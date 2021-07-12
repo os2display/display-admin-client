@@ -1,0 +1,59 @@
+{
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "lint:js": "eslint --ext .js --ext .jsx ./src",
+    "lint:js:fix": "eslint --ext .js --ext .jsx --fix ./src",
+    "lint:scss": "stylelint \"./src/**/*.scss\"",
+    "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
+    "check-coding-standards/markdownlint": "markdownlint README.md docs/**/*.md",
+    "check-coding-standards": "yarn check-coding-standards/markdownlint && yarn lint:js && yarn lint:scss",
+    "apply-coding-standards/markdownlint": "markdownlint --fix README.md docs/**/*.md",
+    "apply-coding-standards": "yarn apply-coding-standards/markdownlint && yarn lint:js:fix && yarn lint:scss:fix",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-only-warn": "^1.0.2",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "2.3.2",
+    "markdownlint-cli": "^0.27.1"
+  }
+}

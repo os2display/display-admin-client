@@ -1,0 +1,4 @@
+{
+  "plugins": ["react", "prettier","only-warn"],
+  "extends": ["airbnb", "prettier", "plugin:prettier/recommended"]
+}
