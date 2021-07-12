@@ -1,3 +1,1 @@
-describe('Test shell', () => {
-
-});
+describe("Test", () => {});
