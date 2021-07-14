@@ -27,10 +27,20 @@ function List({ data, columns, selectedCells }) {
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search).get("search");
-  const [searchText, setSearchText] = useState(searchParams);
-  const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+  const sortParams = new URLSearchParams(search).get("sort");
+  const orderParams = new URLSearchParams(search).get("order");
+  const pageParams = new URLSearchParams(search).get("page");
+  const [searchText, setSearchText] = useState(
+    searchParams !== "null" ? searchParams : ""
+  );
+  const [sortBy, setSortBy] = useState({
+    path: sortParams ? sortParams : "name",
+    order: orderParams ? orderParams : "asc",
+  });
   const pageSize = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(pageParams) ? parseInt(pageParams) : 1
+  );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConsolidateModal, setShowConsolidateModal] = useState(false);
 
@@ -39,16 +49,23 @@ function List({ data, columns, selectedCells }) {
    * Updates the search text state and url.
    */
   function handleSearch(newSearchText) {
-    const params = new URLSearchParams({ search: newSearchText });
-    history.replace({ search: params.toString() });
+    setCurrentPage(1);
     setSearchText(newSearchText);
   }
+
   /**
    * If they search or filter, the pagination is reset.
    */
   useEffect(() => {
-    setCurrentPage(1);
-  }, [searchText, sortBy]);
+    const params = new URLSearchParams();
+    if (searchText) {
+      params.append("search", searchText);
+    }
+    params.append("sort", sortBy.path);
+    params.append("order", sortBy.order);
+    params.append("page", currentPage);
+    history.replace({ search: params.toString() });
+  }, [searchText, sortBy, currentPage]);
 
   /**
    * Closes delete modal.
@@ -77,6 +94,7 @@ function List({ data, columns, selectedCells }) {
    * updates sortcolumn.
    */
   function handleSort(sortColumn) {
+    setCurrentPage(1);
     setSortBy(sortColumn);
   }
 
@@ -190,7 +208,6 @@ function List({ data, columns, selectedCells }) {
           </div>
         </Col>
       </Row>
-
       <Table
         onSort={handleSort}
         data={getTableData().data}
