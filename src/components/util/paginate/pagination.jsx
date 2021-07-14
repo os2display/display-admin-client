@@ -41,7 +41,6 @@ function Pagination({ itemsCount, pageSize, onPageChange, currentPage }) {
       <ul className="pagination">
         {pages.map((page) => (
           <li
-            style={{ cursor: "pointer" }}
             key={page}
             className={page === currentPage ? "page-item active" : "page-item"}
           >

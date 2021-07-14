@@ -61,7 +61,10 @@ function TableHeader({ columns, sortColumn, onSort }) {
         {columns.map((column) => (
           <Fragment key={column.path || column.key}>
             {column.sort && (
-              <th onClick={() => sort(column.path)}>
+              <th
+                id={`table-header-${column.path}`}
+                onClick={() => sort(column.path)}
+              >
                 {column.label} {renderSortIcon(column)}
               </th>
             )}

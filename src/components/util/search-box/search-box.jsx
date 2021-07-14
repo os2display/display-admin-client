@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import PropTypes from "prop-types";
-import "./searchbox.scss";
+import "./search-box.scss";
 
 /**
  * @param {object} props
@@ -28,6 +28,7 @@ function SearchBox({ value, onChange }) {
         </InputGroup.Prepend>
         <FormControl
           placeholder="Søg"
+          id="search-field"
           role="search"
           name="search"
           value={value}

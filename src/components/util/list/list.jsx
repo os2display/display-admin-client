@@ -3,10 +3,9 @@ import { Button, Row, Col } from "react-bootstrap";
 import { useLocation, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Table from "../table/table";
-import SearchBox from "../search-box";
+import SearchBox from "../search-box/search-box";
 import DeleteModal from "../../delete-modal/delete-modal";
 import Pagination from "../paginate/pagination";
-import paginate from "../paginate/paginate";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
 import ConsolidateModal from "../../consolidate-modal/consoliate-modal";
@@ -170,6 +169,21 @@ function List({ data, columns, selectedCells }) {
     setShowConsolidateModal(false);
   }
 
+  /**
+   * @param {Array} items
+   * The items to paginate.
+   * @param {number} pageNumber
+   * The chosen page.
+   * @param {number} pageSize
+   * The page size
+   *  @returns {Array}
+   *   The paginated items.
+   */
+  function paginate(items, pageNumber, pageSize) {
+    const startIndex = (pageNumber - 1) * pageSize;
+    return items.slice(startIndex, startIndex + pageSize);
+  }
+
   return (
     <>
       <Row className="mt-2 mb-2">
@@ -180,6 +194,7 @@ function List({ data, columns, selectedCells }) {
           <div className="ml-4">
             <Button
               variant="danger"
+              id="delete-button"
               disabled={!selectedCells.length > 0}
               onClick={() => setShowDeleteModal(true)}
             >
@@ -189,6 +204,7 @@ function List({ data, columns, selectedCells }) {
           <div className="ml-4">
             <Button
               className="ml-2"
+              id="consolidate-button"
               disabled={!selectedCells.length > 0}
               onClick={() => setShowConsolidateModal(true)}
               variant="success"
