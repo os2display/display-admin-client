@@ -3,11 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "bootstrap": "^5.0.2",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.6.1",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
@@ -20,7 +26,6 @@
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
     "check-coding-standards": "npm run check-coding-standards/markdownlint && npm run lint:js && npm run lint:scss",
     "apply-coding-standards": "npm run apply-coding-standards/markdownlint && npm run lint:js:fix && npm run lint:scss:fix",
-
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
