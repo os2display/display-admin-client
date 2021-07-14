@@ -3,6 +3,22 @@ import PropTypes from "prop-types";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
 
+/**
+ * Delete modal component.
+ *
+ * @param {object} props
+ * Props.
+ * @param {boolean} props.show
+ * Whether to show the modal.
+ * @param {Function} props.onClose
+ * Callback on close modal.
+ * @param {Function} props.selectedCells
+ * Cells that are selected for deletion
+ * @param {Function} props.handleAccept
+ * Callback on accept.
+ * @returns {object}
+ *   The modal.
+ */
 function DeleteModal({ show, onClose, selectedCells, handleAccept }) {
   if (!show) return <></>;
 

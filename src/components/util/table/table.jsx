@@ -6,6 +6,22 @@ import SortColumnProptypes from "../../proptypes/sort-column-proptypes";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
 
+/**
+ * @param {object} props
+ * The props.
+ * @param {Array} props.columns
+ * The columns for the table.
+ * @param {Array} props.selectedCells
+ * The selected cells array.
+ * @param {object} props.onSort
+ * The callback for sort.
+ * @param {object} props.sortColumn
+ * The column to sortby.
+ * @param {Array} props.data
+ * The data to display in the table.
+ * @returns {object}
+ *   The table.
+ */
 function Table({ columns, selectedCells, onSort, sortColumn, data }) {
   return (
     <table className="table">

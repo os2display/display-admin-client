@@ -5,9 +5,25 @@ import PropTypes from "prop-types";
 import SortColumnProptypes from "../../proptypes/sort-column-proptypes";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 
+/**
+ * @param {object} props
+ * The props.
+ * @param {Array} props.columns
+ * The columns for the table.
+ * @param {object} props.sortColumn
+ * The selected cells array.
+ * @param {Function} props.onSort
+ * Callback for on sort.
+ * @returns {object}
+ *   The table body.
+ */
 function TableHeader({ columns, sortColumn, onSort }) {
   let { path, order } = sortColumn;
 
+  /**
+   * @param {object} chosenPath
+   *   The sorting column
+   */
   function sort(chosenPath) {
     if (chosenPath === path) {
       order = order === "asc" ? "desc" : "asc";
@@ -18,6 +34,12 @@ function TableHeader({ columns, sortColumn, onSort }) {
     onSort({ path, order });
   }
 
+  /**
+   * @param {object} column
+   * The sorting column.
+   *  @returns {object}
+   *   The sorting icon.
+   */
   function renderSortIcon(column) {
     if (column.path !== path) {
       return (

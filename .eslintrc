@@ -1,6 +1,12 @@
 {
-  "plugins": ["react", "prettier","only-warn"],
-  "extends": ["airbnb", "prettier", "plugin:prettier/recommended", "plugin:cypress/recommended"],
+  "plugins": ["react", "prettier", "only-warn"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:jsdoc/recommended",
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
@@ -10,10 +16,7 @@
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ]
   }

@@ -3,13 +3,20 @@ import { Button, Row, Container, Col, Form } from "react-bootstrap";
 import List from "./util/list/list";
 import DeleteModal from "./delete-modal/delete-modal";
 
-function TagsList() {
+/**
+ * The tag list component.
+ *
+ * @returns {object}
+ *   The TagList
+ */
+function TagList() {
   const [selectedCells, setSelectedCells] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [tags, setTags] = useState([]);
 
   /**
    * Load content from fixture.
+   * TODO load real content.
    */
   useEffect(() => {
     fetch("./fixtures/tags/tags.json")
@@ -19,6 +26,14 @@ function TagsList() {
       });
   }, []);
 
+  /**
+   * @param {object} props
+   * The props.
+   * @param {string} props.name
+   * The name of the tag.
+   * @param {number} props.id
+   * The id of the tag
+   */
   function handleSelected({ name, id }) {
     const localSelectedCells = [...selectedCells];
     if (localSelectedCells.indexOf({ name, id }) > -1) {
@@ -29,6 +44,14 @@ function TagsList() {
     setSelectedCells(localSelectedCells);
   }
 
+  /**
+   * @param {object} props
+   * The props.
+   * @param {string} props.name
+   * The name of the tag.
+   * @param {number} props.id
+   * The id of the tag
+   */
   function openDeleteModal({ id, name }) {
     setSelectedCells([{ id, name }]);
     setShowDeleteModal(true);
@@ -87,11 +110,22 @@ function TagsList() {
     },
   ];
 
+  /**
+   * @param {object} props
+   * The props.
+   * @param {string} props.name
+   * The name of the tag.
+   * @param {number} props.id
+   * The id of the tag
+   */
   function handleDelete({ id, name }) {
     console.log(`deleted ${id}:${name}`); // eslint-disable-line
     setShowDeleteModal(false);
   }
 
+  /**
+   * Closes the delete modal.
+   */
   function onCloseModal() {
     setShowDeleteModal(false);
   }
@@ -123,4 +157,4 @@ function TagsList() {
   );
 }
 
-export default TagsList;
+export default TagList;

@@ -7,6 +7,16 @@ import InputGroup from "react-bootstrap/InputGroup";
 import PropTypes from "prop-types";
 import "./searchbox.scss";
 
+/**
+ * @param {object} props
+ * The props.
+ * @param {string} props.value
+ *  the value of the search box.
+ *  @param {Function} props.onChange
+ * The callback for change in search box.
+ * @returns {object}
+ *   The search box.
+ */
 function SearchBox({ value, onChange }) {
   return (
     <Form>
