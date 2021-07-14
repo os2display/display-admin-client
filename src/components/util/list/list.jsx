@@ -9,6 +9,7 @@ import Pagination from "../paginate/pagination";
 import paginate from "../paginate/paginate";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
+import ConsolidateModal from "../../consolidate-modal/consoliate-modal";
 
 /**
  * @param {object} props
@@ -31,6 +32,7 @@ function List({ data, columns, selectedCells }) {
   const pageSize = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showConsolidateModal, setShowConsolidateModal] = useState(false);
 
   /**
    * @param {string} newSearchText
@@ -49,10 +51,17 @@ function List({ data, columns, selectedCells }) {
   }, [searchText, sortBy]);
 
   /**
-   * Closes modal.
+   * Closes delete modal.
    */
-  function onCloseModal() {
+  function onCloseDeleteModal() {
     setShowDeleteModal(false);
+  }
+
+  /**
+   * Closes consolidate modal.
+   */
+  function onCloseConsolidateModal() {
+    setShowConsolidateModal(false);
   }
 
   /**
@@ -127,6 +136,32 @@ function List({ data, columns, selectedCells }) {
     return { data: paginated, length: returnValue.length };
   }
 
+  /**
+   * @param {object} props
+   * The props.
+   * @param {string} props.name
+   * The name of the property.
+   * @param {number} props.id
+   * The id of the property
+   */
+  function handleDelete() {
+    console.log(`deleted a bunch of stuff`); // eslint-disable-line
+    setShowDeleteModal(false);
+  }
+
+  /**
+   * @param {object} props
+   * The props.
+   * @param {string} props.name
+   * The name of the property.
+   * @param {number} props.id
+   * The id of the property
+   */
+  function handleConsolidate({ id, name }) {
+    console.log(`consolidated a bunch of stuff`); // eslint-disable-line
+    setShowConsolidateModal(false);
+  }
+
   return (
     <>
       <Row className="mt-2 mb-2">
@@ -147,6 +182,7 @@ function List({ data, columns, selectedCells }) {
             <Button
               className="ml-2"
               disabled={!selectedCells.length > 0}
+              onClick={() => setShowConsolidateModal(true)}
               variant="success"
             >
               Konsolider
@@ -154,6 +190,7 @@ function List({ data, columns, selectedCells }) {
           </div>
         </Col>
       </Row>
+
       <Table
         onSort={handleSort}
         data={getTableData().data}
@@ -169,7 +206,14 @@ function List({ data, columns, selectedCells }) {
       />
       <DeleteModal
         show={showDeleteModal}
-        onClose={onCloseModal}
+        handleAccept={handleDelete}
+        onClose={onCloseDeleteModal}
+        selectedCells={selectedCells}
+      />
+      <ConsolidateModal
+        show={showConsolidateModal}
+        handleAccept={handleConsolidate}
+        onClose={onCloseConsolidateModal}
         selectedCells={selectedCells}
       />
     </>

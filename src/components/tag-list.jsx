@@ -36,11 +36,13 @@ function TagList() {
    */
   function handleSelected({ name, id }) {
     const localSelectedCells = [...selectedCells];
-    if (localSelectedCells.indexOf({ name, id }) > -1) {
+    const alreadySelected = selectedCells.find((x) => x.id === id);
+    if (alreadySelected) {
       localSelectedCells.splice(localSelectedCells.indexOf({ name, id }), 1);
     } else {
       localSelectedCells.push({ name, id });
     }
+
     setSelectedCells(localSelectedCells);
   }
 
@@ -127,6 +129,7 @@ function TagList() {
    * Closes the delete modal.
    */
   function onCloseModal() {
+    setSelectedCells([]);
     setShowDeleteModal(false);
   }
 

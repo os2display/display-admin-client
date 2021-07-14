@@ -29,22 +29,24 @@ function ModalDialog({
   handleAccept,
 }) {
   return (
-    <Modal.Dialog>
-      <Modal.Header>
-        <Modal.Title>{title}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>{text}</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
-          {declineText}
-        </Button>
-        <Button variant="primary" onClick={handleAccept}>
-          {acceptText}
-        </Button>
-      </Modal.Footer>
-    </Modal.Dialog>
+    <div className="modal-container">
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{text}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onClose}>
+            {declineText}
+          </Button>
+          <Button variant="primary" onClick={handleAccept}>
+            {acceptText}
+          </Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
   );
 }
 
