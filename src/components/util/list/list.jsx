@@ -34,12 +34,12 @@ function List({ data, columns, selectedCells }) {
     searchParams !== "null" ? searchParams : ""
   );
   const [sortBy, setSortBy] = useState({
-    path: sortParams ? sortParams : "name",
-    order: orderParams ? orderParams : "asc",
+    path: sortParams || "name",
+    order: orderParams || "asc",
   });
   const pageSize = 10;
   const [currentPage, setCurrentPage] = useState(
-    parseInt(pageParams) ? parseInt(pageParams) : 1
+    parseInt(pageParams, 10) ? parseInt(pageParams, 10) : 1
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showConsolidateModal, setShowConsolidateModal] = useState(false);
@@ -155,12 +155,7 @@ function List({ data, columns, selectedCells }) {
   }
 
   /**
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the property.
-   * @param {number} props.id
-   * The id of the property
+   * Should handle delete.
    */
   function handleDelete() {
     console.log(`deleted a bunch of stuff`); // eslint-disable-line
@@ -168,14 +163,9 @@ function List({ data, columns, selectedCells }) {
   }
 
   /**
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the property.
-   * @param {number} props.id
-   * The id of the property
+   * Should handle consolidate.
    */
-  function handleConsolidate({ id, name }) {
+  function handleConsolidate() {
     console.log(`consolidated a bunch of stuff`); // eslint-disable-line
     setShowConsolidateModal(false);
   }
