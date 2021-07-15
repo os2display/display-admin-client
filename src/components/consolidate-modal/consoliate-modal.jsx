@@ -4,7 +4,7 @@ import ModalDialog from "../util/modal/modal-dialog";
 import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
 
 /**
- * Consolidate modal component.
+ * Consolidate modal component, a modal that merges elements together.
  *
  * @param {object} props
  * Props.

@@ -4,7 +4,7 @@ import ModalDialog from "../util/modal/modal-dialog";
 import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
 
 /**
- * Delete modal component.
+ * Delete modal component, a modal that deletes elements.
  *
  * @param {object} props
  * Props.
