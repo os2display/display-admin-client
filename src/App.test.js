@@ -1,5 +1,5 @@
 describe("Simple app loads", () => {
-  it("localhost and simple text", () => {
+  it("Loads and simple test", () => {
     cy.visit("localhost:3000/");
     cy.get(".App").should("not.be.empty");
   });
