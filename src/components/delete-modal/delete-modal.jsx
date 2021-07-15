@@ -20,7 +20,9 @@ import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
  *   The modal.
  */
 function DeleteModal({ show, onClose, selectedCells, handleAccept }) {
-  if (!show) return <></>;
+  if (!show) {
+    return <></>;
+  }
 
   let valuesToDelete = "";
   selectedCells.forEach((element, index) => {
