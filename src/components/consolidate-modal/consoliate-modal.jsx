@@ -1,7 +1,7 @@
 import { React } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import ModalDialog from "../util/modal/modal-dialog";
-import { FormattedMessage, useIntl } from "react-intl";
 import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
 /**
  * Consolidate modal component, a modal that merges elements together.
@@ -25,9 +25,9 @@ function ConsolidateModal({ show, onClose, selectedCells, handleAccept }) {
     return <></>;
   }
 
-  let and = intl.formatMessage({ id: "and" });
-  let title = intl.formatMessage({ id: "consolidate_title" });
-  let areYouSure = intl.formatMessage({ id: "are_you_sure_consolidate" });
+  const and = intl.formatMessage({ id: "and" });
+  const title = intl.formatMessage({ id: "consolidate_title" });
+  const areYouSure = intl.formatMessage({ id: "are_you_sure_consolidate" });
 
   let valuesToConsolidate = "";
   selectedCells.forEach((element, index) => {

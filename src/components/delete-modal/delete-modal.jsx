@@ -26,9 +26,9 @@ function DeleteModal({ show, onClose, selectedCells, handleAccept }) {
     return <></>;
   }
 
-  let and = intl.formatMessage({ id: "and" });
-  let title = intl.formatMessage({ id: "delete_title" });
-  let areYouSure = intl.formatMessage({ id: "are_you_sure_delete" });
+  const and = intl.formatMessage({ id: "and" });
+  const title = intl.formatMessage({ id: "delete_title" });
+  const areYouSure = intl.formatMessage({ id: "are_you_sure_delete" });
 
   let valuesToDelete = "";
   selectedCells.forEach((element, index) => {

@@ -30,10 +30,8 @@ function ModalDialog({
   handleAccept,
 }) {
   const intl = useIntl();
-  let yes = intl.formatMessage({ id: "yes" });
-  let no = intl.formatMessage({ id: "no" });
-  declineText = declineText ? declineText : no;
-  acceptText = acceptText ? acceptText : yes;
+  const yes = intl.formatMessage({ id: "yes" });
+  const no = intl.formatMessage({ id: "no" });
   return (
     <div className="modal-container">
       <Modal.Dialog>
@@ -45,16 +43,21 @@ function ModalDialog({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={onClose}>
-            {declineText}
+            {declineText || no}
           </Button>
           <Button variant="primary" onClick={handleAccept}>
-            {acceptText}
+            {acceptText || yes}
           </Button>
         </Modal.Footer>
       </Modal.Dialog>
     </div>
   );
 }
+
+ModalDialog.defaultProps = {
+  acceptText: "",
+  declineText: "",
+};
 
 ModalDialog.propTypes = {
   text: PropTypes.string.isRequired,
