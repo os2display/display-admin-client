@@ -12,11 +12,11 @@ describe("Delete modal loads", () => {
       .find("button")
       .first()
       .invoke("text")
-      .should("match", /^Nono, no deleting/);
+      .should("match", /^Nej/);
     cy.get(".modal-container")
       .find("button")
       .last()
       .invoke("text")
-      .should("match", /^Yes, delete/);
+      .should("match", /^Ja/);
   });
 });

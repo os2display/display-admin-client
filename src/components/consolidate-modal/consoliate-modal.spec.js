@@ -14,11 +14,11 @@ describe("Consolidate modal loads", () => {
       .find("button")
       .first()
       .invoke("text")
-      .should("match", /^Nono, no consolidating today/);
+      .should("match", /^Nej/);
     cy.get(".modal-container")
       .find("button")
       .last()
       .invoke("text")
-      .should("match", /^Yes, consolidate/);
+      .should("match", /^Ja/);
   });
 });
