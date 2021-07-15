@@ -16,9 +16,9 @@ function TagList() {
 
   /**
    * Load content from fixture.
-   * @TODO load real content.
    */
   useEffect(() => {
+    // @TODO load real content.
     fetch("./fixtures/tags/tags.json")
       .then((response) => response.json())
       .then((jsonData) => {
