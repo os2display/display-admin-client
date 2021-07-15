@@ -7,17 +7,17 @@ describe("Tags list loads", () => {
 
   it("The column headers are correct", () => {
     cy.visit("localhost:3000/tags");
+    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
+    cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
     cy.get("thead")
       .find("th")
-      .eq(0).invoke("text").should("match", /^Valg/);
+      .eq(2)
+      .invoke("text")
+      .should("match", /^Oprettet af/);
     cy.get("thead")
       .find("th")
-      .eq(1).invoke("text").should("match", /^Navn/);
-    cy.get("thead")
-      .find("th")
-      .eq(2).invoke("text").should("match", /^Oprettet af/);
-    cy.get("thead")
-      .find("th")
-      .eq(3).invoke("text").should("match", /^# slides/);
+      .eq(3)
+      .invoke("text")
+      .should("match", /^# slides/);
   });
 });

@@ -13,4 +13,3 @@ describe("Search box loads", () => {
     cy.get("tbody").find("tr").should("have.length", 1);
   });
 });
-

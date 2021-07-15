@@ -7,20 +7,22 @@ describe("Screen list loads", () => {
 
   it("The column headers are correct", () => {
     cy.visit("localhost:3000/screens");
+    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
+    cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
     cy.get("thead")
       .find("th")
-      .eq(0).invoke("text").should("match", /^Valg/);
+      .eq(2)
+      .invoke("text")
+      .should("match", /^Størrelse/);
     cy.get("thead")
       .find("th")
-      .eq(1).invoke("text").should("match", /^Navn/);
+      .eq(3)
+      .invoke("text")
+      .should("match", /^Opløsning/);
     cy.get("thead")
       .find("th")
-      .eq(2).invoke("text").should("match", /^Størrelse/);
-    cy.get("thead")
-      .find("th")
-      .eq(3).invoke("text").should("match", /^Opløsning/);
-    cy.get("thead")
-      .find("th")
-      .eq(4).invoke("text").should("match", /^Kampagne/);
+      .eq(4)
+      .invoke("text")
+      .should("match", /^Kampagne/);
   });
 });
