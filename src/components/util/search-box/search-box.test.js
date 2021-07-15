@@ -8,8 +8,9 @@ describe("Search box loads", () => {
     cy.visit("localhost:3000/");
     cy.get("#search-field").invoke("val").should("be.empty");
     cy.get("tbody").find("tr").should("have.length", 10);
-    cy.visit("localhost:3000/?search=test");
+    cy.visit("localhost:3000/tags?search=test");
     cy.get("#search-field").invoke("val").should("match", /^test/);
     cy.get("tbody").find("tr").should("have.length", 1);
   });
 });
+

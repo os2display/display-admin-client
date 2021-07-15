@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import PropTypes from "prop-types";
 
 /**
@@ -37,24 +38,33 @@ function Pagination({ itemsCount, pageSize, onPageChange, currentPage }) {
   // Array of numbers from 1 ... pagecount.
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
   return (
-    <nav aria-label="Page navigation">
-      <ul className="pagination">
-        {pages.map((page) => (
-          <li
-            key={page}
-            className={page === currentPage ? "page-item active" : "page-item"}
-          >
-            <button
-              type="button"
-              onClick={() => onPageChange(page)}
-              className="page-link"
-            >
-              {page}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <FormattedMessage
+      id="aria_pagination_site_navigation"
+      defaultMessage="aria_pagination_site_navigation"
+    >
+      {(message) => (
+        <nav aria-label={message}>
+          <ul className="pagination">
+            {pages.map((page) => (
+              <li
+                key={page}
+                className={
+                  page === currentPage ? "page-item active" : "page-item"
+                }
+              >
+                <button
+                  type="button"
+                  onClick={() => onPageChange(page)}
+                  className="page-link"
+                >
+                  {page}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </FormattedMessage>
   );
 }
 

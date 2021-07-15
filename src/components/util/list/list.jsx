@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Button, Row, Col } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 import { useLocation, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Table from "../table/table";
@@ -124,6 +125,7 @@ function List({ data, columns, selectedCells }) {
       .toLocaleLowerCase()
       .includes(searchText.toLocaleLowerCase());
   }
+
   /**
    * @param {string|number} a
    * sort parameter a
@@ -199,7 +201,7 @@ function List({ data, columns, selectedCells }) {
               disabled={!selectedCells.length > 0}
               onClick={() => setShowDeleteModal(true)}
             >
-              Slet
+              <FormattedMessage id="delete" defaultMessage="delete" />
             </Button>
           </div>
           <div className="ml-4">
@@ -210,7 +212,7 @@ function List({ data, columns, selectedCells }) {
               onClick={() => setShowConsolidateModal(true)}
               variant="success"
             >
-              Konsolider
+              <FormattedMessage id="consolidate" defaultMessage="consolidate" />
             </Button>
           </div>
         </Col>

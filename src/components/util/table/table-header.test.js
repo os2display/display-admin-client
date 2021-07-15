@@ -54,9 +54,8 @@ describe("Table header loads", () => {
     cy.get("#table-header-slides").click();
     cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^93/);
   });
-
   it("Loads parametres from url", () => {
-    cy.visit("localhost:3000/?sort=createdBy&order=asc&page=1");
+    cy.visit("localhost:3000/tags?sort=createdBy&order=asc&page=1");
     cy.get("#table-header-slides").should("not.be.empty");
     cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
     cy.get("tbody")
@@ -71,7 +70,7 @@ describe("Table header loads", () => {
       .invoke("text")
       .should("match", /^coherent/);
 
-    cy.visit("localhost:3000/?sort=name&order=desc&page=1");
+    cy.visit("localhost:3000/tags?sort=name&order=desc&page=1");
     cy.get("#table-header-slides").should("not.be.empty");
     cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
     cy.get("tbody").find("tr td").eq(2).invoke("text").should("match", /^Bee/);

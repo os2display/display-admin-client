@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FormattedMessage } from "react-intl";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
@@ -26,15 +27,19 @@ function SearchBox({ value, onChange }) {
             <FontAwesomeIcon className="search-icon" icon={faSearch} />
           </InputGroup.Text>
         </InputGroup.Prepend>
-        <FormControl
-          placeholder="Søg"
-          id="search-field"
-          role="search"
-          name="search"
-          value={value}
-          className="form-control"
-          onChange={(e) => onChange(e.currentTarget.value)}
-        />
+        <FormattedMessage id="search" defaultMessage="search">
+          {(placeholder) => (
+            <FormControl
+              placeholder={placeholder}
+              id="search-field"
+              role="search"
+              name="search"
+              value={value}
+              className="form-control"
+              onChange={(e) => onChange(e.currentTarget.value)}
+            />
+          )}
+        </FormattedMessage>
       </InputGroup>
     </Form>
   );

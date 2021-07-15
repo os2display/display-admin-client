@@ -1,0 +1,116 @@
+{
+  "table_header_pick": [
+    {
+      "type": 0,
+      "value": "Valg"
+    }
+  ],
+  "table_header_name": [
+    {
+      "type": 0,
+      "value": "Navn"
+    }
+  ],
+  "table_header_created_by": [
+    {
+      "type": 0,
+      "value": "Oprettet af"
+    }
+  ],
+  "table_header_size": [
+    {
+      "type": 0,
+      "value": "Størrelse"
+    }
+  ],
+  "aria_pagination_site_navigation": [
+    {
+      "type": 0,
+      "value": "paginering"
+    }
+  ],
+  "aria_choose_element_for_action": [
+    {
+      "type": 0,
+      "value": "Vælg element til massehandling"
+    }
+  ],
+  "screens_list_header": [
+    {
+      "type": 0,
+      "value": "Skærme"
+    }
+  ],
+  "create_new_tag": [
+    {
+      "type": 0,
+      "value": "Opret nyt tag"
+    }
+  ],
+  "delete": [
+    {
+      "type": 0,
+      "value": "Slet"
+    }
+  ],
+  "search": [
+    {
+      "type": 0,
+      "value": "Søg"
+    }
+  ],
+  "consolidate": [
+    {
+      "type": 0,
+      "value": "Konsolider"
+    }
+  ],
+  "edit": [
+    {
+      "type": 0,
+      "value": "Rediger"
+    }
+  ],
+  "create_new_screen": [
+    {
+      "type": 0,
+      "value": "Opret ny skærm"
+    }
+  ],
+  "tags_list_header": [
+    {
+      "type": 0,
+      "value": "Tags"
+    }
+  ],
+  "table_header_dimensions": [
+    {
+      "type": 0,
+      "value": "Opløsning"
+    }
+  ],
+  "table_header_campaign": [
+    {
+      "type": 0,
+      "value": "Kampage"
+    }
+  ],
+  "table_header_number_of_slides": [
+    {
+      "type": 0,
+      "value": "# slides"
+    }
+  ],
+  "navbar_tags": [
+    {
+      "type": 0,
+      "value": "Tags"
+    }
+  ],
+  "navbar_screens": [
+    {
+      "type": 0,
+      "value": "Skærme"
+    }
+  ]
+}
