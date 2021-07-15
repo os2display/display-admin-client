@@ -172,7 +172,7 @@ function List({ data, columns, selectedCells }) {
    * Should handle delete.
    */
   function handleDelete() {
-    console.log(`deleted a bunch of stuff`); // eslint-disable-line
+    // @TODO delete elements
     setShowDeleteModal(false);
   }
 
@@ -180,7 +180,7 @@ function List({ data, columns, selectedCells }) {
    * Should handle consolidate.
    */
   function handleConsolidate() {
-    console.log(`consolidated a bunch of stuff`); // eslint-disable-line
+    // @TODO consolidate elements
     setShowConsolidateModal(false);
   }
 
