@@ -53,6 +53,21 @@ function List({ data, columns, selectedCells }) {
   }
 
   /**
+   * @param {Array} items
+   * The items to paginate.
+   * @param {number} pageNumber
+   * The chosen page.
+   * @param {number} sizeOfPage
+   * The page size
+   *  @returns {Array}
+   *   The paginated items.
+   */
+  function paginate(items, pageNumber, sizeOfPage) {
+    const startIndex = (pageNumber - 1) * sizeOfPage;
+    return items.slice(startIndex, startIndex + sizeOfPage);
+  }
+
+  /**
    * If they search or filter, the pagination is reset.
    */
   useEffect(() => {
@@ -167,21 +182,6 @@ function List({ data, columns, selectedCells }) {
   function handleConsolidate() {
     console.log(`consolidated a bunch of stuff`); // eslint-disable-line
     setShowConsolidateModal(false);
-  }
-
-  /**
-   * @param {Array} items
-   * The items to paginate.
-   * @param {number} pageNumber
-   * The chosen page.
-   * @param {number} pageSize
-   * The page size
-   *  @returns {Array}
-   *   The paginated items.
-   */
-  function paginate(items, pageNumber, pageSize) {
-    const startIndex = (pageNumber - 1) * pageSize;
-    return items.slice(startIndex, startIndex + pageSize);
   }
 
   return (
