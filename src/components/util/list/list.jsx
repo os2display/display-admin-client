@@ -181,6 +181,8 @@ function List({ data, columns, selectedCells }) {
 
   /**
    * Should handle merge.
+   *
+   * @param {string} mergeName - the new name for the data.
    */
   function handleMerge(mergeName) {
     // @TODO merge elements and remove console.log

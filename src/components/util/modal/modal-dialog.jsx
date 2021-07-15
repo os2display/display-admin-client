@@ -6,8 +6,6 @@ import PropTypes from "prop-types";
 /**
  * @param {object} props
  * The props.
- * @param {string} props.text
- * The modal text
  * @param {string} props.title
  * The modal title
  * @param {string} props.acceptText

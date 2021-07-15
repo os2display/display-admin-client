@@ -30,18 +30,13 @@ function DeleteModal({ show, onClose, selectedCells, handleAccept }) {
   const title = intl.formatMessage({ id: "delete_title" });
   const areYouSure = intl.formatMessage({ id: "are_you_sure_delete" });
 
-  let namesOfCells = selectedCells.map((cell) => cell.name);
+  const namesOfCells = selectedCells.map((cell) => cell.name);
   let valuesToDelete = `${namesOfCells
     .slice(0, -1)
     .join(", ")} ${and} ${namesOfCells.slice(-1)}`;
   valuesToDelete = `${areYouSure} ${valuesToDelete}?`;
   return (
-    <ModalDialog
-      children={valuesToDelete}
-      title={title}
-      onClose={onClose}
-      handleAccept={handleAccept}
-    >
+    <ModalDialog title={title} onClose={onClose} handleAccept={handleAccept}>
       {valuesToDelete}
     </ModalDialog>
   );

@@ -1,7 +1,6 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FormattedMessage } from "react-intl";
 import { Form, InputGroup, FormControl } from "react-bootstrap";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
@@ -29,8 +28,7 @@ function MergeModal({ show, onClose, selectedCells, handleAccept }) {
   }
 
   /**
-   * @param {object} sortColumn
-   * Updates sortcolumn.
+   * @param {string} newMergeName - the new name for the merged data.
    */
   function handleInput(newMergeName) {
     setMergeName(newMergeName);
@@ -41,7 +39,7 @@ function MergeModal({ show, onClose, selectedCells, handleAccept }) {
   const areYouSure = intl.formatMessage({ id: "are_you_sure_merge" });
   const chooseNewName = intl.formatMessage({ id: "merge_data_name" });
 
-  let namesOfCells = selectedCells.map((cell) => cell.name);
+  const namesOfCells = selectedCells.map((cell) => cell.name);
   let valuesToMerge = `${namesOfCells
     .slice(0, -1)
     .join(", ")} ${and} ${namesOfCells.slice(-1)}`;
