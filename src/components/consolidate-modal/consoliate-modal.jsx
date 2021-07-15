@@ -1,8 +1,8 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import ModalDialog from "../util/modal/modal-dialog";
+import { FormattedMessage, useIntl } from "react-intl";
 import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
-
 /**
  * Consolidate modal component, a modal that merges elements together.
  *
@@ -20,26 +20,30 @@ import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
  * The modal.
  */
 function ConsolidateModal({ show, onClose, selectedCells, handleAccept }) {
+  const intl = useIntl();
   if (!show) {
     return <></>;
   }
+
+  let and = intl.formatMessage({ id: "and" });
+  let title = intl.formatMessage({ id: "consolidate_title" });
+  let areYouSure = intl.formatMessage({ id: "are_you_sure_consolidate" });
 
   let valuesToConsolidate = "";
   selectedCells.forEach((element, index) => {
     if (index === 0) {
       valuesToConsolidate = `${element.name}`;
     } else if (index === selectedCells.length - 1) {
-      valuesToConsolidate = `${valuesToConsolidate} and ${element.name}`;
+      valuesToConsolidate = `${valuesToConsolidate} ${and} ${element.name}`;
     } else {
       valuesToConsolidate = `${valuesToConsolidate}, ${element.name}`;
     }
   });
+  valuesToConsolidate = `${areYouSure} ${valuesToConsolidate}?`;
   return (
     <ModalDialog
-      text={`Are you sure you want to consolidate ${valuesToConsolidate}?`}
-      title="You are about to consolidate something"
-      acceptText="Yes, consolidate"
-      declineText="Nono, no consolidating today"
+      text={valuesToConsolidate}
+      title={title}
       onClose={onClose}
       handleAccept={handleAccept}
     />

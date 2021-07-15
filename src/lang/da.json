@@ -65,6 +65,12 @@
       "value": "Konsolider"
     }
   ],
+  "consolidate_title": [
+    {
+      "type": 0,
+      "value": "Du er ved at konsolidere noget"
+    }
+  ],
   "edit": [
     {
       "type": 0,
@@ -87,6 +93,42 @@
     {
       "type": 0,
       "value": "Opløsning"
+    }
+  ],
+  "and": [
+    {
+      "type": 0,
+      "value": "og"
+    }
+  ],
+  "yes": [
+    {
+      "type": 0,
+      "value": "Ja"
+    }
+  ],
+  "no": [
+    {
+      "type": 0,
+      "value": "Nej"
+    }
+  ],
+  "are_you_sure_delete": [
+    {
+      "type": 0,
+      "value": "Er du sikker på du vil slette følgende: "
+    }
+  ],
+  "are_you_sure_consolidate": [
+    {
+      "type": 0,
+      "value": "Er du sikker på du vil konsolidere følgende: "
+    }
+  ],
+  "delete_title": [
+    {
+      "type": 0,
+      "value": "Du er ved at slette noget"
     }
   ],
   "table_header_campaign": [

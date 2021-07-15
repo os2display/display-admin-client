@@ -1,4 +1,5 @@
 import { React } from "react";
+import { useIntl } from "react-intl";
 import { Modal, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -28,6 +29,11 @@ function ModalDialog({
   onClose,
   handleAccept,
 }) {
+  const intl = useIntl();
+  let yes = intl.formatMessage({ id: "yes" });
+  let no = intl.formatMessage({ id: "no" });
+  declineText = declineText ? declineText : no;
+  acceptText = acceptText ? acceptText : yes;
   return (
     <div className="modal-container">
       <Modal.Dialog>
@@ -53,8 +59,8 @@ function ModalDialog({
 ModalDialog.propTypes = {
   text: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  acceptText: PropTypes.string.isRequired,
-  declineText: PropTypes.string.isRequired,
+  acceptText: PropTypes.string,
+  declineText: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   handleAccept: PropTypes.func.isRequired,
 };
