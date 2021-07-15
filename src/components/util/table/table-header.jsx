@@ -1,6 +1,10 @@
 import { React, Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSortUp,
+  faSortDown,
+  faSort,
+} from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import SortColumnProptypes from "../../proptypes/sort-column-proptypes";
 import ColumnProptypes from "../../proptypes/column-proptypes";
@@ -44,9 +48,9 @@ function TableHeader({ columns, sortColumn, onSort }) {
     if (column.path !== path) {
       return (
         <FontAwesomeIcon
-          style={{ opacity: 0 }}
+          style={{ color: "grey" }}
           className="search-icon"
-          icon={faSortUp}
+          icon={faSort}
         />
       );
     }
