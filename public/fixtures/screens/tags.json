@@ -1,0 +1,704 @@
+{
+  "screens": [
+    {
+      "id": 1,
+      "name": "Solarbreeze",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 2,
+      "name": "Voyatouch",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 3,
+      "name": "Viva",
+      "size": "50\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 4,
+      "name": "Vagram",
+      "size": "50\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 5,
+      "name": "Zontrax",
+      "size": "50\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 6,
+      "name": "Voltsillam",
+      "size": "50\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 7,
+      "name": "Tempsoft",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 8,
+      "name": "It",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 9,
+      "name": "Treeflex",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 10,
+      "name": "Ventosanzap",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 11,
+      "name": "Span",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 12,
+      "name": "Zaam-Dox",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 13,
+      "name": "Transcof",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 14,
+      "name": "Bigtax",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 15,
+      "name": "Pannier",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 16,
+      "name": "Flowdesk",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 17,
+      "name": "Quo Lux",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 18,
+      "name": "Duobam",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 19,
+      "name": "Zaam-Dox",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 20,
+      "name": "Gembucket",
+      "size": "40\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 21,
+      "name": "Mat Lam Tam",
+      "size": "40\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 22,
+      "name": "Y-find",
+      "size": "40\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 23,
+      "name": "Stim",
+      "size": "40\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 24,
+      "name": "Sonsing",
+      "size": "40\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 25,
+      "name": "Y-Solowarm",
+      "size": "40\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 26,
+      "name": "Viva",
+      "size": "40\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 27,
+      "name": "Ventosanzap",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 28,
+      "name": "Tresom",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 29,
+      "name": "Zontrax",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 30,
+      "name": "Home Ing",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 31,
+      "name": "Tampflex",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 32,
+      "name": "Regrant",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 33,
+      "name": "Konklab",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 34,
+      "name": "Domainer",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 35,
+      "name": "Matsoft",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 36,
+      "name": "Ronstring",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 37,
+      "name": "Bitchip",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 38,
+      "name": "It",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 39,
+      "name": "Daltfresh",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 40,
+      "name": "Flowdesk",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 41,
+      "name": "Latlux",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 42,
+      "name": "Flexidy",
+      "size": "10\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 43,
+      "name": "Gembucket",
+      "size": "10\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 44,
+      "name": "Konklab",
+      "size": "10\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 45,
+      "name": "Bamity",
+      "size": "10\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 46,
+      "name": "Home Ing",
+      "size": "10\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 47,
+      "name": "Voyatouch",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 48,
+      "name": "Flexidy",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 49,
+      "name": "Alphazap",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 50,
+      "name": "Bamity",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 51,
+      "name": "It",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 52,
+      "name": "Job",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 53,
+      "name": "Hatity",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 54,
+      "name": "Flexidy",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 55,
+      "name": "Home Ing",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 56,
+      "name": "Pannier",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 57,
+      "name": "It",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 58,
+      "name": "Subin",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 59,
+      "name": "Greenlam",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 60,
+      "name": "Y-Solowarm",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 61,
+      "name": "Wrapsafe",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 62,
+      "name": "Fixflex",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 63,
+      "name": "Vagram",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 64,
+      "name": "Fintone",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 65,
+      "name": "Alphazap",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 66,
+      "name": "Cardify",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 67,
+      "name": "Prodder",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 68,
+      "name": "Holdlamis",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 69,
+      "name": "Voltsillam",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 70,
+      "name": "Aerified",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 71,
+      "name": "Regrant",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 72,
+      "name": "Subin",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 73,
+      "name": "Rank",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 74,
+      "name": "Asoka",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 75,
+      "name": "Matsoft",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 76,
+      "name": "Ronstring",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 77,
+      "name": "Temp",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 78,
+      "name": "Tin",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 79,
+      "name": "Prodder",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 80,
+      "name": "Biodex",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 81,
+      "name": "Ventosanzap",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 82,
+      "name": "Domainer",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 83,
+      "name": "Solarbreeze",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 84,
+      "name": "Namfix",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 85,
+      "name": "Andalax",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 86,
+      "name": "Stringtough",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 87,
+      "name": "Matsoft",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 88,
+      "name": "Pannier",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 89,
+      "name": "Redhold",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 90,
+      "name": "Bytecard",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 91,
+      "name": "Home Ing",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 92,
+      "name": "Trippledex",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 93,
+      "name": "Keylex",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 94,
+      "name": "Matsoft",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 95,
+      "name": "Toughjoyfax",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 96,
+      "name": "Sonair",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 97,
+      "name": "Redhold",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": true
+    },
+    {
+      "id": 98,
+      "name": "Bigtax",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 99,
+      "name": "Sonair",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    },
+    {
+      "id": 100,
+      "name": "Otcom",
+      "size": "30\"",
+      "dimension": "1920x1080",
+      "overridden_by_campaign": false
+    }
+  ]
+}
