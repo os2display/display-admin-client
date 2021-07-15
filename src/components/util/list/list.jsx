@@ -9,7 +9,7 @@ import DeleteModal from "../../delete-modal/delete-modal";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
-import ConsolidateModal from "../../consolidate-modal/consoliate-modal";
+import MergeModal from "../../merge-modal/merge-modal";
 
 /**
  * @param {object} props
@@ -42,7 +42,7 @@ function List({ data, columns, selectedCells }) {
     parseInt(pageParams, 10) ? parseInt(pageParams, 10) : 1
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showConsolidateModal, setShowConsolidateModal] = useState(false);
+  const [showMergeModal, setMergeMergeModal] = useState(false);
 
   /**
    * @param {string} newSearchText
@@ -90,10 +90,10 @@ function List({ data, columns, selectedCells }) {
   }
 
   /**
-   * Closes consolidate modal.
+   * Closes merge modal.
    */
-  function onCloseConsolidateModal() {
-    setShowConsolidateModal(false);
+  function onCloseMergeModal() {
+    setMergeMergeModal(false);
   }
 
   /**
@@ -180,11 +180,12 @@ function List({ data, columns, selectedCells }) {
   }
 
   /**
-   * Should handle consolidate.
+   * Should handle merge.
    */
-  function handleConsolidate() {
-    // @TODO consolidate elements
-    setShowConsolidateModal(false);
+  function handleMerge(mergeName) {
+    // @TODO merge elements and remove console.log
+    console.log(mergeName); // eslint-disable-line
+    setMergeMergeModal(false);
   }
 
   return (
@@ -207,12 +208,12 @@ function List({ data, columns, selectedCells }) {
           <div className="ml-4">
             <Button
               className="ml-2"
-              id="consolidate-button"
+              id="merge-button"
               disabled={!selectedCells.length > 0}
-              onClick={() => setShowConsolidateModal(true)}
+              onClick={() => setMergeMergeModal(true)}
               variant="success"
             >
-              <FormattedMessage id="consolidate" defaultMessage="consolidate" />
+              <FormattedMessage id="merge" defaultMessage="merge" />
             </Button>
           </div>
         </Col>
@@ -236,10 +237,10 @@ function List({ data, columns, selectedCells }) {
         onClose={onCloseDeleteModal}
         selectedCells={selectedCells}
       />
-      <ConsolidateModal
-        show={showConsolidateModal}
-        handleAccept={handleConsolidate}
-        onClose={onCloseConsolidateModal}
+      <MergeModal
+        show={showMergeModal}
+        handleAccept={handleMerge}
+        onClose={onCloseMergeModal}
         selectedCells={selectedCells}
       />
     </>

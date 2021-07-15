@@ -59,13 +59,13 @@
       "value": "Søg"
     }
   ],
-  "consolidate": [
+  "merge": [
     {
       "type": 0,
       "value": "Konsolider"
     }
   ],
-  "consolidate_title": [
+  "merge_title": [
     {
       "type": 0,
       "value": "Du er ved at konsolidere noget"
@@ -119,7 +119,13 @@
       "value": "Er du sikker på du vil slette følgende: "
     }
   ],
-  "are_you_sure_consolidate": [
+  "merge_data_name": [
+    {
+      "type": 0,
+      "value": "Vælg et nyt navn"
+    }
+  ],
+  "are_you_sure_merge": [
     {
       "type": 0,
       "value": "Er du sikker på du vil konsolidere følgende: "
