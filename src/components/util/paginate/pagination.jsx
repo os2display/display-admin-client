@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
  * @param {Array} props.selectedCells
  * The selected cells, for styling.
  * @returns {object}
- *   The List.
+ * The List.
  */
 
 /**
@@ -20,13 +20,13 @@ import PropTypes from "prop-types";
  * @param {number} props.itemsCount
  * The amount of data to be spread out in pages.
  * @param {number} props.pageSize
- *  The page size
+ * The page size
  * @param {Function} props.onPageChange
  * The callback for page change.
  * @param {number} props.currentPage
  * The current page.
  * @returns {object}
- *   The pagination.
+ * The pagination.
  */
 function Pagination({ itemsCount, pageSize, onPageChange, currentPage }) {
   const pageCount = Math.ceil(itemsCount / pageSize);

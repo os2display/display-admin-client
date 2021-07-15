@@ -15,14 +15,14 @@ import ColumnProptypes from "../../proptypes/column-proptypes";
  * @param {Function} props.onSort
  * Callback for on sort.
  * @returns {object}
- *   The table body.
+ * The table body.
  */
 function TableHeader({ columns, sortColumn, onSort }) {
   let { path, order } = sortColumn;
 
   /**
    * @param {object} chosenPath
-   *   The sorting column
+   * The sorting column
    */
   function sort(chosenPath) {
     if (chosenPath === path) {
@@ -37,8 +37,8 @@ function TableHeader({ columns, sortColumn, onSort }) {
   /**
    * @param {object} column
    * The sorting column.
-   *  @returns {object}
-   *   The sorting icon.
+   * @returns {object}
+   * The sorting icon.
    */
   function renderSortIcon(column) {
     if (column.path !== path) {

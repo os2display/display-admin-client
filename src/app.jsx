@@ -6,7 +6,7 @@ import "./app.scss";
  * App component.
  *
  * @returns {object}
- *   The component.
+ * The component.
  */
 function App() {
   return (

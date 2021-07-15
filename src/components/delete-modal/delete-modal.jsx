@@ -17,7 +17,7 @@ import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
  * @param {Function} props.handleAccept
  * Callback on accept.
  * @returns {object}
- *   The modal.
+ * The modal.
  */
 function DeleteModal({ show, onClose, selectedCells, handleAccept }) {
   if (!show) {

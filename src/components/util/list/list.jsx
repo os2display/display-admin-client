@@ -20,7 +20,7 @@ import ConsolidateModal from "../../consolidate-modal/consoliate-modal";
  * @param {Array} props.selectedCells
  * The selected cells, for styling.
  * @returns {object}
- *   The List.
+ * The List.
  */
 function List({ data, columns, selectedCells }) {
   const { search } = useLocation();
@@ -59,8 +59,8 @@ function List({ data, columns, selectedCells }) {
    * The chosen page.
    * @param {number} sizeOfPage
    * The page size
-   *  @returns {Array}
-   *   The paginated items.
+   * @returns {Array}
+   * The paginated items.
    */
   function paginate(items, pageNumber, sizeOfPage) {
     const startIndex = (pageNumber - 1) * sizeOfPage;
@@ -97,7 +97,7 @@ function List({ data, columns, selectedCells }) {
 
   /**
    * @param {number} page
-   * updates pagination page.
+   * Updates pagination page.
    */
   function handlePageChange(page) {
     setCurrentPage(page);
@@ -105,7 +105,7 @@ function List({ data, columns, selectedCells }) {
 
   /**
    * @param {object} sortColumn
-   * updates sortcolumn.
+   * Updates sortcolumn.
    */
   function handleSort(sortColumn) {
     setCurrentPage(1);
@@ -115,8 +115,8 @@ function List({ data, columns, selectedCells }) {
   /**
    * @param {object} dataToFilter
    * Search filter function.
-   *    @returns {boolean}
-   *   Whether the searchtext is in the data entry.
+   * @returns {boolean}
+   * Whether the searchtext is in the data entry.
    */
   function filterDataFromSearchInput(dataToFilter) {
     const dataValuesString = Object.values(dataToFilter).join(" ");
@@ -130,7 +130,7 @@ function List({ data, columns, selectedCells }) {
    * @param {string|number} b
    * sort parameter b
    * @returns {number}
-   *   Sorting number.
+   * Sorting number.
    */
   function sortData(a, b) {
     let sortVarA = a[sortBy.path];
@@ -149,9 +149,10 @@ function List({ data, columns, selectedCells }) {
 
     return 0;
   }
+
   /**
    * @returns {object}
-   *   returns object of paginated data array and length of data.
+   * returns object of paginated data array and length of data.
    */
   function getTableData() {
     let returnValue = data;

@@ -20,7 +20,7 @@ import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
  * @param {Array} props.data
  * The data to display in the table.
  * @returns {object}
- *   The table.
+ * The table.
  */
 function Table({ columns, selectedCells, onSort, sortColumn, data }) {
   return (

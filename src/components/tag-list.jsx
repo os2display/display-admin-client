@@ -7,7 +7,7 @@ import DeleteModal from "./delete-modal/delete-modal";
  * The tag list component.
  *
  * @returns {object}
- *   The TagList
+ * The TagList
  */
 function TagList() {
   const [selectedCells, setSelectedCells] = useState([]);

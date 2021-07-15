@@ -17,8 +17,8 @@ import PropTypes from "prop-types";
  * The callback for close.
  * @param {Function} props.handleAccept
  * The callback for accept.
- *   @returns {object}
- *   The TagList
+ * @returns {object}
+ * The TagList
  */
 function ModalDialog({
   text,

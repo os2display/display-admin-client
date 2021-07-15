@@ -13,7 +13,7 @@ import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
  * @param {Array} props.data
  * The data to display.
  * @returns {object}
- *   The table body.
+ * The table body.
  */
 function TableBody({ columns, selectedCells, data }) {
   /**
