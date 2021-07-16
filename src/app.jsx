@@ -4,6 +4,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import TagList from "./components/tag-list/tag-list";
 import Navbar from "./components/navbar/navbar";
 import ScreenList from "./components/screen-list/screen-list";
+import CategoryList from "./components/category-list/category-list";
 import "./app.scss";
 
 /**
@@ -31,6 +32,7 @@ function App() {
         <Switch>
           <Route path="/tags" component={TagList} />
           <Route path="/screens" component={ScreenList} />
+          <Route path="/categories" component={CategoryList} />
           <Redirect from="/" to="/tags" exact />
         </Switch>
       </main>
