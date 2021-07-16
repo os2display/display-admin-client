@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Form, InputGroup, FormControl } from "react-bootstrap";
 import ModalDialog from "../util/modal/modal-dialog";
-import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
+import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import contentString from "../util/helpers/contentString";
 
 /**
@@ -15,14 +15,14 @@ import contentString from "../util/helpers/contentString";
  * Whether to show the modal.
  * @param {Function} props.onClose
  * Callback on close modal.
- * @param {Function} props.selectedCells
- * Cells that are selected for deletion
+ * @param {Function} props.selectedRows
+ * Rows that are selected for deletion
  * @param {Function} props.handleAccept
  * Callback on accept.
  * @returns {object}
  * The modal.
  */
-function MergeModal({ show, onClose, selectedCells, handleAccept }) {
+function MergeModal({ show, onClose, selectedRows, handleAccept }) {
   const [mergeName, setMergeName] = useState();
   const intl = useIntl();
   if (!show) {
@@ -39,7 +39,7 @@ function MergeModal({ show, onClose, selectedCells, handleAccept }) {
   const title = intl.formatMessage({ id: "merge_title" });
   const areYouSure = intl.formatMessage({ id: "are_you_sure_merge" });
   const chooseNewName = intl.formatMessage({ id: "merge_data_name" });
-  const valuesToMerge = `${areYouSure}  ${contentString(selectedCells)}?`;
+  const valuesToMerge = `${areYouSure}  ${contentString(selectedRows)}?`;
 
   return (
     <ModalDialog
@@ -67,7 +67,7 @@ function MergeModal({ show, onClose, selectedCells, handleAccept }) {
 MergeModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  selectedCells: SelectedCellsProptypes.isRequired,
+  selectedRows: SelectedRowsProptypes.isRequired,
   handleAccept: PropTypes.func.isRequired,
 };
 

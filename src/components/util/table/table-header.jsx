@@ -15,7 +15,7 @@ import ColumnProptypes from "../../proptypes/column-proptypes";
  * @param {Array} props.columns
  * The columns for the table.
  * @param {object} props.sortColumn
- * The selected cells array.
+ * The column to sortby.
  * @param {Function} props.onSort
  * Callback for on sort.
  * @returns {object}

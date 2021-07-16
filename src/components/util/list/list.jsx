@@ -8,7 +8,7 @@ import SearchBox from "../search-box/search-box";
 import DeleteModal from "../../delete-modal/delete-modal";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
-import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
+import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import MergeModal from "../../merge-modal/merge-modal";
 
 /**
@@ -18,12 +18,12 @@ import MergeModal from "../../merge-modal/merge-modal";
  * The data for the list.
  * @param {Array} props.columns
  * The columns for the table.
- * @param {Array} props.selectedCells
- * The selected cells, for styling.
+ * @param {Array} props.selectedRows
+ * The selected rows, for styling.
  * @returns {object}
  * The List.
  */
-function List({ data, columns, selectedCells }) {
+function List({ data, columns, selectedRows }) {
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search).get("search");
@@ -201,7 +201,7 @@ function List({ data, columns, selectedCells }) {
             <Button
               variant="danger"
               id="delete-button"
-              disabled={!selectedCells.length > 0}
+              disabled={!selectedRows.length > 0}
               onClick={() => setShowDeleteModal(true)}
             >
               <FormattedMessage id="delete" defaultMessage="delete" />
@@ -211,7 +211,7 @@ function List({ data, columns, selectedCells }) {
             <Button
               className="ml-2"
               id="merge-button"
-              disabled={!selectedCells.length > 0}
+              disabled={!selectedRows.length > 0}
               onClick={() => setMergeMergeModal(true)}
               variant="success"
             >
@@ -225,7 +225,7 @@ function List({ data, columns, selectedCells }) {
         data={getTableData().data}
         sortColumn={sortBy}
         columns={columns}
-        selectedCells={selectedCells}
+        selectedRows={selectedRows}
       />
       <Pagination
         itemsCount={getTableData().length}
@@ -237,13 +237,13 @@ function List({ data, columns, selectedCells }) {
         show={showDeleteModal}
         handleAccept={handleDelete}
         onClose={onCloseDeleteModal}
-        selectedCells={selectedCells}
+        selectedRows={selectedRows}
       />
       <MergeModal
         show={showMergeModal}
         handleAccept={handleMerge}
         onClose={onCloseMergeModal}
-        selectedCells={selectedCells}
+        selectedRows={selectedRows}
       />
     </>
   );
@@ -254,6 +254,6 @@ List.propTypes = {
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
-  selectedCells: SelectedCellsProptypes.isRequired,
+  selectedRows: SelectedRowsProptypes.isRequired,
 };
 export default List;

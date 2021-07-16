@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
-import { Button, Row, Container, Col, Form } from "react-bootstrap";
+import { Button, Row, Container, Col } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
+import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
+import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 /**
@@ -11,7 +13,7 @@ import InfoModal from "../info-modal/info-modal";
  * The CategoryList
  */
 function CategoryList() {
-  const [selectedCells, setSelectedCells] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -30,23 +32,11 @@ function CategoryList() {
   }, []);
 
   /**
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the tag.
-   * @param {number} props.id
-   * The id of the tag
+   * @param {object} data
+   * The selected row.
    */
-  function handleSelected({ name, id }) {
-    const localSelectedCells = [...selectedCells];
-    const alreadySelected = selectedCells.find((x) => x.id === id);
-    if (alreadySelected) {
-      localSelectedCells.splice(localSelectedCells.indexOf({ name, id }), 1);
-    } else {
-      localSelectedCells.push({ name, id });
-    }
-
-    setSelectedCells(localSelectedCells);
+  function handleSelected(data) {
+    setSelectedRows(selectedRowsHelper(data, [...selectedRows]));
   }
 
   /**
@@ -58,7 +48,7 @@ function CategoryList() {
    * The id of the tag
    */
   function openDeleteModal({ id, name }) {
-    setSelectedCells([{ id, name }]);
+    setSelectedRows([{ id, name }]);
     setShowDeleteModal(true);
   }
 
@@ -81,22 +71,7 @@ function CategoryList() {
         />
       ),
       content: (data) => (
-        <FormattedMessage
-          id="aria_choose_element_for_action"
-          defaultMessage="aria_choose_element_for_action"
-        >
-          {(message) => (
-            <Form>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check
-                  onChange={() => handleSelected(data)}
-                  type="checkbox"
-                  aria-label={message}
-                />
-              </Form.Group>
-            </Form>
-          )}
-        </FormattedMessage>
+        <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
     },
     {
@@ -145,7 +120,7 @@ function CategoryList() {
       content: () => (
         <>
           <div className="m-2">
-            <Button disabled={selectedCells.length > 0} variant="success">
+            <Button disabled={selectedRows.length > 0} variant="success">
               <FormattedMessage id="edit" defaultMessage="edit" />
             </Button>
           </div>
@@ -159,7 +134,7 @@ function CategoryList() {
           <div className="m-2">
             <Button
               variant="danger"
-              disabled={selectedCells.length > 0}
+              disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
               <FormattedMessage id="delete" defaultMessage="delete" />
@@ -188,7 +163,7 @@ function CategoryList() {
    * Closes the delete modal.
    */
   function onCloseDeleteModal() {
-    setSelectedCells([]);
+    setSelectedRows([]);
     setShowDeleteModal(false);
   }
 
@@ -221,17 +196,13 @@ function CategoryList() {
         </Col>
       </Row>
       {categories && (
-        <List
-          columns={columns}
-          selectedCells={selectedCells}
-          data={categories}
-        />
+        <List columns={columns} selectedRows={selectedRows} data={categories} />
       )}
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}
         handleAccept={handleDelete}
-        selectedCells={selectedCells}
+        selectedRows={selectedRows}
       />
       <InfoModal
         show={showInfoModal}

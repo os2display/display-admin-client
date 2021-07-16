@@ -8,14 +8,14 @@ function contentString(content) {
   const intl = useIntl();
   const and = intl.formatMessage({ id: "and" });
 
-  const namesOfCells = content.map((cell) => cell.name);
+  const namesOfRows = content.map((row) => row.name);
   let returnContentString = "";
-  if (namesOfCells.length === 1) {
-    returnContentString = `${namesOfCells.join(", ")}`;
+  if (namesOfRows.length === 1) {
+    returnContentString = `${namesOfRows.join(", ")}`;
   } else {
-    returnContentString = `${namesOfCells
+    returnContentString = `${namesOfRows
       .slice(0, -1)
-      .join(", ")} ${and} ${namesOfCells.slice(-1)}`;
+      .join(", ")} ${and} ${namesOfRows.slice(-1)}`;
   }
   return returnContentString;
 }

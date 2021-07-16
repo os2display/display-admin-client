@@ -2,7 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import ModalDialog from "../util/modal/modal-dialog";
-import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
+import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import contentString from "../util/helpers/contentString";
 
 /**
@@ -14,21 +14,21 @@ import contentString from "../util/helpers/contentString";
  * Whether to show the modal.
  * @param {Function} props.onClose
  * Callback on close modal.
- * @param {Function} props.selectedCells
- * Cells that are selected for deletion
+ * @param {Function} props.selectedRows
+ * Rows that are selected for deletion
  * @param {Function} props.handleAccept
  * Callback on accept.
  * @returns {object}
  * The modal.
  */
-function DeleteModal({ show, onClose, selectedCells, handleAccept }) {
+function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
   if (!show) {
     return <></>;
   }
   const intl = useIntl();
   const title = intl.formatMessage({ id: "delete_title" });
   const areYouSure = intl.formatMessage({ id: "are_you_sure_delete" });
-  const valuesToDelete = `${areYouSure}  ${contentString(selectedCells)}?`;
+  const valuesToDelete = `${areYouSure}  ${contentString(selectedRows)}?`;
 
   return (
     <ModalDialog title={title} onClose={onClose} handleAccept={handleAccept}>
@@ -40,7 +40,7 @@ function DeleteModal({ show, onClose, selectedCells, handleAccept }) {
 DeleteModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  selectedCells: SelectedCellsProptypes.isRequired,
+  selectedRows: SelectedRowsProptypes.isRequired,
   handleAccept: PropTypes.func.isRequired,
 };
 

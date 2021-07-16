@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
-import { Button, Row, Container, Col, Form } from "react-bootstrap";
+import { Button, Row, Container, Col } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
+import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
+import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
 /**
@@ -10,7 +12,7 @@ import DeleteModal from "../delete-modal/delete-modal";
  * The TagList
  */
 function TagList() {
-  const [selectedCells, setSelectedCells] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [tags, setTags] = useState([]);
 
@@ -27,23 +29,11 @@ function TagList() {
   }, []);
 
   /**
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the tag.
-   * @param {number} props.id
-   * The id of the tag
+   * @param {object} data
+   * The selected row.
    */
-  function handleSelected({ name, id }) {
-    const localSelectedCells = [...selectedCells];
-    const alreadySelected = selectedCells.find((x) => x.id === id);
-    if (alreadySelected) {
-      localSelectedCells.splice(localSelectedCells.indexOf({ name, id }), 1);
-    } else {
-      localSelectedCells.push({ name, id });
-    }
-
-    setSelectedCells(localSelectedCells);
+  function handleSelected(data) {
+    setSelectedRows(selectedRowsHelper(data, [...selectedRows]));
   }
 
   /**
@@ -55,7 +45,7 @@ function TagList() {
    * The id of the tag
    */
   function openDeleteModal({ id, name }) {
-    setSelectedCells([{ id, name }]);
+    setSelectedRows([{ id, name }]);
     setShowDeleteModal(true);
   }
 
@@ -69,22 +59,7 @@ function TagList() {
         />
       ),
       content: (data) => (
-        <FormattedMessage
-          id="aria_choose_element_for_action"
-          defaultMessage="aria_choose_element_for_action"
-        >
-          {(message) => (
-            <Form>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check
-                  onChange={() => handleSelected(data)}
-                  type="checkbox"
-                  aria-label={message}
-                />
-              </Form.Group>
-            </Form>
-          )}
-        </FormattedMessage>
+        <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
     },
     {
@@ -122,7 +97,7 @@ function TagList() {
       content: () => (
         <>
           <div className="m-2">
-            <Button disabled={selectedCells.length > 0} variant="success">
+            <Button disabled={selectedRows.length > 0} variant="success">
               <FormattedMessage id="edit" defaultMessage="edit" />
             </Button>
           </div>
@@ -136,7 +111,7 @@ function TagList() {
           <div className="m-2">
             <Button
               variant="danger"
-              disabled={selectedCells.length > 0}
+              disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
               <FormattedMessage id="delete" defaultMessage="delete" />
@@ -165,7 +140,7 @@ function TagList() {
    * Closes the delete modal.
    */
   function onCloseModal() {
-    setSelectedCells([]);
+    setSelectedRows([]);
     setShowDeleteModal(false);
   }
 
@@ -190,17 +165,13 @@ function TagList() {
         </Col>
       </Row>
       {tags.tags && (
-        <List
-          columns={columns}
-          selectedCells={selectedCells}
-          data={tags.tags}
-        />
+        <List columns={columns} selectedRows={selectedRows} data={tags.tags} />
       )}
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}
         handleAccept={handleDelete}
-        selectedCells={selectedCells}
+        selectedRows={selectedRows}
       />
     </Container>
   );

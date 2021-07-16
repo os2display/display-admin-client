@@ -4,15 +4,15 @@ import TableHeader from "./table-header";
 import TableBody from "./table-body";
 import SortColumnProptypes from "../../proptypes/sort-column-proptypes";
 import ColumnProptypes from "../../proptypes/column-proptypes";
-import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
+import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 
 /**
  * @param {object} props
  * The props.
  * @param {Array} props.columns
  * The columns for the table.
- * @param {Array} props.selectedCells
- * The selected cells array.
+ * @param {Array} props.selectedRows
+ * The selected rows array.
  * @param {object} props.onSort
  * The callback for sort.
  * @param {object} props.sortColumn
@@ -22,11 +22,11 @@ import SelectedCellsProptypes from "../../proptypes/selected-cells-proptypes";
  * @returns {object}
  * The table.
  */
-function Table({ columns, selectedCells, onSort, sortColumn, data }) {
+function Table({ columns, selectedRows, onSort, sortColumn, data }) {
   return (
     <table className="table">
       <TableHeader columns={columns} onSort={onSort} sortColumn={sortColumn} />
-      <TableBody selectedCells={selectedCells} columns={columns} data={data} />
+      <TableBody selectedRows={selectedRows} columns={columns} data={data} />
     </table>
   );
 }
@@ -38,6 +38,6 @@ Table.propTypes = {
   sortColumn: SortColumnProptypes.isRequired,
   onSort: PropTypes.func.isRequired,
   columns: ColumnProptypes.isRequired,
-  selectedCells: SelectedCellsProptypes.isRequired,
+  selectedRows: SelectedRowsProptypes.isRequired,
 };
 export default Table;
