@@ -5,6 +5,7 @@ import TagList from "./components/tag-list/tag-list";
 import Navbar from "./components/navbar/navbar";
 import ScreenList from "./components/screen-list/screen-list";
 import CategoryList from "./components/category-list/category-list";
+import SlidesList from "./components/slides-list/slides-list";
 import "./app.scss";
 
 /**
@@ -33,6 +34,7 @@ function App() {
           <Route path="/tags" component={TagList} />
           <Route path="/screens" component={ScreenList} />
           <Route path="/categories" component={CategoryList} />
+          <Route path="/slides" component={SlidesList} />
           <Redirect from="/" to="/tags" exact />
         </Switch>
       </main>

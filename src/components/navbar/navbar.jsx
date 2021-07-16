@@ -28,6 +28,18 @@ function NavBar() {
             <Link
               className="navbar-brand"
               style={{ color: "black" }}
+              to="/slides"
+            >
+              <FormattedMessage
+                id="navbar_slides"
+                defaultMessage="navbar_slides"
+              />
+            </Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Link
+              className="navbar-brand"
+              style={{ color: "black" }}
               to="/screens"
             >
               <FormattedMessage

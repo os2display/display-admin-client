@@ -41,10 +41,34 @@
       "value": "Skærme"
     }
   ],
+  "table_header_template": [
+    {
+      "type": 0,
+      "value": "Skabelon"
+    }
+  ],
+  "table_header_tags": [
+    {
+      "type": 0,
+      "value": "Tags"
+    }
+  ],
+  "table_header_published": [
+    {
+      "type": 0,
+      "value": "Udgivet"
+    }
+  ],
   "create_new_tag": [
     {
       "type": 0,
       "value": "Opret nyt tag"
+    }
+  ],
+  "create_new_slide": [
+    {
+      "type": 0,
+      "value": "Opret nyt slide"
     }
   ],
   "create_new_category": [
@@ -93,6 +117,12 @@
     {
       "type": 0,
       "value": "Tags"
+    }
+  ],
+  "slides_list_header": [
+    {
+      "type": 0,
+      "value": "Slides"
     }
   ],
   "categories_list_header": [
@@ -189,6 +219,12 @@
     {
       "type": 0,
       "value": "Tags"
+    }
+  ],
+  "navbar_slides": [
+    {
+      "type": 0,
+      "value": "Slides"
     }
   ],
   "navbar_categories": [
