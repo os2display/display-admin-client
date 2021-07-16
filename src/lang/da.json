@@ -47,6 +47,12 @@
       "value": "Opret nyt tag"
     }
   ],
+  "create_new_category": [
+    {
+      "type": 0,
+      "value": "Opret ny kategori"
+    }
+  ],
   "delete": [
     {
       "type": 0,
@@ -87,6 +93,12 @@
     {
       "type": 0,
       "value": "Tags"
+    }
+  ],
+  "categories_list_header": [
+    {
+      "type": 0,
+      "value": "Kategorier"
     }
   ],
   "table_header_dimensions": [
@@ -149,10 +161,40 @@
       "value": "# slides"
     }
   ],
+  "on_the_following_playlists": [
+    {
+      "type": 0,
+      "value": "Kategorien er på de følgende spillelister"
+    }
+  ],
+  "info_decline_text": [
+    {
+      "type": 0,
+      "value": "Luk dialog"
+    }
+  ],
+  "table_header_number_of_playlists": [
+    {
+      "type": 0,
+      "value": "# spillelister"
+    }
+  ],
+  "info_title": [
+    {
+      "type": 0,
+      "value": "Obs"
+    }
+  ],
   "navbar_tags": [
     {
       "type": 0,
       "value": "Tags"
+    }
+  ],
+  "navbar_categories": [
+    {
+      "type": 0,
+      "value": "Kategorier"
     }
   ],
   "navbar_screens": [

@@ -54,6 +54,17 @@ describe("Table header loads", () => {
     cy.get("#table-header-slides").click();
     cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^93/);
   });
+
+  it("It sorts by number of playlists", () => {
+    cy.visit("localhost:3000/categories");
+    cy.get("#table-header-onFollowingPlaylists").should("not.be.empty");
+    cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
+    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^5/);
+    cy.get("#table-header-onFollowingPlaylists").click();
+    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^0/);
+    cy.get("#table-header-onFollowingPlaylists").click();
+    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^7/);
+  });
   it("Loads parametres from url", () => {
     cy.visit("localhost:3000/tags?sort=createdBy&order=asc&page=1");
     cy.get("#table-header-slides").should("not.be.empty");
