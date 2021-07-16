@@ -193,7 +193,7 @@ function CategoryList() {
   }
 
   /**
-   * Closes the delete modal.
+   * Closes the info modal.
    */
   function onCloseInfoModal() {
     setOnPlaylists();
