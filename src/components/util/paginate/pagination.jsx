@@ -5,19 +5,6 @@ import PropTypes from "prop-types";
 /**
  * @param {object} props
  * The props.
- * @param {Array} props.data
- * The data for the list.
- * @param {Array} props.columns
- * The columns for the table.
- * @param {Array} props.selectedCells
- * The selected cells, for styling.
- * @returns {object}
- * The List.
- */
-
-/**
- * @param {object} props
- * The props.
  * @param {number} props.itemsCount
  * The amount of data to be spread out in pages.
  * @param {number} props.pageSize
