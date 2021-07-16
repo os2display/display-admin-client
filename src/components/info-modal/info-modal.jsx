@@ -22,6 +22,7 @@ function InfoModal({ show, onClose, onPlaylists }) {
   if (!show) {
     return <></>;
   }
+
   const intl = useIntl();
   const title = intl.formatMessage({ id: "info_title" });
   const declineText = intl.formatMessage({ id: "info_decline_text" });
@@ -29,6 +30,7 @@ function InfoModal({ show, onClose, onPlaylists }) {
     id: "on_the_following_playlists",
   });
 
+  // Creates a string for modal
   const content = `${onTheFollowingPlaylists}:  ${contentString(onPlaylists)}?`;
 
   return (

@@ -28,6 +28,8 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
   const intl = useIntl();
   const title = intl.formatMessage({ id: "delete_title" });
   const areYouSure = intl.formatMessage({ id: "are_you_sure_delete" });
+
+  // Creates a string for modal
   const valuesToDelete = `${areYouSure}  ${contentString(selectedRows)}?`;
 
   return (

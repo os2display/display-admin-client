@@ -32,6 +32,7 @@ function CategoryList() {
   }, []);
 
   /**
+   * Sets the selected row in state.
    * @param {object} data
    * The selected row.
    */
@@ -40,6 +41,7 @@ function CategoryList() {
   }
 
   /**
+   * Opens the delete modal, for deleting row.
    * @param {object} props
    * The props.
    * @param {string} props.name
@@ -61,6 +63,7 @@ function CategoryList() {
     setShowInfoModal(true);
   }
 
+  // The columns for the table.
   const columns = [
     {
       key: "pick",
@@ -146,6 +149,7 @@ function CategoryList() {
   ];
 
   /**
+   * Deletes screen, and closes modal.
    * @param {object} props
    * The props.
    * @param {string} props.name

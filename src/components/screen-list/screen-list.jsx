@@ -8,10 +8,10 @@ import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 /**
- * The tag list component.
+ * The screen list component.
  *
  * @returns {object}
- *   The TagList
+ *   The screen list.
  */
 function ScreenList() {
   const [selectedRows, setSelectedRows] = useState([]);
@@ -31,6 +31,7 @@ function ScreenList() {
   }, []);
 
   /**
+   * Sets the selected row in state.
    * @param {object} data
    * The selected row.
    */
@@ -39,6 +40,7 @@ function ScreenList() {
   }
 
   /**
+   * Opens the delete modal, for deleting row.
    * @param {object} props
    * The props.
    * @param {string} props.name
@@ -51,6 +53,7 @@ function ScreenList() {
     setShowDeleteModal(true);
   }
 
+  // The columns for the table.
   const columns = [
     {
       key: "pick",
@@ -148,6 +151,7 @@ function ScreenList() {
   ];
 
   /**
+   * Deletes screen, and closes modal.
    * @param {object} props
    * The props.
    * @param {string} props.name

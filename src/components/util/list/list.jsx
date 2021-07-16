@@ -172,7 +172,7 @@ function List({ data, columns, selectedRows }) {
   }
 
   /**
-   * Should handle delete.
+   * Deletes selected data, and closes modal.
    */
   function handleDelete() {
     // @TODO delete elements

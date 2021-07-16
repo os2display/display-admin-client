@@ -39,6 +39,8 @@ function MergeModal({ show, onClose, selectedRows, handleAccept }) {
   const title = intl.formatMessage({ id: "merge_title" });
   const areYouSure = intl.formatMessage({ id: "are_you_sure_merge" });
   const chooseNewName = intl.formatMessage({ id: "merge_data_name" });
+
+  // Creates a string for modal
   const valuesToMerge = `${areYouSure}  ${contentString(selectedRows)}?`;
 
   return (
