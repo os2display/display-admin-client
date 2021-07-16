@@ -15,7 +15,7 @@ function NavBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <Nav.Link>
+          <Nav.Item>
             <Link
               className="navbar-brand"
               style={{ color: "black" }}
@@ -23,8 +23,8 @@ function NavBar() {
             >
               <FormattedMessage id="navbar_tags" defaultMessage="navbar_tags" />
             </Link>
-          </Nav.Link>
-          <Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
             <Link
               className="navbar-brand"
               style={{ color: "black" }}
@@ -35,7 +35,19 @@ function NavBar() {
                 defaultMessage="navbar_screens"
               />
             </Link>
-          </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Link
+              className="navbar-brand"
+              style={{ color: "black" }}
+              to="/categories"
+            >
+              <FormattedMessage
+                id="navbar_categories"
+                defaultMessage="navbar_categories"
+              />
+            </Link>
+          </Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
