@@ -1,0 +1,968 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "createdBy": "Egbert",
+      "onFollowingPlaylists": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Lotstring"
+    },
+    {
+      "id": 2,
+      "createdBy": "Alicia",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        }
+      ],
+      "name": "Tempsoft"
+    },
+    {
+      "id": 3,
+      "createdBy": "Towny",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        }
+      ],
+      "name": "Pannier"
+    },
+    {
+      "id": 4,
+      "createdBy": "Martita",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Bytecard"
+    },
+    {
+      "id": 5,
+      "createdBy": "Clementina",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Subin"
+    },
+    {
+      "id": 6,
+      "createdBy": "Genovera",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 13,
+          "name": "intranet"
+        },
+        {
+          "id": 14,
+          "name": "matrix"
+        }
+      ],
+      "name": "Subin"
+    },
+    {
+      "id": 7,
+      "createdBy": "Cyb",
+      "onFollowingPlaylists": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Voyatouch"
+    },
+    {
+      "id": 8,
+      "createdBy": "Tabbitha",
+      "onFollowingPlaylists": [
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Transcof"
+    },
+    {
+      "id": 9,
+      "createdBy": "Gweneth",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 13,
+          "name": "intranet"
+        },
+        {
+          "id": 14,
+          "name": "matrix"
+        }
+      ],
+      "name": "Solarbreeze"
+    },
+    {
+      "id": 10,
+      "createdBy": "Claiborne",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Konklux"
+    },
+    {
+      "id": 11,
+      "createdBy": "Kathi",
+      "onFollowingPlaylists": [],
+      "name": "Biodex"
+    },
+    {
+      "id": 12,
+      "createdBy": "Raul",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Fintone"
+    },
+    {
+      "id": 13,
+      "createdBy": "Jeno",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        }
+      ],
+      "name": "Aerified"
+    },
+    {
+      "id": 14,
+      "createdBy": "Giacopo",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Treeflex"
+    },
+    {
+      "id": 15,
+      "createdBy": "Teador",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Transcof"
+    },
+    {
+      "id": 16,
+      "createdBy": "Constantine",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Tresom"
+    },
+    {
+      "id": 17,
+      "createdBy": "Hobart",
+      "onFollowingPlaylists": [
+        {
+          "id": 13,
+          "name": "intranet"
+        },
+        {
+          "id": 14,
+          "name": "matrix"
+        }
+      ],
+      "name": "Aerified"
+    },
+    {
+      "id": 18,
+      "createdBy": "Atlanta",
+      "onFollowingPlaylists": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Viva"
+    },
+    {
+      "id": 19,
+      "createdBy": "Ulises",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Otcom"
+    },
+    {
+      "id": 20,
+      "createdBy": "Damien",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Rank"
+    },
+    {
+      "id": 21,
+      "createdBy": "Jarrett",
+      "onFollowingPlaylists": [],
+      "name": "Zaam-Dox"
+    },
+    {
+      "id": 22,
+      "createdBy": "Jennette",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Daltfresh"
+    },
+    {
+      "id": 23,
+      "createdBy": "Chauncey",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Tres-Zap"
+    },
+    {
+      "id": 24,
+      "createdBy": "Amble",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Ronstring"
+    },
+    {
+      "id": 25,
+      "createdBy": "Daune",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        }
+      ],
+      "name": "Asoka"
+    },
+    {
+      "id": 26,
+      "createdBy": "Robinetta",
+      "onFollowingPlaylists": [
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Subin"
+    },
+    {
+      "id": 27,
+      "createdBy": "Bogey",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Bytecard"
+    },
+    {
+      "id": 28,
+      "createdBy": "Bevon",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Bigtax"
+    },
+    {
+      "id": 29,
+      "createdBy": "Andrew",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Zamit"
+    },
+    {
+      "id": 30,
+      "createdBy": "Everard",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Lotlux"
+    },
+    {
+      "id": 31,
+      "createdBy": "Hewett",
+      "onFollowingPlaylists": [],
+      "name": "Asoka"
+    },
+    {
+      "id": 32,
+      "createdBy": "Verena",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Tin"
+    },
+    {
+      "id": 33,
+      "createdBy": "Husain",
+      "onFollowingPlaylists": [
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Pannier"
+    },
+    {
+      "id": 34,
+      "createdBy": "Christy",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        }
+      ],
+      "name": "Kanlam"
+    },
+    {
+      "id": 35,
+      "createdBy": "Othello",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Sonsing"
+    },
+    {
+      "id": 36,
+      "createdBy": "Aubine",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        }
+      ],
+      "name": "Sonsing"
+    },
+    {
+      "id": 37,
+      "createdBy": "Barry",
+      "onFollowingPlaylists": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "It"
+    },
+    {
+      "id": 38,
+      "createdBy": "Mala",
+      "onFollowingPlaylists": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Pannier"
+    },
+    {
+      "id": 39,
+      "createdBy": "Roddy",
+      "onFollowingPlaylists": [
+        {
+          "id": 8,
+          "name": "Cross-group"
+        },
+        {
+          "id": 9,
+          "name": "Devolved"
+        },
+        {
+          "id": 10,
+          "name": "systemic"
+        },
+        {
+          "id": 13,
+          "name": "intranet"
+        },
+        {
+          "id": 14,
+          "name": "matrix"
+        }
+      ],
+      "name": "Zoolab"
+    },
+    {
+      "id": 40,
+      "createdBy": "Lorna",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        },
+        {
+          "id": 11,
+          "name": "asymmetric"
+        },
+        {
+          "id": 12,
+          "name": "throughput"
+        }
+      ],
+      "name": "Overhold"
+    },
+    {
+      "id": 41,
+      "createdBy": "Stewart",
+      "onFollowingPlaylists": [
+        {
+          "id": 1,
+          "name": "dynamic"
+        },
+        {
+          "id": 2,
+          "name": "Mandatory"
+        },
+        {
+          "id": 3,
+          "name": "Enhanced"
+        },
+        {
+          "id": 4,
+          "name": "explicit"
+        },
+        {
+          "id": 5,
+          "name": "policy"
+        }
+      ],
+      "name": "Bamity"
+    }
+  ]
+}
