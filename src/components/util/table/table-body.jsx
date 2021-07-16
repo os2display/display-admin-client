@@ -17,6 +17,7 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  */
 function TableBody({ columns, selectedRows, data }) {
   /**
+   * Renders a cell with the content received.
    * @param {object} item
    * The item to render.
    * @param {object} column
@@ -32,6 +33,7 @@ function TableBody({ columns, selectedRows, data }) {
   }
 
   /**
+   * Styles a row if it is selected.
    * @param {object} item
    * The data item.
    * @returns {string}
