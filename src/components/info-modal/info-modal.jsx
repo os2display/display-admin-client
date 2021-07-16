@@ -1,0 +1,54 @@
+import { React } from "react";
+import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
+import ModalDialog from "../util/modal/modal-dialog";
+import contentString from "../util/helpers/contentString";
+
+/**
+ * Merge modal component, a modal that merges elements together.
+ *
+ * @param {object} props
+ * Props.
+ * @param {boolean} props.show
+ * Whether to show the modal.
+ * @param {Function} props.onClose
+ * Callback on close modal.
+ * @param {Array} props.onPlaylists
+ * The playlists to list.
+ * @returns {object}
+ * The modal.
+ */
+function InfoModal({ show, onClose, onPlaylists }) {
+  if (!show) {
+    return <></>;
+  }
+  const intl = useIntl();
+  const title = intl.formatMessage({ id: "info_title" });
+  const declineText = intl.formatMessage({ id: "info_decline_text" });
+  const onTheFollowingPlaylists = intl.formatMessage({
+    id: "on_the_following_playlists",
+  });
+
+  const content = `${onTheFollowingPlaylists}:  ${contentString(onPlaylists)}?`;
+
+  return (
+    <ModalDialog
+      title={title}
+      onClose={onClose}
+      showAcceptButton={false}
+      declineText={declineText}
+    >
+      {content}
+    </ModalDialog>
+  );
+}
+
+InfoModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onPlaylists: PropTypes.arrayOf(
+    PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+  ).isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+export default InfoModal;

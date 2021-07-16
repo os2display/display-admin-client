@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { Modal, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
@@ -18,6 +18,8 @@ import PropTypes from "prop-types";
  * The callback for accept.
  * @param {object}props.children
  * The children to be rendered.
+ * @param {boolean} props.showAcceptButton
+ * Whether to show the accept button.
  * @returns {object}
  * The TagList
  */
@@ -28,10 +30,31 @@ function ModalDialog({
   onClose,
   handleAccept,
   children,
+  showAcceptButton,
 }) {
   const intl = useIntl();
   const yes = intl.formatMessage({ id: "yes" });
   const no = intl.formatMessage({ id: "no" });
+
+  /**
+   * @param {object} props - the props.
+   * @param {string} props.key - the key input.
+   */
+  function downHandler({ key }) {
+    if (key === "Escape") {
+      onClose();
+    }
+  }
+
+  // Add event listeners for keypress
+  useEffect(() => {
+    window.addEventListener("keydown", downHandler);
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+    };
+  }, []);
+
   return (
     <div className="modal-container">
       <Modal.Dialog>
@@ -40,12 +63,14 @@ function ModalDialog({
         </Modal.Header>
         <Modal.Body>{children}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="secondary" type="button" onClick={onClose}>
             {declineText || no}
           </Button>
-          <Button variant="primary" onClick={handleAccept}>
-            {acceptText || yes}
-          </Button>
+          {showAcceptButton && (
+            <Button variant="primary" type="submit" onClick={handleAccept}>
+              {acceptText || yes}
+            </Button>
+          )}
         </Modal.Footer>
       </Modal.Dialog>
     </div>
@@ -55,12 +80,14 @@ function ModalDialog({
 ModalDialog.defaultProps = {
   acceptText: "",
   declineText: "",
+  showAcceptButton: true,
 };
 
 ModalDialog.propTypes = {
   title: PropTypes.string.isRequired,
   acceptText: PropTypes.string,
   declineText: PropTypes.string,
+  showAcceptButton: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   handleAccept: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,

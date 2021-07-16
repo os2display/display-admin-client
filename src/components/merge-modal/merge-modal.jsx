@@ -4,6 +4,8 @@ import { useIntl } from "react-intl";
 import { Form, InputGroup, FormControl } from "react-bootstrap";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedCellsProptypes from "../proptypes/selected-cells-proptypes";
+import contentString from "../util/helpers/contentString";
+
 /**
  * Merge modal component, a modal that merges elements together.
  *
@@ -34,16 +36,10 @@ function MergeModal({ show, onClose, selectedCells, handleAccept }) {
     setMergeName(newMergeName);
   }
 
-  const and = intl.formatMessage({ id: "and" });
   const title = intl.formatMessage({ id: "merge_title" });
   const areYouSure = intl.formatMessage({ id: "are_you_sure_merge" });
   const chooseNewName = intl.formatMessage({ id: "merge_data_name" });
-
-  const namesOfCells = selectedCells.map((cell) => cell.name);
-  let valuesToMerge = `${namesOfCells
-    .slice(0, -1)
-    .join(", ")} ${and} ${namesOfCells.slice(-1)}`;
-  valuesToMerge = `${areYouSure} ${valuesToMerge}?`;
+  const valuesToMerge = `${areYouSure}  ${contentString(selectedCells)}?`;
 
   return (
     <ModalDialog
