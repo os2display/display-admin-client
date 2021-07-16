@@ -123,7 +123,7 @@ function TagList() {
         <>
           <div className="m-2">
             <Button disabled={selectedCells.length > 0} variant="success">
-              Rediger
+              <FormattedMessage id="edit" defaultMessage="edit" />
             </Button>
           </div>
         </>
@@ -174,7 +174,6 @@ function TagList() {
       <Row className="align-items-end mt-2">
         <Col>
           <h1>
-            {" "}
             <FormattedMessage
               id="tags_list_header"
               defaultMessage="tags_list_header"
@@ -183,7 +182,6 @@ function TagList() {
         </Col>
         <Col md="auto">
           <Button>
-            {" "}
             <FormattedMessage
               id="create_new_tag"
               defaultMessage="create_new_tag"
