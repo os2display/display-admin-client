@@ -38,6 +38,7 @@ function ModalDialog({
 
   /**
    * For closing modals on escape key.
+   *
    * @param {object} props - the props.
    * @param {string} props.key - the key input.
    */

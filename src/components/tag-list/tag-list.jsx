@@ -30,6 +30,7 @@ function TagList() {
 
   /**
    * Sets the selected row in state.
+   *
    * @param {object} data
    * The selected row.
    */
@@ -39,6 +40,7 @@ function TagList() {
 
   /**
    * Opens the delete modal, for deleting row.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name
@@ -127,6 +129,7 @@ function TagList() {
 
   /**
    * Deletes screen, and closes modal.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name

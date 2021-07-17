@@ -6,6 +6,8 @@ import List from "../util/list/list";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
+import ListButton from "../util/list/list-button";
+
 /**
  * The category list component.
  *
@@ -33,6 +35,7 @@ function CategoryList() {
 
   /**
    * Sets the selected row in state.
+   *
    * @param {object} data
    * The selected row.
    */
@@ -42,6 +45,7 @@ function CategoryList() {
 
   /**
    * Opens the delete modal, for deleting row.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name
@@ -100,16 +104,12 @@ function CategoryList() {
     {
       sort: true,
       path: "onFollowingPlaylists",
-      content: (
-        data // eslint-disable-line
-      ) => (
-        <button
-          type="button"
-          onClick={() => openInfoModal(data.onFollowingPlaylists)}
-        >
-          {data.onFollowingPlaylists.length} {/*eslint-disable-line */}
-        </button>
-      ),
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.onFollowingPlaylists,
+          data.onFollowingPlaylists.length
+        ),
       key: "playlists",
       label: (
         <FormattedMessage
@@ -150,6 +150,7 @@ function CategoryList() {
 
   /**
    * Deletes screen, and closes modal.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name

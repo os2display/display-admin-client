@@ -19,11 +19,7 @@ describe("Tags list loads", () => {
       .eq(3)
       .invoke("text")
       .should("match", /^# spillelister/);
-    cy.get("thead")
-      .find("th")
-      .eq(4)
-      .invoke("text")
-      .should("match", /^Tags/);
+    cy.get("thead").find("th").eq(4).invoke("text").should("match", /^Tags/);
     cy.get("thead")
       .find("th")
       .eq(5)

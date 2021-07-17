@@ -6,7 +6,8 @@ import List from "../util/list/list";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
-import { useIntl } from "react-intl";
+import Published from "./published";
+import ListButton from "../util/list/list-button";
 
 /**
  * The category list component.
@@ -15,14 +16,11 @@ import { useIntl } from "react-intl";
  * The SlidesList
  */
 function SlidesList() {
-  const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [slides, setSlides] = useState([]);
-  const yes = intl.formatMessage({ id: "yes" });
-  const no = intl.formatMessage({ id: "no" });
 
   /**
    * Load content from fixture.
@@ -38,6 +36,7 @@ function SlidesList() {
 
   /**
    * Sets the selected row in state.
+   *
    * @param {object} data
    * The selected row.
    */
@@ -47,6 +46,7 @@ function SlidesList() {
 
   /**
    * Opens the delete modal, for deleting row.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name
@@ -105,16 +105,12 @@ function SlidesList() {
     {
       sort: true,
       path: "onFollowingPlaylists",
-      content: (
-        data // eslint-disable-line
-      ) => (
-        <button
-          type="button"
-          onClick={() => openInfoModal(data.onFollowingPlaylists)}
-        >
-          {data.onFollowingPlaylists.length} {/*eslint-disable-line */}
-        </button>
-      ),
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.onFollowingPlaylists,
+          data.onFollowingPlaylists.length
+        ),
       key: "playlists",
       label: (
         <FormattedMessage
@@ -136,9 +132,7 @@ function SlidesList() {
     {
       path: "published",
       sort: true,
-      content: (
-        data // eslint-disable-line
-      ) => <div className="m-2">{data.published ? yes : no}</div>,
+      content: (data) => Published(data),
       label: (
         <FormattedMessage
           id="table_header_published"
@@ -178,6 +172,7 @@ function SlidesList() {
 
   /**
    * Deletes screen, and closes modal.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name

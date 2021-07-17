@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormattedMessage } from "react-intl";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { Button, Row, Container, Col } from "react-bootstrap";
+import CampaignIcon from "./campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -32,6 +31,7 @@ function ScreenList() {
 
   /**
    * Sets the selected row in state.
+   *
    * @param {object} data
    * The selected row.
    */
@@ -41,6 +41,7 @@ function ScreenList() {
 
   /**
    * Opens the delete modal, for deleting row.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name
@@ -106,19 +107,7 @@ function ScreenList() {
           defaultMessage="table_header_campaign"
         />
       ),
-      content: (
-        data // eslint-disable-line
-      ) => (
-        <div className="m-2">
-          <FontAwesomeIcon
-            className="search-icon"
-            icon={faExclamationCircle}
-            style={
-              data.overriddenByCampaign ? { color: "red" } : { color: "grey" } // eslint-disable-line
-            }
-          />
-        </div>
-      ),
+      content: (data) => CampaignIcon(data),
     },
     {
       key: "edit",
@@ -152,6 +141,7 @@ function ScreenList() {
 
   /**
    * Deletes screen, and closes modal.
+   *
    * @param {object} props
    * The props.
    * @param {string} props.name

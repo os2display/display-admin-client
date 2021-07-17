@@ -31,17 +31,19 @@ function InfoModal({ show, onClose, onPlaylists }) {
   });
 
   // Creates a string for modal
-  const content = `${onTheFollowingPlaylists}:  ${contentString(onPlaylists)}?`;
+  const content = `${onTheFollowingPlaylists}:  ${contentString(onPlaylists)}`;
 
   return (
-    <ModalDialog
-      title={title}
-      onClose={onClose}
-      showAcceptButton={false}
-      declineText={declineText}
-    >
-      {content}
-    </ModalDialog>
+    <div id="info-modal">
+      <ModalDialog
+        title={title}
+        onClose={onClose}
+        showAcceptButton={false}
+        declineText={declineText}
+      >
+        {content}
+      </ModalDialog>
+    </div>
   );
 }
 

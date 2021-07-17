@@ -26,6 +26,7 @@ function TableHeader({ columns, sortColumn, onSort }) {
 
   /**
    * Sorts the rows, according to chosenpath.
+   *
    * @param {object} chosenPath
    * The sorting column
    */
@@ -41,6 +42,7 @@ function TableHeader({ columns, sortColumn, onSort }) {
 
   /**
    * Renders a search icon.
+   *
    * @param {object} column
    * The sorting column.
    * @returns {object}
