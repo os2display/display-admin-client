@@ -197,11 +197,9 @@ function List({ data, columns, selectedRows }) {
   return (
     <>
       <Row className="mt-2 mb-2">
-        {searchText && (
-          <Col>
-            <SearchBox value={searchText} onChange={handleSearch} />
-          </Col>
-        )}
+        <Col>
+          <SearchBox value={searchText} onChange={handleSearch} />
+        </Col>
         <Col className="d-flex justify-content-end">
           <div className="ml-4">
             <Button
