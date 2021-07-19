@@ -30,6 +30,10 @@ function List({ data, columns, selectedRows }) {
   const sortParams = new URLSearchParams(search).get("sort");
   const orderParams = new URLSearchParams(search).get("order");
   const pageParams = new URLSearchParams(search).get("page");
+  // At least two rows must be selected for merge.
+  const disableMergeButton = selectedRows.length < 2;
+  // At least one row must be selected for deletion.
+  const disableDeleteButton = !selectedRows.length > 0;
   const [searchText, setSearchText] = useState(
     searchParams !== "null" ? searchParams : ""
   );
@@ -203,7 +207,7 @@ function List({ data, columns, selectedRows }) {
             <Button
               variant="danger"
               id="delete-button"
-              disabled={!selectedRows.length > 0}
+              disabled={disableDeleteButton}
               onClick={() => setShowDeleteModal(true)}
             >
               <FormattedMessage id="delete" defaultMessage="delete" />
@@ -213,7 +217,7 @@ function List({ data, columns, selectedRows }) {
             <Button
               className="ml-2"
               id="merge-button"
-              disabled={selectedRows.length < 2}
+              disabled={disableMergeButton}
               onClick={() => setMergeMergeModal(true)}
               variant="success"
             >
