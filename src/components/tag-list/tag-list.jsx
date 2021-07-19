@@ -58,12 +58,7 @@ function TagList() {
   const columns = [
     {
       key: "pick",
-      label: (
-        <FormattedMessage
-          id="table_header_pick"
-          defaultMessage="table_header_pick"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_pick" }),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -71,32 +66,17 @@ function TagList() {
     {
       path: "name",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_name"
-          defaultMessage="table_header_name"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_name" }),
     },
     {
       path: "createdBy",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_created_by"
-          defaultMessage="table_header_created_by"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_created_by" }),
     },
     {
       path: "slides",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_number_of_slides"
-          defaultMessage="table_header_number_of_slides"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_number_of_slides" }),
     },
     {
       key: "edit",

@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Button, Row, Container, Col } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
@@ -15,6 +15,7 @@ import ListButton from "../util/list/list-button";
  * The CategoryList
  */
 function CategoryList() {
+  const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -71,12 +72,7 @@ function CategoryList() {
   const columns = [
     {
       key: "pick",
-      label: (
-        <FormattedMessage
-          id="table_header_pick"
-          defaultMessage="table_header_pick"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_pick" }),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -84,22 +80,12 @@ function CategoryList() {
     {
       path: "name",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_name"
-          defaultMessage="table_header_name"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_name" }),
     },
     {
       path: "createdBy",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_created_by"
-          defaultMessage="table_header_created_by"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_created_by" }),
     },
     {
       sort: true,
@@ -111,12 +97,7 @@ function CategoryList() {
           data.onFollowingPlaylists.length
         ),
       key: "playlists",
-      label: (
-        <FormattedMessage
-          id="table_header_number_of_playlists"
-          defaultMessage="table_header_number_of_playlists"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_number_of_playlists" }),
     },
     {
       key: "edit",
