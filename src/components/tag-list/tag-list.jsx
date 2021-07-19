@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button, Row, Container, Col } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
@@ -21,7 +22,7 @@ function TagList() {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("./fixtures/tags/tags.json")
+    fetch("http://localhost:3000/fixtures/tags/tags.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setTags(jsonData);
@@ -99,12 +100,15 @@ function TagList() {
     },
     {
       key: "edit",
-      content: () => (
+      content: (data) => (
         <>
           <div className="m-2">
-            <Button disabled={selectedRows.length > 0} variant="success">
+            <Link
+              className="btn btn-primary btn-success"
+              to={`/tag/${data.id}`}
+            >
               <FormattedMessage id="edit" defaultMessage="edit" />
-            </Button>
+            </Link>
           </div>
         </>
       ),
