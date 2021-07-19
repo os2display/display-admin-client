@@ -148,12 +148,12 @@ function TagList() {
           </h1>
         </Col>
         <Col md="auto">
-          <Button>
+          <Link className="btn btn-primary btn-success" to="/tag/new">
             <FormattedMessage
               id="create_new_tag"
               defaultMessage="create_new_tag"
             />
-          </Button>
+          </Link>
         </Col>
       </Row>
       {tags.tags && (
