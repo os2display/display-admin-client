@@ -197,6 +197,24 @@
       "value": "Kategorien er på de følgende spillelister"
     }
   ],
+  "valid_text_tag_name_input": [
+    {
+      "type": 0,
+      "value": "Venligst udfyld taggets navn"
+    }
+  ],
+  "save_tag": [
+    {
+      "type": 0,
+      "value": "Gem tag"
+    }
+  ],
+  "cancel": [
+    {
+      "type": 0,
+      "value": "Annuller"
+    }
+  ],
   "info_decline_text": [
     {
       "type": 0,
