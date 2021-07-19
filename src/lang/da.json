@@ -59,12 +59,6 @@
       "value": "Udgivet"
     }
   ],
-  "create_new_tag": [
-    {
-      "type": 0,
-      "value": "Opret nyt tag"
-    }
-  ],
   "create_new_slide": [
     {
       "type": 0,
@@ -207,6 +201,30 @@
     {
       "type": 0,
       "value": "Gem tag"
+    }
+  ],
+  "edit_add_tag_label": [
+    {
+      "type": 0,
+      "value": "Taggets navn"
+    }
+  ],
+  "edit_add_label_placeholder": [
+    {
+      "type": 0,
+      "value": "Udfyld taggets navn"
+    }
+  ],
+  "create_new_tag": [
+    {
+      "type": 0,
+      "value": "Opret nyt tag"
+    }
+  ],
+  "edit_tag": [
+    {
+      "type": 0,
+      "value": "Rediger følgende tag: "
     }
   ],
   "cancel": [
