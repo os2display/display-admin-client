@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
@@ -17,8 +17,13 @@ function EditTag() {
   const { id } = useParams();
   const [tag, setTag] = useState([]);
   const [tagName, setTagName] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const newTag = id === "new";
   const validText = intl.formatMessage({ id: "valid_text_tag_name_input" });
+  const tagLabel = intl.formatMessage({ id: "edit_add_tag_label" });
+  const tagPlaceholder = intl.formatMessage({
+    id: "edit_add_label_placeholder",
+  });
 
   /**
    * Load content from fixture.
@@ -36,38 +41,61 @@ function EditTag() {
   }, []);
 
   /**
-   * @param newTagName
+   * Set state on change in input field
+   * @param props.target
+   * event target
    */
-  function handleInput(newTagName) {
-    setTagName(newTagName);
+  function handleInput({ target }) {
+    target.setCustomValidity("");
+    setTagName(target.value);
   }
 
   /**
-   * @param root0
-   * @param root0.target
+   * Handles validation of input with translation.
+   * @param props.target
+   * event target
    */
   function handleValidationMessage({ target }) {
     const { message } = target.dataset;
     target.setCustomValidity(message);
   }
+  /**
+   * Redirects back to list.
+   */
+  function handleSubmit() {
+    setSubmitted(true);
+  }
 
   return (
     <>
       <Container>
-        <Form>
-          {newTag && <h1>create tag!</h1>}
-          {!newTag && <h1>Edit tag {tag.name}!</h1>}
+        <Form onSubmit={handleSubmit}>
+          {newTag && (
+            <h1>
+              <FormattedMessage
+                id="create_new_tag"
+                defaultMessage="create_new_tag"
+              />
+            </h1>
+          )}
+          {!newTag && (
+            <h1>
+              <FormattedMessage id="edit_tag" defaultMessage="edit_tag" />{" "}
+              {tag.name}
+            </h1>
+          )}
           <FormInput
             name="tag_name"
             type="text"
-            label="Taggets navn"
+            label={tagLabel}
             required
-            placeholder="Udfyld taggets navn"
+            placeholder={tagPlaceholder}
             value={tagName}
-            onChange={(e) => handleInput(e.currentTarget.value)}
+            onChange={handleInput}
             data-message={validText}
             onInvalid={handleValidationMessage}
           />
+          {submitted && <Redirect to="/tags" />}
           <Button
             variant="secondary"
             type="button"
