@@ -95,7 +95,8 @@ function SlidesList() {
         ListButton(
           openInfoModal,
           data.onFollowingPlaylists,
-          data.onFollowingPlaylists.length
+          data.onFollowingPlaylists.length,
+          data.onFollowingPlaylists.length === 0
         ),
       key: "playlists",
       label: intl.formatMessage({ id: "table_header_number_of_playlists" }),

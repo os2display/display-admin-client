@@ -7,12 +7,18 @@ import { React } from "react";
  * The data for the callback
  * @param {string} label
  * The label of the button.
+ * @param {bool} disabled
+ * Whether the button should be disabled.
  * @returns {object}
  * The list button.
  */
-function ListButton(callback, callbackData, label) {
+function ListButton(callback, callbackData, label, disabled) {
   return (
-    <button type="button" onClick={() => callback(callbackData)}>
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={() => callback(callbackData)}
+    >
       {label}
     </button>
   );

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Row, Container, Col } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -13,6 +13,7 @@ import DeleteModal from "../delete-modal/delete-modal";
  * The TagList
  */
 function TagList() {
+  const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [tags, setTags] = useState([]);
