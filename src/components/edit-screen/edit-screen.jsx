@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import MultiSelect from "react-multi-select-component";
 import { useIntl, FormattedMessage } from "react-intl";
 import FormInput from "../util/form-input";
 import TagDropdown from "../util/multiselect-dropdown/tags/tag-dropdown";
@@ -32,7 +33,7 @@ function EditScreen() {
   useEffect(() => {
     // @TODO load real content.
     if (!newScreen) {
-      fetch(`/fixtures/screens/screen.json`)
+      fetch("http://localhost:3000/fixtures/screens/screen.json")
         .then((response) => response.json())
         .then((jsonData) => {
           setScreen(jsonData.screen);
@@ -73,10 +74,6 @@ function EditScreen() {
     setSubmitted(true);
   }
 
-  /**
-   * @param {object} tag
-   * the tag to select
-   */
   function handleTagSelection(tag) {
     setSelectedTags(tag);
   }
@@ -102,7 +99,7 @@ function EditScreen() {
           <TagDropdown
             handleTagSelection={handleTagSelection}
             selected={selectedTags}
-          />
+          ></TagDropdown>
           <FormInput
             name="screen_name"
             type="text"

@@ -7,6 +7,7 @@ import ScreenList from "./components/screen-list/screen-list";
 import CategoryList from "./components/category-list/category-list";
 import SlidesList from "./components/slides-list/slides-list";
 import EditTag from "./components/edit-tag/edit-tag";
+import EditScreen from "./components/edit-screen/edit-screen";
 import EditCategories from "./components/edit-categories/edit-category";
 import "./app.scss";
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/categories" component={CategoryList} />
           <Route path="/tag/:id" component={EditTag} />
           <Route path="/category/:id" component={EditCategories} />
+          <Route path="/screen/:id" component={EditScreen} />
           <Route path="/slides" component={SlidesList} />
           <Redirect from="/" to="/tags" exact />
         </Switch>
