@@ -42,7 +42,10 @@ function EditTag() {
 
   /**
    * Set state on change in input field
-   * @param props.target
+   *
+   * @param {object} props
+   * The props.
+   * @param {object} props.target
    * event target
    */
   function handleInput({ target }) {
@@ -52,7 +55,10 @@ function EditTag() {
 
   /**
    * Handles validation of input with translation.
-   * @param props.target
+   *
+   * @param {object} props
+   * The props.
+   * @param {object} props.target
    * event target
    */
   function handleValidationMessage({ target }) {

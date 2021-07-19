@@ -5,7 +5,7 @@ import ModalDialog from "../util/modal/modal-dialog";
 import contentString from "../util/helpers/contentString";
 
 /**
- * Merge modal component, a modal that merges elements together.
+ * Info modal component, that displays an info string.
  *
  * @param {object} props
  * Props.

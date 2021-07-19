@@ -1,10 +1,11 @@
 import { React, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Button, Row, Container, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
+import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 /**
  * The tag list component.
@@ -81,18 +82,7 @@ function TagList() {
     },
     {
       key: "edit",
-      content: (data) => (
-        <>
-          <div className="m-2">
-            <Link
-              className="btn btn-primary btn-success"
-              to={`/tag/${data.id}`}
-            >
-              <FormattedMessage id="edit" defaultMessage="edit" />
-            </Link>
-          </div>
-        </>
-      ),
+      content: (data) => <LinkForList data={data} param="tag" />,
     },
     {
       key: "delete",

@@ -7,7 +7,7 @@ import { React } from "react";
  * The data for the callback
  * @param {string} label
  * The label of the button.
- * @param {bool} disabled
+ * @param {boolean} disabled
  * Whether the button should be disabled.
  * @returns {object}
  * The list button.
