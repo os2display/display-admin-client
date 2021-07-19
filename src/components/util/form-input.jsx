@@ -22,11 +22,11 @@ function FormInput({ name, label, helpText, required, ...rest }) {
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <input
-        {...rest}
         name={name}
         id={name}
         required={required}
         className="form-control"
+        {...rest}
       />
 
       {helpText && <small className="form-text">{helpText}</small>}

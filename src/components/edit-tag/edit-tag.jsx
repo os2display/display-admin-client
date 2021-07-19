@@ -22,7 +22,7 @@ function EditTag() {
   const validText = intl.formatMessage({ id: "valid_text_tag_name_input" });
   const tagLabel = intl.formatMessage({ id: "edit_add_tag_label" });
   const tagPlaceholder = intl.formatMessage({
-    id: "edit_add_label_placeholder",
+    id: "edit_add_tag_label_placeholder",
   });
 
   /**
@@ -87,7 +87,7 @@ function EditTag() {
           )}
           {!newTag && (
             <h1>
-              <FormattedMessage id="edit_tag" defaultMessage="edit_tag" />{" "}
+              <FormattedMessage id="edit_tag" defaultMessage="edit_tag" />
               {tag.name}
             </h1>
           )}

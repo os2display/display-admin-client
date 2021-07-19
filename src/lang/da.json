@@ -197,10 +197,28 @@
       "value": "Venligst udfyld taggets navn"
     }
   ],
+  "valid_text_category_name_input": [
+    {
+      "type": 0,
+      "value": "Venligst udfyld kategoriens navn"
+    }
+  ],
   "save_tag": [
     {
       "type": 0,
       "value": "Gem tag"
+    }
+  ],
+  "save_category": [
+    {
+      "type": 0,
+      "value": "Gem kategorien"
+    }
+  ],
+  "edit_category": [
+    {
+      "type": 0,
+      "value": "Rediger kategorien: "
     }
   ],
   "edit_add_tag_label": [
@@ -209,10 +227,22 @@
       "value": "Taggets navn"
     }
   ],
-  "edit_add_label_placeholder": [
+  "edit_add_category_label": [
+    {
+      "type": 0,
+      "value": "Kategoriens navn"
+    }
+  ],
+  "edit_add_tag_label_placeholder": [
     {
       "type": 0,
       "value": "Udfyld taggets navn"
+    }
+  ],
+  "edit_add_category_label_placeholder": [
+    {
+      "type": 0,
+      "value": "Udfyld kategoriens navn"
     }
   ],
   "create_new_tag": [
