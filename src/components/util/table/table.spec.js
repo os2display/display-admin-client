@@ -1,6 +1,6 @@
 describe("Table loads", () => {
   it("It loads", () => {
-    cy.visit("localhost:3000/");
+    cy.visit("/");
     cy.get("table").should("not.be.empty");
   });
 });

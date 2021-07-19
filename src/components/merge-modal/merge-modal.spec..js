@@ -1,6 +1,6 @@
 describe("Merge modal loads", () => {
   it("It loads", () => {
-    cy.visit("localhost:3000/");
+    cy.visit("/");
     cy.get("#merge-button").should("be.disabled");
     cy.get('[type="checkbox"]').check();
     cy.get("#merge-button").should("not.be.disabled");

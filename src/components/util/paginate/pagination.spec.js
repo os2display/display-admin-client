@@ -1,11 +1,11 @@
 describe("Pagination loads", () => {
   it("It loads", () => {
-    cy.visit("localhost:3000/");
+    cy.visit("/");
     cy.get(".pagination").should("not.be.empty");
   });
 
   it("It works", () => {
-    cy.visit("localhost:3000/");
+    cy.visit("/");
     cy.get(".pagination")
       .find("button")
       .first()

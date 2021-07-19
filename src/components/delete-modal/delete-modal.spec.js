@@ -1,6 +1,6 @@
 describe("Delete modal loads", () => {
   it("It loads", () => {
-    cy.visit("localhost:3000/");
+    cy.visit("/");
     cy.get("#delete-button").should("be.disabled");
     cy.get('[type="checkbox"]').check();
     cy.get("#delete-button").should("not.be.disabled");
