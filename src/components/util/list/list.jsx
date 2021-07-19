@@ -211,7 +211,7 @@ function List({ data, columns, selectedRows }) {
             <Button
               className="ml-2"
               id="merge-button"
-              disabled={!selectedRows.length > 1}
+              disabled={selectedRows.length < 2}
               onClick={() => setMergeMergeModal(true)}
               variant="success"
             >
