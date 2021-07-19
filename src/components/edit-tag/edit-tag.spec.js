@@ -9,7 +9,7 @@ describe("Edit tag page loads", () => {
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger følgende tag: {2}matrices/);
+      .should("match", /^Rediger følgende tag: matrices/);
   });
 
   it("It validates", () => {
