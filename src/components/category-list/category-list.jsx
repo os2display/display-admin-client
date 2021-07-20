@@ -29,7 +29,9 @@ function CategoryList() {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("./fixtures/categories/categories.json")
+    fetch(
+      `${process.env.REACT_APP_API_PROXY}/fixtures/categories/categories.json`
+    )
       .then((response) => response.json())
       .then((jsonData) => {
         setCategories(jsonData.categories);

@@ -31,7 +31,7 @@ function EditTag() {
   useEffect(() => {
     // @TODO load real content.
     if (!newTag) {
-      fetch("./fixtures/tags/tag.json")
+      fetch(`${process.env.REACT_APP_API_PROXY}/fixtures/tags/tag.json`)
         .then((response) => response.json())
         .then((jsonData) => {
           setTag(jsonData.tag);

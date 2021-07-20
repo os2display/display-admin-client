@@ -10,7 +10,7 @@ const TagDropdown = ({ handleTagSelection, selected }) => {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("./fixtures/tags/tags.json")
+    fetch(`${process.env.REACT_APP_API_PROXY}/fixtures/tags/tags.json`)
       .then((response) => response.json())
       .then((jsonData) => {
         const mappedArray = jsonData.tags.map((item) => {

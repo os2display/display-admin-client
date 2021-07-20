@@ -33,7 +33,9 @@ function EditCategories() {
   useEffect(() => {
     // @TODO load real content.
     if (!newCategory) {
-      fetch("./fixtures/categories/category.json")
+      fetch(
+        `${process.env.REACT_APP_API_PROXY}/fixtures/categories/category.json`
+      )
         .then((response) => response.json())
         .then((jsonData) => {
           setCategory(jsonData.category);
