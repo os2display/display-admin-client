@@ -1,11 +1,11 @@
 describe("Edit tag page loads", () => {
   it("It loads", () => {
-    cy.visit("localhost:3000/tag/new");
+    cy.visit("/tag/new");
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
       .should("match", /^Opret nyt tag/);
-    cy.visit("localhost:3000/tag/76");
+    cy.visit("/tag/76");
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
@@ -13,7 +13,7 @@ describe("Edit tag page loads", () => {
   });
 
   it("It validates", () => {
-    cy.visit("localhost:3000/tag/new");
+    cy.visit("/tag/new");
     cy.get(".container")
       .find("button")
       .eq(1)
@@ -36,8 +36,8 @@ describe("Edit tag page loads", () => {
   });
 
   it("It goes back", () => {
-    cy.visit("localhost:3000/");
-    cy.visit("localhost:3000/tag/new");
+    cy.visit("/");
+    cy.visit("/tag/new");
     cy.get(".container")
       .find("button")
       .eq(0)

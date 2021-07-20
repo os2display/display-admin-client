@@ -31,7 +31,7 @@ function EditTag() {
   useEffect(() => {
     // @TODO load real content.
     if (!newTag) {
-      fetch("http://localhost:3000/fixtures/tags/tag.json")
+      fetch("./fixtures/tags/tag.json")
         .then((response) => response.json())
         .then((jsonData) => {
           setTag(jsonData.tag);
