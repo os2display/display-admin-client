@@ -4,10 +4,11 @@ import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 import FormInput from "../util/forms/form-input";
-import LocationDropdown from "../util/multiselect-dropdown/locations/location-dropdown";
+import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
+import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
 import Select from "../util/forms/select";
 import FormInputArea from "../util/forms/form-input-area";
-import GroupsDropdown from "../util/multiselect-dropdown/groups/groups-dropdown";
+
 /**
  * The edit screen component.
  *
@@ -28,14 +29,6 @@ function EditScreen() {
   const [layoutOptions, setLayoutOptions] = useState();
   const [submitted, setSubmitted] = useState(false);
   const newScreen = id === "new";
-  const validText = intl.formatMessage({ id: "valid_text_screen_name_input" });
-  const screenLabel = intl.formatMessage({ id: "edit_add_screen_label" });
-  const screenPlaceholder = intl.formatMessage({
-    id: "edit_add_screen_label_placeholder",
-  });
-  const screenLayoutDropdownLabel = intl.formatMessage({
-    id: "screen_layout_dropdown_label",
-  });
 
   /**
    * Load content from fixture.
@@ -114,23 +107,33 @@ function EditScreen() {
           <FormInput
             name="name"
             type="text"
-            label={screenLabel}
+            label={intl.formatMessage({ id: "edit_add_screen_label_name" })}
             required
-            placeholder={screenPlaceholder}
+            placeholder={intl.formatMessage({
+              id: "edit_add_screen_placeholder_name",
+            })}
             value={formStateObject["name"]}
             onChange={handleInput}
-            data-message={validText}
+            data-message={intl.formatMessage({
+              id: "edit_add_screen_invalid_name",
+            })}
             onInvalid={handleValidationMessage}
           />
           <FormInputArea
             name="description"
             type="text"
-            label={screenLabel}
+            label={intl.formatMessage({
+              id: "edit_add_screen_label_description",
+            })}
             required
-            placeholder={screenPlaceholder}
+            placeholder={intl.formatMessage({
+              id: "edit_add_screen_placeholder_description",
+            })}
             value={formStateObject["description"]}
             onChange={handleInput}
-            data-message={validText}
+            data-message={intl.formatMessage({
+              id: "edit_add_screen_invalid_placeholder",
+            })}
             onInvalid={handleValidationMessage}
           ></FormInputArea>
           <GroupsDropdown
@@ -147,11 +150,35 @@ function EditScreen() {
             <Select
               name="screenLayout"
               onChange={handleInput}
-              label={screenLayoutDropdownLabel}
+              label={intl.formatMessage({
+                id: "edit_add_screen_label_screen_layout",
+              })}
               options={layoutOptions}
+              required={true}
               selected={formStateObject["screenLayout"]}
+              data-message={intl.formatMessage({
+                id: "edit_add_screen_invalid_screen_layout",
+              })}
+              onInvalid={handleValidationMessage}
             />
           )}
+          <FormInput
+            name="descriptionOfLocation"
+            type="text"
+            label={intl.formatMessage({
+              id: "edit_add_screen_label_description_of_location",
+            })}
+            required
+            placeholder={intl.formatMessage({
+              id: "edit_add_screen_placeholder_description_of_location",
+            })}
+            value={formStateObject["descriptionOfLocation"]}
+            onChange={handleInput}
+            data-message={intl.formatMessage({
+              id: "edit_add_screen_invalid_screen_description_of_location",
+            })}
+            onInvalid={handleValidationMessage}
+          />
           {submitted && <Redirect to="/screens" />}
           <Button
             variant="secondary"

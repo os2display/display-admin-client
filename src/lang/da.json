@@ -293,6 +293,48 @@
       "value": "Der er ikke valgt noget"
     }
   ],
+  "edit_add_screen_label_name": [
+    {
+      "type": 0,
+      "value": "Skærmens navn"
+    }
+  ],
+  "edit_add_screen_placeholder_name": [
+    {
+      "type": 0,
+      "value": "Skriv skærmens navn"
+    }
+  ],
+  "edit_add_screen_label_description": [
+    {
+      "type": 0,
+      "value": "Beskrivelse af skærmen"
+    }
+  ],
+  "edit_add_screen_placeholder_description": [
+    {
+      "type": 0,
+      "value": "Skriv en beskrivelse af skærmen"
+    }
+  ],
+  "edit_add_screen_label_screen_layout": [
+    {
+      "type": 0,
+      "value": "Skærmens layout"
+    }
+  ],
+  "edit_add_screen_label_description_of_location": [
+    {
+      "type": 0,
+      "value": "Beskrivelse af skærmens lokation"
+    }
+  ],
+  "edit_add_screen_placeholder_description_of_location": [
+    {
+      "type": 0,
+      "value": "Skriv en beskrivelse af skærmens lokation"
+    }
+  ],
   "edit_tag": [
     {
       "type": 0,

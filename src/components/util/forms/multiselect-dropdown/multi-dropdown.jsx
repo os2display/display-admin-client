@@ -2,7 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
-import contentString from "../helpers/contentString";
+import contentString from "../../helpers/contentString";
 
 /**
  * @param {object} props
