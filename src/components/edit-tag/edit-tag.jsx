@@ -65,6 +65,7 @@ function EditTag() {
     const { message } = target.dataset;
     target.setCustomValidity(message);
   }
+
   /**
    * Redirects back to list.
    */
