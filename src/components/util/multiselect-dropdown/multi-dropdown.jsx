@@ -11,10 +11,17 @@ import PropTypes from "prop-types";
  * The callback when an option is selected
  * @param {Array} props.selected
  * The selected options
+ * @param {Boolean} props.isCreatable
+ * Whether the multi dropdown can create new options.
  * @returns {object}
  * The multidropdown
  */
-function MultiSelectComponent({ options, handleTagSelection, selected }) {
+function MultiSelectComponent({
+  options,
+  handleTagSelection,
+  selected,
+  isCreatable,
+}) {
   /**
    * @param {Array} optionsToFilter
    * The options to filter in
@@ -33,7 +40,7 @@ function MultiSelectComponent({ options, handleTagSelection, selected }) {
 
   return (
     <MultiSelect
-      isCreatable
+      isCreatable={isCreatable}
       options={options}
       value={selected}
       filterOptions={filterOptions}
@@ -41,6 +48,10 @@ function MultiSelectComponent({ options, handleTagSelection, selected }) {
     />
   );
 }
+
+MultiSelectComponent.defaultProps = {
+  isCreatable: false,
+};
 
 MultiSelectComponent.propTypes = {
   options: PropTypes.arrayOf(
@@ -58,6 +69,7 @@ MultiSelectComponent.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
+  isCreatable: PropTypes.bool,
 };
 
 export default MultiSelectComponent;

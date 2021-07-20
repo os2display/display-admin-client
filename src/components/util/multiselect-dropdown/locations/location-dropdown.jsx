@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 
-const TagDropdown = ({ handleTagSelection, selected }) => {
+const LocationDropdown = ({ handleLocationSelection, selected }) => {
   const [options, setOptions] = useState();
 
   /**
@@ -10,10 +10,10 @@ const TagDropdown = ({ handleTagSelection, selected }) => {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch(`/fixtures/tags/tags.json`)
+    fetch("http://localhost:3000/fixtures/locations/locations.json")
       .then((response) => response.json())
       .then((jsonData) => {
-        const mappedArray = jsonData.tags.map((item) => {
+        const mappedArray = jsonData.locations.map((item) => {
           return {
             label: item.name,
             value: item.id,
@@ -27,19 +27,20 @@ const TagDropdown = ({ handleTagSelection, selected }) => {
   return (
     <>
       {options && (
-        <MultiSelectComponent
-          handleTagSelection={handleTagSelection}
-          options={options}
-          selected={selected}
-          isCreatable={true}
-        />
+        <>
+          <MultiSelectComponent
+            handleLocationSelection={handleLocationSelection}
+            options={options}
+            selected={selected}
+          />
+        </>
       )}
     </>
   );
 };
 
-TagDropdown.propTypes = {
-  handleTagSelection: PropTypes.func.isRequired,
+LocationDropdown.propTypes = {
+  handleLocationSelection: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
@@ -49,4 +50,4 @@ TagDropdown.propTypes = {
   ).isRequired,
 };
 
-export default TagDropdown;
+export default LocationDropdown;

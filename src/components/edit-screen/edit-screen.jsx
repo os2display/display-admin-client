@@ -4,7 +4,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 import FormInput from "../util/form-input";
-import TagDropdown from "../util/multiselect-dropdown/tags/tag-dropdown";
+import LocationDropdown from "../util/multiselect-dropdown/locations/location-dropdown";
 /**
  * The edit screen component.
  *
@@ -24,7 +24,7 @@ function EditScreen() {
   const screenPlaceholder = intl.formatMessage({
     id: "edit_add_screen_label_placeholder",
   });
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedLocations, setSelectedLocations] = useState([]);
 
   /**
    * Load content from fixture.
@@ -74,11 +74,11 @@ function EditScreen() {
   }
 
   /**
-   * @param {object} tag
-   * the tag to select
+   * @param {object} location
+   * the location to select
    */
-  function handleTagSelection(tag) {
-    setSelectedTags(tag);
+  function handleLocationSelection(location) {
+    setSelectedLocations(location);
   }
 
   return (
@@ -99,9 +99,9 @@ function EditScreen() {
               {screen.name}
             </h1>
           )}
-          <TagDropdown
-            handleTagSelection={handleTagSelection}
-            selected={selectedTags}
+          <LocationDropdown
+            handleLocationSelection={handleLocationSelection}
+            selected={selectedLocations}
           />
           <FormInput
             name="screen_name"

@@ -1,0 +1,72 @@
+{
+  "locations": [
+    {
+      "id": 1,
+      "createdBy": "Egbert",
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "onFollowingScreens": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Dokk1"
+    },
+    {
+      "id": 1,
+      "createdBy": "Egbert",
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "onFollowingScreens": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Blixen"
+    },
+    {
+      "id": 1,
+      "createdBy": "Egbert",
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "onFollowingScreens": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Rådhuset"
+    },
+    {
+      "id": 1,
+      "createdBy": "Egbert",
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "onFollowingScreens": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "ITK"
+    }
+  ]
+}
