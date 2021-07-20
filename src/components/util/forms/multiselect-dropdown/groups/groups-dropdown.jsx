@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 
-const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
+const GroupsDropdown = ({ handleGroupsSelection, selected, formId }) => {
+  const intl = useIntl();
   const [options, setOptions] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const noSelectedGroups = intl.formatMessage({
+    id: "groups_dropdown_no_selected",
+  });
+  const groupsLabel = intl.formatMessage({
+    id: "groups_dropdown_label",
+  });
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("http://localhost:3000/fixtures/locations/locations.json")
+    fetch("http://localhost:3000/fixtures/groups/groups.json")
       .then((response) => response.json())
       .then((jsonData) => {
-        const mappedArray = jsonData.locations.map((item) => {
+        const mappedArray = jsonData.groups.map((item) => {
           return {
             label: item.name,
             value: item.id,
@@ -20,6 +29,7 @@ const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
           };
         });
         setOptions(mappedArray);
+        setIsLoading(false);
       });
   }, []);
 
@@ -27,11 +37,14 @@ const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
     <>
       {options && (
         <>
+          <label>{groupsLabel}</label>
           <MultiSelectComponent
-            handleSelection={handleLocationSelection}
+            handleSelection={handleGroupsSelection}
             options={options}
             selected={selected}
             formId={formId}
+            isLoading={isLoading}
+            noSelectedString={noSelectedGroups}
           />
         </>
       )}
@@ -39,8 +52,8 @@ const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
   );
 };
 
-LocationDropdown.propTypes = {
-  handleLocationSelection: PropTypes.func.isRequired,
+GroupsDropdown.propTypes = {
+  handleGroupsSelection: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
@@ -50,4 +63,4 @@ LocationDropdown.propTypes = {
   ).isRequired,
 };
 
-export default LocationDropdown;
+export default GroupsDropdown;

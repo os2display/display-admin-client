@@ -1,5 +1,5 @@
 {
-  "locations": [
+  "groups": [
     {
       "id": 1,
       "createdBy": "Egbert",
@@ -15,7 +15,7 @@
           "name": "Digitized"
         }
       ],
-      "name": "Dokk1"
+      "name": "Infoskærme"
     },
     {
       "id": 2,
@@ -32,7 +32,7 @@
           "name": "Digitized"
         }
       ],
-      "name": "Blixen"
+      "name": "Mødelokaler"
     },
     {
       "id": 3,
@@ -49,7 +49,7 @@
           "name": "Digitized"
         }
       ],
-      "name": "Rådhuset"
+      "name": "Havneskærme"
     },
     {
       "id": 4,

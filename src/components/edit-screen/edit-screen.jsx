@@ -5,7 +5,9 @@ import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 import FormInput from "../util/forms/form-input";
 import LocationDropdown from "../util/multiselect-dropdown/locations/location-dropdown";
+import Select from "../util/forms/select";
 import FormInputArea from "../util/forms/form-input-area";
+import GroupsDropdown from "../util/multiselect-dropdown/groups/groups-dropdown";
 /**
  * The edit screen component.
  *
@@ -15,10 +17,15 @@ import FormInputArea from "../util/forms/form-input-area";
 function EditScreen() {
   const intl = useIntl();
   const history = useHistory();
-  const [formStateObject, setFormStateObject] = useState({ locations: [] });
+  const [formStateObject, setFormStateObject] = useState({
+    locations: [],
+    groups: [],
+    screenLayout: [],
+  });
   const { id } = useParams();
   const [screen, setScreen] = useState([]);
   const [screenName, setScreenName] = useState("");
+  const [layoutOptions, setLayoutOptions] = useState();
   const [submitted, setSubmitted] = useState(false);
   const newScreen = id === "new";
   const validText = intl.formatMessage({ id: "valid_text_screen_name_input" });
@@ -26,7 +33,9 @@ function EditScreen() {
   const screenPlaceholder = intl.formatMessage({
     id: "edit_add_screen_label_placeholder",
   });
-  const [selectedLocations, setSelectedLocations] = useState([]);
+  const screenLayoutDropdownLabel = intl.formatMessage({
+    id: "screen_layout_dropdown_label",
+  });
 
   /**
    * Load content from fixture.
@@ -41,6 +50,11 @@ function EditScreen() {
           setScreenName(jsonData.screen.name);
         });
     }
+    fetch("http://localhost:3000/fixtures/screen-layout/screen-layout.json")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        setLayoutOptions(jsonData.layouts);
+      });
   }, []);
 
   /**
@@ -77,15 +91,6 @@ function EditScreen() {
     setSubmitted(true);
   }
 
-  /**
-   * @param {object} location
-   * the location to select
-   */
-  function handleLocationSelection(location) {
-    setFormStateObject();
-    setSelectedLocations(location);
-  }
-
   return (
     <>
       <Container>
@@ -105,11 +110,7 @@ function EditScreen() {
               {screen.name}
             </h1>
           )}
-          <LocationDropdown
-            formId="locations"
-            handleLocationSelection={handleInput}
-            selected={selectedLocations}
-          />
+
           <FormInput
             name="name"
             type="text"
@@ -132,6 +133,25 @@ function EditScreen() {
             data-message={validText}
             onInvalid={handleValidationMessage}
           ></FormInputArea>
+          <GroupsDropdown
+            formId="groups"
+            handleGroupsSelection={handleInput}
+            selected={formStateObject["groups"]}
+          />
+          <LocationDropdown
+            formId="locations"
+            handleLocationSelection={handleInput}
+            selected={formStateObject["locations"]}
+          />
+          {layoutOptions && (
+            <Select
+              name="screenLayout"
+              onChange={handleInput}
+              label={screenLayoutDropdownLabel}
+              options={layoutOptions}
+              selected={formStateObject["screenLayout"]}
+            />
+          )}
           {submitted && <Redirect to="/screens" />}
           <Button
             variant="secondary"

@@ -1,6 +1,8 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
+import contentString from "../helpers/contentString";
 
 /**
  * @param {object} props
@@ -22,7 +24,13 @@ function MultiSelectComponent({
   selected,
   isCreatable,
   formId,
+  isLoading,
+  noSelectedString,
 }) {
+  const intl = useIntl();
+  noSelectedString =
+    noSelectedString ||
+    intl.formatMessage({ id: "multi_dropdown_no_selected" });
   /**
    * @param {Array} optionsToFilter
    * The options to filter in
@@ -47,6 +55,10 @@ function MultiSelectComponent({
     handleSelection({ target: target });
   }
 
+  const customValueRenderer = (selected, _options) => {
+    return selected.length ? contentString(selected) : noSelectedString;
+  };
+
   return (
     <MultiSelect
       isCreatable={isCreatable}
@@ -55,12 +67,15 @@ function MultiSelectComponent({
       filterOptions={filterOptions}
       onChange={changeData}
       id={formId}
+      isLoading={isLoading}
+      valueRenderer={customValueRenderer}
     />
   );
 }
 
 MultiSelectComponent.defaultProps = {
   isCreatable: false,
+  noSelectedString: null,
 };
 
 MultiSelectComponent.propTypes = {
@@ -80,6 +95,7 @@ MultiSelectComponent.propTypes = {
     })
   ).isRequired,
   isCreatable: PropTypes.bool,
+  noSelectedString: PropTypes.string,
 };
 
 export default MultiSelectComponent;

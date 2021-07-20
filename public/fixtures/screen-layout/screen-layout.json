@@ -1,0 +1,20 @@
+{
+  "layouts": [
+    {
+      "id": 1,
+      "name": "4 delt"
+    },
+    {
+      "id": 2,
+      "name": "Footer"
+    },
+    {
+      "id": 3,
+      "name": "Header"
+    },
+    {
+      "id": 4,
+      "name": "6x6"
+    }
+  ]
+}

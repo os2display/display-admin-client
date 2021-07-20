@@ -26,6 +26,7 @@ function FormInputArea({ name, label, helpText, required, ...rest }) {
         id={name}
         required={required}
         className="form-control"
+        rows={3}
         {...rest}
       />
 

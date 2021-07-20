@@ -251,6 +251,48 @@
       "value": "Opret nyt tag"
     }
   ],
+  "multi_dropdown_no_selected": [
+    {
+      "type": 0,
+      "value": "Vælg en af mulighederne"
+    }
+  ],
+  "locations_dropdown_no_selected": [
+    {
+      "type": 0,
+      "value": "Vælg en af lokationerne"
+    }
+  ],
+  "groups_dropdown_no_selected": [
+    {
+      "type": 0,
+      "value": "Vælg en af grupperne"
+    }
+  ],
+  "groups_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en eller flere grupper"
+    }
+  ],
+  "locations_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en eller flere lokationer"
+    }
+  ],
+  "screen_layout_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en layoutskabelon til skærmen"
+    }
+  ],
+  "dropdown_nothing_selected": [
+    {
+      "type": 0,
+      "value": "Der er ikke valgt noget"
+    }
+  ],
   "edit_tag": [
     {
       "type": 0,

@@ -10,7 +10,7 @@ function contentString(content) {
   const intl = useIntl();
   const and = intl.formatMessage({ id: "and" });
 
-  const namesOfRows = content.map((row) => row.name);
+  const namesOfRows = content.map((row) => row.name || row.label);
   let returnContentString = "";
   if (namesOfRows.length === 1) {
     returnContentString = `${namesOfRows.join(", ")}`;
