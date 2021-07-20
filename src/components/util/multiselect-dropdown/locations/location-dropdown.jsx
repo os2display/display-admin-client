@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 
-const LocationDropdown = ({ handleLocationSelection, selected }) => {
+const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
   const [options, setOptions] = useState();
-
   /**
    * Load content from fixture.
    */
@@ -29,9 +28,10 @@ const LocationDropdown = ({ handleLocationSelection, selected }) => {
       {options && (
         <>
           <MultiSelectComponent
-            handleLocationSelection={handleLocationSelection}
+            handleSelection={handleLocationSelection}
             options={options}
             selected={selected}
+            formId={formId}
           />
         </>
       )}

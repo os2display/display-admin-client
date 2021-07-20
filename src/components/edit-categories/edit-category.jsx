@@ -3,7 +3,7 @@ import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
-import FormInput from "../util/form-input";
+import FormInput from "../util/forms/form-input";
 
 /**
  * The edit category component.

@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
  * the props.
  * @param {Array} props.options
  * The option for the searchable dropdown.
- * @param {Function} props.handleTagSelection
+ * @param {Function} props.handleSelection
  * The callback when an option is selected
  * @param {Array} props.selected
  * The selected options
@@ -18,9 +18,10 @@ import PropTypes from "prop-types";
  */
 function MultiSelectComponent({
   options,
-  handleTagSelection,
+  handleSelection,
   selected,
   isCreatable,
+  formId,
 }) {
   /**
    * @param {Array} optionsToFilter
@@ -38,13 +39,22 @@ function MultiSelectComponent({
     return optionsToFilter.filter(({ label }) => label && label.match(re));
   }
 
+  function changeData(data) {
+    let target = { value: data, id: formId };
+    target.setCustomValidity = function () {
+      console.log("validate");
+    };
+    handleSelection({ target: target });
+  }
+
   return (
     <MultiSelect
       isCreatable={isCreatable}
       options={options}
       value={selected}
       filterOptions={filterOptions}
-      onChange={handleTagSelection}
+      onChange={changeData}
+      id={formId}
     />
   );
 }
@@ -61,7 +71,7 @@ MultiSelectComponent.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
-  handleTagSelection: PropTypes.func.isRequired,
+  handleSelection: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,

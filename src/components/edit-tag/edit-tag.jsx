@@ -3,7 +3,7 @@ import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
-import FormInput from "../util/form-input";
+import FormInput from "../util/forms/form-input";
 
 /**
  * The edit tag component.
@@ -18,6 +18,7 @@ function EditTag() {
   const [tag, setTag] = useState([]);
   const [tagName, setTagName] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [formStateObject, setFormStateObject] = useState({ locations: [] });
   const newTag = id === "new";
   const validText = intl.formatMessage({ id: "valid_text_tag_name_input" });
   const tagLabel = intl.formatMessage({ id: "edit_add_tag_label" });
@@ -77,6 +78,7 @@ function EditTag() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
+          <div>{JSON.stringify(formStateObject)}</div>
           {newTag && (
             <h1>
               <FormattedMessage

@@ -3,8 +3,9 @@ import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
-import FormInput from "../util/form-input";
+import FormInput from "../util/forms/form-input";
 import LocationDropdown from "../util/multiselect-dropdown/locations/location-dropdown";
+import FormInputArea from "../util/forms/form-input-area";
 /**
  * The edit screen component.
  *
@@ -14,6 +15,7 @@ import LocationDropdown from "../util/multiselect-dropdown/locations/location-dr
 function EditScreen() {
   const intl = useIntl();
   const history = useHistory();
+  const [formStateObject, setFormStateObject] = useState({ locations: [] });
   const { id } = useParams();
   const [screen, setScreen] = useState([]);
   const [screenName, setScreenName] = useState("");
@@ -51,7 +53,9 @@ function EditScreen() {
    */
   function handleInput({ target }) {
     target.setCustomValidity("");
-    setScreenName(target.value);
+    let localFormStateObject = { ...formStateObject };
+    localFormStateObject[target.id] = target.value;
+    setFormStateObject(localFormStateObject);
   }
 
   /**
@@ -78,12 +82,14 @@ function EditScreen() {
    * the location to select
    */
   function handleLocationSelection(location) {
+    setFormStateObject();
     setSelectedLocations(location);
   }
 
   return (
     <>
       <Container>
+        <div>{JSON.stringify(formStateObject)}</div>
         <Form onSubmit={handleSubmit}>
           {newScreen && (
             <h1>
@@ -100,20 +106,32 @@ function EditScreen() {
             </h1>
           )}
           <LocationDropdown
-            handleLocationSelection={handleLocationSelection}
+            formId="locations"
+            handleLocationSelection={handleInput}
             selected={selectedLocations}
           />
           <FormInput
-            name="screen_name"
+            name="name"
             type="text"
             label={screenLabel}
             required
             placeholder={screenPlaceholder}
-            value={screenName}
+            value={formStateObject["name"]}
             onChange={handleInput}
             data-message={validText}
             onInvalid={handleValidationMessage}
           />
+          <FormInputArea
+            name="description"
+            type="text"
+            label={screenLabel}
+            required
+            placeholder={screenPlaceholder}
+            value={formStateObject["description"]}
+            onChange={handleInput}
+            data-message={validText}
+            onInvalid={handleValidationMessage}
+          ></FormInputArea>
           {submitted && <Redirect to="/screens" />}
           <Button
             variant="secondary"
