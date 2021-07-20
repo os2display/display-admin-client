@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Row, Container, Col } from "react-bootstrap";
 import CampaignIcon from "./campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -13,6 +13,7 @@ import List from "../util/list/list";
  *   The screen list.
  */
 function ScreenList() {
+  const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [screens, setScreens] = useState([]);
@@ -58,12 +59,7 @@ function ScreenList() {
   const columns = [
     {
       key: "pick",
-      label: (
-        <FormattedMessage
-          id="table_header_pick"
-          defaultMessage="table_header_pick"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_pick" }),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -71,42 +67,22 @@ function ScreenList() {
     {
       path: "name",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_name"
-          defaultMessage="table_header_name"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_name" }),
     },
     {
       path: "size",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_size"
-          defaultMessage="table_header_size"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_size" }),
     },
     {
       path: "dimensions",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_dimensions"
-          defaultMessage="table_header_dimensions"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_dimensions" }),
     },
     {
       path: "overriddenByCampaign",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_campaign"
-          defaultMessage="table_header_campaign"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_campaign" }),
       content: (data) => CampaignIcon(data),
     },
     {

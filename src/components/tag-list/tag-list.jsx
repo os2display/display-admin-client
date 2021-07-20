@@ -1,9 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { Button, Row, Container, Col } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
+import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 /**
  * The tag list component.
@@ -12,6 +14,7 @@ import DeleteModal from "../delete-modal/delete-modal";
  * The TagList
  */
 function TagList() {
+  const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [tags, setTags] = useState([]);
@@ -21,7 +24,7 @@ function TagList() {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("./fixtures/tags/tags.json")
+    fetch("http://localhost:3000/fixtures/tags/tags.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setTags(jsonData);
@@ -57,12 +60,7 @@ function TagList() {
   const columns = [
     {
       key: "pick",
-      label: (
-        <FormattedMessage
-          id="table_header_pick"
-          defaultMessage="table_header_pick"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_pick" }),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -70,44 +68,21 @@ function TagList() {
     {
       path: "name",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_name"
-          defaultMessage="table_header_name"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_name" }),
     },
     {
       path: "createdBy",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_created_by"
-          defaultMessage="table_header_created_by"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_created_by" }),
     },
     {
       path: "slides",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_number_of_slides"
-          defaultMessage="table_header_number_of_slides"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_number_of_slides" }),
     },
     {
       key: "edit",
-      content: () => (
-        <>
-          <div className="m-2">
-            <Button disabled={selectedRows.length > 0} variant="success">
-              <FormattedMessage id="edit" defaultMessage="edit" />
-            </Button>
-          </div>
-        </>
-      ),
+      content: (data) => <LinkForList data={data} param="tag" />,
     },
     {
       key: "delete",
@@ -163,12 +138,12 @@ function TagList() {
           </h1>
         </Col>
         <Col md="auto">
-          <Button>
+          <Link className="btn btn-primary btn-success" to="/tag/new">
             <FormattedMessage
               id="create_new_tag"
               defaultMessage="create_new_tag"
             />
-          </Button>
+          </Link>
         </Col>
       </Row>
       {tags.tags && (

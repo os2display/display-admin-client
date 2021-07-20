@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { FormattedMessage } from "react-intl";
 
 /**
- * Merge modal component, a modal that merges elements together.
+ * A checkbox for the list.
  *
  * @param {object} props
  * Props.

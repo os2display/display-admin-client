@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Button, Row, Container, Col } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
@@ -16,6 +16,7 @@ import ListButton from "../util/list/list-button";
  * The SlidesList
  */
 function SlidesList() {
+  const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -72,12 +73,7 @@ function SlidesList() {
   const columns = [
     {
       key: "pick",
-      label: (
-        <FormattedMessage
-          id="table_header_pick"
-          defaultMessage="table_header_pick"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_pick" }),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -85,22 +81,12 @@ function SlidesList() {
     {
       path: "name",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_name"
-          defaultMessage="table_header_name"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_name" }),
     },
     {
       path: "template",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_template"
-          defaultMessage="table_header_template"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_template" }),
     },
     {
       sort: true,
@@ -109,36 +95,22 @@ function SlidesList() {
         ListButton(
           openInfoModal,
           data.onFollowingPlaylists,
-          data.onFollowingPlaylists.length
+          data.onFollowingPlaylists.length,
+          data.onFollowingPlaylists.length === 0
         ),
       key: "playlists",
-      label: (
-        <FormattedMessage
-          id="table_header_number_of_playlists"
-          defaultMessage="table_header_number_of_playlists"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_number_of_playlists" }),
     },
     {
       path: "tags",
       sort: true,
-      label: (
-        <FormattedMessage
-          id="table_header_tags"
-          defaultMessage="table_header_tags"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_tags" }),
     },
     {
       path: "published",
       sort: true,
       content: (data) => Published(data),
-      label: (
-        <FormattedMessage
-          id="table_header_published"
-          defaultMessage="table_header_published"
-        />
-      ),
+      label: intl.formatMessage({ id: "table_header_published" }),
     },
     {
       key: "edit",

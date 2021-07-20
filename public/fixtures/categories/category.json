@@ -1,0 +1,13 @@
+{
+  "category": {
+    "id": 1,
+    "createdBy": "Egbert",
+    "onFollowingPlaylists": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
+    "name": "Lotstring"
+  }
+}
