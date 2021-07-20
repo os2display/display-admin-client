@@ -36,7 +36,7 @@ describe("Edit tag page loads", () => {
   });
 
   it("It goes back", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.visit("/tag/new");
     cy.get(".container")
       .find("button")

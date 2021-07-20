@@ -1,11 +1,11 @@
 describe("Table header loads", () => {
   it("It loads", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("table").find("thead").should("not.be.empty");
   });
 
   it("It sorts by name", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("#table-header-name").should("not.be.empty");
     cy.get("tbody").find("tr td").eq(1).should("have.length", 1);
     cy.get("tbody")
@@ -22,7 +22,7 @@ describe("Table header loads", () => {
   });
 
   it("It sorts by created by", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("#table-header-createdBy").should("not.be.empty");
     cy.get("tbody").find("tr td").eq(2).should("have.length", 1);
     cy.get("tbody")
@@ -45,7 +45,7 @@ describe("Table header loads", () => {
   });
 
   it("It sorts by number of slides", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("#table-header-slides").should("not.be.empty");
     cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
     cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^76/);

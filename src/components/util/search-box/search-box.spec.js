@@ -1,11 +1,11 @@
 describe("Search box loads", () => {
   it("It loads", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("#search-field").should("not.be.empty");
   });
 
   it("It searches", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("#search-field").invoke("val").should("be.empty");
     cy.get("tbody").find("tr").should("have.length", 10);
     cy.visit("/tags?search=test");

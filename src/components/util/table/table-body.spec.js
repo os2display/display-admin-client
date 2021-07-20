@@ -1,12 +1,12 @@
 describe("Table body loads", () => {
   it("It loads", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("have.length", 60);
   });
 
   it("If checked, the buttons are disabled", () => {
-    cy.visit("/");
+    cy.visit("/tags");
     cy.get("tbody")
       .find("tr")
       .eq(0)

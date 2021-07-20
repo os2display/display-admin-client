@@ -24,7 +24,7 @@ function TagList() {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("http://localhost:3000/fixtures/tags/tags.json")
+    fetch("./fixtures/tags/tags.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setTags(jsonData);
