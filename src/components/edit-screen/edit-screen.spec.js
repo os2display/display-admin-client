@@ -4,35 +4,51 @@ describe("Edit screen page loads", () => {
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Opret nyt screen/);
+      .should("match", /^Opret ny skærm/);
     cy.visit("localhost:3000/screen/76");
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger følgende screen: matrices/);
+      .should("match", /^Rediger denne skærm: Asoka/);
   });
 
   it("It validates", () => {
-    cy.visit("localhost:3000/screen/new");
+    cy.visit("localhost:3000/screen/32");
+    cy.get("#name").clear();
     cy.get(".container")
-      .find("button")
-      .eq(1)
+      .find("#save_screen")
       .invoke("text")
-      .should("match", /^Gem screen/);
-    cy.get(".container").find("button").eq(1).click();
+      .should("match", /^Gem skærm/);
+    cy.get("#save_screen").click();
     cy.get(".container")
-      .find("button")
-      .eq(1)
+      .find("#save_screen")
       .invoke("text")
-      .should("match", /^Gem screen/);
+      .should("match", /^Gem skærm/);
+    cy.get("#name").type("Hello, World");
+    cy.get("#save_screen").click();
+    cy.get("#save_screen").should('not.exist')
+  });
 
-    cy.get("input").type("Hello, World");
-    cy.get(".container").find("button").eq(1).click();
-    cy.get(".container")
+  it("It loads drag and drop table", () => {
+    cy.visit("localhost:3000/screen/32");
+    cy.get("tbody").find("tr td").should("have.length", 4);
+  });
+
+  it("It loads delete modal", () => {
+    cy.visit("localhost:3000/screen/32");
+    cy.get("tbody").find("tr td button").eq(1).click();
+    cy.get(".modal-container").should("have.css", "position", "absolute");
+    cy.get(".modal-container").find("button").should("have.length", 2);
+    cy.get(".modal-container")
       .find("button")
-      .eq(1)
+      .first()
       .invoke("text")
-      .should("match", /^Konsolider/);
+      .should("match", /^Nej/);
+    cy.get(".modal-container")
+      .find("button")
+      .last()
+      .invoke("text")
+      .should("match", /^Ja/);
   });
 
   it("It goes back", () => {
