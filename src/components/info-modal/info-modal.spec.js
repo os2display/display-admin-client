@@ -1,6 +1,6 @@
 describe("Info modal loads", () => {
   it("It loads", () => {
-    cy.visit("/tags");
+    cy.visit("/categoriesp");
     cy.get("tbody").find("tr td button").eq(0).should("not.be.disabled");
     cy.get("tbody").find("tr td button").eq(0).click();
     cy.get("#info-modal")
