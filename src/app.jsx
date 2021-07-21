@@ -30,21 +30,25 @@ function App() {
   }, []);
 
   return (
-    <IntlProvider messages={translations} locale="da" defaultLocale="da">
-      <main>
-        <Navbar />
-        <Switch>
-          <Route path="/tags" component={TagList} />
-          <Route path="/screens" component={ScreenList} />
-          <Route path="/categories" component={CategoryList} />
-          <Route path="/tag/:id" component={EditTag} />
-          <Route path="/category/:id" component={EditCategories} />
-          <Route path="/screen/:id" component={EditScreen} />
-          <Route path="/slides" component={SlidesList} />
-          <Redirect from="/" to="/tags" exact />
-        </Switch>
-      </main>
-    </IntlProvider>
+    <>
+      {translations && (
+        <IntlProvider messages={translations} locale="da" defaultLocale="da">
+          <main>
+            <Navbar />
+            <Switch>
+              <Route path="/tags" component={TagList} />
+              <Route path="/screens" component={ScreenList} />
+              <Route path="/categories" component={CategoryList} />
+              <Route path="/tag/:id" component={EditTag} />
+              <Route path="/category/:id" component={EditCategories} />
+              <Route path="/screen/:id" component={EditScreen} />
+              <Route path="/slides" component={SlidesList} />
+              <Redirect from="/" to="/tags" exact />
+            </Switch>
+          </main>
+        </IntlProvider>
+      )}
+    </>
   );
 }
 
