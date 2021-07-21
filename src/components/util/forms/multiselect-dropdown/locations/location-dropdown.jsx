@@ -37,7 +37,7 @@ const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
     <>
       {options && (
         <>
-          <label>{locationsLabel}</label>
+          <label htmlFor={formId}>{locationsLabel}</label>
           <MultiSelectComponent
             handleSelection={handleLocationSelection}
             options={options}
@@ -61,6 +61,7 @@ LocationDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
+  formId: PropTypes.string.isRequired,
 };
 
 export default LocationDropdown;

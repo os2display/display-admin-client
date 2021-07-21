@@ -37,7 +37,7 @@ const GroupsDropdown = ({ handleGroupsSelection, selected, formId }) => {
     <>
       {options && (
         <>
-          <label>{groupsLabel}</label>
+          <label htmlFor={formId}>{groupsLabel}</label>
           <MultiSelectComponent
             handleSelection={handleGroupsSelection}
             options={options}
@@ -61,6 +61,7 @@ GroupsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
+  formId: PropTypes.string.isRequired,
 };
 
 export default GroupsDropdown;
