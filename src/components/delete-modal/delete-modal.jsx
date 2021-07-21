@@ -18,16 +18,25 @@ import contentString from "../util/helpers/contentString";
  * Rows that are selected for deletion
  * @param {Function} props.handleAccept
  * Callback on accept.
+ * @param {string} props.areYouSureDelete
+ * The are you sure you want to delete text.
  * @returns {object}
  * The modal.
  */
-function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
+function DeleteModal({
+  show,
+  onClose,
+  selectedRows,
+  handleAccept,
+  areYouSureDelete,
+}) {
   if (!show) {
     return <></>;
   }
   const intl = useIntl();
+  const areYouSure =
+    areYouSureDelete || intl.formatMessage({ id: "are_you_sure_delete" });
   const title = intl.formatMessage({ id: "delete_title" });
-  const areYouSure = intl.formatMessage({ id: "are_you_sure_delete" });
 
   // Creates a string for modal
   const valuesToDelete = `${areYouSure}  ${contentString(selectedRows)}?`;
@@ -39,11 +48,16 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
   );
 }
 
+DeleteModal.defaultProps = {
+  areYouSureDelete: null,
+};
+
 DeleteModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   selectedRows: SelectedRowsProptypes.isRequired,
   handleAccept: PropTypes.func.isRequired,
+  areYouSureDelete: PropTypes.string,
 };
 
 export default DeleteModal;

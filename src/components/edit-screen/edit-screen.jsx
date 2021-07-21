@@ -8,6 +8,8 @@ import LocationDropdown from "../util/forms/multiselect-dropdown/locations/locat
 import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
 import Select from "../util/forms/select";
 import FormInputArea from "../util/forms/form-input-area";
+import RadioButtons from "../util/forms/radio-buttons";
+import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 
 /**
  * The edit screen component.
@@ -17,15 +19,31 @@ import FormInputArea from "../util/forms/form-input-area";
  */
 function EditScreen() {
   const intl = useIntl();
+
   const history = useHistory();
+  const radioButtonOptions = [
+    {
+      id: "horizontal",
+      label: intl.formatMessage({
+        id: "horizontal_layout",
+      }),
+    },
+    {
+      id: "vertical",
+      label: intl.formatMessage({
+        id: "vertical_layout",
+      }),
+    },
+  ];
   const [formStateObject, setFormStateObject] = useState({
     locations: [],
     groups: [],
-    screenLayout: [],
+    screenLayout: 0,
+    playlists: [],
+    horizontal_or_vertical: radioButtonOptions[0].id,
   });
   const { id } = useParams();
-  const [screen, setScreen] = useState([]);
-  const [screenName, setScreenName] = useState("");
+  const [screenName, setScreenName] = useState([]);
   const [layoutOptions, setLayoutOptions] = useState();
   const [submitted, setSubmitted] = useState(false);
   const newScreen = id === "new";
@@ -39,8 +57,21 @@ function EditScreen() {
       fetch("http://localhost:3000/fixtures/screens/screen.json")
         .then((response) => response.json())
         .then((jsonData) => {
-          setScreen(jsonData.screen);
           setScreenName(jsonData.screen.name);
+          setFormStateObject({
+            locations: jsonData.screen.locations,
+            sizeOfScreen: jsonData.screen.sizeOfScreen,
+            resolutionOfScreen: jsonData.screen.resolutionOfScreen,
+            groups: jsonData.screen.groups,
+            screenLayout: jsonData.screen.screenLayout,
+            playlists: jsonData.screen.playlists,
+            horizontal_or_vertical: jsonData.screen.horizontal_or_vertical,
+            horizontal_or_vertical: radioButtonOptions[0].id,
+            name: jsonData.screen.name,
+            description: jsonData.screen.description,
+            descriptionOfLocation: jsonData.screen.descriptionOfLocation,
+          });
+          // setScreen(jsonData.screen);
         });
     }
     fetch("http://localhost:3000/fixtures/screen-layout/screen-layout.json")
@@ -59,8 +90,10 @@ function EditScreen() {
    * event target
    */
   function handleInput({ target }) {
-    target.setCustomValidity("");
-    let localFormStateObject = { ...formStateObject };
+    if (target.setCustomValidity) {
+      target.setCustomValidity("");
+    }
+    const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
   }
@@ -87,7 +120,6 @@ function EditScreen() {
   return (
     <>
       <Container>
-        <div>{JSON.stringify(formStateObject)}</div>
         <Form onSubmit={handleSubmit}>
           {newScreen && (
             <h1>
@@ -100,10 +132,9 @@ function EditScreen() {
           {!newScreen && (
             <h1>
               <FormattedMessage id="edit_screen" defaultMessage="edit_screen" />
-              {screen.name}
+              {screenName}
             </h1>
           )}
-
           <FormInput
             name="name"
             type="text"
@@ -112,9 +143,9 @@ function EditScreen() {
             placeholder={intl.formatMessage({
               id: "edit_add_screen_placeholder_name",
             })}
-            value={formStateObject["name"]}
+            value={formStateObject.name}
             onChange={handleInput}
-            data-message={intl.formatMessage({
+            dataMessage={intl.formatMessage({
               id: "edit_add_screen_invalid_name",
             })}
             onInvalid={handleValidationMessage}
@@ -125,26 +156,25 @@ function EditScreen() {
             label={intl.formatMessage({
               id: "edit_add_screen_label_description",
             })}
-            required
             placeholder={intl.formatMessage({
               id: "edit_add_screen_placeholder_description",
             })}
-            value={formStateObject["description"]}
+            value={formStateObject.description}
             onChange={handleInput}
-            data-message={intl.formatMessage({
+            dataMessage={intl.formatMessage({
               id: "edit_add_screen_invalid_placeholder",
             })}
             onInvalid={handleValidationMessage}
-          ></FormInputArea>
+          />
           <GroupsDropdown
             formId="groups"
             handleGroupsSelection={handleInput}
-            selected={formStateObject["groups"]}
+            selected={formStateObject.groups}
           />
           <LocationDropdown
             formId="locations"
             handleLocationSelection={handleInput}
-            selected={formStateObject["locations"]}
+            selected={formStateObject.locations}
           />
           {layoutOptions && (
             <Select
@@ -154,9 +184,9 @@ function EditScreen() {
                 id: "edit_add_screen_label_screen_layout",
               })}
               options={layoutOptions}
-              required={true}
-              selected={formStateObject["screenLayout"]}
-              data-message={intl.formatMessage({
+              required
+              value={formStateObject.screenLayout}
+              dataMessage={intl.formatMessage({
                 id: "edit_add_screen_invalid_screen_layout",
               })}
               onInvalid={handleValidationMessage}
@@ -172,12 +202,54 @@ function EditScreen() {
             placeholder={intl.formatMessage({
               id: "edit_add_screen_placeholder_description_of_location",
             })}
-            value={formStateObject["descriptionOfLocation"]}
+            value={formStateObject.descriptionOfLocation}
             onChange={handleInput}
-            data-message={intl.formatMessage({
+            dataMessage={intl.formatMessage({
               id: "edit_add_screen_invalid_screen_description_of_location",
             })}
             onInvalid={handleValidationMessage}
+          />
+          <FormInput
+            name="sizeOfScreen"
+            type="text"
+            label={intl.formatMessage({
+              id: "edit_add_screen_label_size_of_screen",
+            })}
+            placeholder={intl.formatMessage({
+              id: "edit_add_screen_placeholder_size_of_screen",
+            })}
+            value={formStateObject.sizeOfScreen}
+            onChange={handleInput}
+          />
+          <RadioButtons
+            options={radioButtonOptions}
+            radioGroupName="horizontal_or_vertical"
+            selected={formStateObject.horizontal_or_vertical}
+            handleChange={handleInput}
+            label={intl.formatMessage({
+              id: "edit_add_screen_horizontal_or_vertical_label",
+            })}
+          />
+          <FormInput
+            name="resolutionOfScreen"
+            type="text"
+            label={intl.formatMessage({
+              id: "edit_add_screen_label_resolution_of_screen",
+            })}
+            placeholder={intl.formatMessage({
+              id: "edit_add_screen_placeholder_resolution_of_screen",
+            })}
+            value={formStateObject.resolutionOfScreen}
+            helpText={intl.formatMessage({
+              id: "edit_add_screen_helptext_resolution_of_screen",
+            })}
+            pattern="(\d+)x(\d+)"
+            onChange={handleInput}
+          />
+          <PlaylistDragAndDrop
+            handleChange={handleInput}
+            formId="playlists"
+            data={formStateObject.playlists}
           />
           {submitted && <Redirect to="/screens" />}
           <Button
@@ -187,7 +259,7 @@ function EditScreen() {
           >
             <FormattedMessage id="cancel" defaultMessage="cancel" />
           </Button>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" id="save_screen">
             <FormattedMessage id="save_screen" defaultMessage="save_screen" />
           </Button>
         </Form>

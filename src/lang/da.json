@@ -263,6 +263,12 @@
       "value": "Vælg en af lokationerne"
     }
   ],
+  "playlists_dropdown_no_selected": [
+    {
+      "type": 0,
+      "value": "Vælg en af følgende playlists"
+    }
+  ],
   "groups_dropdown_no_selected": [
     {
       "type": 0,
@@ -279,6 +285,48 @@
     {
       "type": 0,
       "value": "Vælg en eller flere lokationer"
+    }
+  ],
+  "edit_add_screen_invalid_placeholder": [
+    {
+      "type": 0,
+      "value": "Der skal skrives en beskrivelse"
+    }
+  ],
+  "edit_add_screen_invalid_name": [
+    {
+      "type": 0,
+      "value": "Der skal skrives et navn"
+    }
+  ],
+  "edit_add_screen_invalid_screen_layout": [
+    {
+      "type": 0,
+      "value": "Der skal angives et layout"
+    }
+  ],
+  "edit_screen": [
+    {
+      "type": 0,
+      "value": "Rediger denne skærm: "
+    }
+  ],
+  "drag_and_drop_helptext": [
+    {
+      "type": 0,
+      "value": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug espace til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
+    }
+  ],
+  "edit_add_screen_invalid_screen_description_of_location": [
+    {
+      "type": 0,
+      "value": "Der skal angives en beskrivelse af den valgte loaktion"
+    }
+  ],
+  "playlists_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en eller flere playlists"
     }
   ],
   "screen_layout_dropdown_label": [
@@ -327,6 +375,60 @@
     {
       "type": 0,
       "value": "Beskrivelse af skærmens lokation"
+    }
+  ],
+  "edit_add_screen_label_size_of_screen": [
+    {
+      "type": 0,
+      "value": "Størrelse på skærmen"
+    }
+  ],
+  "edit_add_screen_placeholder_size_of_screen": [
+    {
+      "type": 0,
+      "value": "Angiv størrelsen på skærmen"
+    }
+  ],
+  "edit_add_screen_label_resolution_of_screen": [
+    {
+      "type": 0,
+      "value": "Skærmens opløsning"
+    }
+  ],
+  "edit_add_screen_placeholder_resolution_of_screen": [
+    {
+      "type": 0,
+      "value": "Angiv skærmens opløsning"
+    }
+  ],
+  "edit_add_screen_helptext_resolution_of_screen": [
+    {
+      "type": 0,
+      "value": "Angiv skærmens opløsning (bxh), bredde og højde separeret med et x, eksempelvis 1920x1080"
+    }
+  ],
+  "horizontal_layout": [
+    {
+      "type": 0,
+      "value": "Vandret layout"
+    }
+  ],
+  "edit_add_screen_horizontal_or_vertical_label": [
+    {
+      "type": 0,
+      "value": "Angiv om skærmen er vandret eller lodret"
+    }
+  ],
+  "save_screen": [
+    {
+      "type": 0,
+      "value": "Gem skærmen"
+    }
+  ],
+  "vertical_layout": [
+    {
+      "type": 0,
+      "value": "Lodret layout"
     }
   ],
   "edit_add_screen_placeholder_description_of_location": [
