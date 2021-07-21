@@ -18,7 +18,6 @@ function EditTag() {
   const [tag, setTag] = useState([]);
   const [tagName, setTagName] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [formStateObject, setFormStateObject] = useState({ locations: [] });
   const newTag = id === "new";
   const validText = intl.formatMessage({ id: "valid_text_tag_name_input" });
   const tagLabel = intl.formatMessage({ id: "edit_add_tag_label" });
@@ -50,7 +49,9 @@ function EditTag() {
    * event target
    */
   function handleInput({ target }) {
-    target.setCustomValidity("");
+    if (target.setCustomValidity) {
+      target.setCustomValidity("");
+    }
     setTagName(target.value);
   }
 
@@ -78,7 +79,6 @@ function EditTag() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
-          <div>{JSON.stringify(formStateObject)}</div>
           {newTag && (
             <h1>
               <FormattedMessage
@@ -101,7 +101,7 @@ function EditTag() {
             placeholder={tagPlaceholder}
             value={tagName}
             onChange={handleInput}
-            data-message={validText}
+            dataMessage={validText}
             onInvalid={handleValidationMessage}
           />
           {submitted && <Redirect to="/tags" />}

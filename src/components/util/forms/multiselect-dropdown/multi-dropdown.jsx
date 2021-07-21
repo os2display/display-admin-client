@@ -13,8 +13,14 @@ import contentString from "../../helpers/contentString";
  * The callback when an option is selected
  * @param {Array} props.selected
  * The selected options
- * @param {Boolean} props.isCreatable
+ * @param {boolean} props.isCreatable
  * Whether the multi dropdown can create new options.
+ * @param {string} props.formId
+ * The id of the form element
+ * @param {boolean} props.isLoading
+ * Whether the component is loading.
+ * @param {string} props.noSelectedString
+ * The label for when there is nothing selected.
  * @returns {object}
  * The multidropdown
  */
@@ -28,7 +34,7 @@ function MultiSelectComponent({
   noSelectedString,
 }) {
   const intl = useIntl();
-  noSelectedString =
+  const nothingSelectedLabel =
     noSelectedString ||
     intl.formatMessage({ id: "multi_dropdown_no_selected" });
   /**
@@ -47,18 +53,26 @@ function MultiSelectComponent({
     return optionsToFilter.filter(({ label }) => label && label.match(re));
   }
 
+  /**
+   * @param {Array} data
+   * The data to callback with
+   */
   function changeData(data) {
-    let target = { value: data, id: formId };
-    target.setCustomValidity = function () {
-      console.log("validate");
-    };
-    handleSelection({ target: target });
+    const target = { value: data, id: formId };
+    handleSelection({ target });
   }
 
-  const customValueRenderer = (selected, _options) => {
-    return selected.length ? contentString(selected) : noSelectedString;
-  };
-
+  /**
+   * @param {Array} valueSelected
+   * The value(s) selected to render label from.
+   * @returns {string}
+   * The string to use as a label
+   */
+  function customValueRenderer(valueSelected) {
+    return valueSelected.length
+      ? contentString(valueSelected)
+      : nothingSelectedLabel;
+  }
   return (
     <MultiSelect
       isCreatable={isCreatable}
@@ -76,26 +90,29 @@ function MultiSelectComponent({
 MultiSelectComponent.defaultProps = {
   isCreatable: false,
   noSelectedString: null,
+  isLoading: false,
 };
 
 MultiSelectComponent.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.number,
+      value: PropTypes.number,
+      label: PropTypes.string,
       disabled: PropTypes.bool,
     })
   ).isRequired,
   handleSelection: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.number,
+      value: PropTypes.number,
+      label: PropTypes.string,
       disabled: PropTypes.bool,
     })
   ).isRequired,
   isCreatable: PropTypes.bool,
   noSelectedString: PropTypes.string,
+  formId: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default MultiSelectComponent;

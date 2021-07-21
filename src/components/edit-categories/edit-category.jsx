@@ -53,7 +53,9 @@ function EditCategories() {
    * event target
    */
   function handleInput({ target }) {
-    target.setCustomValidity("");
+    if (target.setCustomValidity) {
+      target.setCustomValidity("");
+    }
     setCategoryName(target.value);
   }
 
@@ -104,7 +106,7 @@ function EditCategories() {
           placeholder={categoryPlaceholder}
           value={categoryName}
           onChange={handleInput}
-          data-message={validText}
+          dataMessage={validText}
           onInvalid={handleValidationMessage}
         />
         {submitted && <Redirect to="/categories" />}

@@ -31,7 +31,7 @@ const TagDropdown = ({ handleTagSelection, selected }) => {
           handleTagSelection={handleTagSelection}
           options={options}
           selected={selected}
-          isCreatable={true}
+          isCreatable
         />
       )}
     </>
