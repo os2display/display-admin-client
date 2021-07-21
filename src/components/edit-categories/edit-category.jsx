@@ -34,7 +34,7 @@ function EditCategories() {
     // @TODO load real content.
     if (!newCategory) {
       fetch(
-        `${process.env.REACT_APP_API_PROXY}/fixtures/categories/category.json`
+        `/fixtures/categories/category.json`
       )
         .then((response) => response.json())
         .then((jsonData) => {

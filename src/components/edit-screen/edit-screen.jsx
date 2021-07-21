@@ -32,7 +32,7 @@ function EditScreen() {
   useEffect(() => {
     // @TODO load real content.
     if (!newScreen) {
-      fetch(`${process.env.REACT_APP_API_PROXY}/fixtures/screens/screen.json`)
+      fetch(`/fixtures/screens/screen.json`)
         .then((response) => response.json())
         .then((jsonData) => {
           setScreen(jsonData.screen);

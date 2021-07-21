@@ -30,7 +30,7 @@ function CategoryList() {
   useEffect(() => {
     // @TODO load real content.
     fetch(
-      `${process.env.REACT_APP_API_PROXY}/fixtures/categories/categories.json`
+      `/fixtures/categories/categories.json`
     )
       .then((response) => response.json())
       .then((jsonData) => {

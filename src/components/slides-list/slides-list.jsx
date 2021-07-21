@@ -29,7 +29,7 @@ function SlidesList() {
   useEffect(() => {
     // @TODO load real content.
 
-    fetch(`${process.env.REACT_APP_API_PROXY}/fixtures/slides/slides.json`)
+    fetch(`/fixtures/slides/slides.json`)
       .then((response) => response.json())
       .then((jsonData) => {
         setSlides(jsonData.slides);
