@@ -1,0 +1,66 @@
+{
+  "screen": {
+    "id": 74,
+    "name": "Asoka",
+    "size": "30\"",
+    "dimensions": "1920x1080",
+    "groups": [
+      {
+        "label": "Infoskærme",
+        "value": 1,
+        "disabled": false
+      },
+      {
+        "label": "Mødelokaler",
+        "value": 2,
+        "disabled": false
+      },
+      {
+        "label": "Havneskærme",
+        "value": 3,
+        "disabled": false
+      },
+      {
+        "label": "ITK",
+        "value": 4,
+        "disabled": false
+      }
+    ],
+    "screenLayout": "1",
+    "playlists": [
+      {
+        "label": "Sommerplaylist",
+        "value": 1,
+        "disabled": false
+      }
+    ],
+    "description": "Denne skærm er super duper",
+    "descriptionOfLocation": "smuk smuk lokation",
+    "resolutionOfScreen": "1200x1080",
+    "sizeOfScreen": "12\"",
+    "location": "M2",
+    "horizontal_or_vertical": "horizontal",
+    "locations": [
+      {
+        "label": "Dokk1",
+        "value": 1,
+        "disabled": false
+      },
+      {
+        "label": "Blixen",
+        "value": 2,
+        "disabled": false
+      },
+      {
+        "label": "Rådhuset",
+        "value": 3,
+        "disabled": false
+      },
+      {
+        "label": "ITK",
+        "value": 4,
+        "disabled": false
+      }
+    ]
+  }
+}

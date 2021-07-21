@@ -1,0 +1,55 @@
+{
+  "playlists": [
+    {
+      "id": 1,
+      "createdBy": "Egbert",
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "onFollowingScreens": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Sommerplaylist"
+    },
+    {
+      "id": 2,
+      "createdBy": "Egbert",
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "onFollowingScreens": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Ereolen"
+    },
+    {
+      "id": 3,
+      "createdBy": "Egbert",
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "onFollowingScreens": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ],
+      "name": "Mødelokaler"
+    }
+  ]
+}
