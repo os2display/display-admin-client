@@ -17,36 +17,46 @@ import PropTypes from "prop-types";
  * @returns {object}
  * An input.
  */
-function FormInputArea({ name, label, helpText, required, ...rest }) {
+function FormInputArea({
+  name,
+  label,
+  placeholder,
+  value,
+  onChange,
+  dataMessage,
+  onInvalid,
+}) {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <textarea
         name={name}
         id={name}
-        required={required}
         className="form-control"
         rows={3}
-        {...rest}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        data-message={dataMessage}
+        onInvalid={onInvalid}
+        required
       />
-
-      {helpText && <small className="form-text">{helpText}</small>}
     </div>
   );
 }
 
 FormInputArea.defaultProps = {
-  helpText: "",
-  required: false,
-  rest: {},
+  value: "",
 };
 
 FormInputArea.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  helpText: PropTypes.string,
-  required: PropTypes.bool,
-  rest: PropTypes.arrayOf(),
+  placeholder: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  dataMessage: PropTypes.string.isRequired,
+  onInvalid: PropTypes.func.isRequired,
 };
 
 export default FormInputArea;
