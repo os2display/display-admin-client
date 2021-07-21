@@ -1,7 +1,8 @@
 describe("Search box loads", () => {
   it("It loads", () => {
     cy.visit("/tags");
-    cy.get("#search-field").should("not.be.empty");
+    cy.get("#search-field").should('exist');
+    cy.get("#search-field").should("be.empty");
   });
 
   it("It searches", () => {
