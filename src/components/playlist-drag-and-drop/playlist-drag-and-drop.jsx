@@ -20,32 +20,6 @@ import DeleteModal from "../delete-modal/delete-modal";
  */
 function PlaylistDragAndDrop({ handleChange, formId, data }) {
   const intl = useIntl();
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedRow, setSelectedRow] = useState([{}]);
-  const confirmationString = intl.formatMessage({ id: "confirm_delete" });
-
-  /**
-   * Closes the delete modal.
-   */
-  function onCloseDeleteModal() {
-    setSelectedRow([]);
-    setShowDeleteModal(false);
-  }
-
-  /**
-   * Opens the delete modal, for removing a row.
-   *
-   * @param {object} props
-   * The props.
-   * @param {string} props.label
-   * The label of the playlist.
-   * @param {number} props.value
-   * The id of the playlist
-   */
-  function openDeleteModal({ label, value }) {
-    setSelectedRow([{ label, value }]);
-    setShowDeleteModal(true);
-  }
 
   /**
    * Removes playlist from list of playlists, and closes modal.
@@ -65,7 +39,6 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
     data.splice(indexOfItemToRemove, 1);
     const target = { value: data, id: formId };
     handleChange({ target });
-    setShowDeleteModal(false);
   }
 
   // The columns of the list
@@ -88,16 +61,12 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
     {
       key: "delete",
       content: (playlistData) => (
-        <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              onClick={() => openDeleteModal(playlistData)}
-            >
-              <FormattedMessage id="delete" defaultMessage="delete" />
-            </Button>
-          </div>
-        </>
+        <Button variant="danger" onClick={() => handleRemove(playlistData)}>
+          <FormattedMessage
+            id="remove_from_list"
+            defaultMessage="remove_from_list"
+          />
+        </Button>
       ),
     },
   ];
@@ -117,13 +86,6 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
           data={data}
         />
       )}
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={onCloseDeleteModal}
-        handleAccept={() => handleRemove(selectedRow)}
-        selectedRows={selectedRow}
-        deleteConfirmation={confirmationString}
-      />
     </>
   );
 }
