@@ -20,6 +20,7 @@ function getFormErrors(formStateObject, form) {
     { input: "screen_layout", form: "screen" },
     { input: "tag_name", form: "tag" },
     { input: "category_name", form: "category" },
+    { input: "group_name", form: "group" },
   ];
   validationList.forEach((element) => {
     if (

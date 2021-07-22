@@ -111,7 +111,6 @@ function GroupsList() {
   function handleDelete({ id, name }) {
     // @TODO delete element
     setSelectedRows([]);
-    setSelectedRows([]);
     setShowDeleteModal(false);
   }
 

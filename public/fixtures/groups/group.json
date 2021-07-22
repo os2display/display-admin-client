@@ -1,0 +1,19 @@
+{
+  "group": {
+    "id": 1,
+    "createdBy": "Egbert",
+    "onFollowingGroups": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
+    "onFollowingScreens": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
+    "name": "Infoskærme"
+  }
+}

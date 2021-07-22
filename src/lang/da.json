@@ -233,6 +233,12 @@
       "value": "Taggets navn"
     }
   ],
+  "edit_add_group_label": [
+    {
+      "type": 0,
+      "value": "Gruppens navn"
+    }
+  ],
   "edit_add_category_label": [
     {
       "type": 0,
@@ -243,6 +249,12 @@
     {
       "type": 0,
       "value": "Udfyld taggets navn"
+    }
+  ],
+  "edit_add_group_label_placeholder": [
+    {
+      "type": 0,
+      "value": "Udfyld gruppens navn"
     }
   ],
   "edit_add_category_label_placeholder": [
@@ -443,6 +455,12 @@
       "value": "Gem skærmen"
     }
   ],
+  "save_group": [
+    {
+      "type": 0,
+      "value": "Gem gruppen"
+    }
+  ],
   "vertical_layout": [
     {
       "type": 0,
@@ -459,6 +477,12 @@
     {
       "type": 0,
       "value": "Rediger følgende tag: "
+    }
+  ],
+  "edit_group": [
+    {
+      "type": 0,
+      "value": "Rediger følgende gruppe: "
     }
   ],
   "cancel": [
