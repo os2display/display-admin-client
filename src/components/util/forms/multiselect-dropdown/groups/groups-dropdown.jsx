@@ -3,7 +3,21 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 
-const GroupsDropdown = ({ handleGroupsSelection, selected, formId }) => {
+/**
+ * @param {object} props
+ * the props.
+ * @param {Function} props.handleGroupsSelection
+ * The callback when an option is selected
+ * @param {Array} props.selected
+ * The selected options
+ * @param {string} props.name
+ * The id of the form element
+ * @param {Array} props.errors
+ * A list of errors, or null.
+ * @returns {object}
+ * The multidropdown of groups.
+ */
+function GroupsDropdown({ handleGroupsSelection, selected, name, errors }) {
   const intl = useIntl();
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +32,7 @@ const GroupsDropdown = ({ handleGroupsSelection, selected, formId }) => {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("http://localhost:3000/fixtures/groups/groups.json")
+    fetch("/fixtures/groups/groups.json")
       .then((response) => response.json())
       .then((jsonData) => {
         const mappedArray = jsonData.groups.map((item) => {
@@ -37,12 +51,13 @@ const GroupsDropdown = ({ handleGroupsSelection, selected, formId }) => {
     <>
       {options && (
         <>
-          <label htmlFor={formId}>{groupsLabel}</label>
           <MultiSelectComponent
+            errors={errors}
             handleSelection={handleGroupsSelection}
             options={options}
+            label={groupsLabel}
             selected={selected}
-            formId={formId}
+            name={name}
             isLoading={isLoading}
             noSelectedString={noSelectedGroups}
           />
@@ -50,6 +65,10 @@ const GroupsDropdown = ({ handleGroupsSelection, selected, formId }) => {
       )}
     </>
   );
+}
+
+GroupsDropdown.defaultProps = {
+  errors: null,
 };
 
 GroupsDropdown.propTypes = {
@@ -61,7 +80,8 @@ GroupsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
-  formId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default GroupsDropdown;

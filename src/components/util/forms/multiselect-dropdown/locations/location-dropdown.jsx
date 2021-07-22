@@ -3,7 +3,21 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 
-const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
+/**
+ * @param {object} props
+ * the props.
+ * @param {Function} props.handleLocationSelection
+ * The callback when an option is selected
+ * @param {Array} props.selected
+ * The selected options
+ * @param {string} props.name
+ * The id of the form element
+ * @param {Array} props.errors
+ * A list of errors, or null.
+ * @returns {object}
+ * The multidropdown of locations.
+ */
+function LocationDropdown({ handleLocationSelection, selected, name, errors }) {
   const intl = useIntl();
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +32,7 @@ const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("http://localhost:3000/fixtures/locations/locations.json")
+    fetch("/fixtures/locations/locations.json")
       .then((response) => response.json())
       .then((jsonData) => {
         const mappedArray = jsonData.locations.map((item) => {
@@ -37,12 +51,13 @@ const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
     <>
       {options && (
         <>
-          <label htmlFor={formId}>{locationsLabel}</label>
           <MultiSelectComponent
             handleSelection={handleLocationSelection}
             options={options}
             selected={selected}
-            formId={formId}
+            label={locationsLabel}
+            name={name}
+            errors={errors}
             isLoading={isLoading}
             noSelectedString={noSelectedLocations}
           />
@@ -50,6 +65,10 @@ const LocationDropdown = ({ handleLocationSelection, selected, formId }) => {
       )}
     </>
   );
+}
+
+LocationDropdown.defaultProps = {
+  errors: null,
 };
 
 LocationDropdown.propTypes = {
@@ -61,7 +80,8 @@ LocationDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
-  formId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default LocationDropdown;

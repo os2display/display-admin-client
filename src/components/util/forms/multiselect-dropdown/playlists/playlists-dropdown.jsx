@@ -3,7 +3,26 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 
-const PlaylistsDropdown = ({ handlePlaylistSelection, selected, formId }) => {
+/**
+ * @param {object} props
+ * the props.
+ * @param {Function} props.handlePlaylistSelection
+ * The callback when an option is selected
+ * @param {Array} props.selected
+ * The selected options
+ * @param {string} props.name
+ * The id of the form element
+ * @param {Array} props.errors
+ * A list of errors, or null.
+ * @returns {object}
+ * The multidropdown of playlists.
+ */
+function PlaylistsDropdown({
+  handlePlaylistSelection,
+  selected,
+  name,
+  errors,
+}) {
   const intl = useIntl();
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +37,7 @@ const PlaylistsDropdown = ({ handlePlaylistSelection, selected, formId }) => {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch("http://localhost:3000/fixtures/playlists/playlists.json")
+    fetch("/fixtures/playlists/playlists.json")
       .then((response) => response.json())
       .then((jsonData) => {
         const mappedArray = jsonData.playlists.map((item) => {
@@ -37,19 +56,24 @@ const PlaylistsDropdown = ({ handlePlaylistSelection, selected, formId }) => {
     <>
       {options && (
         <>
-          <label htmlFor={formId}>{playlistsLabel}</label>
           <MultiSelectComponent
+            label={playlistsLabel}
             handleSelection={handlePlaylistSelection}
             options={options}
             selected={selected}
-            formId={formId}
+            name={name}
             isLoading={isLoading}
             noSelectedString={noSelectedPlaylists}
+            errors={errors}
           />
         </>
       )}
     </>
   );
+}
+
+PlaylistsDropdown.defaultProps = {
+  errors: null,
 };
 
 PlaylistsDropdown.propTypes = {
@@ -61,7 +85,8 @@ PlaylistsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
-  formId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default PlaylistsDropdown;
