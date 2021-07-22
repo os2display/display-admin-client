@@ -14,6 +14,7 @@ function getFormErrors(formStateObject, form) {
     { input: "screenLocations", form: "screen" },
     { input: "screen_groups", form: "screen" },
     { input: "screen_groups", form: "screen" },
+    { input: "location_screens", form: "location" },
   ];
   const definedList = [
     { input: "screen_name", form: "screen" },
