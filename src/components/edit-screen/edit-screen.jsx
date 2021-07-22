@@ -106,12 +106,12 @@ function EditScreen() {
    */
   function handleSubmit(e) {
     e.preventDefault();
+    setErrors([]);
     let returnValue = false;
     const createdErrors = getFormErrors(formStateObject, "screen");
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {
-      setErrors([]);
       setSubmitted(true);
       returnValue = true;
     }

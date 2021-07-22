@@ -68,12 +68,12 @@ function EditTag() {
    */
   function handleSubmit(e) {
     e.preventDefault();
+    setErrors([]);
     let returnValue = false;
     const createdErrors = getFormErrors(formStateObject, "tag");
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {
-      setErrors([]);
       setSubmitted(true);
       returnValue = true;
     }
