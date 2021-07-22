@@ -12,13 +12,11 @@ describe("Edit location page loads", () => {
       .should("match", /^Rediger lokationen: Dokk1/);
   });
 
-
   it("It removes from list", () => {
     cy.visit("/location/32");
     cy.get("tbody").find("tr td").should("have.length", 5);
     cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("tbody").should("not.exist");
-
   });
   it("It goes back", () => {
     cy.visit("/locations");

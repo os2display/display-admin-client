@@ -1,10 +1,9 @@
-import { React, useState } from "react";
+import { React } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useIntl, FormattedMessage } from "react-intl";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
-import DeleteModal from "../delete-modal/delete-modal";
 
 /**
  * An input for forms.

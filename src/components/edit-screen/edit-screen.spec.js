@@ -22,7 +22,6 @@ describe("Edit screen page loads", () => {
     cy.get("tbody").find("tr td").should("have.length", 3);
     cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("tbody").should("not.exist");
-
   });
 
   it("It goes back", () => {

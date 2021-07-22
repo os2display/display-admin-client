@@ -116,7 +116,7 @@ function EditLocation() {
             handleChange={handleInput}
             name="location_screens"
             data={formStateObject.location_screens}
-          ></SelectScreenTable>
+          />
           {submitted && <Redirect to="/locations" />}
           <Button
             variant="secondary"

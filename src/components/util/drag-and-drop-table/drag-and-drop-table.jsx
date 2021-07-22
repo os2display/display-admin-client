@@ -82,7 +82,7 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
   return (
     <div>
       <Table>
-        <TableHeader columns={columns}></TableHeader>
+        <TableHeader columns={columns} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided) => (

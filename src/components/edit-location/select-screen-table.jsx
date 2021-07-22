@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useIntl, FormattedMessage } from "react-intl";
@@ -59,19 +59,17 @@ function SelectScreenTable({ handleChange, name, data, errors }) {
     {
       path: "overriddenByCampaign",
       label: intl.formatMessage({ id: "table_header_campaign" }),
-      content: (data) => CampaignIcon(data),
+      content: (screenData) => CampaignIcon(screenData),
     },
     {
       key: "delete",
-      content: (data) => (
-        <>
-          <Button variant="danger" onClick={() => removeFromList(data)}>
-            <FormattedMessage
-              id="remove_from_list"
-              defaultMessage="remove_from_list"
-            />
-          </Button>
-        </>
+      content: (screenData) => (
+        <Button variant="danger" onClick={() => removeFromList(screenData)}>
+          <FormattedMessage
+            id="remove_from_list"
+            defaultMessage="remove_from_list"
+          />
+        </Button>
       ),
     },
   ];
@@ -85,8 +83,8 @@ function SelectScreenTable({ handleChange, name, data, errors }) {
             name={name}
             handleScreenSelection={handleChange}
             selected={data}
-          ></ScreensDropdown>
-          {data.length > 0 && <Table columns={columns} data={data}></Table>}
+          />
+          {data.length > 0 && <Table columns={columns} data={data} />}
         </>
       )}
     </>
