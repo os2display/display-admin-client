@@ -10,7 +10,7 @@ import Select from "../util/forms/select";
 import FormInputArea from "../util/forms/form-input-area";
 import RadioButtons from "../util/forms/radio-buttons";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
-
+import getFormErrors from "../util/form-errors-helper";
 /**
  * The edit screen component.
  *
@@ -36,15 +36,16 @@ function EditScreen() {
     },
   ];
   const [formStateObject, setFormStateObject] = useState({
-    locations: [],
-    groups: [],
-    screenLayout: 0,
+    screen_locations: [],
+    screen_groups: [],
+    screen_layout: "",
     playlists: [],
     horizontal_or_vertical: radioButtonOptions[0].id,
   });
   const { id } = useParams();
   const [screenName, setScreenName] = useState([]);
   const [layoutOptions, setLayoutOptions] = useState();
+  const [errors, setErrors] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const newScreen = id === "new";
 
@@ -54,27 +55,26 @@ function EditScreen() {
   useEffect(() => {
     // @TODO load real content.
     if (!newScreen) {
-      fetch("http://localhost:3000/fixtures/screens/screen.json")
+      fetch("/fixtures/screens/screen.json")
         .then((response) => response.json())
         .then((jsonData) => {
           setScreenName(jsonData.screen.name);
           setFormStateObject({
-            locations: jsonData.screen.locations,
+            screen_locations: jsonData.screen.locations,
             sizeOfScreen: jsonData.screen.sizeOfScreen,
             resolutionOfScreen: jsonData.screen.resolutionOfScreen,
-            groups: jsonData.screen.groups,
-            screenLayout: jsonData.screen.screenLayout,
+            screen_groups: jsonData.screen.groups,
+            screen_layout: jsonData.screen.screenLayout,
             playlists: jsonData.screen.playlists,
             horizontal_or_vertical: jsonData.screen.horizontal_or_vertical,
-            horizontal_or_vertical: radioButtonOptions[0].id,
-            name: jsonData.screen.name,
+            screen_name: jsonData.screen.name,
             description: jsonData.screen.description,
             descriptionOfLocation: jsonData.screen.descriptionOfLocation,
           });
           // setScreen(jsonData.screen);
         });
     }
-    fetch("http://localhost:3000/fixtures/screen-layout/screen-layout.json")
+    fetch("/fixtures/screen-layout/screen-layout.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setLayoutOptions(jsonData.layouts);
@@ -90,181 +90,168 @@ function EditScreen() {
    * event target
    */
   function handleInput({ target }) {
-    if (target.setCustomValidity) {
-      target.setCustomValidity("");
-    }
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
   }
 
   /**
-   * Handles validation of input with translation.
+   * Handles validations, and goes back to list.
    *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * event target
+   * @todo make it save.
+   * @param {object} e
+   * the submit event.
+   * @returns {boolean}
+   * Boolean indicating whether to submit form.
    */
-  function handleValidationMessage({ target }) {
-    const { message } = target.dataset;
-    target.setCustomValidity(message);
-  }
-  /**
-   * Redirects back to list.
-   */
-  function handleSubmit() {
-    setSubmitted(true);
+  function handleSubmit(e) {
+    e.preventDefault();
+    let returnValue = false;
+    const createdErrors = getFormErrors(formStateObject, "screen");
+    if (createdErrors.length > 0) {
+      setErrors(createdErrors);
+    } else {
+      setSubmitted(true);
+      returnValue = true;
+    }
+    return returnValue;
   }
 
   return (
-    <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newScreen && (
-            <h1>
-              <FormattedMessage
-                id="create_new_screen"
-                defaultMessage="create_new_screen"
-              />
-            </h1>
-          )}
-          {!newScreen && (
-            <h1>
-              <FormattedMessage id="edit_screen" defaultMessage="edit_screen" />
-              {screenName}
-            </h1>
-          )}
-          <FormInput
-            name="name"
-            type="text"
-            label={intl.formatMessage({ id: "edit_add_screen_label_name" })}
-            required
-            placeholder={intl.formatMessage({
-              id: "edit_add_screen_placeholder_name",
-            })}
-            value={formStateObject.name}
-            onChange={handleInput}
-            dataMessage={intl.formatMessage({
-              id: "edit_add_screen_invalid_name",
-            })}
-            onInvalid={handleValidationMessage}
-          />
-          <FormInputArea
-            name="description"
-            type="text"
-            label={intl.formatMessage({
-              id: "edit_add_screen_label_description",
-            })}
-            placeholder={intl.formatMessage({
-              id: "edit_add_screen_placeholder_description",
-            })}
-            value={formStateObject.description}
-            onChange={handleInput}
-            dataMessage={intl.formatMessage({
-              id: "edit_add_screen_invalid_placeholder",
-            })}
-            onInvalid={handleValidationMessage}
-          />
-          <GroupsDropdown
-            formId="groups"
-            handleGroupsSelection={handleInput}
-            selected={formStateObject.groups}
-          />
-          <LocationDropdown
-            formId="locations"
-            handleLocationSelection={handleInput}
-            selected={formStateObject.locations}
-          />
-          {layoutOptions && (
-            <Select
-              name="screenLayout"
-              onChange={handleInput}
-              label={intl.formatMessage({
-                id: "edit_add_screen_label_screen_layout",
-              })}
-              options={layoutOptions}
-              required
-              value={formStateObject.screenLayout}
-              dataMessage={intl.formatMessage({
-                id: "edit_add_screen_invalid_screen_layout",
-              })}
-              onInvalid={handleValidationMessage}
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        {newScreen && (
+          <h1>
+            <FormattedMessage
+              id="create_new_screen"
+              defaultMessage="create_new_screen"
             />
-          )}
-          <FormInput
-            name="descriptionOfLocation"
-            type="text"
-            label={intl.formatMessage({
-              id: "edit_add_screen_label_description_of_location",
-            })}
-            required
-            placeholder={intl.formatMessage({
-              id: "edit_add_screen_placeholder_description_of_location",
-            })}
-            value={formStateObject.descriptionOfLocation}
+          </h1>
+        )}
+        {!newScreen && (
+          <h1>
+            <FormattedMessage id="edit_screen" defaultMessage="edit_screen" />
+            {screenName}
+          </h1>
+        )}
+        <FormInput
+          errors={errors}
+          name="screen_name"
+          type="text"
+          label={intl.formatMessage({ id: "edit_add_screen_label_name" })}
+          invalidText={intl.formatMessage({
+            id: "edit_add_screen_label_name_invalid",
+          })}
+          placeholder={intl.formatMessage({
+            id: "edit_add_screen_placeholder_name",
+          })}
+          value={formStateObject.screen_name}
+          onChange={handleInput}
+        />
+        <FormInputArea
+          name="description"
+          type="text"
+          label={intl.formatMessage({
+            id: "edit_add_screen_label_description",
+          })}
+          placeholder={intl.formatMessage({
+            id: "edit_add_screen_placeholder_description",
+          })}
+          value={formStateObject.description}
+          onChange={handleInput}
+        />
+        <GroupsDropdown
+          errors={errors}
+          name="screen_groups"
+          handleGroupsSelection={handleInput}
+          selected={formStateObject.screen_groups}
+        />
+        <LocationDropdown
+          errors={errors}
+          name="screen_locations"
+          handleLocationSelection={handleInput}
+          selected={formStateObject.screen_locations}
+        />
+        {layoutOptions && (
+          <Select
+            name="screen_layout"
             onChange={handleInput}
-            dataMessage={intl.formatMessage({
-              id: "edit_add_screen_invalid_screen_description_of_location",
-            })}
-            onInvalid={handleValidationMessage}
-          />
-          <FormInput
-            name="sizeOfScreen"
-            type="text"
             label={intl.formatMessage({
-              id: "edit_add_screen_label_size_of_screen",
+              id: "edit_add_screen_label_screen_layout",
             })}
-            placeholder={intl.formatMessage({
-              id: "edit_add_screen_placeholder_size_of_screen",
-            })}
-            value={formStateObject.sizeOfScreen}
-            onChange={handleInput}
+            errors={errors}
+            options={layoutOptions}
+            value={formStateObject.screen_layout}
           />
-          <RadioButtons
-            options={radioButtonOptions}
-            radioGroupName="horizontal_or_vertical"
-            selected={formStateObject.horizontal_or_vertical}
-            handleChange={handleInput}
-            label={intl.formatMessage({
-              id: "edit_add_screen_horizontal_or_vertical_label",
-            })}
-          />
-          <FormInput
-            name="resolutionOfScreen"
-            type="text"
-            label={intl.formatMessage({
-              id: "edit_add_screen_label_resolution_of_screen",
-            })}
-            placeholder={intl.formatMessage({
-              id: "edit_add_screen_placeholder_resolution_of_screen",
-            })}
-            value={formStateObject.resolutionOfScreen}
-            helpText={intl.formatMessage({
-              id: "edit_add_screen_helptext_resolution_of_screen",
-            })}
-            pattern="(\d+)x(\d+)"
-            onChange={handleInput}
-          />
-          <PlaylistDragAndDrop
-            handleChange={handleInput}
-            formId="playlists"
-            data={formStateObject.playlists}
-          />
-          {submitted && <Redirect to="/screens" />}
-          <Button
-            variant="secondary"
-            type="button"
-            onClick={() => history.goBack()}
-          >
-            <FormattedMessage id="cancel" defaultMessage="cancel" />
-          </Button>
-          <Button variant="primary" type="submit" id="save_screen">
-            <FormattedMessage id="save_screen" defaultMessage="save_screen" />
-          </Button>
-        </Form>
-      </Container>
-    </>
+        )}
+        <FormInput
+          name="descriptionOfLocation"
+          type="text"
+          label={intl.formatMessage({
+            id: "edit_add_screen_label_description_of_location",
+          })}
+          required
+          placeholder={intl.formatMessage({
+            id: "edit_add_screen_placeholder_description_of_location",
+          })}
+          value={formStateObject.descriptionOfLocation}
+          onChange={handleInput}
+        />
+        <FormInput
+          name="sizeOfScreen"
+          type="text"
+          label={intl.formatMessage({
+            id: "edit_add_screen_label_size_of_screen",
+          })}
+          placeholder={intl.formatMessage({
+            id: "edit_add_screen_placeholder_size_of_screen",
+          })}
+          value={formStateObject.sizeOfScreen}
+          onChange={handleInput}
+        />
+        <RadioButtons
+          options={radioButtonOptions}
+          radioGroupName="horizontal_or_vertical"
+          selected={formStateObject.horizontal_or_vertical}
+          handleChange={handleInput}
+          label={intl.formatMessage({
+            id: "edit_add_screen_horizontal_or_vertical_label",
+          })}
+        />
+        <FormInput
+          name="resolutionOfScreen"
+          type="text"
+          label={intl.formatMessage({
+            id: "edit_add_screen_label_resolution_of_screen",
+          })}
+          placeholder={intl.formatMessage({
+            id: "edit_add_screen_placeholder_resolution_of_screen",
+          })}
+          value={formStateObject.resolutionOfScreen}
+          helpText={intl.formatMessage({
+            id: "edit_add_screen_helptext_resolution_of_screen",
+          })}
+          pattern="(\d+)x(\d+)"
+          onChange={handleInput}
+        />
+        <PlaylistDragAndDrop
+          handleChange={handleInput}
+          name="playlists"
+          data={formStateObject.playlists}
+        />
+        {submitted && <Redirect to="/screens" />}
+        <Button
+          variant="secondary"
+          type="button"
+          onClick={() => history.goBack()}
+        >
+          <FormattedMessage id="cancel" defaultMessage="cancel" />
+        </Button>
+        <Button variant="primary" type="submit" id="save_screen">
+          <FormattedMessage id="save_screen" defaultMessage="save_screen" />
+        </Button>
+      </Form>
+    </Container>
   );
 }
 
