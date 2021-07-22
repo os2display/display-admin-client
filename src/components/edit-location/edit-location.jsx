@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
+import SelectScreenTable from "./select-screen-table";
 
 /**
  * The edit location component.
@@ -32,11 +33,12 @@ function EditLocation() {
   useEffect(() => {
     // @TODO load real content.
     if (!newLocation) {
-      fetch(`/fixtures/locations/location.json`)
+      fetch("/fixtures/locations/location.json")
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
             location_name: jsonData.location.name,
+            location_screens: jsonData.location.onFollowingScreens,
           });
           setLocationName(jsonData.location.name);
         });
@@ -110,6 +112,11 @@ function EditLocation() {
             value={formStateObject.location_name}
             onChange={handleInput}
           />
+          <SelectScreenTable
+            handleChange={handleInput}
+            name="location_screens"
+            data={formStateObject.location_screens}
+          ></SelectScreenTable>
           {submitted && <Redirect to="/locations" />}
           <Button
             variant="secondary"
