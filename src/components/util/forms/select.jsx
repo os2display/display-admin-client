@@ -46,8 +46,9 @@ function Select({
   const [error, setError] = useState();
   const [classes, setClasses] = useState("form-control");
   const required = !!errors;
+
   /**
-   * Load content from fixture.
+   * Handle errors.
    */
   useEffect(() => {
     if (errors && errors.includes(name)) {

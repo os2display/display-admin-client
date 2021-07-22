@@ -36,7 +36,7 @@ function FormInput({
   const required = !!errors;
 
   /**
-   * Load content from fixture.
+   * Handle errors.
    */
   useEffect(() => {
     if (errors && errors.includes(name)) {

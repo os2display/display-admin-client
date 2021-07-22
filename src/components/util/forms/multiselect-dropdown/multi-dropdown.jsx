@@ -5,6 +5,11 @@ import PropTypes from "prop-types";
 import contentString from "../../helpers/content-string";
 
 /**
+ * A searchablemultiselect component.
+ * Using a multiselect from react-multi-select-component, and making
+ * some adjustments, replacing default fuzzy search with string match
+ * and displaying the values selected using contentstring-method.
+ *
  * @param {object} props
  * the props.
  * @param {Array} props.options
@@ -51,8 +56,9 @@ function MultiSelectComponent({
   const nothingSelectedLabel =
     noSelectedString ||
     intl.formatMessage({ id: "multi_dropdown_no_selected" });
+
   /**
-   * Load content from fixture.
+   * Handle errors.
    */
   useEffect(() => {
     if (errors && errors.includes(name)) {
@@ -62,6 +68,9 @@ function MultiSelectComponent({
   }, [errors]);
 
   /**
+   * Filter to replace the default filter in multi-select.
+   * It matches the label name.
+   *
    * @param {Array} optionsToFilter
    * The options to filter in
    * @param {string} filter
@@ -79,8 +88,9 @@ function MultiSelectComponent({
     );
   }
   /**
+   * A callback on changed data.
    * @param {Array} data
-   * The data to callback with
+   * The data to call back with
    */
   function changeData(data) {
     const target = { value: data, id: name };
@@ -88,6 +98,7 @@ function MultiSelectComponent({
   }
 
   /**
+   * Renders the label in the multiselect.
    * @param {Array} valueSelected
    * The value(s) selected to render label from.
    * @returns {string}
