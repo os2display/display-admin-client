@@ -11,30 +11,6 @@ describe("Edit tag page loads", () => {
       .invoke("text")
       .should("match", /^Rediger følgende tag: matrices/);
   });
-
-  it("It validates", () => {
-    cy.visit("/tag/new");
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Gem tag/);
-    cy.get(".container").find("button").eq(1).click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Gem tag/);
-
-    cy.get("input").type("Hello, World");
-    cy.get(".container").find("button").eq(1).click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Konsolider/);
-  });
-
   it("It goes back", () => {
     cy.visit("/tags");
     cy.visit("/tag/new");

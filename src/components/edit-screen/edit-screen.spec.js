@@ -12,23 +12,6 @@ describe("Edit screen page loads", () => {
       .should("match", /^Rediger denne skærm: Asoka/);
   });
 
-  it("It validates", () => {
-    cy.visit("/screen/32");
-    cy.get("#screen_name").clear();
-    cy.get(".container")
-      .find("#save_screen")
-      .invoke("text")
-      .should("match", /^Gem skærm/);
-    cy.get("#save_screen").click();
-    cy.get(".container")
-      .find("#save_screen")
-      .invoke("text")
-      .should("match", /^Gem skærm/);
-    cy.get("#screen_name").type("Hello, World");
-    cy.get("#save_screen").click();
-    cy.get("#save_screen").should("not.exist");
-  });
-
   it("It loads drag and drop table", () => {
     cy.visit("/screen/32");
     cy.get("tbody").find("tr td").should("have.length", 4);

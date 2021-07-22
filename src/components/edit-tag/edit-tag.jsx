@@ -114,7 +114,7 @@ function EditTag() {
           >
             <FormattedMessage id="cancel" defaultMessage="cancel" />
           </Button>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" id="save_tag">
             <FormattedMessage id="save_tag" defaultMessage="save_tag" />
           </Button>
         </Form>

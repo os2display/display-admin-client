@@ -12,27 +12,7 @@ describe("Edit tag page loads", () => {
       .should("match", /^Rediger kategorien: Lotstring/);
   });
 
-  it("It validates", () => {
-    cy.visit("/category/new");
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Gem kategorien/);
-    cy.get(".container").find("button").eq(1).click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Gem kategorien/);
-    cy.get("input").type("Hello, World");
-    cy.get(".container").find("button").eq(1).click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Konsolider/);
-  });
+
 
   it("It goes back", () => {
     cy.visit("/tags");

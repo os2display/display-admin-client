@@ -117,7 +117,7 @@ function EditCategories() {
         >
           <FormattedMessage id="cancel" defaultMessage="cancel" />
         </Button>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" id="save_category">
           <FormattedMessage id="save_category" defaultMessage="save_category" />
         </Button>
       </Form>
