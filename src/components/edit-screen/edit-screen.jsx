@@ -235,11 +235,11 @@ function EditScreen() {
           pattern="(\d+)x(\d+)"
           onChange={handleInput}
         />
-        {/* <PlaylistDragAndDrop
+        <PlaylistDragAndDrop
           handleChange={handleInput}
           name="playlists"
           data={formStateObject.playlists}
-        /> */}
+        />
         {submitted && <Redirect to="/screens" />}
         <Button
           variant="secondary"
