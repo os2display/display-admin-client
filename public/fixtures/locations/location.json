@@ -11,7 +11,10 @@
     "onFollowingScreens": [
       {
         "id": 15,
-        "name": "Digitized"
+        "name": "Pannier",
+        "size": "30\"",
+        "dimensions": "1920x1080",
+        "overriddenByCampaign": false
       }
     ],
     "name": "Dokk1"
