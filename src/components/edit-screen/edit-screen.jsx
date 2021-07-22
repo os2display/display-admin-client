@@ -71,7 +71,6 @@ function EditScreen() {
             description: jsonData.screen.description,
             descriptionOfLocation: jsonData.screen.descriptionOfLocation,
           });
-          // setScreen(jsonData.screen);
         });
     }
     fetch("/fixtures/screen-layout/screen-layout.json")
