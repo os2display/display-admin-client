@@ -14,6 +14,6 @@ describe("Edit screen page loads", () => {
 
   it("It loads drag and drop table", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 4);
+    cy.get("tbody").find("tr td").should("have.length", 3);
   });
 });

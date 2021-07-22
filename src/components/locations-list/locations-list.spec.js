@@ -2,7 +2,7 @@ describe("Locations list loads", () => {
   it("It loads", () => {
     cy.visit("/locations");
     cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("have.length", 60);
+    cy.get("tbody").find("tr td").should("have.length", 28);
   });
 
   it("The column headers are correct", () => {
@@ -18,6 +18,11 @@ describe("Locations list loads", () => {
       .find("th")
       .eq(3)
       .invoke("text")
-      .should("match", /^# spillelister/);
+      .should("match", /^# skærme/);
+    cy.get("thead")
+      .find("th")
+      .eq(4)
+      .invoke("text")
+      .should("match", /^# grupper/);
   });
 });

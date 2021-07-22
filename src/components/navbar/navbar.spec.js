@@ -25,13 +25,14 @@ describe("Navbar loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Grupper/);
-    cy.get("#navbar_categories").click();
-    cy.get("h1")
-      .invoke("text")
-      .should("match", /^Kategorier/);
+    cy.get("#navbar_screens").click();
     cy.get("#navbar_screens_locations").click();
     cy.get("h1")
       .invoke("text")
       .should("match", /^Lokationer/);
+    cy.get("#navbar_categories").click();
+    cy.get("h1")
+      .invoke("text")
+      .should("match", /^Kategorier/);
   });
 });
