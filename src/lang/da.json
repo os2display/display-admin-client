@@ -329,6 +329,12 @@
       "value": "Vælg en eller flere lokationer"
     }
   ],
+  "screens_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en eller flere skærme"
+    }
+  ],
   "edit_add_screen_invalid_placeholder": [
     {
       "type": 0,
@@ -603,6 +609,12 @@
     {
       "type": 0,
       "value": "Opret ny lokation"
+    }
+  ],
+  "remove_from_list": [
+    {
+      "type": 0,
+      "value": "Fjern fra liste"
     }
   ]
 }
