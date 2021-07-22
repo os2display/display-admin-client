@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { Form, InputGroup, FormControl } from "react-bootstrap";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
-import contentString from "../util/helpers/contentString";
+import contentString from "../util/helpers/content-string";
 
 /**
  * Merge modal component, a modal that merges elements together.
@@ -39,9 +39,10 @@ function MergeModal({ show, onClose, selectedRows, handleAccept }) {
   const title = intl.formatMessage({ id: "merge_title" });
   const areYouSure = intl.formatMessage({ id: "are_you_sure_merge" });
   const chooseNewName = intl.formatMessage({ id: "merge_data_name" });
+  const and = intl.formatMessage({ id: "and" });
 
   // Creates a string for modal
-  const valuesToMerge = `${areYouSure}  ${contentString(selectedRows)}?`;
+  const valuesToMerge = `${areYouSure}  ${contentString(selectedRows, and)}?`;
 
   return (
     <ModalDialog

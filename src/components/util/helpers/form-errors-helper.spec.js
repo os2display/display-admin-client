@@ -1,4 +1,4 @@
-describe("Form errors", () => {
+describe("Form validations", () => {
   it("It validates new tag", () => {
     cy.visit("/tag/new");
     cy.get(".container")

@@ -2,7 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import ModalDialog from "../util/modal/modal-dialog";
-import contentString from "../util/helpers/contentString";
+import contentString from "../util/helpers/content-string";
 
 /**
  * Info modal component, that displays an info string.
@@ -29,9 +29,13 @@ function InfoModal({ show, onClose, onPlaylists }) {
   const onTheFollowingPlaylists = intl.formatMessage({
     id: "on_the_following_playlists",
   });
+  const and = intl.formatMessage({ id: "and" });
 
   // Creates a string for modal
-  const content = `${onTheFollowingPlaylists}:  ${contentString(onPlaylists)}`;
+  const content = `${onTheFollowingPlaylists}:  ${contentString(
+    onPlaylists,
+    and
+  )}`;
 
   return (
     <div id="info-modal">

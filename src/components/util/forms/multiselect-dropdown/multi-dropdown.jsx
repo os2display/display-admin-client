@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
-import contentString from "../../helpers/contentString";
+import contentString from "../../helpers/content-string";
 
 /**
  * @param {object} props
@@ -47,7 +47,7 @@ function MultiSelectComponent({
   const [classes, setClasses] = useState("");
   const textOnError =
     errorText || intl.formatMessage({ id: "input_error_text" });
-
+  const and = intl.formatMessage({ id: "and" });
   const nothingSelectedLabel =
     noSelectedString ||
     intl.formatMessage({ id: "multi_dropdown_no_selected" });
@@ -95,7 +95,7 @@ function MultiSelectComponent({
    */
   function customValueRenderer(valueSelected) {
     return valueSelected.length
-      ? contentString(valueSelected)
+      ? contentString(valueSelected, and)
       : nothingSelectedLabel;
   }
   return (

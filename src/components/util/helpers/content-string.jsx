@@ -6,10 +6,7 @@ import { useIntl } from "react-intl";
  * @param {Array} content - the content to create a string from.
  * @returns {string} a string with commas and "and".
  */
-function contentString(content) {
-  const intl = useIntl();
-  const and = intl.formatMessage({ id: "and" });
-
+function contentString(content, and) {
   const namesOfRows = content.map((row) => row.name || row.label);
   let returnContentString = "";
   if (namesOfRows.length === 1) {

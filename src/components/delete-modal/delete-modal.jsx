@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
-import contentString from "../util/helpers/contentString";
+import contentString from "../util/helpers/content-string";
 
 /**
  * Delete modal component, a modal that deletes elements.
@@ -37,9 +37,10 @@ function DeleteModal({
   const areYouSure =
     areYouSureDelete || intl.formatMessage({ id: "are_you_sure_delete" });
   const title = intl.formatMessage({ id: "delete_title" });
+  const and = intl.formatMessage({ id: "and" });
 
   // Creates a string for modal
-  const valuesToDelete = `${areYouSure}  ${contentString(selectedRows)}?`;
+  const valuesToDelete = `${areYouSure}  ${contentString(selectedRows, and)}?`;
 
   return (
     <ModalDialog title={title} onClose={onClose} handleAccept={handleAccept}>
