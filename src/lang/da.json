@@ -233,6 +233,12 @@
       "value": "Taggets navn"
     }
   ],
+  "edit_add_location_label": [
+    {
+      "type": 0,
+      "value": "Lokationens navn"
+    }
+  ],
   "edit_add_group_label": [
     {
       "type": 0,
@@ -249,6 +255,24 @@
     {
       "type": 0,
       "value": "Udfyld taggets navn"
+    }
+  ],
+  "edit_add_location_label_placeholder": [
+    {
+      "type": 0,
+      "value": "Udfyld lokationens navn"
+    }
+  ],
+  "save_location": [
+    {
+      "type": 0,
+      "value": "Gem lokationen"
+    }
+  ],
+  "edit_location": [
+    {
+      "type": 0,
+      "value": "Rediger lokationen: "
     }
   ],
   "edit_add_group_label_placeholder": [
@@ -533,6 +557,12 @@
       "value": "Tags"
     }
   ],
+  "navbar_locations": [
+    {
+      "type": 0,
+      "value": "Lokationer"
+    }
+  ],
   "navbar_slides": [
     {
       "type": 0,
@@ -572,7 +602,7 @@
   "create_new_location": [
     {
       "type": 0,
-      "value": "Opret ny gruppe"
+      "value": "Opret ny lokation"
     }
   ]
 }

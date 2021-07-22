@@ -117,7 +117,7 @@ function LocationsList() {
     },
     {
       key: "edit",
-      content: (data) => <LinkForList data={data} param="category" />,
+      content: (data) => <LinkForList data={data} param="location" />,
     },
     {
       key: "delete",
@@ -182,7 +182,7 @@ function LocationsList() {
           </h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/category/new">
+          <Link className="btn btn-primary btn-success" to="/location/new">
             <FormattedMessage
               id="create_new_location"
               defaultMessage="create_new_location"
