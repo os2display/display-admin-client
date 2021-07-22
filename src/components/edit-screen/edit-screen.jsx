@@ -58,6 +58,7 @@ function EditScreen() {
         .then((response) => response.json())
         .then((jsonData) => {
           setScreenName(jsonData.screen.name);
+          // Map existing screen to state.
           setFormStateObject({
             screen_locations: jsonData.screen.locations,
             sizeOfScreen: jsonData.screen.sizeOfScreen,
