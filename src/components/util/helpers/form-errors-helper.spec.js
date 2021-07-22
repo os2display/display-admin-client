@@ -49,23 +49,23 @@ describe("Form validations", () => {
     cy.get("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
-    cy.get("#save_screen").click();
+    cy.get("#save_screen").scrollIntoView().click();
     cy.get("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
     cy.get("#screen_name").type("Hello, World");
-    cy.get("#save_screen").click();
+    cy.get("#save_screen").scrollIntoView().click();
     cy.get("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
-    cy.get(".dropdown-heading").eq(0).click();
+    cy.get(".dropdown-heading").eq(0).scrollIntoView().click();
     cy.get('[type="checkbox"]').eq(0).check();
-    cy.get(".dropdown-heading").eq(0).click();
-    cy.get(".dropdown-heading").eq(1).click();
+    cy.get(".dropdown-heading").eq(0).scrollIntoView().click();
+    cy.get(".dropdown-heading").eq(1).scrollIntoView().click();
     cy.get('[type="checkbox"]').eq(0).check();
-    cy.get(".dropdown-heading").eq(1).click();
+    cy.get(".dropdown-heading").eq(1).scrollIntoView().click();
     cy.get("#screen_layout").select("Footer",);
-    cy.get("#save_screen").click();
+    cy.get("#save_screen").scrollIntoView().click();
     cy.get("#save_screen").should("not.exist");
   });
 
@@ -76,13 +76,13 @@ describe("Form validations", () => {
       .find("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
-    cy.get("#save_screen").click();
+    cy.get("#save_screen").scrollIntoView().click();
     cy.get(".container")
       .find("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
-    cy.get("#screen_name").type("Hello, World");
-    cy.get("#save_screen").click();
+    cy.get("#screen_name").scrollIntoView().type("Hello, World");
+    cy.get("#save_screen").scrollIntoView().click();
     cy.get("#save_screen").should("not.exist");
   });
 
