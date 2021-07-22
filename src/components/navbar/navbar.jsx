@@ -18,6 +18,7 @@ function NavBar() {
           <Nav.Item>
             <Link
               className="navbar-brand"
+              id="navbar_tags"
               style={{ color: "black" }}
               to="/tags"
             >
@@ -27,6 +28,7 @@ function NavBar() {
           <Nav.Item>
             <Link
               className="navbar-brand"
+              id="navbar_slides"
               style={{ color: "black" }}
               to="/slides"
             >
@@ -43,11 +45,12 @@ function NavBar() {
                 defaultMessage="navbar_screens"
               />
             }
-            id="basic-nav-dropdown"
+            id="navbar_screens"
           >
             <NavDropdown.Item>
               <Link
                 className="navbar-brand"
+                id="navbar_screens_screens"
                 style={{ color: "black" }}
                 to="/screens"
               >
@@ -61,6 +64,7 @@ function NavBar() {
             <NavDropdown.Item>
               <Link
                 className="navbar-brand"
+                id="navbar_screens_groups"
                 style={{ color: "black" }}
                 to="/groups"
               >
@@ -76,6 +80,7 @@ function NavBar() {
             <Link
               className="navbar-brand"
               style={{ color: "black" }}
+              id="navbar_categories"
               to="/categories"
             >
               <FormattedMessage
