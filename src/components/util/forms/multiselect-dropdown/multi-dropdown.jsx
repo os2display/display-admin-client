@@ -49,7 +49,6 @@ function MultiSelectComponent({
 }) {
   const intl = useIntl();
   const [error, setError] = useState();
-  const [classes, setClasses] = useState("");
   const textOnError =
     errorText || intl.formatMessage({ id: "input_error_text" });
   const and = intl.formatMessage({ id: "and_string" });
@@ -61,10 +60,7 @@ function MultiSelectComponent({
    * Handle errors.
    */
   useEffect(() => {
-    if (errors && errors.includes(name)) {
-      setError(true);
-      setClasses("invalid");
-    }
+    setError(errors && errors.includes(name));
   }, [errors]);
 
   /**
@@ -112,7 +108,7 @@ function MultiSelectComponent({
       : nothingSelectedLabel;
   }
   return (
-    <div className={classes}>
+    <div className={error ? "invalid" : ""}>
       <label htmlFor={name}>{label}</label>
       <MultiSelect
         isCreatable={isCreatable}
@@ -121,7 +117,7 @@ function MultiSelectComponent({
         filterOptions={filterOptions}
         onChange={changeData}
         id={name}
-        className={classes}
+        className={error ? "invalid" : ""}
         isLoading={isLoading}
         valueRenderer={customValueRenderer}
       />
