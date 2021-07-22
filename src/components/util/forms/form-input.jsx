@@ -32,17 +32,13 @@ function FormInput({
   invalidText,
 }) {
   const [error, setError] = useState();
-  const [classes, setClasses] = useState("form-control");
   const required = !!errors;
 
   /**
    * Handle errors.
    */
   useEffect(() => {
-    if (errors && errors.includes(name)) {
-      setError(true);
-      setClasses("form-control is-invalid");
-    }
+    setError(errors && errors.includes(name));
   }, [errors]);
 
   return (
@@ -55,7 +51,7 @@ function FormInput({
         <FormControl
           name={name}
           id={name}
-          className={classes}
+          className={error ? "form-control is-invalid" : "form-control"}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
