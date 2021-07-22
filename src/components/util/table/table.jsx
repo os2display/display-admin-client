@@ -30,6 +30,9 @@ function Table({ columns, selectedRows, onSort, sortColumn, data }) {
     </table>
   );
 }
+Table.defaultProps = {
+  selectedRows: [],
+};
 
 Table.propTypes = {
   data: PropTypes.arrayOf(
@@ -38,6 +41,6 @@ Table.propTypes = {
   sortColumn: SortColumnProptypes.isRequired,
   onSort: PropTypes.func.isRequired,
   columns: ColumnProptypes.isRequired,
-  selectedRows: SelectedRowsProptypes.isRequired,
+  selectedRows: SelectedRowsProptypes,
 };
 export default Table;
