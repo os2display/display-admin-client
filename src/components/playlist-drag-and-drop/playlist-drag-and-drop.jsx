@@ -28,6 +28,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
    * Closes the delete modal.
    */
   function onCloseDeleteModal() {
+    setSelectedRow([]);
     setShowDeleteModal(false);
   }
 

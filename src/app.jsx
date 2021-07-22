@@ -9,6 +9,7 @@ import SlidesList from "./components/slides-list/slides-list";
 import EditTag from "./components/edit-tag/edit-tag";
 import EditScreen from "./components/edit-screen/edit-screen";
 import EditCategories from "./components/edit-categories/edit-category";
+import GroupsList from "./components/groups-list/groups-list";
 import "./app.scss";
 
 /**
@@ -39,6 +40,7 @@ function App() {
               <Route path="/tags" component={TagList} />
               <Route path="/screens" component={ScreenList} />
               <Route path="/categories" component={CategoryList} />
+              <Route path="/groups" component={GroupsList} />
               <Route path="/tag/:id" component={EditTag} />
               <Route path="/category/:id" component={EditCategories} />
               <Route path="/screen/:id" component={EditScreen} />

@@ -2,37 +2,32 @@ import { React, useState, useEffect } from "react";
 import { Button, Row, Container, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
-import CheckboxForList from "../util/list/checkbox-for-list";
-import LinkForList from "../util/list/link-for-list";
-import List from "../util/list/list";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
+import CheckboxForList from "../util/list/checkbox-for-list";
+import List from "../util/list/list";
+import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
-import InfoModal from "../info-modal/info-modal";
-import ListButton from "../util/list/list-button";
-
 /**
- * The category list component.
+ * The groups list component.
  *
  * @returns {object}
- * The CategoryList
+ * The groups list.
  */
-function CategoryList() {
+function GroupsList() {
   const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
-  const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [groups, setGroups] = useState([]);
 
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch(`/fixtures/categories/categories.json`)
+    fetch(`/fixtures/groups/groups.json`)
       .then((response) => response.json())
       .then((jsonData) => {
-        setCategories(jsonData.categories);
+        setGroups(jsonData);
       });
   }, []);
 
@@ -52,22 +47,13 @@ function CategoryList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the tag.
+   * The name of the group.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the group
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
     setShowDeleteModal(true);
-  }
-
-  /**
-   * @param {Array} playlistArray
-   * The array of playlists.
-   */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
-    setShowInfoModal(true);
   }
 
   // The columns for the table.
@@ -90,21 +76,8 @@ function CategoryList() {
       label: intl.formatMessage({ id: "table_header_created_by" }),
     },
     {
-      sort: true,
-      path: "onFollowingPlaylists",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.onFollowingPlaylists,
-          data.onFollowingPlaylists.length,
-          data.onFollowingPlaylists.length === 0
-        ),
-      key: "playlists",
-      label: intl.formatMessage({ id: "table_header_number_of_playlists" }),
-    },
-    {
       key: "edit",
-      content: (data) => <LinkForList data={data} param="category" />,
+      content: (data) => <LinkForList data={data} param="group" />,
     },
     {
       key: "delete",
@@ -125,18 +98,19 @@ function CategoryList() {
   ];
 
   /**
-   * Deletes screen, and closes modal.
+   * Deletes group, and closes modal.
    *
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the tag.
+   * The name of the group.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the group
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
     // @TODO delete element
+    setSelectedRows([]);
     setSelectedRows([]);
     setShowDeleteModal(false);
   }
@@ -144,17 +118,9 @@ function CategoryList() {
   /**
    * Closes the delete modal.
    */
-  function onCloseDeleteModal() {
+  function onCloseModal() {
     setSelectedRows([]);
     setShowDeleteModal(false);
-  }
-
-  /**
-   * Closes the info modal.
-   */
-  function onCloseInfoModal() {
-    setOnPlaylists();
-    setShowInfoModal(false);
   }
 
   return (
@@ -163,36 +129,35 @@ function CategoryList() {
         <Col>
           <h1>
             <FormattedMessage
-              id="categories_list_header"
-              defaultMessage="categories_list_header"
+              id="groups_list_header"
+              defaultMessage="groups_list_header"
             />
           </h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/category/new">
+          <Link className="btn btn-primary btn-success" to="/group/new">
             <FormattedMessage
-              id="create_new_category"
-              defaultMessage="create_new_category"
+              id="create_new_group"
+              defaultMessage="create_new_group"
             />
           </Link>
         </Col>
       </Row>
-      {categories && (
-        <List columns={columns} selectedRows={selectedRows} data={categories} />
+      {groups.groups && (
+        <List
+          columns={columns}
+          selectedRows={selectedRows}
+          data={groups.groups}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}
-        onClose={onCloseDeleteModal}
+        onClose={onCloseModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
-      />
-      <InfoModal
-        show={showInfoModal}
-        onClose={onCloseInfoModal}
-        onPlaylists={onPlaylists}
       />
     </Container>
   );
 }
 
-export default CategoryList;
+export default GroupsList;

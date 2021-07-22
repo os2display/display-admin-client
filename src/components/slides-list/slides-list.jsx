@@ -156,6 +156,7 @@ function SlidesList() {
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
     // @TODO delete element
+    setSelectedRows([]);
     setShowDeleteModal(false);
   }
 

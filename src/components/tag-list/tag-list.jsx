@@ -103,7 +103,7 @@ function TagList() {
   ];
 
   /**
-   * Deletes screen, and closes modal.
+   * Deletes tag, and closes modal.
    *
    * @param {object} props
    * The props.
@@ -115,6 +115,7 @@ function TagList() {
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
     // @TODO delete element
+    setSelectedRows([]);
     setShowDeleteModal(false);
   }
 

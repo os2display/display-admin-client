@@ -119,8 +119,9 @@ function ScreenList() {
    * @param {number} props.id
    * The id of the tag
    */
+  // eslint-disable-next-line
   function handleDelete({ id, name }) {
-    console.log(`deleted ${id}:${name}`); // eslint-disable-line
+    setSelectedRows([]);
     setShowDeleteModal(false);
   }
 

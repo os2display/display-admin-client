@@ -508,5 +508,23 @@
       "type": 0,
       "value": "Skærme"
     }
+  ],
+  "navbar_groups": [
+    {
+      "type": 0,
+      "value": "Grupper"
+    }
+  ],
+  "groups_list_header": [
+    {
+      "type": 0,
+      "value": "Grupper"
+    }
+  ],
+  "create_new_group": [
+    {
+      "type": 0,
+      "value": "Opret ny gruppe"
+    }
   ]
 }
