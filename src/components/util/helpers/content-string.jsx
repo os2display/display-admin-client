@@ -1,9 +1,8 @@
-import { useIntl } from "react-intl";
-
 /**
  * Creates a string with commas and "and".
  *
  * @param {Array} content - the content to create a string from.
+ * @param {string} and - the string between the two last options.
  * @returns {string} a string with commas and "and".
  */
 function contentString(content, and) {

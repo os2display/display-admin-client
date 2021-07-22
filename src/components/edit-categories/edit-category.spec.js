@@ -12,8 +12,6 @@ describe("Edit tag page loads", () => {
       .should("match", /^Rediger kategorien: Lotstring/);
   });
 
-
-
   it("It goes back", () => {
     cy.visit("/tags");
     cy.visit("/category/new");

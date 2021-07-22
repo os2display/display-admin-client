@@ -89,6 +89,7 @@ function MultiSelectComponent({
   }
   /**
    * A callback on changed data.
+   *
    * @param {Array} data
    * The data to call back with
    */
@@ -99,6 +100,7 @@ function MultiSelectComponent({
 
   /**
    * Renders the label in the multiselect.
+   *
    * @param {Array} valueSelected
    * The value(s) selected to render label from.
    * @returns {string}

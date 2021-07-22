@@ -46,22 +46,26 @@ describe("Form validations", () => {
 
   it("It validates new screen", () => {
     cy.visit("/screen/new");
-    cy.get("#save_screen").invoke("text").should("match", /^Gem skærm/);
+    cy.get("#save_screen")
+      .invoke("text")
+      .should("match", /^Gem skærm/);
     cy.get("#save_screen").click();
-    cy.get("#save_screen").invoke("text").should("match", /^Gem skærm/);
+    cy.get("#save_screen")
+      .invoke("text")
+      .should("match", /^Gem skærm/);
     cy.get("#screen_name").type("Hello, World");
     cy.get("#save_screen").click();
-    cy.get("#save_screen").invoke("text").should("match", /^Gem skærm/);
-    cy.get(".dropdown-heading").eq(0).click({ force: true })
-    cy.get('[type="checkbox"]').eq(0).check()
-    cy.get(".dropdown-heading").eq(1).click({ force: true })
-    cy.get('[type="checkbox"]').eq(0).check()
-    cy.get('#screen_layout').select('Footer', { force: true });
+    cy.get("#save_screen")
+      .invoke("text")
+      .should("match", /^Gem skærm/);
+    cy.get(".dropdown-heading").eq(0).click({ force: true });
+    cy.get('[type="checkbox"]').eq(0).check();
+    cy.get(".dropdown-heading").eq(1).click({ force: true });
+    cy.get('[type="checkbox"]').eq(0).check();
+    cy.get("#screen_layout").select("Footer", { force: true });
     cy.get("#save_screen").click();
     cy.get("#save_screen").should("not.exist");
-
   });
-
 
   it("It validates already existing screen", () => {
     cy.visit("/screen/32");
@@ -113,5 +117,4 @@ describe("Form validations", () => {
     cy.get("#save_category").click();
     cy.get("#save_category").should("not.exist");
   });
-
 });
