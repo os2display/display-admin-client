@@ -1,4 +1,4 @@
-describe("Edit tag page loads", () => {
+describe("Edit category page loads", () => {
   it("It loads", () => {
     cy.visit("/category/new");
     cy.get("h1").should("not.be.empty");
@@ -13,14 +13,15 @@ describe("Edit tag page loads", () => {
   });
 
   it("It goes back", () => {
-    cy.visit("/tags");
+    cy.visit("/categories");
     cy.visit("/category/new");
     cy.get(".container")
       .find("button")
       .eq(0)
       .invoke("text")
       .should("match", /^Annuller/);
-    cy.get(".container").find("button").eq(0).click();
+    cy.get("input").type("Hello, World");
+    cy.get("#save_category").click();
     cy.get(".container")
       .find("button")
       .eq(1)

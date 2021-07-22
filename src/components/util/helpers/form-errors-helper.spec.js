@@ -58,11 +58,13 @@ describe("Form validations", () => {
     cy.get("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
-    cy.get(".dropdown-heading").eq(0).click({ force: true });
+    cy.get(".dropdown-heading").eq(0).click();
     cy.get('[type="checkbox"]').eq(0).check();
-    cy.get(".dropdown-heading").eq(1).click({ force: true });
+    cy.get(".dropdown-heading").eq(0).click();
+    cy.get(".dropdown-heading").eq(1).click();
     cy.get('[type="checkbox"]').eq(0).check();
-    cy.get("#screen_layout").select("Footer", { force: true });
+    cy.get(".dropdown-heading").eq(1).click();
+    cy.get("#screen_layout").select("Footer",);
     cy.get("#save_screen").click();
     cy.get("#save_screen").should("not.exist");
   });

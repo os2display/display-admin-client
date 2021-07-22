@@ -19,7 +19,8 @@ describe("Edit tag page loads", () => {
       .eq(0)
       .invoke("text")
       .should("match", /^Annuller/);
-    cy.get(".container").find("button").eq(0).click();
+    cy.get("input").type("Hello, World");
+    cy.get("#save_tag").click();
     cy.get(".container")
       .find("button")
       .eq(1)
