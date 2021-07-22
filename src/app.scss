@@ -9,3 +9,16 @@
   right: 0;
   bottom: 0;
 }
+
+// To make multicomponent look like bootstrap for now
+// @todo change when changing the frontend styling
+.invalid {
+  .dropdown-container {
+    border-color: $red;
+  }
+  .invalid-feedback-multi {
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: $red;
+  }
+}
