@@ -29,9 +29,7 @@ function CategoryList() {
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch(
-      `/fixtures/categories/categories.json`
-    )
+    fetch(`/fixtures/categories/categories.json`)
       .then((response) => response.json())
       .then((jsonData) => {
         setCategories(jsonData.categories);
