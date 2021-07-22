@@ -10,7 +10,7 @@ import Select from "../util/forms/select";
 import FormInputArea from "../util/forms/form-input-area";
 import RadioButtons from "../util/forms/radio-buttons";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
-import getFormErrors from "../util/form-errors-helper";
+import getFormErrors from "../util/helpers/form-errors-helper";
 /**
  * The edit screen component.
  *
