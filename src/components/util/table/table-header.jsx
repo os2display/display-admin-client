@@ -22,7 +22,8 @@ import ColumnProptypes from "../../proptypes/column-proptypes";
  * The table body.
  */
 function TableHeader({ columns, sortColumn, onSort }) {
-  let { path, order } = sortColumn;
+  let path = sortColumn?.path;
+  let order = sortColumn?.order;
 
   /**
    * Sorts the rows, according to chosenpath.
@@ -65,11 +66,12 @@ function TableHeader({ columns, sortColumn, onSort }) {
   }
   return (
     <thead>
-      <tr style={{ cursor: "pointer" }}>
+      <tr>
         {columns.map((column) => (
           <Fragment key={column.path || column.key}>
             {column.sort && (
               <th
+                style={{ cursor: "pointer" }}
                 id={`table-header-${column.path}`}
                 onClick={() => sort(column.path)}
               >
@@ -84,10 +86,15 @@ function TableHeader({ columns, sortColumn, onSort }) {
   );
 }
 
+TableHeader.defaultProps = {
+  sortColumn: {},
+  onSort: () => {},
+};
+
 TableHeader.propTypes = {
-  sortColumn: SortColumnProptypes.isRequired,
+  sortColumn: SortColumnProptypes,
   columns: ColumnProptypes.isRequired,
-  onSort: PropTypes.func.isRequired,
+  onSort: PropTypes.func,
 };
 
 export default TableHeader;

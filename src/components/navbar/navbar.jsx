@@ -74,6 +74,20 @@ function NavBar() {
                 />
               </Link>
             </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item>
+              <Link
+                className="navbar-brand"
+                id="navbar_screens_locations"
+                style={{ color: "black" }}
+                to="/locations"
+              >
+                <FormattedMessage
+                  id="navbar_locations"
+                  defaultMessage="navbar_locations"
+                />
+              </Link>
+            </NavDropdown.Item>
           </NavDropdown>
 
           <Nav.Item>

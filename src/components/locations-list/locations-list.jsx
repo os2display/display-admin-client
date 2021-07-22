@@ -1,38 +1,38 @@
 import { React, useState, useEffect } from "react";
 import { Button, Row, Container, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 import CheckboxForList from "../util/list/checkbox-for-list";
+import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
-import Published from "./published";
 import ListButton from "../util/list/list-button";
 
 /**
- * The category list component.
+ * The locations list component.
  *
  * @returns {object}
- * The SlidesList
+ * The LocationsList
  */
-function SlidesList() {
+function LocationsList() {
   const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [slides, setSlides] = useState([]);
+  const [locations, setLocations] = useState([]);
 
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-
-    fetch(`/fixtures/slides/slides.json`)
+    fetch(`/fixtures/locations/locations.json`)
       .then((response) => response.json())
       .then((jsonData) => {
-        setSlides(jsonData.slides);
+        setLocations(jsonData.locations);
       });
   }, []);
 
@@ -52,9 +52,9 @@ function SlidesList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the tag.
+   * The name of the location.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the location
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
@@ -85,45 +85,39 @@ function SlidesList() {
       label: intl.formatMessage({ id: "table_header_name" }),
     },
     {
-      path: "template",
+      path: "createdBy",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_template" }),
+      label: intl.formatMessage({ id: "table_header_created_by" }),
     },
     {
       sort: true,
-      path: "onFollowingPlaylists",
+      path: "onFollowingScreens",
       content: (data) =>
         ListButton(
           openInfoModal,
-          data.onFollowingPlaylists,
-          data.onFollowingPlaylists.length,
-          data.onFollowingPlaylists.length === 0
+          data.onFollowingScreens,
+          data.onFollowingScreens.length,
+          data.onFollowingScreens.length === 0
         ),
-      key: "playlists",
-      label: intl.formatMessage({ id: "table_header_number_of_playlists" }),
+      key: "screens",
+      label: intl.formatMessage({ id: "table_header_number_of_screens" }),
     },
     {
-      path: "tags",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_tags" }),
-    },
-    {
-      path: "published",
-      sort: true,
-      content: (data) => Published(data),
-      label: intl.formatMessage({ id: "table_header_published" }),
+      path: "onFollowingGroups",
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.onFollowingGroups,
+          data.onFollowingGroups.length,
+          data.onFollowingGroups.length === 0
+        ),
+      key: "groups",
+      label: intl.formatMessage({ id: "table_header_number_of_groups" }),
     },
     {
       key: "edit",
-      content: () => (
-        <>
-          <div className="m-2">
-            <Button disabled={selectedRows.length > 0} variant="success">
-              <FormattedMessage id="edit" defaultMessage="edit" />
-            </Button>
-          </div>
-        </>
-      ),
+      content: (data) => <LinkForList data={data} param="category" />,
     },
     {
       key: "delete",
@@ -149,9 +143,9 @@ function SlidesList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the tag.
+   * The name of the location.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the location
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
@@ -182,22 +176,22 @@ function SlidesList() {
         <Col>
           <h1>
             <FormattedMessage
-              id="slides_list_header"
-              defaultMessage="slides_list_header"
+              id="locations_list_header"
+              defaultMessage="locations_list_header"
             />
           </h1>
         </Col>
         <Col md="auto">
-          <Button>
+          <Link className="btn btn-primary btn-success" to="/category/new">
             <FormattedMessage
-              id="create_new_slide"
-              defaultMessage="create_new_slide"
+              id="create_new_location"
+              defaultMessage="create_new_location"
             />
-          </Button>
+          </Link>
         </Col>
       </Row>
-      {slides && (
-        <List columns={columns} selectedRows={selectedRows} data={slides} />
+      {locations && (
+        <List columns={columns} selectedRows={selectedRows} data={locations} />
       )}
       <DeleteModal
         show={showDeleteModal}
@@ -214,4 +208,4 @@ function SlidesList() {
   );
 }
 
-export default SlidesList;
+export default LocationsList;

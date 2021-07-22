@@ -503,6 +503,24 @@
       "value": "# spillelister"
     }
   ],
+  "table_header_number_of_groups": [
+    {
+      "type": 0,
+      "value": "# grupper"
+    }
+  ],
+  "table_header_number_of_screens": [
+    {
+      "type": 0,
+      "value": "# skærme"
+    }
+  ],
+  "locations_list_header": [
+    {
+      "type": 0,
+      "value": "Lokationer"
+    }
+  ],
   "info_title": [
     {
       "type": 0,
@@ -546,6 +564,12 @@
     }
   ],
   "create_new_group": [
+    {
+      "type": 0,
+      "value": "Opret ny gruppe"
+    }
+  ],
+  "create_new_location": [
     {
       "type": 0,
       "value": "Opret ny gruppe"

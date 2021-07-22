@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Table } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ColumnProptypes from "../../proptypes/column-proptypes";
+import TableHeader from "../table/table-header";
 
 /**
  * @param {object} props
@@ -81,13 +82,7 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
   return (
     <div>
       <Table>
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th key={column.path || column.key}>{column.label}</th>
-            ))}
-          </tr>
-        </thead>
+        <TableHeader columns={columns}></TableHeader>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided) => (
