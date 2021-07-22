@@ -347,6 +347,18 @@
       "value": "Skærmens navn"
     }
   ],
+  "edit_add_screen_label_name_invalid": [
+    {
+      "type": 0,
+      "value": "Venligst udfyld navnet"
+    }
+  ],
+  "input_error_text": [
+    {
+      "type": 0,
+      "value": "Dette felt skal udfyldes"
+    }
+  ],
   "edit_add_screen_placeholder_name": [
     {
       "type": 0,
