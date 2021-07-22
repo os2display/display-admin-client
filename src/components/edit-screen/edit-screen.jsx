@@ -19,7 +19,6 @@ import getFormErrors from "../util/helpers/form-errors-helper";
  */
 function EditScreen() {
   const intl = useIntl();
-
   const history = useHistory();
   const radioButtonOptions = [
     {
