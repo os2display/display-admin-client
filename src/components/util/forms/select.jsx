@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 
@@ -19,8 +19,10 @@ import PropTypes from "prop-types";
  * The message, if the form is submitted invalid.
  * @param {Function} props.onInvalid
  * The callback, if the form is submitted invalid.
- * @param {boolean} props.required
- * Whether the form is required.
+ * @param {Array} props.errors
+ * A list of errors, or null.
+ * @param {string} props.errorText
+ * The string to display on error.
  * @returns {object}
  * The select component.
  */
@@ -32,26 +34,43 @@ function Select({
   onChange,
   dataMessage,
   onInvalid,
-  required,
+  errors,
+  errorText,
 }) {
   const intl = useIntl();
   const nothingSelected = intl.formatMessage({
     id: "dropdown_nothing_selected",
   });
+  const textOnError =
+    errorText || intl.formatMessage({ id: "input_error_text" });
+  const [error, setError] = useState();
+  const [classes, setClasses] = useState("form-control");
+  const required = !!errors;
+  /**
+   * Load content from fixture.
+   */
+  useEffect(() => {
+    if (errors && errors.includes(name)) {
+      setError(true);
+      setClasses("form-control is-invalid");
+    }
+  }, [errors]);
   return (
     <div className="form-group">
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>
+        {label}
+        {required && " *"}
+      </label>
       <select
-        className="form-control"
+        className={classes}
         id={name}
         name={name}
         value={value}
-        required={required}
         data-message={dataMessage}
         onChange={onChange}
         onInvalid={onInvalid}
       >
-        <option disabled value="0">
+        <option disabled value="">
           {nothingSelected}
         </option>
         {options.map((option) => (
@@ -60,12 +79,14 @@ function Select({
           </option>
         ))}
       </select>
+      {error && <div className="invalid-feedback">{textOnError}</div>}
     </div>
   );
 }
 
 Select.defaultProps = {
-  required: false,
+  errors: [],
+  errorText: "",
 };
 
 Select.propTypes = {
@@ -75,13 +96,14 @@ Select.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  required: PropTypes.bool,
+  errors: PropTypes.arrayOf(PropTypes.string),
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   dataMessage: PropTypes.string.isRequired,
   onInvalid: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  errorText: PropTypes.string,
 };
 
 export default Select;
