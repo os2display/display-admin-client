@@ -39,7 +39,6 @@ function FormInputArea({
         onChange={onChange}
         data-message={dataMessage}
         onInvalid={onInvalid}
-        required
       />
     </div>
   );

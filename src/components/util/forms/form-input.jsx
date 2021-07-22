@@ -1,5 +1,6 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { FormGroup, FormLabel, FormControl, InputGroup } from "react-bootstrap";
 
 /**
  * An input for forms.
@@ -22,55 +23,76 @@ function FormInput({
   type,
   label,
   helpText,
-  required,
   placeholder,
   value,
   onChange,
   dataMessage,
   onInvalid,
+  errors,
+  invalidText,
 }) {
-  return (
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
-      <input
-        name={name}
-        id={name}
-        required={required}
-        className="form-control"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        data-message={dataMessage}
-        onInvalid={onInvalid}
-        type={type}
-      />
+  const [error, setError] = useState();
+  const [classes, setClasses] = useState("form-control");
+  const required = !!errors;
 
+  /**
+   * Load content from fixture.
+   */
+  useEffect(() => {
+    if (errors && errors.includes(name)) {
+      setError(true);
+      setClasses("form-control is-invalid");
+    }
+  }, [errors]);
+
+  return (
+    <FormGroup className="mb-3">
+      <FormLabel htmlFor={name}>
+        {label}
+        {required && " *"}
+      </FormLabel>
+      <InputGroup hasValidation>
+        <FormControl
+          name={name}
+          id={name}
+          className={classes}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          data-message={dataMessage}
+          onInvalid={onInvalid}
+          type={type}
+        />
+        {error && <div className="invalid-feedback">{invalidText}</div>}
+      </InputGroup>
       {helpText && <small className="form-text">{helpText}</small>}
-    </div>
+    </FormGroup>
   );
 }
 
 FormInput.defaultProps = {
   helpText: "",
-  required: false,
   placeholder: "",
   type: "text",
   value: "",
   dataMessage: "",
   onInvalid: () => {},
+  errors: null,
+  invalidText: "",
 };
 
 FormInput.propTypes = {
+  errors: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   value: PropTypes.string,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   placeholder: PropTypes.string,
-  required: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   dataMessage: PropTypes.string,
   onInvalid: PropTypes.func,
+  invalidText: PropTypes.string,
 };
 
 export default FormInput;
