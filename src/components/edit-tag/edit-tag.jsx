@@ -3,23 +3,24 @@ import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
+import getFormErrors from "../util/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 
 /**
  * The edit tag component.
  *
  * @returns {object}
- *   The edit tag page.
+ * The edit tag page.
  */
 function EditTag() {
   const intl = useIntl();
+  const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
   const { id } = useParams();
-  const [tag, setTag] = useState([]);
   const [tagName, setTagName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const newTag = id === "new";
-  const validText = intl.formatMessage({ id: "valid_text_tag_name_input" });
+  const [errors, setErrors] = useState([]);
   const tagLabel = intl.formatMessage({ id: "edit_add_tag_label" });
   const tagPlaceholder = intl.formatMessage({
     id: "edit_add_tag_label_placeholder",
@@ -34,7 +35,9 @@ function EditTag() {
       fetch(`/fixtures/tags/tag.json`)
         .then((response) => response.json())
         .then((jsonData) => {
-          setTag(jsonData.tag);
+          setFormStateObject({
+            tag_name: jsonData.tag.name,
+          });
           setTagName(jsonData.tag.name);
         });
     }
@@ -49,30 +52,31 @@ function EditTag() {
    * event target
    */
   function handleInput({ target }) {
-    if (target.setCustomValidity) {
-      target.setCustomValidity("");
-    }
-    setTagName(target.value);
+    const localFormStateObject = { ...formStateObject };
+    localFormStateObject[target.id] = target.value;
+    setFormStateObject(localFormStateObject);
   }
 
   /**
-   * Handles validation of input with translation.
+   * Handles validations, and goes back to list.
    *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * event target
+   * @todo make it save.
+   * @param {object} e
+   * the submit event.
+   * @returns {boolean}
+   * Boolean indicating whether to submit form.
    */
-  function handleValidationMessage({ target }) {
-    const { message } = target.dataset;
-    target.setCustomValidity(message);
-  }
-
-  /**
-   * Redirects back to list.
-   */
-  function handleSubmit() {
-    setSubmitted(true);
+  function handleSubmit(e) {
+    e.preventDefault();
+    let returnValue = false;
+    const createdErrors = getFormErrors(formStateObject, "tag");
+    if (createdErrors.length > 0) {
+      setErrors(createdErrors);
+    } else {
+      setSubmitted(true);
+      returnValue = true;
+    }
+    return returnValue;
   }
 
   return (
@@ -90,19 +94,17 @@ function EditTag() {
           {!newTag && (
             <h1>
               <FormattedMessage id="edit_tag" defaultMessage="edit_tag" />
-              {tag.name}
+              {tagName}
             </h1>
           )}
           <FormInput
             name="tag_name"
             type="text"
+            errors={errors}
             label={tagLabel}
-            required
             placeholder={tagPlaceholder}
-            value={tagName}
+            value={formStateObject.tag_name}
             onChange={handleInput}
-            dataMessage={validText}
-            onInvalid={handleValidationMessage}
           />
           {submitted && <Redirect to="/tags" />}
           <Button
