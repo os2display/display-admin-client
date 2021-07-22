@@ -14,6 +14,5 @@ describe("Groups list loads", () => {
       .eq(2)
       .invoke("text")
       .should("match", /^Oprettet af/);
-
   });
 });
