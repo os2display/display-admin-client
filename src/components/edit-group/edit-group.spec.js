@@ -1,26 +1,26 @@
-describe("Edit tag page loads", () => {
+describe("Edit group page loads", () => {
   it("It loads", () => {
-    cy.visit("/tag/new");
+    cy.visit("/group/new");
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Opret nyt tag/);
-    cy.visit("/tag/76");
+      .should("match", /^Opret ny gruppe/);
+    cy.visit("/group/76");
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger følgende tag: matrices/);
+      .should("match", /^Rediger følgende gruppe: Infoskærme/);
   });
   it("It goes back", () => {
-    cy.visit("/tags");
-    cy.visit("/tag/new");
+    cy.visit("/groups");
+    cy.visit("/group/new");
     cy.get(".container")
       .find("button")
       .eq(0)
       .invoke("text")
       .should("match", /^Annuller/);
     cy.get("input").type("Hello, World");
-    cy.get("#save_tag").click();
+    cy.get("#save_group").click();
     cy.get(".container")
       .find("button")
       .eq(1)
