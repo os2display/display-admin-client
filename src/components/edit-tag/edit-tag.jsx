@@ -73,6 +73,7 @@ function EditTag() {
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {
+      setErrors([]);
       setSubmitted(true);
       returnValue = true;
     }

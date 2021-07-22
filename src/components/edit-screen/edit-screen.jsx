@@ -111,6 +111,7 @@ function EditScreen() {
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {
+      setErrors([]);
       setSubmitted(true);
       returnValue = true;
     }
@@ -234,11 +235,11 @@ function EditScreen() {
           pattern="(\d+)x(\d+)"
           onChange={handleInput}
         />
-        <PlaylistDragAndDrop
+        {/* <PlaylistDragAndDrop
           handleChange={handleInput}
           name="playlists"
           data={formStateObject.playlists}
-        />
+        /> */}
         {submitted && <Redirect to="/screens" />}
         <Button
           variant="secondary"
