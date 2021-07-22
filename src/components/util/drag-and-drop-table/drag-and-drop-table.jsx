@@ -38,6 +38,8 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
   }
 
   /**
+   * Reorders an array after drag and drop.
+   *
    * @param {Array} listOfPlaylists
    * The data to reorder
    * @param {number} startIndex
@@ -55,6 +57,7 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
   }
 
   /**
+   * Called when an item is dropped, callback with reordered data.
    * @param {object} result
    * The result object of the drag and drop, has
    * destination, source (startindex) and index (endindex).
