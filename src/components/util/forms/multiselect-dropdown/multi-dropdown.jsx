@@ -62,7 +62,24 @@ function MultiSelectComponent({
    */
   useEffect(() => {
     setError(errors && errors.includes(name));
-  }, [errors]);
+    const localMappedOptions = options.map((item) => {
+      return {
+        label: item.name,
+        value: item.id,
+        disabled: false,
+      };
+    });
+    setMappedOptions(localMappedOptions);
+
+    const localMappedSelected = selected.map((item) => {
+      return {
+        label: item.name,
+        value: item.id,
+        disabled: false,
+      };
+    });
+    setMappedSelected(localMappedSelected);
+  }, [selected]);
 
   /**
    * Map data to fit component.
