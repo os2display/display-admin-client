@@ -39,7 +39,7 @@
     "resolutionOfScreen": "1200x1080",
     "sizeOfScreen": "12\"",
     "location": "M2",
-    "horizontal_or_vertical": "horizontal",
+    "horizontalOrVertical": "horizontal",
     "locations": [
       {
         "label": "Dokk1",

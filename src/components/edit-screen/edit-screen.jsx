@@ -39,7 +39,7 @@ function EditScreen() {
     screen_groups: [],
     screen_layout: "",
     playlists: [],
-    horizontal_or_vertical: radioButtonOptions[0].id,
+    horizontalOrVertical: radioButtonOptions[0].id,
   });
   const { id } = useParams();
   const [screenName, setScreenName] = useState([]);
@@ -66,7 +66,7 @@ function EditScreen() {
             screen_groups: jsonData.screen.groups,
             screen_layout: jsonData.screen.screenLayout,
             playlists: jsonData.screen.playlists,
-            horizontal_or_vertical: jsonData.screen.horizontal_or_vertical,
+            horizontalOrVertical: jsonData.screen.horizontalOrVertical,
             screen_name: jsonData.screen.name,
             description: jsonData.screen.description,
             descriptionOfLocation: jsonData.screen.descriptionOfLocation,
@@ -211,11 +211,11 @@ function EditScreen() {
         />
         <RadioButtons
           options={radioButtonOptions}
-          radioGroupName="horizontal_or_vertical"
-          selected={formStateObject.horizontal_or_vertical}
+          radioGroupName="horizontalOrVertical"
+          selected={formStateObject.horizontalOrVertical}
           handleChange={handleInput}
           label={intl.formatMessage({
-            id: "edit_add_screen_horizontal_or_vertical_label",
+            id: "edit_add_screen_horizontalOrVertical_label",
           })}
         />
         <FormInput
