@@ -40,9 +40,9 @@ Table.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
-  sortColumn: SortColumnProptypes.isRequired,
+  sortColumn: SortColumnProptypes,
   onSort: PropTypes.func,
-  columns: ColumnProptypes,
+  columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes,
 };
 export default Table;

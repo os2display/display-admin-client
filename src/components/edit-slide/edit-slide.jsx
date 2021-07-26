@@ -7,8 +7,9 @@ import Select from "../util/forms/select";
 import FormInput from "../util/forms/form-input";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import RenderFormElement from "../util/forms/render-form-element";
-import FormCheckbox from '../util/forms/form-checkbox';
-import SelectScreenTable from '../edit-location/select-screen-table';
+import FormCheckbox from "../util/forms/form-checkbox";
+import SelectScreenTable from "../util/multi-and-table/select-screen-table";
+import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
 /**
  * The edit slide component.
  *
@@ -51,7 +52,8 @@ function EditSlide() {
           const localFormStateObject = { ...formStateObject };
           localFormStateObject.slide_name = jsonData.slide.name;
           localFormStateObject.slide_template = jsonData.slide.template;
-          localFormStateObject.locationScreens = jsonData.slide.onFollowingScreens;
+          localFormStateObject.slideScreen = jsonData.slide.onFollowingScreens;
+          localFormStateObject.slidePlaylist = jsonData.slide.playlists;
           setFormStateObject(localFormStateObject);
           setSlideName(jsonData.slide.name);
           setTemplateData(jsonData.slide.templateData);
@@ -193,21 +195,29 @@ function EditSlide() {
               ))}
             </div>
           )}
-    <SelectScreenTable
+          <SelectScreenTable
             handleChange={handleInput}
-            name="locationScreens"
+            name="slideScreen"
             errors={errors}
-            data={formStateObject.locationScreens}
+            selectedData={formStateObject.slideScreen}
+          />
+          <SelectPlaylistTable
+            handleChange={handleInput}
+            name="slidePlaylist"
+            errors={errors}
+            selectedData={formStateObject.slidePlaylist}
           />
           <FormCheckbox
             label={checkboxLabel}
             onChange={handleInput}
             name="slide_publish"
-            value={formStateObject.slidePublish}></FormCheckbox>
+            value={formStateObject.slidePublish}
+          />
           {submitted && <Redirect to="/slides" />}
           <Button
             variant="secondary"
             type="button"
+            id="slide_cancel"
             onClick={() => history.goBack()}
           >
             <FormattedMessage id="cancel" defaultMessage="cancel" />

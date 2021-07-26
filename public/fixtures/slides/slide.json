@@ -11,11 +11,36 @@
       "seperator": false,
       "text-margin": true,
       "duration": 400,
-      "image": {
-        "data_url": "/fixtures/images/mountain1.jpeg"
-      }
+      "image": [
+        {
+          "data_url": "/fixtures/images/mountain1.jpeg"
+        }
+      ]
     },
     "onFollowingScreens": [
+      {
+        "id": 14,
+        "name": "Bigtax",
+        "size": "30\"",
+        "dimensions": "1920x1080",
+        "overriddenByCampaign": true
+      },
+      {
+        "id": 15,
+        "name": "Pannier",
+        "size": "30\"",
+        "dimensions": "1920x1080",
+        "overriddenByCampaign": false
+      },
+      {
+        "id": 16,
+        "name": "Flowdesk",
+        "size": "30\"",
+        "dimensions": "1920x1080",
+        "overriddenByCampaign": false
+      }
+    ],
+    "categories": [
       {
         "id": 15,
         "name": "Digitized"
@@ -25,9 +50,26 @@
     "published": true,
     "playlists": [
       {
-        "label": "Sommerplaylist",
-        "value": 1,
-        "disabled": false
+        "id": 1,
+        "categories": [
+          {
+            "id": 6,
+            "createdBy": "Genovera",
+            "name": "Subin"
+          },
+          {
+            "id": 1,
+            "createdBy": "Egbert",
+            "name": "Lotstring"
+          }
+        ],
+        "slides": [
+          {
+            "id": 1,
+            "name": "Roderigo"
+          }
+        ],
+        "name": "Sommerplaylist"
       }
     ]
   }

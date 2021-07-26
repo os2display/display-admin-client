@@ -26,14 +26,7 @@ function TagDropdown({ handleTagSelection, selected, name, errors }) {
     fetch(`/fixtures/tags/tags.json`)
       .then((response) => response.json())
       .then((jsonData) => {
-        const mappedArray = jsonData.tags.map((item) => {
-          return {
-            label: item.name,
-            value: item.id,
-            disabled: false,
-          };
-        });
-        setOptions(mappedArray);
+        setOptions(jsonData.tags);
       });
   }, []);
 

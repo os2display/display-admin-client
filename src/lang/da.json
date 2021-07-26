@@ -191,6 +191,24 @@
       "value": "# slides"
     }
   ],
+  "table_header_number_of_categories": [
+    {
+      "type": 0,
+      "value": "# kategorier"
+    }
+  ],
+  "playlist_has_categories": [
+    {
+      "type": 0,
+      "value": "Playlisten har de følgende kategorier"
+    }
+  ],
+  "playlist_has_slides": [
+    {
+      "type": 0,
+      "value": "Playlisten indeholder de følgende slides"
+    }
+  ],
   "on_the_following_playlists": [
     {
       "type": 0,

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
  *
  * @param {string} props
  * the props.
- * @param {string} props.radioGroupNamenpm install react-dnd react-dnd-html5-backend
+ * @param {string} props.radioGroupName
  * The name of the input
  * @param {string} props.label
  * The label for the input

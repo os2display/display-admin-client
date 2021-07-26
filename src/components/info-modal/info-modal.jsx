@@ -13,12 +13,14 @@ import contentString from "../util/helpers/content-string";
  * Whether to show the modal.
  * @param {Function} props.onClose
  * Callback on close modal.
- * @param {Array} props.onPlaylists
+ * @param {Array} props.onDataStructures
  * The playlists to list.
+ * @param {string} props.infoModalString
+ * The info modal string.
  * @returns {object}
  * The modal.
  */
-function InfoModal({ show, onClose, onPlaylists }) {
+function InfoModal({ show, onClose, onDataStructures, infoModalString }) {
   if (!show) {
     return <></>;
   }
@@ -26,14 +28,11 @@ function InfoModal({ show, onClose, onPlaylists }) {
   const intl = useIntl();
   const title = intl.formatMessage({ id: "info_title" });
   const declineText = intl.formatMessage({ id: "info_decline_text" });
-  const onTheFollowingPlaylists = intl.formatMessage({
-    id: "on_the_following_playlists",
-  });
-  const and = intl.formatMessage({ id: "and_string" });
+  const and = intl.formatMessage({ id: "and" });
 
   // Creates a string for modal
-  const content = `${onTheFollowingPlaylists}:  ${contentString(
-    onPlaylists,
+  const content = `${infoModalString}:  ${contentString(
+    onDataStructures,
     and
   )}`;
 
@@ -53,10 +52,11 @@ function InfoModal({ show, onClose, onPlaylists }) {
 
 InfoModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  onPlaylists: PropTypes.arrayOf(
+  onDataStructures: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   onClose: PropTypes.func.isRequired,
+  infoModalString: PropTypes.string.isRequired,
 };
 
 export default InfoModal;

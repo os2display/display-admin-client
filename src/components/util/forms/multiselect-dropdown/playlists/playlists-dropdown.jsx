@@ -40,14 +40,7 @@ function PlaylistsDropdown({
     fetch("/fixtures/playlists/playlists.json")
       .then((response) => response.json())
       .then((jsonData) => {
-        const mappedArray = jsonData.playlists.map((item) => {
-          return {
-            label: item.name,
-            value: item.id,
-            disabled: false,
-          };
-        });
-        setOptions(mappedArray);
+        setOptions(jsonData.playlists);
         setIsLoading(false);
       });
   }, []);

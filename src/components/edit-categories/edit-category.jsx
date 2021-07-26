@@ -115,6 +115,7 @@ function EditCategories() {
         <Button
           variant="secondary"
           type="button"
+          id="category_cancel"
           onClick={() => history.goBack()}
         >
           <FormattedMessage id="cancel" defaultMessage="cancel" />

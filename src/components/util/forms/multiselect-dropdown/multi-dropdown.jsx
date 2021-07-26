@@ -49,6 +49,8 @@ function MultiSelectComponent({
 }) {
   const intl = useIntl();
   const [error, setError] = useState();
+  const [mappedOptions, setMappedOptions] = useState([]);
+  const [mappedSelected, setMappedSelected] = useState([]);
   const textOnError =
     errorText || intl.formatMessage({ id: "input_error_text" });
   const and = intl.formatMessage({ id: "and_string" });
@@ -61,7 +63,24 @@ function MultiSelectComponent({
    */
   useEffect(() => {
     setError(errors && errors.includes(name));
-  }, [errors]);
+    const localMappedOptions = options.map((item) => {
+      return {
+        label: item.name,
+        value: item.id,
+        disabled: false,
+      };
+    });
+    setMappedOptions(localMappedOptions);
+
+    const localMappedSelected = selected.map((item) => {
+      return {
+        label: item.name,
+        value: item.id,
+        disabled: false,
+      };
+    });
+    setMappedSelected(localMappedSelected);
+  }, [selected]);
 
   /**
    * Filter to replace the default filter in multi-select.
@@ -90,7 +109,9 @@ function MultiSelectComponent({
    * The data to call back with
    */
   function changeData(data) {
-    const target = { value: data, id: name };
+    const ids = data.map((a) => a.value);
+    const dataToReturn = options.filter((option) => ids.includes(option.id));
+    const target = { value: dataToReturn, id: name };
     handleSelection({ target });
   }
 
@@ -107,22 +128,27 @@ function MultiSelectComponent({
       ? contentString(valueSelected, and)
       : nothingSelectedLabel;
   }
+
   return (
-    <div className={error ? "invalid" : ""}>
-      <label htmlFor={name}>{label}</label>
-      <MultiSelect
-        isCreatable={isCreatable}
-        options={options}
-        value={selected}
-        filterOptions={filterOptions}
-        onChange={changeData}
-        id={name}
-        className={error ? "invalid" : ""}
-        isLoading={isLoading}
-        valueRenderer={customValueRenderer}
-      />
-      {error && <div className="invalid-feedback-multi">{textOnError}</div>}
-    </div>
+    <>
+      {mappedOptions.length > 0 && (
+        <div className={error ? "invalid" : ""}>
+          <label htmlFor={name}>{label}</label>
+          <MultiSelect
+            isCreatable={isCreatable}
+            options={mappedOptions}
+            value={mappedSelected}
+            filterOptions={filterOptions}
+            onChange={changeData}
+            id={name}
+            className={error ? "invalid" : ""}
+            isLoading={isLoading}
+            valueRenderer={customValueRenderer}
+          />
+          {error && <div className="invalid-feedback-multi">{textOnError}</div>}
+        </div>
+      )}
+    </>
   );
 }
 

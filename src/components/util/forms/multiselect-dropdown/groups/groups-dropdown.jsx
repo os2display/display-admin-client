@@ -35,14 +35,7 @@ function GroupsDropdown({ handleGroupsSelection, selected, name, errors }) {
     fetch("/fixtures/groups/groups.json")
       .then((response) => response.json())
       .then((jsonData) => {
-        const mappedArray = jsonData.groups.map((item) => {
-          return {
-            label: item.name,
-            value: item.id,
-            disabled: false,
-          };
-        });
-        setOptions(mappedArray);
+        setOptions(jsonData.groups);
         setIsLoading(false);
       });
   }, []);

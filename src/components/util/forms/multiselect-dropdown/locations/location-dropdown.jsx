@@ -35,14 +35,7 @@ function LocationDropdown({ handleLocationSelection, selected, name, errors }) {
     fetch("/fixtures/locations/locations.json")
       .then((response) => response.json())
       .then((jsonData) => {
-        const mappedArray = jsonData.locations.map((item) => {
-          return {
-            label: item.name,
-            value: item.id,
-            disabled: false,
-          };
-        });
-        setOptions(mappedArray);
+        setOptions(jsonData.locations);
         setIsLoading(false);
       });
   }, []);

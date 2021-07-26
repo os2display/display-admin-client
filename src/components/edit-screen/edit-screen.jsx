@@ -249,6 +249,7 @@ function EditScreen() {
         <Button
           variant="secondary"
           type="button"
+          id="screen_cancel"
           onClick={() => history.goBack()}
         >
           <FormattedMessage id="cancel" defaultMessage="cancel" />

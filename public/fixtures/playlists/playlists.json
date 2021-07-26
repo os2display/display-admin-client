@@ -15,7 +15,26 @@
           "name": "Digitized"
         }
       ],
-      "name": "Sommerplaylist"
+      "name": "Sommerplaylist",
+      "categories": [
+        {
+          "id": 1,
+          "createdBy": "Egbert",
+          "onFollowingPlaylists": [
+            {
+              "id": 15,
+              "name": "Digitized"
+            }
+          ],
+          "name": "Lotstring"
+        }
+      ],
+      "slides": [
+        {
+          "id": 1,
+          "name": "Roderigo"
+        }
+      ]
     },
     {
       "id": 2,
@@ -32,7 +51,26 @@
           "name": "Digitized"
         }
       ],
-      "name": "Ereolen"
+      "name": "Ereolen",
+      "categories": [
+        {
+          "id": 1,
+          "createdBy": "Egbert",
+          "onFollowingPlaylists": [
+            {
+              "id": 15,
+              "name": "Digitized"
+            }
+          ],
+          "name": "Lotstring"
+        }
+      ],
+      "slides": [
+        {
+          "id": 1,
+          "name": "Roderigo"
+        }
+      ]
     },
     {
       "id": 3,
@@ -49,7 +87,26 @@
           "name": "Digitized"
         }
       ],
-      "name": "Mødelokaler"
+      "name": "Mødelokaler",
+      "categories": [
+        {
+          "id": 1,
+          "createdBy": "Egbert",
+          "onFollowingPlaylists": [
+            {
+              "id": 15,
+              "name": "Digitized"
+            }
+          ],
+          "name": "Lotstring"
+        }
+      ],
+      "slides": [
+        {
+          "id": 1,
+          "name": "Roderigo"
+        }
+      ]
     }
   ]
 }

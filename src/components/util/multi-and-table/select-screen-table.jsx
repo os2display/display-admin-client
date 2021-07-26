@@ -2,25 +2,25 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useIntl, FormattedMessage } from "react-intl";
-import ScreensDropdown from "../util/forms/multiselect-dropdown/screens/screens-dropdown";
-import Table from "../util/table/table";
-import CampaignIcon from "../screen-list/campaign-icon";
+import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
+import Table from "../table/table";
+import CampaignIcon from "../../screen-list/campaign-icon";
 
 /**
- * An input for forms.
+ * A multiselect and table for screens.
  *
  * @param {string} props
  * the props.
- * @param {string} props.radioGroupNamenpm install react-dnd react-dnd-html5-backend
- * The name of the input
- * @param {string} props.label
- * The label for the input
+ * @param {string} props.name
+ * The name for the input
+ * @param {string} props.selectedData
+ * The data for the multidropdown.
  * @param {Array} props.errors
  * A list of errors, or null.
  * @returns {object}
  * An input.
  */
-function SelectScreenTable({ handleChange, name, data, errors }) {
+function SelectScreenTable({ handleChange, name, selectedData, errors }) {
   const intl = useIntl();
 
   /**
@@ -32,13 +32,13 @@ function SelectScreenTable({ handleChange, name, data, errors }) {
    * The id of the screen
    */
   function removeFromList({ id }) {
-    const indexOfItemToRemove = data
+    const indexOfItemToRemove = selectedData
       .map((item) => {
         return item.id;
       })
       .indexOf(id);
-    data.splice(indexOfItemToRemove, 1);
-    const target = { value: data, id: name };
+    selectedData.splice(indexOfItemToRemove, 1);
+    const target = { value: selectedData, id: name };
     handleChange({ target });
   }
 
@@ -76,16 +76,14 @@ function SelectScreenTable({ handleChange, name, data, errors }) {
 
   return (
     <>
-      {data && (
-        <>
-          <ScreensDropdown
-            errors={errors}
-            name={name}
-            handleScreenSelection={handleChange}
-            selected={data}
-          />
-          {data.length > 0 && <Table columns={columns} data={data} />}
-        </>
+      <ScreensDropdown
+        errors={errors}
+        name={name}
+        handleScreenSelection={handleChange}
+        selected={selectedData}
+      />
+      {selectedData?.length > 0 && (
+        <Table columns={columns} data={selectedData} />
       )}
     </>
   );
@@ -93,13 +91,14 @@ function SelectScreenTable({ handleChange, name, data, errors }) {
 
 SelectScreenTable.defaultProps = {
   errors: [],
+  selectedData: [],
 };
 
 SelectScreenTable.propTypes = {
   name: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(
+  selectedData: PropTypes.arrayOf(
     PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
-  ).isRequired,
+  ),
   handleChange: PropTypes.func.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };

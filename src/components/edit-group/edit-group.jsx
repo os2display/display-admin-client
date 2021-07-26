@@ -112,6 +112,7 @@ function EditGroup() {
           <Button
             variant="secondary"
             type="button"
+            id="group_cancel"
             onClick={() => history.goBack()}
           >
             <FormattedMessage id="cancel" defaultMessage="cancel" />

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
-import SelectScreenTable from "./select-screen-table";
+import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 
 /**
  * The edit location component.
@@ -119,12 +119,13 @@ function EditLocation() {
             handleChange={handleInput}
             name="locationScreens"
             errors={errors}
-            data={formStateObject.locationScreens}
+            selectedData={formStateObject.locationScreens}
           />
           {submitted && <Redirect to="/locations" />}
           <Button
             variant="secondary"
             type="button"
+            id="location_cancel"
             onClick={() => history.goBack()}
           >
             <FormattedMessage id="cancel" defaultMessage="cancel" />

@@ -78,7 +78,6 @@ function EditTag() {
       setSubmitted(true);
       returnValue = true;
     }
-    debugger;
     return returnValue;
   }
 
@@ -113,6 +112,7 @@ function EditTag() {
           <Button
             variant="secondary"
             type="button"
+            id="tag_cancel"
             onClick={() => history.goBack()}
           >
             <FormattedMessage id="cancel" defaultMessage="cancel" />
