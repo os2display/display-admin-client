@@ -2,10 +2,10 @@
  * Creates a string with commas and "and".
  *
  * @param {Array} content - the content to create a string from.
- * @param {string} and - the string between the two last options.
+ * @param {string} andString - the string between the two last options.
  * @returns {string} a string with commas and "and".
  */
-function contentString(content, and) {
+function contentString(content, andString) {
   const namesOfRows = content.map((row) => row.name || row.label);
   let returnContentString = "";
   if (namesOfRows.length === 1) {
@@ -13,7 +13,7 @@ function contentString(content, and) {
   } else {
     returnContentString = `${namesOfRows
       .slice(0, -1)
-      .join(", ")} ${and} ${namesOfRows.slice(-1)}`;
+      .join(", ")} ${andString} ${namesOfRows.slice(-1)}`;
   }
   return returnContentString;
 }

@@ -35,7 +35,7 @@ function EditScreen() {
     },
   ];
   const [formStateObject, setFormStateObject] = useState({
-    screen_locations: [],
+    screenLocations: [],
     screen_groups: [],
     screen_layout: "",
     playlists: [],
@@ -60,7 +60,7 @@ function EditScreen() {
           setScreenName(jsonData.screen.name);
           // Map existing screen to state.
           setFormStateObject({
-            screen_locations: jsonData.screen.locations,
+            screenLocations: jsonData.screen.locations,
             sizeOfScreen: jsonData.screen.sizeOfScreen,
             resolutionOfScreen: jsonData.screen.resolutionOfScreen,
             screen_groups: jsonData.screen.groups,
@@ -168,9 +168,9 @@ function EditScreen() {
         />
         <LocationDropdown
           errors={errors}
-          name="screen_locations"
+          name="screenLocations"
           handleLocationSelection={handleInput}
-          selected={formStateObject.screen_locations}
+          selected={formStateObject.screenLocations}
         />
         {layoutOptions && (
           <Select

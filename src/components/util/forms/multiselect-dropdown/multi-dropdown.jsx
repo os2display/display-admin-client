@@ -52,7 +52,7 @@ function MultiSelectComponent({
   const [classes, setClasses] = useState("");
   const textOnError =
     errorText || intl.formatMessage({ id: "input_error_text" });
-  const and = intl.formatMessage({ id: "and" });
+  const and = intl.formatMessage({ id: "and_string" });
   const nothingSelectedLabel =
     noSelectedString ||
     intl.formatMessage({ id: "multi_dropdown_no_selected" });

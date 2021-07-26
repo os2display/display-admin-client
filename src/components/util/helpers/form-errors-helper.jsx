@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 function getFormErrors(formStateObject, form) {
   const validationErrors = [];
   const validationList = [
-    { input: "screen_locations", form: "screen" },
+    { input: "screenLocations", form: "screen" },
     { input: "screen_groups", form: "screen" },
     { input: "screen_groups", form: "screen" },
   ];

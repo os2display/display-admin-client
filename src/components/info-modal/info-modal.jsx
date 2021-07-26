@@ -29,7 +29,7 @@ function InfoModal({ show, onClose, onPlaylists }) {
   const onTheFollowingPlaylists = intl.formatMessage({
     id: "on_the_following_playlists",
   });
-  const and = intl.formatMessage({ id: "and" });
+  const and = intl.formatMessage({ id: "and_string" });
 
   // Creates a string for modal
   const content = `${onTheFollowingPlaylists}:  ${contentString(

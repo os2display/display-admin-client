@@ -131,10 +131,16 @@
       "value": "Opløsning"
     }
   ],
-  "and": [
+  "and_string": [
     {
       "type": 0,
       "value": "og"
+    }
+  ],
+  "confirm_delete": [
+    {
+      "type": 0,
+      "value": "Er du sikker på du vil fjerne følgende element fra listen:"
     }
   ],
   "yes": [

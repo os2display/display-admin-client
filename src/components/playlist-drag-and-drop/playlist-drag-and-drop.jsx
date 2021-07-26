@@ -22,6 +22,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
   const intl = useIntl();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState([{}]);
+  const confirmationString = intl.formatMessage({ id: "confirm_delete" });
 
   /**
    * Closes the delete modal.
@@ -126,7 +127,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
         onClose={onCloseDeleteModal}
         handleAccept={() => handleRemove(selectedRow)}
         selectedRows={selectedRow}
-        areYouSureDelete="er du sikker på du vil fjerne følgende element fra listen: "
+        deleteConfirmation={confirmationString}
       />
     </>
   );

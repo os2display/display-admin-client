@@ -18,7 +18,7 @@ import contentString from "../util/helpers/content-string";
  * Rows that are selected for deletion
  * @param {Function} props.handleAccept
  * Callback on accept.
- * @param {string} props.areYouSureDelete
+ * @param {string} props.deleteConfirmation
  * The are you sure you want to delete text.
  * @returns {object}
  * The modal.
@@ -28,19 +28,22 @@ function DeleteModal({
   onClose,
   selectedRows,
   handleAccept,
-  areYouSureDelete,
+  deleteConfirmation,
 }) {
   if (!show) {
     return <></>;
   }
   const intl = useIntl();
-  const areYouSure =
-    areYouSureDelete || intl.formatMessage({ id: "are_you_sure_delete" });
+  const confirmation =
+    deleteConfirmation || intl.formatMessage({ id: "are_you_sure_delete" });
   const title = intl.formatMessage({ id: "delete_title" });
-  const and = intl.formatMessage({ id: "and" });
+  const and = intl.formatMessage({ id: "and_string" });
 
   // Creates a string for modal
-  const valuesToDelete = `${areYouSure}  ${contentString(selectedRows, and)}?`;
+  const valuesToDelete = `${confirmation}  ${contentString(
+    selectedRows,
+    and
+  )}?`;
 
   return (
     <ModalDialog title={title} onClose={onClose} handleAccept={handleAccept}>
@@ -50,7 +53,7 @@ function DeleteModal({
 }
 
 DeleteModal.defaultProps = {
-  areYouSureDelete: null,
+  deleteConfirmation: null,
 };
 
 DeleteModal.propTypes = {
@@ -58,7 +61,7 @@ DeleteModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   selectedRows: SelectedRowsProptypes.isRequired,
   handleAccept: PropTypes.func.isRequired,
-  areYouSureDelete: PropTypes.string,
+  deleteConfirmation: PropTypes.string,
 };
 
 export default DeleteModal;

@@ -53,17 +53,6 @@ function TagDropdown({ handleTagSelection, selected, name, errors }) {
   );
 }
 
-TagDropdown.propTypes = {
-  handleTagSelection: PropTypes.func.isRequired,
-  selected: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.number,
-      disabled: PropTypes.bool,
-    })
-  ).isRequired,
-};
-
 TagDropdown.defaultProps = {
   errors: null,
 };
