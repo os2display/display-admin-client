@@ -7,6 +7,7 @@ import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
+import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
 
 /**
@@ -115,15 +116,7 @@ function SlidesList() {
     },
     {
       key: "edit",
-      content: () => (
-        <>
-          <div className="m-2">
-            <Button disabled={selectedRows.length > 0} variant="success">
-              <FormattedMessage id="edit" defaultMessage="edit" />
-            </Button>
-          </div>
-        </>
-      ),
+      content: (data) => <LinkForList data={data} param="slide" />,
     },
     {
       key: "delete",
