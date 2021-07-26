@@ -371,6 +371,30 @@
       "value": "Vælg et billede"
     }
   ],
+  "pick_more_images": [
+    {
+      "type": 0,
+      "value": "Vælg et eller flere billeder"
+    }
+  ],
+  "replace_image": [
+    {
+      "type": 0,
+      "value": "Erstat billede"
+    }
+  ],
+  "image_invalid_text": [
+    {
+      "type": 0,
+      "value": "Der skal uploades et billede til denne template"
+    }
+  ],
+  "images_invalid_text": [
+    {
+      "type": 0,
+      "value": "Der skal uploades et eller flere billeder til denne template"
+    }
+  ],
   "image_upload_help_text": [
     {
       "type": 0,

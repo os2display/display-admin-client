@@ -97,6 +97,11 @@ function EditSlide() {
    * event target
    */
   function handleInput({ target }) {
+    let localErrors = [...errors];
+    if (localErrors.length > 0) {
+      localErrors = localErrors.filter((error) => error !== target.id);
+      setErrors(localErrors);
+    }
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);

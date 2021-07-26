@@ -1,5 +1,6 @@
 import { React } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import ImageUploader from "../image-uploader/image-uploader";
 import FormCheckbox from "./form-checkbox";
 import FormInput from "./form-input";
@@ -28,9 +29,15 @@ function RenderFormElement({
   onChange,
   formStateObject,
 }) {
+  const intl = useIntl();
   if (data.required) {
     requiredFieldCallback(data.name);
   }
+
+  const imageInvalidText = intl.formatMessage({ id: "image_invalid_text" });
+  const multipleImagesInvalidText = intl.formatMessage({
+    id: "images_invalid_text",
+  });
 
   /**
    * @param {object} formData
@@ -82,15 +89,18 @@ function RenderFormElement({
         );
         break;
       case "image":
-        if (formStateObject[formData.name]) {
-          returnElement = (
-            <ImageUploader
-              handleImageUpload={onChange}
-              inputImage={formStateObject[formData.name]}
-              name={formData.name}
-            />
-          );
-        }
+        returnElement = (
+          <ImageUploader
+            errors={formData.required ? errors : null}
+            multipleImages={data.multipleImages}
+            handleImageUpload={onChange}
+            inputImage={formStateObject[formData.name]}
+            name={formData.name}
+            invalidText={
+              data.multipleImages ? multipleImagesInvalidText : imageInvalidText
+            }
+          />
+        );
         break;
       default:
         returnElement = <></>;
@@ -112,6 +122,7 @@ RenderFormElement.propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,
     required: PropTypes.bool,
+    multipleImages: PropTypes.bool,
   }).isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({
