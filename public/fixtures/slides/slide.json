@@ -15,28 +15,19 @@
         "data_url": "/fixtures/images/mountain1.jpeg"
       }
     },
+    "onFollowingScreens": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
     "tags": "customer loyalty",
     "published": true,
-    "onFollowingPlaylists": [
+    "playlists": [
       {
-        "id": 1,
-        "name": "dynamic"
-      },
-      {
-        "id": 2,
-        "name": "Mandatory"
-      },
-      {
-        "id": 3,
-        "name": "Enhanced"
-      },
-      {
-        "id": 4,
-        "name": "explicit"
-      },
-      {
-        "id": 5,
-        "name": "policy"
+        "label": "Sommerplaylist",
+        "value": 1,
+        "disabled": false
       }
     ]
   }

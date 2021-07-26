@@ -8,7 +8,7 @@ import FormInput from "../util/forms/form-input";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import RenderFormElement from "../util/forms/render-form-element";
 import FormCheckbox from '../util/forms/form-checkbox';
-
+import SelectScreenTable from '../edit-location/select-screen-table';
 /**
  * The edit slide component.
  *
@@ -17,7 +17,9 @@ import FormCheckbox from '../util/forms/form-checkbox';
  */
 function EditSlide() {
   const intl = useIntl();
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState({
+    playlists: [],
+  });
   const history = useHistory();
   const { id } = useParams();
   const [slideName, setSlideName] = useState("");
@@ -49,6 +51,7 @@ function EditSlide() {
           const localFormStateObject = { ...formStateObject };
           localFormStateObject.slide_name = jsonData.slide.name;
           localFormStateObject.slide_template = jsonData.slide.template;
+          localFormStateObject.locationScreens = jsonData.slide.onFollowingScreens;
           setFormStateObject(localFormStateObject);
           setSlideName(jsonData.slide.name);
           setTemplateData(jsonData.slide.templateData);
@@ -190,6 +193,12 @@ function EditSlide() {
               ))}
             </div>
           )}
+    <SelectScreenTable
+            handleChange={handleInput}
+            name="locationScreens"
+            errors={errors}
+            data={formStateObject.locationScreens}
+          />
           <FormCheckbox
             label={checkboxLabel}
             onChange={handleInput}
