@@ -11,20 +11,4 @@ describe("Edit tag page loads", () => {
       .invoke("text")
       .should("match", /^Rediger følgende tag: matrices/);
   });
-  it("It goes back", () => {
-    cy.visit("/tags");
-    cy.visit("/tag/new");
-    cy.get(".container")
-      .find("button")
-      .eq(0)
-      .invoke("text")
-      .should("match", /^Annuller/);
-    cy.get("input").type("Hello, World");
-    cy.get("#save_tag").click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Konsolider/);
-  });
 });
