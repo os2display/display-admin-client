@@ -1,7 +1,7 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import PropTypes from "prop-types";
 import { FormGroup, FormCheck } from "react-bootstrap";
-import { useIntl } from "react-intl";
+
 /**
  * An input for forms.
  *
@@ -35,27 +35,15 @@ function FormCheckbox({ name, label, helpText, onChange, value }) {
 
 FormCheckbox.defaultProps = {
   helpText: "",
-  placeholder: "",
-  type: "text",
   value: "",
-  dataMessage: "",
-  onInvalid: () => {},
-  errors: null,
-  invalidText: null,
 };
 
 FormCheckbox.propTypes = {
-  errors: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
-  type: PropTypes.string,
   value: PropTypes.string,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
-  placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  dataMessage: PropTypes.string,
-  onInvalid: PropTypes.func,
-  invalidText: PropTypes.string,
 };
 
 export default FormCheckbox;
