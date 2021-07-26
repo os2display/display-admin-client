@@ -58,6 +58,7 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
 
   /**
    * Called when an item is dropped, callback with reordered data.
+   *
    * @param {object} result
    * The result object of the drag and drop, has
    * destination, source (startindex) and index (endindex).
