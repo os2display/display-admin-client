@@ -6,7 +6,6 @@ import { useIntl, FormattedMessage } from "react-intl";
 import Select from "../util/forms/select";
 import FormInput from "../util/forms/form-input";
 import getFormErrors from "../util/helpers/form-errors-helper";
-
 import RenderFormElement from "../util/forms/render-form-element";
 
 /**
@@ -56,26 +55,29 @@ function EditSlide() {
   }, []);
   useEffect(() => {
     // @TODO load real content.
-    if (templateData) {
-      fetch("/fixtures/slides/slide-form.json")
-        .then((response) => response.json())
-        .then((jsonData) => {
-          setFormData(jsonData);
-          const localFormStateObject = { ...formStateObject };
-          jsonData.forEach((element) => {
-            localFormStateObject[element.name] = templateData
-              ? templateData[element.name]
-              : "";
-          });
-          setFormStateObject(localFormStateObject);
-        });
-    }
+    fetch("/fixtures/slides/slide-form.json")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        setFormData(jsonData);
+      });
     fetch("/fixtures/templates/templates.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setTemplateOptions(jsonData.templates);
       });
-  }, []);
+  }, [templateData, formStateObject]);
+
+  useEffect(() => {
+    if (templateData) {
+      const localFormStateObject = { ...formStateObject };
+      formData.forEach((element) => {
+        localFormStateObject[element.name] = templateData
+          ? templateData[element.name]
+          : "";
+      });
+      setFormStateObject(localFormStateObject);
+    }
+  }, [formData]);
 
   /**
    * Set state on change in input field
@@ -162,6 +164,7 @@ function EditSlide() {
               {/* Render slide form from jsondata */}
               {formData.map((data) => (
                 <RenderFormElement
+                  key={data.name}
                   data={data}
                   errors={errors}
                   onChange={handleInput}

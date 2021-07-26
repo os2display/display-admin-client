@@ -1,14 +1,15 @@
 [
   {
     "input": "header",
-    "text": "Skabelon: tekst og billede"
+    "text": "Skabelon: tekst og billede",
+    "name": "header"
   },
   {
     "input": "input",
     "name": "title",
     "type": "text",
     "label": "Overskrift",
-    "placeholder": "hej",
+    "placeholder": "Her kan du skrive slidets overskrift",
     "required": true
   },
   {
@@ -62,12 +63,12 @@
         "id": "top"
       },
       {
-        "name": "Venstre",
-        "id": "left"
-      },
-      {
         "name": "Højre",
         "id": "right"
+      },
+      {
+        "name": "Bunden",
+        "id": "bottom"
       },
       {
         "name": "Venstre",

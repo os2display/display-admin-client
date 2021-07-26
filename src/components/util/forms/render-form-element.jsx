@@ -31,6 +31,7 @@ function RenderFormElement({
   if (data.required) {
     requiredFieldCallback(data.name);
   }
+
   /**
    * @param {object} formData
    * The data for form input.
@@ -38,9 +39,10 @@ function RenderFormElement({
    * returns a rendered jsx object.
    */
   function renderElement(formData) {
+    let returnElement;
     switch (formData.input) {
       case "input":
-        return (
+        returnElement = (
           <FormInput
             name={formData.name}
             type={formData.type}
@@ -51,8 +53,9 @@ function RenderFormElement({
             onChange={onChange}
           />
         );
+        break;
       case "checkbox":
-        return (
+        returnElement = (
           <FormCheckbox
             label={formData.label}
             onChange={onChange}
@@ -61,10 +64,12 @@ function RenderFormElement({
             value={formStateObject[formData.name]}
           />
         );
+        break;
       case "header":
-        return <h2>{formData.text}</h2>;
+        returnElement = <h2>{formData.text}</h2>;
+        break;
       case "select":
-        return (
+        returnElement = (
           <Select
             helpText={formData.helpText}
             value={formStateObject[formData.name]}
@@ -75,19 +80,22 @@ function RenderFormElement({
             errors={formData.required ? errors : null}
           />
         );
+        break;
       case "image":
         if (formStateObject[formData.name]) {
-          return (
+          returnElement = (
             <ImageUploader
               handleImageUpload={onChange}
               image={formStateObject[formData.name]}
+              name={formData.name}
             />
           );
         }
         break;
       default:
-        return <></>;
+        returnElement = <></>;
     }
+    return returnElement;
   }
   return <>{renderElement(data)}</>;
 }
@@ -97,9 +105,14 @@ RenderFormElement.defaultProps = {
 };
 
 RenderFormElement.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({ input: PropTypes.string.isRequired })
-  ).isRequired,
+  data: PropTypes.shape({
+    input: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    required: PropTypes.bool,
+  }).isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({
     input: PropTypes.string,

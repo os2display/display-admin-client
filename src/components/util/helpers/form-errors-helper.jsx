@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
 /**
+ * @param requiredFields
  * @param {object} formStateObject
  * The object to validate.
  * @param {string} form
@@ -8,7 +9,7 @@ import PropTypes from "prop-types";
  * @returns {object}
  * A list of validationerrors.
  */
-function getFormErrors(formStateObject, form) {
+function getFormErrors(requiredFields, formStateObject) {
   const validationErrors = [];
   const validationList = [
     { input: "screenLocations", form: "screen" },

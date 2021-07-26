@@ -35,12 +35,12 @@ function FormCheckbox({ name, label, helpText, onChange, value }) {
 
 FormCheckbox.defaultProps = {
   helpText: "",
-  value: "",
+  value: false,
 };
 
 FormCheckbox.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.bool,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   onChange: PropTypes.func.isRequired,

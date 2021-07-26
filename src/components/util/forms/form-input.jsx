@@ -34,9 +34,8 @@ function FormInput({
   const intl = useIntl();
   const [error, setError] = useState();
   const required = !!errors;
-  let invalidInputText = invalidText
-    ? invalidText
-    : intl.formatMessage({ id: "edit_add_slide_label" });
+  const invalidInputText =
+    invalidText || intl.formatMessage({ id: "input_error_text" });
 
   /**
    * Handle errors.
@@ -85,7 +84,7 @@ FormInput.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   placeholder: PropTypes.string,

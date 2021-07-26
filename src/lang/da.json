@@ -215,6 +215,12 @@
       "value": "Gem tag"
     }
   ],
+  "save_slide": [
+    {
+      "type": 0,
+      "value": "Gem slide"
+    }
+  ],
   "save_category": [
     {
       "type": 0,
@@ -231,6 +237,12 @@
     {
       "type": 0,
       "value": "Taggets navn"
+    }
+  ],
+  "edit_add_slide_name_label": [
+    {
+      "type": 0,
+      "value": "Slidets navn"
     }
   ],
   "edit_add_location_label": [
@@ -255,6 +267,18 @@
     {
       "type": 0,
       "value": "Udfyld taggets navn"
+    }
+  ],
+  "edit_add_slide_label_placeholder": [
+    {
+      "type": 0,
+      "value": "Udfyld slides navn"
+    }
+  ],
+  "edit_add_slide_template_label": [
+    {
+      "type": 0,
+      "value": "Vælg en template til slide"
     }
   ],
   "edit_add_location_label_placeholder": [
@@ -333,6 +357,24 @@
     {
       "type": 0,
       "value": "Vælg en eller flere skærme"
+    }
+  ],
+  "remove_image": [
+    {
+      "type": 0,
+      "value": "Fjern billede"
+    }
+  ],
+  "pick_an_image": [
+    {
+      "type": 0,
+      "value": "Vælg et billede"
+    }
+  ],
+  "image_upload_help_text": [
+    {
+      "type": 0,
+      "value": "Vælg et billede ved at trykke på knappen, eller træk og slip det over firkanten"
     }
   ],
   "edit_add_screen_invalid_placeholder": [
@@ -507,6 +549,12 @@
     {
       "type": 0,
       "value": "Rediger følgende tag: "
+    }
+  ],
+  "edit_slide": [
+    {
+      "type": 0,
+      "value": "Rediger følgende slide: "
     }
   ],
   "edit_group": [
