@@ -13,6 +13,7 @@ import GroupsList from "./components/groups-list/groups-list";
 import EditGroup from "./components/edit-group/edit-group";
 import LocationsList from "./components/locations-list/locations-list";
 import EditLocation from "./components/edit-location/edit-location";
+import EditSlide from "./components/edit-slide/edit-slide";
 import "./app.scss";
 
 /**
@@ -51,6 +52,7 @@ function App() {
               <Route path="/screen/:id" component={EditScreen} />
               <Route path="/location/:id" component={EditLocation} />
               <Route path="/slides" component={SlidesList} />
+              <Route path="/slide/:id" component={EditSlide} />
               <Redirect from="/" to="/tags" exact />
             </Switch>
           </main>
