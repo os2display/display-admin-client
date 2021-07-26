@@ -22,6 +22,7 @@ function EditTag() {
   const newTag = id === "new";
   const [errors, setErrors] = useState([]);
   const tagLabel = intl.formatMessage({ id: "edit_add_tag_label" });
+  const requiredFields = ["tag_name"];
   const tagPlaceholder = intl.formatMessage({
     id: "edit_add_tag_label_placeholder",
   });
@@ -70,13 +71,14 @@ function EditTag() {
     e.preventDefault();
     setErrors([]);
     let returnValue = false;
-    const createdErrors = getFormErrors(formStateObject, "tag");
+    const createdErrors = getFormErrors(requiredFields, formStateObject);
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {
       setSubmitted(true);
       returnValue = true;
     }
+    debugger;
     return returnValue;
   }
 

@@ -14,6 +14,7 @@ import FormInput from "../util/forms/form-input";
  */
 function EditCategories() {
   const intl = useIntl();
+  const requiredFields = ["category_name"];
   const [errors, setErrors] = useState([]);
   const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
@@ -70,7 +71,7 @@ function EditCategories() {
     e.preventDefault();
     setErrors([]);
     let returnValue = false;
-    const createdErrors = getFormErrors(formStateObject, "category");
+    const createdErrors = getFormErrors(requiredFields, formStateObject);
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {

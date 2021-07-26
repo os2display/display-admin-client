@@ -14,6 +14,7 @@ import FormInput from "../util/forms/form-input";
  */
 function EditGroup() {
   const intl = useIntl();
+  const requiredFields = ["group_name"];
   const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
   const { id } = useParams();
@@ -70,7 +71,7 @@ function EditGroup() {
     e.preventDefault();
     setErrors([]);
     let returnValue = false;
-    const createdErrors = getFormErrors(formStateObject, "group");
+    const createdErrors = getFormErrors(requiredFields, formStateObject);
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {

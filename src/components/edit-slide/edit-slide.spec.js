@@ -9,7 +9,7 @@ describe("Edit slide page loads", () => {
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger følgende slide: Infoskærme/);
+      .should("match", /^Rediger følgende slide: Roderigo/);
   });
   it("It goes back", () => {
     cy.visit("/slides");

@@ -12,7 +12,6 @@ describe("Form validations", () => {
       .eq(1)
       .invoke("text")
       .should("match", /^Gem tag/);
-
     cy.get("input").type("Hello, World");
     cy.get(".container").find("button").eq(1).click();
     cy.get(".container")

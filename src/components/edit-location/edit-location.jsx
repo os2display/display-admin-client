@@ -15,7 +15,10 @@ import SelectScreenTable from "./select-screen-table";
  */
 function EditLocation() {
   const intl = useIntl();
-  const [formStateObject, setFormStateObject] = useState({});
+  const requiredFields = ["locationName", "locationScreens"];
+  const [formStateObject, setFormStateObject] = useState({
+    locationScreens: [],
+  });
   const history = useHistory();
   const { id } = useParams();
   const [locationName, setLocationName] = useState("");
@@ -37,8 +40,8 @@ function EditLocation() {
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
-            location_name: jsonData.location.name,
-            location_screens: jsonData.location.onFollowingScreens,
+            locationName: jsonData.location.name,
+            locationScreens: jsonData.location.onFollowingScreens,
           });
           setLocationName(jsonData.location.name);
         });
@@ -72,7 +75,7 @@ function EditLocation() {
     e.preventDefault();
     setErrors([]);
     let returnValue = false;
-    const createdErrors = getFormErrors(formStateObject, "location");
+    const createdErrors = getFormErrors(requiredFields, formStateObject);
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {
@@ -104,18 +107,19 @@ function EditLocation() {
             </h1>
           )}
           <FormInput
-            name="location_name"
+            name="locationName"
             type="text"
             errors={errors}
             label={locationLabel}
             placeholder={locationPlaceholder}
-            value={formStateObject.location_name}
+            value={formStateObject.locationName}
             onChange={handleInput}
           />
           <SelectScreenTable
             handleChange={handleInput}
-            name="location_screens"
-            data={formStateObject.location_screens}
+            name="locationScreens"
+            errors={errors}
+            data={formStateObject.locationScreens}
           />
           {submitted && <Redirect to="/locations" />}
           <Button

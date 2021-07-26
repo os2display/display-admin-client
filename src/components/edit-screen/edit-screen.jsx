@@ -20,6 +20,12 @@ import getFormErrors from "../util/helpers/form-errors-helper";
 function EditScreen() {
   const intl = useIntl();
   const history = useHistory();
+  const requiredFields = [
+    "screen_name",
+    "screen_locations",
+    "screen_groups",
+    "screen_layout",
+  ];
   const radioButtonOptions = [
     {
       id: "horizontal",
@@ -107,7 +113,7 @@ function EditScreen() {
     e.preventDefault();
     setErrors([]);
     let returnValue = false;
-    const createdErrors = getFormErrors(formStateObject, "screen");
+    const createdErrors = getFormErrors(requiredFields, formStateObject);
     if (createdErrors.length > 0) {
       setErrors(createdErrors);
     } else {
