@@ -23,7 +23,7 @@ function EditSlide() {
   const [slideName, setSlideName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const newSlide = id === "new";
-  let requiredFields = ["slide_name", "slide_template"];
+  const requiredFields = ["slide_name", "slide_template"];
   const [errors, setErrors] = useState([]);
   const slideLabel = intl.formatMessage({ id: "edit_add_slide_name_label" });
   const templateLabel = intl.formatMessage({
@@ -45,9 +45,9 @@ function EditSlide() {
       fetch("/fixtures/slides/slide.json")
         .then((response) => response.json())
         .then((jsonData) => {
-          let localFormStateObject = { ...formStateObject };
-          localFormStateObject["slide_name"] = jsonData.slide.name;
-          localFormStateObject["slide_template"] = jsonData.slide.template;
+          const localFormStateObject = { ...formStateObject };
+          localFormStateObject.slide_name = jsonData.slide.name;
+          localFormStateObject.slide_template = jsonData.slide.template;
           setFormStateObject(localFormStateObject);
           setSlideName(jsonData.slide.name);
           setTemplateData(jsonData.slide.templateData);
@@ -61,7 +61,7 @@ function EditSlide() {
         .then((response) => response.json())
         .then((jsonData) => {
           setFormData(jsonData);
-          let localFormStateObject = { ...formStateObject };
+          const localFormStateObject = { ...formStateObject };
           jsonData.forEach((element) => {
             localFormStateObject[element.name] = templateData
               ? templateData[element.name]
@@ -91,6 +91,10 @@ function EditSlide() {
     setFormStateObject(localFormStateObject);
   }
 
+  /**
+   * @param {string} field
+   * The required field to validate.
+   */
   function handleRequiredField(field) {
     requiredFields.push(field);
   }
@@ -152,7 +156,7 @@ function EditSlide() {
             onChange={handleInput}
             label={templateLabel}
             errors={errors}
-          ></Select>
+          />
           {formStateObject.slide_template && (
             <div className="border p-2">
               {/* Render slide form from jsondata */}
@@ -163,7 +167,7 @@ function EditSlide() {
                   onChange={handleInput}
                   formStateObject={formStateObject}
                   requiredFieldCallback={handleRequiredField}
-                ></RenderFormElement>
+                />
               ))}
             </div>
           )}
