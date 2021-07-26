@@ -1,0 +1,107 @@
+[
+  {
+    "input": "header",
+    "text": "Skabelon: slideshow",
+    "name": "header"
+  },
+  {
+    "input": "image",
+    "name": "slideshow_images",
+    "multipleImages": true,
+    "label": "Billeder til slideshow"
+  },
+  {
+    "input": "select",
+    "required": true,
+    "label": "Hvilken animation skal slideshowet have",
+    "options": [
+      {
+        "name": "Zoom ind mod midten af billedet",
+        "id": "zoom-in-middle"
+      },
+      {
+        "name": "Zoom ud fra midten af billedet",
+        "id": "zoom-out-middle"
+      },
+      {
+        "name": "Zoom ind fra et vilkårligt punkt på billedet",
+        "id": "zoom-in-random"
+      },
+      {
+        "name": "Zoom ud fra et vilkårligt punkt på billedet",
+        "id": "zoom-out-random"
+      }
+    ],
+    "name": "animation"
+  },
+  {
+    "input": "checkbox",
+    "label": "Fadeovergang imellem billederne",
+    "name": "transition"
+  },
+  {
+    "input": "image",
+    "name": "logo_image",
+    "label": "Logo til slideshow"
+  },
+  {
+    "input": "select",
+    "required": true,
+    "label": "Hvor stort skal logo være",
+    "options": [
+      {
+        "name": "XS",
+        "id": "xs"
+      },
+      {
+        "name": "S",
+        "id": "s"
+      },
+      {
+        "name": "M",
+        "id": "m"
+      },
+      {
+        "name": "L",
+        "id": "l"
+      },
+      {
+        "name": "XL",
+        "id": "xl"
+      }
+    ],
+    "name": "size_of_logo"
+  },
+  {
+    "input": "select",
+    "required": true,
+    "label": "Hvor skal logoet være placeret",
+    "options": [
+      {
+        "name": "Øverste venstre hjørne",
+        "id": "left-top"
+      },
+      {
+        "name": "Øverste højre hjørne",
+        "id": "right-top"
+      },
+      {
+        "name": "Nederste venstre hjørne",
+        "id": "left-bottom"
+      },
+      {
+        "name": "Nederste højre hjørne",
+        "id": "right-bottom"
+      }
+    ],
+    "name": "position_of_logo"
+  },
+  {
+    "input": "input",
+    "name": "duration",
+    "type": "number",
+    "label": "Varighed",
+    "placeholder": "Her skal du skrive varigheden på slidet",
+    "required": true
+  }
+]

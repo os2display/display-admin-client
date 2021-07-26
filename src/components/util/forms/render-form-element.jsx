@@ -86,7 +86,7 @@ function RenderFormElement({
           returnElement = (
             <ImageUploader
               handleImageUpload={onChange}
-              image={formStateObject[formData.name]}
+              inputImage={formStateObject[formData.name]}
               name={formData.name}
             />
           );

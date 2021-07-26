@@ -21,10 +21,12 @@ function RadioButtons({
   handleChange,
 }) {
   /**
+   * Transforms the target to something the edit-components understand.
+   *
    * @param {object}  props
    * The props
    * @param {object} props.target
-   * The object containing the values to via callback return.
+   * The object containing the values return via callback.
    */
   function onCheckedRadio({ target }) {
     const returnTarget = { value: target.id, id: target.name };

@@ -19,10 +19,23 @@ import { FormGroup, FormCheck } from "react-bootstrap";
  * An input.
  */
 function FormCheckbox({ name, label, helpText, onChange, value }) {
+  /**
+   * Transforms the target to something the edit-components understand.
+   *
+   * @param {object}  props
+   * The props
+   * @param {object} props.target
+   * The object containing the values return via callback.
+   */
+  function onChecked({ target }) {
+    const returnTarget = { value: target.checked, id: target.name };
+    onChange({ target: returnTarget });
+  }
+
   return (
     <FormGroup className="mb-3" controlId={`formBasicCheckbox${name}`}>
       <FormCheck
-        onChange={onChange}
+        onChange={onChecked}
         type="checkbox"
         name={name}
         checked={value}

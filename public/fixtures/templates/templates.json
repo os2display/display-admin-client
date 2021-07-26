@@ -1,8 +1,14 @@
 {
   "templates": [
     {
-      "name": "text-and-image",
-      "id": "text-and-image"
+      "name": "Text-and-image",
+      "id": "text-and-image",
+      "url": "/fixtures/slides/slide-form-text-and-image.json"
+    },
+    {
+      "name": "Slideshow",
+      "id": "slideshow",
+      "url": "/fixtures/slides/slide-form-slideshow.json"
     }
   ]
 }

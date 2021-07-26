@@ -53,23 +53,32 @@ function EditSlide() {
         });
     }
   }, []);
+
   useEffect(() => {
-    // @TODO load real content.
-    fetch("/fixtures/slides/slide-form.json")
+    const newTemplate = templateOptions.find(
+      (template) => template.id === formStateObject.slide_template
+    );
+    fetch(newTemplate?.url)
       .then((response) => response.json())
       .then((jsonData) => {
         setFormData(jsonData);
       });
+  }, [formStateObject.slide_template, templateOptions]);
+
+  useEffect(() => {
+    // @TODO load real content.
+
     fetch("/fixtures/templates/templates.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setTemplateOptions(jsonData.templates);
       });
-  }, [templateData, formStateObject]);
+  }, [templateData]);
 
   useEffect(() => {
     if (templateData) {
       const localFormStateObject = { ...formStateObject };
+      setFormStateObject({});
       formData.forEach((element) => {
         localFormStateObject[element.name] = templateData
           ? templateData[element.name]
