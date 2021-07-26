@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { FormGroup, FormLabel, FormControl, InputGroup } from "react-bootstrap";
-
+import { useIntl } from "react-intl";
 /**
  * An input for forms.
  *
@@ -31,8 +31,12 @@ function FormInput({
   errors,
   invalidText,
 }) {
+  const intl = useIntl();
   const [error, setError] = useState();
   const required = !!errors;
+  let invalidInputText = invalidText
+    ? invalidText
+    : intl.formatMessage({ id: "edit_add_slide_label" });
 
   /**
    * Handle errors.
@@ -59,7 +63,7 @@ function FormInput({
           onInvalid={onInvalid}
           type={type}
         />
-        {error && <div className="invalid-feedback">{invalidText}</div>}
+        {error && <div className="invalid-feedback">{invalidInputText}</div>}
       </InputGroup>
       {helpText && <small className="form-text">{helpText}</small>}
     </FormGroup>
@@ -74,7 +78,7 @@ FormInput.defaultProps = {
   dataMessage: "",
   onInvalid: () => {},
   errors: null,
-  invalidText: "",
+  invalidText: null,
 };
 
 FormInput.propTypes = {
