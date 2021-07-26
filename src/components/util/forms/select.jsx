@@ -36,6 +36,7 @@ function Select({
   onInvalid,
   errors,
   errorText,
+  helpText,
 }) {
   const intl = useIntl();
   const nothingSelected = intl.formatMessage({
@@ -70,6 +71,7 @@ function Select({
         data-message={dataMessage}
         onChange={onChange}
         onInvalid={onInvalid}
+        defaultValue=""
       >
         <option disabled value="">
           {nothingSelected}
@@ -80,6 +82,7 @@ function Select({
           </option>
         ))}
       </select>
+      {helpText && <small className="form-text">{helpText}</small>}
       {error && <div className="invalid-feedback">{textOnError}</div>}
     </div>
   );
