@@ -20,11 +20,11 @@ describe("Edit slide page loads", () => {
       .invoke("text")
       .should("match", /^Annuller/);
     cy.get("input").type("Hello, World");
+    cy.get("#slide_template").select("Text-and-image");
+    cy.get("#title").type("Hello, World");
+    cy.get("#box-align").select("Toppen");
+    cy.get("#duration").type(123);
     cy.get("#save_slide").click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Konsolider/);
+    cy.get("#save_slide").should("not.exist");
   });
 });
