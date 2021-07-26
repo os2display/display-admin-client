@@ -389,6 +389,12 @@
       "value": "Der skal uploades et billede til denne template"
     }
   ],
+  "publish": [
+    {
+      "type": 0,
+      "value": "Udgiv"
+    }
+  ],
   "images_invalid_text": [
     {
       "type": 0,

@@ -7,6 +7,7 @@ import Select from "../util/forms/select";
 import FormInput from "../util/forms/form-input";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import RenderFormElement from "../util/forms/render-form-element";
+import FormCheckbox from '../util/forms/form-checkbox';
 
 /**
  * The edit slide component.
@@ -25,6 +26,7 @@ function EditSlide() {
   const requiredFields = ["slide_name", "slide_template"];
   const [errors, setErrors] = useState([]);
   const slideLabel = intl.formatMessage({ id: "edit_add_slide_name_label" });
+  const checkboxLabel = intl.formatMessage({ id: "publish" });
   const templateLabel = intl.formatMessage({
     id: "edit_add_slide_template_label",
   });
@@ -188,6 +190,11 @@ function EditSlide() {
               ))}
             </div>
           )}
+          <FormCheckbox
+            label={checkboxLabel}
+            onChange={handleInput}
+            name="slide_publish"
+            value={formStateObject.slidePublish}></FormCheckbox>
           {submitted && <Redirect to="/slides" />}
           <Button
             variant="secondary"
