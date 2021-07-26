@@ -1,0 +1,79 @@
+[
+  {
+    "input": "header",
+    "text": "Skabelon: tekst og billede"
+  },
+  {
+    "input": "input",
+    "name": "title",
+    "type": "text",
+    "label": "Overskrift",
+    "placeholder": "hej",
+    "required": true
+  },
+  {
+    "input": "input",
+    "name": "text",
+    "type": "text",
+    "label": "Text på slide",
+    "placeholder": "Her kan du skrive teksten til slidet"
+  },
+  {
+    "input": "input",
+    "name": "duration",
+    "type": "number",
+    "label": "Varighed",
+    "placeholder": "Her skal du skrive varigheden på slidet",
+    "required": true
+  },
+  {
+    "input": "image",
+    "name": "image",
+    "label": "Billede"
+  },
+  {
+    "input": "checkbox",
+    "label": "Margin rundt om tekst",
+    "name": "text-margin"
+  },
+  {
+    "input": "checkbox",
+    "label": "Animeret tekst under overskrift",
+    "name": "seperator"
+  },
+  {
+    "input": "checkbox",
+    "label": "Teksten optager højest 50% af skærmen",
+    "name": "half_size"
+  },
+  {
+    "input": "checkbox",
+    "label": "Overskriften er under teksten",
+    "helpText": "Denne kan ikke kombineres med den animerede tekst under overskriften",
+    "name": "reversed"
+  },
+  {
+    "input": "select",
+    "required": true,
+    "label": "Hvor skal tekstboksen være",
+    "options": [
+      {
+        "name": "Toppen",
+        "id": "top"
+      },
+      {
+        "name": "Venstre",
+        "id": "left"
+      },
+      {
+        "name": "Højre",
+        "id": "right"
+      },
+      {
+        "name": "Venstre",
+        "id": "left"
+      }
+    ],
+    "name": "box-align"
+  }
+]

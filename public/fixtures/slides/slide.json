@@ -1,0 +1,43 @@
+{
+  "slide": {
+    "id": 1,
+    "name": "Roderigo",
+    "template": "text-and-image",
+    "templateData": {
+      "text": "Dadada dadada dadada dadada dadada",
+      "title": "Dadada dadada dadada dadada dadada",
+      "half_size": true,
+      "reversed": false,
+      "seperator": false,
+      "text-margin": true,
+      "duration": 400,
+      "image": {
+        "data_url": "/fixtures/images/mountain1.jpeg"
+      }
+    },
+    "tags": "customer loyalty",
+    "published": true,
+    "onFollowingPlaylists": [
+      {
+        "id": 1,
+        "name": "dynamic"
+      },
+      {
+        "id": 2,
+        "name": "Mandatory"
+      },
+      {
+        "id": 3,
+        "name": "Enhanced"
+      },
+      {
+        "id": 4,
+        "name": "explicit"
+      },
+      {
+        "id": 5,
+        "name": "policy"
+      }
+    ]
+  }
+}
