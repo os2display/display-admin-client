@@ -43,7 +43,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
   // The columns of the list
   const columns = [
     {
-      path: "label",
+      path: "name",
       label: intl.formatMessage({ id: "table_header_name" }),
     },
     {
