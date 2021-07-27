@@ -46,9 +46,11 @@ function DeleteModal({
   )}?`;
 
   return (
-    <ModalDialog title={title} onClose={onClose} handleAccept={handleAccept}>
-      {valuesToDelete}
-    </ModalDialog>
+    <div id="delete-modal">
+      <ModalDialog title={title} onClose={onClose} handleAccept={handleAccept}>
+        {valuesToDelete}
+      </ModalDialog>
+    </div>
   );
 }
 

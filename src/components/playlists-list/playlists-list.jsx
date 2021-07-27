@@ -8,6 +8,7 @@ import DeleteModal from "../delete-modal/delete-modal";
 import ListButton from "../util/list/list-button";
 import InfoModal from "../info-modal/info-modal";
 import LinkForList from "../util/list/link-for-list";
+import CheckboxForList from "../util/list/checkbox-for-list";
 /**
 /**
  * The playlists list component.
@@ -96,6 +97,13 @@ function PlaylistsList() {
 
   // The columns for the table.
   const columns = [
+    {
+      key: "pick",
+      label: intl.formatMessage({ id: "table_header_pick" }),
+      content: (data) => (
+        <CheckboxForList onSelected={() => handleSelected(data)} />
+      ),
+    },
     {
       path: "name",
       sort: true,
