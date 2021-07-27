@@ -94,19 +94,19 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
                 <>
                   {data.map((item, index) => (
                     <Draggable
-                      key={item.value}
-                      draggableId={item.label}
+                      key={item.id}
+                      draggableId={item.name}
                       index={index}
                     >
                       {(providedDraggable) => (
                         <tr
                           ref={providedDraggable.innerRef}
                           data-rbd-draggable-context-id="1"
-                          data-rbd-draggable-id={item.label}
+                          data-rbd-draggable-id={item.name}
                           tabIndex="0"
                           role="button"
                           aria-describedby="aria-label-for-drag-and-drop"
-                          data-rbd-drag-handle-draggable-id={item.label}
+                          data-rbd-drag-handle-draggable-id={item.name}
                           data-rbd-drag-handle-context-id="1"
                           draggable="false"
                           style={providedDraggable.draggableProps.style}
