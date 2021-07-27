@@ -167,8 +167,8 @@ function SlidesList() {
    * Closes the info modal.
    */
   function onCloseInfoModal() {
-    setOnPlaylists();
     setShowInfoModal(false);
+    setOnPlaylists();
   }
 
   return (

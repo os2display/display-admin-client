@@ -56,8 +56,8 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
    * Closes the info modal.
    */
   function onCloseInfoModal() {
-    setDataStructureToDisplay();
     setShowInfoModal(false);
+    setDataStructureToDisplay();
   }
 
   /**

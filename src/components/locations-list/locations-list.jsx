@@ -168,8 +168,8 @@ function LocationsList() {
    * Closes the info modal.
    */
   function onCloseInfoModal() {
-    setOnPlaylists();
     setShowInfoModal(false);
+    setOnPlaylists();
   }
 
   return (
