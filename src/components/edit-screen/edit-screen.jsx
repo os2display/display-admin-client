@@ -21,10 +21,10 @@ function EditScreen() {
   const intl = useIntl();
   const history = useHistory();
   const requiredFields = [
-    "screen_name",
-    "screen_locations",
-    "screen_groups",
-    "screen_layout",
+    "screenName",
+    "screenLocations",
+    "screenGroups",
+    "screenLayout",
   ];
   const radioButtonOptions = [
     {
@@ -42,8 +42,8 @@ function EditScreen() {
   ];
   const [formStateObject, setFormStateObject] = useState({
     screenLocations: [],
-    screen_groups: [],
-    screen_layout: "",
+    screenGroups: [],
+    screenLayout: "",
     playlists: [],
     horizontalOrVertical: radioButtonOptions[0].id,
   });
@@ -69,11 +69,11 @@ function EditScreen() {
             screenLocations: jsonData.screen.locations,
             sizeOfScreen: jsonData.screen.sizeOfScreen,
             resolutionOfScreen: jsonData.screen.resolutionOfScreen,
-            screen_groups: jsonData.screen.groups,
-            screen_layout: jsonData.screen.screenLayout,
+            screenGroups: jsonData.screen.groups,
+            screenLayout: jsonData.screen.screenLayout,
             playlists: jsonData.screen.playlists,
-            horizontalOrVertical: jsonData.screen.horizontalOrVertical,
-            screen_name: jsonData.screen.name,
+            horizontal_or_vertical: jsonData.screen.horizontal_or_vertical,
+            screenName: jsonData.screen.name,
             description: jsonData.screen.description,
             descriptionOfLocation: jsonData.screen.descriptionOfLocation,
           });
@@ -142,7 +142,7 @@ function EditScreen() {
         )}
         <FormInput
           errors={errors}
-          name="screen_name"
+          name="screenName"
           type="text"
           label={intl.formatMessage({ id: "edit_add_screen_label_name" })}
           invalidText={intl.formatMessage({
@@ -151,7 +151,7 @@ function EditScreen() {
           placeholder={intl.formatMessage({
             id: "edit_add_screen_placeholder_name",
           })}
-          value={formStateObject.screen_name}
+          value={formStateObject.screenName}
           onChange={handleInput}
         />
         <FormInputArea
@@ -168,9 +168,9 @@ function EditScreen() {
         />
         <GroupsDropdown
           errors={errors}
-          name="screen_groups"
+          name="screenGroups"
           handleGroupsSelection={handleInput}
-          selected={formStateObject.screen_groups}
+          selected={formStateObject.screenGroups}
         />
         <LocationDropdown
           errors={errors}
@@ -180,14 +180,14 @@ function EditScreen() {
         />
         {layoutOptions && (
           <Select
-            name="screen_layout"
+            name="screenLayout"
             onChange={handleInput}
             label={intl.formatMessage({
-              id: "edit_add_screen_label_screen_layout",
+              id: "edit_add_screen_label_screenLayout",
             })}
             errors={errors}
             options={layoutOptions}
-            value={formStateObject.screen_layout}
+            value={formStateObject.screenLayout}
           />
         )}
         <FormInput

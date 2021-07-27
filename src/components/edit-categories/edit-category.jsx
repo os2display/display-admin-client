@@ -14,7 +14,7 @@ import FormInput from "../util/forms/form-input";
  */
 function EditCategories() {
   const intl = useIntl();
-  const requiredFields = ["category_name"];
+  const requiredFields = ["categoryName"];
   const [errors, setErrors] = useState([]);
   const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
@@ -37,7 +37,7 @@ function EditCategories() {
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
-            category_name: jsonData.category.name,
+            categoryName: jsonData.category.name,
           });
           setCategoryName(jsonData.category.name);
         });
@@ -102,12 +102,12 @@ function EditCategories() {
           </h1>
         )}
         <FormInput
-          name="category_name"
+          name="categoryName"
           type="text"
           label={categoryLabel}
           required
           placeholder={categoryPlaceholder}
-          value={formStateObject.category_name}
+          value={formStateObject.categoryName}
           onChange={handleInput}
           errors={errors}
         />

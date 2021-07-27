@@ -22,7 +22,7 @@ function EditTag() {
   const newTag = id === "new";
   const [errors, setErrors] = useState([]);
   const tagLabel = intl.formatMessage({ id: "edit_add_tag_label" });
-  const requiredFields = ["tag_name"];
+  const requiredFields = ["tagName"];
   const tagPlaceholder = intl.formatMessage({
     id: "edit_add_tag_label_placeholder",
   });
@@ -37,7 +37,7 @@ function EditTag() {
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
-            tag_name: jsonData.tag.name,
+            tagName: jsonData.tag.name,
           });
           setTagName(jsonData.tag.name);
         });
@@ -100,12 +100,12 @@ function EditTag() {
             </h1>
           )}
           <FormInput
-            name="tag_name"
+            name="tagName"
             type="text"
             errors={errors}
             label={tagLabel}
             placeholder={tagPlaceholder}
-            value={formStateObject.tag_name}
+            value={formStateObject.tagName}
             onChange={handleInput}
           />
           {submitted && <Redirect to="/tags" />}

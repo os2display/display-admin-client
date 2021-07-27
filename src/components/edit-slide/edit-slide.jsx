@@ -26,7 +26,7 @@ function EditSlide() {
   const [slideName, setSlideName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const newSlide = id === "new";
-  const requiredFields = ["slide_name", "slide_template"];
+  const requiredFields = ["slideName", "slideTemplate"];
   const [errors, setErrors] = useState([]);
   const slideLabel = intl.formatMessage({ id: "edit_add_slide_name_label" });
   const checkboxLabel = intl.formatMessage({ id: "publish" });
@@ -50,8 +50,8 @@ function EditSlide() {
         .then((response) => response.json())
         .then((jsonData) => {
           const localFormStateObject = { ...formStateObject };
-          localFormStateObject.slide_name = jsonData.slide.name;
-          localFormStateObject.slide_template = jsonData.slide.template;
+          localFormStateObject.slideName = jsonData.slide.name;
+          localFormStateObject.slideTemplate = jsonData.slide.template;
           localFormStateObject.slideScreen = jsonData.slide.onFollowingScreens;
           localFormStateObject.slidePlaylist = jsonData.slide.playlists;
           setFormStateObject(localFormStateObject);
@@ -63,14 +63,14 @@ function EditSlide() {
 
   useEffect(() => {
     const newTemplate = templateOptions.find(
-      (template) => template.id === formStateObject.slide_template
+      (template) => template.id === formStateObject.slideTemplate
     );
     fetch(newTemplate?.url)
       .then((response) => response.json())
       .then((jsonData) => {
         setFormData(jsonData);
       });
-  }, [formStateObject.slide_template, templateOptions]);
+  }, [formStateObject.slideTemplate, templateOptions]);
 
   useEffect(() => {
     // @TODO load real content.
@@ -164,23 +164,23 @@ function EditSlide() {
             </h1>
           )}
           <FormInput
-            name="slide_name"
+            name="slideName"
             type="text"
             errors={errors}
             label={slideLabel}
             placeholder={slidePlaceholder}
-            value={formStateObject.slide_name}
+            value={formStateObject.slideName}
             onChange={handleInput}
           />
           <Select
-            value={formStateObject.slide_template}
-            name="slide_template"
+            value={formStateObject.slideTemplate}
+            name="slideTemplate"
             options={templateOptions}
             onChange={handleInput}
             label={templateLabel}
             errors={errors}
           />
-          {formStateObject.slide_template && (
+          {formStateObject.slideTemplate && (
             <div className="border p-2">
               {/* Render slide form from jsondata */}
               {formData.map((data) => (

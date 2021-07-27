@@ -14,7 +14,7 @@ import FormInput from "../util/forms/form-input";
  */
 function EditGroup() {
   const intl = useIntl();
-  const requiredFields = ["group_name"];
+  const requiredFields = ["groupName"];
   const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
   const { id } = useParams();
@@ -37,7 +37,7 @@ function EditGroup() {
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
-            group_name: jsonData.group.name,
+            groupName: jsonData.group.name,
           });
           setGroupName(jsonData.group.name);
         });
@@ -100,12 +100,12 @@ function EditGroup() {
             </h1>
           )}
           <FormInput
-            name="group_name"
+            name="groupName"
             type="text"
             errors={errors}
             label={groupLabel}
             placeholder={groupPlaceholder}
-            value={formStateObject.group_name}
+            value={formStateObject.groupName}
             onChange={handleInput}
           />
           {submitted && <Redirect to="/groups" />}
