@@ -40,9 +40,9 @@ describe("Edit playlist page tests", () => {
   it("It validates already existing playlist", () => {
     cy.visit("/playlist/32");
     cy.get("#playlistName").clear();
-    cy.get("#save_playlist").should("exist")
+    cy.get("#save_playlist").should("exist");
     cy.get("#save_playlist").click();
-    cy.get("#save_playlist").should("exist")
+    cy.get("#save_playlist").should("exist");
     cy.get("#playlistName").type("Hello, World");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("not.exist");
