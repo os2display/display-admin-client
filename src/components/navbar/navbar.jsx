@@ -93,20 +93,43 @@ function NavBar() {
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>
-
-            <Nav.Item>
-              <Link
-                className="navbar-brand"
-                style={{ color: "black" }}
-                id="navbar_categories"
-                to="/categories"
-              >
+            <NavDropdown
+              title={
                 <FormattedMessage
-                  id="navbar_categories"
-                  defaultMessage="navbar_categories"
+                  id="navbar_playlists"
+                  defaultMessage="navbar_playlists"
                 />
-              </Link>
-            </Nav.Item>
+              }
+              id="navbar_playlists"
+            >
+              <NavDropdown.Item>
+                <Link
+                  className="navbar-brand"
+                  id="navbar_playlists_playlists"
+                  style={{ color: "black" }}
+                  to="/playlists"
+                >
+                  <FormattedMessage
+                    id="navbar_playlists"
+                    defaultMessage="navbar_playlists"
+                  />
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item>
+                <Link
+                  className="navbar-brand"
+                  id="navbar_playlists_categories"
+                  style={{ color: "black" }}
+                  to="/categories"
+                >
+                  <FormattedMessage
+                    id="navbar_categories"
+                    defaultMessage="navbar_categories"
+                  />
+                </Link>
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

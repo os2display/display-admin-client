@@ -141,11 +141,12 @@ function List({ data, columns, selectedRows }) {
   function sortData(a, b) {
     let sortVarA = a[sortBy.path];
     let sortVarB = b[sortBy.path];
-
     sortVarA =
       typeof sortVarA === "string" ? sortVarA.toLocaleLowerCase() : sortVarA;
     sortVarB =
       typeof sortVarB === "string" ? sortVarB.toLocaleLowerCase() : sortVarB;
+    sortVarA = Array.isArray(sortVarA) ? sortVarA.length : sortVarA;
+    sortVarB = Array.isArray(sortVarB) ? sortVarB.length : sortVarB;
     if (sortVarA < sortVarB) {
       return -1;
     }

@@ -1,0 +1,38 @@
+{
+  "playlist": {
+    "id": 1,
+    "createdBy": "Egbert",
+    "onFollowingGroups": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
+    "onFollowingScreens": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
+    "name": "Sommerplaylist",
+    "categories": [
+      {
+        "id": 1,
+        "createdBy": "Egbert",
+        "onFollowingPlaylists": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ],
+        "name": "Lotstring"
+      }
+    ],
+    "slides": [
+      {
+        "id": 1,
+        "name": "Roderigo"
+      }
+    ]
+  }
+}

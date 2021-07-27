@@ -14,6 +14,8 @@ import EditGroup from "./components/edit-group/edit-group";
 import LocationsList from "./components/locations-list/locations-list";
 import EditLocation from "./components/edit-location/edit-location";
 import EditSlide from "./components/edit-slide/edit-slide";
+import PlaylistsList from "./components/playlists-list/playlists-list";
+import EditPlaylist from "./components/edit-playlist/edit-playlist";
 import "./app.scss";
 
 /**
@@ -52,6 +54,8 @@ function App() {
               <Route path="/screen/:id" component={EditScreen} />
               <Route path="/location/:id" component={EditLocation} />
               <Route path="/slides" component={SlidesList} />
+              <Route path="/playlists" component={PlaylistsList} />
+              <Route path="/playlist/:id" component={EditPlaylist} />
               <Route path="/slide/:id" component={EditSlide} />
               <Redirect from="/" to="/tags" exact />
             </Switch>
