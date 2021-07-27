@@ -18,5 +18,4 @@ describe("Edit location page loads", () => {
     cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("tbody").should("not.exist");
   });
-
 });
