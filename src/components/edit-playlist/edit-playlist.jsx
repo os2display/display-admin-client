@@ -8,7 +8,7 @@ import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
-
+import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
 /**
  * The edit playlist component.
  *
@@ -20,6 +20,7 @@ function EditPlaylist() {
   const [formStateObject, setFormStateObject] = useState({
     playlistScreens: [],
     playlistSlides: [],
+    playlistCategories: [],
   });
   const history = useHistory();
   const { id } = useParams();
@@ -47,6 +48,7 @@ function EditPlaylist() {
             description: jsonData.playlist.description,
             playlistScreens: jsonData.playlist.onFollowingScreens,
             playlistSlides: jsonData.playlist.slides,
+            playlistCategories: jsonData.playlist.categories,
           });
           setPlaylistName(jsonData.playlist.name);
         });
@@ -131,6 +133,12 @@ function EditPlaylist() {
             })}
             value={formStateObject.description}
             onChange={handleInput}
+          />
+          <CategoriesDropdown
+            errors={errors}
+            name="playlistCategories"
+            handleCategorySelection={handleInput}
+            selected={formStateObject.playlistCategories}
           />
           <SelectScreenTable
             handleChange={handleInput}

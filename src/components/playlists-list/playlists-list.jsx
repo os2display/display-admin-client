@@ -85,9 +85,9 @@ function PlaylistsList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the group.
+   * The name of the playlist.
    * @param {number} props.id
-   * The id of the group
+   * The id of the playlist
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
@@ -150,14 +150,14 @@ function PlaylistsList() {
   ];
 
   /**
-   * Deletes group, and closes modal.
+   * Deletes playlist, and closes modal.
    *
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the group.
+   * The name of the playlist.
    * @param {number} props.id
-   * The id of the group
+   * The id of the playlist
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
@@ -188,8 +188,8 @@ function PlaylistsList() {
         <Col md="auto">
           <Link className="btn btn-primary btn-success" to="/playlist/new">
             <FormattedMessage
-              id="create_new_group"
-              defaultMessage="create_new_group"
+              id="create_new_playlist"
+              defaultMessage="create_new_playlist"
             />
           </Link>
         </Col>
