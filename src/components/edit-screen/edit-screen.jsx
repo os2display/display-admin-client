@@ -72,7 +72,7 @@ function EditScreen() {
             screenGroups: jsonData.screen.groups,
             screenLayout: jsonData.screen.screenLayout,
             playlists: jsonData.screen.playlists,
-            horizontal_or_vertical: jsonData.screen.horizontal_or_vertical,
+            horizontalOrVertical: jsonData.screen.horizontalOrVertical,
             screenName: jsonData.screen.name,
             description: jsonData.screen.description,
             descriptionOfLocation: jsonData.screen.descriptionOfLocation,
