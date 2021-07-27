@@ -241,6 +241,7 @@ function EditScreen() {
           onChange={handleInput}
         />
         <PlaylistDragAndDrop
+          id="playlist_drag_and_drop"
           handleChange={handleInput}
           name="playlists"
           data={formStateObject.playlists}

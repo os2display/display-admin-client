@@ -30,8 +30,13 @@
     "playlists": [
       {
         "name": "Sommerplaylist",
-        "value": 1,
+        "id": 1,
         "disabled": false
+      },
+      {
+        "id": 2,
+        "createdBy": "Egbert",
+        "name": "Ereolen"
       }
     ],
     "description": "Denne skærm er super duper",
