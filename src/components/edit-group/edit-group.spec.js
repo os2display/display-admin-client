@@ -11,20 +11,4 @@ describe("Edit group page loads", () => {
       .invoke("text")
       .should("match", /^Rediger følgende gruppe: Infoskærme/);
   });
-  it("It goes back", () => {
-    cy.visit("/groups");
-    cy.visit("/group/new");
-    cy.get(".container")
-      .find("button")
-      .eq(0)
-      .invoke("text")
-      .should("match", /^Annuller/);
-    cy.get("input").type("Hello, World");
-    cy.get("#save_group").click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Konsolider/);
-  });
 });

@@ -11,5 +11,4 @@ describe("Edit category page loads", () => {
       .invoke("text")
       .should("match", /^Rediger kategorien: Lotstring/);
   });
-
 });

@@ -16,5 +16,4 @@ describe("Edit screen page loads", () => {
     cy.visit("/screen/32");
     cy.get("tbody").find("tr td").should("have.length", 4);
   });
-
 });
