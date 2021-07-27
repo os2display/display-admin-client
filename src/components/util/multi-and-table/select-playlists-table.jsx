@@ -25,6 +25,13 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [onPlaylists, setOnPlaylists] = useState();
   const [infoModalText, setInfoModalText] = useState("");
+  const playlistHasCategoriesText = intl.formatMessage({
+    id: "playlist_has_categories",
+  });
+  const playlistHasSlidesText = intl.formatMessage({
+    id: "playlist_has_slides",
+  });
+
   /**
    * @param {object} props
    * The props
@@ -36,10 +43,8 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
   function openInfoModal({ data, caller }) {
     const localInfoModalText =
       caller === "categories"
-        ? setInfoModalText(
-            intl.formatMessage({ id: "playlist_has_categories" })
-          )
-        : setInfoModalText(intl.formatMessage({ id: "playlist_has_slides" }));
+        ? playlistHasCategoriesText
+        : playlistHasSlidesText;
     setInfoModalText(localInfoModalText);
     setOnPlaylists(data);
     setShowInfoModal(true);
