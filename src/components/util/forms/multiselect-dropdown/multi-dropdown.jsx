@@ -57,12 +57,17 @@ function MultiSelectComponent({
   const nothingSelectedLabel =
     noSelectedString ||
     intl.formatMessage({ id: "multi_dropdown_no_selected" });
-
   /**
    * Handle errors.
    */
   useEffect(() => {
     setError(errors && errors.includes(name));
+  }, [errors]);
+
+  /**
+   * Map data to fit component.
+   */
+  useEffect(() => {
     const localMappedOptions = options.map((item) => {
       return {
         label: item.name,
