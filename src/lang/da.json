@@ -395,6 +395,12 @@
       "value": "Vælg en eller flere grupper"
     }
   ],
+  "slides_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en eller flere slides"
+    }
+  ],
   "locations_dropdown_label": [
     {
       "type": 0,

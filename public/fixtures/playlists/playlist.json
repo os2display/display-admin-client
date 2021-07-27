@@ -14,6 +14,8 @@
     "onFollowingScreens": [
       {
         "id": 15,
+        "size": "30\"",
+        "dimensions": "1920x1080",
         "name": "Digitized"
       }
     ],

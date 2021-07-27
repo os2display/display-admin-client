@@ -17,15 +17,7 @@ import PropTypes from "prop-types";
  * @returns {object}
  * An input.
  */
-function FormInputArea({
-  name,
-  label,
-  placeholder,
-  value,
-  onChange,
-  dataMessage,
-  onInvalid,
-}) {
+function FormInputArea({ name, label, placeholder, value, onChange }) {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
@@ -37,8 +29,6 @@ function FormInputArea({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        data-message={dataMessage}
-        onInvalid={onInvalid}
       />
     </div>
   );
@@ -54,8 +44,6 @@ FormInputArea.propTypes = {
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  dataMessage: PropTypes.string.isRequired,
-  onInvalid: PropTypes.func.isRequired,
 };
 
 export default FormInputArea;

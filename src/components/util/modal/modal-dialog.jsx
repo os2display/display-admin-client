@@ -83,6 +83,7 @@ ModalDialog.defaultProps = {
   acceptText: "",
   declineText: "",
   showAcceptButton: true,
+  handleAccept: () => {},
 };
 
 ModalDialog.propTypes = {
@@ -91,7 +92,7 @@ ModalDialog.propTypes = {
   declineText: PropTypes.string,
   showAcceptButton: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
-  handleAccept: PropTypes.func.isRequired,
+  handleAccept: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
 
