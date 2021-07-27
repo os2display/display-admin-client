@@ -5,6 +5,9 @@ import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
+import FormInputArea from "../util/forms/form-input-area";
+import SelectScreenTable from "../util/multi-and-table/select-screen-table";
+import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 
 /**
  * The edit playlist component.
@@ -14,7 +17,10 @@ import FormInput from "../util/forms/form-input";
  */
 function EditPlaylist() {
   const intl = useIntl();
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState({
+    playlistScreens: [],
+    playlistSlides: [],
+  });
   const history = useHistory();
   const { id } = useParams();
   const [playlistName, setPlaylistName] = useState("");
@@ -38,6 +44,9 @@ function EditPlaylist() {
         .then((jsonData) => {
           setFormStateObject({
             playlistName: jsonData.playlist.name,
+            description: jsonData.playlist.description,
+            playlistScreens: jsonData.playlist.onFollowingScreens,
+            playlistSlides: jsonData.playlist.slides,
           });
           setPlaylistName(jsonData.playlist.name);
         });
@@ -110,6 +119,30 @@ function EditPlaylist() {
             placeholder={playlistPlaceholder}
             value={formStateObject.playlistName}
             onChange={handleInput}
+          />
+          <FormInputArea
+            name="description"
+            type="text"
+            label={intl.formatMessage({
+              id: "edit_add_playlist_label_description",
+            })}
+            placeholder={intl.formatMessage({
+              id: "edit_add_playlist_placeholder_description",
+            })}
+            value={formStateObject.description}
+            onChange={handleInput}
+          />
+          <SelectScreenTable
+            handleChange={handleInput}
+            name="playlistScreens"
+            errors={errors}
+            selectedData={formStateObject.playlistScreens}
+          />
+          <SelectSlidesTable
+            handleChange={handleInput}
+            name="playlistSlides"
+            errors={errors}
+            selectedData={formStateObject.playlistSlides}
           />
           {submitted && <Redirect to="/playlists" />}
           <Button

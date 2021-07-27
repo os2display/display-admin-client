@@ -24,7 +24,7 @@ function SlidesList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [slides, setSlides] = useState([]);
   const infoModalText = intl.formatMessage({
-    id: "on_the_following_playlists",
+    id: "slide_on_the_following_playlists",
   });
   /**
    * Load content from fixture.

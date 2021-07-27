@@ -102,7 +102,7 @@ function MultiSelectComponent({
       };
     });
     setMappedSelected(localMappedSelected);
-  }, [selected]);
+  }, [selected, selected.length]);
 
   /**
    * Filter to replace the default filter in multi-select.

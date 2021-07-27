@@ -209,10 +209,16 @@
       "value": "Playlisten indeholder de følgende slides"
     }
   ],
-  "on_the_following_playlists": [
+  "category_on_the_following_playlists": [
     {
       "type": 0,
       "value": "Kategorien er på de følgende spillelister"
+    }
+  ],
+  "slide_on_the_following_playlists": [
+    {
+      "type": 0,
+      "value": "Slidet er på de følgende spillelister"
     }
   ],
   "playlists_list_header": [
@@ -533,10 +539,22 @@
       "value": "Beskrivelse af skærmen"
     }
   ],
+  "edit_add_playlist_label_description": [
+    {
+      "type": 0,
+      "value": "Beskrivelse af spillelisten"
+    }
+  ],
   "edit_add_screen_placeholder_description": [
     {
       "type": 0,
       "value": "Skriv en beskrivelse af skærmen"
+    }
+  ],
+  "edit_add_playlist_placeholder_description": [
+    {
+      "type": 0,
+      "value": "Skriv en beskrivelse af spillelisten"
     }
   ],
   "edit_add_screen_label_screen_layout": [
