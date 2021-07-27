@@ -29,7 +29,7 @@
     "screenLayout": "1",
     "playlists": [
       {
-        "label": "Sommerplaylist",
+        "name": "Sommerplaylist",
         "value": 1,
         "disabled": false
       }
