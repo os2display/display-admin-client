@@ -46,7 +46,6 @@ describe("Edit slide page tests", () => {
     cy.get("#save_slide").should("not.exist");
   });
 
-
   it("It cancels already existing slide", () => {
     cy.visit("/slides/");
     cy.visit("/slide/32");

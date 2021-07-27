@@ -23,7 +23,7 @@ describe("Edit tag page tests", () => {
       .should("match", /^Gem tag/);
     cy.get("input").type("Hello, World");
     cy.get("#save_tag").click();
-    cy.get("#save_tag").should("not.exist")
+    cy.get("#save_tag").should("not.exist");
   });
 
   it("It validates already existing tag", () => {
@@ -40,5 +40,4 @@ describe("Edit tag page tests", () => {
     cy.get("#save_tag").click();
     cy.get("#save_tag").should("not.exist");
   });
-
 });

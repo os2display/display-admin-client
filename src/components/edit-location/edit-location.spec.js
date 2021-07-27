@@ -19,7 +19,6 @@ describe("Edit location page loads", () => {
     cy.get("tbody").should("not.exist");
   });
 
-
   it("It validates new location", () => {
     cy.visit("/location/new");
     cy.get("#save_location")
@@ -51,7 +50,6 @@ describe("Edit location page loads", () => {
     cy.get("#save_location").click();
     cy.get("#save_location").should("not.exist");
   });
-
 
   it("It cancels already existing location", () => {
     cy.visit("/locations/");

@@ -20,10 +20,22 @@ describe("Edit screen page tests", () => {
     cy.visit("/screen/32");
 
     cy.get("tbody").find("tr td").should("have.length", 6);
-    cy.get("tbody").find("tr td").eq(0).invoke("text")
+    cy.get("tbody")
+      .find("tr td")
+      .eq(0)
+      .invoke("text")
       .should("match", /^Sommerplaylist/);
-    cy.get("tbody").find("tr").eq(0).focus().type(" ").type('{downarrow}').type(" ")
-    cy.get("tbody").find("tr td").eq(0).invoke("text")
+    cy.get("tbody")
+      .find("tr")
+      .eq(0)
+      .focus()
+      .type(" ")
+      .type("{downarrow}")
+      .type(" ");
+    cy.get("tbody")
+      .find("tr td")
+      .eq(0)
+      .invoke("text")
       .should("match", /^Ereolen/);
   });
 
