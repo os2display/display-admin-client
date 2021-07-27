@@ -18,20 +18,5 @@ describe("Edit location page loads", () => {
     cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("tbody").should("not.exist");
   });
-  it("It goes back", () => {
-    cy.visit("/locations");
-    cy.visit("/location/new");
-    cy.get(".container")
-      .find("button")
-      .eq(0)
-      .invoke("text")
-      .should("match", /^Annuller/);
-    cy.get("input").type("Hello, World");
-    cy.get("#save_location").click();
-    cy.get(".container")
-      .find("button")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Konsolider/);
-  });
+
 });
