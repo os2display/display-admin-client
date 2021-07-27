@@ -23,7 +23,7 @@ import ListButton from "../list/list-button";
 function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
   const intl = useIntl();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [onPlaylists, setOnPlaylists] = useState();
+  const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [infoModalText, setInfoModalText] = useState("");
   const playlistHasCategoriesText = intl.formatMessage({
     id: "playlist_has_categories",
@@ -33,6 +33,8 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
   });
 
   /**
+   * Opens info modal with either categories or slides.
+   *
    * @param {object} props
    * The props
    * @param {Array} props.data
@@ -46,7 +48,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
         ? playlistHasCategoriesText
         : playlistHasSlidesText;
     setInfoModalText(localInfoModalText);
-    setOnPlaylists(data);
+    setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
 
@@ -54,7 +56,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
    * Closes the info modal.
    */
   function onCloseInfoModal() {
-    setOnPlaylists();
+    setDataStructureToDisplay();
     setShowInfoModal(false);
   }
 
@@ -132,7 +134,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
       <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}
-        onDataStructures={onPlaylists}
+        dataStructureToDisplay={dataStructureToDisplay}
         infoModalString={infoModalText}
       />
     </>

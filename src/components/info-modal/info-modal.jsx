@@ -13,14 +13,14 @@ import contentString from "../util/helpers/content-string";
  * Whether to show the modal.
  * @param {Function} props.onClose
  * Callback on close modal.
- * @param {Array} props.onDataStructures
+ * @param {Array} props.dataStructureToDisplay
  * The playlists to list.
  * @param {string} props.infoModalString
  * The info modal string.
  * @returns {object}
  * The modal.
  */
-function InfoModal({ show, onClose, onDataStructures, infoModalString }) {
+function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
   if (!show) {
     return <></>;
   }
@@ -32,7 +32,7 @@ function InfoModal({ show, onClose, onDataStructures, infoModalString }) {
 
   // Creates a string for modal
   const content = `${infoModalString}:  ${contentString(
-    onDataStructures,
+    dataStructureToDisplay,
     and
   )}`;
 
@@ -52,7 +52,7 @@ function InfoModal({ show, onClose, onDataStructures, infoModalString }) {
 
 InfoModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  onDataStructures: PropTypes.arrayOf(
+  dataStructureToDisplay: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   onClose: PropTypes.func.isRequired,

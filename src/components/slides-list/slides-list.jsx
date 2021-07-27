@@ -203,7 +203,7 @@ function SlidesList() {
       <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}
-        onDataStructures={onPlaylists}
+        dataStructureToDisplay={onPlaylists}
         infoModalString={infoModalText}
       />
     </Container>
