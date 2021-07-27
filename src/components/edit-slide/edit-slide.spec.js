@@ -21,8 +21,8 @@ describe("Edit slide page tests", () => {
     cy.get("#save_slide")
       .invoke("text")
       .should("match", /^Gem slide/);
-    cy.get("#slide_name").type("Hello, World");
-    cy.get("#slide_template").select("Text-and-image");
+    cy.get("#slideName").type("Hello, World");
+    cy.get("#slideTemplate").select("Text-and-image");
     cy.get("#title").type("Hello, World");
     cy.get("#duration").type(123);
     cy.get("#box-align").select("Toppen");
@@ -32,7 +32,7 @@ describe("Edit slide page tests", () => {
 
   it("It validates already existing slide", () => {
     cy.visit("/slide/32");
-    cy.get("#slide_name").clear();
+    cy.get("#slideName").clear();
     cy.get("#save_slide")
       .invoke("text")
       .should("match", /^Gem slide/);
@@ -40,7 +40,7 @@ describe("Edit slide page tests", () => {
     cy.get("#save_slide")
       .invoke("text")
       .should("match", /^Gem slide/);
-    cy.get("#slide_name").type("Hello, World");
+    cy.get("#slideName").type("Hello, World");
     cy.get("#box-align").select("Toppen");
     cy.get("#save_slide").click();
     cy.get("#save_slide").should("not.exist");

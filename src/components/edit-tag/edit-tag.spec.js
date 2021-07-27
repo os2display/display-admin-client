@@ -28,7 +28,7 @@ describe("Edit tag page tests", () => {
 
   it("It validates already existing tag", () => {
     cy.visit("/tag/32");
-    cy.get("#tag_name").clear();
+    cy.get("#tagName").clear();
     cy.get("#save_tag")
       .invoke("text")
       .should("match", /^Gem tag/);
@@ -36,7 +36,7 @@ describe("Edit tag page tests", () => {
     cy.get("#save_tag")
       .invoke("text")
       .should("match", /^Gem tag/);
-    cy.get("#tag_name").type("Hello, World");
+    cy.get("#tagName").type("Hello, World");
     cy.get("#save_tag").click();
     cy.get("#save_tag").should("not.exist");
   });
