@@ -28,12 +28,12 @@ function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
   const intl = useIntl();
   const title = intl.formatMessage({ id: "info_title" });
   const declineText = intl.formatMessage({ id: "info_decline_text" });
-  const and = intl.formatMessage({ id: "and" });
+  const andString = intl.formatMessage({ id: "and" });
 
   // Creates a string for modal
-  const content = `${infoModalString}:  ${contentString(
+  const content = `${infoModalString}: ${contentString(
     dataStructureToDisplay,
-    and
+    andString
   )}`;
 
   return (
