@@ -53,10 +53,6 @@ InfoModal.defaultProps = {
   dataStructureToDisplay: [],
 };
 
-InfoModal.defaultProps = {
-  dataStructureToDisplay: [],
-};
-
 InfoModal.propTypes = {
   show: PropTypes.bool.isRequired,
   dataStructureToDisplay: PropTypes.arrayOf(

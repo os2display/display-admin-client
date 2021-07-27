@@ -401,18 +401,6 @@
       "value": "Vælg en eller flere grupper"
     }
   ],
-  "create_new_playlist": [
-    {
-      "type": 0,
-      "value": "Opret ny spilleliste"
-    }
-  ],
-  "categories_dropdown_label": [
-    {
-      "type": 0,
-      "value": "Vælg en eller flere kategorier"
-    }
-  ],
   "slides_dropdown_label": [
     {
       "type": 0,
