@@ -1,4 +1,4 @@
-describe("Edit slide page loads", () => {
+describe("Edit slide page tests", () => {
   it("It loads", () => {
     cy.visit("/slide/new");
     cy.get("h1").should("not.be.empty");
@@ -10,5 +10,41 @@ describe("Edit slide page loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Rediger følgende slide: Roderigo/);
+  });
+
+  it("It validates new slide", () => {
+    cy.visit("/slide/new");
+    cy.get("#save_slide")
+      .invoke("text")
+      .should("match", /^Gem slide/);
+    cy.get("#save_slide").click();
+    cy.get("#save_slide")
+      .invoke("text")
+      .should("match", /^Gem slide/);
+    cy.get("#slide_name").type("Hello, World");
+    cy.get("#slide_template").select("Text-and-image");
+    cy.get("#title").type("Hello, World");
+    cy.get("#duration").type(123);
+    cy.get("#box-align").select("Toppen");
+    cy.get("#save_slide").click();
+    cy.get("#save_slide").should("not.exist");
+  });
+
+  it("It validates already existing slide", () => {
+    cy.visit("/slide/32");
+    cy.get("#slide_name").clear();
+    cy.get(".container")
+      .find("#save_slide")
+      .invoke("text")
+      .should("match", /^Gem slide/);
+    cy.get("#save_slide").click();
+    cy.get(".container")
+      .find("#save_slide")
+      .invoke("text")
+      .should("match", /^Gem slide/);
+    cy.get("#slide_name").type("Hello, World");
+    cy.get("#box-align").select("Toppen");
+    cy.get("#save_slide").click();
+    cy.get("#save_slide").should("not.exist");
   });
 });

@@ -6,23 +6,23 @@
     "dimensions": "1920x1080",
     "groups": [
       {
-        "label": "Infoskærme",
-        "value": 1,
+        "name": "Infoskærme",
+        "id": 1,
         "disabled": false
       },
       {
-        "label": "Mødelokaler",
-        "value": 2,
+        "name": "Mødelokaler",
+        "id": 2,
         "disabled": false
       },
       {
-        "label": "Havneskærme",
-        "value": 3,
+        "name": "Havneskærme",
+        "id": 3,
         "disabled": false
       },
       {
-        "label": "ITK",
-        "value": 4,
+        "name": "ITK",
+        "id": 4,
         "disabled": false
       }
     ],
@@ -47,23 +47,23 @@
     "horizontalOrVertical": "horizontal",
     "locations": [
       {
-        "label": "Dokk1",
-        "value": 1,
+        "name": "Dokk1",
+        "id": 1,
         "disabled": false
       },
       {
-        "label": "Blixen",
-        "value": 2,
+        "name": "Blixen",
+        "id": 2,
         "disabled": false
       },
       {
-        "label": "Rådhuset",
-        "value": 3,
+        "name": "Rådhuset",
+        "id": 3,
         "disabled": false
       },
       {
-        "label": "ITK",
-        "value": 4,
+        "name": "ITK",
+        "id": 4,
         "disabled": false
       }
     ]
