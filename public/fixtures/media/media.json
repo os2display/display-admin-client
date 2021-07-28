@@ -1,0 +1,262 @@
+{
+  "media": [
+    {
+      "id": 1,
+      "url": "/fixtures/media/mountain1.jpeg",
+      "name": "Et bjerg 1",
+      "description": "Et smukt bjerg 1",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "url": "/fixtures/media/mountain2.jpeg",
+      "name": "Et bjerg 2",
+      "description": "Et smukt bjerg 2",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "url": "/fixtures/media/mountain3.jpeg",
+      "name": "Et bjerg 3",
+      "description": "Et smukt bjerg 3",
+      "tags": [
+        {
+          "name": "system-worthy",
+          "createdBy": "Alvina",
+          "slides": 3,
+          "id": 3
+        },
+        {
+          "name": "definition",
+          "createdBy": "Walton",
+          "slides": 4,
+          "id": 4
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "url": "/fixtures/media/mountain4.jpeg",
+      "name": "Et bjerg 4",
+      "description": "Et smukt bjerg 4",
+      "tags": [
+        {
+          "name": "system-worthy",
+          "createdBy": "Alvina",
+          "slides": 3,
+          "id": 3
+        },
+        {
+          "name": "definition",
+          "createdBy": "Walton",
+          "slides": 4,
+          "id": 4
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "url": "/fixtures/media/mountain5.jpg",
+      "name": "Et bjerg 5",
+      "description": "Et smukt bjerg 5",
+      "tags": [
+        {
+          "name": "definition",
+          "createdBy": "Walton",
+          "slides": 4,
+          "id": 4
+        },
+        {
+          "name": "Expanded",
+          "createdBy": "Avril",
+          "slides": 5,
+          "id": 5
+        },
+        {
+          "name": "optimizing",
+          "createdBy": "Ronnica",
+          "slides": 6,
+          "id": 6
+        },
+        {
+          "name": "Proactive",
+          "createdBy": "Clim",
+          "slides": 7,
+          "id": 7
+        },
+        {
+          "name": "Implemented",
+          "createdBy": "Kissee",
+          "slides": 8,
+          "id": 8
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "url": "/fixtures/media/goat1.jpg",
+      "name": "En ged 1",
+      "description": "En smuk ged 1",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "url": "/fixtures/media/goat2.jpg",
+      "name": "En ged 2",
+      "description": "En smuk ged 2",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "url": "/fixtures/media/goat3.jpg",
+      "name": "En ged 3",
+      "description": "En smuk ged 3",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "url": "/fixtures/media/goat4.jpg",
+      "name": "En ged 4",
+      "description": "En smuk ged 4",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "url": "/fixtures/media/goat5.jpg",
+      "name": "En ged 5",
+      "description": "En smuk ged 5",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "url": "/fixtures/media/goat6.jpg",
+      "name": "En ged 6",
+      "description": "En smuk ged 6",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "url": "/fixtures/media/sheep1.jpg",
+      "name": "Et får",
+      "description": "Et smukt får",
+      "tags": [
+        {
+          "name": "matrices",
+          "createdBy": "Josi",
+          "slides": 1,
+          "id": 1
+        },
+        {
+          "name": "test",
+          "createdBy": "Daniela",
+          "slides": 2,
+          "id": 2
+        }
+      ]
+    }
+  ]
+}
