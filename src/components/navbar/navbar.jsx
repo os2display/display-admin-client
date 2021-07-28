@@ -44,7 +44,7 @@ function NavBar() {
                   className="navbar-brand"
                   id="navbar_content_media"
                   style={{ color: "black" }}
-                  to="/media"
+                  to="/medias"
                 >
                   <FormattedMessage
                     id="navbar_media"
