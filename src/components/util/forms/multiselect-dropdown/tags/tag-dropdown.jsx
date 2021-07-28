@@ -15,9 +15,8 @@ import MultiSelectComponent from "../multi-dropdown";
  * @returns {object}
  * The multidropdown of playlists.
  */
-function TagDropdown({ handleTagSelection, selected, name, errors }) {
+function TagDropdown({ handleTagSelection, selected, name, errors, label }) {
   const [options, setOptions] = useState();
-
   /**
    * Load content from fixture.
    */
@@ -34,11 +33,12 @@ function TagDropdown({ handleTagSelection, selected, name, errors }) {
     <>
       {options && (
         <MultiSelectComponent
-          handleTagSelection={handleTagSelection}
+          handleSelection={handleTagSelection}
           options={options}
           selected={selected}
           isCreatable
           name={name}
+          label={label}
           errors={errors}
         />
       )}
