@@ -30,7 +30,7 @@ describe("Edit location page loads", () => {
       .should("match", /^Gem lokation/);
     cy.get("#locationName").type("Hello, World");
     cy.get(".dropdown-heading").eq(0).click();
-    cy.get('[type="checkbox"]').eq(0).check();
+    cy.get('[type="checkbox"]').eq(1).check();
     cy.get(".dropdown-heading").eq(0).click();
     cy.get("#save_location").click();
     cy.get("#save_location").should("not.exist");
