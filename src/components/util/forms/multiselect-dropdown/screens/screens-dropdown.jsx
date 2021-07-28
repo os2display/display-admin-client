@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
+
 /**
  * @param {object} props
  * the props.
