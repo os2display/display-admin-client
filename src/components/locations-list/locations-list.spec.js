@@ -5,6 +5,30 @@ describe("Locations list loads", () => {
     cy.get("tbody").find("tr td").should("have.length", 28);
   });
 
+  it("It opens info modal", () => {
+    cy.visit("/locations");
+    cy.get("#info-modal").should("not.exist")
+    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("#info-modal").should("exist")
+    cy.visit("/locations");
+    cy.get("#info-modal").should("not.exist")
+    cy.get("tbody").find("tr td button").eq(1).click();
+    cy.get("#info-modal").should("exist")
+  });
+
+  it("It goes to edit", () => {
+    cy.visit("/locations");
+    cy.get("#locationName").should("not.exist")
+    cy.get("tbody").find("tr td a").eq(0).click();
+    cy.get("#locationName").should("exist")
+  });
+  it("It opens delete modal", () => {
+    cy.visit("/locations");
+    cy.get("#delete-modal").should("not.exist")
+    cy.get("tbody").find("tr td button").eq(2).click();
+    cy.get("#delete-modal").should("exist")
+  });
+
   it("The column headers are correct", () => {
     cy.visit("/locations");
     cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
