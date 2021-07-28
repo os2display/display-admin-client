@@ -46,7 +46,7 @@ function EditSlide() {
   useEffect(() => {
     // @TODO load real content.
     if (!newSlide) {
-      fetch("/fixtures/slides/slide.json")
+      fetch(`/fixtures/slides/slide.json`)
         .then((response) => response.json())
         .then((jsonData) => {
           const localFormStateObject = { ...formStateObject };
@@ -65,11 +65,13 @@ function EditSlide() {
     const newTemplate = templateOptions.find(
       (template) => template.id === formStateObject.slideTemplate
     );
-    fetch(newTemplate?.url)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setFormData(jsonData);
-      });
+    if (newTemplate) {
+      fetch(newTemplate.url)
+        .then((response) => response.json())
+        .then((jsonData) => {
+          setFormData(jsonData);
+        });
+    }
   }, [formStateObject.slideTemplate, templateOptions]);
 
   useEffect(() => {

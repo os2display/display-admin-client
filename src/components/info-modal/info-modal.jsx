@@ -49,12 +49,15 @@ function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
     </div>
   );
 }
+InfoModal.defaultProps = {
+  dataStructureToDisplay: [],
+};
 
 InfoModal.propTypes = {
   show: PropTypes.bool.isRequired,
   dataStructureToDisplay: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
-  ).isRequired,
+  ),
   onClose: PropTypes.func.isRequired,
   infoModalString: PropTypes.string.isRequired,
 };
