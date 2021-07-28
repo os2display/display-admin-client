@@ -14,9 +14,9 @@ describe("Edit playlist page tests", () => {
 
   it("It validates new playlist", () => {
     cy.visit("/playlist/new");
-    cy.get("#save_playlist").should("exist")
+    cy.get("#save_playlist").should("exist");
     cy.get("#save_playlist").click();
-    cy.get("#save_playlist").should("exist")
+    cy.get("#save_playlist").should("exist");
     cy.get("input").type("Hello, World");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("not.exist");
@@ -34,7 +34,7 @@ describe("Edit playlist page tests", () => {
   it("It opens info modal", () => {
     cy.visit("/playlist/32");
     cy.get("tbody").eq(1).find("tr td button").eq(0).click();
-    cy.get("#info-modal").should("exist")
+    cy.get("#info-modal").should("exist");
   });
 
   it("It validates already existing playlist", () => {
