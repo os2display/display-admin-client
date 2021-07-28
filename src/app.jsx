@@ -56,7 +56,7 @@ function App() {
               <Route path="/location/:id" component={EditLocation} />
               <Route path="/slides" component={SlidesList} />
               <Route path="/playlists" component={PlaylistsList} />
-              <Route path="/medias" component={MediaList} />
+              <Route path="/media-list" component={MediaList} />
               <Route path="/playlist/:id" component={EditPlaylist} />
               <Route path="/slide/:id" component={EditSlide} />
               <Redirect from="/" to="/tags" exact />
