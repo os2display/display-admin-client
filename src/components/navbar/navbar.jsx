@@ -16,19 +16,44 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Item>
-              <Link
-                className="navbar-brand"
-                id="navbar_tags"
-                style={{ color: "black" }}
-                to="/tags"
-              >
+            <NavDropdown
+              title={
                 <FormattedMessage
-                  id="navbar_tags"
-                  defaultMessage="navbar_tags"
+                  id="navbar_content"
+                  defaultMessage="navbar_content"
                 />
-              </Link>
-            </Nav.Item>
+              }
+              id="navbar_content"
+            >
+              <NavDropdown.Item>
+                <Link
+                  className="navbar-brand"
+                  id="navbar_content_tags"
+                  style={{ color: "black" }}
+                  to="/tags"
+                >
+                  <FormattedMessage
+                    id="navbar_tags"
+                    defaultMessage="navbar_tags"
+                  />
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item>
+                <Link
+                  className="navbar-brand"
+                  id="navbar_content_media"
+                  style={{ color: "black" }}
+                  to="/media"
+                >
+                  <FormattedMessage
+                    id="navbar_media"
+                    defaultMessage="navbar_media"
+                  />
+                </Link>
+              </NavDropdown.Item>
+            </NavDropdown>
+
             <Nav.Item>
               <Link
                 className="navbar-brand"
