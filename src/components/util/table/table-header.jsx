@@ -8,6 +8,7 @@ import {
 import PropTypes from "prop-types";
 import SortColumnProptypes from "../../proptypes/sort-column-proptypes";
 import ColumnProptypes from "../../proptypes/column-proptypes";
+import "./table-header.scss";
 
 /**
  * @param {object} props
@@ -71,7 +72,7 @@ function TableHeader({ columns, sortColumn, onSort }) {
           <Fragment key={column.path || column.key}>
             {column.sort && (
               <th
-                style={{ cursor: "pointer" }}
+                className="clickable"
                 id={`table-header-${column.path}`}
                 onClick={() => sort(column.path)}
               >
@@ -85,6 +86,7 @@ function TableHeader({ columns, sortColumn, onSort }) {
     </thead>
   );
 }
+cursor: "pointer";
 
 TableHeader.defaultProps = {
   sortColumn: {},
