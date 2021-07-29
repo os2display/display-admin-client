@@ -7,7 +7,7 @@ describe("Info modal loads", () => {
       .invoke("text")
       .should(
         "match",
-        /^ObsKategorien er på de følgende spillelister: dynamic, Mandatory, Enhanced, explicit and policyLuk dialog/
+        /^ObsKategorien er på de følgende spillelister: dynamic, Mandatory, Enhanced, explicit og policyLuk dialog/
       );
   });
 });
