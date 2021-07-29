@@ -196,7 +196,7 @@ function MediaList() {
           </h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/media/upload">
+          <Link className="btn btn-primary btn-success" to="/media/new">
             <FormattedMessage
               id="upload_new_media"
               defaultMessage="upload_new_media"

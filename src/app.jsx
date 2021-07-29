@@ -17,6 +17,7 @@ import EditSlide from "./components/edit-slide/edit-slide";
 import PlaylistsList from "./components/playlists-list/playlists-list";
 import EditPlaylist from "./components/edit-playlist/edit-playlist";
 import MediaList from "./components/media-list/media-list";
+import EditMedia from "./components/edit-media/edit-media";
 import "./app.scss";
 
 /**
@@ -59,6 +60,7 @@ function App() {
               <Route path="/media-list" component={MediaList} />
               <Route path="/playlist/:id" component={EditPlaylist} />
               <Route path="/slide/:id" component={EditSlide} />
+              <Route path="/media/:id" component={EditMedia} />
               <Redirect from="/" to="/tags" exact />
             </Switch>
           </main>
