@@ -497,6 +497,48 @@
       "value": "Rediger denne skærm: "
     }
   ],
+  "upload new media": [
+    {
+      "type": 0,
+      "value": "Upload"
+    }
+  ],
+  "media_tags_select_label": [
+    {
+      "type": 0,
+      "value": "Sorter listen af medier ved at vælge et eller flere tags"
+    }
+  ],
+  "navbar_content": [
+    {
+      "type": 0,
+      "value": "Indhold"
+    }
+  ],
+  "navbar_media": [
+    {
+      "type": 0,
+      "value": "Medier"
+    }
+  ],
+  "media_header": [
+    {
+      "type": 0,
+      "value": "Medier"
+    }
+  ],
+  "media_name": [
+    {
+      "type": 0,
+      "value": "Navn"
+    }
+  ],
+  "media_description": [
+    {
+      "type": 0,
+      "value": "Beskrivelse"
+    }
+  ],
   "drag_and_drop_helptext": [
     {
       "type": 0,

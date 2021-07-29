@@ -86,7 +86,7 @@ function MediaList() {
   }
 
   /**
-   
+
    * @param {object} props
    * The props.
    * @param {string} props.description
@@ -261,7 +261,7 @@ function MediaList() {
             </span>
             <div>
               {data.tags.map((tag) => (
-                <span key={tag.id}>{tag.name}</span>
+                <span key={tag.id}>{tag.name} </span>
               ))}
             </div>
           </div>
