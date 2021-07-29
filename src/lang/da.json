@@ -497,7 +497,13 @@
       "value": "Rediger denne skærm: "
     }
   ],
-  "upload new media": [
+  "create_new_playlist": [
+    {
+      "type": 0,
+      "value": "Opret ny spilleliste"
+    }
+  ],
+  "upload_new_media": [
     {
       "type": 0,
       "value": "Upload"

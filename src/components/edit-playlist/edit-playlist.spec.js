@@ -17,7 +17,7 @@ describe("Edit playlist page tests", () => {
     cy.get("#save_playlist").should("exist");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("exist");
-    cy.get("input").type("Hello, World");
+    cy.get("input").type("x");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("not.exist");
   });
@@ -43,7 +43,7 @@ describe("Edit playlist page tests", () => {
     cy.get("#save_playlist").should("exist");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("exist");
-    cy.get("#playlistName").type("Hello, World");
+    cy.get("#playlistName").type("x");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("not.exist");
   });

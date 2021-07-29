@@ -28,7 +28,7 @@ describe("Edit location page loads", () => {
     cy.get("#save_location")
       .invoke("text")
       .should("match", /^Gem lokation/);
-    cy.get("#locationName").type("Hello, World");
+    cy.get("#locationName").type("x");
     cy.get(".dropdown-heading").eq(0).click();
     cy.get('[type="checkbox"]').eq(1).check();
     cy.get(".dropdown-heading").eq(0).click();
@@ -46,7 +46,7 @@ describe("Edit location page loads", () => {
     cy.get("#save_location")
       .invoke("text")
       .should("match", /^Gem lokation/);
-    cy.get("#locationName").type("Hello, World");
+    cy.get("#locationName").type("x");
     cy.get("#save_location").click();
     cy.get("#save_location").should("not.exist");
   });

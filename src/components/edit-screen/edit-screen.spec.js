@@ -57,7 +57,7 @@ describe("Edit screen page tests", () => {
     cy.get("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
-    cy.get("#screenName").type("Hello, World");
+    cy.get("#screenName").type("x");
     cy.get("#save_screen").click();
     cy.get("#save_screen")
       .invoke("text")
@@ -85,7 +85,7 @@ describe("Edit screen page tests", () => {
       .find("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
-    cy.get("#screenName").type("Hello, World");
+    cy.get("#screenName").type("x");
     cy.get("#save_screen").click();
     cy.get("#save_screen").should("not.exist");
   });

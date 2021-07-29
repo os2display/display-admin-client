@@ -21,7 +21,7 @@ describe("Edit tag page tests", () => {
     cy.get("#save_tag")
       .invoke("text")
       .should("match", /^Gem tag/);
-    cy.get("input").type("Hello, World");
+    cy.get("input").type("x");
     cy.get("#save_tag").click();
     cy.get("#save_tag").should("not.exist");
   });
@@ -36,7 +36,7 @@ describe("Edit tag page tests", () => {
     cy.get("#save_tag")
       .invoke("text")
       .should("match", /^Gem tag/);
-    cy.get("#tagName").type("Hello, World");
+    cy.get("#tagName").type("x");
     cy.get("#save_tag").click();
     cy.get("#save_tag").should("not.exist");
   });

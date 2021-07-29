@@ -86,7 +86,6 @@ function MediaList() {
   }
 
   /**
-   
    * @param {object} props
    * The props.
    * @param {string} props.description
@@ -208,7 +207,7 @@ function MediaList() {
           <div className="ml-4">
             <Button
               variant="danger"
-              id="delete-button"
+              id="delete_media_button"
               disabled={disableDeleteButton}
               onClick={() => setShowDeleteModal(true)}
             >
