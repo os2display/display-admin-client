@@ -9,8 +9,12 @@ describe("Navbar loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Slides/);
-    cy.get("#navbar_tags").click();
+    cy.get("#navbar_content").click();
+    cy.get("#navbar_content_tags").click();
     cy.get("h1").invoke("text").should("match", /^Tags/);
+    cy.get("#navbar_content").click();
+    cy.get("#navbar_content_media").click();
+    cy.get("h1").invoke("text").should("match", /^Medier/);
     cy.get("#navbar_slides").click();
     cy.get("h1")
       .invoke("text")

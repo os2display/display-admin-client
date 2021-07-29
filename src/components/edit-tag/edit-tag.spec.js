@@ -1,5 +1,5 @@
 describe("Edit tag page tests", () => {
-  it("It loads a tags", () => {
+  it("It loads edit new tag", () => {
     cy.visit("/tag/new");
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
