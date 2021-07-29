@@ -66,7 +66,6 @@ function Select({
         name={name}
         value={value}
         onChange={onChange}
-        defaultValue=""
       >
         <option disabled value="">
           {nothingSelected}

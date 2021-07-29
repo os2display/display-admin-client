@@ -20,6 +20,7 @@ function EditSlide() {
   const intl = useIntl();
   const [formStateObject, setFormStateObject] = useState({
     playlists: [],
+    slideTemplate: "",
   });
   const history = useHistory();
   const { id } = useParams();
@@ -46,7 +47,7 @@ function EditSlide() {
   useEffect(() => {
     // @TODO load real content.
     if (!newSlide) {
-      fetch(`/fixtures/slides/slide.json`)
+      fetch("/fixtures/slides/slide.json")
         .then((response) => response.json())
         .then((jsonData) => {
           const localFormStateObject = { ...formStateObject };
@@ -76,7 +77,6 @@ function EditSlide() {
 
   useEffect(() => {
     // @TODO load real content.
-
     fetch("/fixtures/templates/templates.json")
       .then((response) => response.json())
       .then((jsonData) => {

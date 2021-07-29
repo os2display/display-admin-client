@@ -45,9 +45,13 @@ function SearchBox({ value, onChange }) {
   );
 }
 
+SearchBox.defaultProps = {
+  value: "",
+};
+
 SearchBox.propTypes = {
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default SearchBox;
