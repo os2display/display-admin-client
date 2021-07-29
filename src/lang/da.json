@@ -347,6 +347,12 @@
       "value": "Rediger lokationen: "
     }
   ],
+  "pick_this_media_for_bulk_action": [
+    {
+      "type": 0,
+      "value": "Vælg dette medie til massehandling"
+    }
+  ],
   "edit_add_group_label_placeholder": [
     {
       "type": 0,

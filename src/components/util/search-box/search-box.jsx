@@ -18,9 +18,12 @@ import "./search-box.scss";
  * @returns {object}
  * The search box.
  */
-function SearchBox({ value, onChange }) {
+function SearchBox({ value, onChange, showLabel }) {
   return (
     <Form>
+      <Form.Label htmlFor="search-field">
+        <FormattedMessage id="search" defaultMessage="search" />
+      </Form.Label>
       <InputGroup className="mb-3">
         <InputGroup.Prepend>
           <InputGroup.Text id="basic-addon3">

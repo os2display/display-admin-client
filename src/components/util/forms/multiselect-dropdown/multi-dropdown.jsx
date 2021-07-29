@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
 import contentString from "../../helpers/content-string";
+import Form from "react-bootstrap/Form";
 
 /**
  * A searchablemultiselect component.
@@ -155,7 +156,7 @@ function MultiSelectComponent({
     <>
       {mappedOptions.length > 0 && (
         <div className={error ? "invalid" : ""}>
-          <label htmlFor={name}>{label}</label>
+          <Form.Label htmlFor={name}>{label}</Form.Label>
           <MultiSelect
             isCreatable={isCreatable}
             options={mappedOptions}

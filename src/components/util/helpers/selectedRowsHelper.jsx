@@ -7,7 +7,7 @@ function selectedRowsHelper(row, selectedRows) {
   const { name, id } = row;
   const alreadySelected = selectedRows.find((x) => x.id === id);
   if (alreadySelected) {
-    selectedRows.splice(selectedRows.indexOf({ name, id }), 1);
+    selectedRows.splice(selectedRows.indexOf(alreadySelected), 1);
   } else {
     selectedRows.push({ name, id });
   }
