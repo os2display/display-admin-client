@@ -54,6 +54,7 @@ function SearchBox({ value, onChange, showLabel }) {
 
 SearchBox.defaultProps = {
   value: "",
+  showLabel: false,
 };
 
 SearchBox.propTypes = {

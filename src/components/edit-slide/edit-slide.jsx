@@ -60,6 +60,7 @@ function EditSlide() {
           setTemplateData(jsonData.slide.templateData);
         })
         .catch((error) => {
+          // eslint-disable-next-line
           console.error("Error:", error);
         });
     }
@@ -76,6 +77,7 @@ function EditSlide() {
           setFormData(jsonData);
         })
         .catch((error) => {
+          // eslint-disable-next-line
           console.error("Error:", error);
         });
     }
@@ -89,6 +91,7 @@ function EditSlide() {
         setTemplateOptions(jsonData.templates);
       })
       .catch((error) => {
+        // eslint-disable-next-line
         console.error("Error:", error);
       });
   }, [templateData]);

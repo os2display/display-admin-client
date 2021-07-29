@@ -86,7 +86,7 @@ function MediaList() {
   }
 
   /**
-
+   
    * @param {object} props
    * The props.
    * @param {string} props.description
