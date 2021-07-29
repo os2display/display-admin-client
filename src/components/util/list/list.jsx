@@ -1,7 +1,7 @@
-import { React, useState, useEffect } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { React, useEffect, useState } from "react";
+import { Button, Col, Row } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import Table from "../table/table";
 import SearchBox from "../search-box/search-box";

@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Form, InputGroup, FormControl } from "react-bootstrap";
+import { Form, FormControl, InputGroup } from "react-bootstrap";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import contentString from "../util/helpers/content-string";

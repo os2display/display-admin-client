@@ -1,8 +1,8 @@
-import { React, useState, useEffect } from "react";
-import { useParams, Redirect } from "react-router";
-import { Container, Form, Button } from "react-bootstrap";
+import { React, useEffect, useState } from "react";
+import { Redirect, useParams } from "react-router";
+import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 

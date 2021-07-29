@@ -1,6 +1,6 @@
 import { React, useEffect } from "react";
 import { useIntl } from "react-intl";
-import { Modal, Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 /**

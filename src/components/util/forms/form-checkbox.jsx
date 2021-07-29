@@ -1,6 +1,6 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import { FormGroup, FormCheck } from "react-bootstrap";
+import { FormCheck, FormGroup } from "react-bootstrap";
 
 /**
  * An input for forms.

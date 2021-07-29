@@ -15,6 +15,7 @@ import "./search-box.scss";
  * the value of the search box.
  * @param {Function} props.onChange
  * The callback for change in search box.
+ * @param props.showLabel
  * @returns {object}
  * The search box.
  */

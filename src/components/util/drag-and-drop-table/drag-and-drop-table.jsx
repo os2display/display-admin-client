@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FormattedMessage } from "react-intl";
 import { Table } from "react-bootstrap";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import TableHeader from "../table/table-header";
 

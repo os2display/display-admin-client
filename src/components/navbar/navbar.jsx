@@ -1,6 +1,6 @@
 import { React } from "react";
 import { FormattedMessage } from "react-intl";
-import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 /**

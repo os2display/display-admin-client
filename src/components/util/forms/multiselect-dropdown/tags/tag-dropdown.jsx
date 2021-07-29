@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 /**
@@ -12,6 +12,7 @@ import MultiSelectComponent from "../multi-dropdown";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
+ * @param props.label
  * @returns {object}
  * The multidropdown of playlists.
  */

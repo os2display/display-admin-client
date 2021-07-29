@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import Table from "../table/table";

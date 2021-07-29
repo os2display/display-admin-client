@@ -1,11 +1,11 @@
 import { React, useEffect, useState } from "react";
-import { Container, Button, Row, Col, Form } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
 import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
-import { Link } from "react-router-dom";
 import DeleteModal from "../delete-modal/delete-modal";
 import TagDropdown from "../util/forms/multiselect-dropdown/tags/tag-dropdown";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useLocation, useHistory } from "react-router-dom";
+
 import SearchBox from "../util/search-box/search-box";
 import "./media-list.scss";
 
@@ -34,11 +34,14 @@ function MediaList() {
   const [searchText, setSearchText] = useState(
     searchParams === null ? "" : searchParams
   );
+  /**
+   *
+   */
   function getTagsParams() {
     let returnTags = [];
     if (tagsParams) {
       returnTags = tagsParams.split(",").map((tag) => {
-        let tagFields = tag.split("@");
+        const tagFields = tag.split("@");
         return { name: tagFields[0], id: parseInt(tagFields[1]) };
       });
     }
@@ -72,6 +75,8 @@ function MediaList() {
   /**
    * @param {object} dataToFilter
    * Search filter function.
+   * @param dataToFilter.description
+   * @param dataToFilter.name
    * @returns {boolean}
    * Whether the searchtext is in the data entry.
    */
@@ -123,6 +128,10 @@ function MediaList() {
     history.replace({ search: params.toString() });
   }, [searchText, selectedTags]);
 
+  /**
+   * @param root0
+   * @param root0.target
+   */
   function onTagInput({ target }) {
     setSelectedTags(target.value);
   }
@@ -185,11 +194,7 @@ function MediaList() {
 
       <Row className="mt-2 mb-2">
         <Col>
-          <SearchBox
-            showLabel={true}
-            value={searchText}
-            onChange={handleSearch}
-          />
+          <SearchBox showLabel value={searchText} onChange={handleSearch} />
         </Col>
         <Col>
           <TagDropdown
@@ -197,7 +202,7 @@ function MediaList() {
             name="tags"
             label={tagsSelectLabel}
             handleTagSelection={onTagInput}
-          ></TagDropdown>
+          />
         </Col>
       </Row>
       <div className="image-list">

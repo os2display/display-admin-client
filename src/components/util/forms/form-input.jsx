@@ -1,6 +1,6 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FormGroup, FormLabel, FormControl, InputGroup } from "react-bootstrap";
+import { FormControl, FormGroup, FormLabel, InputGroup } from "react-bootstrap";
 import { useIntl } from "react-intl";
 /**
  * An input for forms.

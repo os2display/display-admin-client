@@ -1,9 +1,9 @@
-import { React, Fragment } from "react";
+import { Fragment, React } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSortUp,
-  faSortDown,
   faSort,
+  faSortDown,
+  faSortUp,
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import SortColumnProptypes from "../../proptypes/sort-column-proptypes";

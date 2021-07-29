@@ -1,7 +1,7 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
 import Table from "../table/table";
 import CampaignIcon from "../../screen-list/campaign-icon";

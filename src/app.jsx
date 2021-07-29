@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { IntlProvider } from "react-intl";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import TagList from "./components/tag-list/tag-list";
 import Navbar from "./components/navbar/navbar";
 import ScreenList from "./components/screen-list/screen-list";

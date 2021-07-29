@@ -1,9 +1,9 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
-import contentString from "../../helpers/content-string";
 import Form from "react-bootstrap/Form";
+import contentString from "../../helpers/content-string";
 
 /**
  * A searchablemultiselect component.

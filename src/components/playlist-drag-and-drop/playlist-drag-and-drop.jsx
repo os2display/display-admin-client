@@ -1,7 +1,7 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { useIntl, FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
 

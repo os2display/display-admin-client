@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from "react";
-import { Button, Row, Container, Col } from "react-bootstrap";
+import { React, useEffect, useState } from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { FormattedMessage, useIntl } from "react-intl";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
