@@ -4,8 +4,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useIntl, FormattedMessage } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
-import FormInput from "../util/forms/form-input";
-
+import ImageUploader from "../util/image-uploader/image-uploader";
 /**
  * The edit media component.
  *
@@ -14,7 +13,7 @@ import FormInput from "../util/forms/form-input";
  */
 function EditMedia() {
   const intl = useIntl();
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState({ images: [] });
   const history = useHistory();
   const { id } = useParams();
   const [mediaName, setMediaName] = useState("");
@@ -22,9 +21,12 @@ function EditMedia() {
   const newMedia = id === "new";
   const [errors, setErrors] = useState([]);
   const mediaLabel = intl.formatMessage({ id: "edit_add_media_label" });
-  const requiredFields = ["mediaName"];
+  const requiredFields = ["mediaName", "imageName", "imageDescription"];
   const mediaPlaceholder = intl.formatMessage({
     id: "edit_add_media_label_placeholder",
+  });
+  const multipleImagesInvalidText = intl.formatMessage({
+    id: "images_invalid_text",
   });
 
   /**
@@ -99,14 +101,13 @@ function EditMedia() {
               {mediaName}
             </h1>
           )}
-          <FormInput
-            name="mediaName"
-            type="text"
+          <ImageUploader
             errors={errors}
-            label={mediaLabel}
-            placeholder={mediaPlaceholder}
-            value={formStateObject.mediaName}
-            onChange={handleInput}
+            multipleImages={true}
+            handleImageUpload={handleInput}
+            inputImage={formStateObject.images}
+            name="mediaImages"
+            invalidText={multipleImagesInvalidText}
           />
           {submitted && <Redirect to="/media-list" />}
           <Button

@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "./image-uploader.scss";
 import { FormattedMessage, useIntl } from "react-intl";
+import FormInput from "../forms/form-input";
+import Image from "./image";
 
 /**
  * @param {object} props
@@ -46,6 +48,16 @@ function ImageUploader({
     setError(errors && errors.includes(name));
   }, [errors]);
 
+  function handleChange(image) {
+    let localImages = [...images];
+    let imageIndex = localImages.findIndex(
+      (img) => img.data_url == image.data_url
+    );
+    localImages[imageIndex] = image;
+    setImages(localImages);
+    const target = { value: images, id: name };
+    handleImageUpload({ target });
+  }
   /**
    * Load content from fixture.
    */
@@ -127,38 +139,14 @@ function ImageUploader({
               </>
             )}
             {imageList.map((image, index) => (
-              <div key={image.data_url} className="d-flex">
-                <img
-                  src={image.data_url}
-                  alt=""
-                  style={{ objectFit: "contain" }}
-                  width="100"
-                />
-                <div>
-                  <div className="m-2">
-                    <Button
-                      variant="success"
-                      onClick={() => onImageUpdate(index)}
-                    >
-                      <FormattedMessage
-                        id="replace_image"
-                        defaultMessage="replace_image"
-                      />
-                    </Button>
-                  </div>
-                  <div className="m-2">
-                    <Button
-                      variant="danger"
-                      onClick={() => onImageRemove(index)}
-                    >
-                      <FormattedMessage
-                        id="remove_image"
-                        defaultMessage="remove_image"
-                      />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <Image
+                inputImage={image}
+                handleChange={handleChange}
+                onImageUpdate={onImageUpdate}
+                onImageRemove={() => onImageRemove(index)}
+                index={index}
+                errors={errors}
+              />
             ))}
           </div>
         )}
