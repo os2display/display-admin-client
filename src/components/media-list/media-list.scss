@@ -2,6 +2,14 @@
   display: flex;
   flex-wrap: wrap;
   margin: 1em -1em 1em 0;
+
+  button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    display: flex;
+  }
+
   .image-wrapper {
     position: relative;
     display: flex;
@@ -13,6 +21,10 @@
       width: 100%;
       object-fit: cover;
       vertical-align: baseline;
+
+      &.selected {
+        border: 5px solid darkgreen;
+      }
     }
 
     .form-check {

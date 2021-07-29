@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
-import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
+import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import LinkForList from "../util/list/link-for-list";
@@ -38,7 +38,7 @@ function GroupsList() {
    * The selected row.
    */
   function handleSelected(data) {
-    setSelectedRows(selectedRowsHelper(data, [...selectedRows]));
+    setSelectedRows(selectedHelper(data, [...selectedRows]));
   }
 
   /**

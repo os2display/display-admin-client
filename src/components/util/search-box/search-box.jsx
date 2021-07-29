@@ -15,16 +15,19 @@ import "./search-box.scss";
  * the value of the search box.
  * @param {Function} props.onChange
  * The callback for change in search box.
- * @param props.showLabel
+ * @param {boolean} props.showLabel
+ * Whether to show the label.
  * @returns {object}
  * The search box.
  */
 function SearchBox({ value, onChange, showLabel }) {
   return (
     <Form>
-      <Form.Label htmlFor="search-field">
-        <FormattedMessage id="search" defaultMessage="search" />
-      </Form.Label>
+      {showLabel && (
+        <Form.Label htmlFor="search-field">
+          <FormattedMessage id="search" defaultMessage="search" />
+        </Form.Label>
+      )}
       <InputGroup className="mb-3">
         <InputGroup.Prepend>
           <InputGroup.Text id="basic-addon3">
@@ -55,7 +58,8 @@ SearchBox.defaultProps = {
 
 SearchBox.propTypes = {
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+  showLabel: PropTypes.bool,
 };
 
 export default SearchBox;

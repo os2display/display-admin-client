@@ -1,40 +1,33 @@
-import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { React, useState, useEffect } from "react";
+import { Button, Row, Container, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
+import selectedRowsHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
-import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
-import selectedHelper from "../util/helpers/selectedHelper";
+import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
-import InfoModal from "../info-modal/info-modal";
-import ListButton from "../util/list/list-button";
-
 /**
- * The locations list component.
+ * The tag list component.
  *
  * @returns {object}
- * The LocationsList
+ * The TagList
  */
-function LocationsList() {
+function TagList() {
   const intl = useIntl();
   const [selectedRows, setSelectedRows] = useState([]);
-  const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [locations, setLocations] = useState([]);
-  const infoModalText = intl.formatMessage({
-    id: "category_on_the_following_playlists",
-  });
+  const [tags, setTags] = useState([]);
+
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch(`/fixtures/locations/locations.json`)
+    fetch(`/fixtures/tags/tags.json`)
       .then((response) => response.json())
       .then((jsonData) => {
-        setLocations(jsonData.locations);
+        setTags(jsonData);
       });
   }, []);
 
@@ -45,7 +38,7 @@ function LocationsList() {
    * The selected row.
    */
   function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+    setSelectedRows(selectedRowsHelper(data, [...selectedRows]));
   }
 
   /**
@@ -54,22 +47,13 @@ function LocationsList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the location.
+   * The name of the tag.
    * @param {number} props.id
-   * The id of the location
+   * The id of the tag
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
     setShowDeleteModal(true);
-  }
-
-  /**
-   * @param {Array} playlistArray
-   * The array of playlists.
-   */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
-    setShowInfoModal(true);
   }
 
   // The columns for the table.
@@ -92,34 +76,13 @@ function LocationsList() {
       label: intl.formatMessage({ id: "table_header_created_by" }),
     },
     {
+      path: "slides",
       sort: true,
-      path: "onFollowingScreens",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.onFollowingScreens,
-          data.onFollowingScreens.length,
-          data.onFollowingScreens.length === 0
-        ),
-      key: "screens",
-      label: intl.formatMessage({ id: "table_header_number_of_screens" }),
-    },
-    {
-      sort: true,
-      path: "onFollowingGroups",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.onFollowingGroups,
-          data.onFollowingGroups.length,
-          data.onFollowingGroups.length === 0
-        ),
-      key: "groups",
-      label: intl.formatMessage({ id: "table_header_number_of_groups" }),
+      label: intl.formatMessage({ id: "table_header_number_of_slides" }),
     },
     {
       key: "edit",
-      content: (data) => <LinkForList data={data} param="location" />,
+      content: (data) => <LinkForList data={data} param="tag" />,
     },
     {
       key: "delete",
@@ -145,31 +108,22 @@ function LocationsList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the location.
+   * The name of the tag.
    * @param {number} props.id
-   * The id of the location
+   * The id of the tag
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
     // @TODO delete element
-    setSelectedRows([]);
     setShowDeleteModal(false);
   }
 
   /**
    * Closes the delete modal.
    */
-  function onCloseDeleteModal() {
+  function onCloseModal() {
     setSelectedRows([]);
     setShowDeleteModal(false);
-  }
-
-  /**
-   * Closes the info modal.
-   */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setOnPlaylists();
   }
 
   return (
@@ -178,37 +132,31 @@ function LocationsList() {
         <Col>
           <h1>
             <FormattedMessage
-              id="locations_list_header"
-              defaultMessage="locations_list_header"
+              id="tags_list_header"
+              defaultMessage="tags_list_header"
             />
           </h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/location/new">
+          <Link className="btn btn-primary btn-success" to="/tag/new">
             <FormattedMessage
-              id="create_new_location"
-              defaultMessage="create_new_location"
+              id="create_new_tag"
+              defaultMessage="create_new_tag"
             />
           </Link>
         </Col>
       </Row>
-      {locations && (
-        <List columns={columns} selectedRows={selectedRows} data={locations} />
+      {tags.tags && (
+        <List columns={columns} selectedRows={selectedRows} data={tags.tags} />
       )}
       <DeleteModal
         show={showDeleteModal}
-        onClose={onCloseDeleteModal}
+        onClose={onCloseModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
-      />
-      <InfoModal
-        show={showInfoModal}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={onPlaylists}
-        infoModalString={infoModalText}
       />
     </Container>
   );
 }
 
-export default LocationsList;
+export default TagList;

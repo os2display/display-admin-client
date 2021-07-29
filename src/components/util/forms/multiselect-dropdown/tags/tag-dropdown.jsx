@@ -12,7 +12,8 @@ import MultiSelectComponent from "../multi-dropdown";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
- * @param props.label
+ * @param {string} props.label
+ * The label of the dropdown.
  * @returns {object}
  * The multidropdown of playlists.
  */
@@ -62,6 +63,7 @@ TagDropdown.propTypes = {
   ).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
+  label: PropTypes.string.isRequired,
 };
 
 export default TagDropdown;

@@ -5,7 +5,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
-import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
+import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
@@ -45,7 +45,7 @@ function CategoryList() {
    * The selected row.
    */
   function handleSelected(data) {
-    setSelectedRows(selectedRowsHelper(data, [...selectedRows]));
+    setSelectedRows(selectedHelper(data, [...selectedRows]));
   }
 
   /**

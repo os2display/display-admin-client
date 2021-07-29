@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
-import selectedRowsHelper from "../util/helpers/selectedRowsHelper";
+import selectedHelper from "../util/helpers/selectedHelper";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
 import ListButton from "../util/list/list-button";
@@ -77,7 +77,7 @@ function PlaylistsList() {
    * The selected row.
    */
   function handleSelected(data) {
-    setSelectedRows(selectedRowsHelper(data, [...selectedRows]));
+    setSelectedRows(selectedHelper(data, [...selectedRows]));
   }
 
   /**
