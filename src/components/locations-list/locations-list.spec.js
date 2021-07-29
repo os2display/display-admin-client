@@ -29,8 +29,8 @@ describe("Locations list tests", () => {
     cy.get("#delete-modal").should("exist");
   });
 
-  it("The column headers are correct", () => {
-    cy.visit("/locations (locations list)");
+  it("The column headers are correct (locations list)", () => {
+    cy.visit("/locations");
     cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
     cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
     cy.get("thead")
