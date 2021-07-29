@@ -58,6 +58,9 @@ function EditSlide() {
           setFormStateObject(localFormStateObject);
           setSlideName(jsonData.slide.name);
           setTemplateData(jsonData.slide.templateData);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
         });
     }
   }, []);
@@ -71,6 +74,9 @@ function EditSlide() {
         .then((response) => response.json())
         .then((jsonData) => {
           setFormData(jsonData);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
         });
     }
   }, [formStateObject.slideTemplate, templateOptions]);
@@ -81,6 +87,9 @@ function EditSlide() {
       .then((response) => response.json())
       .then((jsonData) => {
         setTemplateOptions(jsonData.templates);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
   }, [templateData]);
 
