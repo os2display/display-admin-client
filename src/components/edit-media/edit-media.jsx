@@ -20,11 +20,7 @@ function EditMedia() {
   const [submitted, setSubmitted] = useState(false);
   const newMedia = id === "new";
   const [errors, setErrors] = useState([]);
-  const mediaLabel = intl.formatMessage({ id: "edit_add_media_label" });
-  const requiredFields = ["mediaName", "imageName", "imageDescription"];
-  const mediaPlaceholder = intl.formatMessage({
-    id: "edit_add_media_label_placeholder",
-  });
+  const requiredFields = ["mediaName", "mediaName", "mediaDescription"];
   const multipleImagesInvalidText = intl.formatMessage({
     id: "images_invalid_text",
   });
@@ -35,11 +31,18 @@ function EditMedia() {
   useEffect(() => {
     // @TODO load real content.
     if (!newMedia) {
-      fetch(`/fixtures/media/media.json`)
+      fetch(`/fixtures/media/one_media.json`)
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
-            mediaName: jsonData.media.name,
+            images: [
+              {
+                data_url: jsonData.media.url,
+                mediaName: jsonData.media.name,
+                mediaDescription: jsonData.media.description,
+                mediaTags: jsonData.media.tags,
+              },
+            ],
           });
           setMediaName(jsonData.media.name);
         });
@@ -103,7 +106,7 @@ function EditMedia() {
           )}
           <ImageUploader
             errors={errors}
-            multipleImages={true}
+            multipleImages={newMedia ? true : false}
             handleImageUpload={handleInput}
             inputImage={formStateObject.images}
             name="mediaImages"

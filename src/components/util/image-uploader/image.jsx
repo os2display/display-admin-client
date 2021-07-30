@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import { Button, Row, Col } from "react-bootstrap";
 import "./image-uploader.scss";
 import { FormattedMessage } from "react-intl";
@@ -23,16 +24,13 @@ import TagDropdown from "../forms/multiselect-dropdown/tags/tag-dropdown";
  * @returns {object}
  * The image uploader.
  */
-function Image({
-  inputImage,
-  onImageUpdate,
-  onImageRemove,
-  handleChange,
-  errors,
-  index,
-}) {
+function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
+  const intl = useIntl();
+  const inputImageName = intl.formatMessage({ id: "input_image_name" });
+  const imageName = intl.formatMessage({ id: "image_name" });
+  const imageTags = intl.formatMessage({ id: "image_tags_label" });
   const [image, setImage] = useState(inputImage);
-  console.log(index);
+
   function onChange({ target }) {
     let localImage = image;
     localImage[target.id] = target.value;
@@ -47,15 +45,39 @@ function Image({
         </Col>
         <Col>
           <div>
+            <div>
+              <FormInput
+                name="mediaName"
+                type="text"
+                errors={errors}
+                label={imageName}
+                placeholder={inputImageName}
+                value={image.mediaName}
+                dataUrl={image.url}
+                onChange={onChange}
+              ></FormInput>
+            </div>
+            <div>
+              <FormInput
+                name="mediaDescription"
+                type="text"
+                errors={errors}
+                dataUrl={image.url}
+                label={"Bekrivelse, bruges til alt tekst"}
+                placeholder={"Skriv beskrivelse af billedet"}
+                value={image.mediaDescription}
+                onChange={onChange}
+              ></FormInput>
+            </div>
+            <div>
+              <TagDropdown
+                selected={image.mediaTags || []}
+                name="mediaTags"
+                label={imageTags}
+                handleTagSelection={onChange}
+              />
+            </div>
             <Row>
-              <Col md="auto">
-                <Button variant="success" onClick={() => onImageUpdate(index)}>
-                  <FormattedMessage
-                    id="replace_image"
-                    defaultMessage="replace_image"
-                  />
-                </Button>
-              </Col>
               <Col md="auto">
                 <Button variant="danger" onClick={() => onImageRemove(index)}>
                   <FormattedMessage
@@ -65,38 +87,6 @@ function Image({
                 </Button>
               </Col>
             </Row>
-            <div className="m-2">
-              <FormInput
-                name="imageName"
-                type="text"
-                errors={errors}
-                label={"navn"}
-                placeholder={"skriv bileldets navn"}
-                value={image.imageName}
-                dataUrl={image.url}
-                onChange={onChange}
-              ></FormInput>
-            </div>
-            <div className="m-2">
-              <FormInput
-                name="imageDescription"
-                type="text"
-                errors={errors}
-                dataUrl={image.url}
-                label={"Bekrivelse, bruges til alt tekst"}
-                placeholder={"Skriv beskrivelse af billedet"}
-                value={image.imageDescription}
-                onChange={onChange}
-              ></FormInput>
-            </div>
-            <div className="m-2">
-              <TagDropdown
-                selected={image.imageTags || []}
-                name="imageTags"
-                label={"dfssdfsdfsdf"}
-                handleTagSelection={onChange}
-              />
-            </div>
           </div>
         </Col>
       </Row>

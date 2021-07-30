@@ -54,7 +54,8 @@ function ImageUploader({
       (img) => img.data_url == image.data_url
     );
     localImages[imageIndex] = image;
-    setImages(localImages);
+    const uniqueImages = [...new Set(localImages.map((image) => image))];
+    setImages(uniqueImages);
     const target = { value: images, id: name };
     handleImageUpload({ target });
   }
@@ -68,7 +69,11 @@ function ImageUploader({
 
   const onChange = (imageList) => {
     // data for submit
-    setImages(imageList);
+    const uniqueImages = [
+      ...new Map(imageList.map((item) => [item["data_url"], item])).values(),
+    ];
+
+    setImages(uniqueImages);
     const target = { value: imageList, id: name };
     handleImageUpload({ target });
   };
@@ -143,8 +148,9 @@ function ImageUploader({
                 inputImage={image}
                 handleChange={handleChange}
                 onImageUpdate={onImageUpdate}
-                onImageRemove={() => onImageRemove(index)}
+                onImageRemove={onImageRemove}
                 index={index}
+                key={image.data_url}
                 errors={errors}
               />
             ))}

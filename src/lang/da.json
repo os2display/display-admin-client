@@ -443,12 +443,6 @@
       "value": "Vælg et eller flere billeder"
     }
   ],
-  "replace_image": [
-    {
-      "type": 0,
-      "value": "Erstat billede"
-    }
-  ],
   "image_invalid_text": [
     {
       "type": 0,
@@ -491,10 +485,40 @@
       "value": "Der skal angives et layout"
     }
   ],
+  "input_image_name": [
+    {
+      "type": 0,
+      "value": "Skriv billedets navn"
+    }
+  ],
+  "image_name": [
+    {
+      "type": 0,
+      "value": "Billedets navn"
+    }
+  ],
+  "image_tags_label": [
+    {
+      "type": 0,
+      "value": "Billedets navn"
+    }
+  ],
+  "save_media": [
+    {
+      "type": 0,
+      "value": "Gem"
+    }
+  ],
   "edit_screen": [
     {
       "type": 0,
       "value": "Rediger denne skærm: "
+    }
+  ],
+  "edit_media": [
+    {
+      "type": 0,
+      "value": "Rediger: "
     }
   ],
   "create_new_playlist": [
