@@ -1,7 +1,7 @@
 import { React, useEffect } from "react";
-import { useIntl } from "react-intl";
 import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -32,9 +32,9 @@ function ModalDialog({
   children,
   showAcceptButton,
 }) {
-  const intl = useIntl();
-  const yes = intl.formatMessage({ id: "yes" });
-  const no = intl.formatMessage({ id: "no" });
+  const { t } = useTranslation("common");
+  const yes = intl.formatMessage({ id: "yes", defaultMessage: "yes" });
+  const no = intl.formatMessage({ id: "no", defaultMessage: "no" });
 
   /**
    * For closing modals on escape key.
@@ -66,11 +66,11 @@ function ModalDialog({
         <Modal.Body>{children}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" type="button" onClick={onClose}>
-            {declineText || no}
+            {declineText || t("modal-dialog.no")}
           </Button>
           {showAcceptButton && (
             <Button variant="primary" type="submit" onClick={handleAccept}>
-              {acceptText || yes}
+              {acceptText || t("modal-dialog.yes")}
             </Button>
           )}
         </Modal.Footer>

@@ -1,10 +1,10 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { FormattedMessage, useIntl } from "react-intl";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
 import Table from "../table/table";
 import CampaignIcon from "../../screen-list/campaign-icon";
+import { useTranslation } from "react-i18next";
 
 /**
  * A multiselect and table for screens.
@@ -21,7 +21,7 @@ import CampaignIcon from "../../screen-list/campaign-icon";
  * An input.
  */
 function SelectScreenTable({ handleChange, name, selectedData, errors }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
 
   /**
    * Removes screen from list of screens.
@@ -46,29 +46,26 @@ function SelectScreenTable({ handleChange, name, selectedData, errors }) {
   const columns = [
     {
       path: "name",
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("select-screen-table.columns.name"),
     },
     {
       path: "size",
-      label: intl.formatMessage({ id: "table_header_size" }),
+      label: t("select-screen-table.columns.size"),
     },
     {
       path: "dimensions",
-      label: intl.formatMessage({ id: "table_header_dimensions" }),
+      label: t("select-screen-table.columns.dimensions"),
     },
     {
       path: "overriddenByCampaign",
-      label: intl.formatMessage({ id: "table_header_campaign" }),
+      label: t("select-screen-table.columns.campaign"),
       content: (screenData) => CampaignIcon(screenData),
     },
     {
       key: "delete",
       content: (screenData) => (
         <Button variant="danger" onClick={() => removeFromList(screenData)}>
-          <FormattedMessage
-            id="remove_from_list"
-            defaultMessage="remove_from_list"
-          />
+          {t("select-screen-table.remove-from-list")}
         </Button>
       ),
     },

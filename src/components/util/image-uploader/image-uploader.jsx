@@ -5,9 +5,8 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "./image-uploader.scss";
-import { FormattedMessage, useIntl } from "react-intl";
-import FormInput from "../forms/form-input";
 import Image from "./image";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -35,11 +34,10 @@ function ImageUploader({
   errors,
   invalidText,
 }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [images, setImages] = useState([]);
   const [error, setError] = useState();
-  const invalidInputText =
-    invalidText || intl.formatMessage({ id: "input_error_text" });
+  const invalidInputText = invalidText || t("image-uploader.validation-text");
 
   /**
    * Handle errors.
@@ -106,18 +104,8 @@ function ImageUploader({
                   onDragLeave={dragProps.onDragLeave}
                   onDragOver={dragProps.onDragOver}
                 >
-                  {!multipleImages && (
-                    <FormattedMessage
-                      id="pick_an_image"
-                      defaultMessage="pick_an_image"
-                    />
-                  )}
-                  {multipleImages && (
-                    <FormattedMessage
-                      id="pick_more_images"
-                      defaultMessage="pick_more_images"
-                    />
-                  )}
+                  {!multipleImages && t("image-uploader.pick-image")}
+                  {multipleImages && t("image-uploader.pick-more-images")}
                 </Button>
 
                 <div
@@ -136,10 +124,7 @@ function ImageUploader({
                 </div>
 
                 <small id="aria-label-for-drag-and-drop" className="form-text">
-                  <FormattedMessage
-                    id="image_upload_help_text"
-                    defaultMessage="image_upload_help_text"
-                  />
+                  {t("image-uploader.help-text")}
                 </small>
               </>
             )}

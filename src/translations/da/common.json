@@ -1,0 +1,346 @@
+{
+  "tag-list": {
+    "columns": {
+      "pick": "Vælg tag",
+      "name": "Navn",
+      "created-by": "Oprettet af",
+      "number-of-slides": "Antal slides"
+    },
+    "header": "Tags",
+    "create-new-tag": "Opret nyt tag",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "edit-tag": {
+    "create-new-tag": "Opret nyt tag",
+    "edit-tag": "Rediger følgende tag",
+    "save-button": "Gem tag",
+    "cancel-button": "Annuller",
+    "name-label": "Taggets navn",
+    "name-placeholder": "Udfyld taggets navn"
+  },
+  "slides-list": {
+    "columns": {
+      "pick": "Vælg slide",
+      "name": "Navn",
+      "template": "Skabelon",
+      "number-of-playlists": "På playlists",
+      "tags": "Tags",
+      "published": "Udgivet"
+    },
+    "info-modal": {
+      "slide-on-playlists": "Slidet er på de følgende spillelister"
+    },
+    "header": "Slides",
+    "create-new-slide": "Opret nyt slide",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "screens-list": {
+    "columns": {
+      "pick": "Vælg skærm",
+      "name": "Navn",
+      "size": "Størrelse",
+      "dimensions": "Opløsning",
+      "campaign": "Kampagne"
+    },
+    "header": "Skærme",
+    "create-new-screen": "Opret ny skærm",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "groups-list": {
+    "columns": {
+      "pick": "Vælg gruppe",
+      "name": "Navn",
+      "created-by": "Oprettet af"
+    },
+    "header": "Skærme",
+    "create-new-group": "Opret ny skærm",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "locations-list": {
+    "columns": {
+      "pick": "Vælg gruppe",
+      "name": "Navn",
+      "created-by": "Oprettet af",
+      "on-screens": "Skærme tilknyttet",
+      "on-groups": "Tilknyttede grupper"
+    },
+    "info-modal": {
+      "location-on-group": "Lokationen er tilknyttet følgende grupper",
+      "location-on-screen": "Lokationen er tilknyttet følgende skærme"
+    },
+    "header": "Lokationer",
+    "create-new-location": "Opret ny lokation",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "playlists-list": {
+    "columns": {
+      "pick": "Vælg spilleliste",
+      "name": "Navn",
+      "number-of-slides": "Slides tilknyttede"
+    },
+    "info-modal": {
+      "playlist-slides": "Spillelisten har følgende slides",
+      "playlist-categories": "Spillelisten har følgende kategorier"
+    },
+    "header": "Spillelister",
+    "create-new-playlist": "Opret ny spilleliste",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "category-list": {
+    "columns": {
+      "pick": "Vælg kategori",
+      "name": "Navn",
+      "created-by": "Oprettet af",
+      "category-on-playlist": "Playlists med kategorien"
+    },
+    "info-modal": {
+      "category-playlists": "Spillelisten har følgende kategorier"
+    },
+    "header": "Kategorier",
+    "create-new-category": "Opret ny kategori",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "media-list": {
+    "checkbox-form-aria-label": "Vælg dette medie til massehandling",
+    "header": "Medier",
+    "upload-new-media": "Upload",
+    "delete-button": "Slet",
+    "tags-select-label": "Sorter listen af medier ved at vælge et eller flere tags",
+    "media-name": "Navn",
+    "media-description": "Beskrivelse"
+  },
+  "edit-media": {
+    "upload-new-media": "Upload",
+    "edit-media": "Rediger",
+    "save-button": "Gem",
+    "media-validation": "Der skal uploades et eller flere billeder til denne template",
+    "cancel-button": "Annuller"
+  },
+  "edit-slide": {
+    "create-new-slide": "Opret nyt slide",
+    "edit-slide": "Rediger følgende slide",
+    "save-button": "Gem",
+    "cancel-button": "Annuller",
+    "slide-name-label": "Slidets navn",
+    "slide-name-placeholder": "Udfyld slides navn",
+    "slide-template-label": "Vælg en template til dit slide",
+    "slide-publish-label": "Udgiv"
+  },
+  "edit-group": {
+    "create-new-group": "Opret ny gruppe",
+    "edit-group": "Rediger følgende gruppe",
+    "save-button": "Gem",
+    "cancel-button": "Annuller",
+    "group-name-label": "Gruppens navn",
+    "group-name-placeholder": "Udfyld gruppens navn"
+  },
+  "edit-location": {
+    "create-new-location": "Opret ny lokation",
+    "edit-location": "Rediger følgende lokation",
+    "save-button": "Gem",
+    "cancel-button": "Annuller",
+    "location-name-label": "Lokationens navn",
+    "location-name-placeholder": "Udfyld lokationens navn"
+  },
+  "edit-playlist": {
+    "create-new-playlist": "Opret ny spilleliste",
+    "edit-playlist": "Rediger følgende spilleliste",
+    "save-button": "Gem",
+    "cancel-button": "Annuller",
+    "playlist-name-label": "Spillelistens navn",
+    "playlist-name-placeholder": "Udfyld spillelistens navn",
+    "playlist-description-label": "Beskrivelse af spillelisten",
+    "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten"
+  },
+  "edit-category": {
+    "create-new-category": "Opret ny kategori",
+    "edit-category": "Rediger følgende kategori",
+    "save-button": "Gem",
+    "cancel-button": "Annuller",
+    "category-name-label": "Kategoriens navn",
+    "category-name-placeholder": "Udfyld kategoriens navn"
+  },
+  "playlist-drag-and-drop": {
+    "columns": {
+      "pick": "Vælg spilleliste",
+      "name": "Navn",
+      "number-of-slides": "Slides tilknyttede"
+    },
+    "info-modal": {
+      "playlist-slides": "Spillelisten har følgende slides",
+      "playlist-categories": "Spillelisten har følgende kategorier"
+    },
+    "remove-from-list": "Fjern fra liste"
+  },
+  "select-screen-table": {
+    "columns": {
+      "name": "Navn",
+      "size": "Størrelse",
+      "dimensions": "Opløsning",
+      "campaign": "Kampagne"
+    },
+    "remove-from-list": "Fjern fra liste"
+  },
+  "select-slides-table": {
+    "columns": {
+      "name": "Navn",
+      "template": "Skabelon",
+      "number-of-playlists": "På playlists",
+      "tags": "Tags",
+      "published": "Udgivet"
+    },
+    "remove-from-list": "Fjern fra liste"
+  },
+  "pagination": {
+    "aria-label": "Paginering"
+  },
+  "search-box": {
+    "label": "Søg",
+    "placeholder": "Indtast søgning her"
+  },
+  "delete-modal": {
+    "confirmation": "Er du sikker på du vil slette følgende",
+    "title": "Du er ved at slette noget",
+    "and-string": "og"
+  },
+  "info-modal": {
+    "decline-text": "Luk dialog",
+    "title": "Obs",
+    "and-string": "og"
+  },
+  "published": {
+    "yes": "Ja",
+    "no": "Nej"
+  },
+  "modal-dialog": {
+    "yes": "Ja",
+    "no": "Nej"
+  },
+  "form-input": {
+    "validation-text": "Dette felt skal udfyldes",
+  },
+  "render-form-element": {
+    "image-invalid": "Der skal uploades et billede til denne template",
+    "images-invalid": "Der skal uploades et eller flere billeder til denne template"
+  },
+  "multi-dropdown": {
+    "validation-text": "Dette felt skal udfyldes",
+    "and_string": "og",
+    "nothing-selected": "Vælg en af mulighederne"
+  },
+  "groups-dropdown": {
+    "label": "Vælg en eller flere grupper",
+    "nothing-selected": "Vælg en af grupperne"
+  },
+  "locations-dropdown": {
+    "label": "Vælg en eller flere lokationer",
+    "nothing-selected": "Vælg en af lokationerne"
+  },
+  "playlists-dropdown": {
+    "label": "Vælg en eller flere spillelister",
+    "nothing-selected": "Vælg en af spillelisterne"
+  },
+  "screens-dropdown": {
+    "label": "Vælg en eller flere skærme",
+    "nothing-selected": "Vælg en af skærmene"
+  },
+  "slides-dropdown": {
+    "label": "Vælg en eller flere slides",
+    "nothing-selected": "Vælg en af følgende slides"
+  },
+  "categories-dropdown": {
+    "label": "Vælg en eller flere kategorier",
+    "nothing-selected": "Vælg en af kategorierne"
+  },
+  "select": {
+    "validation-text": "Dette felt skal udfyldes",
+    "nothing-selected": "Der er ikke valgt noget"
+  },
+  "merge-modal": {
+    "confirmation": "Er du sikker på du vil konsolidere følgende",
+    "title": "Du er ved at konsolidere noget",
+    "and-string": "og",
+    "new-name-label": "Vælg et nyt navn",
+    "new-name-placeholder": "Vælg et nyt navn",
+  },
+  "select-playlists-table": {
+    "columns": {
+      "pick": "Vælg spilleliste",
+      "name": "Navn",
+      "number-of-slides": "Slides tilknyttede"
+    },
+    "info-modal": {
+      "playlist-slides": "Spillelisten har følgende slides",
+      "playlist-categories": "Spillelisten har følgende kategorier"
+    },
+    "remove-from-list": "Fjern fra liste"
+  },
+  "image-uploader": {
+    "validation-text": "Dette felt skal udfyldes",
+    "pick-image": "Vælg et billede",
+    "pick-more-images": "Vælg et eller flere billeder",
+    "help-text": "Vælg et billede ved at trykke på knappen, eller træk og slip det over firkanten"
+  },
+  "checkbox-for-list": {
+    "checkbox-form-aria-label": "Vælg dette medie til massehandling"
+  },
+  "list": {
+    "delete-button": "Slet",
+    "merge-button": "Konsolider"
+  },
+  "image": {
+    "remove-image": "Slet",
+    "image-name-label": "Billedets navn",
+    "image-name-placeholder": "Skriv billedets navn",
+    "image-description-label": "Beskrivelse af billedet",
+    "image-description-placeholder": "Udfyld beskrivelse af billedet",
+    "image-description-help-text": "Denne beskrivelse benytter til alt-text, og er derfor påkrævet",
+    "image-tags-label": "Tags tilknyttede billedet",
+    "image-tags-help-text": "Disse bruges eksempelvis til fremsøgning af et billede"
+  },
+  "drag-and-drop-table": {
+    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug espace til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
+  },
+  "edit-screen": {
+    "create-new-screen": "Opret ny skærm",
+    "edit-screen": "Rediger følgende skærm",
+    "save-button": "Gem",
+    "cancel-button": "Annuller",
+    "radio-button-horizontal": "Vandret layout",
+    "radio-button-vertical": "Lodret layout",
+    "radio-buttons-horizontal-or-vertical-label": "Angiv om skærmen er vandret eller lodrett",
+    "screen-name-label": "Skærmens navn",
+    "screen-name-placeholder": "Udfyld skærmens navn",
+    "screen-name-validation": "Venligst udfyld skærmens navn",
+    "screen-description-label": "Skærmens navn",
+    "screen-description-placeholder": "Udfyld skærmens navn",
+    "screen-layout-label": "Skærmens layout",
+    "screen-description-of-location-label": "Skærmens navn",
+    "screen-description-of-location-placeholder": "Udfyld skærmens navn",
+    "screen-size-of-screen-label": "Størrelse på skærmen",
+    "screen-size-of-screen-placeholder": "Angiv størrelsen på skærmen",
+    "screen-resolution-of-screen-label": "Skærmens opløsning",
+    "screen-resolution-of-screen-placeholder": "Angiv skærmens opløsning",
+    "screen-resolution-of-screen-helptext": "Angiv skærmens opløsning (bxh), bredde og højde separeret med et x, eksempelvis 1920x1080"
+  },
+  "navbar": {
+    "content": "Indhold",
+    "content-tags": "Tags",
+    "content-media": "Medier",
+    "slides": "Slides",
+    "screens": "Skærme",
+    "screens-screens": "Skærme",
+    "screens-groups": "Grupper",
+    "screens-locations": "Lokationer",
+    "playlists": "Spillelister",
+    "playlists-playlists": "Spillelister",
+    "playlists-categories": "Kategorier"
+  }
+}

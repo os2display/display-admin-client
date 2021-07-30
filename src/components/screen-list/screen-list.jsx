@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CampaignIcon from "./campaign-icon";
@@ -8,6 +7,8 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
+import { useTranslation } from "react-i18next";
+
 /**
  * The screen list component.
  *
@@ -15,7 +16,7 @@ import List from "../util/list/list";
  *   The screen list.
  */
 function ScreenList() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [screens, setScreens] = useState([]);
@@ -61,7 +62,7 @@ function ScreenList() {
   const columns = [
     {
       key: "pick",
-      label: intl.formatMessage({ id: "table_header_pick" }),
+      label: t("screens-list.columns.pick"),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -69,27 +70,33 @@ function ScreenList() {
     {
       path: "name",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("screens-list.columns.name"),
     },
     {
       path: "size",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_size" }),
+      label: t("screens-list.columns.size"),
     },
     {
       path: "dimensions",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_dimensions" }),
+      label: t("screens-list.columns.dimensions"),
     },
     {
       path: "overriddenByCampaign",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_campaign" }),
+      label: t("screens-list.columns.campaign"),
       content: (data) => CampaignIcon(data),
     },
     {
       key: "edit",
-      content: (data) => <LinkForList data={data} param="screen" />,
+      content: (data) => (
+        <LinkForList
+          data={data}
+          label={t("screens-list.edit-button")}
+          param="screen"
+        />
+      ),
     },
     {
       key: "delete",
@@ -101,7 +108,7 @@ function ScreenList() {
               disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
-              <FormattedMessage id="delete" defaultMessage="delete" />
+              {t("screens-list.delete-button")}
             </Button>
           </div>
         </>
@@ -137,19 +144,11 @@ function ScreenList() {
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>
-            <FormattedMessage
-              id="screens_list_header"
-              defaultMessage="screens_list_header"
-            />
-          </h1>
+          <h1>{t("screens-list.header")}</h1>
         </Col>
         <Col md="auto">
           <Link className="btn btn-primary btn-success" to="/screen/new">
-            <FormattedMessage
-              id="create_new_screen"
-              defaultMessage="create_new_screen"
-            />
+            {t("screens-list.create-new-screen")}
           </Link>
         </Col>
       </Row>

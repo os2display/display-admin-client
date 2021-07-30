@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
 import { Table } from "react-bootstrap";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import TableHeader from "../table/table-header";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -21,6 +21,8 @@ import TableHeader from "../table/table-header";
  * The drag and drop table.
  */
 function DragAndDropTable({ columns, data, formId, onDropped }) {
+  const { t } = useTranslation("common");
+
   /**
    * Renders a cell with the content received.
    *
@@ -128,10 +130,7 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
         </DragDropContext>
       </Table>
       <small id="aria-label-for-drag-and-drop" className="form-text">
-        <FormattedMessage
-          id="drag_and_drop_helptext"
-          defaultMessage="drag_and_drop_helptext"
-        />
+        {t("drag-and-drop-table.help-text")}
       </small>
     </div>
   );

@@ -1,11 +1,12 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { FormattedMessage, useIntl } from "react-intl";
 import Table from "../table/table";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import InfoModal from "../../info-modal/info-modal";
 import ListButton from "../list/list-button";
+import { useTranslation } from "react-i18next";
+
 /**
  * A multiselect and table for playlists.
  *
@@ -21,16 +22,10 @@ import ListButton from "../list/list-button";
  * An input.
  */
 function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [infoModalText, setInfoModalText] = useState("");
-  const playlistHasCategoriesText = intl.formatMessage({
-    id: "playlist_has_categories",
-  });
-  const playlistHasSlidesText = intl.formatMessage({
-    id: "playlist_has_slides",
-  });
 
   /**
    * Opens info modal with either categories or slides.
@@ -45,8 +40,8 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
   function openInfoModal({ data, caller }) {
     const localInfoModalText =
       caller === "categories"
-        ? playlistHasCategoriesText
-        : playlistHasSlidesText;
+        ? t("select-playlists-table.info-modal.playlist-categories")
+        : t("select-playlists-table.info-modal.playlist-slides");
     setInfoModalText(localInfoModalText);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
@@ -83,7 +78,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
   const columns = [
     {
       path: "name",
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("select-playlists-table.columns.name"),
     },
     {
       content: (data) =>
@@ -94,7 +89,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
           data.slides?.length === 0
         ),
       key: "slides",
-      label: intl.formatMessage({ id: "table_header_number_of_slides" }),
+      label: t("select-playlists-table.columns.number-of-slides"),
     },
     {
       content: (data) =>
@@ -105,16 +100,13 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
           data.categories?.length === 0
         ),
       key: "categories",
-      label: intl.formatMessage({ id: "table_header_number_of_categories" }),
+      label: t("select-playlists-table.columns.number-of-categories"),
     },
     {
       key: "delete",
       content: (screenData) => (
         <Button variant="danger" onClick={() => removeFromList(screenData)}>
-          <FormattedMessage
-            id="remove_from_list"
-            defaultMessage="remove_from_list"
-          />
+          {t("select-playlists-table.remove-from-list")}
         </Button>
       ),
     },

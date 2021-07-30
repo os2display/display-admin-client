@@ -1,11 +1,10 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 import { Button, Row, Col } from "react-bootstrap";
-import "./image-uploader.scss";
-import { FormattedMessage } from "react-intl";
 import FormInput from "../forms/form-input";
 import TagDropdown from "../forms/multiselect-dropdown/tags/tag-dropdown";
+import { useTranslation } from "react-i18next";
+import "./image-uploader.scss";
 /**
  * @param {object} props
  * The props.
@@ -25,10 +24,7 @@ import TagDropdown from "../forms/multiselect-dropdown/tags/tag-dropdown";
  * The image uploader.
  */
 function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
-  const intl = useIntl();
-  const inputImageName = intl.formatMessage({ id: "input_image_name" });
-  const imageName = intl.formatMessage({ id: "image_name" });
-  const imageTags = intl.formatMessage({ id: "image_tags_label" });
+  const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
   function onChange({ target }) {
@@ -37,6 +33,7 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
     setImage(localImage);
     handleChange(image);
   }
+
   return (
     <div>
       <Row className="mb-2">
@@ -50,8 +47,8 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
                 name="mediaName"
                 type="text"
                 errors={errors}
-                label={imageName}
-                placeholder={inputImageName}
+                label={t("image.image-name-label")}
+                placeholder={t("image.image-name-placeholder")}
                 value={image.mediaName}
                 dataUrl={image.url}
                 onChange={onChange}
@@ -63,8 +60,9 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
                 type="text"
                 errors={errors}
                 dataUrl={image.url}
-                label={"Bekrivelse, bruges til alt tekst"}
-                placeholder={"Skriv beskrivelse af billedet"}
+                label={t("image.image-description-label")}
+                placeholder={t("image.image-description-placeholder")}
+                helpText={t("image.image-description-help-text")}
                 value={image.mediaDescription}
                 onChange={onChange}
               ></FormInput>
@@ -73,17 +71,15 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
               <TagDropdown
                 selected={image.mediaTags || []}
                 name="mediaTags"
-                label={imageTags}
+                label={t("image.image-tags-label")}
                 handleTagSelection={onChange}
+                helpText={t("image.image-tags-help-text")}
               />
             </div>
             <Row>
               <Col md="auto">
                 <Button variant="danger" onClick={() => onImageRemove(index)}>
-                  <FormattedMessage
-                    id="remove_image"
-                    defaultMessage="remove_image"
-                  />
+                  {t("image.remove-image")}
                 </Button>
               </Col>
             </Row>

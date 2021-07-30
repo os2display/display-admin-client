@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -18,15 +18,10 @@ import MultiSelectComponent from "../multi-dropdown";
  * The multidropdown of groups.
  */
 function GroupsDropdown({ handleGroupsSelection, selected, name, errors }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const noSelectedGroups = intl.formatMessage({
-    id: "groups_dropdown_no_selected",
-  });
-  const groupsLabel = intl.formatMessage({
-    id: "groups_dropdown_label",
-  });
+
   /**
    * Load content from fixture.
    */
@@ -48,11 +43,11 @@ function GroupsDropdown({ handleGroupsSelection, selected, name, errors }) {
             errors={errors}
             handleSelection={handleGroupsSelection}
             options={options}
-            label={groupsLabel}
+            label={t("groups-dropdown.label")}
             selected={selected}
             name={name}
             isLoading={isLoading}
-            noSelectedString={noSelectedGroups}
+            noSelectedString={t("groups-dropdown.nothing-selected")}
           />
         </>
       )}

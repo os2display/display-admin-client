@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import Table from "../table/table";
@@ -10,6 +9,7 @@ import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import MergeModal from "../../merge-modal/merge-modal";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -24,6 +24,7 @@ import MergeModal from "../../merge-modal/merge-modal";
  * The List.
  */
 function List({ data, columns, selectedRows }) {
+  const { t } = useTranslation("common");
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search).get("search");
@@ -209,7 +210,7 @@ function List({ data, columns, selectedRows }) {
               disabled={disableDeleteButton}
               onClick={() => setShowDeleteModal(true)}
             >
-              <FormattedMessage id="delete" defaultMessage="delete" />
+              {t("list.delete-button")}
             </Button>
           </div>
           <div className="ml-4">
@@ -220,7 +221,7 @@ function List({ data, columns, selectedRows }) {
               onClick={() => setMergeMergeModal(true)}
               variant="success"
             >
-              <FormattedMessage id="merge" defaultMessage="merge" />
+              {t("list.merge-button")}
             </Button>
           </div>
         </Col>

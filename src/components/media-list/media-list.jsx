@@ -1,12 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import TagDropdown from "../util/forms/multiselect-dropdown/tags/tag-dropdown";
-
 import SearchBox from "../util/search-box/search-box";
+import { useTranslation } from "react-i18next";
 import "./media-list.scss";
 
 /**
@@ -17,13 +16,7 @@ import "./media-list.scss";
  */
 function MediaList() {
   // Translations
-  const intl = useIntl();
-  const tagsSelectLabel = intl.formatMessage({
-    id: "media_tags_select_label",
-  });
-  const pickImageAriaLabel = intl.formatMessage({
-    id: "pick_this_media_for_bulk_action",
-  });
+  const { t } = useTranslation("common");
 
   // Url search paramters
   /**
@@ -191,16 +184,11 @@ function MediaList() {
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>
-            <FormattedMessage id="media_header" defaultMessage="media_header" />
-          </h1>
+          <h1>{t("media-list.header")}</h1>
         </Col>
         <Col md="auto">
           <Link className="btn btn-primary btn-success" to="/media/new">
-            <FormattedMessage
-              id="upload_new_media"
-              defaultMessage="upload_new_media"
-            />
+            {t("media-list.upload-new-media")}
           </Link>
         </Col>
         <Col md="auto">
@@ -211,7 +199,7 @@ function MediaList() {
               disabled={disableDeleteButton}
               onClick={() => setShowDeleteModal(true)}
             >
-              <FormattedMessage id="delete" defaultMessage="delete" />
+              {t("media-list.delete-button")}
             </Button>
           </div>
         </Col>
@@ -225,7 +213,7 @@ function MediaList() {
           <TagDropdown
             selected={selectedTags}
             name="tags"
-            label={tagsSelectLabel}
+            label={t("media-list.tags-select-label")}
             handleTagSelection={onTagInput}
           />
         </Col>
@@ -244,19 +232,14 @@ function MediaList() {
               type="checkbox"
               checked={data.selected}
               tabIndex={-1}
-              aria-label={pickImageAriaLabel}
+              aria-label={t("media-list.checkbox-form-aria-label")}
               readOnly
             />
             <span>
-              <FormattedMessage id="media_name" defaultMessage="media_name" />:{" "}
-              {data.name}
+              {t("media-list.media-name")}: {data.name}
             </span>
             <span>
-              <FormattedMessage
-                id="media_description"
-                defaultMessage="media_description"
-              />
-              : {data.description}
+              {t("media-list.media-description")}: {data.description}
             </span>
             <div>
               {data.tags.map((tag) => (

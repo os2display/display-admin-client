@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import MultiSelect from "react-multi-select-component";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import contentString from "../../helpers/content-string";
+import { useTranslation } from "react-i18next";
 
 /**
  * A searchablemultiselect component.
@@ -33,6 +33,8 @@ import contentString from "../../helpers/content-string";
  * The string to display on error.
  * @param {string} props.label
  * The input label
+ * @param {string} props.helpText
+ * Help text for the dropdown.
  * @returns {object}
  * The multidropdown
  */
@@ -47,17 +49,16 @@ function MultiSelectComponent({
   errors,
   errorText,
   label,
+  helpText,
 }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [error, setError] = useState();
   const [mappedOptions, setMappedOptions] = useState([]);
   const [mappedSelected, setMappedSelected] = useState([]);
-  const textOnError =
-    errorText || intl.formatMessage({ id: "input_error_text" });
-  const and = intl.formatMessage({ id: "and_string" });
+  const textOnError = errorText || t("multi-dropdown.validation-text");
+
   const nothingSelectedLabel =
-    noSelectedString ||
-    intl.formatMessage({ id: "multi_dropdown_no_selected" });
+    noSelectedString || t("multi-dropdown.nothing-selected");
   /**
    * Handle errors.
    */
@@ -148,7 +149,7 @@ function MultiSelectComponent({
    */
   function customValueRenderer(valueSelected) {
     return valueSelected.length
-      ? contentString(valueSelected, and)
+      ? contentString(valueSelected, t("multi-dropdown.and-string"))
       : nothingSelectedLabel;
   }
 
@@ -169,6 +170,7 @@ function MultiSelectComponent({
             valueRenderer={customValueRenderer}
           />
           {error && <div className="invalid-feedback-multi">{textOnError}</div>}
+          {helpText && <small className="form-text">{helpText}</small>}
         </div>
       )}
     </>
@@ -181,6 +183,7 @@ MultiSelectComponent.defaultProps = {
   isLoading: false,
   errors: [],
   errorText: "",
+  helpText: null,
 };
 
 MultiSelectComponent.propTypes = {
@@ -206,6 +209,7 @@ MultiSelectComponent.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.string),
   errorText: PropTypes.string,
   label: PropTypes.string.isRequired,
+  helpText: PropTypes.string,
 };
 
 export default MultiSelectComponent;

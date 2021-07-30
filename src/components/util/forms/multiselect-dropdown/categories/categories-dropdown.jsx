@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
 
@@ -23,15 +22,9 @@ function CategoriesDropdown({
   name,
   errors,
 }) {
-  const intl = useIntl();
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const noSelectedCategories = intl.formatMessage({
-    id: "categories_dropdown_no_selected",
-  });
-  const categoriesLabel = intl.formatMessage({
-    id: "categories_dropdown_label",
-  });
+
   /**
    * Load content from fixture.
    */
@@ -53,11 +46,11 @@ function CategoriesDropdown({
             errors={errors}
             handleSelection={handleCategorySelection}
             options={options}
-            label={categoriesLabel}
+            label={t("categories-dropdown.label")}
             selected={selected}
             name={name}
             isLoading={isLoading}
-            noSelectedString={noSelectedCategories}
+            noSelectedString={t("categories-dropdown.nothing-selected")}
           />
         </>
       )}

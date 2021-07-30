@@ -2,10 +2,10 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
+import { useTranslation } from "react-i18next";
 
 /**
  * The edit location component.
@@ -14,7 +14,7 @@ import SelectScreenTable from "../util/multi-and-table/select-screen-table";
  * The edit location page.
  */
 function EditLocation() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const requiredFields = ["locationName", "locationScreens"];
   const [formStateObject, setFormStateObject] = useState({
     locationScreens: [],
@@ -25,10 +25,6 @@ function EditLocation() {
   const [submitted, setSubmitted] = useState(false);
   const newLocation = id === "new";
   const [errors, setErrors] = useState([]);
-  const locationLabel = intl.formatMessage({ id: "edit_add_location_label" });
-  const locationPlaceholder = intl.formatMessage({
-    id: "edit_add_location_label_placeholder",
-  });
 
   /**
    * Load content from fixture.
@@ -89,29 +85,18 @@ function EditLocation() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
-          {newLocation && (
-            <h1>
-              <FormattedMessage
-                id="create_new_location"
-                defaultMessage="create_new_location"
-              />
-            </h1>
-          )}
+          {newLocation && <h1>{t("edit-location.create-new-location")}</h1>}
           {!newLocation && (
             <h1>
-              <FormattedMessage
-                id="edit_location"
-                defaultMessage="edit_location"
-              />
-              {locationName}
+              {t("edit-location.edit-location")}: {locationName}
             </h1>
           )}
           <FormInput
             name="locationName"
             type="text"
             errors={errors}
-            label={locationLabel}
-            placeholder={locationPlaceholder}
+            label={t("edit-location.location-name-label")}
+            placeholder={t("edit-location.location-name-placeholder")}
             value={formStateObject.locationName}
             onChange={handleInput}
           />
@@ -128,13 +113,10 @@ function EditLocation() {
             id="location_cancel"
             onClick={() => history.goBack()}
           >
-            <FormattedMessage id="cancel" defaultMessage="cancel" />
+            {t("edit-location.cancel-button")}
           </Button>
           <Button variant="primary" type="submit" id="save_location">
-            <FormattedMessage
-              id="save_location"
-              defaultMessage="save_location"
-            />
+            {t("edit-location.save-button")}
           </Button>
         </Form>
       </Container>

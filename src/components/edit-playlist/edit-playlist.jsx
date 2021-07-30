@@ -2,13 +2,14 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
+import { useTranslation } from "react-i18next";
+
 /**
  * The edit playlist component.
  *
@@ -16,7 +17,7 @@ import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/ca
  * The edit playlist page.
  */
 function EditPlaylist() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({
     playlistScreens: [],
     playlistSlides: [],
@@ -28,11 +29,7 @@ function EditPlaylist() {
   const [submitted, setSubmitted] = useState(false);
   const newPlaylist = id === "new";
   const [errors, setErrors] = useState([]);
-  const playlistLabel = intl.formatMessage({ id: "edit_add_playlist_label" });
   const requiredFields = ["playlistName"];
-  const playlistPlaceholder = intl.formatMessage({
-    id: "edit_add_playlist_label_placeholder",
-  });
 
   /**
    * Load content from fixture.
@@ -96,41 +93,26 @@ function EditPlaylist() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
-          {newPlaylist && (
-            <h1>
-              <FormattedMessage
-                id="create_new_playlist"
-                defaultMessage="create_new_playlist"
-              />
-            </h1>
-          )}
+          {newPlaylist && <h1>{t("edit-playlist.create-new-playlist")}</h1>}
           {!newPlaylist && (
             <h1>
-              <FormattedMessage
-                id="edit_playlist"
-                defaultMessage="edit_playlist"
-              />
-              {playlistName}
+              {t("edit-playlist.edit-playlist")}: {playlistName}
             </h1>
           )}
           <FormInput
             name="playlistName"
             type="text"
             errors={errors}
-            label={playlistLabel}
-            placeholder={playlistPlaceholder}
+            label={t("edit-playlist.playlist-name-label")}
+            placeholder={t("edit-playlist.playlist-name-placeholder")}
             value={formStateObject.playlistName}
             onChange={handleInput}
           />
           <FormInputArea
             name="description"
             type="text"
-            label={intl.formatMessage({
-              id: "edit_add_playlist_label_description",
-            })}
-            placeholder={intl.formatMessage({
-              id: "edit_add_playlist_placeholder_description",
-            })}
+            label={t("edit-playlist.playlist-description-label")}
+            placeholder={t("edit-playlist.playlist-description-placeholder")}
             value={formStateObject.description}
             onChange={handleInput}
           />
@@ -159,13 +141,10 @@ function EditPlaylist() {
             id="playlist_cancel"
             onClick={() => history.goBack()}
           >
-            <FormattedMessage id="cancel" defaultMessage="cancel" />
+            {t("edit-playlist.cancel-button")}
           </Button>
           <Button variant="primary" type="submit" id="save_playlist">
-            <FormattedMessage
-              id="save_playlist"
-              defaultMessage="save_playlist"
-            />
+            {t("edit-playlist.save-button")}
           </Button>
         </Form>
       </Container>

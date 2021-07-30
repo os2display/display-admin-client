@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
@@ -9,6 +8,7 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
+import { useTranslation } from "react-i18next";
 
 /**
  * The locations list component.
@@ -17,15 +17,14 @@ import ListButton from "../util/list/list-button";
  * The LocationsList
  */
 function LocationsList() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
+  const [infoModalText, setInfoModalText] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
-  const [onPlaylists, setOnPlaylists] = useState();
+  const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [locations, setLocations] = useState([]);
-  const infoModalText = intl.formatMessage({
-    id: "category_on_the_following_playlists",
-  });
+
   /**
    * Load content from fixture.
    */
@@ -64,11 +63,22 @@ function LocationsList() {
   }
 
   /**
-   * @param {Array} playlistArray
-   * The array of playlists.
+   * Opens info modal with either categories or slides.
+   *
+   * @param {object} props
+   * The props
+   * @param {Array} props.data
+   * The data to sum up in the modal
+   * @param {string} props.caller
+   * Which infomodal is opened, categories or slides.
    */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
+  function openInfoModal({ data, caller }) {
+    const localInfoModalText =
+      caller === "groups"
+        ? t("locations-list.info-modal.location-on-group")
+        : t("locations-list.info-modal.location-on-screen");
+    setInfoModalText(localInfoModalText);
+    setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
 
@@ -76,7 +86,7 @@ function LocationsList() {
   const columns = [
     {
       key: "pick",
-      label: intl.formatMessage({ id: "table_header_pick" }),
+      label: t("locations-list.columns.pick"),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -84,12 +94,12 @@ function LocationsList() {
     {
       path: "name",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("locations-list.columns.name"),
     },
     {
       path: "createdBy",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_created_by" }),
+      label: t("locations-list.columns.created-by"),
     },
     {
       sort: true,
@@ -97,12 +107,12 @@ function LocationsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          data.onFollowingScreens,
+          { data: data.onFollowingScreens, caller: "screens" },
           data.onFollowingScreens.length,
           data.onFollowingScreens.length === 0
         ),
       key: "screens",
-      label: intl.formatMessage({ id: "table_header_number_of_screens" }),
+      label: t("locations-list.columns.on-screens"),
     },
     {
       sort: true,
@@ -110,16 +120,22 @@ function LocationsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          data.onFollowingGroups,
+          { data: data.onFollowingGroups, caller: "groups" },
           data.onFollowingGroups.length,
           data.onFollowingGroups.length === 0
         ),
       key: "groups",
-      label: intl.formatMessage({ id: "table_header_number_of_groups" }),
+      label: t("locations-list.columns.on-groups"),
     },
     {
       key: "edit",
-      content: (data) => <LinkForList data={data} param="location" />,
+      content: (data) => (
+        <LinkForList
+          data={data}
+          label={t("locations-list.edit-button")}
+          param="location"
+        />
+      ),
     },
     {
       key: "delete",
@@ -131,7 +147,7 @@ function LocationsList() {
               disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
-              <FormattedMessage id="delete" defaultMessage="delete" />
+              {t("locations-list.delete-button")}
             </Button>
           </div>
         </>
@@ -169,26 +185,18 @@ function LocationsList() {
    */
   function onCloseInfoModal() {
     setShowInfoModal(false);
-    setOnPlaylists();
+    setDataStructureToDisplay();
   }
 
   return (
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>
-            <FormattedMessage
-              id="locations_list_header"
-              defaultMessage="locations_list_header"
-            />
-          </h1>
+          <h1>{t("locations-list.header")}</h1>
         </Col>
         <Col md="auto">
           <Link className="btn btn-primary btn-success" to="/location/new">
-            <FormattedMessage
-              id="create_new_location"
-              defaultMessage="create_new_location"
-            />
+            {t("locations-list.create-new-location")}
           </Link>
         </Col>
       </Row>
@@ -204,7 +212,7 @@ function LocationsList() {
       <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}
-        dataStructureToDisplay={onPlaylists}
+        dataStructureToDisplay={dataStructureToDisplay}
         infoModalString={infoModalText}
       />
     </Container>

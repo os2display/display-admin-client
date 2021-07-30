@@ -2,9 +2,10 @@ import { React, useState, useEffect } from "react";
 import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { useIntl, FormattedMessage } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import ImageUploader from "../util/image-uploader/image-uploader";
+import { useTranslation } from "react-i18next";
+
 /**
  * The edit media component.
  *
@@ -12,7 +13,7 @@ import ImageUploader from "../util/image-uploader/image-uploader";
  * The edit media page.
  */
 function EditMedia() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({ images: [] });
   const history = useHistory();
   const { id } = useParams();
@@ -20,10 +21,7 @@ function EditMedia() {
   const [submitted, setSubmitted] = useState(false);
   const newMedia = id === "new";
   const [errors, setErrors] = useState([]);
-  const requiredFields = ["mediaName", "mediaName", "mediaDescription"];
-  const multipleImagesInvalidText = intl.formatMessage({
-    id: "images_invalid_text",
-  });
+  const requiredFields = ["mediaName", "mediaDescription", "mediaImages"];
 
   /**
    * Load content from fixture.
@@ -90,18 +88,10 @@ function EditMedia() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
-          {newMedia && (
-            <h1>
-              <FormattedMessage
-                id="upload_new_media"
-                defaultMessage="upload_new_media"
-              />
-            </h1>
-          )}
+          {newMedia && <h1>{t("edit-media.upload-new-media")}</h1>}
           {!newMedia && (
             <h1>
-              <FormattedMessage id="edit_media" defaultMessage="edit_media" />
-              {mediaName}
+              {t("edit-media.edit-media")}: {mediaName}
             </h1>
           )}
           <ImageUploader
@@ -110,7 +100,7 @@ function EditMedia() {
             handleImageUpload={handleInput}
             inputImage={formStateObject.images}
             name="mediaImages"
-            invalidText={multipleImagesInvalidText}
+            invalidText={t("edit-media.media-validation")}
           />
           {submitted && <Redirect to="/media-list" />}
           <Button
@@ -119,10 +109,10 @@ function EditMedia() {
             id="media_cancel"
             onClick={() => history.goBack()}
           >
-            <FormattedMessage id="cancel" defaultMessage="cancel" />
+            {t("edit-media.cancel-button")}
           </Button>
           <Button variant="primary" type="submit" id="save_media">
-            <FormattedMessage id="save_media" defaultMessage="save_media" />
+            {t("edit-media.save-button")}
           </Button>
         </Form>
       </Container>

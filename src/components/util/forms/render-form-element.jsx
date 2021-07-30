@@ -1,10 +1,10 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 import ImageUploader from "../image-uploader/image-uploader";
 import FormCheckbox from "./form-checkbox";
 import FormInput from "./form-input";
 import Select from "./select";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -29,15 +29,7 @@ function RenderFormElement({
   onChange,
   formStateObject,
 }) {
-  const intl = useIntl();
-  if (data.required) {
-    requiredFieldCallback(data.name);
-  }
-
-  const imageInvalidText = intl.formatMessage({ id: "image_invalid_text" });
-  const multipleImagesInvalidText = intl.formatMessage({
-    id: "images_invalid_text",
-  });
+  const { t } = useTranslation("common");
 
   /**
    * @param {object} formData
@@ -49,6 +41,9 @@ function RenderFormElement({
     let returnElement;
     switch (formData.input) {
       case "input":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
         returnElement = (
           <FormInput
             name={formData.name}
@@ -62,6 +57,9 @@ function RenderFormElement({
         );
         break;
       case "checkbox":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
         returnElement = (
           <FormCheckbox
             label={formData.label}
@@ -73,9 +71,15 @@ function RenderFormElement({
         );
         break;
       case "header":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
         returnElement = <h2>{formData.text}</h2>;
         break;
       case "select":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
         returnElement = (
           <Select
             helpText={formData.helpText}
@@ -89,6 +93,9 @@ function RenderFormElement({
         );
         break;
       case "image":
+        if (data.required) {
+          requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
+        }
         returnElement = (
           <ImageUploader
             errors={formData.required ? errors : null}
@@ -97,7 +104,9 @@ function RenderFormElement({
             inputImage={formStateObject[formData.name]}
             name={formData.name}
             invalidText={
-              data.multipleImages ? multipleImagesInvalidText : imageInvalidText
+              data.multipleImages
+                ? t("render-form-element.images-invalid")
+                : t("render-form-element.image-invalid")
             }
           />
         );

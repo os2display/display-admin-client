@@ -1,12 +1,13 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { FormattedMessage, useIntl } from "react-intl";
 import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import Table from "../table/table";
 import InfoModal from "../../info-modal/info-modal";
 import Published from "../../slides-list/published";
+import { useTranslation } from "react-i18next";
+
 /**
  * A multiselect and table for slides.
  *
@@ -22,11 +23,12 @@ import Published from "../../slides-list/published";
  * An input.
  */
 function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const infoModalText = intl.formatMessage({
     id: "slide_on_the_following_playlists",
+    defaultMessage: "slide_on_the_following_playlists",
   });
 
   /**
@@ -69,12 +71,12 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
     {
       path: "name",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("select-slides-table.columns.name"),
     },
     {
       path: "template",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_template" }),
+      label: t("select-slides-table.columns.template"),
     },
     {
       sort: true,
@@ -87,27 +89,24 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
           data.playlists?.length === 0
         ),
       key: "playlists",
-      label: intl.formatMessage({ id: "table_header_number_of_playlists" }),
+      label: t("select-slides-table.columns.number-of-playlists"),
     },
     {
       path: "tags",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_tags" }),
+      label: t("select-slides-table.columns.tags"),
     },
     {
       path: "published",
       sort: true,
       content: (data) => Published(data),
-      label: intl.formatMessage({ id: "table_header_published" }),
+      label: t("select-slides-table.columns.published"),
     },
     {
       key: "delete",
       content: (slideData) => (
         <Button variant="danger" onClick={() => removeFromList(slideData)}>
-          <FormattedMessage
-            id="remove_from_list"
-            defaultMessage="remove_from_list"
-          />
+          {t("select-slides-table.remove-from-list")}
         </Button>
       ),
     },

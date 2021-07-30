@@ -1,8 +1,8 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 import ModalDialog from "../util/modal/modal-dialog";
 import contentString from "../util/helpers/content-string";
+import { useTranslation } from "react-i18next";
 
 /**
  * Info modal component, that displays an info string.
@@ -24,25 +24,21 @@ function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
   if (!show || dataStructureToDisplay.length === 0) {
     return <></>;
   }
-
-  const intl = useIntl();
-  const title = intl.formatMessage({ id: "info_title" });
-  const declineText = intl.formatMessage({ id: "info_decline_text" });
-  const andString = intl.formatMessage({ id: "and_string" });
+  const { t } = useTranslation("common");
 
   // Creates a string for modal
   const content = `${infoModalString}: ${contentString(
     dataStructureToDisplay,
-    andString
+    {t("info-modal.and-string")}
   )}`;
 
   return (
     <div id="info-modal">
       <ModalDialog
-        title={title}
+        title={t("info-modal.title")}
         onClose={onClose}
         showAcceptButton={false}
-        declineText={declineText}
+        declineText={t("info-modal.decline-text")}
       >
         {content}
       </ModalDialog>

@@ -29,14 +29,80 @@
     "screenLayout": "1",
     "playlists": [
       {
-        "name": "Sommerplaylist",
         "id": 1,
-        "disabled": false
+        "createdBy": "Egbert",
+        "onFollowingGroups": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ],
+        "onFollowingScreens": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ],
+        "name": "Sommerplaylist",
+        "categories": [
+          {
+            "id": 1,
+            "createdBy": "Egbert",
+            "onFollowingPlaylists": [
+              {
+                "id": 15,
+                "name": "Digitized"
+              }
+            ],
+            "name": "Lotstring"
+          }
+        ],
+        "slides": [
+          {
+            "id": 1,
+            "name": "Roderigo"
+          }
+        ]
       },
       {
         "id": 2,
         "createdBy": "Egbert",
-        "name": "Ereolen"
+        "onFollowingGroups": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ],
+        "onFollowingScreens": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ],
+        "name": "Ereolen",
+        "categories": [
+          {
+            "id": 1,
+            "createdBy": "Egbert",
+            "onFollowingPlaylists": [
+              {
+                "id": 15,
+                "name": "Digitized"
+              }
+            ],
+            "name": "Lotstring"
+          }
+        ],
+        "slides": [
+          {
+            "id": 1,
+            "name": "Roderigo"
+          },
+          {
+            "id": 2,
+            "name": "Roderigo"
+          }
+        ]
       }
     ],
     "description": "Denne skærm er super duper",

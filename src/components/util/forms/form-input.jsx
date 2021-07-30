@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FormControl, FormGroup, FormLabel, InputGroup } from "react-bootstrap";
-import { useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
+
 /**
  * An input for forms.
  *
@@ -31,11 +32,10 @@ function FormInput({
   errors,
   invalidText,
 }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [error, setError] = useState();
   const required = !!errors;
-  const invalidInputText =
-    invalidText || intl.formatMessage({ id: "input_error_text" });
+  const invalidInputText = invalidText || t("form-input.validation-text");
 
   /**
    * Handle errors.

@@ -1,8 +1,7 @@
 import { React } from "react";
-import { FormattedMessage } from "react-intl";
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 /**
  * The side bar component.
  *
@@ -10,21 +9,14 @@ import { Link } from "react-router-dom";
  *   The NavBar
  */
 function NavBar() {
+  const [t, i18n] = useTranslation("common");
   return (
     <Navbar bg="light" expand="lg" className="left">
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavDropdown
-              title={
-                <FormattedMessage
-                  id="navbar_content"
-                  defaultMessage="navbar_content"
-                />
-              }
-              id="navbar_content"
-            >
+            <NavDropdown title={t("navbar.content")} id="navbar_content">
               <NavDropdown.Item>
                 <Link
                   className="navbar-brand"
@@ -32,10 +24,7 @@ function NavBar() {
                   style={{ color: "black" }}
                   to="/tags"
                 >
-                  <FormattedMessage
-                    id="navbar_tags"
-                    defaultMessage="navbar_tags"
-                  />
+                  {t("navbar.content-tags")}
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -46,10 +35,7 @@ function NavBar() {
                   style={{ color: "black" }}
                   to="/media-list"
                 >
-                  <FormattedMessage
-                    id="navbar_media"
-                    defaultMessage="navbar_media"
-                  />
+                  {t("navbar.content-media")}
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>
@@ -61,21 +47,10 @@ function NavBar() {
                 style={{ color: "black" }}
                 to="/slides"
               >
-                <FormattedMessage
-                  id="navbar_slides"
-                  defaultMessage="navbar_slides"
-                />
+                {t("navbar.slides")}
               </Link>
             </Nav.Item>
-            <NavDropdown
-              title={
-                <FormattedMessage
-                  id="navbar_screens"
-                  defaultMessage="navbar_screens"
-                />
-              }
-              id="navbar_screens"
-            >
+            <NavDropdown title={t("navbar.screens")} id="navbar_screens">
               <NavDropdown.Item>
                 <Link
                   className="navbar-brand"
@@ -83,10 +58,7 @@ function NavBar() {
                   style={{ color: "black" }}
                   to="/screens"
                 >
-                  <FormattedMessage
-                    id="navbar_screens"
-                    defaultMessage="navbar_screens"
-                  />
+                  {t("navbar.screens-screens")}
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -97,10 +69,7 @@ function NavBar() {
                   style={{ color: "black" }}
                   to="/groups"
                 >
-                  <FormattedMessage
-                    id="navbar_groups"
-                    defaultMessage="navbar_groups"
-                  />
+                  {t("navbar.screens-groups")}
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -111,22 +80,11 @@ function NavBar() {
                   style={{ color: "black" }}
                   to="/locations"
                 >
-                  <FormattedMessage
-                    id="navbar_locations"
-                    defaultMessage="navbar_locations"
-                  />
+                  {t("navbar.screens-locations")}
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown
-              title={
-                <FormattedMessage
-                  id="navbar_playlists"
-                  defaultMessage="navbar_playlists"
-                />
-              }
-              id="navbar_playlists"
-            >
+            <NavDropdown title={t("navbar.playlists")} id="navbar_playlists">
               <NavDropdown.Item>
                 <Link
                   className="navbar-brand"
@@ -134,10 +92,7 @@ function NavBar() {
                   style={{ color: "black" }}
                   to="/playlists"
                 >
-                  <FormattedMessage
-                    id="navbar_playlists"
-                    defaultMessage="navbar_playlists"
-                  />
+                  {t("navbar.playlists-playlists")}
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -148,10 +103,7 @@ function NavBar() {
                   style={{ color: "black" }}
                   to="/categories"
                 >
-                  <FormattedMessage
-                    id="navbar_categories"
-                    defaultMessage="navbar_categories"
-                  />
+                  {t("navbar.playlists-categories")}
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>

@@ -2,9 +2,9 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
+import { useTranslation } from "react-i18next";
 
 /**
  * The edit group component.
@@ -13,7 +13,7 @@ import FormInput from "../util/forms/form-input";
  * The edit group page.
  */
 function EditGroup() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const requiredFields = ["groupName"];
   const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
@@ -22,10 +22,6 @@ function EditGroup() {
   const [submitted, setSubmitted] = useState(false);
   const newGroup = id === "new";
   const [errors, setErrors] = useState([]);
-  const groupLabel = intl.formatMessage({ id: "edit_add_group_label" });
-  const groupPlaceholder = intl.formatMessage({
-    id: "edit_add_group_label_placeholder",
-  });
 
   /**
    * Load content from fixture.
@@ -85,26 +81,18 @@ function EditGroup() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
-          {newGroup && (
-            <h1>
-              <FormattedMessage
-                id="create_new_group"
-                defaultMessage="create_new_group"
-              />
-            </h1>
-          )}
+          {newGroup && <h1>{t("edit-group.create-new-group")}</h1>}
           {!newGroup && (
             <h1>
-              <FormattedMessage id="edit_group" defaultMessage="edit_group" />
-              {groupName}
+              {t("edit-group.edit-group")}: {groupName}
             </h1>
           )}
           <FormInput
             name="groupName"
             type="text"
             errors={errors}
-            label={groupLabel}
-            placeholder={groupPlaceholder}
+            label={t("edit-group.group-name-label")}
+            placeholder={t("edit-group.group-name-placeholder")}
             value={formStateObject.groupName}
             onChange={handleInput}
           />
@@ -115,10 +103,10 @@ function EditGroup() {
             id="group_cancel"
             onClick={() => history.goBack()}
           >
-            <FormattedMessage id="cancel" defaultMessage="cancel" />
+            {t("edit-group.cancel-button")}
           </Button>
           <Button variant="primary" type="submit" id="save_group">
-            <FormattedMessage id="save_group" defaultMessage="save_group" />
+            {t("edit-group.save-button")}
           </Button>
         </Form>
       </Container>
