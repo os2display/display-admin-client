@@ -97,7 +97,7 @@
       "pick": "Vælg kategori",
       "name": "Navn",
       "created-by": "Oprettet af",
-      "category-on-playlist": "Playlists med kategorien"
+      "category-on-playlist": "Spillelister med kategorien"
     },
     "info-modal": {
       "category-playlists": "Spillelisten har følgende kategorier"
@@ -119,14 +119,14 @@
   "edit-media": {
     "upload-new-media": "Upload",
     "edit-media": "Rediger",
-    "save-button": "Gem",
+    "save-button": "Gem medie",
     "media-validation": "Der skal uploades et eller flere billeder til denne template",
     "cancel-button": "Annuller"
   },
   "edit-slide": {
     "create-new-slide": "Opret nyt slide",
     "edit-slide": "Rediger følgende slide",
-    "save-button": "Gem",
+    "save-button": "Gem slide",
     "cancel-button": "Annuller",
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
@@ -136,7 +136,7 @@
   "edit-group": {
     "create-new-group": "Opret ny gruppe",
     "edit-group": "Rediger følgende gruppe",
-    "save-button": "Gem",
+    "save-button": "Gem gruppen",
     "cancel-button": "Annuller",
     "group-name-label": "Gruppens navn",
     "group-name-placeholder": "Udfyld gruppens navn"
@@ -144,7 +144,7 @@
   "edit-location": {
     "create-new-location": "Opret ny lokation",
     "edit-location": "Rediger følgende lokation",
-    "save-button": "Gem",
+    "save-button": "Gem lokationen",
     "cancel-button": "Annuller",
     "location-name-label": "Lokationens navn",
     "location-name-placeholder": "Udfyld lokationens navn"
@@ -162,7 +162,7 @@
   "edit-category": {
     "create-new-category": "Opret ny kategori",
     "edit-category": "Rediger følgende kategori",
-    "save-button": "Gem",
+    "save-button": "Gem kategorien",
     "cancel-button": "Annuller",
     "category-name-label": "Kategoriens navn",
     "category-name-placeholder": "Udfyld kategoriens navn"
@@ -171,7 +171,8 @@
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
-      "number-of-slides": "Slides tilknyttede"
+      "number-of-slides": "Slides tilknyttet",
+      "number-of-categories": "Kategorier tilknyttet"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",
@@ -189,6 +190,9 @@
     "remove-from-list": "Fjern fra liste"
   },
   "select-slides-table": {
+    "info-modal": {
+      "slide-on-playlists": "Slidet er på de følgende spillelister"
+    },
     "columns": {
       "name": "Navn",
       "template": "Skabelon",
@@ -224,7 +228,7 @@
     "no": "Nej"
   },
   "form-input": {
-    "validation-text": "Dette felt skal udfyldes",
+    "validation-text": "Dette felt skal udfyldes"
   },
   "render-form-element": {
     "image-invalid": "Der skal uploades et billede til denne template",
@@ -268,7 +272,7 @@
     "title": "Du er ved at konsolidere noget",
     "and-string": "og",
     "new-name-label": "Vælg et nyt navn",
-    "new-name-placeholder": "Vælg et nyt navn",
+    "new-name-placeholder": "Vælg et nyt navn"
   },
   "select-playlists-table": {
     "columns": {
@@ -311,19 +315,19 @@
   "edit-screen": {
     "create-new-screen": "Opret ny skærm",
     "edit-screen": "Rediger følgende skærm",
-    "save-button": "Gem",
+    "save-button": "Gem skærm",
     "cancel-button": "Annuller",
     "radio-button-horizontal": "Vandret layout",
     "radio-button-vertical": "Lodret layout",
-    "radio-buttons-horizontal-or-vertical-label": "Angiv om skærmen er vandret eller lodrett",
+    "radio-buttons-horizontal-or-vertical-label": "Angiv om skærmen er vandret eller lodret",
     "screen-name-label": "Skærmens navn",
     "screen-name-placeholder": "Udfyld skærmens navn",
     "screen-name-validation": "Venligst udfyld skærmens navn",
-    "screen-description-label": "Skærmens navn",
-    "screen-description-placeholder": "Udfyld skærmens navn",
+    "screen-description-label": "Beskrivelse af skærmen",
+    "screen-description-placeholder": "Udfyld beskrivelsen af skærmen",
     "screen-layout-label": "Skærmens layout",
-    "screen-description-of-location-label": "Skærmens navn",
-    "screen-description-of-location-placeholder": "Udfyld skærmens navn",
+    "screen-description-of-location-label": "Beskrivelse af skærmens lokation",
+    "screen-description-of-location-placeholder": "Udfyld beskrivelsem af skærmens lokation",
     "screen-size-of-screen-label": "Størrelse på skærmen",
     "screen-size-of-screen-placeholder": "Angiv størrelsen på skærmen",
     "screen-resolution-of-screen-label": "Skærmens opløsning",

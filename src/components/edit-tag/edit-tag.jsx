@@ -84,7 +84,7 @@ function EditTag() {
           {newTag && <h1>{t("edit-tag.create-new-tag")}</h1>}
           {!newTag && (
             <h1>
-              {t("edit-tag.edit-tag")} {tagName}
+              {t("edit-tag.edit-tag")}: {tagName}
             </h1>
           )}
           <FormInput

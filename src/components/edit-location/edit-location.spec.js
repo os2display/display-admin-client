@@ -9,7 +9,7 @@ describe("Edit location page loads", () => {
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger lokationen: Dokk1/);
+      .should("match", /^Rediger følgende lokation: Dokk1/);
   });
 
   it("It removes from list", () => {

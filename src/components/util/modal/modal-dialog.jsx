@@ -33,8 +33,6 @@ function ModalDialog({
   showAcceptButton,
 }) {
   const { t } = useTranslation("common");
-  const yes = intl.formatMessage({ id: "yes", defaultMessage: "yes" });
-  const no = intl.formatMessage({ id: "no", defaultMessage: "no" });
 
   /**
    * For closing modals on escape key.

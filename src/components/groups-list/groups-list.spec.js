@@ -19,7 +19,7 @@ describe("Groups list tests", () => {
   });
   it("The column headers are correct (groups list)", () => {
     cy.visit("/groups");
-    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
+    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Vælg gruppelastbiler/);
     cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
     cy.get("thead")
       .find("th")

@@ -31,7 +31,7 @@ describe("Slides list tests", () => {
       .find("th")
       .eq(3)
       .invoke("text")
-      .should("match", /^# spillelister/);
+      .should("match", /^Spillelister med kategorien/);
     cy.get("thead").find("th").eq(4).invoke("text").should("match", /^Tags/);
     cy.get("thead")
       .find("th")

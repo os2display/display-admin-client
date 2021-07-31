@@ -11,4 +11,33 @@ describe("Edit group page loads", () => {
       .invoke("text")
       .should("match", /^Rediger følgende gruppe: Infoskærme/);
   });
+
+  it("It validates new group", () => {
+    cy.visit("/group/new");
+    cy.get("#save_group")
+      .invoke("text")
+      .should("match", /^Gem gruppen/);
+    cy.get("#save_group").click();
+    cy.get("#save_group")
+      .invoke("text")
+      .should("match", /^Gem gruppen/);
+    cy.get("input").type("x");
+    cy.get("#save_group").click();
+    cy.get("#save_group").should("not.exist");
+  });
+
+  it("It validates already existing group", () => {
+    cy.visit("/group/32");
+    cy.get("#groupName").clear();
+    cy.get("#save_group")
+      .invoke("text")
+      .should("match", /^Gem gruppen/);
+    cy.get("#save_group").click();
+    cy.get("#save_group")
+      .invoke("text")
+      .should("match", /^Gem gruppen/);
+    cy.get("#groupName").type("x");
+    cy.get("#save_group").click();
+    cy.get("#save_group").should("not.exist");
+  });
 });

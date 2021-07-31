@@ -29,7 +29,7 @@ function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
   // Creates a string for modal
   const content = `${infoModalString}: ${contentString(
     dataStructureToDisplay,
-    {t("info-modal.and-string")}
+    t("info-modal.and-string")
   )}`;
 
   return (

@@ -25,7 +25,7 @@ describe("Categories list tests", () => {
   });
   it("The column headers are correct (categories list)", () => {
     cy.visit("/categories");
-    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
+    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Vælg kategori/);
     cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
     cy.get("thead")
       .find("th")
@@ -36,6 +36,6 @@ describe("Categories list tests", () => {
       .find("th")
       .eq(3)
       .invoke("text")
-      .should("match", /^# spillelister/);
+      .should("match", /^Spillelister med kategorien/);
   });
 });

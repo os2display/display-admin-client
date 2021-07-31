@@ -26,10 +26,6 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
   const { t } = useTranslation("common");
   const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const infoModalText = intl.formatMessage({
-    id: "slide_on_the_following_playlists",
-    defaultMessage: "slide_on_the_following_playlists",
-  });
 
   /**
    * @param {Array} playlistArray
@@ -127,7 +123,7 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        infoModalString={infoModalText}
+        infoModalString={t("select-slides-table.info-modal.slide-on-playlists")}
       />
     </>
   );

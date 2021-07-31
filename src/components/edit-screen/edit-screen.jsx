@@ -28,11 +28,11 @@ function EditScreen() {
   const radioButtonOptions = [
     {
       id: "horizontal",
-      label: t("radio-button-horizontal"),
+      label: t("edit-screen.radio-button-horizontal"),
     },
     {
       id: "vertical",
-      label: t("radio-button-vertical"),
+      label: t("edit-screen.radio-button-vertical"),
     },
   ];
   const [formStateObject, setFormStateObject] = useState({
@@ -121,7 +121,7 @@ function EditScreen() {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        {newScreen && <h1>{t("edit-screen.create-new-slide")}</h1>}
+        {newScreen && <h1>{t("edit-screen.create-new-screen")}</h1>}
         {!newScreen && (
           <h1>
             {t("edit-screen.edit-screen")}: {screenName}
@@ -181,8 +181,8 @@ function EditScreen() {
         <FormInput
           name="sizeOfScreen"
           type="text"
-          label={t("screen-size-of-screen-label")}
-          placeholder={t("screen-size-of-screen-placeholder")}
+          label={t("edit-screen.screen-size-of-screen-label")}
+          placeholder={t("edit-screen.screen-size-of-screen-placeholder")}
           value={formStateObject.sizeOfScreen}
           onChange={handleInput}
         />
@@ -191,15 +191,15 @@ function EditScreen() {
           radioGroupName="horizontalOrVertical"
           selected={formStateObject.horizontalOrVertical}
           handleChange={handleInput}
-          label={t("radio-buttons-horizontal-or-vertical-label")}
+          label={t("edit-screen.radio-buttons-horizontal-or-vertical-label")}
         />
         <FormInput
           name="resolutionOfScreen"
           type="text"
-          label={t("screen-resolution-of-screen-label")}
-          placeholder={t("screen-resolution-of-screen-placeholder")}
+          label={t("edit-screen.screen-resolution-of-screen-label")}
+          placeholder={t("edit-screen.screen-resolution-of-screen-placeholder")}
           value={formStateObject.resolutionOfScreen}
-          helpText={t("screen-resolution-of-screen-helptext")}
+          helpText={t("edit-screen.screen-resolution-of-screen-helptext")}
           pattern="(\d+)x(\d+)"
           onChange={handleInput}
         />

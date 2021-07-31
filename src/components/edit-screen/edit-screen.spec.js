@@ -9,17 +9,16 @@ describe("Edit screen page tests", () => {
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger denne skærm: Asoka/);
+      .should("match", /^Rediger følgende skærm: Asoka/);
   });
 
   it("It loads drag and drop table", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 6);
+    cy.get("tbody").find("tr td").should("have.length", 10);
   });
   it("It drags and drops", () => {
     cy.visit("/screen/32");
-
-    cy.get("tbody").find("tr td").should("have.length", 6);
+    cy.get("tbody").find("tr td").should("have.length", 10);
     cy.get("tbody")
       .find("tr td")
       .eq(0)
@@ -41,10 +40,11 @@ describe("Edit screen page tests", () => {
 
   it("It removes from list", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 6);
-    cy.get("tbody").find("tr td button").eq(1).click();
-    cy.get("tbody").find("tr td").should("have.length", 3);
-    cy.get("tbody").find("tr td button").eq(1).click();
+    cy.get("tbody").find("tr td").should("have.length", 10);
+    cy.get("tbody").find("tr td button").eq(3).click();
+    cy.get("tbody").find("tr td").should("have.length", 5)
+      ;
+    cy.get("tbody").find("tr td button").eq(3).click();
     cy.get("tbody").should("not.exist");
   });
 

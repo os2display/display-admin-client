@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import MultiSelectComponent from "../multi-dropdown";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -22,6 +23,7 @@ function CategoriesDropdown({
   name,
   errors,
 }) {
+  const { t } = useTranslation("common");
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
