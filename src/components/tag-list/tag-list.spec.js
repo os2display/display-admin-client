@@ -20,7 +20,6 @@ describe("Tags list tests", () => {
 
   it("The correct amount of column headers loaded (tags list)", () => {
     cy.visit("/tags");
-    cy.get("thead").find("th").should("have.length", 6)
+    cy.get("thead").find("th").should("have.length", 6);
   });
-
 });

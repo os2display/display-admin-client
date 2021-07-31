@@ -1,25 +1,23 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import FormInput from "../forms/form-input";
 import TagDropdown from "../forms/multiselect-dropdown/tags/tag-dropdown";
-import { useTranslation } from "react-i18next";
 import "./image-uploader.scss";
 /**
  * @param {object} props
  * The props.
  * @param {object} props.inputImage
  * The image object.
- * @param {Function} props.handleImageUpload
- * Callback for image upload.
- * @param {string} props.name
- * The name of the image field.
- * @param {boolean} props.multipleImages
- * Whether the user should be able to upload multiple images.
  * @param {Array} props.errors
  * A list of errors, or null.
- * @param {string} props.invalidText
- * Text on error.
+ * @param {Function} props.onImageRemove
+ * A callback on remove image.
+ * @param {Function} props.handleChange
+ * A callback on change.
+ * @param {number} props.index
+ * The index, used for image removal.
  * @returns {object}
  * The image uploader.
  */
@@ -27,8 +25,14 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
+  /**
+   * @param {object} props
+   * The props
+   * @param {object} props.target
+   * The onchange target.
+   */
   function onChange({ target }) {
-    let localImage = image;
+    const localImage = image;
     localImage[target.id] = target.value;
     setImage(localImage);
     handleChange(image);
@@ -52,7 +56,7 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
                 value={image.mediaName}
                 dataUrl={image.url}
                 onChange={onChange}
-              ></FormInput>
+              />
             </div>
             <div>
               <FormInput
@@ -65,7 +69,7 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
                 helpText={t("image.image-description-help-text")}
                 value={image.mediaDescription}
                 onChange={onChange}
-              ></FormInput>
+              />
             </div>
             <div>
               <TagDropdown
@@ -89,5 +93,17 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
     </div>
   );
 }
+
+Image.defaultProps = {
+  errors: [],
+};
+
+Image.propTypes = {
+  inputImage: PropTypes.func.isRequired,
+  onImageRemove: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.string),
+  index: PropTypes.number.isRequired,
+};
 
 export default Image;

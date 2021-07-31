@@ -1,12 +1,12 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
-import { useTranslation } from "react-i18next";
 /**
  * The tag list component.
  *

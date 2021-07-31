@@ -1,10 +1,10 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Form, FormControl, InputGroup } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import contentString from "../util/helpers/content-string";
-import { useTranslation } from "react-i18next";
 
 /**
  * Merge modal component, a modal that merges elements together.
@@ -37,7 +37,7 @@ function MergeModal({ show, onClose, selectedRows, handleAccept }) {
   }
 
   // Creates a string for modal
-  const valuesToMerge = `${confirmation}: ${contentString(
+  const valuesToMerge = `${t("merge-modal.confirmation")}: ${contentString(
     selectedRows,
     t("merge-modal.and-string")
   )}?`;

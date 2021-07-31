@@ -42,8 +42,7 @@ describe("Edit screen page tests", () => {
     cy.visit("/screen/32");
     cy.get("tbody").find("tr td").should("have.length", 10);
     cy.get("tbody").find("tr td button").eq(3).click();
-    cy.get("tbody").find("tr td").should("have.length", 5)
-      ;
+    cy.get("tbody").find("tr td").should("have.length", 5);
     cy.get("tbody").find("tr td button").eq(3).click();
     cy.get("tbody").should("not.exist");
   });

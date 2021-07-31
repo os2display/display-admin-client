@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useTranslation } from "react-i18next";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import TableHeader from "../table/table-header";
-import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props

@@ -1,9 +1,9 @@
 import { React } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import contentString from "../util/helpers/content-string";
-import { useTranslation } from "react-i18next";
 
 /**
  * Delete modal component, a modal that deletes elements.

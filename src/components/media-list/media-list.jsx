@@ -1,11 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import TagDropdown from "../util/forms/multiselect-dropdown/tags/tag-dropdown";
 import SearchBox from "../util/search-box/search-box";
-import { useTranslation } from "react-i18next";
 import "./media-list.scss";
 
 /**

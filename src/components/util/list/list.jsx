@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import SearchBox from "../search-box/search-box";
 import DeleteModal from "../../delete-modal/delete-modal";
@@ -9,7 +10,6 @@ import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import MergeModal from "../../merge-modal/merge-modal";
-import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props

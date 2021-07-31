@@ -20,7 +20,6 @@ describe("Slides list tests", () => {
 
   it("The correct amount of column headers loaded (slides list)", () => {
     cy.visit("/slides");
-    cy.get("thead").find("th").should("have.length", 8)
+    cy.get("thead").find("th").should("have.length", 8);
   });
-
 });

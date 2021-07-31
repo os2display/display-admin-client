@@ -1,12 +1,12 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import Table from "../table/table";
 import InfoModal from "../../info-modal/info-modal";
 import Published from "../../slides-list/published";
-import { useTranslation } from "react-i18next";
 
 /**
  * A multiselect and table for slides.

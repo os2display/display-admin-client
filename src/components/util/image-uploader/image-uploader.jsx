@@ -5,8 +5,8 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "./image-uploader.scss";
-import Image from "./image";
 import { useTranslation } from "react-i18next";
+import Image from "./image";
 
 /**
  * @param {object} props
@@ -46,13 +46,19 @@ function ImageUploader({
     setError(errors && errors.includes(name));
   }, [errors]);
 
+  /**
+   * @param {object} image
+   * The image with change.
+   */
   function handleChange(image) {
-    let localImages = [...images];
-    let imageIndex = localImages.findIndex(
-      (img) => img.data_url == image.data_url
+    const localImages = [...images];
+    const imageIndex = localImages.findIndex(
+      (img) => img.data_url === image.data_url
     );
     localImages[imageIndex] = image;
-    const uniqueImages = [...new Set(localImages.map((image) => image))];
+    const uniqueImages = [
+      ...new Set(localImages.map((localImage) => localImage)),
+    ];
     setImages(uniqueImages);
     const target = { value: images, id: name };
     handleImageUpload({ target });
@@ -68,7 +74,7 @@ function ImageUploader({
   const onChange = (imageList) => {
     // data for submit
     const uniqueImages = [
-      ...new Map(imageList.map((item) => [item["data_url"], item])).values(),
+      ...new Map(imageList.map((item) => [item.data_url, item])).values(),
     ];
 
     setImages(uniqueImages);

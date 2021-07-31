@@ -1,5 +1,7 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { I18nextProvider } from "react-i18next";
+import i18next from "i18next";
 import TagList from "./components/tag-list/tag-list";
 import Navbar from "./components/navbar/navbar";
 import ScreenList from "./components/screen-list/screen-list";
@@ -17,10 +19,8 @@ import PlaylistsList from "./components/playlists-list/playlists-list";
 import EditPlaylist from "./components/edit-playlist/edit-playlist";
 import MediaList from "./components/media-list/media-list";
 import EditMedia from "./components/edit-media/edit-media";
+import commonDa from "./translations/da/common.json";
 import "./app.scss";
-import { I18nextProvider } from "react-i18next";
-import i18next from "i18next";
-import common_da from "./translations/da/common.json";
 
 /**
  * App component.
@@ -34,7 +34,7 @@ function App() {
     lng: "da", // language to use
     resources: {
       da: {
-        common: common_da,
+        common: commonDa,
       },
     },
   });

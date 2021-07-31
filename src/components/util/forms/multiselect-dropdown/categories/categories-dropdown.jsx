@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import MultiSelectComponent from "../multi-dropdown";
 import { useTranslation } from "react-i18next";
+import MultiSelectComponent from "../multi-dropdown";
 
 /**
  * @param {object} props

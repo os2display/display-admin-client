@@ -1,11 +1,11 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import InfoModal from "../../info-modal/info-modal";
 import ListButton from "../list/list-button";
-import { useTranslation } from "react-i18next";
 
 /**
  * A multiselect and table for playlists.

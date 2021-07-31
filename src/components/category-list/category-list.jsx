@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
@@ -8,7 +9,6 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
-import { useTranslation } from "react-i18next";
 
 /**
  * The category list component.

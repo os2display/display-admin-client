@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 import FormInput from "../util/forms/form-input";
 import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
 import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
@@ -9,7 +11,6 @@ import FormInputArea from "../util/forms/form-input-area";
 import RadioButtons from "../util/forms/radio-buttons";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import getFormErrors from "../util/helpers/form-errors-helper";
-import { useTranslation } from "react-i18next";
 
 /**
  * The edit screen component.
@@ -19,6 +20,7 @@ import { useTranslation } from "react-i18next";
  */
 function EditScreen() {
   const { t } = useTranslation("common");
+  const history = useHistory();
   const requiredFields = [
     "screenName",
     "screenLocations",

@@ -31,6 +31,6 @@ describe("Locations list tests", () => {
 
   it("The column headers are correct (locations list)", () => {
     cy.visit("/locations");
-    cy.get("thead").find("th").should("have.length", 7)
+    cy.get("thead").find("th").should("have.length", 7);
   });
 });

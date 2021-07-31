@@ -1,10 +1,10 @@
 import { React } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import ImageUploader from "../image-uploader/image-uploader";
 import FormCheckbox from "./form-checkbox";
 import FormInput from "./form-input";
 import Select from "./select";
-import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props

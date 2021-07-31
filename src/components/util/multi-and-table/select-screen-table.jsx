@@ -1,10 +1,10 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
 import Table from "../table/table";
 import CampaignIcon from "../../screen-list/campaign-icon";
-import { useTranslation } from "react-i18next";
 
 /**
  * A multiselect and table for screens.

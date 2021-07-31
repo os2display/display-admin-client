@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Select from "../util/forms/select";
 import FormInput from "../util/forms/form-input";
 import getFormErrors from "../util/helpers/form-errors-helper";
@@ -9,7 +10,6 @@ import RenderFormElement from "../util/forms/render-form-element";
 import FormCheckbox from "../util/forms/form-checkbox";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
-import { useTranslation } from "react-i18next";
 
 /**
  * The edit slide component.

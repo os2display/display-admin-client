@@ -14,6 +14,8 @@ import MultiSelectComponent from "../multi-dropdown";
  * A list of errors, or null.
  * @param {string} props.label
  * The label of the dropdown.
+ * @param {string} props.helpText
+ * The help text.
  * @returns {object}
  * The multidropdown of playlists.
  */

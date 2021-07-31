@@ -1,11 +1,11 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import ListButton from "../util/list/list-button";
 import InfoModal from "../info-modal/info-modal";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
-import { useTranslation } from "react-i18next";
 
 /**
  * An input for forms.
@@ -30,18 +30,18 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
    *
    * @param {object} props
    * The props
-   * @param {Array} props.data
+   * @param {Array} props.displayData
    * The data to sum up in the modal
    * @param {string} props.caller
    * Which infomodal is opened, categories or slides.
    */
-  function openInfoModal({ data, caller }) {
+  function openInfoModal({ displayData, caller }) {
     const localInfoModalText =
       caller === "categories"
         ? t("playlist-drag-and-drop.info-modal.playlist-categories")
         : t("playlist-drag-and-drop.info-modal.playlist-slides");
     setInfoModalText(localInfoModalText);
-    setDataStructureToDisplay(data);
+    setDataStructureToDisplay(displayData);
     setShowInfoModal(true);
   }
 
@@ -80,24 +80,24 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
       label: t("playlist-drag-and-drop.columns.name"),
     },
     {
-      content: (data) =>
+      content: (displayData) =>
         ListButton(
           openInfoModal,
-          { data: data.slides, caller: "slides" },
-          data.slides?.length,
-          data.slides?.length === 0
+          { displayData: displayData.slides, caller: "slides" },
+          displayData.slides?.length,
+          displayData.slides?.length === 0
         ),
       path: "slides",
       key: "slides",
       label: t("playlist-drag-and-drop.columns.number-of-slides"),
     },
     {
-      content: (data) =>
+      content: (displayData) =>
         ListButton(
           openInfoModal,
-          { data: data.categories, caller: "categories" },
-          data.categories?.length,
-          data.categories?.length === 0
+          { displayData: displayData.categories, caller: "categories" },
+          displayData.categories?.length,
+          displayData.categories?.length === 0
         ),
       path: "categories",
       key: "categories",

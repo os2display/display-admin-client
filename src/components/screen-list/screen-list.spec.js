@@ -20,7 +20,6 @@ describe("Screen list loads", () => {
 
   it("The correct amount of column headers loaded (screens list)", () => {
     cy.visit("/screens");
-    cy.get("thead").find("th").should("have.length", 7)
+    cy.get("thead").find("th").should("have.length", 7);
   });
-
 });

@@ -26,7 +26,6 @@ describe("Categories list tests", () => {
 
   it("The correct amount of column headers loaded (categories list)", () => {
     cy.visit("/categories");
-    cy.get("thead").find("th").should("have.length", 6)
+    cy.get("thead").find("th").should("have.length", 6);
   });
-
 });

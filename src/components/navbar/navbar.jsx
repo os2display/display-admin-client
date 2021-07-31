@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
  *   The NavBar
  */
 function NavBar() {
-  const [t, i18n] = useTranslation("common");
+  const [t] = useTranslation("common");
   return (
     <Navbar bg="light" expand="lg" className="left">
       <Container>

@@ -2,9 +2,9 @@ import { React, useState, useEffect } from "react";
 import { useParams, Redirect } from "react-router";
 import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import ImageUploader from "../util/image-uploader/image-uploader";
-import { useTranslation } from "react-i18next";
 
 /**
  * The edit media component.
@@ -96,7 +96,7 @@ function EditMedia() {
           )}
           <ImageUploader
             errors={errors}
-            multipleImages={newMedia ? true : false}
+            multipleImages={!!newMedia}
             handleImageUpload={handleInput}
             inputImage={formStateObject.images}
             name="mediaImages"

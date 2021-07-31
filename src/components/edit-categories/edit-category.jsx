@@ -2,9 +2,9 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
-import { useTranslation } from "react-i18next";
 
 /**
  * The edit category component.
