@@ -23,19 +23,10 @@ describe("Categories list tests", () => {
     cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });
-  it("The column headers are correct (categories list)", () => {
+
+  it("The correct amount of column headers loaded (categories list)", () => {
     cy.visit("/categories");
-    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Vælg kategori/);
-    cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
-    cy.get("thead")
-      .find("th")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Oprettet af/);
-    cy.get("thead")
-      .find("th")
-      .eq(3)
-      .invoke("text")
-      .should("match", /^Spillelister med kategorien/);
+    cy.get("thead").find("th").should("have.length", 6)
   });
+
 });

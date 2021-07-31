@@ -18,19 +18,9 @@ describe("Tags list tests", () => {
     cy.get("#delete-modal").should("exist");
   });
 
-  it("The column headers are correct (tags list)", () => {
+  it("The correct amount of column headers loaded (tags list)", () => {
     cy.visit("/tags");
-    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
-    cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
-    cy.get("thead")
-      .find("th")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Oprettet af/);
-    cy.get("thead")
-      .find("th")
-      .eq(3)
-      .invoke("text")
-      .should("match", /^# slides/);
+    cy.get("thead").find("th").should("have.length", 6)
   });
+
 });

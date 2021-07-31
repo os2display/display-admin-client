@@ -4,7 +4,7 @@
       "pick": "Vælg tag",
       "name": "Navn",
       "created-by": "Oprettet af",
-      "number-of-slides": "Antal slides"
+      "number-of-slides": "Slides tilknyttede"
     },
     "header": "Tags",
     "create-new-tag": "Opret nyt tag",
@@ -24,7 +24,7 @@
       "pick": "Vælg slide",
       "name": "Navn",
       "template": "Skabelon",
-      "number-of-playlists": "På playlists",
+      "number-of-playlists": "Spillelister med kategorien",
       "tags": "Tags",
       "published": "Udgivet"
     },
@@ -55,14 +55,14 @@
       "name": "Navn",
       "created-by": "Oprettet af"
     },
-    "header": "Skærme",
+    "header": "Grupper",
     "create-new-group": "Opret ny skærm",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
   "locations-list": {
     "columns": {
-      "pick": "Vælg gruppe",
+      "pick": "Vælg lokation",
       "name": "Navn",
       "created-by": "Oprettet af",
       "on-screens": "Skærme tilknyttet",
@@ -81,7 +81,8 @@
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
-      "number-of-slides": "Slides tilknyttede"
+      "number-of-slides": "Slides tilknyttede",
+      "number-of-categories": "Kategorier tilknyttet"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",
@@ -196,7 +197,7 @@
     "columns": {
       "name": "Navn",
       "template": "Skabelon",
-      "number-of-playlists": "På playlists",
+      "number-of-playlists": "Spillelister med kategorien",
       "tags": "Tags",
       "published": "Udgivet"
     },

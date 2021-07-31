@@ -17,24 +17,10 @@ describe("Screen list loads", () => {
     cy.get("tbody").find("tr td button").eq(0).click();
     cy.get("#delete-modal").should("exist");
   });
-  it("The column headers are correct (screens list)", () => {
+
+  it("The correct amount of column headers loaded (screens list)", () => {
     cy.visit("/screens");
-    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
-    cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
-    cy.get("thead")
-      .find("th")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Størrelse/);
-    cy.get("thead")
-      .find("th")
-      .eq(3)
-      .invoke("text")
-      .should("match", /^Opløsning/);
-    cy.get("thead")
-      .find("th")
-      .eq(4)
-      .invoke("text")
-      .should("match", /^Kampagne/);
+    cy.get("thead").find("th").should("have.length", 7)
   });
+
 });
