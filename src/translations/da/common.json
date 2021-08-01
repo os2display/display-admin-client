@@ -115,7 +115,8 @@
     "delete-button": "Slet",
     "tags-select-label": "Sorter listen af medier ved at vælge et eller flere tags",
     "media-name": "Navn",
-    "media-description": "Beskrivelse"
+    "media-description": "Beskrivelse",
+    "edit-button": "Rediger"
   },
   "edit-media": {
     "upload-new-media": "Upload",

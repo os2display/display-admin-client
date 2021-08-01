@@ -204,7 +204,6 @@ function MediaList() {
           </div>
         </Col>
       </Row>
-
       <Row className="mt-2 mb-2">
         <Col>
           <SearchBox showLabel value={searchText} onChange={handleSearch} />
@@ -221,7 +220,11 @@ function MediaList() {
       <div className="image-list">
         {getListData().map((data) => (
           <div key={data.id} className="image-wrapper">
-            <button type="button" onClick={() => handleChecked(data)}>
+            <button
+              type="button"
+              className="image-button"
+              onClick={() => handleChecked(data)}
+            >
               <img
                 src={data.url}
                 className={data.selected ? "selected" : ""}
@@ -235,16 +238,28 @@ function MediaList() {
               aria-label={t("media-list.checkbox-form-aria-label")}
               readOnly
             />
-            <span>
-              {t("media-list.media-name")}: {data.name}
-            </span>
-            <span>
-              {t("media-list.media-description")}: {data.description}
-            </span>
-            <div>
-              {data.tags.map((tag) => (
-                <span key={tag.id}>{tag.name} </span>
-              ))}
+            <div className="d-flex">
+              <div className="d-flex flex-column">
+                <span>
+                  {t("media-list.media-name")}: {data.name}
+                </span>
+                <span>
+                  {t("media-list.media-description")}: {data.description}
+                </span>
+                <div>
+                  {data.tags.map((tag) => (
+                    <span key={tag.id}>{tag.name} </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <Link
+                  className="btn btn-primary btn-success"
+                  to={`/media/${data.id}`}
+                >
+                  {t("media-list.edit-button")}
+                </Link>
+              </div>
             </div>
           </div>
         ))}
