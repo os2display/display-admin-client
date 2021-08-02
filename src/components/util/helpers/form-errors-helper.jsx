@@ -19,7 +19,7 @@ function getFormErrors(requiredFields, formStateObject) {
   }
   const validationErrors = [];
   requiredFields.forEach((element) => {
-    if (formStateObject.images.length > 0 && isImageField(element)) {
+    if (formStateObject.images?.length > 0 && isImageField(element)) {
       formStateObject.images.forEach((field) => {
         if (field[element] === "") {
           validationErrors.push(element);
