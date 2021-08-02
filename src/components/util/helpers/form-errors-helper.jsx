@@ -21,9 +21,10 @@ function getFormErrors(requiredFields, formStateObject) {
         }
       });
     }
+
     if (
-      !formStateObject[element] ||
-      (formStateObject[element].length === 0 && !isImageField(element))
+      (!formStateObject[element] || formStateObject[element].length === 0) &&
+      !isImageField(element)
     ) {
       validationErrors.push(element);
     }
