@@ -36,7 +36,7 @@ function List({ data, columns, selectedRows }) {
   // At least one row must be selected for deletion.
   const disableDeleteButton = !selectedRows.length > 0;
   const [searchText, setSearchText] = useState(
-    searchParams !== "null" ? searchParams : ""
+    searchParams !== null ? searchParams : ""
   );
   const [sortBy, setSortBy] = useState({
     path: sortParams || "name",
