@@ -30,9 +30,15 @@ describe("Navbar loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Lokationer/);
-    cy.get("#navbar_categories").click();
+    cy.get("#navbar_playlists").click();
+    cy.get("#navbar_playlists_categories").click();
     cy.get("h1")
       .invoke("text")
       .should("match", /^Kategorier/);
+    cy.get("#navbar_playlists").click();
+    cy.get("#navbar_playlists_playlists").click();
+    cy.get("h1")
+      .invoke("text")
+      .should("match", /^Spillelister/);
   });
 });

@@ -209,10 +209,22 @@
       "value": "Playlisten indeholder de følgende slides"
     }
   ],
-  "on_the_following_playlists": [
+  "category_on_the_following_playlists": [
     {
       "type": 0,
       "value": "Kategorien er på de følgende spillelister"
+    }
+  ],
+  "slide_on_the_following_playlists": [
+    {
+      "type": 0,
+      "value": "Slidet er på de følgende spillelister"
+    }
+  ],
+  "playlists_list_header": [
+    {
+      "type": 0,
+      "value": "Spillelister"
     }
   ],
   "valid_text_tag_name_input": [
@@ -231,6 +243,12 @@
     {
       "type": 0,
       "value": "Gem tag"
+    }
+  ],
+  "save_playlist": [
+    {
+      "type": 0,
+      "value": "Gem spilleliste"
     }
   ],
   "save_slide": [
@@ -255,6 +273,12 @@
     {
       "type": 0,
       "value": "Taggets navn"
+    }
+  ],
+  "edit_add_playlist_label": [
+    {
+      "type": 0,
+      "value": "Spillelistens navn"
     }
   ],
   "edit_add_slide_name_label": [
@@ -285,6 +309,12 @@
     {
       "type": 0,
       "value": "Udfyld taggets navn"
+    }
+  ],
+  "edit_add_playlist_label_placeholder": [
+    {
+      "type": 0,
+      "value": "Udfyld spillelistens navn"
     }
   ],
   "edit_add_slide_label_placeholder": [
@@ -347,6 +377,12 @@
       "value": "Vælg en af lokationerne"
     }
   ],
+  "categories_dropdown_no_selected": [
+    {
+      "type": 0,
+      "value": "Vælg en af kategorierne"
+    }
+  ],
   "playlists_dropdown_no_selected": [
     {
       "type": 0,
@@ -363,6 +399,24 @@
     {
       "type": 0,
       "value": "Vælg en eller flere grupper"
+    }
+  ],
+  "create_new_playlist": [
+    {
+      "type": 0,
+      "value": "Opret ny spilleliste"
+    }
+  ],
+  "categories_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en eller flere kategorier"
+    }
+  ],
+  "slides_dropdown_label": [
+    {
+      "type": 0,
+      "value": "Vælg en eller flere slides"
     }
   ],
   "locations_dropdown_label": [
@@ -509,10 +563,22 @@
       "value": "Beskrivelse af skærmen"
     }
   ],
+  "edit_add_playlist_label_description": [
+    {
+      "type": 0,
+      "value": "Beskrivelse af spillelisten"
+    }
+  ],
   "edit_add_screen_placeholder_description": [
     {
       "type": 0,
       "value": "Skriv en beskrivelse af skærmen"
+    }
+  ],
+  "edit_add_playlist_placeholder_description": [
+    {
+      "type": 0,
+      "value": "Skriv en beskrivelse af spillelisten"
     }
   ],
   "edit_add_screen_label_screen_layout": [
@@ -599,6 +665,12 @@
       "value": "Rediger følgende tag: "
     }
   ],
+  "edit_playlist": [
+    {
+      "type": 0,
+      "value": "Rediger følgende spilleliste: "
+    }
+  ],
   "edit_slide": [
     {
       "type": 0,
@@ -657,6 +729,12 @@
     {
       "type": 0,
       "value": "Tags"
+    }
+  ],
+  "navbar_playlists": [
+    {
+      "type": 0,
+      "value": "Spillelister"
     }
   ],
   "navbar_locations": [

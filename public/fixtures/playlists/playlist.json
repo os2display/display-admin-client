@@ -1,0 +1,99 @@
+{
+  "playlist": {
+    "id": 1,
+    "description": "En virkelig god playlist",
+    "createdBy": "Egbert",
+    "published": true,
+    "template": "Treanor",
+    "onFollowingGroups": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
+    "onFollowingScreens": [
+      {
+        "id": 15,
+        "size": "30\"",
+        "dimensions": "1920x1080",
+        "name": "Digitized"
+      }
+    ],
+    "name": "Sommerplaylist",
+    "categories": [
+      {
+        "id": 1,
+        "createdBy": "Egbert",
+        "onFollowingPlaylists": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ],
+        "name": "Lotstring"
+      }
+    ],
+    "slides": [
+      {
+        "id": 1,
+        "name": "Roderigo",
+        "template": "text-and-image",
+        "onFollowingScreens": [
+          {
+            "id": 14,
+            "name": "Bigtax",
+            "size": "30\"",
+            "dimensions": "1920x1080",
+            "overriddenByCampaign": true
+          },
+          {
+            "id": 15,
+            "name": "Pannier",
+            "size": "30\"",
+            "dimensions": "1920x1080",
+            "overriddenByCampaign": false
+          },
+          {
+            "id": 16,
+            "name": "Flowdesk",
+            "size": "30\"",
+            "dimensions": "1920x1080",
+            "overriddenByCampaign": false
+          }
+        ],
+        "categories": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ],
+        "tags": "customer loyalty",
+        "published": true,
+        "playlists": [
+          {
+            "id": 1,
+            "categories": [
+              {
+                "id": 6,
+                "createdBy": "Genovera",
+                "name": "Subin"
+              },
+              {
+                "id": 1,
+                "createdBy": "Egbert",
+                "name": "Lotstring"
+              }
+            ],
+            "slides": [
+              {
+                "id": 1,
+                "name": "Roderigo"
+              }
+            ],
+            "name": "Sommerplaylist"
+          }
+        ]
+      }
+    ]
+  }
+}

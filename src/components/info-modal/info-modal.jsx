@@ -21,14 +21,14 @@ import contentString from "../util/helpers/content-string";
  * The modal.
  */
 function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
-  if (!show) {
+  if (!show || dataStructureToDisplay.length === 0) {
     return <></>;
   }
 
   const intl = useIntl();
   const title = intl.formatMessage({ id: "info_title" });
   const declineText = intl.formatMessage({ id: "info_decline_text" });
-  const andString = intl.formatMessage({ id: "and" });
+  const andString = intl.formatMessage({ id: "and_string" });
 
   // Creates a string for modal
   const content = `${infoModalString}: ${contentString(
@@ -49,6 +49,10 @@ function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
     </div>
   );
 }
+InfoModal.defaultProps = {
+  dataStructureToDisplay: [],
+};
+
 InfoModal.defaultProps = {
   dataStructureToDisplay: [],
 };
