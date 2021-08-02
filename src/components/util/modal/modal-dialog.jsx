@@ -20,9 +20,8 @@ import { useTranslation } from "react-i18next";
  * The children to be rendered.
  * @param {boolean} props.showAcceptButton
  * Whether to show the accept button.
- * @param {string} props.showAcceptButton
+ * @param {string} props.size
  * The size of the modal.
- * @param props.size
  * @returns {object}
  * The TagList
  */

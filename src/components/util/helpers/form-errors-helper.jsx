@@ -10,7 +10,9 @@ import PropTypes from "prop-types";
  */
 function getFormErrors(requiredFields, formStateObject) {
   /**
-   * @param field
+   * @param {string} field
+   * the string to check if is required image field.
+   * @returns {boolean} whether it is an image field (name/description)
    */
   function isImageField(field) {
     return field === "mediaName" || field === "mediaDescription";

@@ -14,14 +14,12 @@ import MediaList from "../media-list/media-list";
  * Callback on close modal.
  * @param {Function} props.handleAccept
  * The are you sure you want to delete text.
- * @param {Function} props.handleSelected
- * Callback when images are selected.
  * @param {boolean} props.multiple
  * Whether it should be possible to choose multiple images.
  * @returns {object}
  * The modal.
  */
-function MediaModal({ show, onClose, handleAccept, handleSelected, multiple }) {
+function MediaModal({ show, onClose, handleAccept, multiple }) {
   if (!show) {
     return <></>;
   }
@@ -29,9 +27,10 @@ function MediaModal({ show, onClose, handleAccept, handleSelected, multiple }) {
   const { t } = useTranslation("common");
 
   /**
-   * @param images
+   * @param {Array} images
+   * The images that are selected in the dialog.
    */
-  function handleSelected(images) {
+  function handleSelectedImages(images) {
     setSelectedImages(images);
     if (!multiple && images.length === 1) {
       handleAccept(images);
@@ -41,12 +40,16 @@ function MediaModal({ show, onClose, handleAccept, handleSelected, multiple }) {
   return (
     <div id="delete-modal">
       <ModalDialog
-        title={multiple? t("media-modal.multiple-select-title") ? t("media-modal.single-select-title")}
+        title={
+          multiple
+            ? t("media-modal.multiple-select-title")
+            : t("media-modal.single-select-title")
+        }
         onClose={onClose}
         handleAccept={() => handleAccept(selectedimages)}
         size="xl"
       >
-        <MediaList fromModal handleSelected={handleSelected} />
+        <MediaList fromModal handleSelected={handleSelectedImages} />
       </ModalDialog>
     </div>
   );
@@ -56,8 +59,7 @@ MediaModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   handleAccept: PropTypes.func.isRequired,
-  handleSelected:PropTypes.func.isRequired,
-  multiple:PropTypes.bool.isRequired,
+  multiple: PropTypes.bool.isRequired,
 };
 
 export default MediaModal;

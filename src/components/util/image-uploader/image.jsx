@@ -24,7 +24,7 @@ import "./image-uploader.scss";
 function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
-  debugger;
+
   /**
    * @param {object} props
    * The props

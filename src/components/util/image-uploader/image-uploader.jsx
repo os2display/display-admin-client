@@ -74,7 +74,8 @@ function ImageUploader({
   /**
    * Sets the selected row in state.
    *
-   * @param selectedImages
+   * @param {Array} selectedImages
+   * The selected images from the modal
    */
   function onAcceptMediaModal(selectedImages) {
     setImages(selectedImages);
