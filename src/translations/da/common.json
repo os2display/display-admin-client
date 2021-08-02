@@ -238,7 +238,7 @@
   },
   "multi-dropdown": {
     "validation-text": "Dette felt skal udfyldes",
-    "and_string": "og",
+    "and-string": "og",
     "nothing-selected": "Vælg en af mulighederne"
   },
   "groups-dropdown": {
