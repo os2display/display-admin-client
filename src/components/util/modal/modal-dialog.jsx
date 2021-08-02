@@ -20,6 +20,9 @@ import { useTranslation } from "react-i18next";
  * The children to be rendered.
  * @param {boolean} props.showAcceptButton
  * Whether to show the accept button.
+ * @param {string} props.showAcceptButton
+ * The size of the modal.
+ * @param props.size
  * @returns {object}
  * The TagList
  */
@@ -31,6 +34,7 @@ function ModalDialog({
   handleAccept,
   children,
   showAcceptButton,
+  size,
 }) {
   const { t } = useTranslation("common");
 
@@ -57,7 +61,7 @@ function ModalDialog({
 
   return (
     <div className="modal-container">
-      <Modal.Dialog>
+      <Modal.Dialog size={size}>
         <Modal.Header>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
@@ -82,6 +86,7 @@ ModalDialog.defaultProps = {
   declineText: "",
   showAcceptButton: true,
   handleAccept: () => {},
+  size: "sm",
 };
 
 ModalDialog.propTypes = {
@@ -91,6 +96,7 @@ ModalDialog.propTypes = {
   showAcceptButton: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   handleAccept: PropTypes.func,
+  size: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 

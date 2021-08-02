@@ -14,10 +14,10 @@ describe("Edit media page tests", () => {
 
   it("It validates new media", () => {
     cy.visit("/media/new");
-    cy.get("#save_media").should("exist")
+    cy.get("#save_media").should("exist");
     cy.get(".invalid-feedback-image-uploader").should("not.exist");
     cy.get("#save_media").click();
-    cy.get("#save_media").should("exist")
+    cy.get("#save_media").should("exist");
     cy.get(".invalid-feedback-image-uploader").should("exist");
   });
 

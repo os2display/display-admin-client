@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -11,10 +12,16 @@ import "./media-list.scss";
 /**
  * The media list component.
  *
+ * @param {object} props
+ * The props.
+ * @param {boolean} props.fromModal
+ * Whether it is opened from the modal, if it is, the upload and delete function should not be accesible.
+ * @param {Function} props.handleSelected
+ * Callback when closing modal.
  * @returns {object}
  * The media list.
  */
-function MediaList() {
+function MediaList({ fromModal, handleSelected }) {
   // Translations
   const { t } = useTranslation("common");
 
@@ -127,15 +134,17 @@ function MediaList() {
    * Sets the url.
    */
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (searchText) {
-      params.append("search", searchText);
+    if (!fromModal) {
+      const params = new URLSearchParams();
+      if (searchText) {
+        params.append("search", searchText);
+      }
+      if (selectedTags.length > 0) {
+        const selectedTagsForUrl = selectedTags.map((a) => `${a.name}@${a.id}`);
+        params.append("tags", selectedTagsForUrl.join(","));
+      }
+      history.replace({ search: params.toString() });
     }
-    if (selectedTags.length > 0) {
-      const selectedTagsForUrl = selectedTags.map((a) => `${a.name}@${a.id}`);
-      params.append("tags", selectedTagsForUrl.join(","));
-    }
-    history.replace({ search: params.toString() });
   }, [searchText, selectedTags]);
 
   /**
@@ -159,6 +168,7 @@ function MediaList() {
   function handleSearch(newSearchText) {
     setSearchText(newSearchText);
   }
+
   /**
    * Deletes selected data, and closes modal.
    */
@@ -178,6 +188,9 @@ function MediaList() {
     const mediaData = data;
     mediaData.selected = !data.selected;
     setSelectedMedia(selectedHelper(mediaData, [...selectedMedia]));
+    if (fromModal) {
+      handleSelected(selectedHelper(mediaData, [...selectedMedia]));
+    }
   }
 
   return (
@@ -186,23 +199,27 @@ function MediaList() {
         <Col>
           <h1>{t("media-list.header")}</h1>
         </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/media/new">
-            {t("media-list.upload-new-media")}
-          </Link>
-        </Col>
-        <Col md="auto">
-          <div className="ml-4">
-            <Button
-              variant="danger"
-              id="delete_media_button"
-              disabled={disableDeleteButton}
-              onClick={() => setShowDeleteModal(true)}
-            >
-              {t("media-list.delete-button")}
-            </Button>
-          </div>
-        </Col>
+        {!fromModal && (
+          <>
+            <Col md="auto">
+              <Link className="btn btn-primary btn-success" to="/media/new">
+                {t("media-list.upload-new-media")}
+              </Link>
+            </Col>
+            <Col md="auto">
+              <div className="ml-4">
+                <Button
+                  variant="danger"
+                  id="delete_media_button"
+                  disabled={disableDeleteButton}
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  {t("media-list.delete-button")}
+                </Button>
+              </div>
+            </Col>
+          </>
+        )}
       </Row>
       <Row className="mt-2 mb-2">
         <Col>
@@ -274,5 +291,15 @@ function MediaList() {
     </Container>
   );
 }
+
+MediaList.defaultProps = {
+  fromModal: false,
+  handleSelected: null,
+};
+
+MediaList.propTypes = {
+  fromModal: PropTypes.bool,
+  handleSelected: PropTypes.func,
+};
 
 export default MediaList;

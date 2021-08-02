@@ -292,7 +292,12 @@
     "validation-text": "Dette felt skal udfyldes",
     "pick-image": "Vælg et billede",
     "pick-more-images": "Vælg et eller flere billeder",
-    "help-text": "Vælg et billede ved at trykke på knappen, eller træk og slip det over firkanten"
+    "help-text": "Vælg et billede ved at trykke på knappen, eller træk og slip det over firkanten",
+    "media-library": "Åbn mediebiblioteket"
+  },
+  "media-modal": {
+    "multiple-select-title": "Vælg mellem følgende medier",
+    "single-select-title": "Vælg et af følgende medier"
   },
   "checkbox-for-list": {
     "checkbox-form-aria-label": "Vælg dette medie til massehandling"

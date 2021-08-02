@@ -13,7 +13,7 @@
       "duration": 400,
       "image": [
         {
-          "data_url": "/fixtures/media/mountain1.jpeg",
+          "url": "/fixtures/media/mountain1.jpeg",
           "mediaDescription": "Et billede af et bjerg",
           "mediaName": "Bjerg"
         }

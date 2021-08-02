@@ -7,6 +7,7 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "./image-uploader.scss";
 import { useTranslation } from "react-i18next";
 import Image from "./image";
+import MediaModal from "../../media-modal/media-modal";
 
 /**
  * @param {object} props
@@ -38,6 +39,7 @@ function ImageUploader({
   const [images, setImages] = useState([]);
   const [error, setError] = useState();
   const invalidInputText = invalidText || t("image-uploader.validation-text");
+  const [showMediaModal, setShowMediaModal] = useState(false);
 
   /**
    * Handle errors.
@@ -52,9 +54,7 @@ function ImageUploader({
    */
   function handleChange(image) {
     const localImages = [...images];
-    const imageIndex = localImages.findIndex(
-      (img) => img.data_url === image.data_url
-    );
+    const imageIndex = localImages.findIndex((img) => img.url === image.url);
     localImages[imageIndex] = image;
     const uniqueImages = [
       ...new Set(localImages.map((localImage) => localImage)),
@@ -63,6 +63,24 @@ function ImageUploader({
     const target = { value: images, id: name };
     handleImageUpload({ target });
   }
+
+  /**
+   * Sets the selected row in state.
+   *
+   */
+  function onCloseMediaModal() {
+    setShowMediaModal(false);
+  }
+  /**
+   * Sets the selected row in state.
+   *
+   * @param selectedImages
+   */
+  function onAcceptMediaModal(selectedImages) {
+    setImages(selectedImages);
+    setShowMediaModal(false);
+  }
+
   /**
    * Load content from fixture.
    */
@@ -74,7 +92,7 @@ function ImageUploader({
   const onChange = (imageList) => {
     // data for submit
     const uniqueImages = [
-      ...new Map(imageList.map((item) => [item.data_url, item])).values(),
+      ...new Map(imageList.map((item) => [item.url, item])).values(),
     ];
 
     setImages(uniqueImages);
@@ -88,7 +106,7 @@ function ImageUploader({
         multiple
         value={images}
         onChange={onChange}
-        dataURLKey="data_url"
+        dataURLKey="url"
       >
         {({
           imageList,
@@ -112,6 +130,12 @@ function ImageUploader({
                 >
                   {!multipleImages && t("image-uploader.pick-image")}
                   {multipleImages && t("image-uploader.pick-more-images")}
+                </Button>
+                <Button
+                  variant="success"
+                  onClick={() => setShowMediaModal(true)}
+                >
+                  {t("image-uploader.media-library")}
                 </Button>
 
                 <div
@@ -141,7 +165,7 @@ function ImageUploader({
                 onImageUpdate={onImageUpdate}
                 onImageRemove={onImageRemove}
                 index={index}
-                key={image.data_url}
+                key={image.url}
                 errors={errors}
               />
             ))}
@@ -153,6 +177,13 @@ function ImageUploader({
           {invalidInputText}
         </div>
       )}
+
+      <MediaModal
+        show={showMediaModal}
+        onClose={onCloseMediaModal}
+        handleAccept={onAcceptMediaModal}
+        multiple={multipleImages}
+      />
     </div>
   );
 }
@@ -165,9 +196,7 @@ ImageUploader.defaultProps = {
 };
 
 ImageUploader.propTypes = {
-  inputImage: PropTypes.arrayOf(
-    PropTypes.shape({ data_url: PropTypes.string })
-  ),
+  inputImage: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
   handleImageUpload: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   multipleImages: PropTypes.bool,

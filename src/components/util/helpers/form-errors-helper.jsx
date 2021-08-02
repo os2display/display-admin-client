@@ -9,6 +9,9 @@ import PropTypes from "prop-types";
  * A list of validationerrors.
  */
 function getFormErrors(requiredFields, formStateObject) {
+  /**
+   * @param field
+   */
   function isImageField(field) {
     return field === "mediaName" || field === "mediaDescription";
   }

@@ -24,7 +24,7 @@ import "./image-uploader.scss";
 function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
-
+  debugger;
   /**
    * @param {object} props
    * The props
@@ -42,7 +42,7 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
     <div>
       <Row className="mb-2">
         <Col md="3" className="image">
-          <img src={image.data_url} alt="" />
+          <img src={image.url} alt="" />
         </Col>
         <Col>
           <div>
