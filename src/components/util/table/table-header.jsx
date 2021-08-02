@@ -86,7 +86,6 @@ function TableHeader({ columns, sortColumn, onSort }) {
     </thead>
   );
 }
-cursor: "pointer";
 
 TableHeader.defaultProps = {
   sortColumn: {},

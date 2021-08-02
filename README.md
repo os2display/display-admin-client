@@ -1,22 +1,36 @@
-# Admin
+# Display admin
 
-This project was created with [Create React App](https://github.com/facebook/create-react-app).
+The admin for OS2Display ver. 2.
 
-## Available Scripts
+Currently, this is a create-react-app.
 
-In the project directory, you can run:
+## Docker development setup
 
-### `yarn start`
+### Up the containers
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`docker-compose up -d`
 
-### `yarn build`
+### Install npm packages
 
-Builds the app for production to the `build` folder.
+`docker-compose run node bash -c 'yarn'`
 
-### `yarn eject`
+## Testing with cypress
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+We use [cypress](https://www.cypress.io/) for testing.
+
+To run cypress tests in the cypress container:
+
+```
+
+docker-compose run cypress run
+```
 
 ### Linting
+
+```
+yarn check-coding-standards
+```
+
+```
+yarn apply-coding-standards
+```
