@@ -378,6 +378,8 @@
     "screens-locations": "Lokationer",
     "playlists": "Spillelister",
     "playlists-playlists": "Spillelister",
-    "playlists-categories": "Kategorier"
+    "playlists-categories": "Kategorier",
+    "configuration": "indstillinger",
+    "configuration-themes": "Temaer"
   }
 }

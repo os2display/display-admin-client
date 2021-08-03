@@ -56,6 +56,14 @@ function NavBar() {
                 {t("navbar.screens-locations")}
               </NavDropdown.Item>
             </NavDropdown>
+            <NavDropdown
+              title={t("navbar.configuration")}
+              id="navbar-configuration"
+            >
+              <NavDropdown.Item href="/themes" id="navbar_configuration_themes">
+                {t("navbar.configuration-themes")}
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
