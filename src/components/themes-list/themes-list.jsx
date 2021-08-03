@@ -19,20 +19,18 @@ import ListButton from "../util/list/list-button";
 function ThemesList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
-  const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [themes, setThemes] = useState([]);
 
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch(`/fixtures/categories/categories.json`)
+    fetch(`/fixtures/themes/themes.json`)
       .then((response) => response.json())
       .then((jsonData) => {
-        setCategories(jsonData.categories);
+        setThemes(jsonData.themes);
       });
   }, []);
 
@@ -61,20 +59,11 @@ function ThemesList() {
     setShowDeleteModal(true);
   }
 
-  /**
-   * @param {Array} playlistArray
-   * The array of playlists.
-   */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
-    setShowInfoModal(true);
-  }
-
   // The columns for the table.
   const columns = [
     {
       key: "pick",
-      label: t("category-list.columns.pick"),
+      label: t("themes-list.columns.pick"),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -82,33 +71,20 @@ function ThemesList() {
     {
       path: "name",
       sort: true,
-      label: t("category-list.columns.name"),
+      label: t("themes-list.columns.name"),
     },
     {
       path: "createdBy",
       sort: true,
-      label: t("category-list.columns.created-by"),
-    },
-    {
-      sort: true,
-      path: "onFollowingPlaylists",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.onFollowingPlaylists,
-          data.onFollowingPlaylists.length,
-          data.onFollowingPlaylists.length === 0
-        ),
-      key: "playlists",
-      label: t("category-list.columns.category-on-playlist"),
+      label: t("themes-list.columns.created-by"),
     },
     {
       key: "edit",
       content: (data) => (
         <LinkForList
           data={data}
-          label={t("category-list.edit-button")}
-          param="category"
+          label={t("themes-list.edit-button")}
+          param="theme"
         />
       ),
     },
@@ -122,7 +98,7 @@ function ThemesList() {
               disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
-              {t("category-list.delete-button")}
+              {t("themes-list.delete-button")}
             </Button>
           </div>
         </>
@@ -155,40 +131,26 @@ function ThemesList() {
     setShowDeleteModal(false);
   }
 
-  /**
-   * Closes the info modal.
-   */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setOnPlaylists();
-  }
-
   return (
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>{t("category-list.header")}</h1>
+          <h1>{t("themes-list.header")}</h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/category/new">
-            {t("category-list.create-new-category")}
+          <Link className="btn btn-primary btn-success" to="/theme/new">
+            {t("themes-list.create-new-theme")}
           </Link>
         </Col>
       </Row>
-      {categories && (
-        <List columns={columns} selectedRows={selectedRows} data={categories} />
+      {themes && (
+        <List columns={columns} selectedRows={selectedRows} data={themes} />
       )}
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
-      />
-      <InfoModal
-        show={showInfoModal}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={onPlaylists}
-        infoModalString={t("category-list.info-modal.category-playlists")}
       />
     </Container>
   );
