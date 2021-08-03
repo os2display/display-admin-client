@@ -8,6 +8,7 @@ import List from "../util/list/list";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import ColorPreviewer from "./color-previewer";
+import ImageForList from "./image-for-list";
 
 /**
  * The themes list component.
@@ -78,8 +79,17 @@ function ThemesList() {
       label: t("themes-list.columns.created-by"),
     },
     {
+      label: t("themes-list.columns.colors"),
       key: "colors",
       content: (data) => <ColorPreviewer data={data} />,
+    },
+    {
+      label: t("themes-list.columns.font"),
+      path: "font.name",
+    },
+    {
+      content: (data) => <ImageForList data={data} />,
+      label: t("themes-list.columns.logo"),
     },
     {
       key: "edit",

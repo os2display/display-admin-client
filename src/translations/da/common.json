@@ -97,7 +97,10 @@
     "columns": {
       "pick": "Vælg tema",
       "name": "Navn",
-      "created-by": "Oprettet af"
+      "created-by": "Oprettet af",
+      "colors": "Temaets farver",
+      "font": "Font",
+      "logo": "Logo"
     },
     "header": "Themes",
     "create-new-theme": "Opret nyt tema",

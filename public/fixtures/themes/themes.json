@@ -4,6 +4,9 @@
       "name": "matrices",
       "createdBy": "Josi",
       "id": 1,
+      "font": {
+        "name": "Comic sans"
+      },
       "colors": {
         "primary": "#FF3030",
         "secondary": "#FF249D",
@@ -14,6 +17,9 @@
       "name": "test",
       "createdBy": "Daniela",
       "id": 2,
+      "font": {
+        "name": "Arial"
+      },
       "colors": {
         "primary": "#9BCD9B",
         "secondary": "#FF249D"
@@ -21,8 +27,12 @@
     },
     {
       "name": "system-worthy",
+      "logo": "/fixtures/media/logo.png",
       "createdBy": "Alvina",
       "id": 3,
+      "font": {
+        "name": "Comic sans"
+      },
       "colors": {
         "primary": "#2110FB",
         "secondary": "#9BCD9B",
@@ -33,6 +43,9 @@
       "name": "definition",
       "createdBy": "Walton",
       "id": 4,
+      "font": {
+        "name": "Comic sans"
+      },
       "colors": {
         "primary": "#9BCD9B",
         "secondary": "#9BCD9B",

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
+import get from "lodash/get";
 
 /**
  * @param {object} props
@@ -30,7 +31,7 @@ function TableBody({ columns, selectedRows, data }) {
     if (column.content) {
       return column.content(item);
     }
-    return item[column.path];
+    return get(item, column.path);
   }
 
   /**
