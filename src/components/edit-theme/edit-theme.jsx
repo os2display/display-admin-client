@@ -31,7 +31,7 @@ function EditTheme() {
   const [submitted, setSubmitted] = useState(false);
   const newTheme = id === "new";
   const [errors, setErrors] = useState([]);
-  const requiredFields = ["mediaName", "mediaDescription", "themeName"];
+  const requiredFields = ["themeName", "mediaDescription", "themeName"];
   // Todo change this when real data is here.
   const fontOptions = [
     { name: "Arial", id: 2 },
@@ -144,7 +144,6 @@ function EditTheme() {
           />
           <ColorPicker
             handleChange={handleInput}
-            name="themeName"
             show={showColorPicker}
             color={formStateObject[showColorPicker]}
             closeColorPicker={() => setShowColorPicker(false)}
