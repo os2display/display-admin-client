@@ -9,7 +9,7 @@ describe("Edit theme page tests", () => {
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger følgende tema: matrices/);
+      .should("match", /^Rediger følgende tema: system-worthy/);
   });
 
   it("It validates new theme", () => {
@@ -21,7 +21,7 @@ describe("Edit theme page tests", () => {
     cy.get("#save_theme")
       .invoke("text")
       .should("match", /^Gem tema/);
-    cy.get("input").type("x");
+    cy.get("#themeName").type("x");
     cy.get("#save_theme").click();
     cy.get("#save_theme").should("not.exist");
   });
