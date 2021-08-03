@@ -32,6 +32,7 @@ function EditTheme() {
   const newTheme = id === "new";
   const [errors, setErrors] = useState([]);
   const requiredFields = ["mediaName", "mediaDescription", "themeName"];
+  // Todo change this when real data is here.
   const fontOptions = [
     { name: "Arial", id: 2 },
     { name: "Comic sans", id: 1 },
