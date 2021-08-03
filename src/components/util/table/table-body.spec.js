@@ -11,13 +11,13 @@ describe("Table body loads", () => {
       .find("tr")
       .eq(0)
       .find("button")
-      .first()
+      .eq(1)
       .should("have.length", 1);
     cy.get("tbody")
       .find("tr")
       .eq(0)
       .find("button")
-      .first()
+      .eq(1)
       .should("be.not.disabled");
     cy.get("tbody")
       .find("tr")
@@ -36,7 +36,7 @@ describe("Table body loads", () => {
       .find("tr")
       .eq(0)
       .find("button")
-      .first()
+      .eq(1)
       .should("be.disabled");
     cy.get("tbody")
       .find("tr")

@@ -8,11 +8,11 @@ describe("Locations list tests", () => {
   it("It opens info modal (locations list)", () => {
     cy.visit("/locations");
     cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("#info-modal").should("exist");
     cy.visit("/locations");
     cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(1).click();
+    cy.get("tbody").find("tr td button").eq(2).click();
     cy.get("#info-modal").should("exist");
   });
 
@@ -25,7 +25,7 @@ describe("Locations list tests", () => {
   it("It opens delete modal (locations list)", () => {
     cy.visit("/locations");
     cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(2).click();
+    cy.get("tbody").find("tr td button").eq(3).click();
     cy.get("#delete-modal").should("exist");
   });
 

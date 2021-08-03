@@ -14,7 +14,7 @@ describe("Tags list tests", () => {
   it("It opens delete modal (tags list)", () => {
     cy.visit("/tags");
     cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });
 

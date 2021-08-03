@@ -7,7 +7,7 @@ describe("Categories list tests", () => {
   it("It opens info modal (categories list)", () => {
     cy.visit("/categories");
     cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("#info-modal").should("exist");
   });
 
@@ -20,7 +20,7 @@ describe("Categories list tests", () => {
   it("It opens delete modal (categories list)", () => {
     cy.visit("/categories");
     cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(1).click();
+    cy.get("tbody").find("tr td button").eq(2).click();
     cy.get("#delete-modal").should("exist");
   });
 
