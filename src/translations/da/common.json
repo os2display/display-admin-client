@@ -412,5 +412,9 @@
     "configuration": "indstillinger",
     "configuration-themes": "Temaer",
     "configuration-users": "Brugere"
+  },
+  "topbar": {
+    "brand": "Aroskanalen",
+    "add": "Ny"
   }
 }
