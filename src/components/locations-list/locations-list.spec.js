@@ -33,4 +33,12 @@ describe("Locations list tests", () => {
     cy.visit("/locations");
     cy.get("thead").find("th").should("have.length", 7);
   });
+
+  it("It removes all selected", () => {
+    cy.visit("/locations");
+    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
+    cy.get("#clear-rows-button").click();
+    cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
+  });
 });
