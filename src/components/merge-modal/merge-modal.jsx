@@ -1,6 +1,5 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
-import { Form, FormControl, InputGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";

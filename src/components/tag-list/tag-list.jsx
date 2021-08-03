@@ -143,13 +143,6 @@ function TagList() {
     setSelectedRows([]);
   }
 
-  /**
-   * Clears the selected rows.
-   */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
   return (
     <Container>
       <Row className="align-items-end mt-2">

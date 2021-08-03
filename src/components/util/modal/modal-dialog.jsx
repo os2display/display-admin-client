@@ -60,7 +60,7 @@ function ModalDialog({
 
   return (
     <div className="modal-container">
-      <Modal.Dialog scrollable={true} size={size}>
+      <Modal.Dialog scrollable size={size}>
         <Modal.Header>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>

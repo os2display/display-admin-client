@@ -34,7 +34,7 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
         handleAccept={handleAccept}
       >
         <ul>
-          {dataStructureToDisplay.map(({ name }) => (
+          {selectedRows.map(({ name }) => (
             <li>{name}</li>
           ))}
         </ul>

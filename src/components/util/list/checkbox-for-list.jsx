@@ -10,25 +10,27 @@ import { useTranslation } from "react-i18next";
  * Props.
  * @param {Function} props.onSelected
  * The callback for onselected.
+ * @param {boolean} props.selected
+ * Whether the checkbox should display selected.
  * @returns {object}
  * A checkbox for the list.
  */
 function CheckboxForList({ selected, onSelected }) {
   const { t } = useTranslation("common");
-  console.log(selected);
   return (
-    <div onClick={onSelected} style={{ minHeight: "50px" }}>
+    <button onClick={onSelected} type="button" style={{ minHeight: "50px" }}>
       <Form>
         <Form.Group controlId="formBasicCheckbox">
           <Form.Check
             checked={selected}
+            tabIndex={-1}
             type="checkbox"
             readOnly
             aria-label={t("checkbox-for-list.checkbox-form-aria-label")}
           />
         </Form.Group>
       </Form>
-    </div>
+    </button>
   );
 }
 

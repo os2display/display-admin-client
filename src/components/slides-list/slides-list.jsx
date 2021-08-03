@@ -129,7 +129,7 @@ function SlidesList() {
     },
     {
       key: "preview",
-      content: (data) => (
+      content: () => (
         <div className="m-2">
           <Button variant="secondary">
             {t("slides-list.columns.preview")}
