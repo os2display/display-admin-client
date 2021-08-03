@@ -17,16 +17,16 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title={t("navbar.content")} id="navbar_content">
+              <NavDropdown.Item href="/slides" id="navbar_content_slides">
+                {t("navbar.content-slides")}
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item href="/tags" id="navbar_content_tags">
                 {t("navbar.content-tags")}
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="/media-list" id="navbar_content_media">
                 {t("navbar.content-media")}
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/slides" id="navbar_content_slides">
-                {t("navbar.content-slides")}
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title={t("navbar.playlists")} id="navbar_playlists">
