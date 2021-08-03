@@ -28,7 +28,8 @@
     "name-placeholder": "Udfyld temaets navn",
     "pick-primary-color": "Vælg primærfarve",
     "pick-secondary-color": "Vælg sekundærfarve",
-    "pick-tertiary-color": "Vælg tertiærfarve"
+    "pick-tertiary-color": "Vælg tertiærfarve",
+    "font-label": "Vælg font"
   },
   "slides-list": {
     "columns": {

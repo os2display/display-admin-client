@@ -8,6 +8,7 @@ import FormInput from "../util/forms/form-input";
 import ColorPicker from "../util/color-picker/color-picker";
 import ColorPreview from "../util/color-picker/color-preview";
 import ImageUploader from "../util/image-uploader/image-uploader";
+import Select from "../util/forms/select";
 import "./edit-theme.scss";
 /**
  * The edit theme component.
@@ -31,7 +32,10 @@ function EditTheme() {
   const newTheme = id === "new";
   const [errors, setErrors] = useState([]);
   const requiredFields = ["mediaName", "mediaDescription", "themeName"];
-
+  const fontOptions = [
+    { name: "Arial", id: 2 },
+    { name: "Comic sans", id: 1 },
+  ];
   /**
    * Load content from fixture.
    */
@@ -149,6 +153,12 @@ function EditTheme() {
             inputImage={formStateObject.images}
             name="logo"
             errors={errors}
+          />
+          <Select
+            value={formStateObject.font}
+            name="font"
+            options={fontOptions}
+            label={t("edit-theme.font-label")}
           />
           {submitted && <Redirect to="/themes" />}
           <div>
