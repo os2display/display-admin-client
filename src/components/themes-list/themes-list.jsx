@@ -7,8 +7,6 @@ import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
-import InfoModal from "../info-modal/info-modal";
-import ListButton from "../util/list/list-button";
 
 /**
  * The themes list component.
