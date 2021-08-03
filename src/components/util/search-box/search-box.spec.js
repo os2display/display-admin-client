@@ -18,7 +18,9 @@ describe("Search box loads", () => {
     cy.get("#search-field").invoke("val").should("be.empty");
     cy.get(".image-wrapper").should("have.length", 12);
     cy.visit("/media-list?search=bjerg");
-    cy.get("#search-field").invoke("val").should("match", /^bjerg/);
+    cy.get("#search-field")
+      .invoke("val")
+      .should("match", /^bjerg/);
     cy.get(".image-wrapper").should("have.length", 5);
   });
 });

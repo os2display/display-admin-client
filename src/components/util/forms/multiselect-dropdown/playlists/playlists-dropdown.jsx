@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
 
 /**
@@ -23,15 +23,10 @@ function PlaylistsDropdown({
   name,
   errors,
 }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const noSelectedPlaylists = intl.formatMessage({
-    id: "playlists_dropdown_no_selected",
-  });
-  const playlistsLabel = intl.formatMessage({
-    id: "playlists_dropdown_label",
-  });
+
   /**
    * Load content from fixture.
    */
@@ -50,13 +45,13 @@ function PlaylistsDropdown({
       {options && (
         <>
           <MultiSelectComponent
-            label={playlistsLabel}
+            label={t("playlists-dropdown.label")}
+            noSelectedString={t("playlists-dropdown.nothing-selected")}
             handleSelection={handlePlaylistSelection}
             options={options}
             selected={selected}
             name={name}
             isLoading={isLoading}
-            noSelectedString={noSelectedPlaylists}
             errors={errors}
           />
         </>

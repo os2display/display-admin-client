@@ -1,45 +1,48 @@
-import { React, useEffect, useState } from "react";
-import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { React, useState, useEffect } from "react";
+import { useParams, Redirect } from "react-router";
+import { Container, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import getFormErrors from "../util/helpers/form-errors-helper";
-import FormInput from "../util/forms/form-input";
-import SelectScreenTable from "../util/multi-and-table/select-screen-table";
+import ImageUploader from "../util/image-uploader/image-uploader";
 
 /**
- * The edit location component.
+ * The edit media component.
  *
  * @returns {object}
- * The edit location page.
+ * The edit media page.
  */
-function EditLocation() {
+function EditMedia() {
   const { t } = useTranslation("common");
-  const requiredFields = ["locationName", "locationScreens"];
-  const [formStateObject, setFormStateObject] = useState({
-    locationScreens: [],
-  });
+  const [formStateObject, setFormStateObject] = useState({ images: [] });
   const history = useHistory();
   const { id } = useParams();
-  const [locationName, setLocationName] = useState("");
+  const [mediaName, setMediaName] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const newLocation = id === "new";
+  const newMedia = id === "new";
   const [errors, setErrors] = useState([]);
+  const requiredFields = ["mediaName", "mediaDescription", "mediaImages"];
 
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-    if (!newLocation) {
-      fetch("/fixtures/locations/location.json")
+    if (!newMedia) {
+      fetch(`/fixtures/media/one_media.json`)
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
-            locationName: jsonData.location.name,
-            locationScreens: jsonData.location.onFollowingScreens,
+            images: [
+              {
+                url: jsonData.media.url,
+                mediaName: jsonData.media.name,
+                mediaDescription: jsonData.media.description,
+                mediaTags: jsonData.media.tags,
+              },
+            ],
           });
-          setLocationName(jsonData.location.name);
+          setMediaName(jsonData.media.name);
         });
     }
   }, []);
@@ -85,38 +88,31 @@ function EditLocation() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
-          {newLocation && <h1>{t("edit-location.create-new-location")}</h1>}
-          {!newLocation && (
+          {newMedia && <h1>{t("edit-media.upload-new-media")}</h1>}
+          {!newMedia && (
             <h1>
-              {t("edit-location.edit-location")}: {locationName}
+              {t("edit-media.edit-media")}: {mediaName}
             </h1>
           )}
-          <FormInput
-            name="locationName"
-            type="text"
+          <ImageUploader
             errors={errors}
-            label={t("edit-location.location-name-label")}
-            placeholder={t("edit-location.location-name-placeholder")}
-            value={formStateObject.locationName}
-            onChange={handleInput}
+            multipleImages={!!newMedia}
+            handleImageUpload={handleInput}
+            inputImage={formStateObject.images}
+            name="mediaImages"
+            invalidText={t("edit-media.media-validation")}
           />
-          <SelectScreenTable
-            handleChange={handleInput}
-            name="locationScreens"
-            errors={errors}
-            selectedData={formStateObject.locationScreens}
-          />
-          {submitted && <Redirect to="/locations" />}
+          {submitted && <Redirect to="/media-list" />}
           <Button
             variant="secondary"
             type="button"
-            id="location_cancel"
+            id="media_cancel"
             onClick={() => history.goBack()}
           >
-            {t("edit-location.cancel-button")}
+            {t("edit-media.cancel-button")}
           </Button>
-          <Button variant="primary" type="submit" id="save_location">
-            {t("edit-location.save-button")}
+          <Button variant="primary" type="submit" id="save_media">
+            {t("edit-media.save-button")}
           </Button>
         </Form>
       </Container>
@@ -124,4 +120,4 @@ function EditLocation() {
   );
 }
 
-export default EditLocation;
+export default EditMedia;

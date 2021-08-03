@@ -1,29 +1,29 @@
 import { React, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import TagDropdown from "../util/forms/multiselect-dropdown/tags/tag-dropdown";
-
 import SearchBox from "../util/search-box/search-box";
 import "./media-list.scss";
 
 /**
  * The media list component.
  *
+ * @param {object} props
+ * The props.
+ * @param {boolean} props.fromModal
+ * Whether it is opened from the modal, if it is, the upload and delete function should not be accesible.
+ * @param {Function} props.handleSelected
+ * Callback when closing modal.
  * @returns {object}
  * The media list.
  */
-function MediaList() {
+function MediaList({ fromModal, handleSelected }) {
   // Translations
-  const intl = useIntl();
-  const tagsSelectLabel = intl.formatMessage({
-    id: "media_tags_select_label",
-  });
-  const pickImageAriaLabel = intl.formatMessage({
-    id: "pick_this_media_for_bulk_action",
-  });
+  const { t } = useTranslation("common");
 
   // Url search paramters
   /**
@@ -134,15 +134,17 @@ function MediaList() {
    * Sets the url.
    */
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (searchText) {
-      params.append("search", searchText);
+    if (!fromModal) {
+      const params = new URLSearchParams();
+      if (searchText) {
+        params.append("search", searchText);
+      }
+      if (selectedTags.length > 0) {
+        const selectedTagsForUrl = selectedTags.map((a) => `${a.name}@${a.id}`);
+        params.append("tags", selectedTagsForUrl.join(","));
+      }
+      history.replace({ search: params.toString() });
     }
-    if (selectedTags.length > 0) {
-      const selectedTagsForUrl = selectedTags.map((a) => `${a.name}@${a.id}`);
-      params.append("tags", selectedTagsForUrl.join(","));
-    }
-    history.replace({ search: params.toString() });
   }, [searchText, selectedTags]);
 
   /**
@@ -166,6 +168,7 @@ function MediaList() {
   function handleSearch(newSearchText) {
     setSearchText(newSearchText);
   }
+
   /**
    * Deletes selected data, and closes modal.
    */
@@ -185,38 +188,39 @@ function MediaList() {
     const mediaData = data;
     mediaData.selected = !data.selected;
     setSelectedMedia(selectedHelper(mediaData, [...selectedMedia]));
+    if (fromModal) {
+      handleSelected(selectedHelper(mediaData, [...selectedMedia]));
+    }
   }
 
   return (
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>
-            <FormattedMessage id="media_header" defaultMessage="media_header" />
-          </h1>
+          <h1>{t("media-list.header")}</h1>
         </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/media/upload">
-            <FormattedMessage
-              id="upload_new_media"
-              defaultMessage="upload_new_media"
-            />
-          </Link>
-        </Col>
-        <Col md="auto">
-          <div className="ml-4">
-            <Button
-              variant="danger"
-              id="delete_media_button"
-              disabled={disableDeleteButton}
-              onClick={() => setShowDeleteModal(true)}
-            >
-              <FormattedMessage id="delete" defaultMessage="delete" />
-            </Button>
-          </div>
-        </Col>
+        {!fromModal && (
+          <>
+            <Col md="auto">
+              <Link className="btn btn-primary btn-success" to="/media/new">
+                {t("media-list.upload-new-media")}
+              </Link>
+            </Col>
+            <Col md="auto">
+              <div className="ml-4">
+                <Button
+                  variant="danger"
+                  id="delete_media_button"
+                  disabled={disableDeleteButton}
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  {t("media-list.delete-button")}
+                </Button>
+              </div>
+            </Col>
+          </>
+        )}
       </Row>
-
       <Row className="mt-2 mb-2">
         <Col>
           <SearchBox showLabel value={searchText} onChange={handleSearch} />
@@ -225,7 +229,7 @@ function MediaList() {
           <TagDropdown
             selected={selectedTags}
             name="tags"
-            label={tagsSelectLabel}
+            label={t("media-list.tags-select-label")}
             handleTagSelection={onTagInput}
           />
         </Col>
@@ -233,7 +237,11 @@ function MediaList() {
       <div className="image-list">
         {getListData().map((data) => (
           <div key={data.id} className="image-wrapper">
-            <button type="button" onClick={() => handleChecked(data)}>
+            <button
+              type="button"
+              className="image-button"
+              onClick={() => handleChecked(data)}
+            >
               <img
                 src={data.url}
                 className={data.selected ? "selected" : ""}
@@ -244,24 +252,31 @@ function MediaList() {
               type="checkbox"
               checked={data.selected}
               tabIndex={-1}
-              aria-label={pickImageAriaLabel}
+              aria-label={t("media-list.checkbox-form-aria-label")}
               readOnly
             />
-            <span>
-              <FormattedMessage id="media_name" defaultMessage="media_name" />:{" "}
-              {data.name}
-            </span>
-            <span>
-              <FormattedMessage
-                id="media_description"
-                defaultMessage="media_description"
-              />
-              : {data.description}
-            </span>
-            <div>
-              {data.tags.map((tag) => (
-                <span key={tag.id}>{tag.name} </span>
-              ))}
+            <div className="d-flex">
+              <div className="d-flex flex-column">
+                <span>
+                  {t("media-list.media-name")}: {data.name}
+                </span>
+                <span>
+                  {t("media-list.media-description")}: {data.description}
+                </span>
+                <div>
+                  {data.tags.map((tag) => (
+                    <span key={tag.id}>{tag.name} </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <Link
+                  className="btn btn-primary btn-success"
+                  to={`/media/${data.id}`}
+                >
+                  {t("media-list.edit-button")}
+                </Link>
+              </div>
             </div>
           </div>
         ))}
@@ -276,5 +291,15 @@ function MediaList() {
     </Container>
   );
 }
+
+MediaList.defaultProps = {
+  fromModal: false,
+  handleSelected: null,
+};
+
+MediaList.propTypes = {
+  fromModal: PropTypes.bool,
+  handleSelected: PropTypes.func,
+};
 
 export default MediaList;

@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 import { Form, FormControl, InputGroup } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import contentString from "../util/helpers/content-string";
@@ -23,11 +23,11 @@ import contentString from "../util/helpers/content-string";
  * The modal.
  */
 function MergeModal({ show, onClose, selectedRows, handleAccept }) {
-  const [mergeName, setMergeName] = useState();
-  const intl = useIntl();
   if (!show) {
     return <></>;
   }
+  const [mergeName, setMergeName] = useState();
+  const { t } = useTranslation("common");
 
   /**
    * @param {string} newMergeName - the new name for the merged data.
@@ -36,27 +36,24 @@ function MergeModal({ show, onClose, selectedRows, handleAccept }) {
     setMergeName(newMergeName);
   }
 
-  const title = intl.formatMessage({ id: "merge_title" });
-  const confirmation = intl.formatMessage({ id: "are_you_sure_merge" });
-  const chooseNewName = intl.formatMessage({ id: "merge_data_name" });
-  const and = intl.formatMessage({ id: "and_string" });
-
   // Creates a string for modal
-  const valuesToMerge = `${confirmation}  ${contentString(selectedRows, and)}?`;
+  const valuesToMerge = `${t("merge-modal.confirmation")}: ${contentString(
+    selectedRows,
+    t("merge-modal.and-string")
+  )}?`;
 
   return (
     <ModalDialog
-      title={title}
+      title={t("merge-modal.title")}
       onClose={onClose}
       handleAccept={() => handleAccept(mergeName)}
     >
       {valuesToMerge}
-
       <Form>
         <InputGroup className="mb-3 mt-3">
           <FormControl
-            placeholder={chooseNewName}
-            aria-label={chooseNewName}
+            aria-label={t("merge-modal.new-name-label")}
+            placeholder={t("merge-modal.new-name-placeholder")}
             id="merged-data-name"
             className="form-control"
             onChange={(e) => handleInput(e.currentTarget.value)}

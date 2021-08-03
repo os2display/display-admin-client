@@ -1,7 +1,7 @@
 import { React, useEffect } from "react";
-import { useIntl } from "react-intl";
 import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -20,6 +20,8 @@ import PropTypes from "prop-types";
  * The children to be rendered.
  * @param {boolean} props.showAcceptButton
  * Whether to show the accept button.
+ * @param {string} props.size
+ * The size of the modal.
  * @returns {object}
  * The TagList
  */
@@ -31,10 +33,9 @@ function ModalDialog({
   handleAccept,
   children,
   showAcceptButton,
+  size,
 }) {
-  const intl = useIntl();
-  const yes = intl.formatMessage({ id: "yes" });
-  const no = intl.formatMessage({ id: "no" });
+  const { t } = useTranslation("common");
 
   /**
    * For closing modals on escape key.
@@ -59,18 +60,18 @@ function ModalDialog({
 
   return (
     <div className="modal-container">
-      <Modal.Dialog>
+      <Modal.Dialog size={size}>
         <Modal.Header>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{children}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" type="button" onClick={onClose}>
-            {declineText || no}
+            {declineText || t("modal-dialog.no")}
           </Button>
           {showAcceptButton && (
             <Button variant="primary" type="submit" onClick={handleAccept}>
-              {acceptText || yes}
+              {acceptText || t("modal-dialog.yes")}
             </Button>
           )}
         </Modal.Footer>
@@ -84,6 +85,7 @@ ModalDialog.defaultProps = {
   declineText: "",
   showAcceptButton: true,
   handleAccept: () => {},
+  size: "sm",
 };
 
 ModalDialog.propTypes = {
@@ -93,6 +95,7 @@ ModalDialog.propTypes = {
   showAcceptButton: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   handleAccept: PropTypes.func,
+  size: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 

@@ -1,7 +1,7 @@
 import { React } from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
+import { useTranslation } from "react-i18next";
 
 /**
  * A checkbox for the list.
@@ -14,23 +14,18 @@ import { FormattedMessage } from "react-intl";
  * A checkbox for the list.
  */
 function CheckboxForList({ onSelected }) {
+  const { t } = useTranslation("common");
+
   return (
-    <FormattedMessage
-      id="aria_choose_element_for_action"
-      defaultMessage="aria_choose_element_for_action"
-    >
-      {(message) => (
-        <Form>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check
-              onChange={onSelected}
-              type="checkbox"
-              aria-label={message}
-            />
-          </Form.Group>
-        </Form>
-      )}
-    </FormattedMessage>
+    <Form>
+      <Form.Group controlId="formBasicCheckbox">
+        <Form.Check
+          onChange={onSelected}
+          type="checkbox"
+          aria-label={t("checkbox-for-list.checkbox-form-aria-label")}
+        />
+      </Form.Group>
+    </Form>
   );
 }
 

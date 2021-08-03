@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import selectedHelper from "../util/helpers/selectedHelper";
@@ -17,21 +17,18 @@ import ListButton from "../util/list/list-button";
  * The SlidesList
  */
 function SlidesList() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [slides, setSlides] = useState([]);
-  const infoModalText = intl.formatMessage({
-    id: "slide_on_the_following_playlists",
-  });
+
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-
     fetch(`/fixtures/slides/slides.json`)
       .then((response) => response.json())
       .then((jsonData) => {
@@ -77,7 +74,7 @@ function SlidesList() {
   const columns = [
     {
       key: "pick",
-      label: intl.formatMessage({ id: "table_header_pick" }),
+      label: t("slides-list.columns.pick"),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -85,12 +82,12 @@ function SlidesList() {
     {
       path: "name",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("slides-list.columns.name"),
     },
     {
       path: "template",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_template" }),
+      label: t("slides-list.columns.template"),
     },
     {
       sort: true,
@@ -103,22 +100,28 @@ function SlidesList() {
           data.onFollowingPlaylists.length === 0
         ),
       key: "playlists",
-      label: intl.formatMessage({ id: "table_header_number_of_playlists" }),
+      label: t("slides-list.columns.number-of-playlists"),
     },
     {
       path: "tags",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_tags" }),
+      label: t("slides-list.columns.tags"),
     },
     {
       path: "published",
       sort: true,
       content: (data) => Published(data),
-      label: intl.formatMessage({ id: "table_header_published" }),
+      label: t("slides-list.columns.published"),
     },
     {
       key: "edit",
-      content: (data) => <LinkForList data={data} param="slide" />,
+      content: (data) => (
+        <LinkForList
+          data={data}
+          param="slide"
+          label={t("slides-list.edit-button")}
+        />
+      ),
     },
     {
       key: "delete",
@@ -130,7 +133,7 @@ function SlidesList() {
               disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
-              <FormattedMessage id="delete" defaultMessage="delete" />
+              {t("slides-list.delete-button")}
             </Button>
           </div>
         </>
@@ -175,20 +178,10 @@ function SlidesList() {
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>
-            <FormattedMessage
-              id="slides_list_header"
-              defaultMessage="slides_list_header"
-            />
-          </h1>
+          <h1>{t("slides-list.header")}</h1>
         </Col>
         <Col md="auto">
-          <Button>
-            <FormattedMessage
-              id="create_new_slide"
-              defaultMessage="create_new_slide"
-            />
-          </Button>
+          <Button>{t("slides-list.create-new-slide")}</Button>
         </Col>
       </Row>
       {slides && (
@@ -204,7 +197,7 @@ function SlidesList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        infoModalString={infoModalText}
+        infoModalString={t("slides-list.info-modal.slide-on-playlists")}
       />
     </Container>
   );

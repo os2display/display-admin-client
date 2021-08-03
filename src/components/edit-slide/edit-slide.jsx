@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
 import Select from "../util/forms/select";
 import FormInput from "../util/forms/form-input";
 import getFormErrors from "../util/helpers/form-errors-helper";
@@ -10,6 +10,7 @@ import RenderFormElement from "../util/forms/render-form-element";
 import FormCheckbox from "../util/forms/form-checkbox";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
+
 /**
  * The edit slide component.
  *
@@ -17,7 +18,7 @@ import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table"
  * The edit slide page.
  */
 function EditSlide() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({
     playlists: [],
     slideTemplate: "",
@@ -29,14 +30,6 @@ function EditSlide() {
   const newSlide = id === "new";
   const requiredFields = ["slideName", "slideTemplate"];
   const [errors, setErrors] = useState([]);
-  const slideLabel = intl.formatMessage({ id: "edit_add_slide_name_label" });
-  const checkboxLabel = intl.formatMessage({ id: "publish" });
-  const templateLabel = intl.formatMessage({
-    id: "edit_add_slide_template_label",
-  });
-  const slidePlaceholder = intl.formatMessage({
-    id: "edit_add_slide_label_placeholder",
-  });
   const [formData, setFormData] = useState([]);
   const [templateData, setTemplateData] = useState();
   const [templateOptions, setTemplateOptions] = useState([]);
@@ -133,7 +126,13 @@ function EditSlide() {
    * The required field to validate.
    */
   function handleRequiredField(field) {
-    requiredFields.push(field);
+    if (Array.isArray(field)) {
+      field.forEach((f) => {
+        requiredFields.push(f);
+      });
+    } else {
+      requiredFields.push(field);
+    }
   }
 
   /**
@@ -163,26 +162,18 @@ function EditSlide() {
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
-          {newSlide && (
-            <h1>
-              <FormattedMessage
-                id="create_new_slide"
-                defaultMessage="create_new_slide"
-              />
-            </h1>
-          )}
+          {newSlide && <h1>{t("edit-slide.create-new-slide")}</h1>}
           {!newSlide && (
             <h1>
-              <FormattedMessage id="edit_slide" defaultMessage="edit_slide" />
-              {slideName}
+              {t("edit-slide.edit-slide")}: {slideName}
             </h1>
           )}
           <FormInput
             name="slideName"
             type="text"
             errors={errors}
-            label={slideLabel}
-            placeholder={slidePlaceholder}
+            label={t("edit-slide.slide-name-label")}
+            placeholder={t("edit-slide.slide-name-placeholder")}
             value={formStateObject.slideName}
             onChange={handleInput}
           />
@@ -191,7 +182,7 @@ function EditSlide() {
             name="slideTemplate"
             options={templateOptions}
             onChange={handleInput}
-            label={templateLabel}
+            label={t("edit-slide.slide-template-label")}
             errors={errors}
           />
           {formStateObject.slideTemplate && (
@@ -222,7 +213,7 @@ function EditSlide() {
             selectedData={formStateObject.slidePlaylist}
           />
           <FormCheckbox
-            label={checkboxLabel}
+            label={t("edit-slide.slide-publish-label")}
             onChange={handleInput}
             name="slide_publish"
             value={formStateObject.slidePublish}
@@ -234,10 +225,10 @@ function EditSlide() {
             id="slide_cancel"
             onClick={() => history.goBack()}
           >
-            <FormattedMessage id="cancel" defaultMessage="cancel" />
+            {t("edit-slide.cancel-slide")}
           </Button>
           <Button variant="primary" type="submit" id="save_slide">
-            <FormattedMessage id="save_slide" defaultMessage="save_slide" />
+            {t("edit-slide.save-button")}
           </Button>
         </Form>
       </Container>

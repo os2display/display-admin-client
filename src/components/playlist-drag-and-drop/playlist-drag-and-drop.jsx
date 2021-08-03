@@ -1,7 +1,9 @@
-import { React } from "react";
+import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
+import ListButton from "../util/list/list-button";
+import InfoModal from "../info-modal/info-modal";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
 
@@ -18,7 +20,38 @@ import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
  * An input.
  */
 function PlaylistDragAndDrop({ handleChange, formId, data }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
+  const [infoModalText, setInfoModalText] = useState("");
+
+  /**
+   * Opens info modal with either categories or slides.
+   *
+   * @param {object} props
+   * The props
+   * @param {Array} props.displayData
+   * The data to sum up in the modal
+   * @param {string} props.caller
+   * Which infomodal is opened, categories or slides.
+   */
+  function openInfoModal({ displayData, caller }) {
+    const localInfoModalText =
+      caller === "categories"
+        ? t("playlist-drag-and-drop.info-modal.playlist-categories")
+        : t("playlist-drag-and-drop.info-modal.playlist-slides");
+    setInfoModalText(localInfoModalText);
+    setDataStructureToDisplay(displayData);
+    setShowInfoModal(true);
+  }
+
+  /**
+   * Closes the info modal.
+   */
+  function onCloseInfoModal() {
+    setShowInfoModal(false);
+    setDataStructureToDisplay();
+  }
 
   /**
    * Removes playlist from list of playlists, and closes modal.
@@ -44,7 +77,31 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
   const columns = [
     {
       path: "name",
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("playlist-drag-and-drop.columns.name"),
+    },
+    {
+      content: (displayData) =>
+        ListButton(
+          openInfoModal,
+          { displayData: displayData.slides, caller: "slides" },
+          displayData.slides?.length,
+          displayData.slides?.length === 0
+        ),
+      path: "slides",
+      key: "slides",
+      label: t("playlist-drag-and-drop.columns.number-of-slides"),
+    },
+    {
+      content: (displayData) =>
+        ListButton(
+          openInfoModal,
+          { displayData: displayData.categories, caller: "categories" },
+          displayData.categories?.length,
+          displayData.categories?.length === 0
+        ),
+      path: "categories",
+      key: "categories",
+      label: t("playlist-drag-and-drop.columns.number-of-categories"),
     },
     {
       key: "edit",
@@ -61,10 +118,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
       key: "delete",
       content: (playlistData) => (
         <Button variant="danger" onClick={() => handleRemove(playlistData)}>
-          <FormattedMessage
-            id="remove_from_list"
-            defaultMessage="remove_from_list"
-          />
+          {t("playlist-drag-and-drop.remove-from-list")}
         </Button>
       ),
     },
@@ -85,6 +139,12 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
           data={data}
         />
       )}
+      <InfoModal
+        show={showInfoModal}
+        onClose={onCloseInfoModal}
+        dataStructureToDisplay={dataStructureToDisplay}
+        infoModalString={infoModalText}
+      />
     </>
   );
 }

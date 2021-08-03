@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 
@@ -13,7 +13,7 @@ import FormInput from "../util/forms/form-input";
  *   The edit category page.
  */
 function EditCategories() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const requiredFields = ["categoryName"];
   const [errors, setErrors] = useState([]);
   const [formStateObject, setFormStateObject] = useState({});
@@ -22,10 +22,6 @@ function EditCategories() {
   const [categoryName, setCategoryName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const newCategory = id === "new";
-  const categoryLabel = intl.formatMessage({ id: "edit_add_category_label" });
-  const categoryPlaceholder = intl.formatMessage({
-    id: "edit_add_category_label_placeholder",
-  });
 
   /**
    * Load content from fixture.
@@ -84,29 +80,18 @@ function EditCategories() {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        {newCategory && (
-          <h1>
-            <FormattedMessage
-              id="create_new_category"
-              defaultMessage="create_new_category"
-            />
-          </h1>
-        )}
+        {newCategory && <h1>{t("edit-category.create-new-category")}</h1>}
         {!newCategory && (
           <h1>
-            <FormattedMessage
-              id="edit_category"
-              defaultMessage="edit_category"
-            />
-            {categoryName}
+            {t("edit-category.edit-category")}: {categoryName}
           </h1>
         )}
         <FormInput
           name="categoryName"
           type="text"
-          label={categoryLabel}
+          label={t("edit-category.category-name-label")}
           required
-          placeholder={categoryPlaceholder}
+          placeholder={t("edit-category.category-name-placeholder")}
           value={formStateObject.categoryName}
           onChange={handleInput}
           errors={errors}
@@ -118,10 +103,10 @@ function EditCategories() {
           id="category_cancel"
           onClick={() => history.goBack()}
         >
-          <FormattedMessage id="cancel" defaultMessage="cancel" />
+          {t("edit-category.cancel-button")}
         </Button>
         <Button variant="primary" type="submit" id="save_category">
-          <FormattedMessage id="save_category" defaultMessage="save_category" />
+          {t("edit-category.save-button")}
         </Button>
       </Form>
     </Container>

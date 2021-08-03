@@ -1,6 +1,6 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import contentString from "../util/helpers/content-string";
@@ -33,21 +33,22 @@ function DeleteModal({
   if (!show) {
     return <></>;
   }
-  const intl = useIntl();
-  const confirmation =
-    deleteConfirmation || intl.formatMessage({ id: "are_you_sure_delete" });
-  const title = intl.formatMessage({ id: "delete_title" });
-  const and = intl.formatMessage({ id: "and_string" });
+  const { t } = useTranslation("common");
+  const confirmation = deleteConfirmation || t("delete-modal.confirmation");
 
   // Creates a string for modal
-  const valuesToDelete = `${confirmation}  ${contentString(
+  const valuesToDelete = `${confirmation}: ${contentString(
     selectedRows,
-    and
+    t("delete-modal.and-string")
   )}?`;
 
   return (
     <div id="delete-modal">
-      <ModalDialog title={title} onClose={onClose} handleAccept={handleAccept}>
+      <ModalDialog
+        title={t("delete-modal.title")}
+        onClose={onClose}
+        handleAccept={handleAccept}
+      >
         {valuesToDelete}
       </ModalDialog>
     </div>

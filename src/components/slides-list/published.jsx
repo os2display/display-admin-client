@@ -1,6 +1,6 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -11,11 +11,13 @@ import { useIntl } from "react-intl";
  * The published yes/no component.
  */
 function Published({ published }) {
-  const intl = useIntl();
-  const yes = intl.formatMessage({ id: "yes" });
-  const no = intl.formatMessage({ id: "no" });
+  const { t } = useTranslation("common");
 
-  return <div className="m-2">{published ? yes : no}</div>;
+  return (
+    <div className="m-2">
+      {published ? t("published.yes") : t("published.no")}
+    </div>
+  );
 }
 
 Published.propTypes = {

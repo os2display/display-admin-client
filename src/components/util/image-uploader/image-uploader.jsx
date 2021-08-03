@@ -5,7 +5,9 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "./image-uploader.scss";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
+import Image from "./image";
+import MediaModal from "../../media-modal/media-modal";
 
 /**
  * @param {object} props
@@ -33,11 +35,11 @@ function ImageUploader({
   errors,
   invalidText,
 }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [images, setImages] = useState([]);
   const [error, setError] = useState();
-  const invalidInputText =
-    invalidText || intl.formatMessage({ id: "input_error_text" });
+  const invalidInputText = invalidText || t("image-uploader.validation-text");
+  const [showMediaModal, setShowMediaModal] = useState(false);
 
   /**
    * Handle errors.
@@ -45,6 +47,40 @@ function ImageUploader({
   useEffect(() => {
     setError(errors && errors.includes(name));
   }, [errors]);
+
+  /**
+   * @param {object} image
+   * The image with change.
+   */
+  function handleChange(image) {
+    const localImages = [...images];
+    const imageIndex = localImages.findIndex((img) => img.url === image.url);
+    localImages[imageIndex] = image;
+    const uniqueImages = [
+      ...new Set(localImages.map((localImage) => localImage)),
+    ];
+    setImages(uniqueImages);
+    const target = { value: images, id: name };
+    handleImageUpload({ target });
+  }
+
+  /**
+   * Sets the selected row in state.
+   *
+   */
+  function onCloseMediaModal() {
+    setShowMediaModal(false);
+  }
+  /**
+   * Sets the selected row in state.
+   *
+   * @param {Array} selectedImages
+   * The selected images from the modal
+   */
+  function onAcceptMediaModal(selectedImages) {
+    setImages(selectedImages);
+    setShowMediaModal(false);
+  }
 
   /**
    * Load content from fixture.
@@ -56,7 +92,11 @@ function ImageUploader({
 
   const onChange = (imageList) => {
     // data for submit
-    setImages(imageList);
+    const uniqueImages = [
+      ...new Map(imageList.map((item) => [item.url, item])).values(),
+    ];
+
+    setImages(uniqueImages);
     const target = { value: imageList, id: name };
     handleImageUpload({ target });
   };
@@ -67,7 +107,7 @@ function ImageUploader({
         multiple
         value={images}
         onChange={onChange}
-        dataURLKey="data_url"
+        dataURLKey="url"
       >
         {({
           imageList,
@@ -89,18 +129,14 @@ function ImageUploader({
                   onDragLeave={dragProps.onDragLeave}
                   onDragOver={dragProps.onDragOver}
                 >
-                  {!multipleImages && (
-                    <FormattedMessage
-                      id="pick_an_image"
-                      defaultMessage="pick_an_image"
-                    />
-                  )}
-                  {multipleImages && (
-                    <FormattedMessage
-                      id="pick_more_images"
-                      defaultMessage="pick_more_images"
-                    />
-                  )}
+                  {!multipleImages && t("image-uploader.pick-image")}
+                  {multipleImages && t("image-uploader.pick-more-images")}
+                </Button>
+                <Button
+                  variant="success"
+                  onClick={() => setShowMediaModal(true)}
+                >
+                  {t("image-uploader.media-library")}
                 </Button>
 
                 <div
@@ -119,46 +155,20 @@ function ImageUploader({
                 </div>
 
                 <small id="aria-label-for-drag-and-drop" className="form-text">
-                  <FormattedMessage
-                    id="image_upload_help_text"
-                    defaultMessage="image_upload_help_text"
-                  />
+                  {t("image-uploader.help-text")}
                 </small>
               </>
             )}
             {imageList.map((image, index) => (
-              <div key={image.data_url} className="d-flex">
-                <img
-                  src={image.data_url}
-                  alt=""
-                  style={{ objectFit: "contain" }}
-                  width="100"
-                />
-                <div>
-                  <div className="m-2">
-                    <Button
-                      variant="success"
-                      onClick={() => onImageUpdate(index)}
-                    >
-                      <FormattedMessage
-                        id="replace_image"
-                        defaultMessage="replace_image"
-                      />
-                    </Button>
-                  </div>
-                  <div className="m-2">
-                    <Button
-                      variant="danger"
-                      onClick={() => onImageRemove(index)}
-                    >
-                      <FormattedMessage
-                        id="remove_image"
-                        defaultMessage="remove_image"
-                      />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <Image
+                inputImage={image}
+                handleChange={handleChange}
+                onImageUpdate={onImageUpdate}
+                onImageRemove={onImageRemove}
+                index={index}
+                key={image.url}
+                errors={errors}
+              />
             ))}
           </div>
         )}
@@ -168,6 +178,13 @@ function ImageUploader({
           {invalidInputText}
         </div>
       )}
+
+      <MediaModal
+        show={showMediaModal}
+        onClose={onCloseMediaModal}
+        handleAccept={onAcceptMediaModal}
+        multiple={multipleImages}
+      />
     </div>
   );
 }
@@ -180,9 +197,7 @@ ImageUploader.defaultProps = {
 };
 
 ImageUploader.propTypes = {
-  inputImage: PropTypes.arrayOf(
-    PropTypes.shape({ data_url: PropTypes.string })
-  ),
+  inputImage: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
   handleImageUpload: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   multipleImages: PropTypes.bool,

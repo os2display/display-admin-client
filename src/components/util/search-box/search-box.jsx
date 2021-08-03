@@ -1,11 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FormattedMessage } from "react-intl";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import "./search-box.scss";
 
 /**
@@ -21,12 +21,11 @@ import "./search-box.scss";
  * The search box.
  */
 function SearchBox({ value, onChange, showLabel }) {
+  const { t } = useTranslation("common");
   return (
     <Form>
       {showLabel && (
-        <Form.Label htmlFor="search-field">
-          <FormattedMessage id="search" defaultMessage="search" />
-        </Form.Label>
+        <Form.Label htmlFor="search-field">{t("search-box.label")}</Form.Label>
       )}
       <InputGroup className="mb-3">
         <InputGroup.Prepend>
@@ -34,19 +33,15 @@ function SearchBox({ value, onChange, showLabel }) {
             <FontAwesomeIcon className="search-icon" icon={faSearch} />
           </InputGroup.Text>
         </InputGroup.Prepend>
-        <FormattedMessage id="search" defaultMessage="search">
-          {(placeholder) => (
-            <FormControl
-              placeholder={placeholder}
-              id="search-field"
-              role="search"
-              name="search"
-              value={value}
-              className="form-control"
-              onChange={(e) => onChange(e.currentTarget.value)}
-            />
-          )}
-        </FormattedMessage>
+        <FormControl
+          placeholder={t("search-box.placeholder")}
+          id="search-field"
+          role="search"
+          name="search"
+          value={value}
+          className="form-control"
+          onChange={(e) => onChange(e.currentTarget.value)}
+        />
       </InputGroup>
     </Form>
   );

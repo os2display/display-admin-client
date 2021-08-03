@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
+
 /**
  * @param {object} props
  * the props.
@@ -17,12 +18,9 @@ import MultiSelectComponent from "../multi-dropdown";
  * The multidropdown of playlists.
  */
 function SlidesDropdown({ handleSlideSelection, selected, name, errors }) {
+  const { t } = useTranslation("common");
   const [options, setOptions] = useState();
-  const intl = useIntl();
   const [isLoading, setIsLoading] = useState(true);
-  const slidesLabel = intl.formatMessage({
-    id: "slides_dropdown_label",
-  });
 
   /**
    * Load content from fixture.
@@ -44,7 +42,8 @@ function SlidesDropdown({ handleSlideSelection, selected, name, errors }) {
           isLoading={isLoading}
           handleSelection={handleSlideSelection}
           options={options}
-          label={slidesLabel}
+          label={t("slides-dropdown.label")}
+          noSelectedString={t("slides-dropdown.nothing-selected")}
           selected={selected}
           name={name}
           errors={errors}

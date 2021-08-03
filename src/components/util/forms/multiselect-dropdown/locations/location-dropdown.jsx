@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
 
 /**
@@ -18,15 +18,10 @@ import MultiSelectComponent from "../multi-dropdown";
  * The multidropdown of locations.
  */
 function LocationDropdown({ handleLocationSelection, selected, name, errors }) {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const noSelectedLocations = intl.formatMessage({
-    id: "locations_dropdown_no_selected",
-  });
-  const locationsLabel = intl.formatMessage({
-    id: "locations_dropdown_label",
-  });
+
   /**
    * Load content from fixture.
    */
@@ -48,11 +43,11 @@ function LocationDropdown({ handleLocationSelection, selected, name, errors }) {
             handleSelection={handleLocationSelection}
             options={options}
             selected={selected}
-            label={locationsLabel}
+            label={t("locations-dropdown.label")}
+            noSelectedString={t("locations-dropdown.nothing-selected")}
             name={name}
             errors={errors}
             isLoading={isLoading}
-            noSelectedString={noSelectedLocations}
           />
         </>
       )}

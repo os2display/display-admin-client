@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
 
 /**
@@ -18,12 +18,9 @@ import MultiSelectComponent from "../multi-dropdown";
  * The multidropdown of playlists.
  */
 function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
+  const { t } = useTranslation("common");
   const [options, setOptions] = useState();
-  const intl = useIntl();
   const [isLoading, setIsLoading] = useState(true);
-  const screensLabel = intl.formatMessage({
-    id: "screens_dropdown_label",
-  });
 
   /**
    * Load content from fixture.
@@ -45,7 +42,8 @@ function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
           isLoading={isLoading}
           handleSelection={handleScreenSelection}
           options={options}
-          label={screensLabel}
+          label={t("screens-dropdown.label")}
+          noSelectedString={t("screens-dropdown.nothing-selected")}
           selected={selected}
           isCreatable
           name={name}

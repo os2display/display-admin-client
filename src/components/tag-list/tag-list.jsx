@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -14,7 +14,7 @@ import DeleteModal from "../delete-modal/delete-modal";
  * The TagList
  */
 function TagList() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [tags, setTags] = useState([]);
@@ -60,7 +60,7 @@ function TagList() {
   const columns = [
     {
       key: "pick",
-      label: intl.formatMessage({ id: "table_header_pick" }),
+      label: t("tag-list.columns.pick"),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -68,21 +68,27 @@ function TagList() {
     {
       path: "name",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_name" }),
+      label: t("tag-list.columns.name"),
     },
     {
       path: "createdBy",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_created_by" }),
+      label: t("tag-list.columns.created-by"),
     },
     {
       path: "slides",
       sort: true,
-      label: intl.formatMessage({ id: "table_header_number_of_slides" }),
+      label: t("tag-list.columns.number-of-slides"),
     },
     {
       key: "edit",
-      content: (data) => <LinkForList data={data} param="tag" />,
+      content: (data) => (
+        <LinkForList
+          data={data}
+          label={t("tag-list.edit-button")}
+          param="tag"
+        />
+      ),
     },
     {
       key: "delete",
@@ -94,7 +100,7 @@ function TagList() {
               disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
-              <FormattedMessage id="delete" defaultMessage="delete" />
+              {t("tag-list.delete-button")}
             </Button>
           </div>
         </>
@@ -131,19 +137,11 @@ function TagList() {
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>
-            <FormattedMessage
-              id="tags_list_header"
-              defaultMessage="tags_list_header"
-            />
-          </h1>
+          <h1>{t("tag-list.header")}</h1>
         </Col>
         <Col md="auto">
           <Link className="btn btn-primary btn-success" to="/tag/new">
-            <FormattedMessage
-              id="create_new_tag"
-              defaultMessage="create_new_tag"
-            />
+            {t("tag-list.create-new-tag")}
           </Link>
         </Col>
       </Row>

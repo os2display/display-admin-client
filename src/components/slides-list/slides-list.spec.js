@@ -18,25 +18,8 @@ describe("Slides list tests", () => {
     cy.get("#delete-modal").should("exist");
   });
 
-  it("The column headers are correct (slides list)", () => {
+  it("The correct amount of column headers loaded (slides list)", () => {
     cy.visit("/slides");
-    cy.get("thead").find("th").eq(0).invoke("text").should("match", /^Valg/);
-    cy.get("thead").find("th").eq(1).invoke("text").should("match", /^Navn/);
-    cy.get("thead")
-      .find("th")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Skabelon/);
-    cy.get("thead")
-      .find("th")
-      .eq(3)
-      .invoke("text")
-      .should("match", /^# spillelister/);
-    cy.get("thead").find("th").eq(4).invoke("text").should("match", /^Tags/);
-    cy.get("thead")
-      .find("th")
-      .eq(5)
-      .invoke("text")
-      .should("match", /^Udgivet/);
+    cy.get("thead").find("th").should("have.length", 8);
   });
 });

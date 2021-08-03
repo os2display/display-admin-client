@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {object} props
@@ -34,12 +34,8 @@ function Select({
   errorText,
   helpText,
 }) {
-  const intl = useIntl();
-  const nothingSelected = intl.formatMessage({
-    id: "dropdown_nothing_selected",
-  });
-  const textOnError =
-    errorText || intl.formatMessage({ id: "input_error_text" });
+  const { t } = useTranslation("common");
+  const textOnError = errorText || t("select.validation-text");
   const [error, setError] = useState();
   const [classes, setClasses] = useState("form-control");
   const required = !!errors;
@@ -68,7 +64,7 @@ function Select({
         onChange={onChange}
       >
         <option disabled value="">
-          {nothingSelected}
+          {t("select.nothing-selected")}
         </option>
         {options.map((option) => (
           <option value={option.id} key={option.id}>

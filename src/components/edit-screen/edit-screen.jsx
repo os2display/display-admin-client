@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
 import FormInput from "../util/forms/form-input";
 import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
 import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
@@ -11,6 +11,7 @@ import FormInputArea from "../util/forms/form-input-area";
 import RadioButtons from "../util/forms/radio-buttons";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import getFormErrors from "../util/helpers/form-errors-helper";
+
 /**
  * The edit screen component.
  *
@@ -18,7 +19,7 @@ import getFormErrors from "../util/helpers/form-errors-helper";
  *   The edit screen page.
  */
 function EditScreen() {
-  const intl = useIntl();
+  const { t } = useTranslation("common");
   const history = useHistory();
   const requiredFields = [
     "screenName",
@@ -29,15 +30,11 @@ function EditScreen() {
   const radioButtonOptions = [
     {
       id: "horizontal",
-      label: intl.formatMessage({
-        id: "horizontal_layout",
-      }),
+      label: t("edit-screen.radio-button-horizontal"),
     },
     {
       id: "vertical",
-      label: intl.formatMessage({
-        id: "vertical_layout",
-      }),
+      label: t("edit-screen.radio-button-vertical"),
     },
   ];
   const [formStateObject, setFormStateObject] = useState({
@@ -126,43 +123,27 @@ function EditScreen() {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        {newScreen && (
-          <h1>
-            <FormattedMessage
-              id="create_new_screen"
-              defaultMessage="create_new_screen"
-            />
-          </h1>
-        )}
+        {newScreen && <h1>{t("edit-screen.create-new-screen")}</h1>}
         {!newScreen && (
           <h1>
-            <FormattedMessage id="edit_screen" defaultMessage="edit_screen" />
-            {screenName}
+            {t("edit-screen.edit-screen")}: {screenName}
           </h1>
         )}
         <FormInput
           errors={errors}
           name="screenName"
           type="text"
-          label={intl.formatMessage({ id: "edit_add_screen_label_name" })}
-          invalidText={intl.formatMessage({
-            id: "edit_add_screen_label_name_invalid",
-          })}
-          placeholder={intl.formatMessage({
-            id: "edit_add_screen_placeholder_name",
-          })}
+          label={t("edit-screen.screen-name-label")}
+          invalidText={t("edit-screen.screen-name-validation")}
+          placeholder={t("edit-screen.screen-name-placeholder")}
           value={formStateObject.screenName}
           onChange={handleInput}
         />
         <FormInputArea
           name="description"
           type="text"
-          label={intl.formatMessage({
-            id: "edit_add_screen_label_description",
-          })}
-          placeholder={intl.formatMessage({
-            id: "edit_add_screen_placeholder_description",
-          })}
+          label={t("edit-screen.screen-description-label")}
+          placeholder={t("edit-screen.screen-description-placeholder")}
           value={formStateObject.description}
           onChange={handleInput}
         />
@@ -182,9 +163,7 @@ function EditScreen() {
           <Select
             name="screenLayout"
             onChange={handleInput}
-            label={intl.formatMessage({
-              id: "edit_add_screen_label_screenLayout",
-            })}
+            label={t("edit-screen.screen-layout-label")}
             errors={errors}
             options={layoutOptions}
             value={formStateObject.screenLayout}
@@ -193,25 +172,19 @@ function EditScreen() {
         <FormInput
           name="descriptionOfLocation"
           type="text"
-          label={intl.formatMessage({
-            id: "edit_add_screen_label_description_of_location",
-          })}
           required
-          placeholder={intl.formatMessage({
-            id: "edit_add_screen_placeholder_description_of_location",
-          })}
+          label={t("edit-screen.screen-description-of-location-label")}
+          placeholder={t(
+            "edit-screen.screen-description-of-location-placeholder"
+          )}
           value={formStateObject.descriptionOfLocation}
           onChange={handleInput}
         />
         <FormInput
           name="sizeOfScreen"
           type="text"
-          label={intl.formatMessage({
-            id: "edit_add_screen_label_size_of_screen",
-          })}
-          placeholder={intl.formatMessage({
-            id: "edit_add_screen_placeholder_size_of_screen",
-          })}
+          label={t("edit-screen.screen-size-of-screen-label")}
+          placeholder={t("edit-screen.screen-size-of-screen-placeholder")}
           value={formStateObject.sizeOfScreen}
           onChange={handleInput}
         />
@@ -220,23 +193,15 @@ function EditScreen() {
           radioGroupName="horizontalOrVertical"
           selected={formStateObject.horizontalOrVertical}
           handleChange={handleInput}
-          label={intl.formatMessage({
-            id: "edit_add_screen_horizontalOrVertical_label",
-          })}
+          label={t("edit-screen.radio-buttons-horizontal-or-vertical-label")}
         />
         <FormInput
           name="resolutionOfScreen"
           type="text"
-          label={intl.formatMessage({
-            id: "edit_add_screen_label_resolution_of_screen",
-          })}
-          placeholder={intl.formatMessage({
-            id: "edit_add_screen_placeholder_resolution_of_screen",
-          })}
+          label={t("edit-screen.screen-resolution-of-screen-label")}
+          placeholder={t("edit-screen.screen-resolution-of-screen-placeholder")}
           value={formStateObject.resolutionOfScreen}
-          helpText={intl.formatMessage({
-            id: "edit_add_screen_helptext_resolution_of_screen",
-          })}
+          helpText={t("edit-screen.screen-resolution-of-screen-helptext")}
           pattern="(\d+)x(\d+)"
           onChange={handleInput}
         />
@@ -253,10 +218,10 @@ function EditScreen() {
           id="screen_cancel"
           onClick={() => history.goBack()}
         >
-          <FormattedMessage id="cancel" defaultMessage="cancel" />
+          {t("edit-screen.cancel-button")}
         </Button>
         <Button variant="primary" type="submit" id="save_screen">
-          <FormattedMessage id="save_screen" defaultMessage="save_screen" />
+          {t("edit-screen.save-button")}
         </Button>
       </Form>
     </Container>

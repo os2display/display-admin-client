@@ -14,10 +14,19 @@ import MultiSelectComponent from "../multi-dropdown";
  * A list of errors, or null.
  * @param {string} props.label
  * The label of the dropdown.
+ * @param {string} props.helpText
+ * The help text.
  * @returns {object}
  * The multidropdown of playlists.
  */
-function TagDropdown({ handleTagSelection, selected, name, errors, label }) {
+function TagDropdown({
+  handleTagSelection,
+  selected,
+  name,
+  errors,
+  label,
+  helpText,
+}) {
   const [options, setOptions] = useState();
   /**
    * Load content from fixture.
@@ -42,6 +51,7 @@ function TagDropdown({ handleTagSelection, selected, name, errors, label }) {
           name={name}
           label={label}
           errors={errors}
+          helpText={helpText}
         />
       )}
     </>
@@ -50,6 +60,7 @@ function TagDropdown({ handleTagSelection, selected, name, errors, label }) {
 
 TagDropdown.defaultProps = {
   errors: null,
+  helpText: null,
 };
 
 TagDropdown.propTypes = {
@@ -64,6 +75,7 @@ TagDropdown.propTypes = {
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   label: PropTypes.string.isRequired,
+  helpText: PropTypes.string,
 };
 
 export default TagDropdown;
