@@ -90,8 +90,12 @@ function EditTheme() {
     return returnValue;
   }
 
+  /**
+   * @param {string} selectedColor
+   * A string or null, the selected color to open color picker for.
+   */
   function openColorPicker(selectedColor) {
-    let newColorPickerValue =
+    const newColorPickerValue =
       typeof showColorPicker === "string" ? null : selectedColor;
     setShowColorPicker(newColorPickerValue);
   }
@@ -118,28 +122,28 @@ function EditTheme() {
           <ColorPreview
             name="primaryColor"
             color={formStateObject.primaryColor}
-            clickedButton={openColorPicker}
+            openColorPicker={openColorPicker}
             label={t("edit-theme.pick-primary-color")}
-          ></ColorPreview>
+          />
           <ColorPreview
             name="secondaryColor"
             color={formStateObject.secondaryColor}
-            clickedButton={openColorPicker}
+            openColorPicker={openColorPicker}
             label={t("edit-theme.pick-secondary-color")}
-          ></ColorPreview>
+          />
           <ColorPreview
             name="tertiaryColor"
             color={formStateObject.tertiaryColor}
-            clickedButton={openColorPicker}
+            openColorPicker={openColorPicker}
             label={t("edit-theme.pick-tertiary-color")}
-          ></ColorPreview>
+          />
           <ColorPicker
             handleChange={handleInput}
             name="themeName"
             show={showColorPicker}
             color={formStateObject[showColorPicker]}
             closeColorPicker={() => setShowColorPicker(false)}
-          ></ColorPicker>
+          />
           <ImageUploader
             handleImageUpload={handleInput}
             inputImage={formStateObject.images}

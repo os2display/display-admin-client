@@ -44,8 +44,15 @@ function ColorPreviewForList({ data }) {
 }
 
 ColorPreviewForList.propTypes = {
-  data: PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
-    .isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.number,
+    colors: PropTypes.shape({
+      primary: PropTypes.string,
+      secondary: PropTypes.string,
+      tertiary: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default ColorPreviewForList;

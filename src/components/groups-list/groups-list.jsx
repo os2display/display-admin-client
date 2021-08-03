@@ -143,7 +143,7 @@ function GroupsList() {
       </Row>
       {groups.groups && (
         <List
-          showMerge={true}
+          showMerge
           columns={columns}
           selectedRows={selectedRows}
           data={groups.groups}

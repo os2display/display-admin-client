@@ -177,7 +177,7 @@ function CategoryList() {
       </Row>
       {categories && (
         <List
-          showMerge={true}
+          showMerge
           columns={columns}
           selectedRows={selectedRows}
           data={categories}

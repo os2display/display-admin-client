@@ -147,7 +147,7 @@ function TagList() {
       </Row>
       {tags.tags && (
         <List
-          showMerge={true}
+          showMerge
           columns={columns}
           selectedRows={selectedRows}
           data={tags.tags}
