@@ -118,6 +118,27 @@ function SlidesList() {
     },
     {
       key: "edit",
+      content: () => (
+        <>
+          {/* @todo make quick edit modal */}
+          <div className="m-2">
+            <Button variant="primary">Quick edit</Button>
+          </div>
+        </>
+      ),
+    },
+    {
+      key: "preview",
+      content: (data) => (
+        <div className="m-2">
+          <Button variant="secondary">
+            {t("slides-list.columns.preview")}
+          </Button>
+        </div>
+      ),
+    },
+    {
+      key: "edit",
       content: (data) => (
         <LinkForList
           data={data}
@@ -129,17 +150,15 @@ function SlidesList() {
     {
       key: "delete",
       content: (data) => (
-        <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              disabled={selectedRows.length > 0}
-              onClick={() => openDeleteModal(data)}
-            >
-              {t("slides-list.delete-button")}
-            </Button>
-          </div>
-        </>
+        <div className="m-2">
+          <Button
+            variant="danger"
+            disabled={selectedRows.length > 0}
+            onClick={() => openDeleteModal(data)}
+          >
+            {t("slides-list.delete-button")}
+          </Button>
+        </div>
       ),
     },
   ];

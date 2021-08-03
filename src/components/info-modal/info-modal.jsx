@@ -2,7 +2,6 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
-import contentString from "../util/helpers/content-string";
 
 /**
  * Info modal component, that displays an info string.

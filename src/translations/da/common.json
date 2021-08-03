@@ -39,7 +39,8 @@
       "template": "Skabelon",
       "number-of-playlists": "Spillelister med kategorien",
       "tags": "Tags",
-      "published": "Udgivet"
+      "published": "Udgivet",
+      "preview": "Preview"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
