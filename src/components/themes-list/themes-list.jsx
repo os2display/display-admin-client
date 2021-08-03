@@ -11,12 +11,12 @@ import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
 
 /**
- * The category list component.
+ * The themes list component.
  *
  * @returns {object}
- * The CategoryList
+ * The themes list
  */
-function CategoryList() {
+function ThemesList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
@@ -176,12 +176,7 @@ function CategoryList() {
         </Col>
       </Row>
       {categories && (
-        <List
-          showMerge={true}
-          columns={columns}
-          selectedRows={selectedRows}
-          data={categories}
-        />
+        <List columns={columns} selectedRows={selectedRows} data={categories} />
       )}
       <DeleteModal
         show={showDeleteModal}
@@ -199,4 +194,4 @@ function CategoryList() {
   );
 }
 
-export default CategoryList;
+export default ThemesList;
