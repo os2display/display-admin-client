@@ -25,7 +25,7 @@ import MergeModal from "../../merge-modal/merge-modal";
  * @returns {object}
  * The List.
  */
-function List({ data, columns, selectedRows, showMerge }) {
+function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
   const { t } = useTranslation("common");
   const { search } = useLocation();
   const history = useHistory();
@@ -49,7 +49,7 @@ function List({ data, columns, selectedRows, showMerge }) {
     parseInt(pageParams, 10) ? parseInt(pageParams, 10) : 1
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showMergeModal, setMergeMergeModal] = useState(false);
+  const [showMergeModal, setViewMergeModal] = useState(false);
 
   /**
    * @param {string} newSearchText
@@ -100,7 +100,7 @@ function List({ data, columns, selectedRows, showMerge }) {
    * Closes merge modal.
    */
   function onCloseMergeModal() {
-    setMergeMergeModal(false);
+    setViewMergeModal(false);
   }
 
   /**
@@ -195,7 +195,7 @@ function List({ data, columns, selectedRows, showMerge }) {
   function handleMerge(mergeName) {
     // @TODO merge elements and remove console.log
     console.log(mergeName); // eslint-disable-line
-    setMergeMergeModal(false);
+    setViewMergeModal(false);
   }
 
   return (
@@ -221,13 +221,24 @@ function List({ data, columns, selectedRows, showMerge }) {
                 className="ml-2"
                 id="merge-button"
                 disabled={disableMergeButton}
-                onClick={() => setMergeMergeModal(true)}
+                onClick={() => setViewMergeModal(true)}
                 variant="success"
               >
                 {t("list.merge-button")}
               </Button>
             </div>
           )}
+          <div className="ml-4">
+            <Button
+              className="ml-2"
+              id="clear-rows-button"
+              disabled={selectedRows.length === 0}
+              onClick={() => clearSelectedRows()}
+              variant="success"
+            >
+              {t("list.deselect-all")}
+            </Button>
+          </div>
         </Col>
       </Row>
       <Table

@@ -88,7 +88,10 @@ function LocationsList() {
       key: "pick",
       label: t("locations-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -188,6 +191,13 @@ function LocationsList() {
     setDataStructureToDisplay();
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -201,7 +211,12 @@ function LocationsList() {
         </Col>
       </Row>
       {locations && (
-        <List columns={columns} selectedRows={selectedRows} data={locations} />
+        <List
+          columns={columns}
+          selectedRows={selectedRows}
+          data={locations}
+          clearSelectedRows={clearSelectedRows}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}

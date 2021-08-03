@@ -76,7 +76,10 @@ function SlidesList() {
       key: "pick",
       label: t("slides-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -174,6 +177,13 @@ function SlidesList() {
     setOnPlaylists();
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -185,7 +195,12 @@ function SlidesList() {
         </Col>
       </Row>
       {slides && (
-        <List columns={columns} selectedRows={selectedRows} data={slides} />
+        <List
+          columns={columns}
+          selectedRows={selectedRows}
+          data={slides}
+          clearSelectedRows={clearSelectedRows}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}

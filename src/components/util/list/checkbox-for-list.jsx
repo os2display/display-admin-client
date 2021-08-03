@@ -13,24 +13,32 @@ import { useTranslation } from "react-i18next";
  * @returns {object}
  * A checkbox for the list.
  */
-function CheckboxForList({ onSelected }) {
+function CheckboxForList({ selected, onSelected }) {
   const { t } = useTranslation("common");
-
+  console.log(selected);
   return (
-    <Form>
-      <Form.Group controlId="formBasicCheckbox">
-        <Form.Check
-          onChange={onSelected}
-          type="checkbox"
-          aria-label={t("checkbox-for-list.checkbox-form-aria-label")}
-        />
-      </Form.Group>
-    </Form>
+    <div onClick={onSelected} style={{ minHeight: "50px" }}>
+      <Form>
+        <Form.Group controlId="formBasicCheckbox">
+          <Form.Check
+            checked={selected}
+            type="checkbox"
+            readOnly
+            aria-label={t("checkbox-for-list.checkbox-form-aria-label")}
+          />
+        </Form.Group>
+      </Form>
+    </div>
   );
 }
 
+CheckboxForList.defaultProps = {
+  selected: false,
+};
+
 CheckboxForList.propTypes = {
   onSelected: PropTypes.func.isRequired,
+  selected: PropTypes.bool,
 };
 
 export default CheckboxForList;

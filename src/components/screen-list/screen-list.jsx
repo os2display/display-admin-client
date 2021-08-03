@@ -64,7 +64,10 @@ function ScreenList() {
       key: "pick",
       label: t("screens-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -140,6 +143,13 @@ function ScreenList() {
     setShowDeleteModal(false);
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -157,6 +167,7 @@ function ScreenList() {
           columns={columns}
           selectedRows={selectedRows}
           data={screens.screens}
+          clearSelectedRows={clearSelectedRows}
         />
       )}
       <DeleteModal

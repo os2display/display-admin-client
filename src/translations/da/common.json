@@ -331,7 +331,8 @@
   },
   "list": {
     "delete-button": "Slet",
-    "merge-button": "Konsolider"
+    "merge-button": "Konsolider",
+    "deselect-all": "Fravælg alle"
   },
   "image": {
     "remove-image": "Slet",

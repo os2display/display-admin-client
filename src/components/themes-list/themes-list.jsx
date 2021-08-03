@@ -65,7 +65,10 @@ function ThemesList() {
       key: "pick",
       label: t("themes-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -89,6 +92,7 @@ function ThemesList() {
     },
     {
       content: (data) => <ImageForList data={data} />,
+      key: "logo",
       label: t("themes-list.columns.logo"),
     },
     {
@@ -144,6 +148,13 @@ function ThemesList() {
     setShowDeleteModal(false);
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -157,7 +168,12 @@ function ThemesList() {
         </Col>
       </Row>
       {themes && (
-        <List columns={columns} selectedRows={selectedRows} data={themes} />
+        <List
+          columns={columns}
+          selectedRows={selectedRows}
+          data={themes}
+          clearSelectedRows={clearSelectedRows}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}
