@@ -12,7 +12,7 @@ import "./color-previewer.scss";
  * @returns {object}
  * A link for the list.
  */
-function ColorPreviewer({ data }) {
+function ColorPreviewForList({ data }) {
   return (
     <div className="d-flex flex-column">
       {data.colors.primary && (
@@ -43,9 +43,9 @@ function ColorPreviewer({ data }) {
   );
 }
 
-ColorPreviewer.propTypes = {
+ColorPreviewForList.propTypes = {
   data: PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
     .isRequired,
 };
 
-export default ColorPreviewer;
+export default ColorPreviewForList;

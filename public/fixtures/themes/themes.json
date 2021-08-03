@@ -27,7 +27,12 @@
     },
     {
       "name": "system-worthy",
-      "logo": "/fixtures/media/logo.png",
+      "logo": {
+        "id": 6,
+        "url": "/fixtures/media/logo.png",
+        "mediaName": "Logo",
+        "mediaDescription": "OS2 logo"
+      },
       "createdBy": "Alvina",
       "id": 3,
       "font": {

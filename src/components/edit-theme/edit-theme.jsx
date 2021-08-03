@@ -5,7 +5,10 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
-
+import ColorPicker from "../util/color-picker/color-picker";
+import ColorPreview from "../util/color-picker/color-preview";
+import ImageUploader from "../util/image-uploader/image-uploader";
+import "./edit-theme.scss";
 /**
  * The edit theme component.
  *
@@ -14,14 +17,20 @@ import FormInput from "../util/forms/form-input";
  */
 function EditTheme() {
   const { t } = useTranslation("common");
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState({
+    primaryColor: "",
+    secondaryColor: "",
+    tertiaryColor: "",
+    logo: "",
+  });
+  const [showColorPicker, setShowColorPicker] = useState(null);
   const history = useHistory();
   const { id } = useParams();
   const [themeName, setThemeName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const newTheme = id === "new";
   const [errors, setErrors] = useState([]);
-  const requiredFields = ["themeName"];
+  const requiredFields = ["mediaName", "mediaDescription", "themeName"];
 
   /**
    * Load content from fixture.
@@ -29,11 +38,15 @@ function EditTheme() {
   useEffect(() => {
     // @TODO load real content.
     if (!newTheme) {
-      fetch(`/fixtures/themes/theme.json`)
+      fetch("/fixtures/themes/theme.json")
         .then((response) => response.json())
         .then((jsonData) => {
           setFormStateObject({
             themeName: jsonData.theme.name,
+            primaryColor: jsonData.theme.colors.primary,
+            secondaryColor: jsonData.theme.colors.secondary,
+            tertiaryColor: jsonData.theme.colors.tertiary,
+            images: [jsonData.theme.logo],
           });
           setThemeName(jsonData.theme.name);
         });
@@ -77,6 +90,12 @@ function EditTheme() {
     return returnValue;
   }
 
+  function openColorPicker(selectedColor) {
+    let newColorPickerValue =
+      typeof showColorPicker === "string" ? null : selectedColor;
+    setShowColorPicker(newColorPickerValue);
+  }
+
   return (
     <>
       <Container>
@@ -96,18 +115,51 @@ function EditTheme() {
             value={formStateObject.themeName}
             onChange={handleInput}
           />
+          <ColorPreview
+            name="primaryColor"
+            color={formStateObject.primaryColor}
+            clickedButton={openColorPicker}
+            label={t("edit-theme.pick-primary-color")}
+          ></ColorPreview>
+          <ColorPreview
+            name="secondaryColor"
+            color={formStateObject.secondaryColor}
+            clickedButton={openColorPicker}
+            label={t("edit-theme.pick-secondary-color")}
+          ></ColorPreview>
+          <ColorPreview
+            name="tertiaryColor"
+            color={formStateObject.tertiaryColor}
+            clickedButton={openColorPicker}
+            label={t("edit-theme.pick-tertiary-color")}
+          ></ColorPreview>
+          <ColorPicker
+            handleChange={handleInput}
+            name="themeName"
+            show={showColorPicker}
+            color={formStateObject[showColorPicker]}
+            closeColorPicker={() => setShowColorPicker(false)}
+          ></ColorPicker>
+          <ImageUploader
+            handleImageUpload={handleInput}
+            inputImage={formStateObject.images}
+            name="logo"
+            errors={errors}
+          />
           {submitted && <Redirect to="/themes" />}
-          <Button
-            variant="secondary"
-            type="button"
-            id="theme_cancel"
-            onClick={() => history.goBack()}
-          >
-            {t("edit-theme.cancel-button")}
-          </Button>
-          <Button variant="primary" type="submit" id="save_theme">
-            {t("edit-theme.save-button")}
-          </Button>
+          <div>
+            <Button
+              variant="secondary"
+              type="button"
+              id="theme_cancel"
+              onClick={() => history.goBack()}
+            >
+              {t("edit-theme.cancel-button")}
+            </Button>
+            <Button variant="primary" type="submit" id="save_theme">
+              {t("edit-theme.save-button")}
+            </Button>
+          </div>
         </Form>
       </Container>
     </>

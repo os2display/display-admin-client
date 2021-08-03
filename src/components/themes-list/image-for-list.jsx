@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
  * A link for the list.
  */
 function ImageForList({ data }) {
-  return <img src={data.logo} width="70" />;
+  return <img src={data.logo?.url} width="70" />;
 }
 
 ImageForList.propTypes = {

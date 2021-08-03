@@ -1,14 +1,21 @@
 {
   "theme": {
-    "name": "test",
-    "createdBy": "Daniela",
-    "id": 2,
+    "name": "system-worthy",
+    "logo": {
+      "id": 6,
+      "url": "/fixtures/media/logo.png",
+      "mediaName": "Logo",
+      "mediaDescription": "OS2 logo"
+    },
+    "createdBy": "Alvina",
+    "id": 3,
     "font": {
-      "name": "Arial"
+      "name": "Comic sans"
     },
     "colors": {
-      "primary": "#9BCD9B",
-      "secondary": "#FF249D"
+      "primary": "#2110FB",
+      "secondary": "#9BCD9B",
+      "tertiary": "#C7FF00"
     }
   }
 }
