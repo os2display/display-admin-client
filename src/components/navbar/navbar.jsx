@@ -17,94 +17,44 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title={t("navbar.content")} id="navbar_content">
-              <NavDropdown.Item>
-                <Link
-                  className="navbar-brand"
-                  id="navbar_content_tags"
-                  style={{ color: "black" }}
-                  to="/tags"
-                >
-                  {t("navbar.content-tags")}
-                </Link>
+              <NavDropdown.Item href="/tags" id="navbar_content_tags">
+                {t("navbar.content-tags")}
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link
-                  className="navbar-brand"
-                  id="navbar_content_media"
-                  style={{ color: "black" }}
-                  to="/media-list"
-                >
-                  {t("navbar.content-media")}
-                </Link>
-              </NavDropdown.Item>
-            </NavDropdown>
-
-            <Nav.Item>
-              <Link
-                className="navbar-brand"
-                id="navbar_slides"
-                style={{ color: "black" }}
-                to="/slides"
-              >
-                {t("navbar.slides")}
-              </Link>
-            </Nav.Item>
-            <NavDropdown title={t("navbar.screens")} id="navbar_screens">
-              <NavDropdown.Item>
-                <Link
-                  className="navbar-brand"
-                  id="navbar_screens_screens"
-                  style={{ color: "black" }}
-                  to="/screens"
-                >
-                  {t("navbar.screens-screens")}
-                </Link>
+              <NavDropdown.Item href="/media-list" id="navbar_content_media">
+                {t("navbar.content-media")}
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link
-                  className="navbar-brand"
-                  id="navbar_screens_groups"
-                  style={{ color: "black" }}
-                  to="/groups"
-                >
-                  {t("navbar.screens-groups")}
-                </Link>
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link
-                  className="navbar-brand"
-                  id="navbar_screens_locations"
-                  style={{ color: "black" }}
-                  to="/locations"
-                >
-                  {t("navbar.screens-locations")}
-                </Link>
+              <NavDropdown.Item href="/slides" id="navbar_content_slides">
+                {t("navbar.content-slides")}
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title={t("navbar.playlists")} id="navbar_playlists">
-              <NavDropdown.Item>
-                <Link
-                  className="navbar-brand"
-                  id="navbar_playlists_playlists"
-                  style={{ color: "black" }}
-                  to="/playlists"
-                >
-                  {t("navbar.playlists-playlists")}
-                </Link>
+              <NavDropdown.Item
+                href="/playlists"
+                id="navbar_playlists_playlists"
+              >
+                {t("navbar.playlists-playlists")}
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link
-                  className="navbar-brand"
-                  id="navbar_playlists_categories"
-                  style={{ color: "black" }}
-                  to="/categories"
-                >
-                  {t("navbar.playlists-categories")}
-                </Link>
+              <NavDropdown.Item
+                href="/categories"
+                id="navbar_playlists_categories"
+              >
+                {t("navbar.playlists-categories")}
+              </NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title={t("navbar.screens")} id="navbar_screens">
+              <NavDropdown.Item href="/screens" id="navbar_screens_screens">
+                {t("navbar.screens-screens")}
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="/groups" id="navbar_screens_groups">
+                {t("navbar.screens-groups")}
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="/locations" id="navbar_screens_locations">
+                {t("navbar.screens-locations")}
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
