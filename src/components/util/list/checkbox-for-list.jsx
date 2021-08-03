@@ -18,7 +18,15 @@ import { useTranslation } from "react-i18next";
 function CheckboxForList({ selected, onSelected }) {
   const { t } = useTranslation("common");
   return (
-    <button onClick={onSelected} type="button" style={{ minHeight: "50px" }}>
+    <button
+      onClick={onSelected}
+      type="button"
+      style={{
+        minHeight: "50px",
+        border: "none",
+        backgroundColor: "transparent",
+      }}
+    >
       <Form>
         <Form.Group controlId="formBasicCheckbox">
           <Form.Check
