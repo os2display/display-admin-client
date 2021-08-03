@@ -27,12 +27,6 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
   }
   const { t } = useTranslation("common");
 
-  // Creates a string for modal
-  const valuesToDelete = `${contentString(
-    selectedRows,
-    t("delete-modal.and-string")
-  )}`;
-
   return (
     <div id="delete-modal">
       <ModalDialog
@@ -40,7 +34,11 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
         onClose={onClose}
         handleAccept={handleAccept}
       >
-        {valuesToDelete}
+        <ul>
+          {dataStructureToDisplay.map(({ name }) => (
+            <li>{name}</li>
+          ))}
+        </ul>
       </ModalDialog>
     </div>
   );

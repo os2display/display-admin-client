@@ -239,12 +239,10 @@
     "placeholder": "Indtast søgning her"
   },
   "delete-modal": {
-    "title": "Er du sikker på du vil slette følgende",
-    "and-string": "og"
+    "title": "Er du sikker på du vil slette følgende"
   },
   "info-modal": {
-    "decline-text": "Luk dialog",
-    "and-string": "og"
+    "decline-text": "Luk dialog"
   },
   "published": {
     "yes": "Ja",
@@ -296,9 +294,8 @@
   },
   "merge-modal": {
     "title": "Er du sikker på du vil konsolidere følgende",
-    "and-string": "og",
     "new-name-label": "Vælg et nyt navn",
-    "new-name-placeholder": "Vælg et nyt navn"
+    "new-name-placeholder": "Skriv det nye navn her"
   },
   "select-playlists-table": {
     "columns": {

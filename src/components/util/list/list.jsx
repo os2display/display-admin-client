@@ -264,7 +264,7 @@ function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
         show={showMergeModal}
         handleAccept={handleMerge}
         onClose={onCloseMergeModal}
-        selectedRows={selectedRows}
+        dataStructureToDisplay={selectedRows}
       />
     </>
   );

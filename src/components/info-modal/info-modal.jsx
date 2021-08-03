@@ -26,12 +26,6 @@ function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
   }
   const { t } = useTranslation("common");
 
-  // Creates a string for modal
-  const content = `${contentString(
-    dataStructureToDisplay,
-    t("info-modal.and-string")
-  )}`;
-
   return (
     <div id="info-modal">
       <ModalDialog
@@ -40,7 +34,11 @@ function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
         showAcceptButton={false}
         declineText={t("info-modal.decline-text")}
       >
-        {content}
+        <ul>
+          {dataStructureToDisplay.map(({ name }) => (
+            <li>{name}</li>
+          ))}
+        </ul>
       </ModalDialog>
     </div>
   );

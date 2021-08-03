@@ -4,7 +4,7 @@ import { Form, FormControl, InputGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
-import contentString from "../util/helpers/content-string";
+import FormInput from "../util/forms/form-input";
 
 /**
  * Merge modal component, a modal that merges elements together.
@@ -15,14 +15,14 @@ import contentString from "../util/helpers/content-string";
  * Whether to show the modal.
  * @param {Function} props.onClose
  * Callback on close modal.
- * @param {Function} props.selectedRows
+ * @param {Function} props.dataStructureToDisplay
  * Rows that are selected for deletion
  * @param {Function} props.handleAccept
  * Callback on accept.
  * @returns {object}
  * The modal.
  */
-function MergeModal({ show, onClose, selectedRows, handleAccept }) {
+function MergeModal({ show, onClose, dataStructureToDisplay, handleAccept }) {
   if (!show) {
     return <></>;
   }
@@ -36,30 +36,24 @@ function MergeModal({ show, onClose, selectedRows, handleAccept }) {
     setMergeName(newMergeName);
   }
 
-  // Creates a string for modal
-  const valuesToMerge = `${contentString(
-    selectedRows,
-    t("merge-modal.and-string")
-  )}`;
-
   return (
     <ModalDialog
       title={t("merge-modal.title")}
       onClose={onClose}
       handleAccept={() => handleAccept(mergeName)}
     >
-      {valuesToMerge}
-      <Form>
-        <InputGroup className="mb-3 mt-3">
-          <FormControl
-            aria-label={t("merge-modal.new-name-label")}
-            placeholder={t("merge-modal.new-name-placeholder")}
-            id="merged-data-name"
-            className="form-control"
-            onChange={(e) => handleInput(e.currentTarget.value)}
-          />
-        </InputGroup>
-      </Form>
+      {dataStructureToDisplay.map(({ name }) => (
+        <li>{name}</li>
+      ))}
+      <FormInput
+        name="mergeName"
+        aria-label={t("merge-modal.new-name-label")}
+        label={t("merge-modal.new-name-label")}
+        placeholder={t("merge-modal.new-name-placeholder")}
+        value={mergeName}
+        onChange={(e) => handleInput(e.currentTarget.value)}
+        id="merged-data-name"
+      />
     </ModalDialog>
   );
 }
@@ -67,7 +61,7 @@ function MergeModal({ show, onClose, selectedRows, handleAccept }) {
 MergeModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  selectedRows: SelectedRowsProptypes.isRequired,
+  dataStructureToDisplay: SelectedRowsProptypes.isRequired,
   handleAccept: PropTypes.func.isRequired,
 };
 
