@@ -24,6 +24,8 @@ import MediaModal from "../../media-modal/media-modal";
  * A list of errors, or null.
  * @param {string} props.invalidText
  * Text on error.
+ * @param {boolean} props.showLibraryButton
+ * Whether to show the library button.
  * @returns {object}
  * The image uploader.
  */
@@ -34,6 +36,7 @@ function ImageUploader({
   multipleImages,
   errors,
   invalidText,
+  showLibraryButton,
 }) {
   const { t } = useTranslation("common");
   const [images, setImages] = useState([]);
@@ -131,13 +134,14 @@ function ImageUploader({
                   {!multipleImages && t("image-uploader.pick-image")}
                   {multipleImages && t("image-uploader.pick-more-images")}
                 </Button>
-                <Button
-                  variant="success"
-                  onClick={() => setShowMediaModal(true)}
-                >
-                  {t("image-uploader.media-library")}
-                </Button>
-
+                {showLibraryButton && (
+                  <Button
+                    variant="success"
+                    onClick={() => setShowMediaModal(true)}
+                  >
+                    {t("image-uploader.media-library")}
+                  </Button>
+                )}
                 <div
                   className={
                     isDragging
@@ -193,6 +197,7 @@ ImageUploader.defaultProps = {
   multipleImages: false,
   errors: [],
   invalidText: null,
+  showLibraryButton: true,
 };
 
 ImageUploader.propTypes = {
@@ -202,6 +207,7 @@ ImageUploader.propTypes = {
   multipleImages: PropTypes.bool,
   errors: PropTypes.arrayOf(PropTypes.string),
   invalidText: PropTypes.string,
+  showLibraryButton: PropTypes.bool,
 };
 
 export default ImageUploader;
