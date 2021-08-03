@@ -7,6 +7,7 @@ import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
+import ColorPreviewer from "./color-previewer";
 
 /**
  * The themes list component.
@@ -75,6 +76,10 @@ function ThemesList() {
       path: "createdBy",
       sort: true,
       label: t("themes-list.columns.created-by"),
+    },
+    {
+      key: "colors",
+      content: (data) => <ColorPreviewer data={data} />,
     },
     {
       key: "edit",

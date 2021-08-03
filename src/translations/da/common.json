@@ -93,6 +93,17 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
+  "themes-list": {
+    "columns": {
+      "pick": "Vælg tema",
+      "name": "Navn",
+      "created-by": "Oprettet af"
+    },
+    "header": "Themes",
+    "create-new-theme": "Opret nyt tema",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
   "category-list": {
     "columns": {
       "pick": "Vælg kategori",
