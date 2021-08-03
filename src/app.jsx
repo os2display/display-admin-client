@@ -21,6 +21,7 @@ import MediaList from "./components/media-list/media-list";
 import EditMedia from "./components/edit-media/edit-media";
 import ThemesList from "./components/themes-list/themes-list";
 import commonDa from "./translations/da/common.json";
+import EditTheme from "./components/edit-theme/edit-theme";
 import "./app.scss";
 
 /**
@@ -63,6 +64,7 @@ function App() {
             <Route path="/slide/:id" component={EditSlide} />
             <Route path="/media/:id" component={EditMedia} />
             <Route path="/themes/" component={ThemesList} />
+            <Route path="/theme/:id" component={EditTheme} />
             <Redirect from="/" to="/tags" exact />
           </Switch>
         </main>

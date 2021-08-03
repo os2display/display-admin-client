@@ -19,6 +19,14 @@
     "name-label": "Taggets navn",
     "name-placeholder": "Udfyld taggets navn"
   },
+  "edit-theme": {
+    "create-new-theme": "Opret nyt tema",
+    "edit-theme": "Rediger følgende tema",
+    "save-button": "Gem tema",
+    "cancel-button": "Annuller",
+    "name-label": "Temaets navn",
+    "name-placeholder": "Udfyld temaets navn"
+  },
   "slides-list": {
     "columns": {
       "pick": "Vælg slide",

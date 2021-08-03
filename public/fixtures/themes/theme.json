@@ -1,7 +1,14 @@
 {
-  "category": {
+  "theme": {
     "name": "test",
     "createdBy": "Daniela",
-    "id": 2
+    "id": 2,
+    "font": {
+      "name": "Arial"
+    },
+    "colors": {
+      "primary": "#9BCD9B",
+      "secondary": "#FF249D"
+    }
   }
 }
