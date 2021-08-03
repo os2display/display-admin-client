@@ -25,7 +25,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
-  const [infoModalText, setInfoModalText] = useState("");
+  const [infoModalTitle, setInfoModalTitle] = useState("");
 
   /**
    * Opens info modal with either categories or slides.
@@ -38,11 +38,11 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
    * Which infomodal is opened, categories or slides.
    */
   function openInfoModal({ data, caller }) {
-    const localInfoModalText =
+    const localInfoModalTitle =
       caller === "categories"
         ? t("select-playlists-table.info-modal.playlist-categories")
         : t("select-playlists-table.info-modal.playlist-slides");
-    setInfoModalText(localInfoModalText);
+    setInfoModalTitle(localInfoModalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
@@ -127,7 +127,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        infoModalString={infoModalText}
+        title={infoModalTitle}
       />
     </>
   );

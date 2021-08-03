@@ -123,7 +123,7 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        infoModalString={t("select-slides-table.info-modal.slide-on-playlists")}
+        title={t("select-slides-table.info-modal.slide-on-playlists")}
       />
     </>
   );

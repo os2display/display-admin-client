@@ -37,10 +37,10 @@ function MergeModal({ show, onClose, selectedRows, handleAccept }) {
   }
 
   // Creates a string for modal
-  const valuesToMerge = `${t("merge-modal.confirmation")}: ${contentString(
+  const valuesToMerge = `${contentString(
     selectedRows,
     t("merge-modal.and-string")
-  )}?`;
+  )}`;
 
   return (
     <ModalDialog

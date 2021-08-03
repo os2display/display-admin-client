@@ -204,7 +204,7 @@ function CategoryList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        infoModalString={t("category-list.info-modal.category-playlists")}
+        title={t("category-list.info-modal.category-playlists")}
       />
     </Container>
   );

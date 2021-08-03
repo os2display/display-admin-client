@@ -212,7 +212,7 @@ function SlidesList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        infoModalString={t("slides-list.info-modal.slide-on-playlists")}
+        title={t("slides-list.info-modal.slide-on-playlists")}
       />
     </Container>
   );

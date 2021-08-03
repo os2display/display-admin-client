@@ -239,13 +239,11 @@
     "placeholder": "Indtast søgning her"
   },
   "delete-modal": {
-    "confirmation": "Er du sikker på du vil slette følgende",
-    "title": "Du er ved at slette noget",
+    "title": "Er du sikker på du vil slette følgende",
     "and-string": "og"
   },
   "info-modal": {
     "decline-text": "Luk dialog",
-    "title": "Obs",
     "and-string": "og"
   },
   "published": {
@@ -297,8 +295,7 @@
     "nothing-selected": "Der er ikke valgt noget"
   },
   "merge-modal": {
-    "confirmation": "Er du sikker på du vil konsolidere følgende",
-    "title": "Du er ved at konsolidere noget",
+    "title": "Er du sikker på du vil konsolidere følgende",
     "and-string": "og",
     "new-name-label": "Vælg et nyt navn",
     "new-name-placeholder": "Vælg et nyt navn"

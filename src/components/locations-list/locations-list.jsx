@@ -18,7 +18,7 @@ import ListButton from "../util/list/list-button";
  */
 function LocationsList() {
   const { t } = useTranslation("common");
-  const [infoModalText, setInfoModalText] = useState("");
+  const [infoModalTitle, setInfoModalTitle] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -73,11 +73,11 @@ function LocationsList() {
    * Which infomodal is opened, categories or slides.
    */
   function openInfoModal({ data, caller }) {
-    const localInfoModalText =
+    const localInfoModalTitle =
       caller === "groups"
         ? t("locations-list.info-modal.location-on-group")
         : t("locations-list.info-modal.location-on-screen");
-    setInfoModalText(localInfoModalText);
+    setInfoModalTitle(localInfoModalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
@@ -228,7 +228,7 @@ function LocationsList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        infoModalString={infoModalText}
+        title={infoModalTitle}
       />
     </Container>
   );

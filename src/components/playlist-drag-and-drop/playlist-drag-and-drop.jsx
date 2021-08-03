@@ -143,7 +143,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        infoModalString={infoModalText}
+        title={infoModalText}
       />
     </>
   );

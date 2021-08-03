@@ -24,7 +24,7 @@ function PlaylistsList() {
   const [playlists, setPlaylists] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
-  const [infoModalText, setInfoModalText] = useState("");
+  const [infoModalTitle, setInfoModalTitle] = useState("");
 
   /**
    * Opens info modal with either categories or slides.
@@ -37,11 +37,11 @@ function PlaylistsList() {
    * Which infomodal is opened, categories or slides.
    */
   function openInfoModal({ data, caller }) {
-    const localInfoModalText =
+    const localInfoModalTitle =
       caller === "categories"
         ? t("playlists-list.info-modal.playlist-categories")
         : t("playlists-list.info-modal.playlist-slides");
-    setInfoModalText(localInfoModalText);
+    setInfoModalTitle(localInfoModalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
@@ -223,7 +223,7 @@ function PlaylistsList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        infoModalString={infoModalText}
+        title={infoModalTitle}
       />
     </Container>
   );
