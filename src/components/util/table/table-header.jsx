@@ -52,18 +52,12 @@ function TableHeader({ columns, sortColumn, onSort }) {
    */
   function renderSortIcon(column) {
     if (column.path !== path) {
-      return (
-        <FontAwesomeIcon
-          style={{ color: "grey" }}
-          className="search-icon"
-          icon={faSort}
-        />
-      );
+      return <FontAwesomeIcon style={{ color: "grey" }} icon={faSort} />;
     }
     if (order === "asc") {
-      return <FontAwesomeIcon className="search-icon" icon={faSortUp} />;
+      return <FontAwesomeIcon icon={faSortUp} />;
     }
-    return <FontAwesomeIcon className="search-icon" icon={faSortDown} />;
+    return <FontAwesomeIcon icon={faSortDown} />;
   }
   return (
     <thead>

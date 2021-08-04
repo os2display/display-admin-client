@@ -24,7 +24,7 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  */
 function Table({ columns, selectedRows, onSort, sortColumn, data }) {
   return (
-    <table className="table">
+    <table className="table table-hover">
       <TableHeader columns={columns} onSort={onSort} sortColumn={sortColumn} />
       <TableBody selectedRows={selectedRows} columns={columns} data={data} />
     </table>
