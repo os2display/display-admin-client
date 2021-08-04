@@ -152,6 +152,17 @@ function PlaylistsList() {
       label: t("playlists-list.columns.on-screens"),
     },
     {
+      key: "quick-edit",
+      content: () => (
+        <>
+          {/* @todo make quick edit modal */}
+          <div className="m-2">
+            <Button variant="primary">Quick edit</Button>
+          </div>
+        </>
+      ),
+    },
+    {
       key: "edit",
       content: (data) => (
         <LinkForList
