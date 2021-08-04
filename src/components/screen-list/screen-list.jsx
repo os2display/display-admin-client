@@ -26,7 +26,7 @@ function ScreenList() {
   const [screens, setScreens] = useState([]);
 
   /**
-   * @param {Array} playlistArray
+   * @param {Array} groupsArray
    * The array of groups.
    */
   function openInfoModal(groupsArray) {
@@ -107,7 +107,7 @@ function ScreenList() {
           data.onFollowingGroups.length === 0
         ),
       key: "groups",
-      label: t("locations-list.columns.on-groups"),
+      label: t("screens-list.columns.on-groups"),
     },
     {
       path: "size",
@@ -214,7 +214,7 @@ function ScreenList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={inGroups}
-        title={t("screens-list.info-modal.in-groups")}
+        title={t("screens-list.info-modal.screen-in-groups")}
       />
     </Container>
   );

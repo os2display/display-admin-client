@@ -56,10 +56,11 @@
       "name": "Navn",
       "size": "Størrelse",
       "dimensions": "Opløsning",
-      "campaign": "Kampagne"
+      "campaign": "Kampagne",
+      "on-groups": "Tilknyttede grupper"
     },
     "info-modal": {
-      "in-groups": "Skærmen er i følgende grupper"
+      "screen-in-groups": "Skærmen er i følgende grupper"
     },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
@@ -83,11 +84,13 @@
       "name": "Navn",
       "created-by": "Oprettet af",
       "on-screens": "Skærme tilknyttet",
-      "on-groups": "Tilknyttede grupper"
+      "on-groups": "Tilknyttede grupper",
+      "live": "Live"
     },
     "info-modal": {
       "location-on-group": "Lokationen er tilknyttet følgende grupper",
-      "location-on-screen": "Lokationen er tilknyttet følgende skærme"
+      "location-on-screen": "Lokationen er tilknyttet følgende skærme",
+      "location-in-groups": "Lokationen er i følgende grupper"
     },
     "header": "Lokationer",
     "create-new-location": "Opret ny lokation",

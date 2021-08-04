@@ -9,6 +9,7 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
+import LiveIcon from "./live-icon";
 
 /**
  * The locations list component.
@@ -72,12 +73,8 @@ function LocationsList() {
    * @param {string} props.caller
    * Which infomodal is opened, categories or slides.
    */
-  function openInfoModal({ data, caller }) {
-    const localInfoModalTitle =
-      caller === "groups"
-        ? t("locations-list.info-modal.location-on-group")
-        : t("locations-list.info-modal.location-on-screen");
-    setInfoModalTitle(localInfoModalTitle);
+  function openInfoModal({ data, modalTitle }) {
+    setInfoModalTitle(modalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
@@ -95,9 +92,31 @@ function LocationsList() {
       ),
     },
     {
+      path: "live",
+      sort: true,
+      label: t("locations-list.columns.live"),
+      content: (data) => LiveIcon(data),
+    },
+    {
       path: "name",
       sort: true,
       label: t("locations-list.columns.name"),
+    },
+    {
+      sort: true,
+      path: "onFollowingScreens",
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          {
+            data: data.onFollowingScreens,
+            modalTitle: t("locations-list.info-modal.location-in-groups"),
+          },
+          data.onFollowingScreens.length,
+          data.onFollowingScreens.length === 0
+        ),
+      key: "screens",
+      label: t("locations-list.columns.on-groups"),
     },
     {
       path: "createdBy",
@@ -110,7 +129,10 @@ function LocationsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.onFollowingScreens, caller: "screens" },
+          {
+            data: data.onFollowingScreens,
+            modalTitle: t("locations-list.info-modal.location-on-screen"),
+          },
           data.onFollowingScreens.length,
           data.onFollowingScreens.length === 0
         ),
@@ -123,7 +145,10 @@ function LocationsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.onFollowingGroups, caller: "groups" },
+          {
+            data: data.onFollowingGroups,
+            modalTitle: t("locations-list.info-modal.location-on-group"),
+          },
           data.onFollowingGroups.length,
           data.onFollowingGroups.length === 0
         ),
