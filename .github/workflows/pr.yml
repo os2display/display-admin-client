@@ -1,0 +1,79 @@
+on: pull_request
+name: Review
+jobs:
+  frontend-build:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: install
+        run: npm install
+
+      - name: Build production assets
+        run: npm run build
+
+  frontend-coding-standards:
+    name: Frontend coding standards
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: install
+        run: npm install
+
+      - name: React coding standards
+        run: npm run check-coding-standards
+
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: ["chrome", "firefox"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup network
+        run: docker network create frontend
+
+      - name: Install
+        run: docker-compose run node npm install
+
+      - name: Cypress run
+        run: docker-compose run cypress run --browser ${{ matrix.browser }}
+
+      - name: Archive screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenhosts-${{ matrix.browser }}
+          path: cypress/screenshots
+          retention-days: 7
