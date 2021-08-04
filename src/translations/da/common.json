@@ -58,6 +58,9 @@
       "dimensions": "Opløsning",
       "campaign": "Kampagne"
     },
+    "info-modal": {
+      "in-groups": "Skærmen er i følgende grupper"
+    },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
     "delete-button": "Slet",

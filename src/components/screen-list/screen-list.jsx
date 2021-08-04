@@ -8,6 +8,8 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
+import InfoModal from "../info-modal/info-modal";
+import ListButton from "../util/list/list-button";
 
 /**
  * The screen list component.
@@ -19,7 +21,26 @@ function ScreenList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [inGroups, setInGroups] = useState();
   const [screens, setScreens] = useState([]);
+
+  /**
+   * @param {Array} playlistArray
+   * The array of groups.
+   */
+  function openInfoModal(groupsArray) {
+    setInGroups(groupsArray);
+    setShowInfoModal(true);
+  }
+
+  /**
+   * Closes the info modal.
+   */
+  function onCloseInfoModal() {
+    setShowInfoModal(false);
+    setInGroups();
+  }
 
   /**
    * Load content from fixture.
@@ -74,6 +95,19 @@ function ScreenList() {
       path: "name",
       sort: true,
       label: t("screens-list.columns.name"),
+    },
+    {
+      sort: true,
+      path: "onFollowingGroups",
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.onFollowingGroups,
+          data.onFollowingGroups.length,
+          data.onFollowingGroups.length === 0
+        ),
+      key: "groups",
+      label: t("locations-list.columns.on-groups"),
     },
     {
       path: "size",
@@ -175,6 +209,12 @@ function ScreenList() {
         onClose={onCloseModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
+      />
+      <InfoModal
+        show={showInfoModal}
+        onClose={onCloseInfoModal}
+        dataStructureToDisplay={inGroups}
+        title={t("screens-list.info-modal.in-groups")}
       />
     </Container>
   );

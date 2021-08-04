@@ -5,560 +5,1044 @@
       "name": "Solarbreeze",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 2,
       "name": "Voyatouch",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        },
+        {
+          "id": 15,
+          "name": "sdfsdf"
+        }
+      ]
     },
     {
       "id": 3,
       "name": "Viva",
       "size": "50\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 4,
       "name": "Vagram",
       "size": "50\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 5,
       "name": "Zontrax",
       "size": "50\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 6,
       "name": "Voltsillam",
       "size": "50\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 7,
       "name": "Tempsoft",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 8,
       "name": "It",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 9,
       "name": "Treeflex",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 10,
       "name": "Ventosanzap",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 11,
       "name": "Span",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 12,
       "name": "Zaam-Dox",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 13,
       "name": "Transcof",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 14,
       "name": "Bigtax",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 15,
       "name": "Pannier",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 16,
       "name": "Flowdesk",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 17,
       "name": "Quo Lux",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 18,
       "name": "Duobam",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 19,
       "name": "Zaam-Dox",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 20,
       "name": "Gembucket",
       "size": "40\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 21,
       "name": "Mat Lam Tam",
       "size": "40\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 22,
       "name": "Y-find",
       "size": "40\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 23,
       "name": "Stim",
       "size": "40\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 24,
       "name": "Sonsing",
       "size": "40\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 25,
       "name": "Y-Solowarm",
       "size": "40\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 26,
       "name": "Viva",
       "size": "40\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 27,
       "name": "Ventosanzap",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 28,
       "name": "Tresom",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 29,
       "name": "Zontrax",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 30,
       "name": "Home Ing",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 31,
       "name": "Tampflex",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 32,
       "name": "Regrant",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 33,
       "name": "Konklab",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 34,
       "name": "Domainer",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 35,
       "name": "Matsoft",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 36,
       "name": "Ronstring",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 37,
       "name": "Bitchip",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 38,
       "name": "It",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 39,
       "name": "Daltfresh",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 40,
       "name": "Flowdesk",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 41,
       "name": "Latlux",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 42,
       "name": "Flexidy",
       "size": "10\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 43,
       "name": "Gembucket",
       "size": "10\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 44,
       "name": "Konklab",
       "size": "10\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 45,
       "name": "Bamity",
       "size": "10\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 46,
       "name": "Home Ing",
       "size": "10\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 47,
       "name": "Voyatouch",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 48,
       "name": "Flexidy",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 49,
       "name": "Alphazap",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 50,
       "name": "Bamity",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 51,
       "name": "It",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 52,
       "name": "Job",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 53,
       "name": "Hatity",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 54,
       "name": "Flexidy",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 55,
       "name": "Home Ing",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 56,
       "name": "Pannier",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 57,
       "name": "It",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 58,
       "name": "Subin",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 59,
       "name": "Greenlam",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 60,
       "name": "Y-Solowarm",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 61,
       "name": "Wrapsafe",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 62,
       "name": "Fixflex",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 63,
       "name": "Vagram",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 64,
       "name": "Fintone",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 65,
       "name": "Alphazap",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 66,
       "name": "Cardify",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 67,
       "name": "Prodder",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 68,
       "name": "Holdlamis",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 69,
       "name": "Voltsillam",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 70,
       "name": "Aerified",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 71,
       "name": "Regrant",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 72,
       "name": "Subin",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 73,
       "name": "Rank",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 74,
       "name": "Asoka",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 75,
       "name": "Matsoft",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 76,
       "name": "Ronstring",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 77,
       "name": "Temp",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": true
+      "overriddenByCampaign": true,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 78,
       "name": "Tin",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 79,
       "name": "Prodder",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     },
     {
       "id": 80,
       "name": "Biodex",
       "size": "30\"",
       "dimensions": "1920x1080",
-      "overriddenByCampaign": false
+      "overriddenByCampaign": false,
+      "onFollowingGroups": [
+        {
+          "id": 15,
+          "name": "Digitized"
+        }
+      ]
     }
   ]
 }
