@@ -9,7 +9,7 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
-import LiveIcon from "./live-icon";
+import LiveIcon from "../screen-list/live-icon";
 
 /**
  * The locations list component.
@@ -92,31 +92,9 @@ function LocationsList() {
       ),
     },
     {
-      path: "live",
-      sort: true,
-      label: t("locations-list.columns.live"),
-      content: (data) => LiveIcon(data),
-    },
-    {
       path: "name",
       sort: true,
       label: t("locations-list.columns.name"),
-    },
-    {
-      sort: true,
-      path: "onFollowingScreens",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          {
-            data: data.onFollowingScreens,
-            modalTitle: t("locations-list.info-modal.location-in-groups"),
-          },
-          data.onFollowingScreens.length,
-          data.onFollowingScreens.length === 0
-        ),
-      key: "screens",
-      label: t("locations-list.columns.on-groups"),
     },
     {
       path: "createdBy",

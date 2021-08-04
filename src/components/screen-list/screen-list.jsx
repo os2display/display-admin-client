@@ -10,6 +10,7 @@ import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
+import LiveIcon from "./live-icon";
 
 /**
  * The screen list component.
@@ -90,6 +91,12 @@ function ScreenList() {
           selected={selectedRows.indexOf(data) > -1}
         />
       ),
+    },
+    {
+      path: "live",
+      sort: true,
+      label: t("screens-list.columns.live"),
+      content: (data) => LiveIcon(data),
     },
     {
       path: "name",

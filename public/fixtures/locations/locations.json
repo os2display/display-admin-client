@@ -2,7 +2,6 @@
   "locations": [
     {
       "id": 1,
-      "live": true,
       "createdBy": "Egbert",
       "onFollowingGroups": [
         {
@@ -20,7 +19,6 @@
     },
     {
       "id": 2,
-      "live": false,
       "createdBy": "Egbert",
       "onFollowingGroups": [
         {
@@ -38,7 +36,6 @@
     },
     {
       "id": 3,
-      "live": true,
       "createdBy": "Egbert",
       "onFollowingGroups": [
         {
@@ -56,7 +53,6 @@
     },
     {
       "id": 4,
-      "live": true,
       "createdBy": "Egbert",
       "onFollowingGroups": [
         {

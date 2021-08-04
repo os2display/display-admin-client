@@ -4,6 +4,13 @@
     "name": "Asoka",
     "size": "30\"",
     "dimensions": "1920x1080",
+    "live": false,
+    "onFollowingGroups": [
+      {
+        "id": 15,
+        "name": "Digitized"
+      }
+    ],
     "groups": [
       {
         "name": "Infoskærme",

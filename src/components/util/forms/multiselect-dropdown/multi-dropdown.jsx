@@ -136,7 +136,9 @@ function MultiSelectComponent({
     const ids = data.map((a) => a.value);
     const dataToReturn = options.filter((option) => ids.includes(option.id));
     const newData = data.filter((a) => a.__isNew__);
-    dataToReturn.unshift(newData);
+    if (newData.length > 0) {
+      dataToReturn.unshift(newData);
+    }
     const target = { value: dataToReturn, id: name };
     handleSelection({ target });
   }

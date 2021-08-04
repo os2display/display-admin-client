@@ -6,6 +6,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -19,6 +20,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -36,6 +38,7 @@
       "size": "50\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -49,6 +52,7 @@
       "size": "50\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -62,6 +66,7 @@
       "size": "50\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -75,6 +80,7 @@
       "size": "50\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -88,6 +94,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -101,6 +108,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -114,6 +122,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -127,6 +136,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -140,6 +150,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -153,6 +164,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -166,6 +178,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -179,6 +192,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -192,6 +206,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -205,6 +220,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -218,6 +234,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -231,6 +248,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -244,6 +262,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -257,6 +276,7 @@
       "size": "40\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -270,6 +290,7 @@
       "size": "40\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -283,6 +304,7 @@
       "size": "40\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -296,6 +318,7 @@
       "size": "40\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -309,6 +332,7 @@
       "size": "40\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -322,6 +346,7 @@
       "size": "40\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -335,6 +360,7 @@
       "size": "40\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -348,6 +374,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -361,6 +388,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -374,6 +402,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -387,6 +416,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -400,6 +430,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -413,6 +444,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -426,6 +458,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -439,6 +472,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -452,6 +486,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -465,6 +500,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -478,6 +514,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -491,6 +528,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -504,6 +542,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -517,6 +556,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -530,6 +570,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -543,6 +584,7 @@
       "size": "10\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -556,6 +598,7 @@
       "size": "10\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -569,6 +612,7 @@
       "size": "10\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -582,6 +626,7 @@
       "size": "10\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -595,6 +640,7 @@
       "size": "10\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -608,6 +654,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -621,6 +668,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -634,6 +682,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -647,6 +696,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -660,6 +710,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -673,6 +724,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -686,6 +738,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -699,6 +752,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -712,6 +766,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -725,6 +780,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -738,6 +794,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -751,6 +808,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -764,6 +822,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -777,6 +836,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -790,6 +850,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -803,6 +864,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -816,6 +878,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -829,6 +892,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -842,6 +906,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -855,6 +920,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -868,6 +934,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -881,6 +948,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -894,6 +962,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -907,6 +976,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -920,6 +990,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -933,6 +1004,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -946,6 +1018,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -959,6 +1032,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -972,6 +1046,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -985,6 +1060,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -998,6 +1074,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": true,
+      "live": true,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -1011,6 +1088,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -1024,6 +1102,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
@@ -1037,6 +1116,7 @@
       "size": "30\"",
       "dimensions": "1920x1080",
       "overriddenByCampaign": false,
+      "live": false,
       "onFollowingGroups": [
         {
           "id": 15,
