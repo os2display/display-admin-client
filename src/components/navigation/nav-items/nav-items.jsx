@@ -1,7 +1,16 @@
 import { React } from "react";
-import { Nav, NavDropdown } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTachometerAlt,
+  faDesktop,
+  faStream,
+  faPhotoVideo,
+  faPlusCircle,
+  faCog
+} from "@fortawesome/free-solid-svg-icons";
 /**
  * The nav items.
  *
@@ -12,56 +21,69 @@ function NavItems() {
   const [t] = useTranslation("common");
   return (
     <>
-      <NavDropdown title={t("navbar.content")} id="navbar_content">
-        <NavDropdown.Item>
-          <Link id="navbar_content_tags" to="/tags">
-            {t("navbar.content-tags")}
-          </Link>
-        </NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item>
-          <Link id="navbar_content_media" to="/media-list">
-            {t("navbar.content-media")}
-          </Link>
-        </NavDropdown.Item>
-      </NavDropdown>
       <Nav.Item>
-        <Link id="navbar_slides" to="/slides">
-          {t("navbar.slides")}
+        <Link id="navbar_dashboard" className="nav-link" to="/dashboard">
+          <FontAwesomeIcon className="me-2" icon={faTachometerAlt} />{t("nav-items.dashboard")}
         </Link>
       </Nav.Item>
-      <NavDropdown title={t("navbar.screens")} id="navbar_screens">
-        <NavDropdown.Item>
-          <Link id="navbar_screens_screens" to="/screens">
-            {t("navbar.screens-screens")}
-          </Link>
-        </NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item>
-          <Link id="navbar_screens_groups" to="/groups">
-            {t("navbar.screens-groups")}
-          </Link>
-        </NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item>
-          <Link id="navbar_screens_locations" to="/locations">
-            {t("navbar.screens-locations")}
-          </Link>
-        </NavDropdown.Item>
-      </NavDropdown>
-      <NavDropdown title={t("navbar.playlists")} id="navbar_playlists">
-        <NavDropdown.Item>
-          <Link id="navbar_playlists_playlists" to="/playlists">
-            {t("navbar.playlists-playlists")}
-          </Link>
-        </NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item>
-          <Link id="navbar_playlists_categories" to="/categories">
-            {t("navbar.playlists-categories")}
-          </Link>
-        </NavDropdown.Item>
-      </NavDropdown>
+      <hr />
+      <Nav.Item>
+        <Link id="nav-items_slides" className="nav-link d-inline" to="/slides">
+          <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />{t("nav-items.content-slides")}
+        </Link>
+        <Link className="nav-link d-inline" to="/slides/new">
+          <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link id="nav-items_content_tags" className="nav-link ms-4 small" to="/tags">
+          {t("nav-items.content-tags")}
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link id="nav-items_content_media" className="nav-link ms-4 small" to="/media-list">
+          {t("nav-items.content-media")}
+        </Link>
+      </Nav.Item>
+      <hr />
+      <Nav.Item>
+        <Link id="nav-items_screens_screens" className="nav-link d-inline" to="/screens">
+          <FontAwesomeIcon className="me-2" icon={faDesktop} />{t("nav-items.screens-screens")}
+        </Link>
+        <Link className="nav-link d-inline" to="/screens/new">
+          <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link id="nav-items_screens_groups" className="nav-link ms-4 small" to="/groups">
+          {t("nav-items.screens-groups")}
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link id="nav-items_screens_locations" className="nav-link ms-4 small" to="/locations">
+          {t("nav-items.screens-locations")}
+        </Link>
+      </Nav.Item>
+      <hr />
+      <Nav.Item>
+        <Link id="nav-items_playlists_playlists" className="nav-link d-inline" to="/playlists">
+          <FontAwesomeIcon className="me-2" icon={faStream} />{t("nav-items.playlists-playlists")}
+        </Link>
+        <Link className="nav-link d-inline" to="/screens/new">
+          <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link id="nav-items_playlists_categories" className="nav-link ms-4 small" to="/categories">
+          {t("nav-items.playlists-categories")}
+        </Link>
+      </Nav.Item>
+      <hr />
+      <Nav.Item>
+        <Link id="nav-items_settings" className="nav-link" to="/settings">
+          <FontAwesomeIcon className="me-2" icon={faCog} />{t("nav-items.settings")}
+        </Link>
+      </Nav.Item>
     </>
   );
 }

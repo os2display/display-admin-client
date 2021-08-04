@@ -397,7 +397,8 @@
     "screen-resolution-of-screen-placeholder": "Angiv skærmens opløsning",
     "screen-resolution-of-screen-helptext": "Angiv skærmens opløsning (bxh), bredde og højde separeret med et x, eksempelvis 1920x1080"
   },
-  "navbar": {
+  "nav-items": {
+    "dashboard": "Oversigt",
     "content": "Indhold",
     "content-tags": "Tags",
     "content-media": "Medier",
@@ -415,6 +416,11 @@
   },
   "topbar": {
     "brand": "Aroskanalen",
-    "add": "Ny"
+    "add": "Ny",
+    "add_slide": "Nyt slide",
+    "add_screen": "Ny skærm",
+    "add_playlist": "Ny spilleliste",
+    "user": "Username",
+    "signout": "Log ud"
   }
 }
