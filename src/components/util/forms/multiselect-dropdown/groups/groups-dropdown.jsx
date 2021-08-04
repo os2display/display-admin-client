@@ -14,10 +14,18 @@ import MultiSelectComponent from "../multi-dropdown";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
+ * @param {boolean} props.isCreatable
+ * Whether it is possible to create in the multi dropdown.
  * @returns {object}
  * The multidropdown of groups.
  */
-function GroupsDropdown({ handleGroupsSelection, selected, name, errors }) {
+function GroupsDropdown({
+  handleGroupsSelection,
+  selected,
+  name,
+  errors,
+  isCreatable,
+}) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +55,7 @@ function GroupsDropdown({ handleGroupsSelection, selected, name, errors }) {
             selected={selected}
             name={name}
             isLoading={isLoading}
+            isCreatable={isCreatable}
             noSelectedString={t("groups-dropdown.nothing-selected")}
           />
         </>
@@ -57,6 +66,7 @@ function GroupsDropdown({ handleGroupsSelection, selected, name, errors }) {
 
 GroupsDropdown.defaultProps = {
   errors: null,
+  isCreatable: false,
 };
 
 GroupsDropdown.propTypes = {
@@ -70,6 +80,7 @@ GroupsDropdown.propTypes = {
   ).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
+  isCreatable: PropTypes.bool,
 };
 
 export default GroupsDropdown;

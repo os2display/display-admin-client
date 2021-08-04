@@ -14,10 +14,18 @@ import MultiSelectComponent from "../multi-dropdown";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
+ * @param {boolean} props.isCreatable
+ * Whether it is possible to create in the multi dropdown.
  * @returns {object}
  * The multidropdown of locations.
  */
-function LocationDropdown({ handleLocationSelection, selected, name, errors }) {
+function LocationDropdown({
+  handleLocationSelection,
+  selected,
+  name,
+  errors,
+  isCreatable,
+}) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +56,7 @@ function LocationDropdown({ handleLocationSelection, selected, name, errors }) {
             name={name}
             errors={errors}
             isLoading={isLoading}
+            isCreatable={isCreatable}
           />
         </>
       )}
@@ -57,6 +66,7 @@ function LocationDropdown({ handleLocationSelection, selected, name, errors }) {
 
 LocationDropdown.defaultProps = {
   errors: null,
+  isCreatable: false,
 };
 
 LocationDropdown.propTypes = {
@@ -70,6 +80,7 @@ LocationDropdown.propTypes = {
   ).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
+  isCreatable: PropTypes.bool,
 };
 
 export default LocationDropdown;

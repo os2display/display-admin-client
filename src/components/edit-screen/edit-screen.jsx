@@ -150,11 +150,13 @@ function EditScreen() {
         <GroupsDropdown
           errors={errors}
           name="screenGroups"
+          isCreatable={true}
           handleGroupsSelection={handleInput}
           selected={formStateObject.screenGroups}
         />
         <LocationDropdown
           errors={errors}
+          isCreatable={true}
           name="screenLocations"
           handleLocationSelection={handleInput}
           selected={formStateObject.screenLocations}
