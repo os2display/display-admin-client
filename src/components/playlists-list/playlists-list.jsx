@@ -36,12 +36,8 @@ function PlaylistsList() {
    * @param {string} props.caller
    * Which infomodal is opened, categories or slides.
    */
-  function openInfoModal({ data, caller }) {
-    const localInfoModalTitle =
-      caller === "categories"
-        ? t("playlists-list.info-modal.playlist-categories")
-        : t("playlists-list.info-modal.playlist-slides");
-    setInfoModalTitle(localInfoModalTitle);
+  function openInfoModal({ data, modalTitle }) {
+    setInfoModalTitle(modalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
@@ -111,7 +107,10 @@ function PlaylistsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.slides, caller: "slides" },
+          {
+            data: data.slides,
+            modalTitle: t("playlists-list.info-modal.playlist-slides"),
+          },
           data.slides?.length,
           data.slides?.length === 0
         ),
@@ -124,7 +123,10 @@ function PlaylistsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.categories, caller: "categories" },
+          {
+            data: data.categories,
+            modalTitle: t("playlists-list.info-modal.playlist-categories"),
+          },
           data.categories?.length,
           data.categories?.length === 0
         ),
@@ -132,6 +134,22 @@ function PlaylistsList() {
       path: "categories",
       key: "categories",
       label: t("playlists-list.columns.number-of-categories"),
+    },
+    {
+      sort: true,
+      path: "onFollowingScreens",
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          {
+            data: data.onFollowingScreens,
+            modalTitle: t("playlists-list.info-modal.playlist-screens"),
+          },
+          data.onFollowingScreens.length,
+          data.onFollowingScreens.length === 0
+        ),
+      key: "screens",
+      label: t("playlists-list.columns.on-screens"),
     },
     {
       key: "edit",

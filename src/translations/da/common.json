@@ -95,12 +95,14 @@
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
+      "on-screens": "Skærme tilknyttet",
       "number-of-slides": "Slides tilknyttede",
       "number-of-categories": "Kategorier tilknyttet"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",
-      "playlist-categories": "Spillelisten har følgende kategorier"
+      "playlist-categories": "Spillelisten har følgende kategorier",
+      "playlist-screens": "Spillelisten er på følgende skærme"
     },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
