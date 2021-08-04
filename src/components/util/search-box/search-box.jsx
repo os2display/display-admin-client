@@ -28,11 +28,9 @@ function SearchBox({ value, onChange, showLabel }) {
         <Form.Label htmlFor="search-field">{t("search-box.label")}</Form.Label>
       )}
       <InputGroup>
-        <InputGroup.Prepend>
-          <InputGroup.Text id="basic-addon3">
-            <FontAwesomeIcon className="search-icon" icon={faSearch} />
-          </InputGroup.Text>
-        </InputGroup.Prepend>
+        <InputGroup.Text id="basic-addon3">
+          <FontAwesomeIcon icon={faSearch} />
+        </InputGroup.Text>
         <FormControl
           placeholder={t("search-box.placeholder")}
           id="search-field"
