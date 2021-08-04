@@ -93,15 +93,13 @@ function GroupsList() {
       key: "delete",
       content: (data) => (
         <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              disabled={selectedRows.length > 0}
-              onClick={() => openDeleteModal(data)}
-            >
-              {t("groups-list.delete-button")}
-            </Button>
-          </div>
+          <Button
+            variant="danger"
+            disabled={selectedRows.length > 0}
+            onClick={() => openDeleteModal(data)}
+          >
+            {t("groups-list.delete-button")}
+          </Button>
         </>
       ),
     },
