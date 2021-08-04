@@ -61,6 +61,7 @@ function EditPlaylist() {
    * event target
    */
   function handleInput({ target }) {
+    console.log(target);
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
