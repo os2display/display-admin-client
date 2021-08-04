@@ -207,7 +207,8 @@
       "pick": "Vælg spilleliste",
       "name": "Navn",
       "number-of-slides": "Slides tilknyttet",
-      "number-of-categories": "Kategorier tilknyttet"
+      "number-of-categories": "Kategorier tilknyttet",
+      "playlist-screens": "Spillelisten er på følgende skærme"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",

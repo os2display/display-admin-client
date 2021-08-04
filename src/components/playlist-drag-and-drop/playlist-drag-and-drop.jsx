@@ -23,7 +23,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
-  const [infoModalText, setInfoModalText] = useState("");
+  const [infoModal, setInfoModal] = useState("");
 
   /**
    * Opens info modal with either categories or slides.
@@ -35,12 +35,8 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
    * @param {string} props.caller
    * Which infomodal is opened, categories or slides.
    */
-  function openInfoModal({ displayData, caller }) {
-    const localInfoModalText =
-      caller === "categories"
-        ? t("playlist-drag-and-drop.info-modal.playlist-categories")
-        : t("playlist-drag-and-drop.info-modal.playlist-slides");
-    setInfoModalText(localInfoModalText);
+  function openInfoModal({ displayData, modalTitle }) {
+    setInfoModal(modalTitle);
     setDataStructureToDisplay(displayData);
     setShowInfoModal(true);
   }
@@ -83,7 +79,10 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
       content: (displayData) =>
         ListButton(
           openInfoModal,
-          { displayData: displayData.slides, caller: "slides" },
+          {
+            displayData: displayData.slides,
+            modalTitle: t("playlist-drag-and-drop.info-modal.playlist-slides"),
+          },
           displayData.slides?.length,
           displayData.slides?.length === 0
         ),
@@ -95,13 +94,33 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
       content: (displayData) =>
         ListButton(
           openInfoModal,
-          { displayData: displayData.categories, caller: "categories" },
+          {
+            displayData: displayData.categories,
+            modalTitle: t(
+              "playlist-drag-and-drop.info-modal.playlist-categories"
+            ),
+          },
           displayData.categories?.length,
           displayData.categories?.length === 0
         ),
       path: "categories",
       key: "categories",
       label: t("playlist-drag-and-drop.columns.number-of-categories"),
+    },
+    {
+      path: "onFollowingScreens",
+      content: (displayData) =>
+        ListButton(
+          openInfoModal,
+          {
+            displayData: displayData.onFollowingScreens,
+            modalTitle: t("playlist-drag-and-drop.columns.playlist-screens"),
+          },
+          displayData.onFollowingScreens.length,
+          displayData.onFollowingScreens.length === 0
+        ),
+      key: "screens",
+      label: t("playlists-list.columns.on-screens"),
     },
     {
       key: "edit",
@@ -143,7 +162,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        title={infoModalText}
+        title={infoModal}
       />
     </>
   );
