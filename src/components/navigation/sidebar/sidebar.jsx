@@ -12,10 +12,7 @@ import "./sidebar.scss";
  */
 function SideBar() {
   return (
-    <Col
-      className="bg-dark"
-      sm={2}
-    >
+    <Col className="bg-dark" sm={2}>
       <Navbar variant="dark" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
