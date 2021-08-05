@@ -22,6 +22,7 @@ function EditTheme() {
     primaryColor: "",
     secondaryColor: "",
     tertiaryColor: "",
+    fontColor: "",
     logo: "",
   });
   const [showColorPicker, setShowColorPicker] = useState(null);
@@ -51,6 +52,7 @@ function EditTheme() {
             primaryColor: jsonData.theme.colors.primary,
             secondaryColor: jsonData.theme.colors.secondary,
             tertiaryColor: jsonData.theme.colors.tertiary,
+            fontColor: jsonData.theme.colors.fontColor,
             images: [jsonData.theme.logo],
           });
           setThemeName(jsonData.theme.name);
@@ -155,10 +157,16 @@ function EditTheme() {
             errors={errors}
           />
           <Select
-            value={formStateObject.font}
-            name="font"
+            value={formStateObject.fontColor}
+            name="fontColor"
             options={fontOptions}
             label={t("edit-theme.font-label")}
+          />
+          <ColorPreview
+            name="fontColor"
+            color={formStateObject.fontColor}
+            openColorPicker={openColorPicker}
+            label={t("edit-theme.pick-font-color")}
           />
           {submitted && <Redirect to="/themes" />}
           <div>

@@ -1,6 +1,5 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import "./color-previewer.scss";
 
 /**
  * A link for the list
@@ -13,31 +12,20 @@ import "./color-previewer.scss";
  * A link for the list.
  */
 function ColorPreviewForList({ data }) {
+  const { primary, secondary, tertiary, fontColor } = data.colors;
   return (
     <div className="d-flex flex-column">
-      {data.colors.primary && (
-        <div
-          className="preview"
-          style={{ backgroundColor: `${data.colors.primary}` }}
-        >
-          {data.colors.primary}
-        </div>
+      {primary && (
+        <div style={{ backgroundColor: `${primary}` }}>{primary}</div>
       )}
-      {data.colors.secondary && (
-        <div
-          className="preview"
-          style={{ backgroundColor: `${data.colors.secondary}` }}
-        >
-          {data.colors.secondary}
-        </div>
+      {secondary && (
+        <div style={{ backgroundColor: `${secondary}` }}>{secondary}</div>
       )}
-      {data.colors.tertiary && (
-        <div
-          className="preview"
-          style={{ backgroundColor: `${data.colors.tertiary}` }}
-        >
-          {data.colors.tertiary}
-        </div>
+      {tertiary && (
+        <div style={{ backgroundColor: `${tertiary}` }}>{tertiary}</div>
+      )}
+      {fontColor && (
+        <div style={{ backgroundColor: `${fontColor}` }}>{fontColor}</div>
       )}
     </div>
   );

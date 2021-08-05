@@ -15,7 +15,8 @@
     "colors": {
       "primary": "#2110FB",
       "secondary": "#9BCD9B",
-      "tertiary": "#C7FF00"
+      "tertiary": "#C7FF00",
+      "fontColor": "#000"
     }
   }
 }

@@ -41,7 +41,8 @@
       "colors": {
         "primary": "#2110FB",
         "secondary": "#9BCD9B",
-        "tertiary": "#C7FF00"
+        "tertiary": "#C7FF00",
+        "fontColor": "#fff"
       }
     },
     {
@@ -54,7 +55,8 @@
       "colors": {
         "primary": "#9BCD9B",
         "secondary": "#9BCD9B",
-        "tertiary": "#6F2518"
+        "tertiary": "#6F2518",
+        "fontColor": "#000"
       }
     }
   ]
