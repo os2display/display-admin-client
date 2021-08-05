@@ -1,17 +1,14 @@
-Cypress.on('uncaught:exception', (err, runnable) => {
+Cypress.on("uncaught:exception", () => {
   // returning false here prevents Cypress from
   // failing the test
-  return false
-})
-
+  return false;
+});
 
 describe("Slides list tests", () => {
-
   beforeEach(() => {
     cy.visit("/slides");
-  })
+  });
   it("It loads slides list", () => {
-
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("have.length", 80);
   });
