@@ -19,7 +19,7 @@ import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
  * @returns {object}
  * An input.
  */
-function PlaylistDragAndDrop({ handleChange, formId, data }) {
+function PlaylistDragAndDrop({ handleChange, name, data }) {
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
@@ -65,7 +65,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
       .indexOf(value);
 
     data.splice(indexOfItemToRemove, 1);
-    const target = { value: data, id: formId };
+    const target = { value: data, id: name };
     handleChange({ target });
   }
 
@@ -154,7 +154,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
         <DragAndDropTable
           columns={columns}
           onDropped={handleChange}
-          formId={formId}
+          name={name}
           data={data}
         />
       )}
@@ -169,7 +169,7 @@ function PlaylistDragAndDrop({ handleChange, formId, data }) {
 }
 
 PlaylistDragAndDrop.propTypes = {
-  formId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
   ).isRequired,

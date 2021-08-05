@@ -13,14 +13,14 @@ import TableHeader from "../table/table-header";
  * The columns for the table.
  * @param {Array} props.data
  * The data to display in the table.
- * @param {string} props.formId
+ * @param {string} props.name
  * The id of the form element
  * @param {Function} props.onDropped
  * Callback for when an items is dropped and the list is reordered.
  * @returns {object}
  * The drag and drop table.
  */
-function DragAndDropTable({ columns, data, formId, onDropped }) {
+function DragAndDropTable({ columns, data, name, onDropped }) {
   const { t } = useTranslation("common");
 
   /**
@@ -77,9 +77,28 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
       result.source.index,
       result.destination.index
     );
-    const target = { value: reorderedListOfPlaylists, id: formId };
+    const target = { value: reorderedListOfPlaylists, id: name };
     onDropped({ target });
   }
+
+  const getListStyle = (isDraggingOver) => ({
+    background: isDraggingOver ? "lightblue" : "lightgrey",
+    padding: 10,
+    width: 250,
+  });
+
+  const getItemStyle = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: "none",
+    padding: 10 * 2,
+    margin: `0 0 ${10}px 0`,
+
+    // change background colour if dragging
+    background: isDragging ? "lightgreen" : "grey",
+
+    // styles we need to apply on draggables
+    ...draggableStyle,
+  });
 
   return (
     <div>
@@ -87,11 +106,11 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
         <TableHeader columns={columns} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
-            {(provided) => (
+            {(provided, snapshot) => (
               <tbody
-                data-rbd-droppable-id="droppable"
-                data-rbd-droppable-context-id="1"
+                {...provided.droppableProps}
                 ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
               >
                 <>
                   {data.map((item, index) => (
@@ -100,18 +119,15 @@ function DragAndDropTable({ columns, data, formId, onDropped }) {
                       draggableId={item.name}
                       index={index}
                     >
-                      {(providedDraggable) => (
+                      {(providedDraggable, providedSnapshot) => (
                         <tr
                           ref={providedDraggable.innerRef}
-                          data-rbd-draggable-context-id="1"
-                          data-rbd-draggable-id={item.name}
-                          tabIndex="0"
-                          role="button"
-                          aria-describedby="aria-label-for-drag-and-drop"
-                          data-rbd-drag-handle-draggable-id={item.name}
-                          data-rbd-drag-handle-context-id="1"
-                          draggable="false"
-                          style={providedDraggable.draggableProps.style}
+                          {...providedDraggable.draggableProps}
+                          {...providedDraggable.dragHandleProps}
+                          style={getItemStyle(
+                            providedSnapshot.isDragging,
+                            providedDraggable.draggableProps.style
+                          )}
                         >
                           {columns.map((column) => (
                             <td key={item.id + (column.path || column.key)}>
@@ -141,7 +157,7 @@ DragAndDropTable.propTypes = {
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
-  formId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   onDropped: PropTypes.func.isRequired,
 };
 export default DragAndDropTable;
