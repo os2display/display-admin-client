@@ -16,21 +16,23 @@ describe("Edit screen page tests", () => {
     cy.visit("/screen/32");
     cy.get("#drag-and-drop-table").find("tr td").should("have.length", 12);
   });
+
   it("It drags and drops", () => {
     cy.visit("/screen/32");
-    cy.get("#drag-and-drop-table")
+    cy.get("tbody").find("tr td").should("have.length", 18);
+    cy.get("tbody")
       .find("tr td")
       .eq(0)
       .invoke("text")
       .should("match", /^Sommerplaylist/);
-    cy.get("#drag-and-drop-table")
+    cy.get("tbody")
       .find("tr")
       .eq(0)
       .focus()
       .type(" ")
       .type("{downarrow}")
       .type(" ");
-    cy.get("#drag-and-drop-table")
+    cy.get("tbody")
       .find("tr td")
       .eq(0)
       .invoke("text")
