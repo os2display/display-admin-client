@@ -25,7 +25,7 @@ describe("Playlists list tests", () => {
   it("It opens delete modal (playlist list)", () => {
     cy.visit("/playlists");
     cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(3).click();
+    cy.get("tbody").find("tr td button").eq(5).click();
     cy.get("#delete-modal").should("exist");
   });
 
