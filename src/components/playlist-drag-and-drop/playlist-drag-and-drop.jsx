@@ -32,8 +32,8 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
    * The props
    * @param {Array} props.displayData
    * The data to sum up in the modal
-   * @param {string} props.caller
-   * Which infomodal is opened, categories or slides.
+   * @param {string} props.modalTitle
+   * The title for the infomodal.
    */
   function openInfoModal({ displayData, modalTitle }) {
     setInfoModal(modalTitle);

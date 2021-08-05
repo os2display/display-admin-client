@@ -22,7 +22,7 @@ import MergeModal from "../../merge-modal/merge-modal";
  * The selected rows, for styling.
  * @param {object} props.showMerge
  * Whether to show the merge button.
- * @param {function} props.clearSelectedRows
+ * @param {Function} props.clearSelectedRows
  * Callback to clear the selected rows.
  * @returns {object}
  * The List.

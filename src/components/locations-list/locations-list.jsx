@@ -9,7 +9,6 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
-import LiveIcon from "../screen-list/live-icon";
 
 /**
  * The locations list component.
@@ -70,8 +69,8 @@ function LocationsList() {
    * The props
    * @param {Array} props.data
    * The data to sum up in the modal
-   * @param {string} props.caller
-   * Which infomodal is opened, categories or slides.
+   * @param {string} props.modalTitle
+   * The title for the infomodal.
    */
   function openInfoModal({ data, modalTitle }) {
     setInfoModalTitle(modalTitle);

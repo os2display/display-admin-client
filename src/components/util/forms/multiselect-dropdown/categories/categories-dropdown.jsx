@@ -52,7 +52,7 @@ function CategoriesDropdown({
             selected={selected}
             name={name}
             isLoading={isLoading}
-            isCreatable={true}
+            isCreatable
             noSelectedString={t("categories-dropdown.nothing-selected")}
           />
         </>

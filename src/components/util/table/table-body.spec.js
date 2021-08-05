@@ -32,12 +32,7 @@ describe("Table body loads", () => {
       .last()
       .should("be.not.disabled");
     cy.get('[type="checkbox"]').check();
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .eq(1)
-      .should("be.disabled");
+    cy.get("tbody").find("tr").eq(0).find("button").eq(1).should("be.disabled");
     cy.get("tbody")
       .find("tr")
       .eq(0)

@@ -99,7 +99,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
     // styles we need to apply on draggables
     ...draggableStyle,
   });
-
+  /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div>
       <Table>
