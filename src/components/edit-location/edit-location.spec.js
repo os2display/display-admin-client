@@ -27,7 +27,6 @@ describe("Edit location page loads", () => {
     cy.get("#info-modal").should("exist");
   });
 
-
   it("It validates new location", () => {
     cy.visit("/location/new");
     cy.get("#save_location")
