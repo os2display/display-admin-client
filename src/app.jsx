@@ -56,29 +56,27 @@ function App() {
           </Row>
           <Row>
             <SideBar />
-            <Col>
-              <main>
-                <Switch>
-                  <Route path="/tags" component={TagList} />
-                  <Route path="/screens" component={ScreenList} />
-                  <Route path="/categories" component={CategoryList} />
-                  <Route path="/locations" component={LocationsList} />
-                  <Route path="/groups" component={GroupsList} />
-                  <Route path="/tag/:id" component={EditTag} />
-                  <Route path="/category/:id" component={EditCategories} />
-                  <Route path="/group/:id" component={EditGroup} />
-                  <Route path="/screen/:id" component={EditScreen} />
-                  <Route path="/location/:id" component={EditLocation} />
-                  <Route path="/slides" component={SlidesList} />
-                  <Route path="/playlists" component={PlaylistsList} />
-                  <Route path="/media-list" component={MediaList} />
-                  <Route path="/playlist/:id" component={EditPlaylist} />
-                  <Route path="/slide/:id" component={EditSlide} />
-                  <Route path="/media/:id" component={EditMedia} />
-                  <Redirect from="/" to="/tags" exact />
-                </Switch>
-              </main>
-            </Col>
+            <main className="col">
+              <Switch>
+                <Route path="/tags" component={TagList} />
+                <Route path="/screens" component={ScreenList} />
+                <Route path="/categories" component={CategoryList} />
+                <Route path="/locations" component={LocationsList} />
+                <Route path="/groups" component={GroupsList} />
+                <Route path="/tag/:id" component={EditTag} />
+                <Route path="/category/:id" component={EditCategories} />
+                <Route path="/group/:id" component={EditGroup} />
+                <Route path="/screen/:id" component={EditScreen} />
+                <Route path="/location/:id" component={EditLocation} />
+                <Route path="/slides" component={SlidesList} />
+                <Route path="/playlists" component={PlaylistsList} />
+                <Route path="/media-list" component={MediaList} />
+                <Route path="/playlist/:id" component={EditPlaylist} />
+                <Route path="/slide/:id" component={EditSlide} />
+                <Route path="/media/:id" component={EditMedia} />
+                <Redirect from="/" to="/tags" exact />
+              </Switch>
+            </main>
           </Row>
         </Container>
       </I18nextProvider>
