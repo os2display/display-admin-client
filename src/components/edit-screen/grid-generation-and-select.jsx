@@ -4,20 +4,22 @@ import { Tabs, Tab } from "react-bootstrap";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import "./grid.scss";
 /**
- * Screen component.
+ * The grid generator component.
  *
  * @param {object} props
- *   Props.
- * @param {object} props.screen
- *   The screen data.
- * @param props.grid
- * @param props.handleInput
- * @param props.selectedData
- * @returns {JSX.Element}
- *   The component.
+ * Props.
+ * @param {object} props.grid
+ * The grid to generate.
+ * @param {Function} props.handleInput
+ * A callback on select in multiselect
+ * @param {object} props.selectedData
+ * The selected data for the multidropdown.
+ * @param {object} props.regions
+ * The regions in the grid.
+ * @returns {object}
+ * The component.
  */
-function Grid({ grid, handleInput, selectedData }) {
-  console.log(selectedData);
+function GridGenerationAndSelect({ grid, regions, handleInput, selectedData }) {
   const [key, setKey] = useState("region1");
   // TODO, find a more elegant solution for grid layout.
   const alphabet = [
@@ -73,8 +75,8 @@ function Grid({ grid, handleInput, selectedData }) {
     "zz",
   ];
 
-  const configColumns = grid?.grid?.columns || 1;
-  const configRows = grid?.grid?.rows || 1;
+  const configColumns = grid?.columns || 1;
+  const configRows = grid?.rows || 1;
   const rootStyle = {};
 
   /**
@@ -112,23 +114,25 @@ function Grid({ grid, handleInput, selectedData }) {
   }
   rootStyle.gridTemplateAreas = createGrid(configColumns, configRows);
   /**
-   * @param {Array} grid
+   * @param {Array} gridArray
    *  The grid array.
    * @returns {string}
    *   The grid-area strings.
    */
-  function createGridArea(grid) {
-    if (grid) {
-      const lastGridCharacter = grid[grid.length - 1];
-      const firstGridCharacter = grid[0];
+  function createGridArea(gridArray) {
+    if (gridArray) {
+      const lastGridCharacter = gridArray[gridArray.length - 1];
+      const firstGridCharacter = gridArray[0];
       return `${firstGridCharacter} / ${firstGridCharacter} / ${lastGridCharacter} / ${lastGridCharacter}`;
     }
     return "a / a / i / i";
   }
 
   /**
-   * @param root0
-   * @param root0.target
+   * @param {object} props
+   * the props.
+   * @param {object} props.target
+   * event target
    */
   function handleChange({ target }) {
     const localTarget = target.value.map((value) => {
@@ -143,8 +147,8 @@ function Grid({ grid, handleInput, selectedData }) {
   return (
     <>
       <div className="grid" style={rootStyle}>
-        {grid?.regions &&
-          grid.regions.map((data) => (
+        {regions &&
+          regions.map((data) => (
             <div
               className="grid-item"
               style={{ gridArea: createGridArea(data.gridArea) }}
@@ -159,8 +163,8 @@ function Grid({ grid, handleInput, selectedData }) {
         activeKey={key}
         onSelect={(k) => setKey(k)}
       >
-        {grid?.regions &&
-          grid.regions.map((data) => (
+        {regions &&
+          regions.map((data) => (
             <Tab
               style={{ backgroundColor: "beige" }}
               key={data.id}
@@ -182,4 +186,20 @@ function Grid({ grid, handleInput, selectedData }) {
   );
 }
 
-export default Grid;
+GridGenerationAndSelect.propTypes = {
+  grid: PropTypes.shape({ columns: PropTypes.number, rows: PropTypes.number })
+    .isRequired,
+  selectedData: PropTypes.arrayOf(
+    PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
+  ).isRequired,
+  handleInput: PropTypes.func.isRequired,
+  regions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      gridArea: PropTypes.arrayOf(PropTypes.string),
+    })
+  ).isRequired,
+};
+
+export default GridGenerationAndSelect;

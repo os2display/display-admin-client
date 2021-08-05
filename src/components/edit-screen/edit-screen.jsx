@@ -10,7 +10,8 @@ import Select from "../util/forms/select";
 import FormInputArea from "../util/forms/form-input-area";
 import RadioButtons from "../util/forms/radio-buttons";
 import getFormErrors from "../util/helpers/form-errors-helper";
-import Grid from "./grid";
+import GridGenerationAndSelect from "./grid-generation-and-select";
+
 /**
  * The edit screen component.
  *
@@ -182,8 +183,9 @@ function EditScreen() {
             value={formStateObject.screenLayout}
           />
         )}
-        <Grid
-          grid={grid}
+        <GridGenerationAndSelect
+          grid={grid?.grid}
+          regions={grid?.regions}
           handleInput={handleInput}
           selectedData={formStateObject.playlists}
         />
