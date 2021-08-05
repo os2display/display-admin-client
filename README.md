@@ -20,17 +20,16 @@ We use [cypress](https://www.cypress.io/) for testing.
 
 To run cypress tests in the cypress container:
 
-```
-
+```bash
 docker-compose run cypress run
 ```
 
 ### Linting
 
-```
+```bash
 yarn check-coding-standards
 ```
 
-```
+```bash
 yarn apply-coding-standards
 ```
