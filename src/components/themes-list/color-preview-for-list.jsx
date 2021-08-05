@@ -39,6 +39,7 @@ ColorPreviewForList.propTypes = {
       primary: PropTypes.string,
       secondary: PropTypes.string,
       tertiary: PropTypes.string,
+      fontColor: PropTypes.string,
     }),
   }).isRequired,
 };
