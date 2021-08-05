@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
  * The callback for close.
  * @param {Function} props.handleAccept
  * The callback for accept.
- * @param {object}props.children
+ * @param {object} props.children
  * The children to be rendered.
  * @param {boolean} props.showAcceptButton
  * Whether to show the accept button.

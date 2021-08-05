@@ -2,19 +2,208 @@
   "layouts": [
     {
       "id": 1,
-      "name": "4 delt"
+      "name": "4 delt",
+      "grid": {
+        "rows": 2,
+        "columns": 2
+      },
+      "regions": [
+        {
+          "id": "region1",
+          "name": "Region 1",
+          "gridArea": [
+            "a"
+          ]
+        },
+        {
+          "id": "region2",
+          "name": "Region 2",
+          "gridArea": [
+            "b"
+          ]
+        },
+        {
+          "id": "region3",
+          "name": "Region 3",
+          "gridArea": [
+            "c"
+          ]
+        },
+        {
+          "id": "region4",
+          "name": "Region 4",
+          "gridArea": [
+            "d"
+          ]
+        }
+      ]
     },
     {
       "id": 2,
-      "name": "Footer"
-    },
-    {
-      "id": 3,
-      "name": "Header"
+      "name": "Complicated",
+      "grid": {
+        "rows": 4,
+        "columns": 12
+      },
+      "regions": [
+        {
+          "id": "region1",
+          "name": "Region g1",
+          "gridArea": [
+            "a",
+            "d"
+          ],
+          "playlists": [
+            {
+              "id": "uniquePlaylist1",
+              "url": "./fixtures/playlist1.json"
+            }
+          ]
+        },
+        {
+          "id": "region2",
+          "name": "Region g2",
+          "gridArea": [
+            "e",
+            "m"
+          ],
+          "playlists": [
+            {
+              "id": "uniquePlaylist2",
+              "url": "./fixtures/playlist2.json"
+            }
+          ]
+        },
+        {
+          "id": "region3",
+          "name": "Region g3",
+          "gridArea": [
+            "q",
+            "z"
+          ],
+          "playlists": [
+            {
+              "id": "uniquePlaylist3",
+              "url": "./fixtures/playlist3.json"
+            }
+          ]
+        },
+        {
+          "id": "region4",
+          "name": "Region g4",
+          "gridArea": [
+            "dd",
+            "pp"
+          ],
+          "playlists": [
+            {
+              "id": "uniquePlaylist4",
+              "url": "./fixtures/playlist4.json"
+            }
+          ]
+        },
+        {
+          "id": "region5",
+          "name": "Region g5",
+          "gridArea": [
+            "tt",
+            "xx"
+          ],
+          "playlists": [
+            {
+              "id": "uniquePlaylist5",
+              "url": "./fixtures/playlist5.json"
+            }
+          ]
+        },
+        {
+          "id": "region6",
+          "name": "Region g6",
+          "gridArea": [
+            "f",
+            "ss"
+          ],
+          "playlists": [
+            {
+              "id": "uniquePlaylist6",
+              "url": "./fixtures/playlist6.json"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 4,
-      "name": "6x6"
+      "name": "3x3",
+      "grid": {
+        "rows": 3,
+        "columns": 3
+      },
+      "regions": [
+        {
+          "id": "region1",
+          "name": "Region 1",
+          "gridArea": [
+            "a"
+          ]
+        },
+        {
+          "id": "region2",
+          "name": "Region 2",
+          "gridArea": [
+            "b"
+          ]
+        },
+        {
+          "id": "region3",
+          "name": "Region 3",
+          "gridArea": [
+            "c"
+          ]
+        },
+        {
+          "id": "region4",
+          "name": "Region 4",
+          "gridArea": [
+            "d"
+          ]
+        },
+        {
+          "id": "region5",
+          "name": "Region 5",
+          "gridArea": [
+            "e"
+          ]
+        },
+        {
+          "id": "region6",
+          "name": "Region 6",
+          "gridArea": [
+            "f"
+          ]
+        },
+        {
+          "id": "region7",
+          "name": "Region 7",
+          "gridArea": [
+            "g"
+          ]
+        },
+        {
+          "id": "region8",
+          "name": "Region 8",
+          "gridArea": [
+            "h"
+          ]
+        },
+        {
+          "id": "region9",
+          "name": "Region 9",
+          "gridArea": [
+            "i"
+          ]
+        }
+      ]
     }
   ]
 }

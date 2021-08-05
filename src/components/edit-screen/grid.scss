@@ -1,0 +1,11 @@
+.grid {
+  display: grid;
+  max-width: 50%;
+
+  .grid-item {
+    background-color: lightblue;
+    border: 1px dotted black;
+    margin: 1px;
+    padding: 2em;
+  }
+}
