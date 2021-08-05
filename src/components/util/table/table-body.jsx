@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import get from "lodash/get";
+import get from "lodash.get";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 
