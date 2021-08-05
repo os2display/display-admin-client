@@ -22,13 +22,15 @@ function NavItems() {
   const [t] = useTranslation("common");
   return (
     <>
-      <Nav.Item>
+      {/* TODO: Dashboard is hidden for now */}
+
+      {/* <Nav.Item>
         <Link id="navbar_dashboard" className="nav-link" to="/dashboard">
           <FontAwesomeIcon className="me-2" icon={faTachometerAlt} />
           {t("nav-items.dashboard")}
         </Link>
       </Nav.Item>
-      <hr className="d-none d-md-block" />
+      <hr className="d-none d-md-block" /> */}
       <Nav.Item>
         <Link id="nav-items_slides" className="nav-link d-inline" to="/slides">
           <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
@@ -54,6 +56,29 @@ function NavItems() {
           to="/media-list"
         >
           {t("nav-items.content-media")}
+        </Link>
+      </Nav.Item>
+      <hr className="d-none d-md-block" />
+      <Nav.Item>
+        <Link
+          id="nav-items_playlists_playlists"
+          className="nav-link d-inline"
+          to="/playlists"
+        >
+          <FontAwesomeIcon className="me-2" icon={faStream} />
+          {t("nav-items.playlists-playlists")}
+        </Link>
+        <Link className="nav-link d-inline" to="/screens/new">
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+        </Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Link
+          id="nav-items_playlists_categories"
+          className="nav-link ms-4 small"
+          to="/categories"
+        >
+          {t("nav-items.playlists-categories")}
         </Link>
       </Nav.Item>
       <hr className="d-none d-md-block" />
@@ -86,29 +111,6 @@ function NavItems() {
           to="/locations"
         >
           {t("nav-items.screens-locations")}
-        </Link>
-      </Nav.Item>
-      <hr className="d-none d-md-block" />
-      <Nav.Item>
-        <Link
-          id="nav-items_playlists_playlists"
-          className="nav-link d-inline"
-          to="/playlists"
-        >
-          <FontAwesomeIcon className="me-2" icon={faStream} />
-          {t("nav-items.playlists-playlists")}
-        </Link>
-        <Link className="nav-link d-inline" to="/screens/new">
-          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-        </Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Link
-          id="nav-items_playlists_categories"
-          className="nav-link ms-4 small"
-          to="/categories"
-        >
-          {t("nav-items.playlists-categories")}
         </Link>
       </Nav.Item>
       <hr className="d-none d-md-block" />
