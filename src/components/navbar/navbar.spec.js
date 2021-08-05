@@ -51,6 +51,6 @@ describe("Navbar loads", () => {
     cy.get("#navbar_configuration_themes").click();
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Spillelister/);
+      .should("match", /^Temaer/);
   });
 });
