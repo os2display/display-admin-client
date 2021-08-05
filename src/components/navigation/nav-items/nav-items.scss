@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap/";
+
+.nav-item {
+  margin-bottom: $spacer;
+}
+@include media-breakpoint-up(sm) {
+  .nav-item {
+    margin-bottom: 0;
+  }
+}

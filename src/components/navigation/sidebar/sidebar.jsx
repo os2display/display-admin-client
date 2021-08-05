@@ -12,15 +12,15 @@ import "./sidebar.scss";
  */
 function SideBar() {
   return (
-    <Col className="bg-dark" sm={2}>
-      <Navbar variant="dark" expand="lg">
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav variant="pills" className="sidebar-nav flex-column w-100">
-            <NavItems />
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+    <Col className="bg-light border-end d-none d-md-block py-3" sm={2}>
+      {/* <Navbar variant="light" expand="lg"> */}
+      {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+      {/* <Navbar.Collapse id="basic-navbar-nav"> */}
+      <Nav variant="light" className="sidebar-nav flex-column w-100">
+        <NavItems />
+      </Nav>
+      {/* </Navbar.Collapse> */}
+      {/* </Navbar> */}
     </Col>
   );
 }

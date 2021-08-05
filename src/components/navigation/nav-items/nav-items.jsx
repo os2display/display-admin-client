@@ -11,6 +11,7 @@ import {
   faPlusCircle,
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
+import "./nav-items.scss";
 /**
  * The nav items.
  *
@@ -27,14 +28,14 @@ function NavItems() {
           {t("nav-items.dashboard")}
         </Link>
       </Nav.Item>
-      <hr />
+      <hr className="d-none d-md-block" />
       <Nav.Item>
         <Link id="nav-items_slides" className="nav-link d-inline" to="/slides">
           <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
           {t("nav-items.content-slides")}
         </Link>
         <Link className="nav-link d-inline" to="/slides/new">
-          <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
       <Nav.Item>
@@ -55,7 +56,7 @@ function NavItems() {
           {t("nav-items.content-media")}
         </Link>
       </Nav.Item>
-      <hr />
+      <hr className="d-none d-md-block" />
       <Nav.Item>
         <Link
           id="nav-items_screens_screens"
@@ -66,7 +67,7 @@ function NavItems() {
           {t("nav-items.screens-screens")}
         </Link>
         <Link className="nav-link d-inline" to="/screens/new">
-          <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
       <Nav.Item>
@@ -87,7 +88,7 @@ function NavItems() {
           {t("nav-items.screens-locations")}
         </Link>
       </Nav.Item>
-      <hr />
+      <hr className="d-none d-md-block" />
       <Nav.Item>
         <Link
           id="nav-items_playlists_playlists"
@@ -98,7 +99,7 @@ function NavItems() {
           {t("nav-items.playlists-playlists")}
         </Link>
         <Link className="nav-link d-inline" to="/screens/new">
-          <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
       <Nav.Item>
@@ -110,7 +111,7 @@ function NavItems() {
           {t("nav-items.playlists-categories")}
         </Link>
       </Nav.Item>
-      <hr />
+      <hr className="d-none d-md-block" />
       <Nav.Item>
         <Link id="nav-items_settings" className="nav-link" to="/settings">
           <FontAwesomeIcon className="me-2" icon={faCog} />

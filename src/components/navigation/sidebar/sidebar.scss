@@ -1,8 +1,8 @@
-.navbar-dark {
+.navbar-light {
   .sidebar-nav {
     &.navbar-nav {
       .nav-link {
-        color: white;
+        color: var(--bs-gray-dark);
       }
     }
   }
