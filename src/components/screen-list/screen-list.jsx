@@ -11,6 +11,7 @@ import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
 import LiveIcon from "./live-icon";
+import ContentHeader from "../util/content-header/content-header";
 
 /**
  * The screen list component.
@@ -190,17 +191,12 @@ function ScreenList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("screens-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/screen/new">
-            {t("screens-list.create-new-screen")}
-          </Link>
-        </Col>
-      </Row>
+    <>
+      <ContentHeader
+        title={t("screens-list.header")}
+        newBtnTitle={t("screens-list.create-new-screen")}
+        newBtnLink={"/screen/new"}
+      />
       {screens.screens && (
         <List
           columns={columns}
@@ -221,7 +217,7 @@ function ScreenList() {
         dataStructureToDisplay={inGroups}
         title={t("screens-list.info-modal.screen-in-groups")}
       />
-    </Container>
+    </>
   );
 }
 

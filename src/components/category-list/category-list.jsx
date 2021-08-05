@@ -9,6 +9,7 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
+import ContentHeader from "../util/content-header/content-header";
 
 /**
  * The category list component.
@@ -174,17 +175,12 @@ function CategoryList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("category-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary" to="/category/new">
-            {t("category-list.create-new-category")}
-          </Link>
-        </Col>
-      </Row>
+    <>
+      <ContentHeader
+        title={t("category-list.header")}
+        newBtnTitle={t("category-list.create-new-category")}
+        newBtnLink={"/category/new"}
+      />
       {categories && (
         <List
           showMerge
@@ -206,7 +202,7 @@ function CategoryList() {
         dataStructureToDisplay={onPlaylists}
         title={t("category-list.info-modal.category-playlists")}
       />
-    </Container>
+    </>
   );
 }
 

@@ -7,6 +7,8 @@ import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
+import ContentHeader from "../util/content-header/content-header";
+
 /**
  * The tag list component.
  *
@@ -142,17 +144,12 @@ function TagList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("tag-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/tag/new">
-            {t("tag-list.create-new-tag")}
-          </Link>
-        </Col>
-      </Row>
+    <>
+      <ContentHeader
+        title={t("tag-list.header")}
+        newBtnTitle={t("tag-list.create-new-tag")}
+        newBtnLink={"/tag/new"}
+      />
       {tags.tags && (
         <List
           showMerge
@@ -168,7 +165,7 @@ function TagList() {
         handleAccept={handleDelete}
         selectedRows={selectedRows}
       />
-    </Container>
+    </>
   );
 }
 

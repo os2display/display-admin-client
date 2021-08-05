@@ -9,6 +9,7 @@ import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
+import ContentHeader from "../util/content-header/content-header";
 
 /**
  * The category list component.
@@ -204,15 +205,12 @@ function SlidesList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("slides-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Button>{t("slides-list.create-new-slide")}</Button>
-        </Col>
-      </Row>
+    <>
+      <ContentHeader
+        title={t("slides-list.header")}
+        newBtnTitle={t("slides-list.create-new-slide")}
+        newBtnLink={"/slides/new"}
+      />
       {slides && (
         <List
           columns={columns}
@@ -233,7 +231,7 @@ function SlidesList() {
         dataStructureToDisplay={onPlaylists}
         title={t("slides-list.info-modal.slide-on-playlists")}
       />
-    </Container>
+    </>
   );
 }
 

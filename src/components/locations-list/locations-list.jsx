@@ -9,6 +9,7 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
+import ContentHeader from "../util/content-header/content-header";
 
 /**
  * The locations list component.
@@ -199,17 +200,12 @@ function LocationsList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("locations-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/location/new">
-            {t("locations-list.create-new-location")}
-          </Link>
-        </Col>
-      </Row>
+    <>
+      <ContentHeader
+        title={t("locations-list.header")}
+        newBtnTitle={t("locations-list.create-new-location")}
+        newBtnLink={"/location/new"}
+      />
       {locations && (
         <List
           columns={columns}
@@ -230,7 +226,7 @@ function LocationsList() {
         dataStructureToDisplay={dataStructureToDisplay}
         title={infoModalTitle}
       />
-    </Container>
+    </>
   );
 }
 
