@@ -1,9 +1,7 @@
-.navbar-light {
-  .sidebar-nav {
-    &.navbar-nav {
-      .nav-link {
-        color: var(--bs-gray-dark);
-      }
+.sidebar-nav {
+  &.nav-light {
+    .nav-link {
+      color: var(--bs-gray-dark);
     }
   }
 }
