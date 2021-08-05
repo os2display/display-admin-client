@@ -24,7 +24,7 @@ describe("Edit playlist page tests", () => {
 
   it("It removes from screens list", () => {
     cy.visit("/playlist/32");
-    cy.get("tbody").eq(0).find("tr td").should("have.length", 6);
+    cy.get("tbody").eq(0).find("tr td").should("have.length", 7);
     cy.get("tbody").eq(0).find("tr td button").eq(1).click();
     cy.get("tbody").should("have.length", 1);
   });
@@ -39,7 +39,7 @@ describe("Edit playlist page tests", () => {
     cy.visit("/playlist/32");
     cy.get("#drag-and-drop-table").find("tr td").should("have.length", 6);
     cy.get("#drag-and-drop-table").find("tr td button").eq(1).click();
-    cy.get("#drag-and-drop-table").should("have.length", 1);
+    cy.get("#drag-and-drop-table").should("not.exist");
   });
 
   it("It opens info modal drag-drop table", () => {
