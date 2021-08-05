@@ -102,7 +102,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div>
-      <Table>
+      <Table id="drag-and-drop-table">
         <TableHeader columns={columns} />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
