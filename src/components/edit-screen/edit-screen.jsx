@@ -186,7 +186,7 @@ function EditScreen() {
           grid={grid}
           handleInput={handleInput}
           selectedData={formStateObject.playlists}
-        ></Grid>
+        />
         <FormInput
           name="descriptionOfLocation"
           type="text"

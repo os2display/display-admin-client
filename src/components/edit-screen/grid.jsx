@@ -10,6 +10,9 @@ import "./grid.scss";
  *   Props.
  * @param {object} props.screen
  *   The screen data.
+ * @param props.grid
+ * @param props.handleInput
+ * @param props.selectedData
  * @returns {JSX.Element}
  *   The component.
  */
@@ -123,8 +126,12 @@ function Grid({ grid, handleInput, selectedData }) {
     return "a / a / i / i";
   }
 
+  /**
+   * @param root0
+   * @param root0.target
+   */
   function handleChange({ target }) {
-    let localTarget = target.value.map((value) => {
+    const localTarget = target.value.map((value) => {
       return {
         region: target.id,
         ...value,
