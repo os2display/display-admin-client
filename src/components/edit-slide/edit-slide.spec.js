@@ -1,3 +1,10 @@
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})
+
+
 describe("Edit slide page tests", () => {
   it("It validates new slide", () => {
     cy.visit("/slide/new");
