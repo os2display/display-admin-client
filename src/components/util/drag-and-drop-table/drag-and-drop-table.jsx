@@ -94,7 +94,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
     margin: `0 0 ${10}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "grey",
+    background: isDragging ? "lightgreen" : "lightgrey",
 
     // styles we need to apply on draggables
     ...draggableStyle,

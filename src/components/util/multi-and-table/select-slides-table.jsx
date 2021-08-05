@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import Table from "../table/table";
+import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import InfoModal from "../../info-modal/info-modal";
 import Published from "../../slides-list/published";
 
@@ -116,8 +117,16 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
         handleSlideSelection={handleChange}
         selected={selectedData}
       />
-      {selectedData?.length > 0 && (
+      {/* {selectedData?.length > 0 && (
         <Table columns={columns} data={selectedData} />
+      )} */}
+      {selectedData && (
+        <DragAndDropTable
+          columns={columns}
+          onDropped={handleChange}
+          name={name}
+          data={selectedData}
+        />
       )}
       <InfoModal
         show={showInfoModal}
