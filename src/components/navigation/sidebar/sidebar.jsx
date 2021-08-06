@@ -1,5 +1,4 @@
 import { React } from "react";
-import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Col from "react-bootstrap/Col";
 import NavItems from "../nav-items/nav-items";
@@ -12,11 +11,14 @@ import "./sidebar.scss";
  */
 function SideBar() {
   return (
-    <Col className="bg-light border-end d-none d-md-block py-3" sm={2}>
+    <Col className="bg-light border-end d-none d-md-block" sm={2}>
       {/* <Navbar variant="light" expand="lg"> */}
       {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
       {/* <Navbar.Collapse id="basic-navbar-nav"> */}
-      <Nav variant="light" className="sidebar-nav flex-column w-100">
+      <Nav
+        variant="light"
+        className="sidebar-nav flex-column w-100 py-3 sticky-md-top"
+      >
         <NavItems />
       </Nav>
       {/* </Navbar.Collapse> */}
