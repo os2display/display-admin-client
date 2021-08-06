@@ -183,13 +183,15 @@ function EditScreen() {
             value={formStateObject.screenLayout}
           />
         )}
-        <GridGenerationAndSelect
-          grid={grid?.grid}
-          layout={formStateObject.horizontalOrVertical}
-          regions={grid?.regions}
-          handleInput={handleInput}
-          selectedData={formStateObject.playlists}
-        />
+        {grid?.grid && (
+          <GridGenerationAndSelect
+            grid={grid?.grid}
+            layout={formStateObject.horizontalOrVertical}
+            regions={grid?.regions}
+            handleInput={handleInput}
+            selectedData={formStateObject.playlists}
+          />
+        )}
         <FormInput
           name="descriptionOfLocation"
           type="text"

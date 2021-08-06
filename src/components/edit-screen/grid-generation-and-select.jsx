@@ -59,6 +59,7 @@ function GridGenerationAndSelect({
         {regions &&
           regions.map((data) => (
             <div
+              key={data.id}
               className="grid-item"
               style={{ gridArea: createGridArea(data.gridArea) }}
             >
@@ -105,7 +106,7 @@ GridGenerationAndSelect.propTypes = {
   handleInput: PropTypes.func.isRequired,
   regions: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       name: PropTypes.string,
       gridArea: PropTypes.arrayOf(PropTypes.string),
     })
