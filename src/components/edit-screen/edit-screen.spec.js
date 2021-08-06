@@ -92,6 +92,6 @@ describe("Edit screen page tests", () => {
 
   it("It has grid", () => {
     cy.visit("/screen/32");
-    cy.get(".grid-item").should("have.length",4);
+    cy.get(".grid-item").should("have.length", 4);
   });
 });
