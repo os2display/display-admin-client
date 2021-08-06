@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Tabs, Tab } from "react-bootstrap";
+import { createGridArea, createGrid } from "os2display-grid-generator";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import "./grid.scss";
 /**
@@ -16,117 +17,26 @@ import "./grid.scss";
  * The selected data for the multidropdown.
  * @param {object} props.regions
  * The regions in the grid.
+ * @param {string} props.layout
+ * Either "horizontal" or "vertical", has styling associated
  * @returns {object}
  * The component.
  */
-function GridGenerationAndSelect({ grid, regions, handleInput, selectedData }) {
+function GridGenerationAndSelect({
+  grid,
+  layout,
+  regions,
+  handleInput,
+  selectedData,
+}) {
   const [key, setKey] = useState("region1");
-  // TODO, find a more elegant solution for grid layout.
-  const alphabet = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "x",
-    "y",
-    "z",
-    "aa",
-    "bb",
-    "cc",
-    "dd",
-    "ee",
-    "ff",
-    "gg",
-    "hh",
-    "ii",
-    "jj",
-    "kk",
-    "ll",
-    "mm",
-    "nn",
-    "oo",
-    "pp",
-    "qq",
-    "rr",
-    "ss",
-    "tt",
-    "uu",
-    "vv",
-    "xx",
-    "yy",
-    "zz",
-  ];
-
+  const gridClasses = `grid ${layout}`;
+  // Rows and columns in grid defaults to 1.
   const configColumns = grid?.columns || 1;
   const configRows = grid?.rows || 1;
-  const rootStyle = {};
-
-  /**
-   * @param {number} columns
-   *   Number of columns.
-   * @param {number} rows
-   *   Number of rows.
-   * @returns {string}
-   *   String of grid entries.
-   */
-  function createGrid(columns, rows) {
-    const arrayOfGridTemplateAreas = new Array(columns);
-    // Create two dimensional array.
-    for (let i = 0; i < arrayOfGridTemplateAreas.length; i += 1) {
-      arrayOfGridTemplateAreas[i] = new Array(rows);
-    }
-
-    let h = 0;
-
-    // Add alphabetical chartacters to array.
-    for (let i = 0; i < columns; i += 1) {
-      for (let j = 0; j < rows; j += 1) {
-        arrayOfGridTemplateAreas[i][j] = alphabet[h];
-        h += 1;
-      }
-    }
-
-    let gridTemplateAreas = "";
-    // Create the grid-template-areas string.
-    arrayOfGridTemplateAreas.forEach((element) => {
-      gridTemplateAreas += `'${element.join(" ")}'\n `;
-    });
-
-    return gridTemplateAreas;
-  }
-  rootStyle.gridTemplateAreas = createGrid(configColumns, configRows);
-  /**
-   * @param {Array} gridArray
-   *  The grid array.
-   * @returns {string}
-   *   The grid-area strings.
-   */
-  function createGridArea(gridArray) {
-    if (gridArray) {
-      const lastGridCharacter = gridArray[gridArray.length - 1];
-      const firstGridCharacter = gridArray[0];
-      return `${firstGridCharacter} / ${firstGridCharacter} / ${lastGridCharacter} / ${lastGridCharacter}`;
-    }
-    return "a / a / i / i";
-  }
+  const gridTemplateAreas = {
+    gridTemplateAreas: createGrid(configColumns, configRows),
+  };
 
   /**
    * @param {object} props
@@ -143,10 +53,9 @@ function GridGenerationAndSelect({ grid, regions, handleInput, selectedData }) {
     });
     handleInput({ target: { value: localTarget, id: "playlists" } });
   }
-
   return (
     <>
-      <div className="grid" style={rootStyle}>
+      <div className={gridClasses} style={gridTemplateAreas}>
         {regions &&
           regions.map((data) => (
             <div
@@ -192,6 +101,7 @@ GridGenerationAndSelect.propTypes = {
   selectedData: PropTypes.arrayOf(
     PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
   ).isRequired,
+  layout: PropTypes.string.isRequired,
   handleInput: PropTypes.func.isRequired,
   regions: PropTypes.arrayOf(
     PropTypes.shape({

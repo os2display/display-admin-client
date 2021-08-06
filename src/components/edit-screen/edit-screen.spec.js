@@ -14,7 +14,7 @@ describe("Edit screen page tests", () => {
 
   it("It loads drag and drop table", () => {
     cy.visit("/screen/32");
-    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 12);
+    cy.get(".table").find("tr td").should("have.length", 10);
   });
 
   it("It drags and drops", () => {
@@ -68,7 +68,7 @@ describe("Edit screen page tests", () => {
     cy.get(".dropdown-heading").eq(1).click();
     cy.get('[type="checkbox"]').eq(0).check();
     cy.get(".dropdown-heading").eq(1).click();
-    cy.get("#screenLayout").select("Footer");
+    cy.get("#screenLayout").select("3x3");
     cy.get("#save_screen").click();
     cy.get("#save_screen").should("not.exist");
   });

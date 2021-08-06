@@ -37,6 +37,7 @@
     "playlists": [
       {
         "id": 1,
+        "region": "region1",
         "createdBy": "Egbert",
         "onFollowingGroups": [
           {
@@ -73,6 +74,7 @@
       },
       {
         "id": 2,
+        "region": "region1",
         "createdBy": "Egbert",
         "onFollowingGroups": [
           {

@@ -1,11 +1,17 @@
 .grid {
   display: grid;
-  max-width: 50%;
+  max-width: 40%;
+  height: 500px;
 
   .grid-item {
     background-color: lightblue;
     border: 1px dotted black;
     margin: 1px;
     padding: 2em;
+  }
+
+  &.horizontal {
+    max-width: 60%;
+    height: 300px;
   }
 }
