@@ -33,6 +33,11 @@
     "label": "Billede"
   },
   {
+    "input": "header-h3",
+    "text": "Opsætning",
+    "name": "header"
+  },
+  {
     "input": "checkbox",
     "label": "Margin rundt om tekst",
     "name": "text-margin"

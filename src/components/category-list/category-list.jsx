@@ -9,6 +9,7 @@ import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The category list component.
@@ -180,15 +181,17 @@ function CategoryList() {
         newBtnTitle={t("category-list.create-new-category")}
         newBtnLink="/category/new"
       />
-      {categories && (
-        <List
-          showMerge
-          columns={columns}
-          selectedRows={selectedRows}
-          data={categories}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+      <ContentBody>
+        {categories && (
+          <List
+            showMerge
+            columns={columns}
+            selectedRows={selectedRows}
+            data={categories}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}

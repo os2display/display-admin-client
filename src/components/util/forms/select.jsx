@@ -52,7 +52,7 @@ function Select({
 
   return (
     <div className="form-group">
-      <label htmlFor={name}>
+      <label htmlFor={name} className="form-label">
         {label}
         {required && " *"}
       </label>

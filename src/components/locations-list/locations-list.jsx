@@ -9,6 +9,7 @@ import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The locations list component.
@@ -205,14 +206,16 @@ function LocationsList() {
         newBtnTitle={t("locations-list.create-new-location")}
         newBtnLink="/location/new"
       />
-      {locations && (
-        <List
-          columns={columns}
-          selectedRows={selectedRows}
-          data={locations}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+      <ContentBody>
+        {locations && (
+          <List
+            columns={columns}
+            selectedRows={selectedRows}
+            data={locations}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}

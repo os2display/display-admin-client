@@ -74,7 +74,14 @@ function RenderFormElement({
         if (data.required) {
           requiredFieldCallback(data.name);
         }
-        returnElement = <h2>{formData.text}</h2>;
+        returnElement = <h2 className="h4">{formData.text}</h2>;
+        break;
+      // TODO: This (header-h3) should be posible to create in a more efficient way, in combination with the above.
+      case "header-h3":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
+        returnElement = <h3 className="h5">{formData.text}</h3>;
         break;
       case "select":
         if (data.required) {

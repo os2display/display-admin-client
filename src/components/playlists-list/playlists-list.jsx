@@ -9,6 +9,7 @@ import InfoModal from "../info-modal/info-modal";
 import LinkForList from "../util/list/link-for-list";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
 /**
@@ -227,14 +228,16 @@ function PlaylistsList() {
         newBtnTitle={t("playlists-list.create-new-playlist")}
         newBtnLink="/playlist/new"
       />
-      {playlists.playlists && (
-        <List
-          columns={columns}
-          selectedRows={selectedRows}
-          data={playlists.playlists}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+      <ContentBody>
+        {playlists.playlists && (
+          <List
+            columns={columns}
+            selectedRows={selectedRows}
+            data={playlists.playlists}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}

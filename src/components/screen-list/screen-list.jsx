@@ -11,6 +11,7 @@ import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
 import LiveIcon from "./live-icon";
 import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The screen list component.
@@ -196,14 +197,16 @@ function ScreenList() {
         newBtnTitle={t("screens-list.create-new-screen")}
         newBtnLink="/screen/new"
       />
-      {screens.screens && (
-        <List
-          columns={columns}
-          selectedRows={selectedRows}
-          data={screens.screens}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+      <ContentBody>
+        {screens.screens && (
+          <List
+            columns={columns}
+            selectedRows={selectedRows}
+            data={screens.screens}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}

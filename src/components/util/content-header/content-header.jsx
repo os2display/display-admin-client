@@ -18,11 +18,11 @@ import Row from "react-bootstrap/row";
  */
 function ContentHeader({ title, newBtnTitle, newBtnLink }) {
   return (
-    <Row className="align-items-center my-3">
+    <Row className="align-items-center justify-content-between my-3">
       <Col>
         <h1>{title}</h1>
       </Col>
-      <Col md="auto">
+      <Col xs="auto">
         <Button htef={newBtnLink}>{newBtnTitle}</Button>
       </Col>
     </Row>

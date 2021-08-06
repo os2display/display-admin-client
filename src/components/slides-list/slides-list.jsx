@@ -10,6 +10,7 @@ import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The category list component.
@@ -211,14 +212,16 @@ function SlidesList() {
         newBtnTitle={t("slides-list.create-new-slide")}
         newBtnLink="/slides/new"
       />
-      {slides && (
-        <List
-          columns={columns}
-          selectedRows={selectedRows}
-          data={slides}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+      <ContentBody>
+        {slides && (
+          <List
+            columns={columns}
+            selectedRows={selectedRows}
+            data={slides}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}

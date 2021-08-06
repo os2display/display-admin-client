@@ -1,6 +1,12 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FormControl, FormGroup, FormLabel, InputGroup } from "react-bootstrap";
+import {
+  FormControl,
+  FormGroup,
+  FormLabel,
+  InputGroup,
+  Col,
+} from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 /**
@@ -45,7 +51,7 @@ function FormInput({
   }, [errors]);
 
   return (
-    <FormGroup className="mb-3">
+    <FormGroup className="mb-3" as={Col}>
       <FormLabel htmlFor={name}>
         {label}
         {required && " *"}

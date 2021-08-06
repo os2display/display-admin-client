@@ -7,6 +7,7 @@ import List from "../util/list/list";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The groups list component.
@@ -144,15 +145,17 @@ function GroupsList() {
         newBtnTitle={t("groups-list.create-new-group")}
         newBtnLink="/group/new"
       />
-      {groups.groups && (
-        <List
-          showMerge
-          columns={columns}
-          selectedRows={selectedRows}
-          data={groups.groups}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+      <ContentBody>
+        {groups.groups && (
+          <List
+            showMerge
+            columns={columns}
+            selectedRows={selectedRows}
+            data={groups.groups}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}

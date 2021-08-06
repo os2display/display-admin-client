@@ -7,6 +7,7 @@ import List from "../util/list/list";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The tag list component.
@@ -149,15 +150,17 @@ function TagList() {
         newBtnTitle={t("tag-list.create-new-tag")}
         newBtnLink="/tag/new"
       />
-      {tags.tags && (
-        <List
-          showMerge
-          columns={columns}
-          selectedRows={selectedRows}
-          data={tags.tags}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+      <ContentBody>
+        {tags.tags && (
+          <List
+            showMerge
+            columns={columns}
+            selectedRows={selectedRows}
+            data={tags.tags}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}
