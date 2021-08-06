@@ -89,4 +89,9 @@ describe("Edit screen page tests", () => {
     cy.get("#save_screen").click();
     cy.get("#save_screen").should("not.exist");
   });
+
+  it("It has grid", () => {
+    cy.visit("/screen/32");
+    cy.get(".grid-item").should("have.length",4);
+  });
 });
