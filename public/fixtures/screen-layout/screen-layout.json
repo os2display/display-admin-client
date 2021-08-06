@@ -48,6 +48,7 @@
       "regions": [
         {
           "id": "region1",
+          "name": "Region 1",
           "gridArea": [
             "a",
             "d"
@@ -61,6 +62,7 @@
         },
         {
           "id": "region2",
+          "name": "Region 2",
           "gridArea": [
             "e",
             "m"
@@ -74,6 +76,7 @@
         },
         {
           "id": "region3",
+          "name": "Region 3",
           "gridArea": [
             "q",
             "y"
@@ -87,6 +90,7 @@
         },
         {
           "id": "region4",
+          "name": "Region 4",
           "gridArea": [
             "cc",
             "oo"
@@ -100,6 +104,7 @@
         },
         {
           "id": "region5",
+          "name": "Region 5",
           "gridArea": [
             "ss",
             "vv"
@@ -113,6 +118,7 @@
         },
         {
           "id": "region6",
+          "name": "Region 6",
           "gridArea": [
             "f",
             "rr"
