@@ -1,10 +1,18 @@
 @import "~bootstrap/scss/bootstrap/";
 
 .nav-item {
-  margin-bottom: $spacer;
+  .nav-link {
+    padding-top: $spacer;
+    padding-bottom: $spacer;
+  }
 }
-@include media-breakpoint-up(sm) {
-  .nav-item {
-    margin-bottom: 0;
+
+.nav-second-level {
+  padding-left: $spacer * 2.5;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  .nav-link {
+    padding-top: $spacer / 2;
+    padding-bottom: $spacer / 2;
   }
 }

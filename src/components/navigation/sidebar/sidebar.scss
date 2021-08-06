@@ -1,7 +1,31 @@
+@import "~bootstrap/scss/bootstrap/";
+
 .sidebar-nav {
-  &.nav-light {
-    .nav-link {
-      color: var(--bs-gray-dark);
+  &.nav-dark {
+    .nav-item {
+      margin-top: $spacer;
+      .nav-link {
+        color: white;
+        &.nav-add-new {
+          &:hover {
+            color: $primary;
+          }
+        }
+      }
+      &:hover {
+        background-color: $gray-700;
+        transition: background-color 0.2s ease-in-out;
+        .nav-link {
+          color: $gray-100;
+        }
+      }
+      &.active {
+        background-color: $gray-800;
+        border-right: 3px solid $primary;
+      }
+      &.nav-second-level {
+        margin-top: 0;
+      }
     }
   }
 }

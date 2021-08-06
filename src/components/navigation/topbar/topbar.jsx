@@ -26,14 +26,21 @@ import "./topbar.scss";
 function TopBar() {
   const [t] = useTranslation("common");
   return (
-    <Navbar variant="dark" bg="dark" expand="lg">
-      <Navbar.Brand href="/" className="text-white col-lg-2">
+    <Navbar
+      variant="light"
+      bg="white"
+      expand="lg"
+      className="border-bottom shadow-sm"
+    >
+      <Navbar.Brand href="/" className="col-lg-2 d-lg-none ms-3">
         {t("topbar.brand")}
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
+      <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3" />
+      <Navbar.Collapse id="basic-navbar-nav" className="px-3">
         {/* TODO: Global searchbox: results show as list in popover when typing more than 3 characters */}
-        <SearchBox />
+        <div className="my-3 my-md-0">
+          <SearchBox />
+        </div>
         <Nav variant="dark" className="topbar-nav d-md-none">
           <NavItems />
         </Nav>
@@ -73,14 +80,21 @@ function TopBar() {
             </Dropdown.Menu>
           </Dropdown>
           <Nav.Item className="me-md-3 mb-2 mb-md-0">
-            <Link id="topbar-faq" className="btn btn-primary" to="/faq">
+            <Link id="topbar-faq" className="btn btn-dark" to="/faq">
               <FontAwesomeIcon icon={faQuestionCircle} />
               <span className="visually-hidden">{t("topbar.faq")}</span>
             </Link>
           </Nav.Item>
           <Dropdown>
-            <Dropdown.Toggle variant="outline-light" id="topbar_user">
-              <FontAwesomeIcon className="me-1 fa-lg" icon={faUserCircle} />
+            <Dropdown.Toggle
+              variant="link"
+              id="topbar_user"
+              className="text-dark text-decoration-none"
+            >
+              <FontAwesomeIcon
+                className="me-1 fa-lg text-dark text-muted"
+                icon={faUserCircle}
+              />
               {t("topbar.user")}
             </Dropdown.Toggle>
             <Dropdown.Menu>

@@ -30,35 +30,36 @@ function NavItems() {
         </Link>
       </Nav.Item>
       <hr className="d-none d-md-block" /> */}
-      <Nav.Item>
-        <Link id="nav-items_slides" className="nav-link d-inline" to="/slides">
+
+      {/* TODO: Show active item based on Route */}
+      <Nav.Item className="d-flex justify-content-between active">
+        <Link
+          id="nav-items_slides"
+          className="nav-link d-inline w-100"
+          to="/slides"
+        >
           <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
           {t("nav-items.content-slides")}
         </Link>
-        <Link className="nav-link d-inline" to="/slides/new">
+        <Link className="nav-link d-inline nav-add-new" to="/slides/new">
           <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
-      <Nav.Item>
-        <Link
-          id="nav-items_content_tags"
-          className="nav-link ms-4 small"
-          to="/tags"
-        >
+      <Nav.Item className="nav-second-level">
+        <Link id="nav-items_content_tags" className="nav-link" to="/tags">
           {t("nav-items.content-tags")}
         </Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className="nav-second-level">
         <Link
           id="nav-items_content_media"
-          className="nav-link ms-4 small"
+          className="nav-link"
           to="/media-list"
         >
           {t("nav-items.content-media")}
         </Link>
       </Nav.Item>
-      <hr className="d-none d-md-block" />
-      <Nav.Item>
+      <Nav.Item className="d-flex justify-content-between">
         <Link
           id="nav-items_playlists_playlists"
           className="nav-link d-inline"
@@ -67,21 +68,20 @@ function NavItems() {
           <FontAwesomeIcon className="me-2" icon={faStream} />
           {t("nav-items.playlists-playlists")}
         </Link>
-        <Link className="nav-link d-inline" to="/screens/new">
+        <Link className="nav-link d-inline nav-add-new" to="/screens/new">
           <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className="nav-second-level">
         <Link
           id="nav-items_playlists_categories"
-          className="nav-link ms-4 small"
+          className="nav-link"
           to="/categories"
         >
           {t("nav-items.playlists-categories")}
         </Link>
       </Nav.Item>
-      <hr className="d-none d-md-block" />
-      <Nav.Item>
+      <Nav.Item className="d-flex justify-content-between">
         <Link
           id="nav-items_screens_screens"
           className="nav-link d-inline"
@@ -90,29 +90,24 @@ function NavItems() {
           <FontAwesomeIcon className="me-2" icon={faDesktop} />
           {t("nav-items.screens-screens")}
         </Link>
-        <Link className="nav-link d-inline" to="/screens/new">
+        <Link className="nav-link d-inline nav-add-new" to="/screens/new">
           <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
-      <Nav.Item>
-        <Link
-          id="nav-items_screens_groups"
-          className="nav-link ms-4 small"
-          to="/groups"
-        >
+      <Nav.Item className="nav-second-level">
+        <Link id="nav-items_screens_groups" className="nav-link" to="/groups">
           {t("nav-items.screens-groups")}
         </Link>
       </Nav.Item>
-      <Nav.Item>
+      <Nav.Item className="nav-second-level">
         <Link
           id="nav-items_screens_locations"
-          className="nav-link ms-4 small"
+          className="nav-link"
           to="/locations"
         >
           {t("nav-items.screens-locations")}
         </Link>
       </Nav.Item>
-      <hr className="d-none d-md-block" />
       <Nav.Item>
         <Link id="nav-items_settings" className="nav-link" to="/settings">
           <FontAwesomeIcon className="me-2" icon={faCog} />

@@ -4,6 +4,7 @@ import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import TagList from "./components/tag-list/tag-list";
 import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
@@ -49,33 +50,33 @@ function App() {
   return (
     <>
       <I18nextProvider i18n={i18next}>
-        <Container fluid className="h-100">
-          <Row>
-            <TopBar />
-          </Row>
-          <Row>
+        <Container fluid className="h-100 px-0">
+          <Row className="g-0">
             <SideBar />
-            <main className="col py-3">
-              <Switch>
-                <Route path="/tags" component={TagList} />
-                <Route path="/screens" component={ScreenList} />
-                <Route path="/categories" component={CategoryList} />
-                <Route path="/locations" component={LocationsList} />
-                <Route path="/groups" component={GroupsList} />
-                <Route path="/tag/:id" component={EditTag} />
-                <Route path="/category/:id" component={EditCategories} />
-                <Route path="/group/:id" component={EditGroup} />
-                <Route path="/screen/:id" component={EditScreen} />
-                <Route path="/location/:id" component={EditLocation} />
-                <Route path="/slides" component={SlidesList} />
-                <Route path="/playlists" component={PlaylistsList} />
-                <Route path="/media-list" component={MediaList} />
-                <Route path="/playlist/:id" component={EditPlaylist} />
-                <Route path="/slide/:id" component={EditSlide} />
-                <Route path="/media/:id" component={EditMedia} />
-                <Redirect from="/" to="/slides" exact />
-              </Switch>
-            </main>
+            <Col lg={9} xl={10}>
+              <TopBar />
+              <main className="col p-3 bg-light">
+                <Switch>
+                  <Route path="/tags" component={TagList} />
+                  <Route path="/screens" component={ScreenList} />
+                  <Route path="/categories" component={CategoryList} />
+                  <Route path="/locations" component={LocationsList} />
+                  <Route path="/groups" component={GroupsList} />
+                  <Route path="/tag/:id" component={EditTag} />
+                  <Route path="/category/:id" component={EditCategories} />
+                  <Route path="/group/:id" component={EditGroup} />
+                  <Route path="/screen/:id" component={EditScreen} />
+                  <Route path="/location/:id" component={EditLocation} />
+                  <Route path="/slides" component={SlidesList} />
+                  <Route path="/playlists" component={PlaylistsList} />
+                  <Route path="/media-list" component={MediaList} />
+                  <Route path="/playlist/:id" component={EditPlaylist} />
+                  <Route path="/slide/:id" component={EditSlide} />
+                  <Route path="/media/:id" component={EditMedia} />
+                  <Redirect from="/" to="/slides" exact />
+                </Switch>
+              </main>
+            </Col>
           </Row>
         </Container>
       </I18nextProvider>

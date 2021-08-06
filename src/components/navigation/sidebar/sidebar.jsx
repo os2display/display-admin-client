@@ -1,6 +1,8 @@
 import { React } from "react";
 import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import Col from "react-bootstrap/Col";
+import { useTranslation } from "react-i18next";
 import NavItems from "../nav-items/nav-items";
 import "./sidebar.scss";
 /**
@@ -10,19 +12,21 @@ import "./sidebar.scss";
  *   The SideBar
  */
 function SideBar() {
+  const [t] = useTranslation("common");
   return (
-    <Col className="bg-light border-end d-none d-md-block" sm={2}>
-      {/* <Navbar variant="light" expand="lg"> */}
-      {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-      {/* <Navbar.Collapse id="basic-navbar-nav"> */}
+    <Col className="bg-dark border-end d-none d-lg-block" lg={3} xl={2}>
       <Nav
-        variant="light"
-        className="sidebar-nav flex-column w-100 py-3 sticky-md-top"
+        variant="dark"
+        className="sidebar-nav flex-column w-100 pb-3 sticky-md-top"
       >
+        <Navbar.Brand
+          href="/"
+          className="text-white mb-2 mt-2 ms-3 d-none d-md-block"
+        >
+          {t("topbar.brand")}
+        </Navbar.Brand>
         <NavItems />
       </Nav>
-      {/* </Navbar.Collapse> */}
-      {/* </Navbar> */}
     </Col>
   );
 }
