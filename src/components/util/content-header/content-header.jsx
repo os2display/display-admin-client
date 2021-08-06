@@ -16,7 +16,6 @@ import Row from "react-bootstrap/row";
  * @returns {object}
  * The Content header.
  */
-
 function ContentHeader({ title, newBtnTitle, newBtnLink }) {
   return (
     <Row className="align-items-center my-3">

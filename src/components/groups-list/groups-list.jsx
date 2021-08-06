@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -143,7 +142,7 @@ function GroupsList() {
       <ContentHeader
         title={t("groups-list.header")}
         newBtnTitle={t("groups-list.create-new-group")}
-        newBtnLink={"/group/new"}
+        newBtnLink="/group/new"
       />
       {groups.groups && (
         <List

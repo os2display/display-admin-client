@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -209,7 +209,7 @@ function SlidesList() {
       <ContentHeader
         title={t("slides-list.header")}
         newBtnTitle={t("slides-list.create-new-slide")}
-        newBtnLink={"/slides/new"}
+        newBtnLink="/slides/new"
       />
       {slides && (
         <List

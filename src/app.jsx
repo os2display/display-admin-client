@@ -4,7 +4,6 @@ import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import TagList from "./components/tag-list/tag-list";
 import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";

@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "./campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -195,7 +194,7 @@ function ScreenList() {
       <ContentHeader
         title={t("screens-list.header")}
         newBtnTitle={t("screens-list.create-new-screen")}
-        newBtnLink={"/screen/new"}
+        newBtnLink="/screen/new"
       />
       {screens.screens && (
         <List

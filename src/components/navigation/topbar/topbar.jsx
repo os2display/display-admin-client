@@ -1,13 +1,10 @@
 import { React } from "react";
 import Nav from "react-bootstrap/nav";
-import Col from "react-bootstrap/col";
-import Row from "react-bootstrap/row";
 import Dropdown from "react-bootstrap/dropdown";
 import Navbar from "react-bootstrap/navbar";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NavItems from "../nav-items/nav-items";
 import {
   faPlusCircle,
   faPhotoVideo,
@@ -17,6 +14,7 @@ import {
   faUserCircle,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import NavItems from "../nav-items/nav-items";
 import SearchBox from "../../util/search-box/search-box";
 import "./topbar.scss";
 /**

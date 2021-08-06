@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import List from "../util/list/list";
@@ -226,7 +225,7 @@ function PlaylistsList() {
       <ContentHeader
         title={t("playlists-list.header")}
         newBtnTitle={t("playlists-list.create-new-playlist")}
-        newBtnLink={"/playlist/new"}
+        newBtnLink="/playlist/new"
       />
       {playlists.playlists && (
         <List

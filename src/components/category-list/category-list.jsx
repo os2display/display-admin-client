@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import LinkForList from "../util/list/link-for-list";
@@ -179,7 +178,7 @@ function CategoryList() {
       <ContentHeader
         title={t("category-list.header")}
         newBtnTitle={t("category-list.create-new-category")}
-        newBtnLink={"/category/new"}
+        newBtnLink="/category/new"
       />
       {categories && (
         <List
