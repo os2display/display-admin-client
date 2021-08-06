@@ -185,7 +185,7 @@ function EditScreen() {
         )}
         <GridGenerationAndSelect
           grid={grid?.grid}
-          horizontal={formStateObject.horizontalOrVertical}
+          layout={formStateObject.horizontalOrVertical}
           regions={grid?.regions}
           handleInput={handleInput}
           selectedData={formStateObject.playlists}

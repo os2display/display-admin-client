@@ -48,7 +48,6 @@
       "regions": [
         {
           "id": "region1",
-          "name": "Region g1",
           "gridArea": [
             "a",
             "d"
@@ -62,7 +61,6 @@
         },
         {
           "id": "region2",
-          "name": "Region g2",
           "gridArea": [
             "e",
             "m"
@@ -76,10 +74,9 @@
         },
         {
           "id": "region3",
-          "name": "Region g3",
           "gridArea": [
             "q",
-            "z"
+            "y"
           ],
           "playlists": [
             {
@@ -90,10 +87,9 @@
         },
         {
           "id": "region4",
-          "name": "Region g4",
           "gridArea": [
-            "dd",
-            "pp"
+            "cc",
+            "oo"
           ],
           "playlists": [
             {
@@ -104,10 +100,9 @@
         },
         {
           "id": "region5",
-          "name": "Region g5",
           "gridArea": [
-            "tt",
-            "xx"
+            "ss",
+            "vv"
           ],
           "playlists": [
             {
@@ -118,10 +113,9 @@
         },
         {
           "id": "region6",
-          "name": "Region g6",
           "gridArea": [
             "f",
-            "ss"
+            "rr"
           ],
           "playlists": [
             {
