@@ -55,7 +55,7 @@ function App() {
           </Row>
           <Row>
             <SideBar />
-            <main className="col">
+            <main className="col py-3">
               <Switch>
                 <Route path="/tags" component={TagList} />
                 <Route path="/screens" component={ScreenList} />
@@ -73,7 +73,7 @@ function App() {
                 <Route path="/playlist/:id" component={EditPlaylist} />
                 <Route path="/slide/:id" component={EditSlide} />
                 <Route path="/media/:id" component={EditMedia} />
-                <Redirect from="/" to="/tags" exact />
+                <Redirect from="/" to="/slides" exact />
               </Switch>
             </main>
           </Row>

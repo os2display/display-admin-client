@@ -23,7 +23,6 @@ function NavItems() {
   return (
     <>
       {/* TODO: Dashboard is hidden for now */}
-
       {/* <Nav.Item>
         <Link id="navbar_dashboard" className="nav-link" to="/dashboard">
           <FontAwesomeIcon className="me-2" icon={faTachometerAlt} />
