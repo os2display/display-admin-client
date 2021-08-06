@@ -4,10 +4,14 @@
   height: 500px;
 
   .grid-item {
-    background-color: lightblue;
+    background-color: lightcyan;
     border: 1px dotted black;
     margin: 1px;
     padding: 1em;
+
+    &.selected {
+      background-color: lightblue;
+    }
   }
 
   &.horizontal {

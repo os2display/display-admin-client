@@ -60,7 +60,7 @@ function GridGenerationAndSelect({
           regions.map((data) => (
             <div
               key={data.id}
-              className="grid-item"
+              className={key === data.id ? "grid-item selected" : "grid-item "}
               style={{ gridArea: createGridArea(data.gridArea) }}
             >
               {data.name}
