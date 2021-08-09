@@ -1,12 +1,6 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-  FormControl,
-  FormGroup,
-  FormLabel,
-  InputGroup,
-  Col,
-} from "react-bootstrap";
+import { FormControl, FormGroup, FormLabel, InputGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 /**
@@ -37,6 +31,7 @@ function FormInput({
   onInvalid,
   errors,
   invalidText,
+  formGroupClasses,
 }) {
   const { t } = useTranslation("common");
   const [error, setError] = useState();
@@ -51,7 +46,7 @@ function FormInput({
   }, [errors]);
 
   return (
-    <FormGroup className="mb-3" as={Col}>
+    <FormGroup className={formGroupClasses}>
       <FormLabel htmlFor={name}>
         {label}
         {required && " *"}
@@ -77,6 +72,7 @@ function FormInput({
 
 FormInput.defaultProps = {
   helpText: "",
+  formGroupClasses: "",
   placeholder: "",
   type: "text",
   value: "",
@@ -98,6 +94,7 @@ FormInput.propTypes = {
   dataMessage: PropTypes.string,
   onInvalid: PropTypes.func,
   invalidText: PropTypes.string,
+  formGroupClasses: PropTypes.string,
 };
 
 export default FormInput;

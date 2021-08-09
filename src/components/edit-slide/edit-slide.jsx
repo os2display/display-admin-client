@@ -2,7 +2,6 @@ import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Select from "../util/forms/select";
@@ -172,31 +171,30 @@ function EditSlide() {
           </h1>
         )}
         <ContentBody>
-          <Col>
-            <FormInput
-              name="slideName"
-              type="text"
-              errors={errors}
-              label={t("edit-slide.slide-name-label")}
-              placeholder={t("edit-slide.slide-name-placeholder")}
-              value={formStateObject.slideName}
-              onChange={handleInput}
-            />
-          </Col>
-          <Col>
-            <Select
-              value={formStateObject.slideTemplate}
-              name="slideTemplate"
-              options={templateOptions}
-              onChange={handleInput}
-              label={t("edit-slide.slide-template-label")}
-              errors={errors}
-            />
-          </Col>
+          <FormInput
+            name="slideName"
+            type="text"
+            errors={errors}
+            label={t("edit-slide.slide-name-label")}
+            helpText={t("edit-slide.slide-name-placeholder")}
+            value={formStateObject.slideName}
+            onChange={handleInput}
+          />
+        </ContentBody>
+        <ContentBody>
+          <Select
+            value={formStateObject.slideTemplate}
+            name="slideTemplate"
+            options={templateOptions}
+            onChange={handleInput}
+            label={t("edit-slide.slide-template-label")}
+            helpText={t("edit-slide.slide-template-help-text")}
+            errors={errors}
+          />
         </ContentBody>
         <ContentBody>
           {formStateObject.slideTemplate && (
-            <section>
+            <section className="row">
               {/* Render slide form from jsondata */}
               {formData.map((data) => (
                 <RenderFormElement
@@ -212,6 +210,7 @@ function EditSlide() {
           )}
         </ContentBody>
         <ContentBody>
+          <h3 className="h4">{t("edit-slide.slide-select-screen-title")}</h3>
           <SelectScreenTable
             handleChange={handleInput}
             name="slideScreen"
@@ -220,12 +219,16 @@ function EditSlide() {
           />
         </ContentBody>
         <ContentBody>
+          <h3 className="h4">{t("edit-slide.slide-select-playlist-title")}</h3>
           <SelectPlaylistTable
             handleChange={handleInput}
             name="slidePlaylist"
             errors={errors}
             selectedData={formStateObject.slidePlaylist}
           />
+        </ContentBody>
+        <ContentBody>
+          <h3 className="h4">{t("edit-slide.slide-publish-title")}</h3>
           <FormCheckbox
             label={t("edit-slide.slide-publish-label")}
             onChange={handleInput}
@@ -240,12 +243,18 @@ function EditSlide() {
             type="button"
             id="slide_cancel"
             onClick={() => history.goBack()}
-            className="me-md-3"
+            className="me-md-3 col"
             size="lg"
           >
             {t("edit-slide.cancel-button")}
           </Button>
-          <Button variant="primary" type="submit" id="save_slide" size="lg">
+          <Button
+            variant="primary"
+            type="submit"
+            id="save_slide"
+            size="lg"
+            className="col"
+          >
             {t("edit-slide.save-button")}
           </Button>
         </ContentFooter>

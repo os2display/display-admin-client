@@ -182,13 +182,17 @@
   },
   "edit-slide": {
     "create-new-slide": "Opret nyt slide",
-    "edit-slide": "Rediger følgende slide",
+    "edit-slide": "Rediger slide",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
-    "slide-publish-label": "Udgiv"
+    "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide.",
+    "slide-publish-label": "Marker for at udgive dette slide",
+    "slide-select-screen-title": "Skærme",
+    "slide-select-playlist-title": "Spillelister",
+    "slide-publish-title": "Udgivelse"
   },
   "edit-group": {
     "create-new-group": "Opret ny gruppe",
@@ -335,7 +339,8 @@
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
-      "number-of-slides": "Slides tilknyttede"
+      "number-of-slides": "Slides tilknyttede",
+      "number-of-categories": "Kategorier"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",

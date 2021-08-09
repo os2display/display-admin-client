@@ -10,7 +10,11 @@ import PropTypes from "prop-types";
  * The Content header.
  */
 function ContentFooter({ children }) {
-  return <section className="d-grid gap-2 d-lg-block">{children}</section>;
+  return (
+    <section className="d-grid gap-2 d-lg-block align-items-end mb-5">
+      {children}
+    </section>
+  );
 }
 
 ContentFooter.propTypes = {
