@@ -1,7 +1,7 @@
 import { React } from "react";
-import Nav from "react-bootstrap/nav";
-import Dropdown from "react-bootstrap/dropdown";
-import Navbar from "react-bootstrap/navbar";
+import Nav from "react-bootstrap/Nav";
+import Dropdown from "react-bootstrap/Dropdown";
+import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
