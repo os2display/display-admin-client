@@ -39,10 +39,13 @@ describe("Nav items loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Spillelister/);
-    cy.get("#navbar_configuration").click();
-    cy.get("#navbar_configuration_themes").click();
+    cy.get("#nav-items_configuration_themes").click();
     cy.get("h1")
       .invoke("text")
       .should("match", /^Temaer/);
+    cy.get("#nav-items_configuration_users").click();
+    cy.get("h1")
+      .invoke("text")
+      .should("match", /^Brugere/);
   });
 });

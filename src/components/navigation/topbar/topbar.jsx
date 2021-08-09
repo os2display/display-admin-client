@@ -2,6 +2,7 @@ import { React } from "react";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
+import FormControl from "react-bootstrap/FormControl";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +16,6 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import NavItems from "../nav-items/nav-items";
-import SearchBox from "../../util/search-box/search-box";
 import "./topbar.scss";
 /**
  * The side bar component.
@@ -39,7 +39,13 @@ function TopBar() {
       <Navbar.Collapse id="basic-navbar-nav" className="px-3">
         {/* TODO: Global searchbox: results show as list in popover when typing more than 3 characters */}
         <div className="my-3 my-md-0">
-          <SearchBox />
+          <FormControl
+            placeholder={t("search-box.placeholder")}
+            id="global-search-field"
+            role="search"
+            name="search"
+            className="form-control"
+          />
         </div>
         <Nav variant="dark" id="topbar" className="topbar-nav d-md-none">
           <NavItems />

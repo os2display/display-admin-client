@@ -21,7 +21,7 @@ describe("Edit user page tests", () => {
     cy.get("#save_user")
       .invoke("text")
       .should("match", /^Gem bruger/);
-    cy.get("input").type("x");
+    cy.get("#userName").type("x");
     cy.get("#save_user").click();
     cy.get("#save_user").should("not.exist");
   });

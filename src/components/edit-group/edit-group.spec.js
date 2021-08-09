@@ -21,7 +21,7 @@ describe("Edit group page loads", () => {
     cy.get("#save_group")
       .invoke("text")
       .should("match", /^Gem gruppen/);
-    cy.get("input").type("x");
+    cy.get("#groupName").type("x");
     cy.get("#save_group").click();
     cy.get("#save_group").should("not.exist");
   });

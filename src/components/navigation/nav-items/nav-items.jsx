@@ -116,7 +116,7 @@ function NavItems() {
       </Nav.Item>
       <Nav.Item className="nav-second-level">
         <Link
-          id="navbar_configuration_themes"
+          id="nav-items_configuration_themes"
           className="nav-link"
           to="/themes"
         >
@@ -124,7 +124,11 @@ function NavItems() {
         </Link>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link id="navbar_configuration_users" className="nav-link" to="/users">
+        <Link
+          id="nav-items_configuration_users"
+          className="nav-link"
+          to="/users"
+        >
           {t("navbar.configuration-users")}
         </Link>
       </Nav.Item>
