@@ -84,6 +84,8 @@
     },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
+    "change-view-list": "Liste",
+    "change-view-calendar": "Kalender",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
@@ -94,7 +96,7 @@
       "created-by": "Oprettet af"
     },
     "header": "Grupper",
-    "create-new-group": "Opret ny skærm",
+    "create-new-group": "Opret ny grupee",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },

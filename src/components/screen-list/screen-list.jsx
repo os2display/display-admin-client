@@ -6,6 +6,7 @@ import CheckboxForList from "../util/list/checkbox-for-list";
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
+import Calendar from "./calendar";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
@@ -22,6 +23,7 @@ import ContentBody from "../util/content-body/content-body";
 function ScreenList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
+  const [listView, setListView] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
