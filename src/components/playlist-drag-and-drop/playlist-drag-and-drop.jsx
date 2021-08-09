@@ -146,7 +146,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
   return (
     <>
       <PlaylistsDropdown
-        name={formId}
+        name={name}
         handlePlaylistSelection={handleChange}
         selected={data}
       />
