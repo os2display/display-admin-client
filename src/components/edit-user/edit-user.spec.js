@@ -9,7 +9,7 @@ describe("Edit user page tests", () => {
     cy.get("h1").should("not.be.empty");
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Rediger følgende bruger: matrices/);
+      .should("match", /^Rediger følgende bruger: Ellene Gilardengo/);
   });
 
   it("It validates new user", () => {
