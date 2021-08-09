@@ -2,33 +2,35 @@ import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
-import List from "../util/list/list";
 import LinkForList from "../util/list/link-for-list";
+import List from "../util/list/list";
+import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
+import ColorPreviewForList from "./color-preview-for-list";
+import ImageForList from "./image-for-list";
 
 /**
- * The groups list component.
+ * The themes list component.
  *
  * @returns {object}
- * The groups list.
+ * The themes list
  */
-function GroupsList() {
+function ThemesList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [groups, setGroups] = useState([]);
+  const [themes, setThemes] = useState([]);
 
   /**
    * Load content from fixture.
    */
   useEffect(() => {
     // @TODO load real content.
-    fetch(`/fixtures/groups/groups.json`)
+    fetch(`/fixtures/themes/themes.json`)
       .then((response) => response.json())
       .then((jsonData) => {
-        setGroups(jsonData);
+        setThemes(jsonData.themes);
       });
   }, []);
 
@@ -48,9 +50,9 @@ function GroupsList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the group.
+   * The name of the tag.
    * @param {number} props.id
-   * The id of the group
+   * The id of the tag
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
@@ -61,7 +63,7 @@ function GroupsList() {
   const columns = [
     {
       key: "pick",
-      label: t("groups-list.columns.pick"),
+      label: t("themes-list.columns.pick"),
       content: (data) => (
         <CheckboxForList onSelected={() => handleSelected(data)} />
       ),
@@ -69,20 +71,33 @@ function GroupsList() {
     {
       path: "name",
       sort: true,
-      label: t("groups-list.columns.name"),
+      label: t("themes-list.columns.name"),
     },
     {
       path: "createdBy",
       sort: true,
-      label: t("groups-list.columns.created-by"),
+      label: t("themes-list.columns.created-by"),
+    },
+    {
+      label: t("themes-list.columns.colors"),
+      key: "colors",
+      content: (data) => <ColorPreviewForList data={data} />,
+    },
+    {
+      label: t("themes-list.columns.font"),
+      path: "font.name",
+    },
+    {
+      content: (data) => <ImageForList data={data} />,
+      label: t("themes-list.columns.logo"),
     },
     {
       key: "edit",
       content: (data) => (
         <LinkForList
           data={data}
-          label={t("groups-list.edit-button")}
-          param="group"
+          label={t("themes-list.edit-button")}
+          param="theme"
         />
       ),
     },
@@ -96,7 +111,7 @@ function GroupsList() {
               disabled={selectedRows.length > 0}
               onClick={() => openDeleteModal(data)}
             >
-              {t("groups-list.delete-button")}
+              {t("themes-list.delete-button")}
             </Button>
           </div>
         </>
@@ -105,14 +120,14 @@ function GroupsList() {
   ];
 
   /**
-   * Deletes group, and closes modal.
+   * Deletes screen, and closes modal.
    *
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the group.
+   * The name of the tag.
    * @param {number} props.id
-   * The id of the group
+   * The id of the tag
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
@@ -124,7 +139,7 @@ function GroupsList() {
   /**
    * Closes the delete modal.
    */
-  function onCloseModal() {
+  function onCloseDeleteModal() {
     setSelectedRows([]);
     setShowDeleteModal(false);
   }
@@ -133,25 +148,20 @@ function GroupsList() {
     <Container>
       <Row className="align-items-end mt-2">
         <Col>
-          <h1>{t("groups-list.header")}</h1>
+          <h1>{t("themes-list.header")}</h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/group/new">
-            {t("groups-list.create-new-group")}
+          <Link className="btn btn-primary btn-success" to="/theme/new">
+            {t("themes-list.create-new-theme")}
           </Link>
         </Col>
       </Row>
-      {groups.groups && (
-        <List
-          showMerge
-          columns={columns}
-          selectedRows={selectedRows}
-          data={groups.groups}
-        />
+      {themes && (
+        <List columns={columns} selectedRows={selectedRows} data={themes} />
       )}
       <DeleteModal
         show={showDeleteModal}
-        onClose={onCloseModal}
+        onClose={onCloseDeleteModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
       />
@@ -159,4 +169,4 @@ function GroupsList() {
   );
 }
 
-export default GroupsList;
+export default ThemesList;

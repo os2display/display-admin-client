@@ -146,7 +146,12 @@ function TagList() {
         </Col>
       </Row>
       {tags.tags && (
-        <List columns={columns} selectedRows={selectedRows} data={tags.tags} />
+        <List
+          showMerge
+          columns={columns}
+          selectedRows={selectedRows}
+          data={tags.tags}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}

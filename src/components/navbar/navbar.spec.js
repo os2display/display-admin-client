@@ -47,5 +47,10 @@ describe("Navbar loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Spillelister/);
+    cy.get("#navbar-configuration").click();
+    cy.get("#navbar_configuration_themes").click();
+    cy.get("h1")
+      .invoke("text")
+      .should("match", /^Temaer/);
   });
 });

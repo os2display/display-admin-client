@@ -19,6 +19,19 @@
     "name-label": "Taggets navn",
     "name-placeholder": "Udfyld taggets navn"
   },
+  "edit-theme": {
+    "create-new-theme": "Opret nyt tema",
+    "edit-theme": "Rediger følgende tema",
+    "save-button": "Gem tema",
+    "cancel-button": "Annuller",
+    "name-label": "Temaets navn",
+    "name-placeholder": "Udfyld temaets navn",
+    "pick-primary-color": "Vælg primærfarve",
+    "pick-secondary-color": "Vælg sekundærfarve",
+    "pick-tertiary-color": "Vælg tertiærfarve",
+    "pick-font-color": "Font farve",
+    "font-label": "Vælg font"
+  },
   "slides-list": {
     "columns": {
       "pick": "Vælg slide",
@@ -90,6 +103,20 @@
     },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
+  "themes-list": {
+    "columns": {
+      "pick": "Vælg tema",
+      "name": "Navn",
+      "created-by": "Oprettet af",
+      "colors": "Temaets farver",
+      "font": "Font",
+      "logo": "Logo"
+    },
+    "header": "Temaer",
+    "create-new-theme": "Opret nyt tema",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
@@ -352,6 +379,8 @@
     "screens-locations": "Lokationer",
     "playlists": "Spillelister",
     "playlists-playlists": "Spillelister",
-    "playlists-categories": "Kategorier"
+    "playlists-categories": "Kategorier",
+    "configuration": "indstillinger",
+    "configuration-themes": "Temaer"
   }
 }

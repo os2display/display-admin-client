@@ -176,7 +176,12 @@ function CategoryList() {
         </Col>
       </Row>
       {categories && (
-        <List columns={columns} selectedRows={selectedRows} data={categories} />
+        <List
+          showMerge
+          columns={columns}
+          selectedRows={selectedRows}
+          data={categories}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}

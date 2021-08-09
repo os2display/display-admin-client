@@ -79,7 +79,7 @@ function Select({
 }
 
 Select.defaultProps = {
-  errors: [],
+  errors: null,
   errorText: "",
   helpText: "",
   value: "",

@@ -40,7 +40,6 @@ function ImageUploader({
   const [error, setError] = useState();
   const invalidInputText = invalidText || t("image-uploader.validation-text");
   const [showMediaModal, setShowMediaModal] = useState(false);
-
   /**
    * Handle errors.
    */

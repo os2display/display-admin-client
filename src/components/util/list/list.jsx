@@ -20,10 +20,12 @@ import MergeModal from "../../merge-modal/merge-modal";
  * The columns for the table.
  * @param {Array} props.selectedRows
  * The selected rows, for styling.
+ * @param {object} props.showMerge
+ * Whether to show the merge button.
  * @returns {object}
  * The List.
  */
-function List({ data, columns, selectedRows }) {
+function List({ data, columns, selectedRows, showMerge }) {
   const { t } = useTranslation("common");
   const { search } = useLocation();
   const history = useHistory();
@@ -213,17 +215,19 @@ function List({ data, columns, selectedRows }) {
               {t("list.delete-button")}
             </Button>
           </div>
-          <div className="ml-4">
-            <Button
-              className="ml-2"
-              id="merge-button"
-              disabled={disableMergeButton}
-              onClick={() => setMergeMergeModal(true)}
-              variant="success"
-            >
-              {t("list.merge-button")}
-            </Button>
-          </div>
+          {showMerge && (
+            <div className="ml-4">
+              <Button
+                className="ml-2"
+                id="merge-button"
+                disabled={disableMergeButton}
+                onClick={() => setMergeMergeModal(true)}
+                variant="success"
+              >
+                {t("list.merge-button")}
+              </Button>
+            </div>
+          )}
         </Col>
       </Row>
       <Table
@@ -255,11 +259,16 @@ function List({ data, columns, selectedRows }) {
   );
 }
 
+List.defaultProps = {
+  showMerge: false,
+};
+
 List.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes.isRequired,
+  showMerge: PropTypes.bool,
 };
 export default List;
