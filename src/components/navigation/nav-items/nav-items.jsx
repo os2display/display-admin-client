@@ -34,7 +34,7 @@ function NavItems() {
       {/* TODO: Show active item based on Route */}
       <Nav.Item className="d-flex justify-content-between active">
         <Link
-          id="nav-items_slides"
+          id="nav-items_content_slides"
           className="nav-link d-inline w-100"
           to="/slides"
         >

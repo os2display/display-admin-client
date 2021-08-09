@@ -41,7 +41,7 @@ function TopBar() {
         <div className="my-3 my-md-0">
           <SearchBox />
         </div>
-        <Nav variant="dark" className="topbar-nav d-md-none">
+        <Nav variant="dark" id="topbar" className="topbar-nav d-md-none">
           <NavItems />
         </Nav>
         <Nav className="ms-md-auto mt-3 mt-md-0">
@@ -52,7 +52,7 @@ function TopBar() {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Link
-                id="nav-items_slides"
+                id="nav-items_add_slide"
                 className="dropdown-item"
                 to="/slides"
               >
@@ -61,7 +61,7 @@ function TopBar() {
               </Link>
 
               <Link
-                id="nav-items_screens_screens"
+                id="nav-items_add_screen"
                 className="dropdown-item"
                 to="/screens"
               >
@@ -70,7 +70,7 @@ function TopBar() {
               </Link>
 
               <Link
-                id="nav-items_playlists_playlists"
+                id="nav-items_add_playlist"
                 className="dropdown-item"
                 to="/playlists"
               >

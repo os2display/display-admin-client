@@ -17,6 +17,7 @@ function SideBar() {
     <Col className="bg-dark border-end d-none d-lg-block" lg={3} xl={2}>
       <Nav
         variant="dark"
+        id="sidebar"
         className="sidebar-nav flex-column w-100 pb-3 sticky-md-top"
       >
         <Navbar.Brand
