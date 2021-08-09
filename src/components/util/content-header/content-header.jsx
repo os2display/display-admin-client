@@ -1,8 +1,8 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import Button from "react-bootstrap/button";
-import Col from "react-bootstrap/col";
-import Row from "react-bootstrap/row";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 /**
  * @param {object} props
