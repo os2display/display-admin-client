@@ -11,6 +11,17 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
+  "user-list": {
+    "columns": {
+      "pick": "Vælg bruger",
+      "name": "Navn",
+      "created-by": "Oprettet af"
+    },
+    "header": "Brugere",
+    "create-new-tag": "Opret ny bruger",
+    "delete-button": "Slet",
+    "edit-button": "Rediger"
+  },
   "edit-tag": {
     "create-new-tag": "Opret nyt tag",
     "edit-tag": "Rediger følgende tag",
@@ -18,6 +29,14 @@
     "cancel-button": "Annuller",
     "name-label": "Taggets navn",
     "name-placeholder": "Udfyld taggets navn"
+  },
+  "edit-user": {
+    "create-new-user": "Opret ny bruger",
+    "edit-user": "Rediger følgende bruger",
+    "save-button": "Gem bruger",
+    "cancel-button": "Annuller",
+    "name-label": "Brugerens navn",
+    "name-placeholder": "Udfyld brugerens navn"
   },
   "edit-theme": {
     "create-new-theme": "Opret nyt tema",
@@ -381,6 +400,7 @@
     "playlists-playlists": "Spillelister",
     "playlists-categories": "Kategorier",
     "configuration": "indstillinger",
-    "configuration-themes": "Temaer"
+    "configuration-themes": "Temaer",
+    "configuration-users": "Brugere"
   }
 }

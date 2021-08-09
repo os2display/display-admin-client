@@ -63,6 +63,10 @@ function NavBar() {
               <NavDropdown.Item href="/themes" id="navbar_configuration_themes">
                 {t("navbar.configuration-themes")}
               </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="/users" id="navbar_configuration_users">
+                {t("navbar.configuration-users")}
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

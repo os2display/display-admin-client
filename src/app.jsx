@@ -22,6 +22,8 @@ import EditMedia from "./components/edit-media/edit-media";
 import ThemesList from "./components/themes-list/themes-list";
 import commonDa from "./translations/da/common.json";
 import EditTheme from "./components/edit-theme/edit-theme";
+import EditUser from "./components/edit-user/edit-user";
+import UserList from "./components/user-list/user-list";
 import "./app.scss";
 
 /**
@@ -65,6 +67,8 @@ function App() {
             <Route path="/media/:id" component={EditMedia} />
             <Route path="/themes/" component={ThemesList} />
             <Route path="/theme/:id" component={EditTheme} />
+            <Route path="/users/" component={UserList} />
+            <Route path="/user/:id" component={EditUser} />
             <Redirect from="/" to="/tags" exact />
           </Switch>
         </main>
