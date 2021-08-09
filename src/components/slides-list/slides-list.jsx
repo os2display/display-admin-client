@@ -76,7 +76,10 @@ function SlidesList() {
       key: "pick",
       label: t("slides-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -115,6 +118,27 @@ function SlidesList() {
     },
     {
       key: "edit",
+      content: () => (
+        <>
+          {/* @todo make quick edit modal */}
+          <div className="m-2">
+            <Button variant="primary">Quick edit</Button>
+          </div>
+        </>
+      ),
+    },
+    {
+      key: "preview",
+      content: () => (
+        <div className="m-2">
+          <Button variant="secondary">
+            {t("slides-list.columns.preview")}
+          </Button>
+        </div>
+      ),
+    },
+    {
+      key: "edit",
       content: (data) => (
         <LinkForList
           data={data}
@@ -126,17 +150,15 @@ function SlidesList() {
     {
       key: "delete",
       content: (data) => (
-        <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              disabled={selectedRows.length > 0}
-              onClick={() => openDeleteModal(data)}
-            >
-              {t("slides-list.delete-button")}
-            </Button>
-          </div>
-        </>
+        <div className="m-2">
+          <Button
+            variant="danger"
+            disabled={selectedRows.length > 0}
+            onClick={() => openDeleteModal(data)}
+          >
+            {t("slides-list.delete-button")}
+          </Button>
+        </div>
       ),
     },
   ];
@@ -174,6 +196,13 @@ function SlidesList() {
     setOnPlaylists();
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -185,7 +214,12 @@ function SlidesList() {
         </Col>
       </Row>
       {slides && (
-        <List columns={columns} selectedRows={selectedRows} data={slides} />
+        <List
+          columns={columns}
+          selectedRows={selectedRows}
+          data={slides}
+          clearSelectedRows={clearSelectedRows}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}
@@ -197,7 +231,7 @@ function SlidesList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        infoModalString={t("slides-list.info-modal.slide-on-playlists")}
+        title={t("slides-list.info-modal.slide-on-playlists")}
       />
     </Container>
   );

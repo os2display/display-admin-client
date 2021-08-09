@@ -18,7 +18,7 @@ import ListButton from "../util/list/list-button";
  */
 function LocationsList() {
   const { t } = useTranslation("common");
-  const [infoModalText, setInfoModalText] = useState("");
+  const [infoModalTitle, setInfoModalTitle] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -69,15 +69,11 @@ function LocationsList() {
    * The props
    * @param {Array} props.data
    * The data to sum up in the modal
-   * @param {string} props.caller
-   * Which infomodal is opened, categories or slides.
+   * @param {string} props.modalTitle
+   * The title for the infomodal.
    */
-  function openInfoModal({ data, caller }) {
-    const localInfoModalText =
-      caller === "groups"
-        ? t("locations-list.info-modal.location-on-group")
-        : t("locations-list.info-modal.location-on-screen");
-    setInfoModalText(localInfoModalText);
+  function openInfoModal({ data, modalTitle }) {
+    setInfoModalTitle(modalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
@@ -88,7 +84,10 @@ function LocationsList() {
       key: "pick",
       label: t("locations-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -107,7 +106,10 @@ function LocationsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.onFollowingScreens, caller: "screens" },
+          {
+            data: data.onFollowingScreens,
+            modalTitle: t("locations-list.info-modal.location-on-screen"),
+          },
           data.onFollowingScreens.length,
           data.onFollowingScreens.length === 0
         ),
@@ -120,7 +122,10 @@ function LocationsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.onFollowingGroups, caller: "groups" },
+          {
+            data: data.onFollowingGroups,
+            modalTitle: t("locations-list.info-modal.location-on-group"),
+          },
           data.onFollowingGroups.length,
           data.onFollowingGroups.length === 0
         ),
@@ -188,6 +193,13 @@ function LocationsList() {
     setDataStructureToDisplay();
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -201,7 +213,12 @@ function LocationsList() {
         </Col>
       </Row>
       {locations && (
-        <List columns={columns} selectedRows={selectedRows} data={locations} />
+        <List
+          columns={columns}
+          selectedRows={selectedRows}
+          data={locations}
+          clearSelectedRows={clearSelectedRows}
+        />
       )}
       <DeleteModal
         show={showDeleteModal}
@@ -213,7 +230,7 @@ function LocationsList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        infoModalString={infoModalText}
+        title={infoModalTitle}
       />
     </Container>
   );

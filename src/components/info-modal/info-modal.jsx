@@ -2,7 +2,6 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
-import contentString from "../util/helpers/content-string";
 
 /**
  * Info modal component, that displays an info string.
@@ -15,32 +14,30 @@ import contentString from "../util/helpers/content-string";
  * Callback on close modal.
  * @param {Array} props.dataStructureToDisplay
  * The playlists to list.
- * @param {string} props.infoModalString
+ * @param {string} props.title
  * The info modal string.
  * @returns {object}
  * The modal.
  */
-function InfoModal({ show, onClose, dataStructureToDisplay, infoModalString }) {
+function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
   if (!show || dataStructureToDisplay.length === 0) {
     return <></>;
   }
   const { t } = useTranslation("common");
 
-  // Creates a string for modal
-  const content = `${infoModalString}: ${contentString(
-    dataStructureToDisplay,
-    t("info-modal.and-string")
-  )}`;
-
   return (
     <div id="info-modal">
       <ModalDialog
-        title={t("info-modal.title")}
+        title={title}
         onClose={onClose}
         showAcceptButton={false}
         declineText={t("info-modal.decline-text")}
       >
-        {content}
+        <ul>
+          {dataStructureToDisplay.map(({ name }) => (
+            <li>{name}</li>
+          ))}
+        </ul>
       </ModalDialog>
     </div>
   );
@@ -55,7 +52,7 @@ InfoModal.propTypes = {
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ),
   onClose: PropTypes.func.isRequired,
-  infoModalString: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default InfoModal;

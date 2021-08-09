@@ -133,8 +133,14 @@ function MultiSelectComponent({
    * The data to call back with
    */
   function changeData(data) {
-    const ids = data.map((a) => a.value);
+    const ids = data.map(({ value }) => value);
     const dataToReturn = options.filter((option) => ids.includes(option.id));
+    // The below disabling of underscore dang
+    // eslint-disable-next-line no-underscore-dangle
+    const newData = data.filter(({ __isNew__ }) => __isNew__);
+    if (newData.length > 0) {
+      dataToReturn.unshift(newData);
+    }
     const target = { value: dataToReturn, id: name };
     handleSelection({ target });
   }

@@ -1,10 +1,13 @@
-import { React } from "react";
+import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
 import Table from "../table/table";
 import CampaignIcon from "../../screen-list/campaign-icon";
+import LiveIcon from "../../screen-list/live-icon";
+import ListButton from "../list/list-button";
+import InfoModal from "../../info-modal/info-modal";
 
 /**
  * A multiselect and table for screens.
@@ -22,6 +25,24 @@ import CampaignIcon from "../../screen-list/campaign-icon";
  */
 function SelectScreenTable({ handleChange, name, selectedData, errors }) {
   const { t } = useTranslation("common");
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [inGroups, setInGroups] = useState();
+
+  /**
+   * @param {Array} groupsArray
+   * The array of groups.
+   */
+  function openInfoModal(groupsArray) {
+    setInGroups(groupsArray);
+    setShowInfoModal(true);
+  }
+  /**
+   * Closes the info modal.
+   */
+  function onCloseInfoModal() {
+    setShowInfoModal(false);
+    setInGroups();
+  }
 
   /**
    * Removes screen from list of screens.
@@ -45,8 +66,25 @@ function SelectScreenTable({ handleChange, name, selectedData, errors }) {
   // The columns for the table.
   const columns = [
     {
+      path: "live",
+      label: t("select-screen-table.columns.live"),
+      content: (data) => LiveIcon(data),
+    },
+    {
       path: "name",
       label: t("select-screen-table.columns.name"),
+    },
+    {
+      path: "onFollowingGroups",
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.onFollowingGroups,
+          data.onFollowingGroups?.length,
+          data.onFollowingGroups?.length === 0
+        ),
+      key: "groups",
+      label: t("select-screen-table.columns.on-groups"),
     },
     {
       path: "size",
@@ -82,6 +120,12 @@ function SelectScreenTable({ handleChange, name, selectedData, errors }) {
       {selectedData?.length > 0 && (
         <Table columns={columns} data={selectedData} />
       )}
+      <InfoModal
+        show={showInfoModal}
+        onClose={onCloseInfoModal}
+        dataStructureToDisplay={inGroups}
+        title={t("select-screen-table.info-modal.screen-in-groups")}
+      />
     </>
   );
 }

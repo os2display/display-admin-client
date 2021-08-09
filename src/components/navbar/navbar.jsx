@@ -58,7 +58,7 @@ function NavBar() {
             </NavDropdown>
             <NavDropdown
               title={t("navbar.configuration")}
-              id="navbar-configuration"
+              id="navbar_configuration"
             >
               <NavDropdown.Item href="/themes" id="navbar_configuration_themes">
                 {t("navbar.configuration-themes")}

@@ -14,11 +14,12 @@ describe("Edit screen page tests", () => {
 
   it("It loads drag and drop table", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 10);
+    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 12);
   });
+
   it("It drags and drops", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 10);
+    cy.get("tbody").find("tr td").should("have.length", 18);
     cy.get("tbody")
       .find("tr td")
       .eq(0)
@@ -40,11 +41,11 @@ describe("Edit screen page tests", () => {
 
   it("It removes from list", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 10);
-    cy.get("tbody").find("tr td button").eq(3).click();
-    cy.get("tbody").find("tr td").should("have.length", 5);
-    cy.get("tbody").find("tr td button").eq(3).click();
-    cy.get("tbody").should("not.exist");
+    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 12);
+    cy.get("#drag-and-drop-table").find("tr td button").eq(4).click();
+    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 6);
+    cy.get("#drag-and-drop-table").find("tr td button").eq(4).click();
+    cy.get("#drag-and-drop-table").should("have.length", 1);
   });
 
   it("It validates new screen", () => {

@@ -186,7 +186,7 @@ function MediaList({ fromModal, handleSelected }) {
    */
   function handleChecked(data) {
     const mediaData = data;
-    mediaData.selected = !data.selected;
+    mediaData.selected = !mediaData.selected;
     setSelectedMedia(selectedHelper(mediaData, [...selectedMedia]));
     if (fromModal) {
       handleSelected(selectedHelper(mediaData, [...selectedMedia]));

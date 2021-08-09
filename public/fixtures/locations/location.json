@@ -10,11 +10,18 @@
     ],
     "onFollowingScreens": [
       {
-        "id": 15,
-        "name": "Pannier",
+        "id": 17,
+        "name": "Quo Lux",
         "size": "30\"",
         "dimensions": "1920x1080",
-        "overriddenByCampaign": false
+        "overriddenByCampaign": false,
+        "live": true,
+        "onFollowingGroups": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ]
       }
     ],
     "name": "Dokk1"

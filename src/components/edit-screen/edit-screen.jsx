@@ -11,6 +11,7 @@ import FormInputArea from "../util/forms/form-input-area";
 import RadioButtons from "../util/forms/radio-buttons";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import getFormErrors from "../util/helpers/form-errors-helper";
+import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 
 /**
  * The edit screen component.
@@ -43,6 +44,7 @@ function EditScreen() {
     screenLayout: "",
     playlists: [],
     horizontalOrVertical: radioButtonOptions[0].id,
+    screenSlides: [],
   });
   const { id } = useParams();
   const [screenName, setScreenName] = useState([]);
@@ -73,6 +75,7 @@ function EditScreen() {
             screenName: jsonData.screen.name,
             description: jsonData.screen.description,
             descriptionOfLocation: jsonData.screen.descriptionOfLocation,
+            screenSlides: jsonData.screen.slides,
           });
         });
     }
@@ -150,11 +153,13 @@ function EditScreen() {
         <GroupsDropdown
           errors={errors}
           name="screenGroups"
+          isCreatable
           handleGroupsSelection={handleInput}
           selected={formStateObject.screenGroups}
         />
         <LocationDropdown
           errors={errors}
+          isCreatable
           name="screenLocations"
           handleLocationSelection={handleInput}
           selected={formStateObject.screenLocations}
@@ -210,6 +215,12 @@ function EditScreen() {
           handleChange={handleInput}
           name="playlists"
           data={formStateObject.playlists}
+        />
+        <SelectSlidesTable
+          handleChange={handleInput}
+          name="screenSlides"
+          errors={errors}
+          selectedData={formStateObject.screenSlides}
         />
         {submitted && <Redirect to="/screens" />}
         <Button

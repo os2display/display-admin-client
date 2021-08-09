@@ -101,6 +101,7 @@ function EditMedia() {
             inputImage={formStateObject.images}
             name="mediaImages"
             invalidText={t("edit-media.media-validation")}
+            showLibraryButton={false}
           />
           {submitted && <Redirect to="/media-list" />}
           <Button

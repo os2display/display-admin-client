@@ -14,12 +14,20 @@ describe("Groups list tests", () => {
   it("It opens delete modal (groups list)", () => {
     cy.visit("/groups");
     cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });
 
   it("The correct amount of column headers loaded (groups list)", () => {
     cy.visit("/groups");
     cy.get("thead").find("th").should("have.length", 5);
+  });
+
+  it("It removes all selected", () => {
+    cy.visit("/groups");
+    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
+    cy.get("#clear-rows-button").click();
+    cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
   });
 });

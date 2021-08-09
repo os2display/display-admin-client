@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
-import Table from "../table/table";
+import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import InfoModal from "../../info-modal/info-modal";
 import Published from "../../slides-list/published";
 
@@ -66,16 +66,13 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
   const columns = [
     {
       path: "name",
-      sort: true,
       label: t("select-slides-table.columns.name"),
     },
     {
       path: "template",
-      sort: true,
       label: t("select-slides-table.columns.template"),
     },
     {
-      sort: true,
       path: "playlists",
       content: (data) =>
         ListButton(
@@ -89,12 +86,10 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
     },
     {
       path: "tags",
-      sort: true,
       label: t("select-slides-table.columns.tags"),
     },
     {
       path: "published",
-      sort: true,
       content: (data) => Published(data),
       label: t("select-slides-table.columns.published"),
     },
@@ -116,14 +111,19 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
         handleSlideSelection={handleChange}
         selected={selectedData}
       />
-      {selectedData?.length > 0 && (
-        <Table columns={columns} data={selectedData} />
+      {selectedData.length > 0 && (
+        <DragAndDropTable
+          columns={columns}
+          onDropped={handleChange}
+          name={name}
+          data={selectedData}
+        />
       )}
       <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        infoModalString={t("select-slides-table.info-modal.slide-on-playlists")}
+        title={t("select-slides-table.info-modal.slide-on-playlists")}
       />
     </>
   );

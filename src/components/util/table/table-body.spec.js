@@ -11,13 +11,13 @@ describe("Table body loads", () => {
       .find("tr")
       .eq(0)
       .find("button")
-      .first()
+      .eq(1)
       .should("have.length", 1);
     cy.get("tbody")
       .find("tr")
       .eq(0)
       .find("button")
-      .first()
+      .eq(1)
       .should("be.not.disabled");
     cy.get("tbody")
       .find("tr")
@@ -32,12 +32,7 @@ describe("Table body loads", () => {
       .last()
       .should("be.not.disabled");
     cy.get('[type="checkbox"]').check();
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .first()
-      .should("be.disabled");
+    cy.get("tbody").find("tr").eq(0).find("button").eq(1).should("be.disabled");
     cy.get("tbody")
       .find("tr")
       .eq(0)

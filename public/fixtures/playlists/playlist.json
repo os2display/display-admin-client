@@ -13,10 +13,17 @@
     ],
     "onFollowingScreens": [
       {
+        "live": true,
         "id": 15,
         "size": "30\"",
         "dimensions": "1920x1080",
-        "name": "Digitized"
+        "name": "Digitized",
+        "onFollowingGroups": [
+          {
+            "id": 15,
+            "name": "Digitized"
+          }
+        ]
       }
     ],
     "name": "Sommerplaylist",

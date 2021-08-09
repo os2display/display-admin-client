@@ -60,7 +60,7 @@ function ModalDialog({
 
   return (
     <div className="modal-container">
-      <Modal.Dialog size={size}>
+      <Modal.Dialog scrollable size={size}>
         <Modal.Header>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
@@ -85,7 +85,7 @@ ModalDialog.defaultProps = {
   declineText: "",
   showAcceptButton: true,
   handleAccept: () => {},
-  size: "sm",
+  size: "m",
 };
 
 ModalDialog.propTypes = {

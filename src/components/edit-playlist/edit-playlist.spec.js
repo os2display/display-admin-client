@@ -22,18 +22,30 @@ describe("Edit playlist page tests", () => {
     cy.get("#save_playlist").should("not.exist");
   });
 
-  it("It removes from list", () => {
+  it("It removes from screens list", () => {
     cy.visit("/playlist/32");
-    cy.get("tbody").eq(0).find("tr td").should("have.length", 5);
-    cy.get("tbody").eq(0).find("tr td button").eq(0).click();
-    cy.get("tbody").eq(0).find("tr td").should("have.length", 6);
+    cy.get("tbody").eq(0).find("tr td").should("have.length", 7);
     cy.get("tbody").eq(0).find("tr td button").eq(1).click();
-    cy.get("tbody").should("not.exist");
+    cy.get("tbody").should("have.length", 1);
   });
 
-  it("It opens info modal", () => {
+  it("It opens info modal in screens list", () => {
     cy.visit("/playlist/32");
-    cy.get("tbody").eq(1).find("tr td button").eq(0).click();
+    cy.get("#drag-and-drop-table").find("tr td button").eq(0).click();
+    cy.get("#info-modal").should("exist");
+  });
+
+  it("It removes from drag-drop table", () => {
+    cy.visit("/playlist/32");
+    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 6);
+    cy.get("#drag-and-drop-table").find("tr td button").eq(1).click();
+    cy.get("#drag-and-drop-table").should("not.exist");
+  });
+
+  it("It opens info modal drag-drop table", () => {
+    cy.visit("/playlist/32");
+    cy.get("#info-modal").should("not.exist");
+    cy.get("#drag-and-drop-table").find("tr td button").eq(0).click();
     cy.get("#info-modal").should("exist");
   });
 

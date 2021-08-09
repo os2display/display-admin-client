@@ -24,7 +24,7 @@ function PlaylistsList() {
   const [playlists, setPlaylists] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
-  const [infoModalText, setInfoModalText] = useState("");
+  const [infoModalTitle, setInfoModalTitle] = useState("");
 
   /**
    * Opens info modal with either categories or slides.
@@ -33,15 +33,11 @@ function PlaylistsList() {
    * The props
    * @param {Array} props.data
    * The data to sum up in the modal
-   * @param {string} props.caller
-   * Which infomodal is opened, categories or slides.
+   * @param {string} props.modalTitle
+   * The title for the infomodal.
    */
-  function openInfoModal({ data, caller }) {
-    const localInfoModalText =
-      caller === "categories"
-        ? t("playlists-list.info-modal.playlist-categories")
-        : t("playlists-list.info-modal.playlist-slides");
-    setInfoModalText(localInfoModalText);
+  function openInfoModal({ data, modalTitle }) {
+    setInfoModalTitle(modalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
@@ -96,7 +92,10 @@ function PlaylistsList() {
       key: "pick",
       label: t("playlists-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -108,7 +107,10 @@ function PlaylistsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.slides, caller: "slides" },
+          {
+            data: data.slides,
+            modalTitle: t("playlists-list.info-modal.playlist-slides"),
+          },
           data.slides?.length,
           data.slides?.length === 0
         ),
@@ -121,7 +123,10 @@ function PlaylistsList() {
       content: (data) =>
         ListButton(
           openInfoModal,
-          { data: data.categories, caller: "categories" },
+          {
+            data: data.categories,
+            modalTitle: t("playlists-list.info-modal.playlist-categories"),
+          },
           data.categories?.length,
           data.categories?.length === 0
         ),
@@ -129,6 +134,33 @@ function PlaylistsList() {
       path: "categories",
       key: "categories",
       label: t("playlists-list.columns.number-of-categories"),
+    },
+    {
+      sort: true,
+      path: "onFollowingScreens",
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          {
+            data: data.onFollowingScreens,
+            modalTitle: t("playlists-list.info-modal.playlist-screens"),
+          },
+          data.onFollowingScreens.length,
+          data.onFollowingScreens.length === 0
+        ),
+      key: "screens",
+      label: t("playlists-list.columns.on-screens"),
+    },
+    {
+      key: "quick-edit",
+      content: () => (
+        <>
+          {/* @todo make quick edit modal */}
+          <div className="m-2">
+            <Button variant="primary">Quick edit</Button>
+          </div>
+        </>
+      ),
     },
     {
       key: "edit",
@@ -183,6 +215,13 @@ function PlaylistsList() {
     setShowDeleteModal(false);
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -200,6 +239,7 @@ function PlaylistsList() {
           columns={columns}
           selectedRows={selectedRows}
           data={playlists.playlists}
+          clearSelectedRows={clearSelectedRows}
         />
       )}
       <DeleteModal
@@ -212,7 +252,7 @@ function PlaylistsList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        infoModalString={infoModalText}
+        title={infoModalTitle}
       />
     </Container>
   );

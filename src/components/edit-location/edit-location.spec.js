@@ -14,9 +14,17 @@ describe("Edit location page loads", () => {
 
   it("It removes from list", () => {
     cy.visit("/location/32");
-    cy.get("tbody").find("tr td").should("have.length", 5);
-    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr td").should("have.length", 7);
+    cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("tbody").should("not.exist");
+  });
+
+  it("It opens info modal", () => {
+    cy.visit("/location/32");
+    cy.get("tbody").find("tr td").should("have.length", 7);
+    cy.get("#info-modal").should("not.exist");
+    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("#info-modal").should("exist");
   });
 
   it("It validates new location", () => {

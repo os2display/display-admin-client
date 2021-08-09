@@ -62,7 +62,10 @@ function TagList() {
       key: "pick",
       label: t("tag-list.columns.pick"),
       content: (data) => (
-        <CheckboxForList onSelected={() => handleSelected(data)} />
+        <CheckboxForList
+          onSelected={() => handleSelected(data)}
+          selected={selectedRows.indexOf(data) > -1}
+        />
       ),
     },
     {
@@ -133,6 +136,13 @@ function TagList() {
     setShowDeleteModal(false);
   }
 
+  /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
   return (
     <Container>
       <Row className="align-items-end mt-2">
@@ -151,6 +161,7 @@ function TagList() {
           columns={columns}
           selectedRows={selectedRows}
           data={tags.tags}
+          clearSelectedRows={clearSelectedRows}
         />
       )}
       <DeleteModal

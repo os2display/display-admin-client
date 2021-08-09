@@ -39,7 +39,8 @@
       "template": "Skabelon",
       "number-of-playlists": "Spillelister med kategorien",
       "tags": "Tags",
-      "published": "Udgivet"
+      "published": "Udgivet",
+      "preview": "Preview"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
@@ -55,7 +56,12 @@
       "name": "Navn",
       "size": "Størrelse",
       "dimensions": "Opløsning",
-      "campaign": "Kampagne"
+      "campaign": "Kampagne",
+      "on-groups": "Tilknyttede grupper",
+      "live": "Live"
+    },
+    "info-modal": {
+      "screen-in-groups": "Skærmen er i følgende grupper"
     },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
@@ -83,7 +89,8 @@
     },
     "info-modal": {
       "location-on-group": "Lokationen er tilknyttet følgende grupper",
-      "location-on-screen": "Lokationen er tilknyttet følgende skærme"
+      "location-on-screen": "Lokationen er tilknyttet følgende skærme",
+      "location-in-groups": "Lokationen er i følgende grupper"
     },
     "header": "Lokationer",
     "create-new-location": "Opret ny lokation",
@@ -94,12 +101,14 @@
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
+      "on-screens": "Skærme tilknyttet",
       "number-of-slides": "Slides tilknyttede",
       "number-of-categories": "Kategorier tilknyttet"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",
-      "playlist-categories": "Spillelisten har følgende kategorier"
+      "playlist-categories": "Spillelisten har følgende kategorier",
+      "playlist-screens": "Spillelisten er på følgende skærme"
     },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
@@ -201,7 +210,8 @@
       "pick": "Vælg spilleliste",
       "name": "Navn",
       "number-of-slides": "Slides tilknyttet",
-      "number-of-categories": "Kategorier tilknyttet"
+      "number-of-categories": "Kategorier tilknyttet",
+      "playlist-screens": "Spillelisten er på følgende skærme"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",
@@ -214,7 +224,12 @@
       "name": "Navn",
       "size": "Størrelse",
       "dimensions": "Opløsning",
-      "campaign": "Kampagne"
+      "live": "Live",
+      "campaign": "Kampagne",
+      "on-groups": "Tilknyttede grupper"
+    },
+    "info-modal": {
+      "screen-in-groups": "Skærmen er i følgende grupper"
     },
     "remove-from-list": "Fjern fra liste"
   },
@@ -239,14 +254,10 @@
     "placeholder": "Indtast søgning her"
   },
   "delete-modal": {
-    "confirmation": "Er du sikker på du vil slette følgende",
-    "title": "Du er ved at slette noget",
-    "and-string": "og"
+    "title": "Er du sikker på du vil slette følgende"
   },
   "info-modal": {
-    "decline-text": "Luk dialog",
-    "title": "Obs",
-    "and-string": "og"
+    "decline-text": "Luk dialog"
   },
   "published": {
     "yes": "Ja",
@@ -297,11 +308,9 @@
     "nothing-selected": "Der er ikke valgt noget"
   },
   "merge-modal": {
-    "confirmation": "Er du sikker på du vil konsolidere følgende",
-    "title": "Du er ved at konsolidere noget",
-    "and-string": "og",
+    "title": "Er du sikker på du vil konsolidere følgende",
     "new-name-label": "Vælg et nyt navn",
-    "new-name-placeholder": "Vælg et nyt navn"
+    "new-name-placeholder": "Skriv det nye navn her"
   },
   "select-playlists-table": {
     "columns": {
@@ -331,7 +340,8 @@
   },
   "list": {
     "delete-button": "Slet",
-    "merge-button": "Konsolider"
+    "merge-button": "Konsolider",
+    "deselect-all": "Fravælg alle"
   },
   "image": {
     "remove-image": "Slet",
