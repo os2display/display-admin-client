@@ -73,6 +73,10 @@ function App() {
                   <Route path="/playlist/:id" component={EditPlaylist} />
                   <Route path="/slide/:id" component={EditSlide} />
                   <Route path="/media/:id" component={EditMedia} />
+                  <Route path="/themes/" component={ThemesList} />
+                  <Route path="/theme/:id" component={EditTheme} />
+                  <Route path="/users/" component={UserList} />
+                  <Route path="/user/:id" component={EditUser} />
                   <Redirect from="/" to="/slides" exact />
                 </Switch>
               </main>
