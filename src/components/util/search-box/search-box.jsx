@@ -6,7 +6,6 @@ import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import "./search-box.scss";
 
 /**
  * @param {object} props
