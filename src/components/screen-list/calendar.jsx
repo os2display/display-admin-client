@@ -1,15 +1,27 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import { Am4ThemesColorTheme } from "./calendarColors";
+import Am4ThemesColorTheme from "./calendarColors";
 
-function Calendar({ data, endDateForXAxis, id }) {
+/**
+ * @param {object} props
+ * The props
+ * @param {number} props.id
+ * The id for the chart
+ * @param {Array} props.playlists
+ * the playlists to display in the chart.
+ * @returns {object}
+ * The gantt chart.
+ */
+function Calendar({ id, playlists }) {
   const chartId = `chart${id}`;
+
   useEffect(() => {
     am4core.useTheme(Am4ThemesColorTheme);
     const colorSet = new am4core.ColorSet();
     // Add theme colors
-    data = data.map(function (item, index) {
+    const data = playlists.map((item, index) => {
       // There are 10 colors in the theme, so
       // if the index exceeds 9, the last int in
       // the number is used
@@ -21,26 +33,25 @@ function Calendar({ data, endDateForXAxis, id }) {
       };
     });
 
-    var chart = am4core.create(chartId, am4charts.XYChart);
+    const chart = am4core.create(chartId, am4charts.XYChart);
 
     chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
 
     chart.data = data;
-    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "name";
-    // categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.inversed = true;
 
-    var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd";
     dateAxis.renderer.minGridDistance = 70;
     dateAxis.baseInterval = { count: 30, timeUnit: "date" };
 
-    dateAxis.max = endDateForXAxis.getTime();
     dateAxis.strictMinMax = true;
     dateAxis.renderer.tooltipLocation = 0;
 
-    var series1 = chart.series.push(new am4charts.ColumnSeries());
+    const series1 = chart.series.push(new am4charts.ColumnSeries());
     series1.columns.template.width = am4core.percent(80);
     series1.columns.template.tooltipText = "{name}: {openDateX} - {dateX}";
 
@@ -55,9 +66,20 @@ function Calendar({ data, endDateForXAxis, id }) {
     return () => {
       chart.dispose();
     };
-  }, [data]);
+  }, []);
 
-  return <div id={chartId} className="calendar-chart" />;
+  return (
+    <div className="charts">
+      <div id={chartId} className="calendar-chart" />
+    </div>
+  );
 }
+
+Calendar.propTypes = {
+  playlists: PropTypes.arrayOf(
+    PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+  ).isRequired,
+  id: PropTypes.number.isRequired,
+};
 
 export default Calendar;

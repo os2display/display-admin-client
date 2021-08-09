@@ -51,6 +51,11 @@
     "pick-font-color": "Font farve",
     "font-label": "Vælg font"
   },
+  "calendar-list": {
+    "name-label": "Navn",
+    "in-groups-label": "I følgende grupper",
+    "live-label": "Live"
+  },
   "slides-list": {
     "columns": {
       "pick": "Vælg slide",

@@ -2,13 +2,13 @@ import { React, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "./campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
-import Calendar from "./calendar";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
@@ -215,6 +215,18 @@ function ScreenList() {
         newBtnTitle={t("screens-list.create-new-screen")}
         newBtnLink="/screen/new"
       />
+          <Col md="auto">
+          {listView === "list" && (
+            <Button onClick={() => setListView("calendar")}>
+              {t("screens-list.change-view-calendar")}
+            </Button>
+          )}
+          {listView === "calendar" && (
+            <Button onClick={() => setListView("list")}>
+              {t("screens-list.change-view-list")}
+            </Button>
+          )}
+        </Col>
       <ContentBody>
         {screens.screens && (
           <List
@@ -222,6 +234,7 @@ function ScreenList() {
             selectedRows={selectedRows}
             data={screens.screens}
             clearSelectedRows={clearSelectedRows}
+            withChart
           />
         )}
       </ContentBody>

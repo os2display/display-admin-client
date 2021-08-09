@@ -19,10 +19,12 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  * The column to sortby.
  * @param {Array} props.data
  * The data to display in the table.
+ * @param {boolean} props.withChart
+ * If the table should display a gantt chart
  * @returns {object}
  * The table.
  */
-function Table({ columns, selectedRows, onSort, sortColumn, data }) {
+function Table({ columns, selectedRows, onSort, sortColumn, data, withChart }) {
   return (
     <div className="table-responsive">
       <table className="table table-hover">
@@ -31,7 +33,7 @@ function Table({ columns, selectedRows, onSort, sortColumn, data }) {
           onSort={onSort}
           sortColumn={sortColumn}
         />
-        <TableBody selectedRows={selectedRows} columns={columns} data={data} />
+        <TableBody withChart={withChart} selectedRows={selectedRows} columns={columns} data={data} />
       </table>
     </div>
   );
@@ -50,5 +52,6 @@ Table.propTypes = {
   onSort: PropTypes.func,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes,
+  withChart: PropTypes.bool.isRequired,
 };
 export default Table;

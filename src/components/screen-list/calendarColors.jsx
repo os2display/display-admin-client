@@ -1,10 +1,14 @@
 import * as am4core from "@amcharts/amcharts4/core";
 
-export function Am4ThemesColorTheme(target) {
+/**
+ * @param {object} target
+ * The colorsset
+ */
+function Am4ThemesColorTheme(target) {
   if (target instanceof am4core.ColorSet) {
     // Thanks to https://colorbrewer2.org/ for creating a
     // colorblind-friendly palette.
-    target.list = [
+    const list = [
       am4core.color("#d73027"),
       am4core.color("#f46d43"),
       am4core.color("#fdae61"),
@@ -16,5 +20,9 @@ export function Am4ThemesColorTheme(target) {
       am4core.color("#4575b4"),
       am4core.color("#313695"),
     ];
+    // eslint-disable-next-line
+    target.list = list;
   }
 }
+
+export default Am4ThemesColorTheme;
