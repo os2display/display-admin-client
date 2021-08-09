@@ -84,7 +84,7 @@ function GridGenerationAndSelect({
               <PlaylistDragAndDrop
                 id="playlist_drag_and_drop"
                 handleChange={handleChange}
-                formId={data.id}
+                name={data.id}
                 data={selectedData.filter(
                   (playlistData) => playlistData.region === data.id
                 )}
