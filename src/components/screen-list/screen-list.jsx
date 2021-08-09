@@ -1,5 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "./campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -13,6 +15,7 @@ import ListButton from "../util/list/list-button";
 import LiveIcon from "./live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import "./screen-list.scss";
 
 /**
  * The screen list component.
@@ -22,8 +25,11 @@ import ContentBody from "../util/content-body/content-body";
  */
 function ScreenList() {
   const { t } = useTranslation("common");
+  const { search } = useLocation();
+  const history = useHistory();
+  const viewParams = new URLSearchParams(search).get("view");
+  const [listView, setListView] = useState(viewParams ?? "list");
   const [selectedRows, setSelectedRows] = useState([]);
-  const [listView, setListView] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
@@ -57,6 +63,16 @@ function ScreenList() {
         setScreens(jsonData);
       });
   }, []);
+
+  /**
+   * Set the view in url.
+   */
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    params.delete("view");
+    params.append("view", listView);
+    history.replace({ search: params.toString() });
+  }, [listView]);
 
   /**
    * Sets the selected row in state.

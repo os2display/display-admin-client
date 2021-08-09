@@ -81,12 +81,16 @@ function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
    * If they search or filter, the pagination is reset.
    */
   useEffect(() => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(search);
     if (searchText) {
+      params.delete("search");
       params.append("search", searchText);
     }
+    params.delete("sort");
     params.append("sort", sortBy.path);
+    params.delete("order");
     params.append("order", sortBy.order);
+    params.delete("page");
     params.append("page", currentPage);
     history.replace({ search: params.toString() });
   }, [searchText, sortBy, currentPage]);

@@ -1,0 +1,14 @@
+.charts {
+  display: flex;
+  flex-direction: column;
+
+  .calendar-entry {
+    border: 1px solid black;
+    margin-bottom: 1rem;
+    .calendar-chart {
+      height: 80%;
+      width: 100%;
+      min-height: 15rem;
+    }
+  }
+}
