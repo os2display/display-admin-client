@@ -9,9 +9,8 @@ import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dro
 import Select from "../util/forms/select";
 import FormInputArea from "../util/forms/form-input-area";
 import RadioButtons from "../util/forms/radio-buttons";
-import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import getFormErrors from "../util/helpers/form-errors-helper";
-import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
+import GridGenerationAndSelect from "./grid-generation-and-select";
 
 /**
  * The edit screen component.
@@ -48,6 +47,7 @@ function EditScreen() {
   });
   const { id } = useParams();
   const [screenName, setScreenName] = useState([]);
+  const [grid, setGrid] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const [errors, setErrors] = useState([]);
   const [submitted, setSubmitted] = useState(false);
@@ -58,6 +58,11 @@ function EditScreen() {
    */
   useEffect(() => {
     // @TODO load real content.
+    fetch("/fixtures/screen-layout/screen-layout.json")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        setLayoutOptions(jsonData.layouts);
+      });
     if (!newScreen) {
       fetch("/fixtures/screens/screen.json")
         .then((response) => response.json())
@@ -79,12 +84,16 @@ function EditScreen() {
           });
         });
     }
-    fetch("/fixtures/screen-layout/screen-layout.json")
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setLayoutOptions(jsonData.layouts);
-      });
   }, []);
+
+  useEffect(() => {
+    if (layoutOptions) {
+      const localGrid = layoutOptions.find(
+        (layout) => layout.id === parseInt(formStateObject.screenLayout, 10)
+      );
+      setGrid(localGrid);
+    }
+  }, [formStateObject.screenLayout]);
 
   /**
    * Set state on change in input field
@@ -174,6 +183,15 @@ function EditScreen() {
             value={formStateObject.screenLayout}
           />
         )}
+        {grid?.grid && (
+          <GridGenerationAndSelect
+            grid={grid?.grid}
+            layout={formStateObject.horizontalOrVertical}
+            regions={grid?.regions}
+            handleInput={handleInput}
+            selectedData={formStateObject.playlists}
+          />
+        )}
         <FormInput
           name="descriptionOfLocation"
           type="text"
@@ -209,18 +227,6 @@ function EditScreen() {
           helpText={t("edit-screen.screen-resolution-of-screen-helptext")}
           pattern="(\d+)x(\d+)"
           onChange={handleInput}
-        />
-        <PlaylistDragAndDrop
-          id="playlist_drag_and_drop"
-          handleChange={handleInput}
-          name="playlists"
-          data={formStateObject.playlists}
-        />
-        <SelectSlidesTable
-          handleChange={handleInput}
-          name="screenSlides"
-          errors={errors}
-          selectedData={formStateObject.screenSlides}
         />
         {submitted && <Redirect to="/screens" />}
         <Button

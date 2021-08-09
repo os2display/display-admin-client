@@ -225,7 +225,7 @@ function EditSlide() {
             id="slide_cancel"
             onClick={() => history.goBack()}
           >
-            {t("edit-slide.cancel-slide")}
+            {t("edit-slide.cancel-button")}
           </Button>
           <Button variant="primary" type="submit" id="save_slide">
             {t("edit-slide.save-button")}

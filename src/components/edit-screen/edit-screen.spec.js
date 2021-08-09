@@ -14,12 +14,12 @@ describe("Edit screen page tests", () => {
 
   it("It loads drag and drop table", () => {
     cy.visit("/screen/32");
-    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 12);
+    cy.get(".table").find("tr td").should("have.length", 12);
   });
 
   it("It drags and drops", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 18);
+    cy.get("tbody").find("tr td").should("have.length", 12);
     cy.get("tbody")
       .find("tr td")
       .eq(0)
@@ -45,7 +45,7 @@ describe("Edit screen page tests", () => {
     cy.get("#drag-and-drop-table").find("tr td button").eq(4).click();
     cy.get("#drag-and-drop-table").find("tr td").should("have.length", 6);
     cy.get("#drag-and-drop-table").find("tr td button").eq(4).click();
-    cy.get("#drag-and-drop-table").should("have.length", 1);
+    cy.get("#drag-and-drop-table").should("not.exist");
   });
 
   it("It validates new screen", () => {
@@ -68,7 +68,7 @@ describe("Edit screen page tests", () => {
     cy.get(".dropdown-heading").eq(1).click();
     cy.get('[type="checkbox"]').eq(0).check();
     cy.get(".dropdown-heading").eq(1).click();
-    cy.get("#screenLayout").select("Footer");
+    cy.get("#screenLayout").select("3x3");
     cy.get("#save_screen").click();
     cy.get("#save_screen").should("not.exist");
   });
@@ -88,5 +88,10 @@ describe("Edit screen page tests", () => {
     cy.get("#screenName").type("x");
     cy.get("#save_screen").click();
     cy.get("#save_screen").should("not.exist");
+  });
+
+  it("It has grid", () => {
+    cy.visit("/screen/32");
+    cy.get(".grid-item").should("have.length", 4);
   });
 });

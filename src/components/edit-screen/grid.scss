@@ -1,0 +1,21 @@
+.grid {
+  display: grid;
+  max-width: 40%;
+  height: 500px;
+
+  .grid-item {
+    background-color: lightcyan;
+    border: 1px dotted black;
+    margin: 1px;
+    padding: 1em;
+
+    &.selected {
+      background-color: lightblue;
+    }
+  }
+
+  &.horizontal {
+    max-width: 60%;
+    height: 300px;
+  }
+}
