@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import LinkForList from "../util/list/link-for-list";
@@ -9,6 +8,8 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The category list component.
@@ -119,7 +120,7 @@ function CategoryList() {
       key: "delete",
       content: (data) => (
         <>
-          <div className="m-2">
+          <div>
             <Button
               variant="danger"
               disabled={selectedRows.length > 0}
@@ -174,26 +175,23 @@ function CategoryList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("category-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/category/new">
-            {t("category-list.create-new-category")}
-          </Link>
-        </Col>
-      </Row>
-      {categories && (
-        <List
-          showMerge
-          columns={columns}
-          selectedRows={selectedRows}
-          data={categories}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+    <>
+      <ContentHeader
+        title={t("category-list.header")}
+        newBtnTitle={t("category-list.create-new-category")}
+        newBtnLink="/category/new"
+      />
+      <ContentBody>
+        {categories && (
+          <List
+            showMerge
+            columns={columns}
+            selectedRows={selectedRows}
+            data={categories}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}
@@ -206,7 +204,7 @@ function CategoryList() {
         dataStructureToDisplay={onPlaylists}
         title={t("category-list.info-modal.category-playlists")}
       />
-    </Container>
+    </>
   );
 }
 

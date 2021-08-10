@@ -18,7 +18,14 @@ import { FormCheck, FormGroup } from "react-bootstrap";
  * @returns {object}
  * An input.
  */
-function FormCheckbox({ name, label, helpText, onChange, value }) {
+function FormCheckbox({
+  name,
+  label,
+  helpText,
+  onChange,
+  value,
+  formGroupClasses,
+}) {
   /**
    * Transforms the target to something the edit-components understand.
    *
@@ -33,7 +40,10 @@ function FormCheckbox({ name, label, helpText, onChange, value }) {
   }
 
   return (
-    <FormGroup className="mb-3" controlId={`formBasicCheckbox${name}`}>
+    <FormGroup
+      className={formGroupClasses}
+      controlId={`formBasicCheckbox${name}`}
+    >
       <FormCheck
         onChange={onChecked}
         type="checkbox"
@@ -48,6 +58,7 @@ function FormCheckbox({ name, label, helpText, onChange, value }) {
 
 FormCheckbox.defaultProps = {
   helpText: "",
+  formGroupClasses: "",
   value: false,
 };
 
@@ -56,6 +67,7 @@ FormCheckbox.propTypes = {
   value: PropTypes.bool,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
+  formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 

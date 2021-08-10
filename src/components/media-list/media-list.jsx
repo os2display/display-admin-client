@@ -1,12 +1,13 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import TagDropdown from "../util/forms/multiselect-dropdown/tags/tag-dropdown";
 import SearchBox from "../util/search-box/search-box";
+import ContentBody from "../util/content-body/content-body";
 import "./media-list.scss";
 
 /**
@@ -194,19 +195,19 @@ function MediaList({ fromModal, handleSelected }) {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
+    <>
+      <Row className="align-items-center justify-content-between mt-2">
         <Col>
           <h1>{t("media-list.header")}</h1>
         </Col>
         {!fromModal && (
           <>
-            <Col md="auto">
-              <Link className="btn btn-primary btn-success" to="/media/new">
+            <Col xs="auto">
+              <Link className="btn btn-success" to="/media/new">
                 {t("media-list.upload-new-media")}
               </Link>
             </Col>
-            <Col md="auto">
+            <Col xs="auto">
               <div className="ml-4">
                 <Button
                   variant="danger"
@@ -221,74 +222,73 @@ function MediaList({ fromModal, handleSelected }) {
           </>
         )}
       </Row>
-      <Row className="mt-2 mb-2">
-        <Col>
-          <SearchBox showLabel value={searchText} onChange={handleSearch} />
-        </Col>
-        <Col>
-          <TagDropdown
-            selected={selectedTags}
-            name="tags"
-            label={t("media-list.tags-select-label")}
-            handleTagSelection={onTagInput}
-          />
-        </Col>
-      </Row>
-      <div className="image-list">
-        {getListData().map((data) => (
-          <div key={data.id} className="image-wrapper">
-            <button
-              type="button"
-              className="image-button"
-              onClick={() => handleChecked(data)}
-            >
-              <img
-                src={data.url}
-                className={data.selected ? "selected" : ""}
-                alt={data.description}
-              />
-            </button>
-            <Form.Check
-              type="checkbox"
-              checked={data.selected}
-              tabIndex={-1}
-              aria-label={t("media-list.checkbox-form-aria-label")}
-              readOnly
+      <ContentBody>
+        <Row className="mt-2 mb-2">
+          <Col>
+            <SearchBox showLabel value={searchText} onChange={handleSearch} />
+          </Col>
+          <Col>
+            <TagDropdown
+              selected={selectedTags}
+              name="tags"
+              label={t("media-list.tags-select-label")}
+              handleTagSelection={onTagInput}
             />
-            <div className="d-flex">
-              <div className="d-flex flex-column">
-                <span>
-                  {t("media-list.media-name")}: {data.name}
-                </span>
-                <span>
-                  {t("media-list.media-description")}: {data.description}
-                </span>
+          </Col>
+        </Row>
+
+        <div className="image-list">
+          {getListData().map((data) => (
+            <div key={data.id} className="image-wrapper">
+              <button
+                type="button"
+                className="image-button"
+                onClick={() => handleChecked(data)}
+              >
+                <img
+                  src={data.url}
+                  className={data.selected ? "selected" : ""}
+                  alt={data.description}
+                />
+              </button>
+              <Form.Check
+                type="checkbox"
+                checked={data.selected}
+                tabIndex={-1}
+                aria-label={t("media-list.checkbox-form-aria-label")}
+                readOnly
+              />
+              <div className="d-flex">
+                <div className="d-flex flex-column">
+                  <span>
+                    {t("media-list.media-name")}: {data.name}
+                  </span>
+                  <span>
+                    {t("media-list.media-description")}: {data.description}
+                  </span>
+                  <div>
+                    {data.tags.map((tag) => (
+                      <span key={tag.id}>{tag.name} </span>
+                    ))}
+                  </div>
+                </div>
                 <div>
-                  {data.tags.map((tag) => (
-                    <span key={tag.id}>{tag.name} </span>
-                  ))}
+                  <Link className="btn btn-primary" to={`/media/${data.id}`}>
+                    {t("media-list.edit-button")}
+                  </Link>
                 </div>
               </div>
-              <div>
-                <Link
-                  className="btn btn-primary btn-success"
-                  to={`/media/${data.id}`}
-                >
-                  {t("media-list.edit-button")}
-                </Link>
-              </div>
             </div>
-          </div>
-        ))}
-      </div>
-
+          ))}
+        </div>
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         handleAccept={handleDelete}
         onClose={onCloseDeleteModal}
         selectedRows={selectedMedia}
       />
-    </Container>
+    </>
   );
 }
 

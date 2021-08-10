@@ -50,9 +50,10 @@ function RenderFormElement({
             type={formData.type}
             errors={formData.required ? errors : null}
             label={formData.label}
-            placeholder={formData.placeholder}
+            helpText={formData.helpText}
             value={formStateObject[formData.name]}
             onChange={onChange}
+            formGroupClasses={formData.formGroupClasses}
           />
         );
         break;
@@ -67,6 +68,7 @@ function RenderFormElement({
             name={formData.name}
             helpText={formData.helpText}
             value={formStateObject[formData.name]}
+            formGroupClasses={formData.formGroupClasses}
           />
         );
         break;
@@ -74,7 +76,18 @@ function RenderFormElement({
         if (data.required) {
           requiredFieldCallback(data.name);
         }
-        returnElement = <h2>{formData.text}</h2>;
+        returnElement = (
+          <h2 className={formData.formGroupClasses}>{formData.text}</h2>
+        );
+        break;
+      // TODO: This (header-h3) should be posible to create in a more efficient way, in combination with the above.
+      case "header-h3":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
+        returnElement = (
+          <h3 className={formData.formGroupClasses}>{formData.text}</h3>
+        );
         break;
       case "select":
         if (data.required) {
@@ -89,6 +102,7 @@ function RenderFormElement({
             onChange={onChange}
             label={formData.label}
             errors={formData.required ? errors : null}
+            formGroupClasses={formData.formGroupClasses}
           />
         );
         break;
@@ -108,6 +122,7 @@ function RenderFormElement({
                 ? t("render-form-element.images-invalid")
                 : t("render-form-element.image-invalid")
             }
+            formGroupClasses={formData.formGroupClasses}
           />
         );
         break;
@@ -129,7 +144,7 @@ RenderFormElement.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     label: PropTypes.string,
-    placeholder: PropTypes.string,
+    helpText: PropTypes.string,
     required: PropTypes.bool,
     multipleImages: PropTypes.bool,
   }).isRequired,
@@ -139,7 +154,7 @@ RenderFormElement.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     label: PropTypes.string,
-    placeholder: PropTypes.string,
+    helpText: PropTypes.string,
     required: PropTypes.bool,
   }).isRequired,
   requiredFieldCallback: PropTypes.func.isRequired,

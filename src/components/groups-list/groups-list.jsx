@@ -1,12 +1,13 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The groups list component.
@@ -93,15 +94,13 @@ function GroupsList() {
       key: "delete",
       content: (data) => (
         <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              disabled={selectedRows.length > 0}
-              onClick={() => openDeleteModal(data)}
-            >
-              {t("groups-list.delete-button")}
-            </Button>
-          </div>
+          <Button
+            variant="danger"
+            disabled={selectedRows.length > 0}
+            onClick={() => openDeleteModal(data)}
+          >
+            {t("groups-list.delete-button")}
+          </Button>
         </>
       ),
     },
@@ -140,33 +139,30 @@ function GroupsList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("groups-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/group/new">
-            {t("groups-list.create-new-group")}
-          </Link>
-        </Col>
-      </Row>
-      {groups.groups && (
-        <List
-          showMerge
-          columns={columns}
-          selectedRows={selectedRows}
-          data={groups.groups}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+    <>
+      <ContentHeader
+        title={t("groups-list.header")}
+        newBtnTitle={t("groups-list.create-new-group")}
+        newBtnLink="/group/new"
+      />
+      <ContentBody>
+        {groups.groups && (
+          <List
+            showMerge
+            columns={columns}
+            selectedRows={selectedRows}
+            data={groups.groups}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
       />
-    </Container>
+    </>
   );
 }
 

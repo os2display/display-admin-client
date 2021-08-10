@@ -21,7 +21,7 @@ describe("Edit tag page tests", () => {
     cy.get("#save_tag")
       .invoke("text")
       .should("match", /^Gem tag/);
-    cy.get("input").type("x");
+    cy.get("#tagName").type("x");
     cy.get("#save_tag").click();
     cy.get("#save_tag").should("not.exist");
   });

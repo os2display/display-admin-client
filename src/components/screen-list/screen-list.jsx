@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "./campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -11,6 +10,8 @@ import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
 import LiveIcon from "./live-icon";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The screen list component.
@@ -146,15 +147,13 @@ function ScreenList() {
       key: "delete",
       content: (data) => (
         <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              disabled={selectedRows.length > 0}
-              onClick={() => openDeleteModal(data)}
-            >
-              {t("screens-list.delete-button")}
-            </Button>
-          </div>
+          <Button
+            variant="danger"
+            disabled={selectedRows.length > 0}
+            onClick={() => openDeleteModal(data)}
+          >
+            {t("screens-list.delete-button")}
+          </Button>
         </>
       ),
     },
@@ -192,25 +191,22 @@ function ScreenList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("screens-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/screen/new">
-            {t("screens-list.create-new-screen")}
-          </Link>
-        </Col>
-      </Row>
-      {screens.screens && (
-        <List
-          columns={columns}
-          selectedRows={selectedRows}
-          data={screens.screens}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+    <>
+      <ContentHeader
+        title={t("screens-list.header")}
+        newBtnTitle={t("screens-list.create-new-screen")}
+        newBtnLink="/screen/new"
+      />
+      <ContentBody>
+        {screens.screens && (
+          <List
+            columns={columns}
+            selectedRows={selectedRows}
+            data={screens.screens}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}
@@ -223,7 +219,7 @@ function ScreenList() {
         dataStructureToDisplay={inGroups}
         title={t("screens-list.info-modal.screen-in-groups")}
       />
-    </Container>
+    </>
   );
 }
 

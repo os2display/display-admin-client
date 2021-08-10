@@ -21,7 +21,7 @@ describe("Edit category page tests", () => {
     cy.get("#save_category")
       .invoke("text")
       .should("match", /^Gem kategorien/);
-    cy.get("input").type("x");
+    cy.get("#categoryName").type("x");
     cy.get("#save_category").click();
     cy.get("#save_category").should("not.exist");
   });

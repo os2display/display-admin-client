@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Select from "../util/forms/select";
@@ -10,6 +11,8 @@ import RenderFormElement from "../util/forms/render-form-element";
 import FormCheckbox from "../util/forms/form-checkbox";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 
 /**
  * The edit slide component.
@@ -160,33 +163,38 @@ function EditSlide() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newSlide && <h1>{t("edit-slide.create-new-slide")}</h1>}
-          {!newSlide && (
-            <h1>
-              {t("edit-slide.edit-slide")}: {slideName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newSlide && <h1>{t("edit-slide.create-new-slide")}</h1>}
+        {!newSlide && (
+          <h1 className="m-3 h3">
+            {t("edit-slide.edit-slide")}: {slideName}
+          </h1>
+        )}
+        <ContentBody>
           <FormInput
             name="slideName"
             type="text"
             errors={errors}
             label={t("edit-slide.slide-name-label")}
-            placeholder={t("edit-slide.slide-name-placeholder")}
+            helpText={t("edit-slide.slide-name-placeholder")}
             value={formStateObject.slideName}
             onChange={handleInput}
           />
+        </ContentBody>
+        <ContentBody>
           <Select
             value={formStateObject.slideTemplate}
             name="slideTemplate"
             options={templateOptions}
             onChange={handleInput}
             label={t("edit-slide.slide-template-label")}
+            helpText={t("edit-slide.slide-template-help-text")}
             errors={errors}
           />
+        </ContentBody>
+        <ContentBody>
           {formStateObject.slideTemplate && (
-            <div className="border p-2">
+            <section className="row">
               {/* Render slide form from jsondata */}
               {formData.map((data) => (
                 <RenderFormElement
@@ -198,20 +206,29 @@ function EditSlide() {
                   requiredFieldCallback={handleRequiredField}
                 />
               ))}
-            </div>
+            </section>
           )}
+        </ContentBody>
+        <ContentBody>
+          <h3 className="h4">{t("edit-slide.slide-select-screen-title")}</h3>
           <SelectScreenTable
             handleChange={handleInput}
             name="slideScreen"
             errors={errors}
             selectedData={formStateObject.slideScreen}
           />
+        </ContentBody>
+        <ContentBody>
+          <h3 className="h4">{t("edit-slide.slide-select-playlist-title")}</h3>
           <SelectPlaylistTable
             handleChange={handleInput}
             name="slidePlaylist"
             errors={errors}
             selectedData={formStateObject.slidePlaylist}
           />
+        </ContentBody>
+        <ContentBody>
+          <h3 className="h4">{t("edit-slide.slide-publish-title")}</h3>
           <FormCheckbox
             label={t("edit-slide.slide-publish-label")}
             onChange={handleInput}
@@ -219,19 +236,29 @@ function EditSlide() {
             value={formStateObject.slidePublish}
           />
           {submitted && <Redirect to="/slides" />}
+        </ContentBody>
+        <ContentFooter>
           <Button
             variant="secondary"
             type="button"
             id="slide_cancel"
             onClick={() => history.goBack()}
+            className="me-md-3 col"
+            size="lg"
           >
             {t("edit-slide.cancel-button")}
           </Button>
-          <Button variant="primary" type="submit" id="save_slide">
+          <Button
+            variant="primary"
+            type="submit"
+            id="save_slide"
+            size="lg"
+            className="col"
+          >
             {t("edit-slide.save-button")}
           </Button>
-        </Form>
-      </Container>
+        </ContentFooter>
+      </Form>
     </>
   );
 }

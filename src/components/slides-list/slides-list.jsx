@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -9,6 +9,8 @@ import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
 
 /**
  * The category list component.
@@ -121,20 +123,14 @@ function SlidesList() {
       content: () => (
         <>
           {/* @todo make quick edit modal */}
-          <div className="m-2">
-            <Button variant="primary">Quick edit</Button>
-          </div>
+          <Button variant="primary">Quick edit</Button>
         </>
       ),
     },
     {
       key: "preview",
       content: () => (
-        <div className="m-2">
-          <Button variant="secondary">
-            {t("slides-list.columns.preview")}
-          </Button>
-        </div>
+        <Button variant="secondary">{t("slides-list.columns.preview")}</Button>
       ),
     },
     {
@@ -150,7 +146,7 @@ function SlidesList() {
     {
       key: "delete",
       content: (data) => (
-        <div className="m-2">
+        <>
           <Button
             variant="danger"
             disabled={selectedRows.length > 0}
@@ -158,7 +154,7 @@ function SlidesList() {
           >
             {t("slides-list.delete-button")}
           </Button>
-        </div>
+        </>
       ),
     },
   ];
@@ -204,23 +200,22 @@ function SlidesList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("slides-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Button>{t("slides-list.create-new-slide")}</Button>
-        </Col>
-      </Row>
-      {slides && (
-        <List
-          columns={columns}
-          selectedRows={selectedRows}
-          data={slides}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+    <>
+      <ContentHeader
+        title={t("slides-list.header")}
+        newBtnTitle={t("slides-list.create-new-slide")}
+        newBtnLink="/slides/new"
+      />
+      <ContentBody>
+        {slides && (
+          <List
+            columns={columns}
+            selectedRows={selectedRows}
+            data={slides}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}
@@ -233,7 +228,7 @@ function SlidesList() {
         dataStructureToDisplay={onPlaylists}
         title={t("slides-list.info-modal.slide-on-playlists")}
       />
-    </Container>
+    </>
   );
 }
 

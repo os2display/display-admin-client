@@ -1,0 +1,9 @@
+.navbar-light {
+  .topbar-nav {
+    &.navbar-nav {
+      .nav-link {
+        color: var(--bs-gray-dark);
+      }
+    }
+  }
+}

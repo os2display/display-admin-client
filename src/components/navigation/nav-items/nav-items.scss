@@ -1,0 +1,20 @@
+@use "sass:math";
+@import "~bootstrap/scss/bootstrap/";
+
+.nav-item {
+  .nav-link {
+    padding-top: $spacer;
+    padding-bottom: $spacer;
+  }
+}
+
+.nav-second-level {
+  padding-left: $spacer * 2.5;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  .nav-link {
+    $padding: math.div($spacer, 2);
+    padding-top: $padding;
+    padding-bottom: $padding;
+  }
+}

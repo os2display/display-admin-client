@@ -13,12 +13,10 @@ import PropTypes from "prop-types";
  */
 function LiveIcon({ live }) {
   return (
-    <div className="m-2">
-      <FontAwesomeIcon
-        icon={faCheckSquare}
-        style={live ? { color: "green" } : { color: "grey" }}
-      />
-    </div>
+    <FontAwesomeIcon
+      icon={faCheckSquare}
+      style={live ? { color: "green" } : { color: "grey" }}
+    />
   );
 }
 

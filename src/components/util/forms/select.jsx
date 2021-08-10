@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { FormGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 /**
@@ -21,6 +22,8 @@ import { useTranslation } from "react-i18next";
  * The string to display on error.
  * @param {string} props.helpText
  * The helptext.
+ * @param {string} props.formGroupClasses
+ * The classes for the form-group element.
  * @returns {object}
  * The select component.
  */
@@ -33,11 +36,12 @@ function Select({
   errors,
   errorText,
   helpText,
+  formGroupClasses,
 }) {
   const { t } = useTranslation("common");
   const textOnError = errorText || t("select.validation-text");
   const [error, setError] = useState();
-  const [classes, setClasses] = useState("form-control");
+  const [classes, setClasses] = useState("form-select");
   const required = !!errors;
 
   /**
@@ -46,13 +50,13 @@ function Select({
   useEffect(() => {
     if (errors && errors.includes(name)) {
       setError(true);
-      setClasses("form-control is-invalid");
+      setClasses("form-select is-invalid");
     }
   }, [errors]);
 
   return (
-    <div className="form-group">
-      <label htmlFor={name}>
+    <FormGroup className={formGroupClasses}>
+      <label htmlFor={name} className="form-label">
         {label}
         {required && " *"}
       </label>
@@ -74,7 +78,7 @@ function Select({
       </select>
       {helpText && <small className="form-text">{helpText}</small>}
       {error && <div className="invalid-feedback">{textOnError}</div>}
-    </div>
+    </FormGroup>
   );
 }
 
@@ -83,6 +87,7 @@ Select.defaultProps = {
   errorText: "",
   helpText: "",
   value: "",
+  formGroupClasses: "",
 };
 
 Select.propTypes = {
@@ -99,6 +104,7 @@ Select.propTypes = {
   value: PropTypes.string,
   errorText: PropTypes.string,
   helpText: PropTypes.string,
+  formGroupClasses: PropTypes.string,
 };
 
 export default Select;

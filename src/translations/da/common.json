@@ -182,13 +182,17 @@
   },
   "edit-slide": {
     "create-new-slide": "Opret nyt slide",
-    "edit-slide": "Rediger følgende slide",
+    "edit-slide": "Rediger slide",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
-    "slide-template-label": "Vælg en template til dit slide",
-    "slide-publish-label": "Udgiv"
+    "slide-template-label": "Vælg en skabelon til dit slide",
+    "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide.",
+    "slide-publish-label": "Marker for at udgive dette slide",
+    "slide-select-screen-title": "Skærme",
+    "slide-select-playlist-title": "Spillelister",
+    "slide-publish-title": "Udgivelse"
   },
   "edit-group": {
     "create-new-group": "Opret ny gruppe",
@@ -335,7 +339,8 @@
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
-      "number-of-slides": "Slides tilknyttede"
+      "number-of-slides": "Slides tilknyttede",
+      "number-of-categories": "Kategorier"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",
@@ -397,7 +402,8 @@
     "screen-resolution-of-screen-placeholder": "Angiv skærmens opløsning",
     "screen-resolution-of-screen-helptext": "Angiv skærmens opløsning (bxh), bredde og højde separeret med et x, eksempelvis 1920x1080"
   },
-  "navbar": {
+  "nav-items": {
+    "dashboard": "Oversigt",
     "content": "Indhold",
     "content-tags": "Tags",
     "content-media": "Medier",
@@ -409,8 +415,17 @@
     "playlists": "Spillelister",
     "playlists-playlists": "Spillelister",
     "playlists-categories": "Kategorier",
-    "configuration": "indstillinger",
+    "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
     "configuration-users": "Brugere"
+  },
+  "topbar": {
+    "brand": "OS2Display",
+    "add": "Ny",
+    "add_slide": "Nyt slide",
+    "add_screen": "Ny skærm",
+    "add_playlist": "Ny spilleliste",
+    "user": "Username",
+    "signout": "Log ud"
   }
 }
