@@ -30,17 +30,14 @@ services:
     command: npm start
     networks:
       - app
-      - frontend
     working_dir: /app
-    ports:
-      - '3000'
     environment:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
 
   cypress:
-    image: cypress/included:7.5.0
+    image: cypress/included:7.7.0
     networks:
       - app
     depends_on:
