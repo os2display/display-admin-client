@@ -203,12 +203,8 @@ function SlidesList() {
     <>
       <ContentHeader
         title={t("slides-list.header")}
-        buttons={[
-          {
-            link: "/slides/new",
-            title: t("slides-list.create-new-slide"),
-          },
-        ]}
+        newBtnTitle={t("slides-list.create-new-slide")}
+        newBtnLink="/slides/new"
       />
       <ContentBody>
         {slides && (

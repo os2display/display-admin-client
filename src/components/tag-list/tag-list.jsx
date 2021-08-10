@@ -147,12 +147,8 @@ function TagList() {
     <>
       <ContentHeader
         title={t("tag-list.header")}
-        buttons={[
-          {
-            link: "/tag/new",
-            title: t("tag-list.create-new-tag"),
-          },
-        ]}
+        newBtnTitle={t("tag-list.create-new-tag")}
+        newBtnLink="/tag/new"
       />
       <ContentBody>
         {tags.tags && (

@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "./campaign-icon";
@@ -210,20 +210,21 @@ function ScreenList() {
     <>
       <ContentHeader
         title={t("screens-list.header")}
-        buttons={[
-          {
-            onClickEvent: () => setView("calendar"),
-            invisible: view === "calendar",
-            title: t("screens-list.change-view-calendar"),
-          },
-          {
-            onClickEvent: () => setView("list"),
-            invisible: view === "list",
-            title: t("screens-list.change-view-list"),
-          },
-          { link: "/screen/new", title: t("screens-list.create-new-screen") },
-        ]}
+        newBtnTitle={t("screens-list.create-new-screen")}
+        newBtnLink="/screen/new"
       />
+      <Col md="auto">
+        {view === "list" && (
+          <Button onClick={() => setView("calendar")}>
+            {t("screens-list.change-view-calendar")}
+          </Button>
+        )}
+        {view === "calendar" && (
+          <Button onClick={() => setView("list")}>
+            {t("screens-list.change-view-list")}
+          </Button>
+        )}
+      </Col>
       <ContentBody>
         {screens.screens && (
           <List

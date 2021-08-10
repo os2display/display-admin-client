@@ -9,31 +9,21 @@ import Row from "react-bootstrap/Row";
  * The props.
  * @param {Array} props.title
  * The title
- * @param {Array} props.buttons
- * The buttons list
+ * @param {Array} props.newBtnTitle
+ * The button title
+ * @param {Array} props.newBtnLink
+ * The button link
  * @returns {object}
  * The Content header.
  */
-function ContentHeader({ title, buttons }) {
+function ContentHeader({ title, newBtnTitle, newBtnLink }) {
   return (
     <Row className="align-items-center justify-content-between my-3">
       <Col>
         <h1>{title}</h1>
       </Col>
       <Col xs="auto">
-        {buttons.map((button) => (
-          <>
-            {!button.invisible && (
-              <Button
-                style={{ marginLeft: "0.5rem" }}
-                onClick={button.onClickEvent}
-                href={button.link}
-              >
-                {button.title}
-              </Button>
-            )}
-          </>
-        ))}
+        <Button htef={newBtnLink}>{newBtnTitle}</Button>
       </Col>
     </Row>
   );
@@ -41,13 +31,8 @@ function ContentHeader({ title, buttons }) {
 
 ContentHeader.propTypes = {
   title: PropTypes.isRequired,
-  buttons: PropTypes.arrayOf(
-    PropTypes.shape({
-      link: PropTypes.string,
-      title: PropTypes.string,
-      onClickEvent: PropTypes.func,
-    })
-  ).isRequired,
+  newBtnTitle: PropTypes.isRequired,
+  newBtnLink: PropTypes.isRequired,
 };
 
 export default ContentHeader;
