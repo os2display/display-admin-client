@@ -111,7 +111,7 @@ function NavItems() {
       <Nav.Item>
         <Link id="nav-items_settings" className="nav-link" to="/settings">
           <FontAwesomeIcon className="me-2" icon={faCog} />
-          {t("nav-items.settings")}
+          {t("nav-items.configuration")}
         </Link>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
@@ -120,7 +120,7 @@ function NavItems() {
           className="nav-link"
           to="/themes"
         >
-          {t("navbar.configuration-themes")}
+          {t("nav-items.configuration-themes")}
         </Link>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
@@ -129,7 +129,7 @@ function NavItems() {
           className="nav-link"
           to="/users"
         >
-          {t("navbar.configuration-users")}
+          {t("nav-items.configuration-users")}
         </Link>
       </Nav.Item>
     </>
