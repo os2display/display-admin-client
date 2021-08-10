@@ -19,16 +19,6 @@ body {
   overflow-y: hidden;
 }
 
-.modal-container {
-  z-index: 100;
-  background-color: rgba(255, 0, 0, 0.2);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
 // To make multicomponent look like bootstrap for now
 // @todo change when changing the frontend styling
 .invalid {

@@ -295,7 +295,10 @@
   },
   "modal-dialog": {
     "yes": "Ja",
-    "no": "Nej"
+    "no": "Nej",
+    "cancel": "Annuller",
+    "save": "Gem og luk",
+    "remove": "Slet"
   },
   "form-input": {
     "validation-text": "Dette felt skal udfyldes"

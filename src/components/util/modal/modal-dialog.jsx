@@ -2,6 +2,7 @@ import { React, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import "./modal-dialog.scss";
 
 /**
  * @param {object} props
@@ -22,6 +23,8 @@ import { useTranslation } from "react-i18next";
  * Whether to show the accept button.
  * @param {string} props.size
  * The size of the modal.
+ * @param {string} props.btnVariant
+ * The variant of the submit button.
  * @returns {object}
  * The TagList
  */
@@ -34,6 +37,7 @@ function ModalDialog({
   children,
   showAcceptButton,
   size,
+  btnVariant,
 }) {
   const { t } = useTranslation("common");
 
@@ -59,24 +63,22 @@ function ModalDialog({
   }, []);
 
   return (
-    <div className="modal-container">
-      <Modal.Dialog scrollable size={size}>
-        <Modal.Header>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{children}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={onClose}>
-            {declineText || t("modal-dialog.no")}
+    <>
+      <Modal.Header>
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{children}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" type="button" onClick={onClose}>
+          {declineText || t("modal-dialog.cancel")}
+        </Button>
+        {showAcceptButton && (
+          <Button variant={btnVariant} type="submit" onClick={handleAccept}>
+            {acceptText || t("modal-dialog.remove")}
           </Button>
-          {showAcceptButton && (
-            <Button variant="primary" type="submit" onClick={handleAccept}>
-              {acceptText || t("modal-dialog.yes")}
-            </Button>
-          )}
-        </Modal.Footer>
-      </Modal.Dialog>
-    </div>
+        )}
+      </Modal.Footer>
+    </>
   );
 }
 
@@ -86,6 +88,7 @@ ModalDialog.defaultProps = {
   showAcceptButton: true,
   handleAccept: () => {},
   size: "m",
+  btnVariant: "primary",
 };
 
 ModalDialog.propTypes = {
@@ -97,6 +100,7 @@ ModalDialog.propTypes = {
   handleAccept: PropTypes.func,
   size: PropTypes.string,
   children: PropTypes.node.isRequired,
+  btnVariant: PropTypes.string,
 };
 
 export default ModalDialog;
