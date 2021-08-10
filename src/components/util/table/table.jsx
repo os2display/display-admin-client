@@ -33,7 +33,12 @@ function Table({ columns, selectedRows, onSort, sortColumn, data, withChart }) {
           onSort={onSort}
           sortColumn={sortColumn}
         />
-        <TableBody withChart={withChart} selectedRows={selectedRows} columns={columns} data={data} />
+        <TableBody
+          withChart={withChart}
+          selectedRows={selectedRows}
+          columns={columns}
+          data={data}
+        />
       </table>
     </div>
   );
