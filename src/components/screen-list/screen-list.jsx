@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "./campaign-icon";

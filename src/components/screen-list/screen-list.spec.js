@@ -39,6 +39,6 @@ describe("Screen list loads", () => {
 
   it("It loads charts", () => {
     cy.visit("/screens?view=calendar&sort=name&order=asc&page=1");
-    cy.get("#chart80").should("exist")
+    cy.get("#chart80").should("exist");
   });
 });
