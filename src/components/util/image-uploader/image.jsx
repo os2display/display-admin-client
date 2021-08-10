@@ -39,58 +39,53 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
   }
 
   return (
-    <div>
-      <Row className="mb-2">
-        <Col md="3" className="image">
+    <Row className="mb-3">
+      <Col md="3" className="mb-3 mb-md-0">
+        <div className="image h-100 justify-content-center d-flex rounded">
           <img src={image.url} alt="" />
-        </Col>
-        <Col>
-          <div>
-            <div>
-              <FormInput
-                name="mediaName"
-                type="text"
-                errors={errors}
-                label={t("image.image-name-label")}
-                placeholder={t("image.image-name-placeholder")}
-                value={image.mediaName}
-                dataUrl={image.url}
-                onChange={onChange}
-              />
-            </div>
-            <div>
-              <FormInput
-                name="mediaDescription"
-                type="text"
-                errors={errors}
-                dataUrl={image.url}
-                label={t("image.image-description-label")}
-                placeholder={t("image.image-description-placeholder")}
-                helpText={t("image.image-description-help-text")}
-                value={image.mediaDescription}
-                onChange={onChange}
-              />
-            </div>
-            <div>
-              <TagDropdown
-                selected={image.mediaTags || []}
-                name="mediaTags"
-                label={t("image.image-tags-label")}
-                handleTagSelection={onChange}
-                helpText={t("image.image-tags-help-text")}
-              />
-            </div>
-            <Row>
-              <Col md="auto">
-                <Button variant="danger" onClick={() => onImageRemove(index)}>
-                  {t("image.remove-image")}
-                </Button>
-              </Col>
-            </Row>
-          </div>
-        </Col>
-      </Row>
-    </div>
+        </div>
+      </Col>
+      <Col md="9">
+        <FormInput
+          name="mediaName"
+          type="text"
+          errors={errors}
+          label={t("image.image-name-label")}
+          placeholder={t("image.image-name-placeholder")}
+          value={image.mediaName}
+          dataUrl={image.url}
+          onChange={onChange}
+          formGroupClasses="mb-3"
+        />
+        <FormInput
+          name="mediaDescription"
+          type="text"
+          errors={errors}
+          dataUrl={image.url}
+          label={t("image.image-description-label")}
+          placeholder={t("image.image-description-placeholder")}
+          helpText={t("image.image-description-help-text")}
+          value={image.mediaDescription}
+          onChange={onChange}
+          formGroupClasses="mb-3"
+        />
+        <TagDropdown
+          selected={image.mediaTags || []}
+          name="mediaTags"
+          label={t("image.image-tags-label")}
+          handleTagSelection={onChange}
+          helpText={t("image.image-tags-help-text")}
+          formGroupClasses="mb-3"
+        />
+        <Button
+          className="mt-3"
+          variant="danger"
+          onClick={() => onImageRemove(index)}
+        >
+          {t("image.remove-image")}
+        </Button>
+      </Col>
+    </Row>
   );
 }
 
