@@ -177,9 +177,13 @@ function CategoryList() {
   return (
     <>
       <ContentHeader
+        buttons={[
+          {
+            link: "/category/new",
+            title: t("category-list.create-new-category"),
+          },
+        ]}
         title={t("category-list.header")}
-        newBtnTitle={t("category-list.create-new-category")}
-        newBtnLink="/category/new"
       />
       <ContentBody>
         {categories && (

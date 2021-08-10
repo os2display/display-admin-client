@@ -223,8 +223,12 @@ function PlaylistsList() {
     <>
       <ContentHeader
         title={t("playlists-list.header")}
-        newBtnTitle={t("playlists-list.create-new-playlist")}
-        newBtnLink="/playlist/new"
+        buttons={[
+          {
+            link: "/playlist/new",
+            title: t("playlists-list.create-new-playlist"),
+          },
+        ]}
       />
       <ContentBody>
         {playlists.playlists && (

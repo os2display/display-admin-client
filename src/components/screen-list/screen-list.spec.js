@@ -8,7 +8,7 @@ describe("Screen list loads", () => {
   it("It loads screens list", () => {
     cy.visit("/screens");
     cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("have.length", 90);
+    cy.get("tbody").find("tr td").should("have.length", 63);
   });
 
   it("It goes to edit (screens list)", () => {
@@ -35,5 +35,10 @@ describe("Screen list loads", () => {
     cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
+  });
+
+  it("It loads charts", () => {
+    cy.visit("/screens?view=calendar&sort=name&order=asc&page=1");
+    cy.get("#chart80").should("exist")
   });
 });

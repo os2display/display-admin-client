@@ -26,7 +26,7 @@ function ScreenList() {
   const { search } = useLocation();
   const history = useHistory();
   const viewParams = new URLSearchParams(search).get("view");
-  const [listView, setListView] = useState(viewParams ?? "list");
+  const [view, setView] = useState(viewParams ?? "list");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -68,9 +68,9 @@ function ScreenList() {
   useEffect(() => {
     const params = new URLSearchParams(search);
     params.delete("view");
-    params.append("view", listView);
+    params.append("view", view);
     history.replace({ search: params.toString() });
-  }, [listView]);
+  }, [view]);
 
   /**
    * Sets the selected row in state.
@@ -210,21 +210,20 @@ function ScreenList() {
     <>
       <ContentHeader
         title={t("screens-list.header")}
-        newBtnTitle={t("screens-list.create-new-screen")}
-        newBtnLink="/screen/new"
+        buttons={[
+          {
+            onClickEvent: () => setView("calendar"),
+            invisible: view === "calendar",
+            title: t("screens-list.change-view-calendar"),
+          },
+          {
+            onClickEvent: () => setView("list"),
+            invisible: view === "list",
+            title: t("screens-list.change-view-list"),
+          },
+          { link: "/screen/new", title: t("screens-list.create-new-screen") },
+        ]}
       />
-      <Col md="auto">
-        {listView === "list" && (
-          <Button onClick={() => setListView("calendar")}>
-            {t("screens-list.change-view-calendar")}
-          </Button>
-        )}
-        {listView === "calendar" && (
-          <Button onClick={() => setListView("list")}>
-            {t("screens-list.change-view-list")}
-          </Button>
-        )}
-      </Col>
       <ContentBody>
         {screens.screens && (
           <List
@@ -232,7 +231,7 @@ function ScreenList() {
             selectedRows={selectedRows}
             data={screens.screens}
             clearSelectedRows={clearSelectedRows}
-            withChart
+            withChart={view === "calendar"}
           />
         )}
       </ContentBody>

@@ -13,7 +13,7 @@ import ContentBody from "../util/content-body/content-body";
  * The tag list component.
  *
  * @returns {object}
- * The TagList
+ * The tag list
  */
 function TagList() {
   const { t } = useTranslation("common");
@@ -147,8 +147,12 @@ function TagList() {
     <>
       <ContentHeader
         title={t("tag-list.header")}
-        newBtnTitle={t("tag-list.create-new-tag")}
-        newBtnLink="/tag/new"
+        buttons={[
+          {
+            link: "/tag/new",
+            title: t("tag-list.create-new-tag"),
+          },
+        ]}
       />
       <ContentBody>
         {tags.tags && (

@@ -142,8 +142,12 @@ function GroupsList() {
     <>
       <ContentHeader
         title={t("groups-list.header")}
-        newBtnTitle={t("groups-list.create-new-group")}
-        newBtnLink="/group/new"
+        buttons={[
+          {
+            link: "/group/new",
+            title: t("groups-list.create-new-group"),
+          },
+        ]}
       />
       <ContentBody>
         {groups.groups && (
