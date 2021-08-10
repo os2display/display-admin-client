@@ -13,12 +13,10 @@ import PropTypes from "prop-types";
  */
 function CampaignIcon({ overriddenByCampaign }) {
   return (
-    <div className="m-2">
-      <FontAwesomeIcon
-        icon={faExclamationCircle}
-        style={overriddenByCampaign ? { color: "red" } : { color: "grey" }}
-      />
-    </div>
+    <FontAwesomeIcon
+      icon={faExclamationCircle}
+      style={overriddenByCampaign ? { color: "red" } : { color: "grey" }}
+    />
   );
 }
 

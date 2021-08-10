@@ -90,15 +90,13 @@ function UserList() {
       key: "delete",
       content: (data) => (
         <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              disabled={selectedRows.length > 0}
-              onClick={() => openDeleteModal(data)}
-            >
-              {t("user-list.delete-button")}
-            </Button>
-          </div>
+          <Button
+            variant="danger"
+            disabled={selectedRows.length > 0}
+            onClick={() => openDeleteModal(data)}
+          >
+            {t("user-list.delete-button")}
+          </Button>
         </>
       ),
     },
@@ -136,7 +134,7 @@ function UserList() {
           <h1>{t("user-list.header")}</h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/user/new">
+          <Link className="btn btn-success" to="/user/new">
             {t("user-list.create-new-user")}
           </Link>
         </Col>

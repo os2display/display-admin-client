@@ -203,7 +203,7 @@ function MediaList({ fromModal, handleSelected }) {
         {!fromModal && (
           <>
             <Col xs="auto">
-              <Link className="btn btn-primary btn-success" to="/media/new">
+              <Link className="btn btn-success" to="/media/new">
                 {t("media-list.upload-new-media")}
               </Link>
             </Col>
@@ -273,10 +273,7 @@ function MediaList({ fromModal, handleSelected }) {
                   </div>
                 </div>
                 <div>
-                  <Link
-                    className="btn btn-primary btn-success"
-                    to={`/media/${data.id}`}
-                  >
+                  <Link className="btn btn-primary" to={`/media/${data.id}`}>
                     {t("media-list.edit-button")}
                   </Link>
                 </div>

@@ -123,20 +123,14 @@ function SlidesList() {
       content: () => (
         <>
           {/* @todo make quick edit modal */}
-          <div className="m-2">
-            <Button variant="primary">Quick edit</Button>
-          </div>
+          <Button variant="primary">Quick edit</Button>
         </>
       ),
     },
     {
       key: "preview",
       content: () => (
-        <div className="m-2">
-          <Button variant="secondary">
-            {t("slides-list.columns.preview")}
-          </Button>
-        </div>
+        <Button variant="secondary">{t("slides-list.columns.preview")}</Button>
       ),
     },
     {

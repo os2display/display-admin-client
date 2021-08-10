@@ -127,9 +127,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
       content: () => (
         <>
           {/* @todo make quick edit modal */}
-          <div className="m-2">
-            <Button variant="primary">Quick edit</Button>
-          </div>
+          <Button variant="primary">Quick edit</Button>
         </>
       ),
     },

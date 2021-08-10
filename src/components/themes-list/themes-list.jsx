@@ -109,15 +109,13 @@ function ThemesList() {
       key: "delete",
       content: (data) => (
         <>
-          <div className="m-2">
-            <Button
-              variant="danger"
-              disabled={selectedRows.length > 0}
-              onClick={() => openDeleteModal(data)}
-            >
-              {t("themes-list.delete-button")}
-            </Button>
-          </div>
+          <Button
+            variant="danger"
+            disabled={selectedRows.length > 0}
+            onClick={() => openDeleteModal(data)}
+          >
+            {t("themes-list.delete-button")}
+          </Button>
         </>
       ),
     },
@@ -162,7 +160,7 @@ function ThemesList() {
           <h1>{t("themes-list.header")}</h1>
         </Col>
         <Col md="auto">
-          <Link className="btn btn-primary btn-success" to="/theme/new">
+          <Link className="btn btn-success" to="/theme/new">
             {t("themes-list.create-new-theme")}
           </Link>
         </Col>

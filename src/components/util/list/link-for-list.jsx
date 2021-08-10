@@ -18,7 +18,7 @@ import PropTypes from "prop-types";
  */
 function LinkForList({ data, param, label }) {
   return (
-    <Link className="btn btn-primary btn-success" to={`/${param}/${data.id}`}>
+    <Link className="btn btn-primary" to={`/${param}/${data.id}`}>
       {label}
     </Link>
   );
