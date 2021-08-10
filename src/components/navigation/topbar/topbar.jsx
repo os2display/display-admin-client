@@ -18,10 +18,10 @@ import {
 import NavItems from "../nav-items/nav-items";
 import "./topbar.scss";
 /**
- * The side bar component.
+ * The TopBar component.
  *
  * @returns {object}
- *   The NavBar
+ *   The TopBar
  */
 function TopBar() {
   const [t] = useTranslation("common");
