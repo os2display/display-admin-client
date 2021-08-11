@@ -50,8 +50,8 @@ jobs:
       - name: React coding standards
         run: npm run check-coding-standards
 
-  cypress-docker:
-    name: Cypress (docker run)
+  cypress:
+    name: Cypress
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -82,17 +82,3 @@ jobs:
           name: cypress-screenhosts-${{ matrix.browser }}
           path: cypress/screenshots
           retention-days: 7
-
-  cypress-run:
-    name: Cypress (cypress-io/github-action)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm start
