@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 
 networks:
   frontend:
@@ -35,6 +35,12 @@ services:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://node:3000/tags" ]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   cypress:
     image: cypress/included:7.7.0
@@ -42,6 +48,7 @@ services:
       - app
     depends_on:
       - nginx
+      - node
     environment:
       - CYPRESS_VIDEO=false
       - CYPRESS_baseUrl=http://nginx
