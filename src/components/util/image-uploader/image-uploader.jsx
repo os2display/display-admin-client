@@ -105,8 +105,6 @@ function ImageUploader({
 
   return (
     <div className={error ? "invalid" : ""}>
-      {/* <div className="col mb-3"> */}
-      {/* <h4 className="h6">{t("image-uploader.title")}</h4> */}
       <ImageUploading
         multiple
         value={images}
@@ -182,7 +180,6 @@ function ImageUploader({
           </div>
         )}
       </ImageUploading>
-      {/* </div> */}
       {error && (
         <div className="invalid-feedback-image-uploader">
           {invalidInputText}
