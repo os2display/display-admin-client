@@ -1,3 +1,5 @@
+@import "~bootstrap/scss/bootstrap/";
+
 .drag-drop-area {
   height: 300px;
   width: 100%;
@@ -14,13 +16,22 @@
   border-color: darkmagenta;
 }
 .image {
-  justify-content: center;
-  display: flex;
-  background-color: lightgray;
+  background-color: $gray-300;
 
   img {
     object-fit: contain;
     max-width: 100%;
     max-height: 400px;
+  }
+}
+
+.upload__image-wrapper {
+  .row {
+    border-bottom: 1px solid $gray-300;
+    padding-bottom: $spacer;
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
   }
 }

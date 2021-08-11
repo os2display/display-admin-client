@@ -120,7 +120,7 @@ function ImageUploader({
           dragProps,
         }) => (
           // write your building UI
-          <div className="upload__image-wrapper">
+          <div className="upload__image-wrapper bg-light border p-3 pb-0 rounded my-3">
             {(imageList.length === 0 || multipleImages) && (
               <>
                 <Button
@@ -130,6 +130,7 @@ function ImageUploader({
                   onDragEnter={dragProps.onDragEnter}
                   onDragLeave={dragProps.onDragLeave}
                   onDragOver={dragProps.onDragOver}
+                  className="me-3"
                 >
                   {!multipleImages && t("image-uploader.pick-image")}
                   {multipleImages && t("image-uploader.pick-more-images")}
@@ -157,7 +158,10 @@ function ImageUploader({
                   <FontAwesomeIcon icon={faImage} />
                 </div>
 
-                <small id="aria-label-for-drag-and-drop" className="form-text">
+                <small
+                  id="aria-label-for-drag-and-drop"
+                  className="form-text mb-3"
+                >
                   {t("image-uploader.help-text")}
                 </small>
               </>

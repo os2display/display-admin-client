@@ -349,6 +349,7 @@
     "remove-from-list": "Fjern fra liste"
   },
   "image-uploader": {
+    "title": "Billede",
     "validation-text": "Dette felt skal udfyldes",
     "pick-image": "Vælg et billede",
     "pick-more-images": "Vælg et eller flere billeder",
@@ -368,12 +369,12 @@
     "deselect-all": "Fravælg alle"
   },
   "image": {
-    "remove-image": "Slet",
+    "remove-image": "Fjern billedet",
     "image-name-label": "Billedets navn",
     "image-name-placeholder": "Skriv billedets navn",
     "image-description-label": "Beskrivelse af billedet",
     "image-description-placeholder": "Udfyld beskrivelse af billedet",
-    "image-description-help-text": "Denne beskrivelse benytter til alt-text, og er derfor påkrævet",
+    "image-description-help-text": "Denne beskrivelse benyttes til alt-text, og er derfor påkrævet",
     "image-tags-label": "Tags tilknyttede billedet",
     "image-tags-help-text": "Disse bruges eksempelvis til fremsøgning af et billede"
   },
