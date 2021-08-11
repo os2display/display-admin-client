@@ -73,7 +73,7 @@ jobs:
       - name: Cypress run
         run: docker-compose run cypress run --browser ${{ matrix.browser }}
         env:
-          - CYPRESS_RETRIES=2
+          CYPRESS_RETRIES: 2
 
       - name: Archive screenshots
         if: ${{ failure() }}
