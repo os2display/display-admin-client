@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Button from "react-bootstrap/Button";
+import ContentBody from "../util/content-body/content-body";
+import ContentHeader from "../util/content-header/content-header";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import LinkForList from "../util/list/link-for-list";
 import List from "../util/list/list";
@@ -154,32 +155,29 @@ function ThemesList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("themes-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-success" to="/theme/new">
-            {t("themes-list.create-new-theme")}
-          </Link>
-        </Col>
-      </Row>
-      {themes && (
-        <List
-          columns={columns}
-          selectedRows={selectedRows}
-          data={themes}
-          clearSelectedRows={clearSelectedRows}
-        />
-      )}
+    <>
+      <ContentHeader
+        title={t("themes-list.header")}
+        newBtnTitle={t("themes-list.create-new-theme")}
+        newBtnLink="/theme/new"
+      />
+      <ContentBody>
+        {themes && (
+          <List
+            columns={columns}
+            selectedRows={selectedRows}
+            data={themes}
+            clearSelectedRows={clearSelectedRows}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
       />
-    </Container>
+    </>
   );
 }
 

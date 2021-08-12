@@ -22,9 +22,11 @@ function ContentHeader({ title, newBtnTitle, newBtnLink }) {
       <Col>
         <h1>{title}</h1>
       </Col>
-      <Col xs="auto">
-        <Button htef={newBtnLink}>{newBtnTitle}</Button>
-      </Col>
+      {newBtnTitle && (
+        <Col xs="auto">
+          <Button htef={newBtnLink}>{newBtnTitle}</Button>
+        </Col>
+      )}
     </Row>
   );
 }

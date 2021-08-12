@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
 import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
@@ -133,14 +136,16 @@ function EditScreen() {
   }
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        {newScreen && <h1>{t("edit-screen.create-new-screen")}</h1>}
-        {!newScreen && (
-          <h1>
-            {t("edit-screen.edit-screen")}: {screenName}
-          </h1>
-        )}
+    <Form onSubmit={handleSubmit}>
+      {newScreen && (
+        <ContentHeader title={t("edit-screen.create-new-screen")} />
+      )}
+      {!newScreen && (
+        <ContentHeader
+          title={`${t("edit-screen.edit-screen")}: ${screenName}`}
+        />
+      )}
+      <ContentBody>
         <FormInput
           errors={errors}
           name="screenName"
@@ -228,20 +233,24 @@ function EditScreen() {
           pattern="(\d+)x(\d+)"
           onChange={handleInput}
         />
+      </ContentBody>
+      <ContentFooter>
         {submitted && <Redirect to="/screens" />}
         <Button
           variant="secondary"
           type="button"
           id="screen_cancel"
           onClick={() => history.goBack()}
+          size="lg"
+          className="me-3"
         >
           {t("edit-screen.cancel-button")}
         </Button>
-        <Button variant="primary" type="submit" id="save_screen">
+        <Button variant="primary" type="submit" id="save_screen" size="lg">
           {t("edit-screen.save-button")}
         </Button>
-      </Form>
-    </Container>
+      </ContentFooter>
+    </Form>
   );
 }
 

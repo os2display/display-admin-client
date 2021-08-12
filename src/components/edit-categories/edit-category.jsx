@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 
@@ -78,14 +81,16 @@ function EditCategories() {
   }
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        {newCategory && <h1>{t("edit-category.create-new-category")}</h1>}
-        {!newCategory && (
-          <h1>
-            {t("edit-category.edit-category")}: {categoryName}
-          </h1>
-        )}
+    <Form onSubmit={handleSubmit}>
+      {newCategory && (
+        <ContentHeader title={t("edit-category.create-new-category")} />
+      )}
+      {!newCategory && (
+        <ContentHeader
+          title={`${t("edit-category.edit-category")}: ${categoryName}`}
+        />
+      )}
+      <ContentBody>
         <FormInput
           name="categoryName"
           type="text"
@@ -96,20 +101,24 @@ function EditCategories() {
           onChange={handleInput}
           errors={errors}
         />
+      </ContentBody>
+      <ContentFooter>
         {submitted && <Redirect to="/categories" />}
         <Button
           variant="secondary"
           type="button"
           id="category_cancel"
           onClick={() => history.goBack()}
+          size="lg"
+          className="me-3"
         >
           {t("edit-category.cancel-button")}
         </Button>
-        <Button variant="primary" type="submit" id="save_category">
+        <Button variant="primary" type="submit" id="save_category" size="lg">
           {t("edit-category.save-button")}
         </Button>
-      </Form>
-    </Container>
+      </ContentFooter>
+    </Form>
   );
 }
 

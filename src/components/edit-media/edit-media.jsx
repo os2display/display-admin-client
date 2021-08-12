@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useParams, Redirect } from "react-router";
-import { Container, Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import getFormErrors from "../util/helpers/form-errors-helper";
@@ -86,14 +86,14 @@ function EditMedia() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newMedia && <h1>{t("edit-media.upload-new-media")}</h1>}
-          {!newMedia && (
-            <h1>
-              {t("edit-media.edit-media")}: {mediaName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newMedia && <ContentHeader title={t("edit-media.upload-new-media")} />}
+        {!newMedia && (
+          <ContentHeader
+            title={`${t("edit-media.edit-media")}: ${mediaName}`}
+          />
+        )}
+        <ContentBody>
           <ImageUploader
             errors={errors}
             multipleImages={!!newMedia}
@@ -103,6 +103,8 @@ function EditMedia() {
             invalidText={t("edit-media.media-validation")}
             showLibraryButton={false}
           />
+        </ContentBody>
+        <ContentFooter>
           {submitted && <Redirect to="/media-list" />}
           <Button
             variant="secondary"
@@ -115,8 +117,8 @@ function EditMedia() {
           <Button variant="primary" type="submit" id="save_media">
             {t("edit-media.save-button")}
           </Button>
-        </Form>
-      </Container>
+        </ContentFooter>
+      </Form>
     </>
   );
 }

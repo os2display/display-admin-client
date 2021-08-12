@@ -1,8 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
@@ -91,14 +93,14 @@ function EditPlaylist() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newPlaylist && <h1>{t("edit-playlist.create-new-playlist")}</h1>}
-          {!newPlaylist && (
-            <h1>
-              {t("edit-playlist.edit-playlist")}: {playlistName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newPlaylist && <h1>{t("edit-playlist.create-new-playlist")}</h1>}
+        {!newPlaylist && (
+          <h1>
+            {t("edit-playlist.edit-playlist")}: {playlistName}
+          </h1>
+        )}
+        <ContentBody>
           <FormInput
             name="playlistName"
             type="text"
@@ -134,20 +136,24 @@ function EditPlaylist() {
             errors={errors}
             selectedData={formStateObject.playlistSlides}
           />
+        </ContentBody>
+        <ContentFooter>
           {submitted && <Redirect to="/playlists" />}
           <Button
             variant="secondary"
             type="button"
             id="playlist_cancel"
             onClick={() => history.goBack()}
+            size="lg"
+            className="me-3"
           >
             {t("edit-playlist.cancel-button")}
           </Button>
-          <Button variant="primary" type="submit" id="save_playlist">
+          <Button variant="primary" type="submit" id="save_playlist" size="lg">
             {t("edit-playlist.save-button")}
           </Button>
-        </Form>
-      </Container>
+        </ContentFooter>
+      </Form>
     </>
   );
 }
