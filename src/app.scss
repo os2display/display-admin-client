@@ -4,9 +4,9 @@ html {
   height: -webkit-fill-available;
 }
 
-body {
+body,
+.row-full-height {
   min-height: 100vh;
-  min-height: -webkit-fill-available;
 }
 
 .root {

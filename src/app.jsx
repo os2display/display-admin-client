@@ -50,12 +50,12 @@ function App() {
   return (
     <>
       <I18nextProvider i18n={i18next}>
-        <Container fluid className="h-100 px-0">
-          <Row className="g-0">
+        <Container fluid className="h-100 px-0 bg-light">
+          <Row className="row-full-height g-0">
             <SideBar />
             <Col lg={9} xl={10}>
               <TopBar />
-              <main className="col p-3 bg-light">
+              <main className="col p-3">
                 <Switch>
                   <Route path="/tags" component={TagList} />
                   <Route path="/screens" component={ScreenList} />
