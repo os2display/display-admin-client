@@ -2,7 +2,6 @@ import { React, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import "./modal-dialog.scss";
 
 /**
  * @param {object} props
@@ -21,8 +20,6 @@ import "./modal-dialog.scss";
  * The children to be rendered.
  * @param {boolean} props.showAcceptButton
  * Whether to show the accept button.
- * @param {string} props.size
- * The size of the modal.
  * @param {string} props.btnVariant
  * The variant of the submit button.
  * @returns {object}
@@ -36,7 +33,6 @@ function ModalDialog({
   handleAccept,
   children,
   showAcceptButton,
-  size,
   btnVariant,
 }) {
   const { t } = useTranslation("common");
@@ -87,7 +83,6 @@ ModalDialog.defaultProps = {
   declineText: "",
   showAcceptButton: true,
   handleAccept: () => {},
-  size: "m",
   btnVariant: "primary",
 };
 
@@ -98,7 +93,6 @@ ModalDialog.propTypes = {
   showAcceptButton: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   handleAccept: PropTypes.func,
-  size: PropTypes.string,
   children: PropTypes.node.isRequired,
   btnVariant: PropTypes.string,
 };

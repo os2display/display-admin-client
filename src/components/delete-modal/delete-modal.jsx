@@ -1,7 +1,7 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Modal } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 
@@ -28,35 +28,28 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
   const { t } = useTranslation("common");
 
   return (
-    <div id="delete-modal">
-      <Modal show={show}>
-        <ModalDialog
-          title={t("delete-modal.title")}
-          onClose={onClose}
-          handleAccept={handleAccept}
-          btnVariant="danger"
-        >
-          <ul>
-            {selectedRows.map(({ name }) => (
-              <li>{name}</li>
-            ))}
-          </ul>
-        </ModalDialog>
-      </Modal>
-    </div>
+    <Modal show={show} size="m" id="delete-modal">
+      <ModalDialog
+        title={t("delete-modal.title")}
+        onClose={onClose}
+        handleAccept={handleAccept}
+        btnVariant="danger"
+      >
+        <ul>
+          {selectedRows.map(({ name }) => (
+            <li>{name}</li>
+          ))}
+        </ul>
+      </ModalDialog>
+    </Modal>
   );
 }
-
-DeleteModal.defaultProps = {
-  btnVariant: "primary",
-};
 
 DeleteModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   selectedRows: SelectedRowsProptypes.isRequired,
   handleAccept: PropTypes.func.isRequired,
-  btnVariant: PropTypes.string,
 };
 
 export default DeleteModal;
