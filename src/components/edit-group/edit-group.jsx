@@ -86,7 +86,7 @@ function EditGroup() {
         {newGroup && <ContentHeader title={t("edit-group.create-new-group")} />}
         {!newGroup && (
           <ContentHeader
-            title={`${t("edit-category.edit-category")}: ${groupName}`}
+            title={`${t("edit-group.edit-group")}: ${groupName}`}
           />
         )}
         <ContentBody>

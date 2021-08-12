@@ -76,12 +76,12 @@ describe("Edit screen page tests", () => {
   it("It validates already existing screen", () => {
     cy.visit("/screen/32");
     cy.get("#screenName").clear();
-    cy.get(".container")
+    cy.get(".content-footer")
       .find("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);
     cy.get("#save_screen").click();
-    cy.get(".container")
+    cy.get(".content-footer")
       .find("#save_screen")
       .invoke("text")
       .should("match", /^Gem skærm/);

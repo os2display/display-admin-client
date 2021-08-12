@@ -343,7 +343,8 @@
   "merge-modal": {
     "title": "Er du sikker på du vil konsolidere følgende",
     "new-name-label": "Vælg et nyt navn",
-    "new-name-placeholder": "Skriv det nye navn her"
+    "new-name-placeholder": "Skriv det nye navn her",
+    "accept-text": "Konsolider"
   },
   "select-playlists-table": {
     "columns": {

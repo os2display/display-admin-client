@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
  */
 function ContentFooter({ children }) {
   return (
-    <section className="d-grid gap-2 d-lg-block align-items-end mb-5">
+    <section className="content-footer d-grid gap-2 d-lg-block align-items-end mb-5">
       {children}
     </section>
   );
