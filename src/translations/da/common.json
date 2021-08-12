@@ -51,6 +51,11 @@
     "pick-font-color": "Font farve",
     "font-label": "Vælg font"
   },
+  "calendar-list": {
+    "name-label": "Navn",
+    "in-groups-label": "I følgende grupper",
+    "live-label": "Live"
+  },
   "slides-list": {
     "columns": {
       "pick": "Vælg slide",
@@ -84,6 +89,8 @@
     },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
+    "change-view-list": "Liste",
+    "change-view-calendar": "Kalender",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
@@ -94,7 +101,7 @@
       "created-by": "Oprettet af"
     },
     "header": "Grupper",
-    "create-new-group": "Opret ny skærm",
+    "create-new-group": "Opret ny grupee",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },

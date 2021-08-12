@@ -1,8 +1,9 @@
-import React from "react";
+import { React, Fragment } from "react";
 import PropTypes from "prop-types";
 import get from "lodash.get";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
+import Calendar from "../../screen-list/calendar";
 
 /**
  * @param {object} props
@@ -13,10 +14,12 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  * The selected rows array.
  * @param {Array} props.data
  * The data to display.
+ * @param {boolean} props.withChart
+ * If the table should display a gantt chart
  * @returns {object}
  * The table body.
  */
-function TableBody({ columns, selectedRows, data }) {
+function TableBody({ columns, selectedRows, data, withChart }) {
   /**
    * Renders a cell with the content received.
    *
@@ -43,19 +46,33 @@ function TableBody({ columns, selectedRows, data }) {
    * Class for styling.
    */
   function isRowSelected(item) {
-    if (selectedRows.find((x) => x.id === item.id)) return "bg-light";
-    return "";
+    let classes = "";
+    if (selectedRows.find((x) => x.id === item.id)) classes += "bg-light";
+    return classes;
   }
+
   return (
     <tbody>
       {data.map((item) => (
-        <tr className={isRowSelected(item)} key={item.id}>
-          {columns.map((column) => (
-            <td key={item.id + (column.path || column.key)}>
-              {renderCell(item, column)}
-            </td>
-          ))}
-        </tr>
+        <Fragment key={item.id}>
+          <tr
+            style={withChart ? { borderBottomColor: "transparent" } : {}}
+            className={isRowSelected(item)}
+          >
+            {columns.map((column) => (
+              <td key={item.id + (column.path || column.key)}>
+                {renderCell(item, column)}
+              </td>
+            ))}
+          </tr>
+          {withChart && (
+            <tr className={isRowSelected(item)}>
+              <td colSpan="100%" key={item.id}>
+                <Calendar playlists={item.playlists} id={item.id} />
+              </td>
+            </tr>
+          )}
+        </Fragment>
       ))}
     </tbody>
   );
@@ -67,6 +84,7 @@ TableBody.propTypes = {
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes.isRequired,
+  withChart: PropTypes.bool.isRequired,
 };
 
 export default TableBody;

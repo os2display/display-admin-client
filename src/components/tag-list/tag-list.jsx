@@ -13,7 +13,7 @@ import ContentBody from "../util/content-body/content-body";
  * The tag list component.
  *
  * @returns {object}
- * The TagList
+ * The tag list
  */
 function TagList() {
   const { t } = useTranslation("common");

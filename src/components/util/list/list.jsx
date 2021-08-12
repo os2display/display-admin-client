@@ -24,10 +24,19 @@ import MergeModal from "../../merge-modal/merge-modal";
  * Whether to show the merge button.
  * @param {Function} props.clearSelectedRows
  * Callback to clear the selected rows.
+ * @param {boolean} props.withChart
+ * If the list should display a gantt chart
  * @returns {object}
  * The List.
  */
-function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
+function List({
+  data,
+  columns,
+  selectedRows,
+  showMerge,
+  clearSelectedRows,
+  withChart,
+}) {
   const { t } = useTranslation("common");
   const { search } = useLocation();
   const history = useHistory();
@@ -81,12 +90,16 @@ function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
    * If they search or filter, the pagination is reset.
    */
   useEffect(() => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(search);
     if (searchText) {
+      params.delete("search");
       params.append("search", searchText);
     }
+    params.delete("sort");
     params.append("sort", sortBy.path);
+    params.delete("order");
     params.append("order", sortBy.order);
+    params.delete("page");
     params.append("page", currentPage);
     history.replace({ search: params.toString() });
   }, [searchText, sortBy, currentPage]);
@@ -129,7 +142,12 @@ function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
    * Whether the searchtext is in the data entry.
    */
   function filterDataFromSearchInput(dataToFilter) {
-    const dataValuesString = Object.values(dataToFilter).join(" ");
+    let dataValuesString = Object.values(dataToFilter);
+    dataValuesString = dataValuesString
+      .filter((el) => {
+        return typeof el === "string" || typeof el === "number";
+      })
+      .join("");
     return dataValuesString
       .toLocaleLowerCase()
       .includes(searchText.toLocaleLowerCase());
@@ -249,6 +267,7 @@ function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
         sortColumn={sortBy}
         columns={columns}
         selectedRows={selectedRows}
+        withChart={withChart}
       />
       <Pagination
         itemsCount={getTableData().length}
@@ -274,6 +293,7 @@ function List({ data, columns, selectedRows, showMerge, clearSelectedRows }) {
 
 List.defaultProps = {
   showMerge: false,
+  withChart: false,
 };
 
 List.propTypes = {
@@ -284,5 +304,6 @@ List.propTypes = {
   selectedRows: SelectedRowsProptypes.isRequired,
   showMerge: PropTypes.bool,
   clearSelectedRows: PropTypes.func.isRequired,
+  withChart: PropTypes.bool,
 };
 export default List;

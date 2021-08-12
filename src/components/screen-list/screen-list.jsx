@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col } from "react-bootstrap";
+import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "./campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -12,6 +13,7 @@ import ListButton from "../util/list/list-button";
 import LiveIcon from "./live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import "./screen-list.scss";
 
 /**
  * The screen list component.
@@ -21,6 +23,10 @@ import ContentBody from "../util/content-body/content-body";
  */
 function ScreenList() {
   const { t } = useTranslation("common");
+  const { search } = useLocation();
+  const history = useHistory();
+  const viewParams = new URLSearchParams(search).get("view");
+  const [view, setView] = useState(viewParams ?? "list");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -55,6 +61,16 @@ function ScreenList() {
         setScreens(jsonData);
       });
   }, []);
+
+  /**
+   * Set the view in url.
+   */
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    params.delete("view");
+    params.append("view", view);
+    history.replace({ search: params.toString() });
+  }, [view]);
 
   /**
    * Sets the selected row in state.
@@ -197,6 +213,18 @@ function ScreenList() {
         newBtnTitle={t("screens-list.create-new-screen")}
         newBtnLink="/screen/new"
       />
+      <Col md="auto">
+        {view === "list" && (
+          <Button onClick={() => setView("calendar")}>
+            {t("screens-list.change-view-calendar")}
+          </Button>
+        )}
+        {view === "calendar" && (
+          <Button onClick={() => setView("list")}>
+            {t("screens-list.change-view-list")}
+          </Button>
+        )}
+      </Col>
       <ContentBody>
         {screens.screens && (
           <List
@@ -204,6 +232,7 @@ function ScreenList() {
             selectedRows={selectedRows}
             data={screens.screens}
             clearSelectedRows={clearSelectedRows}
+            withChart={view === "calendar"}
           />
         )}
       </ContentBody>

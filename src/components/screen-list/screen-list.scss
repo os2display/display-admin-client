@@ -1,0 +1,10 @@
+.charts {
+  display: flex;
+  flex-direction: column;
+
+  .calendar-chart {
+    height: 80%;
+    width: 100%;
+    min-height: 15rem;
+  }
+}
