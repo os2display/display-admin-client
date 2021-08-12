@@ -36,24 +36,26 @@ function MergeModal({ show, onClose, dataStructureToDisplay, handleAccept }) {
   }
 
   return (
-    <ModalDialog
-      title={t("merge-modal.title")}
-      onClose={onClose}
-      handleAccept={() => handleAccept(mergeName)}
-    >
-      {dataStructureToDisplay.map(({ name }) => (
-        <li>{name}</li>
-      ))}
-      <FormInput
-        name="mergeName"
-        aria-label={t("merge-modal.new-name-label")}
-        label={t("merge-modal.new-name-label")}
-        placeholder={t("merge-modal.new-name-placeholder")}
-        value={mergeName}
-        onChange={(e) => handleInput(e.currentTarget.value)}
-        id="merged-data-name"
-      />
-    </ModalDialog>
+    <Modal show={show} size="xl" id="merge-modal">
+      <ModalDialog
+        title={t("merge-modal.title")}
+        onClose={onClose}
+        handleAccept={() => handleAccept(mergeName)}
+      >
+        {dataStructureToDisplay.map(({ name }) => (
+          <li>{name}</li>
+        ))}
+        <FormInput
+          name="mergeName"
+          aria-label={t("merge-modal.new-name-label")}
+          label={t("merge-modal.new-name-label")}
+          placeholder={t("merge-modal.new-name-placeholder")}
+          value={mergeName}
+          onChange={(e) => handleInput(e.currentTarget.value)}
+          id="merged-data-name"
+        />
+      </ModalDialog>
+    </Modal>
   );
 }
 
