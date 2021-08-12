@@ -3,6 +3,9 @@ import { useParams, Redirect } from "react-router";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import ImageUploader from "../util/image-uploader/image-uploader";
 
