@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
@@ -83,14 +86,16 @@ function EditLocation() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newLocation && <h1>{t("edit-location.create-new-location")}</h1>}
-          {!newLocation && (
-            <h1>
-              {t("edit-location.edit-location")}: {locationName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newLocation && (
+          <ContentHeader title={t("edit-location.create-new-location")} />
+        )}
+        {!newLocation && (
+          <ContentHeader
+            title={`${t("edit-location.edit-location")}: ${locationName}`}
+          />
+        )}
+        <ContentBody>
           <FormInput
             name="locationName"
             type="text"
@@ -106,6 +111,8 @@ function EditLocation() {
             errors={errors}
             selectedData={formStateObject.locationScreens}
           />
+        </ContentBody>
+        <ContentFooter>
           {submitted && <Redirect to="/locations" />}
           <Button
             variant="secondary"
@@ -118,8 +125,8 @@ function EditLocation() {
           <Button variant="primary" type="submit" id="save_location">
             {t("edit-location.save-button")}
           </Button>
-        </Form>
-      </Container>
+        </ContentFooter>
+      </Form>
     </>
   );
 }

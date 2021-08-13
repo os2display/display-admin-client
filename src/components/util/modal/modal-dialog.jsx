@@ -20,8 +20,8 @@ import { useTranslation } from "react-i18next";
  * The children to be rendered.
  * @param {boolean} props.showAcceptButton
  * Whether to show the accept button.
- * @param {string} props.size
- * The size of the modal.
+ * @param {string} props.btnVariant
+ * The variant of the submit button.
  * @returns {object}
  * The TagList
  */
@@ -33,7 +33,7 @@ function ModalDialog({
   handleAccept,
   children,
   showAcceptButton,
-  size,
+  btnVariant,
 }) {
   const { t } = useTranslation("common");
 
@@ -59,24 +59,22 @@ function ModalDialog({
   }, []);
 
   return (
-    <div className="modal-container">
-      <Modal.Dialog scrollable size={size}>
-        <Modal.Header>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{children}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={onClose}>
-            {declineText || t("modal-dialog.no")}
+    <>
+      <Modal.Header>
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{children}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" type="button" onClick={onClose}>
+          {declineText || t("modal-dialog.cancel")}
+        </Button>
+        {showAcceptButton && (
+          <Button variant={btnVariant} type="submit" onClick={handleAccept}>
+            {acceptText || t("modal-dialog.remove")}
           </Button>
-          {showAcceptButton && (
-            <Button variant="primary" type="submit" onClick={handleAccept}>
-              {acceptText || t("modal-dialog.yes")}
-            </Button>
-          )}
-        </Modal.Footer>
-      </Modal.Dialog>
-    </div>
+        )}
+      </Modal.Footer>
+    </>
   );
 }
 
@@ -85,7 +83,7 @@ ModalDialog.defaultProps = {
   declineText: "",
   showAcceptButton: true,
   handleAccept: () => {},
-  size: "m",
+  btnVariant: "primary",
 };
 
 ModalDialog.propTypes = {
@@ -95,8 +93,8 @@ ModalDialog.propTypes = {
   showAcceptButton: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   handleAccept: PropTypes.func,
-  size: PropTypes.string,
   children: PropTypes.node.isRequired,
+  btnVariant: PropTypes.string,
 };
 
 export default ModalDialog;

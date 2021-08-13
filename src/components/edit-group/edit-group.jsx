@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 
@@ -79,14 +82,14 @@ function EditGroup() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newGroup && <h1>{t("edit-group.create-new-group")}</h1>}
-          {!newGroup && (
-            <h1>
-              {t("edit-group.edit-group")}: {groupName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newGroup && <ContentHeader title={t("edit-group.create-new-group")} />}
+        {!newGroup && (
+          <ContentHeader
+            title={`${t("edit-group.edit-group")}: ${groupName}`}
+          />
+        )}
+        <ContentBody>
           <FormInput
             name="groupName"
             type="text"
@@ -96,6 +99,8 @@ function EditGroup() {
             value={formStateObject.groupName}
             onChange={handleInput}
           />
+        </ContentBody>
+        <ContentFooter>
           {submitted && <Redirect to="/groups" />}
           <Button
             variant="secondary"
@@ -108,8 +113,8 @@ function EditGroup() {
           <Button variant="primary" type="submit" id="save_group">
             {t("edit-group.save-button")}
           </Button>
-        </Form>
-      </Container>
+        </ContentFooter>
+      </Form>
     </>
   );
 }

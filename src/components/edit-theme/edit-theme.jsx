@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 import ColorPicker from "../util/color-picker/color-picker";
@@ -109,14 +112,14 @@ function EditTheme() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newTheme && <h1>{t("edit-theme.create-new-theme")}</h1>}
-          {!newTheme && (
-            <h1>
-              {t("edit-theme.edit-theme")}: {themeName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newTheme && <ContentHeader title={t("edit-theme.create-new-theme")} />}
+        {!newTheme && (
+          <ContentHeader
+            title={`${t("edit-theme.edit-theme")}: ${themeName}`}
+          />
+        )}
+        <ContentBody>
           <FormInput
             name="themeName"
             type="text"
@@ -168,22 +171,24 @@ function EditTheme() {
             openColorPicker={openColorPicker}
             label={t("edit-theme.pick-font-color")}
           />
-          {submitted && <Redirect to="/themes" />}
-          <div>
-            <Button
-              variant="secondary"
-              type="button"
-              id="theme_cancel"
-              onClick={() => history.goBack()}
-            >
-              {t("edit-theme.cancel-button")}
-            </Button>
-            <Button variant="primary" type="submit" id="save_theme">
-              {t("edit-theme.save-button")}
-            </Button>
-          </div>
-        </Form>
-      </Container>
+        </ContentBody>
+        {submitted && <Redirect to="/themes" />}
+        <ContentFooter>
+          <Button
+            variant="secondary"
+            type="button"
+            id="theme_cancel"
+            onClick={() => history.goBack()}
+            size="lg"
+            className="me-3"
+          >
+            {t("edit-theme.cancel-button")}
+          </Button>
+          <Button variant="primary" type="submit" id="save_theme" size="lg">
+            {t("edit-theme.save-button")}
+          </Button>
+        </ContentFooter>
+      </Form>
     </>
   );
 }

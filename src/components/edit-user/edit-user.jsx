@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 
@@ -79,14 +82,12 @@ function EditUser() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newUser && <h1>{t("edit-user.create-new-user")}</h1>}
-          {!newUser && (
-            <h1>
-              {t("edit-user.edit-user")}: {userName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newUser && <ContentHeader title={t("edit-user.create-new-user")} />}
+        {!newUser && (
+          <ContentHeader title={`${t("edit-user.edit-user")}: ${userName}`} />
+        )}
+        <ContentBody>
           <FormInput
             name="userName"
             type="text"
@@ -96,20 +97,24 @@ function EditUser() {
             value={formStateObject.userName}
             onChange={handleInput}
           />
-          {submitted && <Redirect to="/users" />}
+        </ContentBody>
+        {submitted && <Redirect to="/users" />}
+        <ContentFooter>
           <Button
             variant="secondary"
             type="button"
             id="user_cancel"
             onClick={() => history.goBack()}
+            size="lg"
+            className="me-3"
           >
             {t("edit-user.cancel-button")}
           </Button>
-          <Button variant="primary" type="submit" id="save_user">
+          <Button variant="primary" type="submit" id="save_user" size="lg">
             {t("edit-user.save-button")}
           </Button>
-        </Form>
-      </Container>
+        </ContentFooter>
+      </Form>
     </>
   );
 }

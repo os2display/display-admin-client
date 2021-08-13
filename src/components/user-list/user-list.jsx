@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Button from "react-bootstrap/Button";
+import ContentBody from "../util/content-body/content-body";
+import ContentHeader from "../util/content-header/content-header";
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -128,32 +129,29 @@ function UserList() {
   }
 
   return (
-    <Container>
-      <Row className="align-items-end mt-2">
-        <Col>
-          <h1>{t("user-list.header")}</h1>
-        </Col>
-        <Col md="auto">
-          <Link className="btn btn-success" to="/user/new">
-            {t("user-list.create-new-user")}
-          </Link>
-        </Col>
-      </Row>
-      {users.users && (
-        <List
-          showMerge
-          columns={columns}
-          selectedRows={selectedRows}
-          data={users.users}
-        />
-      )}
+    <>
+      <ContentHeader
+        title={t("user-list.header")}
+        newBtnTitle={t("user-list.create-new-user")}
+        newBtnLink="/user/new"
+      />
+      <ContentBody>
+        {users.users && (
+          <List
+            showMerge
+            columns={columns}
+            selectedRows={selectedRows}
+            data={users.users}
+          />
+        )}
+      </ContentBody>
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
       />
-    </Container>
+    </>
   );
 }
 

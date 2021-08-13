@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ContentHeader from "../util/content-header/content-header";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 
@@ -79,14 +82,12 @@ function EditTag() {
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          {newTag && <h1>{t("edit-tag.create-new-tag")}</h1>}
-          {!newTag && (
-            <h1>
-              {t("edit-tag.edit-tag")}: {tagName}
-            </h1>
-          )}
+      <Form onSubmit={handleSubmit}>
+        {newTag && <ContentHeader title={t("edit-tag.create-new-tag")} />}
+        {!newTag && (
+          <ContentHeader title={`${t("edit-tag.edit-tag")}: ${tagName}`} />
+        )}
+        <ContentBody>
           <FormInput
             name="tagName"
             type="text"
@@ -96,20 +97,24 @@ function EditTag() {
             value={formStateObject.tagName}
             onChange={handleInput}
           />
-          {submitted && <Redirect to="/tags" />}
+        </ContentBody>
+        {submitted && <Redirect to="/tags" />}
+        <ContentFooter>
           <Button
             variant="secondary"
             type="button"
             id="tag_cancel"
             onClick={() => history.goBack()}
+            size="lg"
+            className="me-3"
           >
             {t("edit-tag.cancel-button")}
           </Button>
-          <Button variant="primary" type="submit" id="save_tag">
+          <Button variant="primary" type="submit" id="save_tag" size="lg">
             {t("edit-tag.save-button")}
           </Button>
-        </Form>
-      </Container>
+        </ContentFooter>
+      </Form>
     </>
   );
 }

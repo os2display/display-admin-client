@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../util/modal/modal-dialog";
 import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 import FormInput from "../util/forms/form-input";
@@ -36,24 +37,29 @@ function MergeModal({ show, onClose, dataStructureToDisplay, handleAccept }) {
   }
 
   return (
-    <ModalDialog
-      title={t("merge-modal.title")}
-      onClose={onClose}
-      handleAccept={() => handleAccept(mergeName)}
-    >
-      {dataStructureToDisplay.map(({ name }) => (
-        <li>{name}</li>
-      ))}
-      <FormInput
-        name="mergeName"
-        aria-label={t("merge-modal.new-name-label")}
-        label={t("merge-modal.new-name-label")}
-        placeholder={t("merge-modal.new-name-placeholder")}
-        value={mergeName}
-        onChange={(e) => handleInput(e.currentTarget.value)}
-        id="merged-data-name"
-      />
-    </ModalDialog>
+    <Modal show={show} size="xl" id="merge-modal">
+      <ModalDialog
+        title={t("merge-modal.title")}
+        onClose={onClose}
+        handleAccept={() => handleAccept(mergeName)}
+        acceptText={t("merge-modal.accept-text")}
+      >
+        <ul>
+          {dataStructureToDisplay.map(({ name }) => (
+            <li>{name}</li>
+          ))}
+        </ul>
+        <FormInput
+          name="mergeName"
+          aria-label={t("merge-modal.new-name-label")}
+          label={t("merge-modal.new-name-label")}
+          placeholder={t("merge-modal.new-name-placeholder")}
+          value={mergeName}
+          onChange={(e) => handleInput(e.currentTarget.value)}
+          id="merged-data-name"
+        />
+      </ModalDialog>
+    </Modal>
   );
 }
 

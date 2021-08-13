@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../util/modal/modal-dialog";
 import MediaList from "../media-list/media-list";
 /**
@@ -38,7 +39,7 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
   }
 
   return (
-    <div id="delete-modal">
+    <Modal show={show} size="xl" id="media-modal">
       <ModalDialog
         title={
           multiple
@@ -47,11 +48,10 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
         }
         onClose={onClose}
         handleAccept={() => handleAccept(selectedimages)}
-        size="xl"
       >
         <MediaList fromModal handleSelected={handleSelectedImages} />
       </ModalDialog>
-    </div>
+    </Modal>
   );
 }
 

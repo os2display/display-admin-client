@@ -295,7 +295,10 @@
   },
   "modal-dialog": {
     "yes": "Ja",
-    "no": "Nej"
+    "no": "Nej",
+    "cancel": "Annuller",
+    "save": "Gem og luk",
+    "remove": "Slet"
   },
   "form-input": {
     "validation-text": "Dette felt skal udfyldes"
@@ -340,7 +343,8 @@
   "merge-modal": {
     "title": "Er du sikker på du vil konsolidere følgende",
     "new-name-label": "Vælg et nyt navn",
-    "new-name-placeholder": "Skriv det nye navn her"
+    "new-name-placeholder": "Skriv det nye navn her",
+    "accept-text": "Konsolider"
   },
   "select-playlists-table": {
     "columns": {

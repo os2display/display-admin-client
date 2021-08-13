@@ -8,17 +8,16 @@ describe("Merge modal loads", () => {
       .invoke("text")
       .should("match", /^Konsolider/);
     cy.get("#merge-button").click();
-    cy.get(".modal-container").should("have.css", "position", "absolute");
-    cy.get(".modal-container").find("button").should("have.length", 2);
-    cy.get(".modal-container")
+    cy.get("#merge-modal").find("button").should("have.length", 2);
+    cy.get("#merge-modal")
       .find("button")
       .first()
       .invoke("text")
-      .should("match", /^Nej/);
-    cy.get(".modal-container")
+      .should("match", /^Annuller/);
+    cy.get("#merge-modal")
       .find("button")
       .last()
       .invoke("text")
-      .should("match", /^Ja/);
+      .should("match", /^Konsolider/);
   });
 });
