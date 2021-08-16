@@ -96,7 +96,7 @@ function TableHeader({ columns, sortColumn, onSort, draggable }) {
 TableHeader.defaultProps = {
   sortColumn: {},
   onSort: () => {},
-  draggable: {},
+  draggable: false,
 };
 
 TableHeader.propTypes = {
