@@ -14,15 +14,15 @@ describe("Edit screen page tests", () => {
 
   it("It loads drag and drop table", () => {
     cy.visit("/screen/32");
-    cy.get(".table").find("tr td").should("have.length", 12);
+    cy.get(".table").find("tr td").should("have.length", 14);
   });
 
   it("It drags and drops", () => {
     cy.visit("/screen/32");
-    cy.get("tbody").find("tr td").should("have.length", 12);
+    cy.get("tbody").find("tr td").should("have.length", 14);
     cy.get("tbody")
       .find("tr td")
-      .eq(0)
+      .eq(1)
       .invoke("text")
       .should("match", /^Sommerplaylist/);
     cy.get("tbody")
@@ -34,16 +34,16 @@ describe("Edit screen page tests", () => {
       .type(" ");
     cy.get("tbody")
       .find("tr td")
-      .eq(0)
+      .eq(1)
       .invoke("text")
       .should("match", /^Ereolen/);
   });
 
   it("It removes from list", () => {
     cy.visit("/screen/32");
-    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 12);
+    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 14);
     cy.get("#drag-and-drop-table").find("tr td button").eq(4).click();
-    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 6);
+    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 7);
     cy.get("#drag-and-drop-table").find("tr td button").eq(4).click();
     cy.get("#drag-and-drop-table").should("not.exist");
   });
