@@ -1,21 +1,22 @@
 .grid {
   display: grid;
-  max-width: 40%;
+  max-width: 100%;
   height: 500px;
 
   .grid-item {
-    background-color: lightcyan;
+    background-color: lightgrey;
     border: 1px dotted black;
     margin: 1px;
     padding: 1em;
 
     &.selected {
       background-color: lightblue;
+      border: 1px solid black;
     }
   }
 
   &.horizontal {
-    max-width: 60%;
-    height: 300px;
+    max-width: 100%;
+    height: 200px;
   }
 }

@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Tabs, Tab } from "react-bootstrap";
 import { createGridArea, createGrid } from "os2display-grid-generator";
+import { useTranslation } from "react-i18next";
 import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import "./grid.scss";
 /**
@@ -29,6 +30,7 @@ function GridGenerationAndSelect({
   handleInput,
   selectedData,
 }) {
+  const { t } = useTranslation("common");
   const [key, setKey] = useState("region1");
   const gridClasses = `grid ${layout}`;
   // Rows and columns in grid defaults to 1.
@@ -55,43 +57,56 @@ function GridGenerationAndSelect({
   }
   return (
     <>
-      <div className={gridClasses} style={gridTemplateAreas}>
-        {regions &&
-          regions.map((data) => (
-            <div
-              key={data.id}
-              className={key === data.id ? "grid-item selected" : "grid-item "}
-              style={{ gridArea: createGridArea(data.gridArea) }}
-            >
-              {data.name}
-            </div>
-          ))}
+      <div className="col-md-4 my-3 my-md-0">
+        <div className="bg-light border rounded p-1">
+          <div className={gridClasses} style={gridTemplateAreas}>
+            {regions &&
+              regions.map((data) => (
+                <div
+                  key={data.id}
+                  className={
+                    key === data.id ? "grid-item selected" : "grid-item "
+                  }
+                  style={{ gridArea: createGridArea(data.gridArea) }}
+                >
+                  {data.name}
+                </div>
+              ))}
+          </div>
+        </div>
       </div>
-      <Tabs
-        defaultActiveKey="region1"
-        id="uncontrolled-tab-example"
-        activeKey={key}
-        onSelect={(k) => setKey(k)}
-      >
-        {regions &&
-          regions.map((data) => (
-            <Tab
-              style={{ backgroundColor: "beige" }}
-              key={data.id}
-              eventKey={data.id}
-              title={data.name}
-            >
-              <PlaylistDragAndDrop
-                id="playlist_drag_and_drop"
-                handleChange={handleChange}
-                name={data.id}
-                data={selectedData.filter(
-                  (playlistData) => playlistData.region === data.id
-                )}
-              />
-            </Tab>
-          ))}
-      </Tabs>
+      <div className="col-md-12">
+        <Tabs
+          defaultActiveKey="region1"
+          id="uncontrolled-tab-example"
+          activeKey={key}
+          onSelect={(k) => setKey(k)}
+        >
+          {regions &&
+            regions.map((data) => (
+              <Tab
+                className="mt-2"
+                key={data.id}
+                eventKey={data.id}
+                title={data.name}
+              >
+                <h3 className="h5">
+                  {t("edit-screen.screen-playlists-region")}
+                </h3>
+                <div className="mt-3">
+                  <PlaylistDragAndDrop
+                    id="playlist_drag_and_drop"
+                    handleChange={handleChange}
+                    name={data.id}
+                    data={selectedData.filter(
+                      (playlistData) => playlistData.region === data.id
+                    )}
+                  />
+                </div>
+              </Tab>
+            ))}
+        </Tabs>
+      </div>
     </>
   );
 }

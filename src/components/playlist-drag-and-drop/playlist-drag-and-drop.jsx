@@ -147,6 +147,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
         name={name}
         handlePlaylistSelection={handleChange}
         selected={data}
+        className="mb-3"
       />
       {data.length > 0 && (
         <DragAndDropTable

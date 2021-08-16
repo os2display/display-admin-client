@@ -146,13 +146,14 @@ function EditScreen() {
         />
       )}
       <ContentBody>
+        <h2 className="h4">{t("edit-screen.screen-about")}</h2>
         <FormInput
           errors={errors}
           name="screenName"
           type="text"
           label={t("edit-screen.screen-name-label")}
           invalidText={t("edit-screen.screen-name-validation")}
-          placeholder={t("edit-screen.screen-name-placeholder")}
+          helpText={t("edit-screen.screen-name-placeholder")}
           value={formStateObject.screenName}
           onChange={handleInput}
         />
@@ -160,10 +161,13 @@ function EditScreen() {
           name="description"
           type="text"
           label={t("edit-screen.screen-description-label")}
-          placeholder={t("edit-screen.screen-description-placeholder")}
+          helpText={t("edit-screen.screen-description-placeholder")}
           value={formStateObject.description}
           onChange={handleInput}
         />
+      </ContentBody>
+      <ContentBody>
+        <h2 className="h4">{t("edit-screen.screen-groups")}</h2>
         <GroupsDropdown
           errors={errors}
           name="screenGroups"
@@ -171,6 +175,9 @@ function EditScreen() {
           handleGroupsSelection={handleInput}
           selected={formStateObject.screenGroups}
         />
+      </ContentBody>
+      <ContentBody>
+        <h2 className="h4">{t("edit-screen.screen-location")}</h2>
         <LocationDropdown
           errors={errors}
           isCreatable
@@ -178,41 +185,23 @@ function EditScreen() {
           handleLocationSelection={handleInput}
           selected={formStateObject.screenLocations}
         />
-        {layoutOptions && (
-          <Select
-            name="screenLayout"
-            onChange={handleInput}
-            label={t("edit-screen.screen-layout-label")}
-            errors={errors}
-            options={layoutOptions}
-            value={formStateObject.screenLayout}
-          />
-        )}
-        {grid?.grid && (
-          <GridGenerationAndSelect
-            grid={grid?.grid}
-            layout={formStateObject.horizontalOrVertical}
-            regions={grid?.regions}
-            handleInput={handleInput}
-            selectedData={formStateObject.playlists}
-          />
-        )}
         <FormInput
           name="descriptionOfLocation"
           type="text"
           required
           label={t("edit-screen.screen-description-of-location-label")}
-          placeholder={t(
-            "edit-screen.screen-description-of-location-placeholder"
-          )}
+          helpText={t("edit-screen.screen-description-of-location-placeholder")}
           value={formStateObject.descriptionOfLocation}
           onChange={handleInput}
         />
+      </ContentBody>
+      <ContentBody>
+        <h2 className="h4">{t("edit-screen.screen-settings")}</h2>
         <FormInput
           name="sizeOfScreen"
           type="text"
           label={t("edit-screen.screen-size-of-screen-label")}
-          placeholder={t("edit-screen.screen-size-of-screen-placeholder")}
+          helpText={t("edit-screen.screen-size-of-screen-placeholder")}
           value={formStateObject.sizeOfScreen}
           onChange={handleInput}
         />
@@ -233,6 +222,32 @@ function EditScreen() {
           pattern="(\d+)x(\d+)"
           onChange={handleInput}
         />
+      </ContentBody>
+      <ContentBody>
+        <h2 className="h4">{t("edit-screen.screen-layout")}</h2>
+        <div className="row">
+          {layoutOptions && (
+            <div className="col-md-8">
+              <Select
+                name="screenLayout"
+                onChange={handleInput}
+                label={t("edit-screen.screen-layout-label")}
+                errors={errors}
+                options={layoutOptions}
+                value={formStateObject.screenLayout}
+              />
+            </div>
+          )}
+          {grid?.grid && (
+            <GridGenerationAndSelect
+              grid={grid?.grid}
+              layout={formStateObject.horizontalOrVertical}
+              regions={grid?.regions}
+              handleInput={handleInput}
+              selectedData={formStateObject.playlists}
+            />
+          )}
+        </div>
       </ContentBody>
       <ContentFooter>
         {submitted && <Redirect to="/screens" />}
