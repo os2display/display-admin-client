@@ -184,6 +184,7 @@ function EditScreen() {
           name="screenLocations"
           handleLocationSelection={handleInput}
           selected={formStateObject.screenLocations}
+          formGroupClasses="mb-3"
         />
         <FormInput
           name="descriptionOfLocation"

@@ -76,6 +76,7 @@ function GridGenerationAndSelect({
         </div>
       </div>
       <div className="col-md-12">
+        <h3 className="h5">{t("edit-screen.screen-playlists")}</h3>
         <Tabs
           defaultActiveKey="region1"
           id="uncontrolled-tab-example"
@@ -90,9 +91,6 @@ function GridGenerationAndSelect({
                 eventKey={data.id}
                 title={data.name}
               >
-                <h3 className="h5">
-                  {t("edit-screen.screen-playlists-region")}
-                </h3>
                 <div className="mt-3">
                   <PlaylistDragAndDrop
                     id="playlist_drag_and_drop"
