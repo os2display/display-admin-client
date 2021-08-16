@@ -104,7 +104,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
   return (
     <div className="table-responsive">
       <Table id="drag-and-drop-table">
-        <TableHeader columns={columns} />
+        <TableHeader columns={columns} draggable />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided, snapshot) => (

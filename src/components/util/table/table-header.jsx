@@ -5,6 +5,7 @@ import {
   faSortDown,
   faSortUp,
 } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import SortColumnProptypes from "../../proptypes/sort-column-proptypes";
 import ColumnProptypes from "../../proptypes/column-proptypes";
@@ -19,10 +20,14 @@ import "./table-header.scss";
  * The column to sortby.
  * @param {Function} props.onSort
  * Callback for on sort.
+ * @param {boolean} props.draggable
+ * If table has draggable rows.
  * @returns {object}
  * The table body.
  */
-function TableHeader({ columns, sortColumn, onSort }) {
+function TableHeader({ columns, sortColumn, onSort, draggable }) {
+  const { t } = useTranslation("common");
+
   let path = sortColumn?.path;
   let order = sortColumn?.order;
 
@@ -62,6 +67,13 @@ function TableHeader({ columns, sortColumn, onSort }) {
   return (
     <thead>
       <tr>
+        {draggable && (
+          <th>
+            <span className="visually-hidden">
+              {t("drag-and-drop-table.table-header-for-indicator")}
+            </span>
+          </th>
+        )}
         {columns.map((column) => (
           <Fragment key={column.path || column.key}>
             {column.sort && (
@@ -84,12 +96,14 @@ function TableHeader({ columns, sortColumn, onSort }) {
 TableHeader.defaultProps = {
   sortColumn: {},
   onSort: () => {},
+  draggable: {},
 };
 
 TableHeader.propTypes = {
   sortColumn: SortColumnProptypes,
   columns: ColumnProptypes.isRequired,
   onSort: PropTypes.func,
+  draggable: PropTypes.bool,
 };
 
 export default TableHeader;
