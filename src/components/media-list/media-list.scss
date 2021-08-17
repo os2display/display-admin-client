@@ -1,37 +1,49 @@
-.image-list {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 1em -1em 1em 0;
+@import "~bootstrap/scss/bootstrap/";
 
-  .image-button {
+.media-item {
+  &-button {
     padding: 0;
     border: none;
     background-color: transparent;
     display: flex;
-  }
 
-  .image-wrapper {
-    position: relative;
-    display: flex;
-    width: 25%;
-    padding: 0 1em 1em 0;
-    flex-direction: column;
     img {
-      height: 250px;
+      height: 150px;
+      @include media-breakpoint-up(md) {
+        height: 200px;
+      }
+      @include media-breakpoint-up(lg) {
+        height: 150px;
+      }
+      @include media-breakpoint-up(xxl) {
+        height: 200px;
+      }
       width: 100%;
       object-fit: cover;
       vertical-align: baseline;
+      transition: opacity 0.1s ease-out;
+    }
 
-      &.selected {
-        border: 5px solid darkgreen;
+    &:hover {
+      img {
+        opacity: 0.6;
+        transition: opacity 0.2s ease-in;
       }
     }
+  }
 
-    .form-check {
-      position: absolute;
-      top: 1em;
-      right: 2em;
-      pointer-events: none;
+  &.selected {
+    border-color: $primary;
+    img {
+      opacity: 0.8;
+      filter: grayscale(50%);
     }
+  }
+
+  .form-check {
+    position: absolute;
+    top: $spacer * 0.5;
+    right: $spacer * 0.5;
+    pointer-events: none;
   }
 }

@@ -175,7 +175,8 @@
     "header": "Medier",
     "upload-new-media": "Upload",
     "delete-button": "Slet",
-    "tags-select-label": "Sorter listen af medier ved at vælge et eller flere tags",
+    "tags-select-label": "Tags",
+    "tags-select-help-text": "Sorter listen af medier ved at vælge et eller flere tags",
     "media-name": "Navn",
     "media-description": "Beskrivelse",
     "edit-button": "Rediger"
