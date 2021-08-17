@@ -247,10 +247,8 @@ function MediaList({ fromModal, handleSelected }) {
           {getListData().map((data) => (
             <div key={data.id} className="col mb-3">
               <div
-                className={
-                  "card bg-light h-100 media-item" +
-                  (data.selected ? " selected" : "")
-                }
+                className={`card bg-light h-100 media-item +
+                  ${data.selected ? " selected" : ""}`}
               >
                 <button
                   type="button"
@@ -271,7 +269,7 @@ function MediaList({ fromModal, handleSelected }) {
                   readOnly
                 />
 
-                <div class="card-body">
+                <div className="card-body">
                   <div className="row align-items-center">
                     <div className="col-auto">
                       <h2 className="h6">{data.name}</h2>
