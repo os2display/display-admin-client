@@ -6,22 +6,24 @@
       margin-top: $spacer;
       .nav-link {
         color: white;
-        &.nav-add-new {
+        .nav-add-new {
+          color: white;
+          float: right;
           &:hover {
             color: $primary;
           }
         }
-      }
-      &:hover {
-        background-color: $gray-700;
-        transition: background-color 0.2s ease-in-out;
-        .nav-link {
-          color: $gray-100;
+        &:hover {
+          background-color: $gray-700;
+          transition: background-color 0.2s ease-in-out;
+          .nav-link {
+            color: $gray-100;
+          }
         }
-      }
-      &.active {
-        background-color: $gray-800;
-        border-right: 3px solid $primary;
+        &.active {
+          background-color: $gray-800;
+          border-right: 3px solid $primary;
+        }
       }
       &.nav-second-level {
         margin-top: 0;
