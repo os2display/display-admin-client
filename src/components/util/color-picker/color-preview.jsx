@@ -19,14 +19,15 @@ import { Button } from "react-bootstrap";
  */
 function ColorPreview({ name, color, openColorPicker, label }) {
   return (
-    <div className="d-flex">
-      <div className="color-preview" style={{ backgroundColor: color }} />
+    <div className="col-auto">
+      <h3 className="h6">{label}</h3>
       <Button
-        variant="primary"
+        variant="link"
         type="button"
         onClick={() => openColorPicker(name)}
+        className="p-0"
       >
-        {label}
+        <div className="color-preview" style={{ backgroundColor: color }} />
       </Button>
     </div>
   );

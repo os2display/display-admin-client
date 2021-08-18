@@ -47,7 +47,7 @@ function ColorPicker({ color, show, handleChange, closeColorPicker }) {
   }
 
   return (
-    <div ref={ref} style={{ maxWidth: "456px" }}>
+    <div ref={ref} style={{ maxWidth: "456px" }} className="mt-3 shadow-lg">
       <CP
         style={{ position: "absolute" }}
         width={456}
