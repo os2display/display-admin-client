@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
-import ColumnProptypes from "../../proptypes/column-proptypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGripVertical } from "@fortawesome/free-solid-svg-icons";
+import "./drag-and-drop-table.scss";
 import TableHeader from "../table/table-header";
+import ColumnProptypes from "../../proptypes/column-proptypes";
 
 /**
  * @param {object} props
@@ -82,9 +85,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
   }
 
   const getListStyle = (isDraggingOver) => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
-    padding: 10,
-    width: 250,
+    background: isDraggingOver ? "lightgrey" : "white",
   });
 
   const getItemStyle = (isDragging, draggableStyle) => ({
@@ -94,16 +95,16 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
     margin: `0 0 ${10}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "lightgrey",
+    background: isDragging ? "lightgreen" : "white",
 
     // styles we need to apply on draggables
     ...draggableStyle,
   });
   /* eslint-disable react/jsx-props-no-spreading */
   return (
-    <div>
+    <div className="table-responsive">
       <Table id="drag-and-drop-table">
-        <TableHeader columns={columns} />
+        <TableHeader columns={columns} draggable />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided, snapshot) => (
@@ -129,6 +130,12 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
                             providedDraggable.draggableProps.style
                           )}
                         >
+                          <td>
+                            <FontAwesomeIcon
+                              className="table-draggable-grip me-1"
+                              icon={faGripVertical}
+                            />
+                          </td>
                           {columns.map((column) => (
                             <td key={item.id + (column.path || column.key)}>
                               {renderCell(item, column)}

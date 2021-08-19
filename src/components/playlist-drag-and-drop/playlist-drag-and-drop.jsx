@@ -143,11 +143,13 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
 
   return (
     <>
-      <PlaylistsDropdown
-        name={name}
-        handlePlaylistSelection={handleChange}
-        selected={data}
-      />
+      <div className="mb-3">
+        <PlaylistsDropdown
+          name={name}
+          handlePlaylistSelection={handleChange}
+          selected={data}
+        />
+      </div>
       {data.length > 0 && (
         <DragAndDropTable
           columns={columns}

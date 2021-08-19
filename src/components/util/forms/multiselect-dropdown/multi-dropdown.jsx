@@ -162,7 +162,7 @@ function MultiSelectComponent({
   return (
     <>
       {mappedOptions.length > 0 && (
-        <div className={error ? "invalid" : ""}>
+        <div className={`mb-3 ${error ? "invalid" : ""}`}>
           <Form.Label htmlFor={name}>{label}</Form.Label>
           <MultiSelect
             isCreatable={isCreatable}

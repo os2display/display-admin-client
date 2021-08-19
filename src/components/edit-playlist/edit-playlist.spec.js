@@ -37,7 +37,7 @@ describe("Edit playlist page tests", () => {
 
   it("It removes from drag-drop table", () => {
     cy.visit("/playlist/32");
-    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 6);
+    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 7);
     cy.get("#drag-and-drop-table").find("tr td button").eq(1).click();
     cy.get("#drag-and-drop-table").should("not.exist");
   });

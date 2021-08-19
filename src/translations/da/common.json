@@ -397,6 +397,7 @@
     "image-tags-help-text": "Disse bruges eksempelvis til fremsøgning af et billede"
   },
   "drag-and-drop-table": {
+    "table-header-for-indicator": "Drag and drop indikator",
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug espace til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
   "edit-screen": {
@@ -407,6 +408,12 @@
     "radio-button-horizontal": "Vandret layout",
     "radio-button-vertical": "Lodret layout",
     "radio-buttons-horizontal-or-vertical-label": "Angiv om skærmen er vandret eller lodret",
+    "screen-about": "Om skærmen",
+    "screen-groups": "Grupper",
+    "screen-location": "Lokation(er)",
+    "screen-settings": "Opsætning",
+    "screen-layout": "Layout",
+    "screen-playlists": "Spillelister",
     "screen-name-label": "Skærmens navn",
     "screen-name-placeholder": "Udfyld skærmens navn",
     "screen-name-validation": "Venligst udfyld skærmens navn",
