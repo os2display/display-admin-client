@@ -224,58 +224,82 @@ function MediaList({ fromModal, handleSelected }) {
       </Row>
       <ContentBody>
         <Row className="mt-2 mb-2">
-          <Col>
-            <SearchBox showLabel value={searchText} onChange={handleSearch} />
+          <Col sm={12} md={6}>
+            <SearchBox
+              showLabel
+              value={searchText}
+              onChange={handleSearch}
+              helpText={t("media-list.search-help-text")}
+            />
           </Col>
-          <Col>
+          <Col sm={12} md={6} className="mt-3 mt-md-0">
             <TagDropdown
               selected={selectedTags}
               name="tags"
               label={t("media-list.tags-select-label")}
               handleTagSelection={onTagInput}
+              helpText={t("media-list.tags-select-help-text")}
             />
           </Col>
         </Row>
 
-        <div className="image-list">
+        <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5  media-list">
           {getListData().map((data) => (
-            <div key={data.id} className="image-wrapper">
-              <button
-                type="button"
-                className="image-button"
-                onClick={() => handleChecked(data)}
+            <div key={data.id} className="col mb-3">
+              <div
+                className={`card bg-light h-100 media-item +
+                  ${data.selected ? " selected" : ""}`}
               >
-                <img
-                  src={data.url}
-                  className={data.selected ? "selected" : ""}
-                  alt={data.description}
+                <button
+                  type="button"
+                  className="media-item-button"
+                  onClick={() => handleChecked(data)}
+                >
+                  <img
+                    src={data.url}
+                    className="card-img-top"
+                    alt={data.description}
+                  />
+                </button>
+                <Form.Check
+                  type="checkbox"
+                  checked={data.selected}
+                  tabIndex={-1}
+                  aria-label={t("media-list.checkbox-form-aria-label")}
+                  readOnly
                 />
-              </button>
-              <Form.Check
-                type="checkbox"
-                checked={data.selected}
-                tabIndex={-1}
-                aria-label={t("media-list.checkbox-form-aria-label")}
-                readOnly
-              />
-              <div className="d-flex">
-                <div className="d-flex flex-column">
-                  <span>
-                    {t("media-list.media-name")}: {data.name}
-                  </span>
-                  <span>
-                    {t("media-list.media-description")}: {data.description}
-                  </span>
-                  <div>
-                    {data.tags.map((tag) => (
-                      <span key={tag.id}>{tag.name} </span>
-                    ))}
+
+                <div className="card-body">
+                  <div className="row align-items-center">
+                    <div className="col-auto">
+                      <h2 className="h6">{data.name}</h2>
+                    </div>
+                    <div className="col-auto ms-auto">
+                      <Link
+                        className="btn btn-primary btn-sm"
+                        to={`/media/${data.id}`}
+                      >
+                        {t("media-list.edit-button")}
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <Link className="btn btn-primary" to={`/media/${data.id}`}>
-                    {t("media-list.edit-button")}
-                  </Link>
+                  <div className="row">
+                    <div className="col">
+                      <span className="small">{data.description}</span>
+                    </div>
+                  </div>
+                  <div className="row mt-1">
+                    <div className="col">
+                      {data.tags.map((tag) => (
+                        <span
+                          className="badge bg-light text-dark border me-1"
+                          key={tag.id}
+                        >
+                          {tag.name}{" "}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
