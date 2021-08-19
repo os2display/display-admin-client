@@ -3,6 +3,7 @@ import { Redirect, useParams } from "react-router";
 import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Row from "react-bootstrap/Row";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -129,36 +130,47 @@ function EditTheme() {
             value={formStateObject.themeName}
             onChange={handleInput}
           />
-          <ColorPreview
-            name="primaryColor"
-            color={formStateObject.primaryColor}
-            openColorPicker={openColorPicker}
-            label={t("edit-theme.pick-primary-color")}
-          />
-          <ColorPreview
-            name="secondaryColor"
-            color={formStateObject.secondaryColor}
-            openColorPicker={openColorPicker}
-            label={t("edit-theme.pick-secondary-color")}
-          />
-          <ColorPreview
-            name="tertiaryColor"
-            color={formStateObject.tertiaryColor}
-            openColorPicker={openColorPicker}
-            label={t("edit-theme.pick-tertiary-color")}
-          />
+        </ContentBody>
+        <ContentBody>
+          <h2 className="h4">{t("edit-theme.title-colors")}</h2>
+          <Row>
+            <ColorPreview
+              name="primaryColor"
+              color={formStateObject.primaryColor}
+              openColorPicker={openColorPicker}
+              label={t("edit-theme.pick-primary-color")}
+            />
+            <ColorPreview
+              name="secondaryColor"
+              color={formStateObject.secondaryColor}
+              openColorPicker={openColorPicker}
+              label={t("edit-theme.pick-secondary-color")}
+            />
+            <ColorPreview
+              name="tertiaryColor"
+              color={formStateObject.tertiaryColor}
+              openColorPicker={openColorPicker}
+              label={t("edit-theme.pick-tertiary-color")}
+            />
+          </Row>
           <ColorPicker
             handleChange={handleInput}
             show={showColorPicker}
             color={formStateObject[showColorPicker]}
             closeColorPicker={() => setShowColorPicker(false)}
           />
+        </ContentBody>
+        <ContentBody>
+          <h2 className="h4">{t("edit-theme.title-logo")}</h2>
           <ImageUploader
             handleImageUpload={handleInput}
             inputImage={formStateObject.images}
             name="logo"
             errors={errors}
           />
+        </ContentBody>
+        <ContentBody>
+          <h2 className="h4">{t("edit-theme.title-typograpy")}</h2>
           <Select
             value={formStateObject.fontColor}
             name="fontColor"
@@ -171,6 +183,7 @@ function EditTheme() {
             openColorPicker={openColorPicker}
             label={t("edit-theme.pick-font-color")}
           />
+          {/* TODO: Color-picker shows below theme colors? How do we fix that? */}
         </ContentBody>
         {submitted && <Redirect to="/themes" />}
         <ContentFooter>

@@ -49,7 +49,10 @@
     "pick-secondary-color": "Vælg sekundærfarve",
     "pick-tertiary-color": "Vælg tertiærfarve",
     "pick-font-color": "Font farve",
-    "font-label": "Vælg font"
+    "font-label": "Vælg font",
+    "title-colors": "Temaets farver",
+    "title-logo": "Logo",
+    "title-typograpy": "Typografi"
   },
   "calendar-list": {
     "name-label": "Navn",
