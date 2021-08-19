@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Col from "react-bootstrap/Col";
@@ -13,12 +13,15 @@ import "./sidebar.scss";
  */
 function SideBar() {
   const [t] = useTranslation("common");
+  const [active, setActive] = useState();
   return (
     <Col className="bg-dark border-end d-none d-lg-block" lg={3} xl={2}>
       <Nav
         variant="dark"
         id="sidebar"
         className="sidebar-nav flex-column w-100 pb-3 sticky-md-top"
+        activeKey={active}
+        onSelect={(selectedKey) => setActive(selectedKey)}
       >
         <Navbar.Brand
           href="/"

@@ -1,6 +1,6 @@
 import { React } from "react";
 import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,105 +33,109 @@ function NavItems() {
       <hr className="d-none d-md-block" /> */}
 
       {/* TODO: Show active item based on Route */}
-      <Nav.Item className="d-flex justify-content-between active">
-        <Link
+      <Nav.Item>
+        <NavLink
           id="nav-items_content_slides"
-          className="nav-link d-inline w-100"
+          className="nav-link"
           to="/slides"
         >
           <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
           {t("nav-items.content-slides")}
-        </Link>
-        <Link className="nav-link d-inline nav-add-new" to="/slides/new">
-          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-        </Link>
+          <Link className="nav-add-new" to="/slide/new">
+            <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+          </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link id="nav-items_content_tags" className="nav-link" to="/tags">
+        <NavLink id="nav-items_content_tags" className="nav-link" to="/tags">
           {t("nav-items.content-tags")}
-        </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link
+        <NavLink
           id="nav-items_content_media"
           className="nav-link"
           to="/media-list"
         >
           {t("nav-items.content-media")}
-        </Link>
+        </NavLink>
       </Nav.Item>
-      <Nav.Item className="d-flex justify-content-between">
-        <Link
+      <Nav.Item>
+        <NavLink
           id="nav-items_playlists_playlists"
-          className="nav-link d-inline"
+          className="nav-link"
           to="/playlists"
         >
           <FontAwesomeIcon className="me-2" icon={faStream} />
           {t("nav-items.playlists-playlists")}
-        </Link>
-        <Link className="nav-link d-inline nav-add-new" to="/screens/new">
-          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-        </Link>
+          <Link className="nav-add-new" to="/playlist/new">
+            <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+          </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link
+        <NavLink
           id="nav-items_playlists_categories"
           className="nav-link"
           to="/categories"
         >
           {t("nav-items.playlists-categories")}
-        </Link>
+        </NavLink>
       </Nav.Item>
-      <Nav.Item className="d-flex justify-content-between">
-        <Link
+      <Nav.Item>
+        <NavLink
           id="nav-items_screens_screens"
-          className="nav-link d-inline"
+          className="nav-link"
           to="/screens"
         >
           <FontAwesomeIcon className="me-2" icon={faDesktop} />
           {t("nav-items.screens-screens")}
-        </Link>
-        <Link className="nav-link d-inline nav-add-new" to="/screens/new">
-          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-        </Link>
+          <Link className="nav-add-new" to="/screen/new">
+            <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+          </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link id="nav-items_screens_groups" className="nav-link" to="/groups">
+        <NavLink
+          id="nav-items_screens_groups"
+          className="nav-link"
+          to="/groups"
+        >
           {t("nav-items.screens-groups")}
-        </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link
+        <NavLink
           id="nav-items_screens_locations"
           className="nav-link"
           to="/locations"
         >
           {t("nav-items.screens-locations")}
-        </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item>
-        <Link id="nav-items_settings" className="nav-link" to="/settings">
+        <NavLink id="nav-items_settings" className="nav-link" to="/settings">
           <FontAwesomeIcon className="me-2" icon={faCog} />
           {t("nav-items.configuration")}
-        </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link
+        <NavLink
           id="nav-items_configuration_themes"
           className="nav-link"
           to="/themes"
         >
           {t("nav-items.configuration-themes")}
-        </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <Link
+        <NavLink
           id="nav-items_configuration_users"
           className="nav-link"
           to="/users"
         >
           {t("nav-items.configuration-users")}
-        </Link>
+        </NavLink>
       </Nav.Item>
     </>
   );
