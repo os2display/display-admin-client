@@ -220,45 +220,40 @@ function List({
 
   return (
     <>
-      <Row className="mt-2 mb-2">
+      <Row className="my-2">
         <Col>
           <SearchBox value={searchText} onChange={handleSearch} />
         </Col>
         <Col className="d-flex justify-content-end">
-          <div className="ml-4">
-            <Button
-              variant="danger"
-              id="delete-button"
-              disabled={disableDeleteButton}
-              onClick={() => setShowDeleteModal(true)}
-            >
-              {t("list.delete-button")}
-            </Button>
-          </div>
+          <Button
+            variant="danger"
+            id="delete-button"
+            disabled={disableDeleteButton}
+            onClick={() => setShowDeleteModal(true)}
+            className="me-3"
+          >
+            {t("list.delete-button")}
+          </Button>
+
           {showMerge && (
-            <div className="ml-4">
-              <Button
-                className="ml-2"
-                id="merge-button"
-                disabled={disableMergeButton}
-                onClick={() => setViewMergeModal(true)}
-                variant="success"
-              >
-                {t("list.merge-button")}
-              </Button>
-            </div>
-          )}
-          <div className="ml-4">
             <Button
-              className="ml-2"
-              id="clear-rows-button"
-              disabled={selectedRows.length === 0}
-              onClick={() => clearSelectedRows()}
+              className="me-3"
+              id="merge-button"
+              disabled={disableMergeButton}
+              onClick={() => setViewMergeModal(true)}
               variant="success"
             >
-              {t("list.deselect-all")}
+              {t("list.merge-button")}
             </Button>
-          </div>
+          )}
+          <Button
+            id="clear-rows-button"
+            disabled={selectedRows.length === 0}
+            onClick={() => clearSelectedRows()}
+            variant="dark"
+          >
+            {t("list.deselect-all")}
+          </Button>
         </Col>
       </Row>
       <Table
