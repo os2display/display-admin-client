@@ -223,6 +223,9 @@
   "edit-playlist": {
     "create-new-playlist": "Opret ny spilleliste",
     "edit-playlist": "Rediger følgende spilleliste",
+    "title-about": "Om spillelisten",
+    "title-screens": "Tilknyttede skærme",
+    "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
     "cancel-button": "Annuller",
     "playlist-name-label": "Spillelistens navn",

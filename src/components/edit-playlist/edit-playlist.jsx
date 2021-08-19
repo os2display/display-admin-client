@@ -101,6 +101,7 @@ function EditPlaylist() {
           </h1>
         )}
         <ContentBody>
+          <h2 className="h4">{t("edit-playlist.title-about")}</h2>
           <FormInput
             name="playlistName"
             type="text"
@@ -124,12 +125,18 @@ function EditPlaylist() {
             handleCategorySelection={handleInput}
             selected={formStateObject.playlistCategories}
           />
+        </ContentBody>
+        <ContentBody>
+          <h2 className="h4">{t("edit-playlist.title-screens")}</h2>
           <SelectScreenTable
             handleChange={handleInput}
             name="playlistScreens"
             errors={errors}
             selectedData={formStateObject.playlistScreens}
           />
+        </ContentBody>
+        <ContentBody>
+          <h2 className="h4">{t("edit-playlist.title-slides")}</h2>
           <SelectSlidesTable
             handleChange={handleInput}
             name="playlistSlides"
