@@ -10,6 +10,7 @@ import LinkForList from "../util/list/link-for-list";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import { useGetV1PlaylistsQuery } from "../../redux/api/api.generated";
 
 /**
 /**
@@ -50,10 +51,16 @@ function PlaylistsList() {
     setShowInfoModal(false);
     setDataStructureToDisplay();
   }
+
+  const res = useGetV1PlaylistsQuery();
+
+  console.log(res)
+
   /**
    * Load content from fixture.
    */
   useEffect(() => {
+
     // @TODO load real content.
     fetch(`/fixtures/playlists/playlists.json`)
       .then((response) => response.json())

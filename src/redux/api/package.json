@@ -1,0 +1,15 @@
+{
+  "name": "api-generation",
+  "version": "1.0.0",
+  "description": "Provides project for generating api from OpenAPI spec and converting from typescript to vanilla javascript.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx @rtk-incubator/rtk-query-codegen-openapi --hooks api.json > api.generated.ts && node_modules/typescript/bin/tsc api.generated.ts"
+  },
+  "author": "ITKDev",
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
+    "typescript": "^4.4.2"
+  }
+}
