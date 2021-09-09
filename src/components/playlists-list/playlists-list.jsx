@@ -52,23 +52,6 @@ function PlaylistsList() {
     setDataStructureToDisplay();
   }
 
-  const res = useGetV1PlaylistsQuery();
-
-  console.log(res)
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-
-    // @TODO load real content.
-    fetch(`/fixtures/playlists/playlists.json`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setPlaylists(jsonData);
-      });
-  }, []);
-
   /**
    * Sets the selected row in state.
    *
@@ -107,37 +90,19 @@ function PlaylistsList() {
       ),
     },
     {
-      path: "name",
+      path: "title",
       sort: true,
       label: t("playlists-list.columns.name"),
     },
     {
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          {
-            data: data.slides,
-            modalTitle: t("playlists-list.info-modal.playlist-slides"),
-          },
-          data.slides?.length,
-          data.slides?.length === 0
-        ),
+      content: (data) => <div>@TODO</div>,
       sort: true,
       path: "slides",
       key: "slides",
       label: t("playlists-list.columns.number-of-slides"),
     },
     {
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          {
-            data: data.categories,
-            modalTitle: t("playlists-list.info-modal.playlist-categories"),
-          },
-          data.categories?.length,
-          data.categories?.length === 0
-        ),
+      content: (data) => <div>@TODO</div>,
       sort: true,
       path: "categories",
       key: "categories",
@@ -146,16 +111,7 @@ function PlaylistsList() {
     {
       sort: true,
       path: "onFollowingScreens",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          {
-            data: data.onFollowingScreens,
-            modalTitle: t("playlists-list.info-modal.playlist-screens"),
-          },
-          data.onFollowingScreens.length,
-          data.onFollowingScreens.length === 0
-        ),
+      content: (data) => <div>@TODO</div>,
       key: "screens",
       label: t("playlists-list.columns.on-screens"),
     },
@@ -226,6 +182,9 @@ function PlaylistsList() {
     setSelectedRows([]);
   }
 
+
+  const { data, error, isLoading } = useGetV1PlaylistsQuery(1)
+
   return (
     <>
       <ContentHeader
@@ -234,11 +193,11 @@ function PlaylistsList() {
         newBtnLink="/playlist/new"
       />
       <ContentBody>
-        {playlists.playlists && (
+        {data && data['hydra:member'] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={playlists.playlists}
+            data={data['hydra:member']}
             clearSelectedRows={clearSelectedRows}
           />
         )}

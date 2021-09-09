@@ -59,13 +59,12 @@ services:
     working_dir: /e2e
     entrypoint: cypress
 
-  # @TODO: Adjust itkdev/json-server to replace this.
   json-server:
     image: node:14
     environment:
       - NODE_ENV=development
       - DEBUG=*
-    command: ./node_modules/.bin/nodemon app.js
+    command: npm start
     networks:
       - app
     ports:
@@ -73,3 +72,4 @@ services:
     working_dir: /app
     volumes:
       - ./data:/app:delegated
+

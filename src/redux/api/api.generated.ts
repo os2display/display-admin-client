@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://os2display-api.local.itkdev.dk",
+    baseUrl: "http://os2display-api.local.itkdev.dk:3000",
   }),
   tagTypes: [],
   endpoints: (build) => ({

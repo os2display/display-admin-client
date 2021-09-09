@@ -1,4 +1,22 @@
 {
+  "playlists": [
+    {
+      "jsonServerId": "29ff6eca-8778-6789-bfeb-53e4bf4a6457",
+      "@context": "/contexts/playlist",
+      "@id": "/v1/playlist/29ff6eca-8778-6789-bfeb-53e4bf4a6457",
+      "title": "The first playlist",
+      "description": "This is an playlist wiht image and video",
+      "modified": "2021-09-21T17:32:28Z",
+      "created": "2021-09-21T17:00:01Z",
+      "modifiedBy": "Jens Jensen",
+      "createdBy": "Ole Olesen",
+      "onScreens": "/v1/playlists/29ff6eca-8778-6789-bfeb-53e4bf4a6457/screens",
+      "published": {
+        "from": "2021-09-21T17:00:01Z",
+        "to": "2021-07-22T17:00:01Z"
+      }
+    }
+  ],
   "slides": [
     {
       "jsonServerId": "a97f6ec4-5278-4993-bfeb-53cdedea6d10",
