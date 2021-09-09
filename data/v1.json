@@ -1,0 +1,61 @@
+{
+  "slides": [
+    {
+      "jsonServerId": "a97f6ec4-5278-4993-bfeb-53cdedea6d10",
+      "@context": "/contexts/Slide",
+      "@id": "/v1/slides/a97f6ec4-5278-4993-bfeb-53cdedea6d10",
+      "title": "Image Slide",
+      "description": "This is the first slide named one",
+      "modified": "2012-09-03T12:21:56Z",
+      "created": "2021-09-01T10:04:00Z",
+      "modifiedBy": "Ole Olesen",
+      "createdBy": "Jens Jensen",
+      "template": {
+        "@id": "/v1/templates/457d6ecb-6378-4299-bfcb-53cbaaaa6f65",
+        "options": [
+          {
+            "fade": false
+          },
+          {
+            "icon": true,
+            "url": "http://test.local.itkdev.dk/icon.png"
+          }
+        ]
+      },
+      "onScreens": "/v1/screens?slideId=a97f6ec4-5278-4993-bfeb-53cdedea6d10",
+      "onPlaylists": "/v1/playlists?slideId=a97f6ec4-5278-4993-bfeb-53cdedea6d10",
+      "duration": 45000,
+      "published": 1622555123,
+      "content": {
+        "text": "This is slide content",
+        "media": "/v1/media/497f6eca-4576-4883-cfeb-53cbffba6f08"
+      }
+    },
+    {
+      "jsonServerId": "787f6ece-6276-5982-beeb-53cba4f36f12",
+      "@context": "/contexts/Slide",
+      "@id": "/v1/slides/787f6ece-6276-5982-beeb-53cba4f36f12",
+      "title": "Video Slide",
+      "description": "This is the next slide named two",
+      "modified": "2012-09-03T12:32:04Z",
+      "created": "2021-08-14T10:54:43Z",
+      "modifiedBy": "Jens Jensen",
+      "createdBy": "Ole Olesen",
+      "template": {
+        "@id": "/v1/templates/457d6ecb-6378-4299-bfcb-53cbaaaa6f65",
+        "options": [
+          {
+            "fade": true
+          }
+        ]
+      },
+      "onScreens": "/v1/screens?slideId=787f6ece-6276-5982-beeb-53cba4f36f12",
+      "onPlaylists": "/v1/playlists?slideId=787f6ece-6276-5982-beeb-53cba4f36f12",
+      "duration": 90000,
+      "published": 1622555475,
+      "content": {
+        "media": "/v1/media/597f6eca-4576-1454-cf15-52cb3eba6b85"
+      }
+    }
+  ]
+}

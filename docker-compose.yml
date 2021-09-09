@@ -58,3 +58,18 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
     working_dir: /e2e
     entrypoint: cypress
+
+  # @TODO: Adjust itkdev/json-server to replace this.
+  json-server:
+    image: node:14
+    environment:
+      - NODE_ENV=development
+      - DEBUG=*
+    command: ./node_modules/.bin/nodemon app.js
+    networks:
+      - app
+    ports:
+      - '3000:3000'
+    working_dir: /app
+    volumes:
+      - ./data:/app:delegated
