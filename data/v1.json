@@ -49,8 +49,8 @@
           }
         ]
       },
-      "onScreens": "/v1/screens?slideId=a97f6ec4-5278-4993-bfeb-53cdedea6d10",
-      "onPlaylists": "/v1/playlists?slideId=a97f6ec4-5278-4993-bfeb-53cdedea6d10",
+      "onScreens": "/v1/screens?slideId=787f6ece-6276-5982-beeb-53cba4f36f12",
+      "onPlaylists": "/v1/playlists?slideId=787f6ece-6276-5982-beeb-53cba4f36f12",
       "duration": 90000,
       "published": 1622555475,
       "content": {
