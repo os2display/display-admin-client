@@ -59,6 +59,7 @@ services:
     working_dir: /e2e
     entrypoint: cypress
 
+  # @TODO: Adjust itkdev/json-server to replace this.
   json-server:
     image: node:14
     environment:
@@ -72,13 +73,3 @@ services:
     working_dir: /app
     volumes:
       - ./data:/app:delegated
-
-#  json-server:
-#    # @TODO: Adjust itkdev/json-server to work.
-#    build: .docker/json-server
-#    networks:
-#      - app
-#    ports:
-#      - '3000:3000'
-#    volumes:
-#      - ./data:/data:delegated
