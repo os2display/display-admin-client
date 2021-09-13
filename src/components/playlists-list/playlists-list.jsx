@@ -1,10 +1,9 @@
-import { React, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { React, useState } from "react";
+import { Button, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
-import ListButton from "../util/list/list-button";
 import InfoModal from "../info-modal/info-modal";
 import LinkForList from "../util/list/link-for-list";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -23,7 +22,6 @@ function PlaylistsList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [playlists, setPlaylists] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [infoModalTitle, setInfoModalTitle] = useState("");
@@ -182,8 +180,10 @@ function PlaylistsList() {
     setSelectedRows([]);
   }
 
-
-  const { data, error, isLoading } = useGetV1PlaylistsQuery(1)
+  const { data, error, isLoading } = useGetV1PlaylistsQuery({
+    page: 1
+  });
+  console.log(data, error, isLoading);
 
   return (
     <>
@@ -193,7 +193,7 @@ function PlaylistsList() {
         newBtnLink="/playlist/new"
       />
       <ContentBody>
-        {data && data['hydra:member'] && (
+        {!isLoading && data && data['hydra:member'] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
@@ -201,6 +201,8 @@ function PlaylistsList() {
             clearSelectedRows={clearSelectedRows}
           />
         )}
+        {isLoading && <Spinner/>}
+        {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
       <DeleteModal
         show={showDeleteModal}

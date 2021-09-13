@@ -5,16 +5,13 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.title
- * The title
- * @param {Array} props.newBtnTitle
- * The button title
- * @param {Array} props.newBtnLink
- * The button link
- * @returns {object}
- * The Content header.
+ * @TODO: Missing description.
+ *
+ * @param {object} props The props.
+ * @param {string} props.title The title
+ * @param {string} props.newBtnTitle The button title
+ * @param {string} props.newBtnLink The button link
+ * @returns {object} The Content header.
  */
 function ContentHeader({ title, newBtnTitle, newBtnLink }) {
   return (
@@ -32,9 +29,9 @@ function ContentHeader({ title, newBtnTitle, newBtnLink }) {
 }
 
 ContentHeader.propTypes = {
-  title: PropTypes.isRequired,
-  newBtnTitle: PropTypes.isRequired,
-  newBtnLink: PropTypes.isRequired,
+  title: PropTypes.string.isRequired,
+  newBtnTitle: PropTypes.string.isRequired,
+  newBtnLink: PropTypes.string.isRequired,
 };
 
 export default ContentHeader;

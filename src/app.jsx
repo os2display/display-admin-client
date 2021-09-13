@@ -57,6 +57,8 @@ function App() {
               <TopBar />
               <main className="col p-3">
                 <Switch>
+                  <Route path="/playlists" component={PlaylistsList} />
+                  <Route path="/playlist/:id" component={EditPlaylist} />
                   <Route path="/tags" component={TagList} />
                   <Route path="/screens" component={ScreenList} />
                   <Route path="/categories" component={CategoryList} />
@@ -68,9 +70,7 @@ function App() {
                   <Route path="/screen/:id" component={EditScreen} />
                   <Route path="/location/:id" component={EditLocation} />
                   <Route path="/slides" component={SlidesList} />
-                  <Route path="/playlists" component={PlaylistsList} />
                   <Route path="/media-list" component={MediaList} />
-                  <Route path="/playlist/:id" component={EditPlaylist} />
                   <Route path="/slide/:id" component={EditSlide} />
                   <Route path="/media/:id" component={EditMedia} />
                   <Route path="/themes/" component={ThemesList} />

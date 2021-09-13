@@ -11,6 +11,7 @@ import FormInputArea from "../util/forms/form-input-area";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
+import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
 
 /**
  * The edit playlist component.
@@ -26,12 +27,13 @@ function EditPlaylist() {
     playlistCategories: [],
   });
   const history = useHistory();
-  const { id } = useParams();
+//  const { id } = useParams();
   const [playlistName, setPlaylistName] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const newPlaylist = id === "new";
+  const newPlaylist = false;// id === "new";
   const [errors, setErrors] = useState([]);
   const requiredFields = ["playlistName"];
+  const [localChanges, setLocalChanges] = useState({});
 
   /**
    * Load content from fixture.
@@ -39,18 +41,24 @@ function EditPlaylist() {
   useEffect(() => {
     // @TODO load real content.
     if (!newPlaylist) {
-      fetch(`/fixtures/playlists/playlist.json`)
-        .then((response) => response.json())
-        .then((jsonData) => {
-          setFormStateObject({
-            playlistName: jsonData.playlist.name,
-            description: jsonData.playlist.description,
-            playlistScreens: jsonData.playlist.onFollowingScreens,
-            playlistSlides: jsonData.playlist.slides,
-            playlistCategories: jsonData.playlist.categories,
-          });
-          setPlaylistName(jsonData.playlist.name);
-        });
+      const { data, error, isLoading } = useGetV1PlaylistsByIdQuery({id: '29ff6eca-8778-6789-bfeb-53e4bf4a6457'});
+      setFormStateObject(data);
+      console.log(data, error, isLoading);
+      /*
+            fetch(`/fixtures/playlists/playlist.json`)
+              .then((response) => response.json())
+              .then((jsonData) => {
+                setFormStateObject({
+                  playlistName: jsonData.playlist.name,
+                  description: jsonData.playlist.description,
+                  playlistScreens: jsonData.playlist.onFollowingScreens,
+                  playlistSlides: jsonData.playlist.slides,
+                  playlistCategories: jsonData.playlist.categories,
+                });
+                setPlaylistName(jsonData.playlist.name);
+              });
+
+       */
     }
   }, []);
 
@@ -79,7 +87,7 @@ function EditPlaylist() {
    */
   function handleSubmit(e) {
     e.preventDefault();
-    setErrors([]);
+/*    setErrors([]);
     let returnValue = false;
     const createdErrors = getFormErrors(requiredFields, formStateObject);
     if (createdErrors.length > 0) {
@@ -89,6 +97,8 @@ function EditPlaylist() {
       returnValue = true;
     }
     return returnValue;
+
+ */
   }
 
   return (
@@ -108,7 +118,7 @@ function EditPlaylist() {
             errors={errors}
             label={t("edit-playlist.playlist-name-label")}
             placeholder={t("edit-playlist.playlist-name-placeholder")}
-            value={formStateObject.playlistName}
+            value={formStateObject.title}
             onChange={handleInput}
           />
           <FormInputArea

@@ -3,7 +3,7 @@
     {
       "jsonServerId": "29ff6eca-8778-6789-bfeb-53e4bf4a6457",
       "@context": "/contexts/playlist",
-      "@id": "/v1/playlist/29ff6eca-8778-6789-bfeb-53e4bf4a6457",
+      "@id": "/v1/playlists/29ff6eca-8778-6789-bfeb-53e4bf4a6457",
       "title": "The first playlist",
       "description": "This is an playlist wiht image and video",
       "modified": "2021-09-21T17:32:28Z",
