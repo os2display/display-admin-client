@@ -111,14 +111,15 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
         handleSlideSelection={handleChange}
         selected={selectedData}
       />
-      {selectedData.length > 0 && (
+      {/* todo this should work when real data is fetched */}
+      {/* {selectedData.length > 0 && (
         <DragAndDropTable
           columns={columns}
           onDropped={handleChange}
           name={name}
           data={selectedData}
         />
-      )}
+      )} */}
       <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}

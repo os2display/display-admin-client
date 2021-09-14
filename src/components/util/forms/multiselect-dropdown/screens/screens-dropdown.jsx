@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import Alert from "react-bootstrap/Alert";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
+import { useGetV1ScreensQuery } from "../../../../../redux/api/api.generated";
 
 /**
  * @param {object} props
@@ -20,37 +22,32 @@ import MultiSelectComponent from "../multi-dropdown";
 function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [selectedOptions, setSelectedOptions] = useState([
+    { title: t("screens-dropdown.no-screens-configured"), id: 1 },
+  ]);
+  const { data, error, isLoading } = useGetV1ScreensQuery({ page: 1 });
   /**
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
-    fetch(`/fixtures/screens/screens.json`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setOptions(jsonData.screens);
-        setIsLoading(false);
-      });
-  }, []);
+    if (data) {
+      setOptions(data["hydra:member"]);
+      setSelectedOptions(selected);
+    }
+  }, [data]);
 
   return (
-    <>
-      {options && (
-        <MultiSelectComponent
-          isLoading={isLoading}
-          handleSelection={handleScreenSelection}
-          options={options}
-          label={t("screens-dropdown.label")}
-          noSelectedString={t("screens-dropdown.nothing-selected")}
-          selected={selected}
-          isCreatable
-          name={name}
-          errors={errors}
-        />
-      )}
-    </>
+    <MultiSelectComponent
+      isLoading={isLoading}
+      handleSelection={handleScreenSelection}
+      options={options}
+      label={t("screens-dropdown.label")}
+      noSelectedString={t("screens-dropdown.nothing-selected")}
+      selected={selectedOptions}
+      name={name}
+      isCreatable
+      errors={errors}
+    />
   );
 }
 

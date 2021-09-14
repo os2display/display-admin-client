@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
-
+import { useGetV1SlidesQuery } from "../../../../../redux/api/api.generated";
 /**
  * @param {object} props
  * the props.
@@ -20,20 +20,20 @@ import MultiSelectComponent from "../multi-dropdown";
 function SlidesDropdown({ handleSlideSelection, selected, name, errors }) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const [selectedOptions, setSelectedOptions] = useState([
+    { title: t("slides-dropdown.no-slides-configured"), id: 1 },
+  ]);
+  const { data, error, isLoading } = useGetV1SlidesQuery({ page: 1 });
 
   /**
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
-    fetch(`/fixtures/slides/slides.json`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setOptions(jsonData.slides);
-        setIsLoading(false);
-      });
-  }, []);
+    if (data) {
+      setOptions(data["hydra:member"]);
+      setSelectedOptions(selected);
+    }
+  }, [data]);
 
   return (
     <>
@@ -44,7 +44,7 @@ function SlidesDropdown({ handleSlideSelection, selected, name, errors }) {
           options={options}
           label={t("slides-dropdown.label")}
           noSelectedString={t("slides-dropdown.nothing-selected")}
-          selected={selected}
+          selected={selectedOptions}
           name={name}
           errors={errors}
         />

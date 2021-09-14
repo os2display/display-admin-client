@@ -53,8 +53,8 @@ function MultiSelectComponent({
 }) {
   const { t } = useTranslation("common");
   const [error, setError] = useState();
-  const [mappedOptions, setMappedOptions] = useState([]);
-  const [mappedSelected, setMappedSelected] = useState([]);
+  const [mappedOptions, setMappedOptions] = useState();
+  const [mappedSelected, setMappedSelected] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
 
   const nothingSelectedLabel =
@@ -64,23 +64,6 @@ function MultiSelectComponent({
    */
   useEffect(() => {
     setError(errors && errors.includes(name));
-    const localMappedOptions = options.map((item) => {
-      return {
-        label: item.name,
-        value: item.id,
-        disabled: false,
-      };
-    });
-    setMappedOptions(localMappedOptions);
-
-    const localMappedSelected = selected.map((item) => {
-      return {
-        label: item.name,
-        value: item.id,
-        disabled: false,
-      };
-    });
-    setMappedSelected(localMappedSelected);
   }, [selected]);
 
   /**
@@ -89,16 +72,15 @@ function MultiSelectComponent({
   useEffect(() => {
     const localMappedOptions = options.map((item) => {
       return {
-        label: item.name,
+        label: item.title,
         value: item.id,
         disabled: false,
       };
     });
     setMappedOptions(localMappedOptions);
-
     const localMappedSelected = selected.map((item) => {
       return {
-        label: item.name,
+        label: item.title,
         value: item.id,
         disabled: false,
       };
@@ -161,7 +143,7 @@ function MultiSelectComponent({
 
   return (
     <>
-      {mappedOptions.length > 0 && (
+      {mappedOptions && mappedSelected && (
         <div className={`mb-3 ${error ? "invalid" : ""}`}>
           <Form.Label htmlFor={name}>{label}</Form.Label>
           <MultiSelect
@@ -190,6 +172,8 @@ MultiSelectComponent.defaultProps = {
   errors: [],
   errorText: "",
   helpText: null,
+  selected: [],
+  options: [],
 };
 
 MultiSelectComponent.propTypes = {
@@ -199,7 +183,7 @@ MultiSelectComponent.propTypes = {
       label: PropTypes.string,
       disabled: PropTypes.bool,
     })
-  ).isRequired,
+  ),
   handleSelection: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
@@ -207,7 +191,7 @@ MultiSelectComponent.propTypes = {
       label: PropTypes.string,
       disabled: PropTypes.bool,
     })
-  ).isRequired,
+  ),
   isCreatable: PropTypes.bool,
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,

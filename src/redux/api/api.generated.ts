@@ -755,4 +755,3 @@ export const {
   useGetV1MediaQuery,
   useGetV1MediaByIdQuery,
 } = api;
-
