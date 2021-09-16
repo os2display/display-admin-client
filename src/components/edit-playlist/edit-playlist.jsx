@@ -7,7 +7,6 @@ import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
-import getFormErrors from "../util/helpers/form-errors-helper";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectScreenTable from "../util/multi-and-table/select-screen-table";
@@ -21,11 +20,11 @@ import {
 /**
  * The edit playlist component.
  *
- * @returns {object}
- * The edit playlist page.
+ * @returns {object} The edit playlist page.
  */
 function EditPlaylist() {
-  // Todo error handling and validation
+  // @TODO: Error handling and validation.
+
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
@@ -37,10 +36,8 @@ function EditPlaylist() {
   const fiveSeconds = 5000;
   const [displaySaveSuccess, setDisplaySaveSuccess] = useState(false);
 
-  const { data, error, isLoading } = useGetV1PlaylistsByIdQuery({
-    id: id,
-  });
 
+  // @TODO: Handle POST case where id is not set.
   // const put = usePutV1PlaylistsByIdMutation();
   // const [
   //   PostV1Playlists, // This is the mutation trigger
@@ -51,11 +48,14 @@ function EditPlaylist() {
     { isLoading: isUpdating, error: saveError, isSuccess: isSaveSuccess }, // This is the destructured mutation result
   ] = usePutV1PlaylistsByIdMutation();
 
+  // Load data for
+  const { data, error, isLoading } = useGetV1PlaylistsByIdQuery({ id });
+  console.log(data, error, isLoading)
+
   /**
-   * Set loaded data in state.
+   * Set loaded data into form state.
    */
   useEffect(() => {
-    // @TODO load real content.
     if (!newPlaylist && data) {
       setFormStateObject(data);
     }
@@ -82,10 +82,8 @@ function EditPlaylist() {
   /**
    * Set state on change in input field
    *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * event target
+   * @param {object} props The props.
+   * @param {object} props.target Event target.
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
@@ -96,16 +94,12 @@ function EditPlaylist() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @todo make it save.
-   * @param {object} e
-   * the submit event.
-   * @returns {boolean}
-   * Boolean indicating whether to submit form.
+   * @param {Event} event The submit event.
+   * @returns {boolean} Indicating whether to submit form.
    */
-  function handleSubmit(e) {
-    let sdf = { id: id, body: formStateObject };
-
-    PutV1Playlists(sdf);
+  function handleSubmit(event) {
+    let data = { id: id, body: formStateObject };
+    PutV1Playlists(data);
   }
 
   return (

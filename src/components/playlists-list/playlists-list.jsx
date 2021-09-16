@@ -183,7 +183,6 @@ function PlaylistsList() {
   const { data, error, isLoading } = useGetV1PlaylistsQuery({
     page: 1
   });
-  console.log(data, error, isLoading);
 
   return (
     <>
@@ -197,11 +196,11 @@ function PlaylistsList() {
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={data['hydra:member']}
+            data={data['hydra:member'] }
             clearSelectedRows={clearSelectedRows}
           />
         )}
-        {isLoading && <Spinner/>}
+        {isLoading && <Spinner animation={"grow"}/>}
         {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
       <DeleteModal
