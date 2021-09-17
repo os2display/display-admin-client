@@ -190,6 +190,7 @@ function List({
       returnValue = returnValue.filter(filterDataFromSearchInput);
     }
     if (sortBy) {
+      // @TODO: Fix issue.
       // returnValue = returnValue.sort(sortData);
     }
     if (sortBy.order === "desc") {

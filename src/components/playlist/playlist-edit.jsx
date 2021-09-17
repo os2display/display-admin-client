@@ -18,45 +18,33 @@ import {
 } from "../../redux/api/api.generated";
 
 /**
- * The edit playlist component.
+ * The playlist edit component.
  *
- * @returns {object} The edit playlist page.
+ * @returns {object} The playlist edit page.
  */
-function EditPlaylist() {
-  // @TODO: Error handling and validation.
-
+function PlaylistEdit() {
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({});
   const history = useHistory();
   const { id } = useParams();
   const [playlistName, setPlaylistName] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const newPlaylist = false; // id === "new";
   const [errors, setErrors] = useState([]);
   const fiveSeconds = 5000;
   const [displaySaveSuccess, setDisplaySaveSuccess] = useState(false);
 
-
-  // @TODO: Handle POST case where id is not set.
-  // const put = usePutV1PlaylistsByIdMutation();
-  // const [
-  //   PostV1Playlists, // This is the mutation trigger
-  //   { isLoading: isUpdating }, // This is the destructured mutation result
-  // ] = usePostV1PlaylistsMutation();
   const [
     PutV1Playlists, // This is the mutation trigger
     { isLoading: isUpdating, error: saveError, isSuccess: isSaveSuccess }, // This is the destructured mutation result
   ] = usePutV1PlaylistsByIdMutation();
 
-  // Load data for
   const { data, error, isLoading } = useGetV1PlaylistsByIdQuery({ id });
-  console.log(data, error, isLoading)
 
   /**
    * Set loaded data into form state.
    */
   useEffect(() => {
-    if (!newPlaylist && data) {
+    if (data) {
       setFormStateObject(data);
     }
   }, [data]);
@@ -105,16 +93,13 @@ function EditPlaylist() {
   return (
     <>
       <Form>
-        {newPlaylist && <h1>{t("edit-playlist.create-new-playlist")}</h1>}
-        {!newPlaylist && (
-          <h1>
-            {t("edit-playlist.edit-playlist")}: {playlistName}
-          </h1>
-        )}
+        <h1>
+          {t("edit-playlist.edit-playlist")}: {playlistName}
+        </h1>
         <ContentBody>
           <h2 className="h4">{t("edit-playlist.title-about")}</h2>
           <FormInput
-            name="playlistName"
+            name="title"
             type="text"
             errors={errors}
             label={t("edit-playlist.playlist-name-label")}
@@ -204,4 +189,4 @@ function EditPlaylist() {
   );
 }
 
-export default EditPlaylist;
+export default PlaylistEdit;

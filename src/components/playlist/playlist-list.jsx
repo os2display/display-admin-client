@@ -12,13 +12,12 @@ import ContentBody from "../util/content-body/content-body";
 import { useGetV1PlaylistsQuery } from "../../redux/api/api.generated";
 
 /**
-/**
  * The playlists list component.
  *
  * @returns {object}
  * The playlists list.
  */
-function PlaylistsList() {
+function PlaylistList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -114,15 +113,6 @@ function PlaylistsList() {
       label: t("playlists-list.columns.on-screens"),
     },
     {
-      key: "quick-edit",
-      content: () => (
-        <>
-          {/* @todo make quick edit modal */}
-          <Button variant="primary">Quick edit</Button>
-        </>
-      ),
-    },
-    {
       key: "edit",
       content: (data) => (
         <LinkForList
@@ -180,9 +170,7 @@ function PlaylistsList() {
     setSelectedRows([]);
   }
 
-  const { data, error, isLoading } = useGetV1PlaylistsQuery({
-    page: 1
-  });
+  const { data, error, isLoading } = useGetV1PlaylistsQuery({ page: 1 });
 
   return (
     <>
@@ -219,4 +207,4 @@ function PlaylistsList() {
   );
 }
 
-export default PlaylistsList;
+export default PlaylistList;

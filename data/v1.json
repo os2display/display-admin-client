@@ -835,6 +835,57 @@
         "from": "2021-09-21T17:00:01Z",
         "to": "2021-07-22T17:00:01Z"
       }
+    },
+    {
+      "id": "01FFSKY5RW76HVM95EJKFQY3PN",
+      "@context": "/contexts/Playlist",
+      "@id": "/v1/playlists/01FFSKY5RW76HVM95EJKFQY3PN",
+      "title": "Min første spilleliste",
+      "description": "Med en sjov beskrivelse.",
+      "modified": "2021-09-17T10:13:23.356Z",
+      "created": "2021-09-17T10:13:23.356Z",
+      "modifiedBy": "TODO",
+      "createdBy": "TODO",
+      "slides": "/v1/slidesPlaylist?_expand=slide&playlistId=01FFSKY5RW76HVM95EJKFQY3PN",
+      "onScreens": "/v1/playlists/01FFSKY5RW76HVM95EJKFQY3PN/screens",
+      "published": {
+        "from": "2021-09-17T10:13:23.356Z",
+        "to": null
+      }
+    },
+    {
+      "id": "01FFSM0KF0F2PP1BZ2T7KY4G56",
+      "@context": "/contexts/Playlist",
+      "@id": "/v1/playlists/01FFSM0KF0F2PP1BZ2T7KY4G56",
+      "title": "New playlist 2222",
+      "description": "asdsadas",
+      "modified": "2021-09-17T10:14:42.912Z",
+      "created": "2021-09-17T10:14:42.912Z",
+      "modifiedBy": "TODO",
+      "createdBy": "TODO",
+      "slides": "/v1/slidesPlaylist?_expand=slide&playlistId=01FFSM0KF0F2PP1BZ2T7KY4G56",
+      "onScreens": "/v1/playlists/01FFSM0KF0F2PP1BZ2T7KY4G56/screens",
+      "published": {
+        "from": "2021-09-17T10:14:42.912Z",
+        "to": null
+      }
+    },
+    {
+      "id": "01FFSM2PDRH8YM877YHMKXF5VN",
+      "@context": "/contexts/Playlist",
+      "@id": "/v1/playlists/01FFSM2PDRH8YM877YHMKXF5VN",
+      "title": "New playlist 123123",
+      "description": "asdasdasdasd",
+      "modified": "2021-09-17T10:15:51.480Z",
+      "created": "2021-09-17T10:15:51.480Z",
+      "modifiedBy": "TODO",
+      "createdBy": "TODO",
+      "slides": "/v1/slidesPlaylist?_expand=slide&playlistId=01FFSM2PDRH8YM877YHMKXF5VN",
+      "onScreens": "/v1/playlists/01FFSM2PDRH8YM877YHMKXF5VN/screens",
+      "published": {
+        "from": "2021-09-17T10:15:51.480Z",
+        "to": null
+      }
     }
   ],
   "templates": [
