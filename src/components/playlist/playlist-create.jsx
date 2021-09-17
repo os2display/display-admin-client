@@ -20,7 +20,6 @@ function PlaylistCreate() {
   const creationTime = dayjs().toISOString();
   const newUlid = ulid();
 
-  // @TODO: Make sure this matches the API.
   const [formStateObject, setFormStateObject] = useState({
     "id": newUlid,
     "@context": "/contexts/Playlist",
@@ -39,7 +38,7 @@ function PlaylistCreate() {
     }
   });
 
-  const [ PostV1Playlist, { isLoading } ] = usePostV1PlaylistsMutation();
+  const [ PostV1Playlist, { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess } ] = usePostV1PlaylistsMutation();
 
   /**
    * Set state on change in input field
@@ -63,7 +62,16 @@ function PlaylistCreate() {
   }
 
   return (
-    <PlaylistForm playlist={formStateObject} handleInput={handleInput} handleSubmit={handleSubmit} isLoading={isLoading} headerText={headerText} />
+    <PlaylistForm
+      playlist={formStateObject}
+      headerText={headerText}
+      handleInput={handleInput}
+      handleSubmit={handleSubmit}
+      isLoading={false}
+      isSaveSuccess={isSaveSuccess}
+      isSaving={isSaving}
+      errors={[saveError]}
+    />
   );
 }
 
