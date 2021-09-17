@@ -118,7 +118,7 @@ function PlaylistList() {
         <LinkForList
           data={data}
           label={t("playlists-list.edit-button")}
-          param="playlist"
+          param="playlists/edit"
         />
       ),
     },
@@ -177,7 +177,7 @@ function PlaylistList() {
       <ContentHeader
         title={t("playlists-list.header")}
         newBtnTitle={t("playlists-list.create-new-playlist")}
-        newBtnLink="/playlist/new"
+        newBtnLink="/playlist/create"
       />
       <ContentBody>
         {!isLoading && data && data['hydra:member'] && (

@@ -64,11 +64,11 @@ function NavItems() {
         <NavLink
           id="nav-items_playlists_playlists"
           className="nav-link"
-          to="/playlists"
+          to="/playlists/list"
         >
           <FontAwesomeIcon className="me-2" icon={faStream} />
           {t("nav-items.playlists-playlists")}
-          <Link className="nav-add-new" to="/playlist/new">
+          <Link className="nav-add-new" to="/playlists/create">
             <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
           </Link>
         </NavLink>
