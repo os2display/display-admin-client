@@ -27,13 +27,17 @@ function PlaylistForm({ playlist, handleInput, handleSubmit, isSaving, headerTex
    * Display a banner if save is successful.
    */
   useEffect(() => {
+    // @TODO: Handle multiple saves.
+
     let timer = null;
+
     if (isSaveSuccess) {
       setDisplaySaveSuccess(true);
       timer = setTimeout(() => {
         setDisplaySaveSuccess(false);
       }, displaySaveSuccessMilliseconds);
     }
+
     return function cleanup() {
       if (timer !== null) {
         clearInterval(timer);
