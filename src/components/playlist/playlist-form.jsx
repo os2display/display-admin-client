@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
@@ -20,6 +20,26 @@ import { useHistory } from "react-router-dom";
 function PlaylistForm({ playlist, handleInput, handleSubmit, isSaving, headerText, isSaveSuccess, isLoading, errors }) {
   const { t } = useTranslation("common");
   const history = useHistory();
+  const [displaySaveSuccess, setDisplaySaveSuccess] = useState(false);
+  const displaySaveSuccessMilliseconds = 5000;
+
+  /**
+   * Display a banner if save is successful.
+   */
+  useEffect(() => {
+    let timer = null;
+    if (isSaveSuccess) {
+      setDisplaySaveSuccess(true);
+      timer = setTimeout(() => {
+        setDisplaySaveSuccess(false);
+      }, displaySaveSuccessMilliseconds);
+    }
+    return function cleanup() {
+      if (timer !== null) {
+        clearInterval(timer);
+      }
+    };
+  }, [isSaveSuccess]);
 
   return (
     <Form>
@@ -125,7 +145,7 @@ function PlaylistForm({ playlist, handleInput, handleSubmit, isSaving, headerTex
               </>
             </Button>
 
-            {isSaveSuccess && (
+            {displaySaveSuccess && (
               <Alert className="mt-2" variant="success">
                 {t("edit-playlist.saved")}
               </Alert>
