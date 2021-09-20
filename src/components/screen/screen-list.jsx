@@ -13,6 +13,7 @@ import ListButton from "../util/list/list-button";
 import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import { useGetV1ScreensQuery } from "../../redux/api/api.generated";
 import "./screen-list.scss";
 
 /**
@@ -31,7 +32,6 @@ function ScreenList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
-  const [screens, setScreens] = useState([]);
 
   /**
    * @param {Array} groupsArray
@@ -49,18 +49,6 @@ function ScreenList() {
     setShowInfoModal(false);
     setInGroups();
   }
-
-  /**
-   * Load content from fixture.
-   * TODO load real content.
-   */
-  useEffect(() => {
-    fetch(`/fixtures/screens/screens.json`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setScreens(jsonData);
-      });
-  }, []);
 
   /**
    * Set the view in url.
@@ -123,13 +111,14 @@ function ScreenList() {
     {
       sort: true,
       path: "onFollowingGroups",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.onFollowingGroups,
-          data.onFollowingGroups.length,
-          data.onFollowingGroups.length === 0
-        ),
+      // content: (data) =>
+      //   ListButton(
+      //     openInfoModal,
+      //     data.onFollowingGroups,
+      //     data.onFollowingGroups.length,
+      //     data.onFollowingGroups.length === 0
+      //   ),
+      content: (data) => <div>@TODO</div>,
       key: "groups",
       label: t("screens-list.columns.on-groups"),
     },
@@ -139,15 +128,15 @@ function ScreenList() {
       label: t("screens-list.columns.size"),
     },
     {
-      path: "dimensions",
       sort: true,
+      content: (data) => <div>{data.dimensions.height}x{data.dimensions.width}</div>,
       label: t("screens-list.columns.dimensions"),
     },
     {
-      path: "overriddenByCampaign",
       sort: true,
       label: t("screens-list.columns.campaign"),
       content: (data) => CampaignIcon(data),
+      // TODO implement overridden by campaing
     },
     {
       key: "edit",
@@ -206,6 +195,8 @@ function ScreenList() {
     setSelectedRows([]);
   }
 
+  const { data, error, isLoading } = useGetV1ScreensQuery({ page: 1 });
+  console.log(data)
   return (
     <>
       <ContentHeader
@@ -226,11 +217,11 @@ function ScreenList() {
         )}
       </Col>
       <ContentBody>
-        {screens.screens && (
+        {!isLoading && data && data['hydra:member'] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={screens.screens}
+            data={data['hydra:member']}
             clearSelectedRows={clearSelectedRows}
             withChart={view === "calendar"}
           />
