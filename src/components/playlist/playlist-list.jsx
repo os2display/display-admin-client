@@ -23,6 +23,7 @@ function PlaylistList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
+  /* eslint-disable-next-line no-unused-vars */
   const [infoModalTitle, setInfoModalTitle] = useState("");
 
   /**
@@ -35,11 +36,13 @@ function PlaylistList() {
    * @param {string} props.modalTitle
    * The title for the infomodal.
    */
+  /* @TODO: Re-add this.
   function openInfoModal({ data, modalTitle }) {
     setInfoModalTitle(modalTitle);
     setDataStructureToDisplay(data);
     setShowInfoModal(true);
   }
+  */
 
   /**
    * Closes the info modal.
@@ -92,14 +95,14 @@ function PlaylistList() {
       label: t("playlists-list.columns.name"),
     },
     {
-      content: (data) => <div>@TODO</div>,
+      content: () => <div>@TODO</div>,
       sort: true,
       path: "slides",
       key: "slides",
       label: t("playlists-list.columns.number-of-slides"),
     },
     {
-      content: (data) => <div>@TODO</div>,
+      content: () => <div>@TODO</div>,
       sort: true,
       path: "categories",
       key: "categories",
@@ -108,7 +111,7 @@ function PlaylistList() {
     {
       sort: true,
       path: "onFollowingScreens",
-      content: (data) => <div>@TODO</div>,
+      content: () => <div>@TODO</div>,
       key: "screens",
       label: t("playlists-list.columns.on-screens"),
     },
@@ -180,15 +183,15 @@ function PlaylistList() {
         newBtnLink="/playlist/create"
       />
       <ContentBody>
-        {!isLoading && data && data['hydra:member'] && (
+        {!isLoading && data && data["hydra:member"] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={data['hydra:member'] }
+            data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
           />
         )}
-        {isLoading && <Spinner animation={"grow"}/>}
+        {isLoading && <Spinner animation="grow" />}
         {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
       <DeleteModal

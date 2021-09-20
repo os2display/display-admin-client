@@ -23,7 +23,11 @@ function PlaylistEdit() {
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1PlaylistsByIdMutation();
 
-  const { data, error: loadError, isLoading } = useGetV1PlaylistsByIdQuery({ id });
+  const {
+    data,
+    error: loadError,
+    isLoading,
+  } = useGetV1PlaylistsByIdQuery({ id });
 
   /**
    * Set loaded data into form state.
@@ -48,13 +52,9 @@ function PlaylistEdit() {
 
   /**
    * Handles validations, and goes back to list.
-   *
-   * @param {Event} event The submit event.
-   * @returns {boolean} Indicating whether to submit form.
    */
-  function handleSubmit(event) {
-    let data = { id: id, body: formStateObject };
-    PutV1Playlists(data);
+  function handleSubmit() {
+    PutV1Playlists({ id, body: formStateObject });
   }
 
   return (

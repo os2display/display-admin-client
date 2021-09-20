@@ -4,9 +4,8 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
+// @TODO: Missing description.
 /**
- * @TODO: Missing description.
- *
  * @param {object} props The props.
  * @param {string} props.title The title
  * @param {string} props.newBtnTitle The button title

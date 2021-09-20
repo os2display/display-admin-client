@@ -1,10 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { api } from './api/api.generated';
+import { configureStore } from "@reduxjs/toolkit";
+import { api } from "./api/api.generated";
 
+/* eslint-disable-next-line import/prefer-default-export */
 export const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer
+    [api.reducerPath]: api.reducer,
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(api.middleware)
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
+});

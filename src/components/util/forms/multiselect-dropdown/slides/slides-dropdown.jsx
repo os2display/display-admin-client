@@ -23,7 +23,7 @@ function SlidesDropdown({ handleSlideSelection, selected, name, errors }) {
   const [selectedOptions, setSelectedOptions] = useState([
     { title: t("slides-dropdown.no-slides-configured"), id: 1 },
   ]);
-  const { data, error, isLoading } = useGetV1SlidesQuery({ page: 1 });
+  const { data, isLoading } = useGetV1SlidesQuery({ page: 1 });
 
   /**
    * Load content from fixture.
