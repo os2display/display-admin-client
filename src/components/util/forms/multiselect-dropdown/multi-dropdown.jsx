@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import MultiSelect from "react-multi-select-component";
+import { MultiSelect } from "react-multi-select-component";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import { useTranslation } from "react-i18next";
