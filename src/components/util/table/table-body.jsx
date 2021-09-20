@@ -68,7 +68,8 @@ function TableBody({ columns, selectedRows, data, withChart }) {
           {withChart && (
             <tr className={isRowSelected(item)}>
               <td colSpan="100%" key={item.id}>
-                <Calendar playlists={item.playlists} id={item.id} />
+                // TODO calendar of item playlists
+                {/* <Calendar playlists={item.playlists} id={item.id} /> */}
               </td>
             </tr>
           )}
