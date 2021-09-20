@@ -196,7 +196,7 @@ function ScreenList() {
   }
 
   const { data, error, isLoading } = useGetV1ScreensQuery({ page: 1 });
-  console.log(data)
+
   return (
     <>
       <ContentHeader
