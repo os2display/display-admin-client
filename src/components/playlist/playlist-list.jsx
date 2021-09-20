@@ -12,13 +12,12 @@ import ContentBody from "../util/content-body/content-body";
 import { useGetV1PlaylistsQuery } from "../../redux/api/api.generated";
 
 /**
-/**
  * The playlists list component.
  *
  * @returns {object}
  * The playlists list.
  */
-function PlaylistsList() {
+function PlaylistList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -114,21 +113,12 @@ function PlaylistsList() {
       label: t("playlists-list.columns.on-screens"),
     },
     {
-      key: "quick-edit",
-      content: () => (
-        <>
-          {/* @todo make quick edit modal */}
-          <Button variant="primary">Quick edit</Button>
-        </>
-      ),
-    },
-    {
       key: "edit",
       content: (data) => (
         <LinkForList
           data={data}
           label={t("playlists-list.edit-button")}
-          param="playlist"
+          param="playlists/edit"
         />
       ),
     },
@@ -180,28 +170,25 @@ function PlaylistsList() {
     setSelectedRows([]);
   }
 
-  const { data, error, isLoading } = useGetV1PlaylistsQuery({
-    page: 1
-  });
-  console.log(data, error, isLoading);
+  const { data, error, isLoading } = useGetV1PlaylistsQuery({ page: 1 });
 
   return (
     <>
       <ContentHeader
         title={t("playlists-list.header")}
         newBtnTitle={t("playlists-list.create-new-playlist")}
-        newBtnLink="/playlist/new"
+        newBtnLink="/playlist/create"
       />
       <ContentBody>
         {!isLoading && data && data['hydra:member'] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={data['hydra:member']}
+            data={data['hydra:member'] }
             clearSelectedRows={clearSelectedRows}
           />
         )}
-        {isLoading && <Spinner/>}
+        {isLoading && <Spinner animation={"grow"}/>}
         {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
       <DeleteModal
@@ -220,4 +207,4 @@ function PlaylistsList() {
   );
 }
 
-export default PlaylistsList;
+export default PlaylistList;

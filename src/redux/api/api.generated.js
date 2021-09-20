@@ -5,7 +5,7 @@ var react_1 = require("@reduxjs/toolkit/query/react");
 var query_1 = require("@reduxjs/toolkit/query");
 exports.api = (0, react_1.createApi)({
     baseQuery: (0, query_1.fetchBaseQuery)({
-        baseUrl: "http://os2display-api.local.itkdev.dk:3000"
+        baseUrl: "/api/"
     }),
     tagTypes: [],
     endpoints: function (build) { return ({
