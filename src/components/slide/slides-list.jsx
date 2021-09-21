@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -11,7 +11,7 @@ import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-
+import { useGetV1SlidesQuery } from "../../redux/api/api.generated";
 /**
  * The category list component.
  *
@@ -24,19 +24,6 @@ function SlidesList() {
   const [onPlaylists, setOnPlaylists] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [slides, setSlides] = useState([]);
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    // @TODO: load real content.
-    fetch(`/fixtures/slides/slides.json`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setSlides(jsonData.slides);
-      });
-  }, []);
 
   /**
    * Sets the selected row in state.
@@ -85,30 +72,31 @@ function SlidesList() {
       ),
     },
     {
-      path: "name",
+      path: "title",
       sort: true,
       label: t("slides-list.columns.name"),
     },
     {
-      path: "template",
+      path: "template.@id",
       sort: true,
       label: t("slides-list.columns.template"),
     },
     {
       sort: true,
       path: "onFollowingPlaylists",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.onFollowingPlaylists,
-          data.onFollowingPlaylists.length,
-          data.onFollowingPlaylists.length === 0
-        ),
+      // content: (data) =>
+      //   ListButton(
+      //     openInfoModal,
+      //     data.onFollowingPlaylists,
+      //     data.onFollowingPlaylists.length,
+      //     data.onFollowingPlaylists.length === 0
+      //   ),
+      content: (data) => <div>todo</div>,
       key: "playlists",
       label: t("slides-list.columns.number-of-playlists"),
     },
     {
-      path: "tags",
+      content: (data) => <div>todo</div>,
       sort: true,
       label: t("slides-list.columns.tags"),
     },
@@ -199,6 +187,8 @@ function SlidesList() {
     setSelectedRows([]);
   }
 
+  const { data, error, isLoading } = useGetV1SlidesQuery({ page: 1 });
+  console.log(data);
   return (
     <>
       <ContentHeader
@@ -207,14 +197,16 @@ function SlidesList() {
         newBtnLink="/slides/new"
       />
       <ContentBody>
-        {slides && (
+        {!isLoading && data && data["hydra:member"] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={slides}
+            data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
           />
         )}
+        {isLoading && <Spinner animation={"grow"} />}
+        {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
       <DeleteModal
         show={showDeleteModal}

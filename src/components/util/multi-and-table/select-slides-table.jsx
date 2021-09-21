@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import InfoModal from "../../info-modal/info-modal";
-import Published from "../../slides-list/published";
+import Published from "../../slide/published";
 
 /**
  * A multiselect and table for slides.

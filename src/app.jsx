@@ -10,7 +10,7 @@ import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import CategoryList from "./components/category-list/category-list";
-import SlidesList from "./components/slides-list/slides-list";
+import SlidesList from "./components/slide/slides-list";
 import EditTag from "./components/edit-tag/edit-tag";
 import EditCategories from "./components/edit-categories/edit-category";
 import GroupsList from "./components/groups-list/groups-list";
