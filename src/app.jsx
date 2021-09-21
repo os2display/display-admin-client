@@ -12,7 +12,6 @@ import ScreenList from "./components/screen/screen-list";
 import CategoryList from "./components/category-list/category-list";
 import SlidesList from "./components/slides-list/slides-list";
 import EditTag from "./components/edit-tag/edit-tag";
-import EditScreen from "./components/screen/edit-screen";
 import EditCategories from "./components/edit-categories/edit-category";
 import GroupsList from "./components/groups-list/groups-list";
 import EditGroup from "./components/edit-group/edit-group";
@@ -29,6 +28,8 @@ import commonDa from "./translations/da/common.json";
 import EditTheme from "./components/edit-theme/edit-theme";
 import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
+import ScreenCreate from "./components/screen/screen-create";
+import ScreenEdit from "./components/screen/screen-edit";
 import "./app.scss";
 
 /**
@@ -62,6 +63,7 @@ function App() {
                   <Route path="/playlists/edit/:id" component={PlaylistEdit} />
                   <Route path="/playlists/list" component={PlaylistList} />
                   <Route path="/tags" component={TagList} />
+                  <Route path="/screens/create" component={ScreenCreate} />
                   <Route path="/screens" component={ScreenList} />
                   <Route path="/categories" component={CategoryList} />
                   <Route path="/locations" component={LocationsList} />
@@ -69,7 +71,7 @@ function App() {
                   <Route path="/tag/:id" component={EditTag} />
                   <Route path="/category/:id" component={EditCategories} />
                   <Route path="/group/:id" component={EditGroup} />
-                  <Route path="/screen/:id" component={EditScreen} />
+                  <Route path="/screen/:id" component={ScreenEdit} />
                   <Route path="/location/:id" component={EditLocation} />
                   <Route path="/slides" component={SlidesList} />
                   <Route path="/media-list" component={MediaList} />

@@ -72,7 +72,7 @@ function Select({
         </option>
         {options.map((option) => (
           <option value={option.id} key={option.id}>
-            {option.name}
+            {option.name || option.title}
           </option>
         ))}
       </select>

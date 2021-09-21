@@ -104,7 +104,7 @@ function ScreenList() {
       content: (data) => LiveIcon(data),
     },
     {
-      path: "name",
+      path: "title",
       sort: true,
       label: t("screens-list.columns.name"),
     },
@@ -129,7 +129,11 @@ function ScreenList() {
     },
     {
       sort: true,
-      content: (data) => <div>{data.dimensions.height}x{data.dimensions.width}</div>,
+      content: (data) => (
+        <div>
+          {data.dimensions.height}x{data.dimensions.width}
+        </div>
+      ),
       label: t("screens-list.columns.dimensions"),
     },
     {
@@ -202,7 +206,7 @@ function ScreenList() {
       <ContentHeader
         title={t("screens-list.header")}
         newBtnTitle={t("screens-list.create-new-screen")}
-        newBtnLink="/screen/new"
+        newBtnLink="/screens/create"
       />
       <Col md="auto">
         {view === "list" && (
@@ -217,11 +221,11 @@ function ScreenList() {
         )}
       </Col>
       <ContentBody>
-        {!isLoading && data && data['hydra:member'] && (
+        {!isLoading && data && data["hydra:member"] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={data['hydra:member']}
+            data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             withChart={view === "calendar"}
           />

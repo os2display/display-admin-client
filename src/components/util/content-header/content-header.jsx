@@ -20,7 +20,7 @@ function ContentHeader({ title, newBtnTitle, newBtnLink }) {
       </Col>
       {newBtnTitle && (
         <Col xs="auto">
-          <Button htef={newBtnLink}>{newBtnTitle}</Button>
+          <Button href={newBtnLink}>{newBtnTitle}</Button>
         </Col>
       )}
     </Row>

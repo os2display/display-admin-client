@@ -30,16 +30,7 @@ function EditScreen() {
     "screenGroups",
     "screenLayout",
   ];
-  const radioButtonOptions = [
-    {
-      id: "horizontal",
-      label: t("edit-screen.radio-button-horizontal"),
-    },
-    {
-      id: "vertical",
-      label: t("edit-screen.radio-button-vertical"),
-    },
-  ];
+
   const [formStateObject, setFormStateObject] = useState({
     screenLocations: [],
     screenGroups: [],

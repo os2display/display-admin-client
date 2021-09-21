@@ -57,54 +57,58 @@ function GridGenerationAndSelect({
   }
   return (
     <>
-      <div className="col-md-4 my-3 my-md-0">
-        <div className="bg-light border rounded p-1">
-          <div className={gridClasses} style={gridTemplateAreas}>
-            {regions &&
-              regions.map((data) => (
-                <div
-                  key={data.id}
-                  className={
-                    key === data.id ? "grid-item selected" : "grid-item "
-                  }
-                  style={{ gridArea: createGridArea(data.gridArea) }}
-                >
-                  {data.name}
-                </div>
-              ))}
+      {selectedData && (
+        <>
+          <div className="col-md-4 my-3 my-md-0">
+            <div className="bg-light border rounded p-1">
+              <div className={gridClasses} style={gridTemplateAreas}>
+                {regions &&
+                  regions.map((data) => (
+                    <div
+                      key={data.id}
+                      className={
+                        key === data.id ? "grid-item selected" : "grid-item "
+                      }
+                      style={{ gridArea: createGridArea(data.gridArea) }}
+                    >
+                      {data.name}
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="col-md-12">
-        <h3 className="h5">{t("edit-screen.screen-playlists")}</h3>
-        <Tabs
-          defaultActiveKey="region1"
-          id="uncontrolled-tab-example"
-          activeKey={key}
-          onSelect={(k) => setKey(k)}
-        >
-          {regions &&
-            regions.map((data) => (
-              <Tab
-                className="mt-2"
-                key={data.id}
-                eventKey={data.id}
-                title={data.name}
-              >
-                <div className="mt-3">
-                  <PlaylistDragAndDrop
-                    id="playlist_drag_and_drop"
-                    handleChange={handleChange}
-                    name={data.id}
-                    data={selectedData.filter(
-                      (playlistData) => playlistData.region === data.id
-                    )}
-                  />
-                </div>
-              </Tab>
-            ))}
-        </Tabs>
-      </div>
+          <div className="col-md-12">
+            <h3 className="h5">{t("edit-screen.screen-playlists")}</h3>
+            <Tabs
+              defaultActiveKey="region1"
+              id="uncontrolled-tab-example"
+              activeKey={key}
+              onSelect={(k) => setKey(k)}
+            >
+              {regions &&
+                regions.map((data) => (
+                  <Tab
+                    className="mt-2"
+                    key={data.id}
+                    eventKey={data.id}
+                    title={data.name}
+                  >
+                    <div className="mt-3">
+                      {/* <PlaylistDragAndDrop
+                        id="playlist_drag_and_drop"
+                        handleChange={handleChange}
+                        name={data.id}
+                        data={selectedData.filter(
+                          (playlistData) => playlistData.region === data.id
+                        )}
+                      /> */}
+                    </div>
+                  </Tab>
+                ))}
+            </Tabs>
+          </div>
+        </>
+      )}
     </>
   );
 }
