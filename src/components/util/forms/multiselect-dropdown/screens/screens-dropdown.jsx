@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Alert from "react-bootstrap/Alert";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
@@ -25,7 +24,7 @@ function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
   const [selectedOptions, setSelectedOptions] = useState([
     { title: t("screens-dropdown.no-screens-configured"), id: 1 },
   ]);
-  const { data, error, isLoading } = useGetV1ScreensQuery({ page: 1 });
+  const { data, isLoading } = useGetV1ScreensQuery({ page: 1 });
   /**
    * Load content from fixture.
    */

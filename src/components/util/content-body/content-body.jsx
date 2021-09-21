@@ -13,7 +13,7 @@ function ContentBody({ children }) {
 }
 
 ContentBody.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default ContentBody;
