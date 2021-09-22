@@ -63,15 +63,15 @@ function App() {
                   <Route path="/playlists/edit/:id" component={PlaylistEdit} />
                   <Route path="/playlists/list" component={PlaylistList} />
                   <Route path="/tags" component={TagList} />
-                  <Route path="/screens/create" component={ScreenCreate} />
-                  <Route path="/screens" component={ScreenList} />
+                  <Route path="/screen/create" component={ScreenCreate} />
+                  <Route path="/screen/list" component={ScreenList} />
                   <Route path="/categories" component={CategoryList} />
                   <Route path="/locations" component={LocationsList} />
                   <Route path="/groups" component={GroupsList} />
                   <Route path="/tag/:id" component={EditTag} />
                   <Route path="/category/:id" component={EditCategories} />
                   <Route path="/group/:id" component={EditGroup} />
-                  <Route path="/screen/:id" component={ScreenEdit} />
+                  <Route path="/screen/edit/:id" component={ScreenEdit} />
                   <Route path="/location/:id" component={EditLocation} />
                   <Route path="/slides" component={SlidesList} />
                   <Route path="/media-list" component={MediaList} />

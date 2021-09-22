@@ -90,7 +90,7 @@ function NavItems() {
         >
           <FontAwesomeIcon className="me-2" icon={faDesktop} />
           {t("nav-items.screens-screens")}
-          <Link className="nav-add-new" to="/screens/create">
+          <Link className="nav-add-new" to="/screen/create">
             <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
           </Link>
         </NavLink>

@@ -206,7 +206,7 @@ function ScreenList() {
       <ContentHeader
         title={t("screens-list.header")}
         newBtnTitle={t("screens-list.create-new-screen")}
-        newBtnLink="/screens/create"
+        newBtnLink="/screen/create"
       />
       <Col md="auto">
         {view === "list" && (
