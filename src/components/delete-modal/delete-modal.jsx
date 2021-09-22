@@ -28,7 +28,7 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
   const { t } = useTranslation("common");
 
   return (
-    <Modal show={show} size="m" id="delete-modal">
+    <Modal show={show} size="m" id="delete-modal" onHide={onClose}>
       <ModalDialog
         title={t("delete-modal.title")}
         onClose={onClose}
@@ -36,8 +36,8 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
         btnVariant="danger"
       >
         <ul>
-          {selectedRows.map(({ name }) => (
-            <li>{name}</li>
+          {selectedRows.map(({ title }) => (
+            <li>{title}</li>
           ))}
         </ul>
       </ModalDialog>

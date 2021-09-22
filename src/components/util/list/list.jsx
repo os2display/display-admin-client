@@ -213,8 +213,7 @@ function List({
    * @param {string} mergeName - the new name for the data.
    */
   function handleMerge(mergeName) {
-    // @TODO: merge elements and remove console.log
-    console.log(mergeName); // eslint-disable-line
+    // @TODO merge elements and remove console.log
     setViewMergeModal(false);
   }
 

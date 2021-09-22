@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Spinner, Toast } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -9,9 +9,13 @@ import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
+import "./slides-list.scss";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import { useGetV1SlidesQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1SlidesQuery,
+  useDeleteV1SlidesByIdMutation,
+} from "../../redux/api/api.generated";
 /**
  * The category list component.
  *
@@ -22,8 +26,39 @@ function SlidesList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
+  const displayDeleteSuccessMilliseconds = 5000;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [displayDeleteSuccess, setDisplayDeleteSuccess] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+
+  const { GetV1Slides } = useGetV1SlidesQuery({
+    page: 1,
+  });
+  const [
+    DeleteV1Slides,
+    { isLoading: isUpdating, isSuccess: isDeleteSuccess },
+  ] = useDeleteV1SlidesByIdMutation();
+  /**
+   * Display a banner if save is successful.
+   */
+  useEffect(() => {
+    // @TODO: Handle multiple saves.
+
+    let timer = null;
+
+    if (isDeleteSuccess) {
+      setDisplayDeleteSuccess(true);
+      timer = setTimeout(() => {
+        setDisplayDeleteSuccess(false);
+      }, displayDeleteSuccessMilliseconds);
+    }
+
+    return function cleanup() {
+      if (timer !== null) {
+        clearInterval(timer);
+      }
+    };
+  }, [isDeleteSuccess]);
 
   /**
    * Sets the selected row in state.
@@ -45,8 +80,8 @@ function SlidesList() {
    * @param {number} props.id
    * The id of the tag
    */
-  function openDeleteModal({ id, name }) {
-    setSelectedRows([{ id, name }]);
+  function openDeleteModal({ id, title }) {
+    setSelectedRows([{ id, title }]);
     setShowDeleteModal(true);
   }
 
@@ -158,8 +193,11 @@ function SlidesList() {
    * The id of the tag
    */
   // eslint-disable-next-line
-  function handleDelete({ id, name }) {
-    // @TODO: delete element
+  function handleDelete() {
+    // @TODO delete element
+    const [first] = selectedRows;
+    // todo fetch data
+    DeleteV1Slides({ id: first.id }).then(({ data }) => {});
     setSelectedRows([]);
     setShowDeleteModal(false);
   }
@@ -187,10 +225,16 @@ function SlidesList() {
     setSelectedRows([]);
   }
 
-  const { data, error, isLoading } = useGetV1SlidesQuery({ page: 1 });
-  console.log(data);
+  const { data, error, isLoading } = useGetV1SlidesQuery({
+    page: 1,
+  });
   return (
     <>
+      <div className="toast-wrapper">
+        <Toast animation={false} bg="success" show={displayDeleteSuccess}>
+          <Toast.Body>{t("slides-list.deleted")}</Toast.Body>
+        </Toast>
+      </div>
       <ContentHeader
         title={t("slides-list.header")}
         newBtnTitle={t("slides-list.create-new-slide")}
@@ -208,6 +252,7 @@ function SlidesList() {
         {isLoading && <Spinner animation={"grow"} />}
         {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
+
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}
