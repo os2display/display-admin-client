@@ -11,7 +11,7 @@ import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dro
 import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
 import RadioButtons from "../util/forms/radio-buttons";
 import GridGenerationAndSelect from "./grid-generation-and-select";
-import Alert from "react-bootstrap/Alert";
+import Toast from "../util/toast/toast";
 import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,8 +35,6 @@ function ScreenForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [displaySaveSuccess, setDisplaySaveSuccess] = useState(false);
-  const displaySaveSuccessMilliseconds = 5000;
   const [grid, setGrid] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const { data: layouts, isLoading: loadingLayouts } = useGetV1LayoutsQuery({
@@ -71,30 +69,8 @@ function ScreenForm({
     }
   }, [screen.screenLayout, layoutOptions]);
 
-  /**
-   * Display a banner if save is successful.
-   */
-  useEffect(() => {
-    // @TODO: Handle multiple saves.
-
-    let timer = null;
-
-    if (isSaveSuccess) {
-      setDisplaySaveSuccess(true);
-      timer = setTimeout(() => {
-        setDisplaySaveSuccess(false);
-      }, displaySaveSuccessMilliseconds);
-    }
-
-    return function cleanup() {
-      if (timer !== null) {
-        clearInterval(timer);
-      }
-    };
-  }, [isSaveSuccess]);
-
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <h1>{headerText}</h1>
       {isLoading && (
         <>
@@ -254,15 +230,16 @@ function ScreenForm({
         >
           {t("edit-screen.cancel-button")}
         </Button>
-        <Button variant="primary" type="submit" id="save_screen" size="lg">
+        <Button
+          variant="primary"
+          type="button"
+          id="save_screen"
+          size="lg"
+          onClick={handleSubmit}
+        >
           {t("edit-screen.save-button")}
         </Button>
-
-        {displaySaveSuccess && (
-          <Alert className="mt-2" variant="success">
-            {t("edit-screen.saved")}
-          </Alert>
-        )}
+        <Toast show={isSaveSuccess} text={t("edit-screen.saved")} />
       </ContentFooter>
     </Form>
   );

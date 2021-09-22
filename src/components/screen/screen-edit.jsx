@@ -34,7 +34,6 @@ function ScreenEdit() {
    */
   useEffect(() => {
     if (data) {
-      console.log(data);
       setFormStateObject(data);
     }
   }, [data]);

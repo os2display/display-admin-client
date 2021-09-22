@@ -167,12 +167,7 @@ function PlaylistForm({
                 )}
               </>
             </Button>
-
-            {displaySaveSuccess && (
-              <Alert className="mt-2" variant="success">
-                {t("edit-playlist.saved")}
-              </Alert>
-            )}
+            <Toast show={displaySaveSuccess} text={t("edit-playlist.saved")} />
           </ContentFooter>
         </>
       )}
