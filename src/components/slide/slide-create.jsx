@@ -40,7 +40,7 @@ function SlideCreate() {
   ] = usePostV1SlidesMutation();
 
   /**
-   * Set submitted.
+   * Redirect to slide edit.
    */
   useEffect(() => {
     if (isSaveSuccess) {
