@@ -16,7 +16,7 @@ function ScreenCreate() {
   const headerText = t("edit-screen.create-new-screen");
   let history = useHistory();
   const creationTime = dayjs().toISOString();
-  const newUlid = ulid();
+  const [newUlid] = useState(ulid());
   const [formStateObject, setFormStateObject] = useState({
     id: newUlid,
     "@context": "/contexts/Screen",
