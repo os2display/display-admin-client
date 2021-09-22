@@ -31,6 +31,7 @@ import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
 import SlideEdit from "./components/slide/slide-edit";
+import SlideCreate from "./components/slide/slide-create";
 import "./app.scss";
 
 /**
@@ -75,7 +76,7 @@ function App() {
                   <Route path="/group/:id" component={EditGroup} />
                   <Route path="/location/:id" component={EditLocation} />
                   <Route path="/slide/list" component={SlidesList} />
-                  <Route path="/slide/create" component={PlaylistCreate} />
+                  <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
                   <Route path="/media-list" component={MediaList} />
                   <Route path="/slide/:id" component={EditSlide} />
