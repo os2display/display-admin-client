@@ -79,7 +79,6 @@ function App() {
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
                   <Route path="/media-list" component={MediaList} />
-                  <Route path="/slide/:id" component={EditSlide} />
                   <Route path="/media/:id" component={EditMedia} />
                   <Route path="/themes/" component={ThemesList} />
                   <Route path="/theme/:id" component={EditTheme} />
