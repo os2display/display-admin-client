@@ -17,12 +17,11 @@ function ScreenCreate() {
 
   const creationTime = dayjs().toISOString();
   const newUlid = ulid();
-  const [submitted, setSubmitted] = useState(false);
   const [formStateObject, setFormStateObject] = useState({
     id: newUlid,
     "@context": "/contexts/Screen",
     "@id": "/v1/screens/" + newUlid,
-    title: "New screen",
+    title: "",
     description: "",
     modified: creationTime,
     created: creationTime,
@@ -57,24 +56,20 @@ function ScreenCreate() {
    * @param {Event} event The submit event.
    */
   function handleSubmit(event) {
-    setSubmitted(true);
     PostV1Screen({ body: formStateObject });
   }
 
   return (
-    <>
-      {submitted && <Redirect to="/screens" />}
-      <ScreenForm
-        screen={formStateObject}
-        headerText={headerText}
-        handleInput={handleInput}
-        handleSubmit={handleSubmit}
-        isLoading={false}
-        isSaveSuccess={isSaveSuccess}
-        isSaving={isSaving}
-        errors={[saveError]}
-      />
-    </>
+    <ScreenForm
+      screen={formStateObject}
+      headerText={headerText}
+      handleInput={handleInput}
+      handleSubmit={handleSubmit}
+      isLoading={false}
+      isSaveSuccess={isSaveSuccess}
+      isSaving={isSaving}
+      errors={[saveError]}
+    />
   );
 }
 

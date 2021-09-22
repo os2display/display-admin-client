@@ -39,30 +39,6 @@ function PlaylistForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [displaySaveSuccess, setDisplaySaveSuccess] = useState(false);
-  const displaySaveSuccessMilliseconds = 5000;
-
-  /**
-   * Display a banner if save is successful.
-   */
-  useEffect(() => {
-    // @TODO: Handle multiple saves.
-
-    let timer = null;
-
-    if (isSaveSuccess) {
-      setDisplaySaveSuccess(true);
-      timer = setTimeout(() => {
-        setDisplaySaveSuccess(false);
-      }, displaySaveSuccessMilliseconds);
-    }
-
-    return function cleanup() {
-      if (timer !== null) {
-        clearInterval(timer);
-      }
-    };
-  }, [isSaveSuccess]);
 
   return (
     <Form>
@@ -167,7 +143,7 @@ function PlaylistForm({
                 )}
               </>
             </Button>
-            <Toast show={displaySaveSuccess} text={t("edit-playlist.saved")} />
+            <Toast show={isSaveSuccess} text={t("edit-playlist.saved")} />
           </ContentFooter>
         </>
       )}
