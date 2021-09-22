@@ -9,7 +9,6 @@ import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
-import "./slides-list.scss";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import {
@@ -161,7 +160,7 @@ function SlidesList() {
       content: (data) => (
         <LinkForList
           data={data}
-          param="slide"
+          param="slide/edit"
           label={t("slides-list.edit-button")}
         />
       ),
@@ -238,7 +237,7 @@ function SlidesList() {
       <ContentHeader
         title={t("slides-list.header")}
         newBtnTitle={t("slides-list.create-new-slide")}
-        newBtnLink="/slides/new"
+        newBtnLink="/slide/create"
       />
       <ContentBody>
         {!isLoading && data && data["hydra:member"] && (

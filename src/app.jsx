@@ -30,6 +30,7 @@ import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
+import SlideEdit from "./components/slide/slide-edit";
 import "./app.scss";
 
 /**
@@ -73,7 +74,9 @@ function App() {
                   <Route path="/category/:id" component={EditCategories} />
                   <Route path="/group/:id" component={EditGroup} />
                   <Route path="/location/:id" component={EditLocation} />
-                  <Route path="/slides" component={SlidesList} />
+                  <Route path="/slide/list" component={SlidesList} />
+                  <Route path="/slide/create" component={PlaylistCreate} />
+                  <Route path="/slide/edit/:id" component={SlideEdit} />
                   <Route path="/media-list" component={MediaList} />
                   <Route path="/slide/:id" component={EditSlide} />
                   <Route path="/media/:id" component={EditMedia} />
@@ -81,7 +84,7 @@ function App() {
                   <Route path="/theme/:id" component={EditTheme} />
                   <Route path="/users/" component={UserList} />
                   <Route path="/user/:id" component={EditUser} />
-                  <Redirect from="/" to="/slides" exact />
+                  <Redirect from="/" to="/slide/list" exact />
                 </Switch>
               </main>
             </Col>

@@ -26,7 +26,7 @@ function SelectScreenTable({ handleChange, name, selectedData, errors }) {
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
-
+  console.log(selectedData);
   /**
    * @param {Array} groupsArray
    * The array of groups.

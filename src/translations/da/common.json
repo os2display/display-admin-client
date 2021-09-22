@@ -194,6 +194,10 @@
     "cancel-button": "Annuller"
   },
   "edit-slide": {
+    "loading": "Henter slide...",
+    "loading-templates": "Henter skabeloner...",
+    "saving": "Gemmer...",
+    "saved": "Slide er gemt",
     "create-new-slide": "Opret nyt slide",
     "edit-slide": "Rediger slide",
     "save-button": "Gem slide",
