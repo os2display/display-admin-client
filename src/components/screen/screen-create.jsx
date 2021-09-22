@@ -1,20 +1,20 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { ulid } from "ulid";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router-dom";
 import * as dayjs from "dayjs";
 import { usePostV1ScreensMutation } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
 import { useTranslation } from "react-i18next";
 
 /**
- * The screen edit component.
+ * The screen create component.
  *
- * @returns {object} The screen edit page.
+ * @returns {object} The screen create page.
  */
 function ScreenCreate() {
   const { t } = useTranslation("common");
   const headerText = t("edit-screen.create-new-screen");
-
+  let history = useHistory();
   const creationTime = dayjs().toISOString();
   const newUlid = ulid();
   const [formStateObject, setFormStateObject] = useState({
@@ -39,6 +39,17 @@ function ScreenCreate() {
   ] = usePostV1ScreensMutation();
 
   /**
+   * Redirect to screen edit.
+   */
+  useEffect(() => {
+    debugger;
+    saveError;
+    if (isSaveSuccess) {
+      history.push(`/screen/edit/${newUlid}`);
+    }
+  }, [isSaveSuccess]);
+
+  /**
    * Set state on change in input field
    *
    * @param {object} props The props.
@@ -52,10 +63,8 @@ function ScreenCreate() {
 
   /**
    * Handles submit.
-   *
-   * @param {Event} event The submit event.
    */
-  function handleSubmit(event) {
+  function handleSubmit() {
     PostV1Screen({ body: formStateObject });
   }
 
