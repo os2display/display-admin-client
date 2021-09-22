@@ -42,8 +42,6 @@ function ScreenCreate() {
    * Redirect to screen edit.
    */
   useEffect(() => {
-    debugger;
-    saveError;
     if (isSaveSuccess) {
       history.push(`/screen/edit/${newUlid}`);
     }
