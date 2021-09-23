@@ -2,25 +2,35 @@ import { React, useEffect, useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 import ContentBody from "../util/content-body/content-body";
 import Select from "../util/forms/select";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
-import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
-import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
+// import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
+// import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
 import RadioButtons from "../util/forms/radio-buttons";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
 import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
-import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./screen-form.scss";
 
 /**
  * The screen form component.
  *
+ * @param {object} props The props.
+ * @param {object} props.screen The screen object to modify in the form.
+ * @param {Function} props.handleInput Handles form input.
+ * @param {Function} props.handleSubmit Handles form submit.
+ * @param {boolean} props.isSaving Is the form saving?
+ * @param {string} props.headerText Headline text.
+ * @param {boolean|null} props.isSaveSuccess Is the save a success?
+ * @param {boolean|null} props.isLoading The data is loading.
+ * @param {Array} props.errors Array of errors.
  * @returns {object} The screen form.
  */
 function ScreenForm({
@@ -37,7 +47,7 @@ function ScreenForm({
   const history = useHistory();
   const [grid, setGrid] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
-  const { data: layouts, isLoading: loadingLayouts } = useGetV1LayoutsQuery({
+  const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
   });
 
@@ -72,7 +82,7 @@ function ScreenForm({
   return (
     <Form>
       <h1>{headerText}</h1>
-      {isLoading && (
+      {(isLoading || isSaving) && (
         <>
           <Spinner
             as="span"
@@ -110,25 +120,26 @@ function ScreenForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("edit-screen.screen-groups")}</h2>
-            <GroupsDropdown
+            {/* todo make work when relevant data from api */}
+            {/* <GroupsDropdown
               errors={errors}
               name="screenGroups"
               isCreatable
               handleGroupsSelection={handleInput}
               selected={screen.screenGroups}
-            />
+            /> */}
           </ContentBody>
           <ContentBody>
             {/* todo connect location to api data */}
             <h2 className="h4">{t("edit-screen.screen-location")}</h2>
-            <LocationDropdown
+            {/* <LocationDropdown
               errors={errors}
               isCreatable
               name="screenLocations"
               handleLocationSelection={handleInput}
               selected={screen.screenLocations}
               formGroupClasses="mb-3"
-            />
+            /> */}
             <FormInput
               name="descriptionOfLocation"
               type="text"
@@ -240,9 +251,21 @@ function ScreenForm({
           {t("edit-screen.save-button")}
         </Button>
         <Toast show={isSaveSuccess} text={t("edit-screen.saved")} />
+        <Toast show={errors} text={t("edit-screen.error")} />
       </ContentFooter>
     </Form>
   );
 }
+
+ScreenForm.propTypes = {
+  screen: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleInput: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  headerText: PropTypes.string.isRequired,
+  isSaveSuccess: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
 export default ScreenForm;

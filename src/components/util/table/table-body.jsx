@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import get from "lodash.get";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
-import Calendar from "../../screen-list/calendar";
+// import Calendar from "../../screen-list/calendar";
 
 /**
  * @param {object} props
@@ -68,7 +68,7 @@ function TableBody({ columns, selectedRows, data, withChart }) {
           {withChart && (
             <tr className={isRowSelected(item)}>
               <td colSpan="100%" key={item.id}>
-                // TODO calendar of item playlists
+                {/* TODO calendar of item playlists */}
                 {/* <Calendar playlists={item.playlists} id={item.id} /> */}
               </td>
             </tr>

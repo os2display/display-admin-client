@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Tabs, Tab } from "react-bootstrap";
 import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
-import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
+// import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import "./grid.scss";
 /**
  * The grid generator component.
@@ -12,8 +12,8 @@ import "./grid.scss";
  * Props.
  * @param {object} props.grid
  * The grid to generate.
- * @param {Function} props.handleInput
- * A callback on select in multiselect
+//  * @param {Function} props.handleInput
+//  * A callback on select in multiselect
  * @param {object} props.selectedData
  * The selected data for the multidropdown.
  * @param {object} props.regions
@@ -27,7 +27,7 @@ function GridGenerationAndSelect({
   grid,
   layout,
   regions,
-  handleInput,
+  // handleInput,
   selectedData,
 }) {
   const { t } = useTranslation("common");
@@ -40,21 +40,21 @@ function GridGenerationAndSelect({
     gridTemplateAreas: createGrid(configColumns, configRows),
   };
 
-  /**
-   * @param {object} props
-   * the props.
-   * @param {object} props.target
-   * event target
-   */
-  function handleChange({ target }) {
-    const localTarget = target.value.map((value) => {
-      return {
-        region: target.id,
-        ...value,
-      };
-    });
-    handleInput({ target: { value: localTarget, id: "playlists" } });
-  }
+  // /**
+  //  * @param {object} props
+  //  * the props.
+  //  * @param {object} props.target
+  //  * event target
+  //  */
+  // function handleChange({ target }) {
+  //   const localTarget = target.value.map((value) => {
+  //     return {
+  //       region: target.id,
+  //       ...value,
+  //     };
+  //   });
+  //   handleInput({ target: { value: localTarget, id: "playlists" } });
+  // }
   return (
     <>
       {selectedData && (
@@ -120,7 +120,7 @@ GridGenerationAndSelect.propTypes = {
     PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
   ).isRequired,
   layout: PropTypes.string.isRequired,
-  handleInput: PropTypes.func.isRequired,
+  // handleInput: PropTypes.func.isRequired,
   regions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

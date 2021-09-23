@@ -9,12 +9,14 @@ import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
-import ListButton from "../util/list/list-button";
+// import ListButton from "../util/list/list-button";
+import Toast from "../util/toast/toast";
 import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import { useGetV1ScreensQuery } from "../../redux/api/api.generated";
 import "./screen-list.scss";
+import Dimensions from "./dimension";
 
 /**
  * The screen list component.
@@ -33,14 +35,14 @@ function ScreenList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
 
-  /**
-   * @param {Array} groupsArray
-   * The array of groups.
-   */
-  function openInfoModal(groupsArray) {
-    setInGroups(groupsArray);
-    setShowInfoModal(true);
-  }
+  // /**
+  //  * @param {Array} groupsArray
+  //  * The array of groups.
+  //  */
+  // function openInfoModal(groupsArray) {
+  //   setInGroups(groupsArray);
+  //   setShowInfoModal(true);
+  // }
 
   /**
    * Closes the info modal.
@@ -118,7 +120,7 @@ function ScreenList() {
       //     data.onFollowingGroups.length,
       //     data.onFollowingGroups.length === 0
       //   ),
-      content: (data) => <div>@TODO</div>,
+      content: () => <div>@TODO</div>,
       key: "groups",
       label: t("screens-list.columns.on-groups"),
     },
@@ -129,11 +131,7 @@ function ScreenList() {
     },
     {
       sort: true,
-      content: (data) => (
-        <div>
-          {data.dimensions.height}x{data.dimensions.width}
-        </div>
-      ),
+      content: ({ dimensions }) => Dimensions(dimensions),
       label: t("screens-list.columns.dimensions"),
     },
     {
@@ -148,7 +146,7 @@ function ScreenList() {
         <LinkForList
           data={data}
           label={t("screens-list.edit-button")}
-          param="screen"
+          param="screen/edit"
         />
       ),
     },
@@ -199,10 +197,18 @@ function ScreenList() {
     setSelectedRows([]);
   }
 
-  const { data, error, isLoading } = useGetV1ScreensQuery({ page: 1 });
+  const {
+    data,
+    error: screensGetError,
+    isLoading,
+  } = useGetV1ScreensQuery({ page: 1 });
 
   return (
     <>
+      <Toast
+        show={screensGetError}
+        text={t("screens-list.screens-get-error")}
+      />
       <ContentHeader
         title={t("screens-list.header")}
         newBtnTitle={t("screens-list.create-new-screen")}

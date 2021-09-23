@@ -51,7 +51,7 @@ function PlaylistEdit() {
   }
 
   /**
-   * Handles validations, and goes back to list.
+   * Handles submit.
    */
   function handleSubmit() {
     PutV1Playlists({ id, body: formStateObject });

@@ -1,14 +1,14 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import { Button, Form } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
-import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
+import Toast from "../util/toast/toast";
 // import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 // import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 // import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";

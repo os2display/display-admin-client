@@ -69,7 +69,7 @@ function TopBar() {
               <Link
                 id="nav-items_add_screen"
                 className="dropdown-item"
-                to="/screens"
+                to="/screen/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faDesktop} />
                 {t("topbar.add_screen")}

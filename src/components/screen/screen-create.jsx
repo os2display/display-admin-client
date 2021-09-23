@@ -2,9 +2,9 @@ import { React, useState, useEffect } from "react";
 import { ulid } from "ulid";
 import { useHistory } from "react-router-dom";
 import * as dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 import { usePostV1ScreensMutation } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
-import { useTranslation } from "react-i18next";
 
 /**
  * The screen create component.
@@ -14,13 +14,13 @@ import { useTranslation } from "react-i18next";
 function ScreenCreate() {
   const { t } = useTranslation("common");
   const headerText = t("edit-screen.create-new-screen");
-  let history = useHistory();
+  const history = useHistory();
   const creationTime = dayjs().toISOString();
   const [newUlid] = useState(ulid());
   const [formStateObject, setFormStateObject] = useState({
     id: newUlid,
     "@context": "/contexts/Screen",
-    "@id": "/v1/screens/" + newUlid,
+    "@id": `/v1/screens/${newUlid}`,
     title: "",
     description: "",
     modified: creationTime,

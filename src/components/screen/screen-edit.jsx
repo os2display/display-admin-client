@@ -26,7 +26,7 @@ function ScreenEdit() {
   const {
     data,
     error: loadError,
-    isLoading,
+    isLoading: isLoadingScreen,
   } = useGetV1ScreensByIdQuery({ id });
 
   /**
@@ -51,14 +51,11 @@ function ScreenEdit() {
   }
 
   /**
-   * Handles validations, and goes back to list.
-   *
-   * @param {Event} event The submit event.
-   * @returns {boolean} Indicating whether to submit form.
+   * Handles submit.
    */
-  function handleSubmit(event) {
-    let data = { id: id, body: formStateObject };
-    PutV1Screens(data);
+  function handleSubmit() {
+    const saveData = { id, body: formStateObject };
+    PutV1Screens(saveData);
   }
 
   return (
@@ -67,10 +64,10 @@ function ScreenEdit() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
+      isLoading={isLoadingScreen}
       isSaveSuccess={isSaveSuccess}
       isSaving={isSaving}
-      errors={[saveError]}
+      errors={[saveError, loadError]}
     />
   );
 }

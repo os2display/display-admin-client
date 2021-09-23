@@ -91,6 +91,7 @@
       "screen-in-groups": "Skærmen er i følgende grupper"
     },
     "header": "Skærme",
+    "screens-get-error": "Der skete en fejl da skærmene skulle hentes",
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
     "change-view-calendar": "Kalender",
@@ -410,6 +411,7 @@
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
     "edit-screen": "Rediger følgende skærm",
+    "error": "Der skete en fejl",
     "loading": "Henter skærm...",
     "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",

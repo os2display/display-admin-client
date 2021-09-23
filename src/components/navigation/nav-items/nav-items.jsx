@@ -86,7 +86,7 @@ function NavItems() {
         <NavLink
           id="nav-items_screens_screens"
           className="nav-link"
-          to="/screens"
+          to="/screen/list"
         >
           <FontAwesomeIcon className="me-2" icon={faDesktop} />
           {t("nav-items.screens-screens")}
