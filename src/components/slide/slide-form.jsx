@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import Toast from "../util/toast";
+import Toast from "../util/toast/toast";
 import { useTranslation } from "react-i18next";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
