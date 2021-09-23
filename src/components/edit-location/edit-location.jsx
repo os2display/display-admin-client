@@ -64,7 +64,7 @@ function EditLocation() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @todo make it save.
+   * @TODO make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}

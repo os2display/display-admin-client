@@ -122,7 +122,7 @@ function SlidesList() {
       key: "edit",
       content: () => (
         <>
-          {/* @todo make quick edit modal */}
+          {/* @TODO make quick edit modal */}
           <Button variant="primary">Quick edit</Button>
         </>
       ),

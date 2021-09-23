@@ -120,7 +120,7 @@ function ScreenForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("edit-screen.screen-groups")}</h2>
-            {/* todo make work when relevant data from api */}
+            {/* @TODO make work when relevant data from api */}
             {/* <GroupsDropdown
               errors={errors}
               name="screenGroups"
@@ -130,7 +130,7 @@ function ScreenForm({
             /> */}
           </ContentBody>
           <ContentBody>
-            {/* todo connect location to api data */}
+            {/* @TODO connect location to api data */}
             <h2 className="h4">{t("edit-screen.screen-location")}</h2>
             {/* <LocationDropdown
               errors={errors}

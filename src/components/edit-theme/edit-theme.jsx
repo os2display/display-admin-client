@@ -37,7 +37,7 @@ function EditTheme() {
   const newTheme = id === "new";
   const [errors, setErrors] = useState([]);
   const requiredFields = ["themeName", "mediaDescription", "themeName"];
-  // Todo change this when real data is here.
+  // @TODO change this when real data is here.
   const fontOptions = [
     { name: "Arial", id: 2 },
     { name: "Comic sans", id: 1 },
@@ -81,7 +81,7 @@ function EditTheme() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @todo make it save.
+   * @TODO make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}
@@ -183,7 +183,7 @@ function EditTheme() {
             openColorPicker={openColorPicker}
             label={t("edit-theme.pick-font-color")}
           />
-          {/* TODO: Color-picker shows below theme colors? How do we fix that? */}
+          {/* @TODO: Color-picker shows below theme colors? How do we fix that? */}
         </ContentBody>
         {submitted && <Redirect to="/themes" />}
         <ContentFooter>

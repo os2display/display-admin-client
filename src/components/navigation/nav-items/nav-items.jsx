@@ -23,7 +23,7 @@ function NavItems() {
   const [t] = useTranslation("common");
   return (
     <>
-      {/* TODO: Dashboard is hidden for now */}
+      {/* @TODO: Dashboard is hidden for now */}
       {/* <Nav.Item>
         <Link id="navbar_dashboard" className="nav-link" to="/dashboard">
           <FontAwesomeIcon className="me-2" icon={faTachometerAlt} />
@@ -32,7 +32,7 @@ function NavItems() {
       </Nav.Item>
       <hr className="d-none d-md-block" /> */}
 
-      {/* TODO: Show active item based on Route */}
+      {/* @TODO: Show active item based on Route */}
       <Nav.Item>
         <NavLink
           id="nav-items_content_slides"

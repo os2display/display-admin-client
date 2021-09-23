@@ -25,8 +25,8 @@ function PlaylistCreate() {
     description: "",
     modified: creationTime,
     created: creationTime,
-    modifiedBy: "TODO",
-    createdBy: "TODO",
+    modifiedBy: "@TODO",
+    createdBy: "@TODO",
     slides: `/v1/slidesPlaylist?_expand=slide&playlistId=${newUlid}`,
     onScreens: `/v1/playlists/${newUlid}/screens`,
     published: {

@@ -24,7 +24,7 @@ describe("Topbar loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Slides/);
-    // TODO: Add a textcase for Faq
-    // TODO: Add a textcase for Signout
+    // @TODO: Add a textcase for Faq
+    // @TODO: Add a textcase for Signout
   });
 });
