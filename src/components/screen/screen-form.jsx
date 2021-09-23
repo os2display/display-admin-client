@@ -22,15 +22,15 @@ import "./screen-form.scss";
 /**
  * The screen form component.
  *
- * @param {object} props The props.
- * @param {object} props.screen The screen object to modify in the form.
- * @param {Function} props.handleInput Handles form input.
- * @param {Function} props.handleSubmit Handles form submit.
- * @param {boolean} props.isSaving Is the form saving?
- * @param {string} props.headerText Headline text.
- * @param {boolean|null} props.isSaveSuccess Is the save a success?
- * @param {boolean|null} props.isLoading The data is loading.
- * @param {Array} props.errors Array of errors.
+ * @param {object} props - The props.
+ * @param {object} props - screen The screen object to modify in the form.
+ * @param {Function} props - handleInput Handles form input.
+ * @param {Function} props - handleSubmit Handles form submit.
+ * @param {boolean} props - isSaving Is the form saving?
+ * @param {string} props - headerText Headline text.
+ * @param {boolean|null} props - isSaveSuccess Is the save a success?
+ * @param {boolean|null} props - isLoading The data is loading.
+ * @param {Array} props - errors Array of errors.
  * @returns {object} The screen form.
  */
 function ScreenForm({

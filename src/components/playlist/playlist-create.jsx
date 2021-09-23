@@ -43,8 +43,8 @@ function PlaylistCreate() {
   /**
    * Set state on change in input field
    *
-   * @param {object} props The props.
-   * @param {object} props.target Event target.
+   * @param {object} props - The props.
+   * @param {object} props.target - Event target.
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };

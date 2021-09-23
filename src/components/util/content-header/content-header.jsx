@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 
 // @TODO: Missing description.
 /**
- * @param {object} props The props.
+ * @param {object} props - The props.
  * @param {string} props.title The title
  * @param {string} props.newBtnTitle The button title
  * @param {string} props.newBtnLink The button link

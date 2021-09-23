@@ -16,7 +16,7 @@ import Toast from "../util/toast/toast";
 /**
  * The playlist form component.
  *
- * @param {object} props The props.
+ * @param {object} props - The props.
  * @param {object} props.playlist The playlist object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
