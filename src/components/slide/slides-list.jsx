@@ -8,7 +8,7 @@ import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
-import ListButton from "../util/list/list-button";
+// import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import {
@@ -30,19 +30,13 @@ function SlidesList() {
   const [displayDeleteSuccess, setDisplayDeleteSuccess] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const { GetV1Slides } = useGetV1SlidesQuery({
-    page: 1,
-  });
-  const [
-    DeleteV1Slides,
-    { isLoading: isUpdating, isSuccess: isDeleteSuccess },
-  ] = useDeleteV1SlidesByIdMutation();
+  const [DeleteV1Slides, { isSuccess: isDeleteSuccess }] =
+    useDeleteV1SlidesByIdMutation();
   /**
    * Display a banner if save is successful.
    */
   useEffect(() => {
     // @TODO: Handle multiple saves.
-
     let timer = null;
 
     if (isDeleteSuccess) {
@@ -74,8 +68,8 @@ function SlidesList() {
    *
    * @param {object} props
    * The props.
-   * @param {string} props.name
-   * The name of the tag.
+   * @param {string} props.title
+   * The title of the tag.
    * @param {number} props.id
    * The id of the tag
    */
@@ -84,14 +78,14 @@ function SlidesList() {
     setShowDeleteModal(true);
   }
 
-  /**
-   * @param {Array} playlistArray
-   * The array of playlists.
-   */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
-    setShowInfoModal(true);
-  }
+  // /**
+  //  * @param {Array} playlistArray
+  //  * The array of playlists.
+  //  */
+  // function openInfoModal(playlistArray) {
+  //   setOnPlaylists(playlistArray);
+  //   setShowInfoModal(true);
+  // }
 
   // The columns for the table.
   const columns = [
@@ -125,12 +119,12 @@ function SlidesList() {
       //     data.onFollowingPlaylists.length,
       //     data.onFollowingPlaylists.length === 0
       //   ),
-      content: (data) => <div>todo</div>,
+      content: () => <div>todo</div>,
       key: "playlists",
       label: t("slides-list.columns.number-of-playlists"),
     },
     {
-      content: (data) => <div>todo</div>,
+      content: () => <div>todo</div>,
       sort: true,
       label: t("slides-list.columns.tags"),
     },
@@ -183,20 +177,13 @@ function SlidesList() {
 
   /**
    * Deletes screen, and closes modal.
-   *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the tag.
-   * @param {number} props.id
-   * The id of the tag
    */
   // eslint-disable-next-line
   function handleDelete() {
     // @TODO delete element
     const [first] = selectedRows;
     // todo fetch data
-    DeleteV1Slides({ id: first.id }).then(({ data }) => {});
+    DeleteV1Slides({ id: first.id });
     setSelectedRows([]);
     setShowDeleteModal(false);
   }
@@ -248,7 +235,7 @@ function SlidesList() {
             clearSelectedRows={clearSelectedRows}
           />
         )}
-        {isLoading && <Spinner animation={"grow"} />}
+        {isLoading && <Spinner animation="grow" />}
         {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
 

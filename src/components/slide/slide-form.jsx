@@ -1,22 +1,32 @@
 import { React, useEffect, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import Toast from "../util/toast/toast";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
+import Form from "react-bootstrap/Form";
+import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
-import SelectScreenTable from "../util/multi-and-table/select-screen-table";
-import { useHistory } from "react-router-dom";
-import Form from "react-bootstrap/Form";
+// import SelectScreenTable from "../util/multi-and-table/select-screen-table";
+// import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
+// import RenderFormElement from "../util/forms/render-form-element";
 import Select from "../util/forms/select";
 import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
-import RenderFormElement from "../util/forms/render-form-element";
 import FormCheckbox from "../util/forms/form-checkbox";
-import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
 
 /**
  * The slide form component.
  *
+ * @param {object} props - The props.
+ * @param {object} props.slide The slide object to modify in the form.
+ * @param {Function} props.handleInput Handles form input.
+ * @param {Function} props.handleSubmit Handles form submit.
+ * @param {boolean} props.isSaving Is the form saving?
+ * @param {string} props.headerText Headline text.
+ * @param {boolean|null} props.isSaveSuccess Is the save a success?
+ * @param {boolean|null} props.isLoading The data is loading.
+ * @param {Array} props.errors Array of errors.
  * @returns {object} The slide form.
  */
 function SlideForm({
@@ -31,8 +41,6 @@ function SlideForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [displaySaveSuccess, setDisplaySaveSuccess] = useState(false);
-  const displaySaveSuccessMilliseconds = 5000;
   const [templateOptions, setTemplateOptions] = useState([]);
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
@@ -49,7 +57,7 @@ function SlideForm({
     <Form>
       <Toast text={t("edit-slide.saved")} show={isSaveSuccess} />
       <h1>{headerText}</h1>
-      {isLoading && (
+      {(isLoading || isSaving) && (
         <>
           <Spinner
             as="span"
@@ -104,8 +112,8 @@ function SlideForm({
           {slide.slideTemplate && (
             // todo fetch form data
             <ContentBody>
-              <section className="row">
-                {/* Render slide form from jsondata */}
+              {/* Render slide form from jsondata */}
+              {/* <section className="row">
                 {formData.map((data) => (
                   <RenderFormElement
                     key={data.name}
@@ -113,10 +121,9 @@ function SlideForm({
                     errors={errors}
                     onChange={handleInput}
                     slide={slide}
-                    requiredFieldCallback={handleRequiredField}
                   />
                 ))}
-              </section>
+              </section> */}
             </ContentBody>
           )}
           <ContentBody>
@@ -177,5 +184,16 @@ function SlideForm({
     </Form>
   );
 }
+
+SlideForm.propTypes = {
+  slide: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleInput: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  headerText: PropTypes.string.isRequired,
+  isSaveSuccess: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
 export default SlideForm;

@@ -6,7 +6,6 @@ import {
   usePutV1SlidesByIdMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
-import Button from "react-bootstrap/Button";
 
 /**
  * The slide edit component.
@@ -48,14 +47,11 @@ function SlideEdit() {
   }
 
   /**
-   * Handles validations, and goes back to list.
-   *
-   * @param {Event} event The submit event.
-   * @returns {boolean} Indicating whether to submit form.
+   * Handles submit.
    */
   function handleSubmit() {
-    let data = { id: id, body: formStateObject };
-    PutV1Slides(data);
+    const saveData = { id, body: formStateObject };
+    PutV1Slides(saveData);
   }
 
   return (

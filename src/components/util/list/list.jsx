@@ -209,11 +209,9 @@ function List({
 
   /**
    * Should handle merge.
-   *
-   * @param {string} mergeName - the new name for the data.
    */
-  function handleMerge(mergeName) {
-    // @TODO merge elements and remove console.log
+  function handleMerge() {
+    // @TODO merge elements
     setViewMergeModal(false);
   }
 

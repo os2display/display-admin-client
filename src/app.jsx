@@ -17,7 +17,6 @@ import GroupsList from "./components/groups-list/groups-list";
 import EditGroup from "./components/edit-group/edit-group";
 import LocationsList from "./components/locations-list/locations-list";
 import EditLocation from "./components/edit-location/edit-location";
-import EditSlide from "./components/slide/edit-slide";
 import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";

@@ -1,11 +1,10 @@
 import { React, useState, useEffect } from "react";
 import { ulid } from "ulid";
-import { Redirect } from "react-router";
 import { useHistory } from "react-router-dom";
 import * as dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 import { usePostV1SlidesMutation } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
-import { useTranslation } from "react-i18next";
 
 /**
  * The slide edit component.
@@ -14,14 +13,14 @@ import { useTranslation } from "react-i18next";
  */
 function SlideCreate() {
   const { t } = useTranslation("common");
-  let history = useHistory();
+  const history = useHistory();
   const headerText = t("edit-slide.create-new-slide");
   const creationTime = dayjs().toISOString();
   const [newUlid] = useState(ulid());
   const [formStateObject, setFormStateObject] = useState({
     id: newUlid,
     "@context": "/contexts/Slide",
-    "@id": "/v1/slide/" + newUlid,
+    "@id": `/v1/slide/${newUlid}`,
     title: "",
     description: "",
     modified: creationTime,
@@ -62,10 +61,8 @@ function SlideCreate() {
 
   /**
    * Handles submit.
-   *
-   * @param {Event} event The submit event.
    */
-  function handleSubmit(event) {
+  function handleSubmit() {
     PostV1Slide({ body: formStateObject });
   }
 
