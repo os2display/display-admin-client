@@ -30,7 +30,7 @@ function EditUser() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     if (!newUser) {
       fetch(`/fixtures/users/user.json`)
         .then((response) => response.json())
@@ -60,7 +60,7 @@ function EditUser() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @TODO make it save.
+   * @TODO: make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}

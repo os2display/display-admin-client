@@ -33,7 +33,7 @@ function EditLocation() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     if (!newLocation) {
       fetch("/fixtures/locations/location.json")
         .then((response) => response.json())
@@ -64,7 +64,7 @@ function EditLocation() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @TODO make it save.
+   * @TODO: make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}

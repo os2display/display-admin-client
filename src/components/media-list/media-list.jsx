@@ -64,7 +64,7 @@ function MediaList({ fromModal, handleSelected }) {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     fetch("/fixtures/media/media.json")
       .then((response) => response.json())
       .then((jsonData) => {
@@ -174,7 +174,7 @@ function MediaList({ fromModal, handleSelected }) {
    * Deletes selected data, and closes modal.
    */
   function handleDelete() {
-    // @TODO delete elements
+    // @TODO: delete elements
     setShowDeleteModal(false);
     setSelectedMedia([]);
   }

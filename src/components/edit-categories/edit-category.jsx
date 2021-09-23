@@ -30,7 +30,7 @@ function EditCategories() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     if (!newCategory) {
       fetch("/fixtures/categories/category.json")
         .then((response) => response.json())
@@ -60,7 +60,7 @@ function EditCategories() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @TODO make it save.
+   * @TODO: make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}

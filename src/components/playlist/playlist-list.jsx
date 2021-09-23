@@ -111,7 +111,7 @@ function PlaylistList() {
     {
       sort: true,
       path: "onFollowingScreens",
-      content: () => <div>@TODO</div>,
+      content: () => <div>@TODO:</div>,
       key: "screens",
       label: t("playlists-list.columns.on-screens"),
     },
@@ -153,7 +153,7 @@ function PlaylistList() {
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
-    // @TODO delete element
+    // @TODO: delete element
     setSelectedRows([]);
     setShowDeleteModal(false);
   }

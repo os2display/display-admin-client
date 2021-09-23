@@ -138,7 +138,7 @@ function ScreenList() {
       sort: true,
       label: t("screens-list.columns.campaign"),
       content: (data) => CampaignIcon(data),
-      // @TODO implement overridden by campaing
+      // @TODO: implement overridden by campaing
     },
     {
       key: "edit",

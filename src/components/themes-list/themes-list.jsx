@@ -27,7 +27,7 @@ function ThemesList() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     fetch(`/fixtures/themes/themes.json`)
       .then((response) => response.json())
       .then((jsonData) => {
@@ -134,7 +134,7 @@ function ThemesList() {
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
-    // @TODO delete element
+    // @TODO: delete element
     setSelectedRows([]);
     setShowDeleteModal(false);
   }

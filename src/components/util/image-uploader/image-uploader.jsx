@@ -88,7 +88,7 @@ function ImageUploader({
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     setImages(Array.isArray(inputImage) ? inputImage : [inputImage]);
   }, [inputImage]);
 

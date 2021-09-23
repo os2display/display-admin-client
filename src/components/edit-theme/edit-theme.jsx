@@ -37,7 +37,7 @@ function EditTheme() {
   const newTheme = id === "new";
   const [errors, setErrors] = useState([]);
   const requiredFields = ["themeName", "mediaDescription", "themeName"];
-  // @TODO change this when real data is here.
+  // @TODO: change this when real data is here.
   const fontOptions = [
     { name: "Arial", id: 2 },
     { name: "Comic sans", id: 1 },
@@ -46,7 +46,7 @@ function EditTheme() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     if (!newTheme) {
       fetch("/fixtures/themes/theme.json")
         .then((response) => response.json())
@@ -81,7 +81,7 @@ function EditTheme() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @TODO make it save.
+   * @TODO: make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}
