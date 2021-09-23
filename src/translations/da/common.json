@@ -72,6 +72,7 @@
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
+    "slides-get-error": "Der skete en fejl da slides skulle hentes",
     "deleted": "Slidet er blevet slettet",
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
@@ -88,6 +89,7 @@
       "on-groups": "Tilknyttede grupper",
       "live": "Live"
     },
+    "deleted": "SKærmen er blevet slettet",
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     },

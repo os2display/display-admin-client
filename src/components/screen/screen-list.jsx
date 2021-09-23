@@ -82,8 +82,8 @@ function ScreenList() {
    *
    * @param {object} props
    * The props.
-   * @param {string} props.name
-   * The name of the tag.
+   * @param {string} props.title
+   * The title of the tag.
    * @param {number} props.id
    * The id of the tag
    */
@@ -207,6 +207,7 @@ function ScreenList() {
         show={screensGetError}
         text={t("screens-list.screens-get-error")}
       />
+      <Toast show={isDeleteSuccess} text={t("screens-list.deleted")} />
       <ContentHeader
         title={t("screens-list.header")}
         newBtnTitle={t("screens-list.create-new-screen")}

@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { Button, Spinner, Toast } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -25,33 +25,10 @@ function SlidesList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
-  const displayDeleteSuccessMilliseconds = 5000;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [displayDeleteSuccess, setDisplayDeleteSuccess] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [DeleteV1Slides, { isSuccess: isDeleteSuccess }] =
     useDeleteV1SlidesByIdMutation();
-
-  /**
-   * Display a banner if save is successful.
-   */
-  useEffect(() => {
-    // @TODO: Handle multiple saves.
-    let timer = null;
-
-    if (isDeleteSuccess) {
-      setDisplayDeleteSuccess(true);
-      timer = setTimeout(() => {
-        setDisplayDeleteSuccess(false);
-      }, displayDeleteSuccessMilliseconds);
-    }
-
-    return function cleanup() {
-      if (timer !== null) {
-        clearInterval(timer);
-      }
-    };
-  }, [isDeleteSuccess]);
 
   /**
    * Sets the selected row in state.
@@ -208,16 +185,18 @@ function SlidesList() {
     setSelectedRows([]);
   }
 
-  const { data, error, isLoading } = useGetV1SlidesQuery({
+  const {
+    data,
+    error: slidesGetError,
+    isLoading,
+  } = useGetV1SlidesQuery({
     page: 1,
   });
   return (
     <>
-      <div className="toast-wrapper">
-        <Toast animation={false} bg="success" show={displayDeleteSuccess}>
-          <Toast.Body>{t("slides-list.deleted")}</Toast.Body>
-        </Toast>
-      </div>
+      <Toast show={slidesGetError} text={t("slides-list.slides-get-error")} />
+      <Toast show={isDeleteSuccess} text={t("slides-list.deleted")} />
+
       <ContentHeader
         title={t("slides-list.header")}
         newBtnTitle={t("slides-list.create-new-slide")}
@@ -233,7 +212,6 @@ function SlidesList() {
           />
         )}
         {isLoading && <Spinner animation="grow" />}
-        {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
 
       <DeleteModal
