@@ -29,9 +29,9 @@ function SlidesList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [displayDeleteSuccess, setDisplayDeleteSuccess] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-
   const [DeleteV1Slides, { isSuccess: isDeleteSuccess }] =
     useDeleteV1SlidesByIdMutation();
+
   /**
    * Display a banner if save is successful.
    */
@@ -178,11 +178,8 @@ function SlidesList() {
   /**
    * Deletes screen, and closes modal.
    */
-  // eslint-disable-next-line
   function handleDelete() {
-    // @TODO delete element
     const [first] = selectedRows;
-    // todo fetch data
     DeleteV1Slides({ id: first.id });
     setSelectedRows([]);
     setShowDeleteModal(false);
