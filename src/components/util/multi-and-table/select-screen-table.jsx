@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
-import Table from "../table/table";
 import CampaignIcon from "../../screen-list/campaign-icon";
 import LiveIcon from "../../screen-list/live-icon";
 import ListButton from "../list/list-button";
@@ -64,6 +63,7 @@ function SelectScreenTable({ handleChange, name, selectedData, errors }) {
   }
 
   // The columns for the table.
+  /* eslint-disable-next-line no-unused-vars */
   const columns = [
     {
       path: "live",
@@ -117,9 +117,10 @@ function SelectScreenTable({ handleChange, name, selectedData, errors }) {
         handleScreenSelection={handleChange}
         selected={selectedData}
       />
-      {selectedData?.length > 0 && (
+      {/* @TODO: this should work when real data is fetched */}
+      {/* {selectedData.length > 0 && (
         <Table columns={columns} data={selectedData} />
-      )}
+      )} */}
       <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}

@@ -229,6 +229,8 @@
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
     "cancel-button": "Annuller",
+    "saving": "Gemmer...",
+    "saved": "Spillelisten er gemt",
     "playlist-name-label": "Spillelistens navn",
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
@@ -333,11 +335,13 @@
   },
   "screens-dropdown": {
     "label": "Vælg en eller flere skærme",
-    "nothing-selected": "Vælg en af skærmene"
+    "nothing-selected": "Vælg en af skærmene",
+    "no-screens-configured": "Der er ikke nogle skærme konfigureret"
   },
   "slides-dropdown": {
     "label": "Vælg en eller flere slides",
-    "nothing-selected": "Vælg en af følgende slides"
+    "nothing-selected": "Vælg en af følgende slides",
+    "no-slides-configured": "Der er ikke nogle slides konfigureret"
   },
   "categories-dropdown": {
     "label": "Vælg en eller flere kategorier",

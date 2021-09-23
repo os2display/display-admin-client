@@ -4,7 +4,6 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
-import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import InfoModal from "../../info-modal/info-modal";
 import Published from "../../slides-list/published";
 
@@ -63,6 +62,7 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
     handleChange({ target });
   }
 
+  /* eslint-disable-next-line no-unused-vars */
   const columns = [
     {
       path: "name",
@@ -111,14 +111,15 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
         handleSlideSelection={handleChange}
         selected={selectedData}
       />
-      {selectedData.length > 0 && (
+      {/* @TODO: this should work when real data is fetched */}
+      {/* {selectedData.length > 0 && (
         <DragAndDropTable
           columns={columns}
           onDropped={handleChange}
           name={name}
           data={selectedData}
         />
-      )}
+      )} */}
       <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}

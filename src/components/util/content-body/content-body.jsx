@@ -2,12 +2,9 @@ import { React } from "react";
 import PropTypes from "prop-types";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.children
- * The children being passed from parent
- * @returns {object}
- * The Content header.
+ * @param {object} props The props.
+ * @param {Array} props.children The children being passed from parent
+ * @returns {object} The Content header.
  */
 function ContentBody({ children }) {
   return (
@@ -16,7 +13,7 @@ function ContentBody({ children }) {
 }
 
 ContentBody.propTypes = {
-  children: PropTypes.isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default ContentBody;

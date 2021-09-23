@@ -154,13 +154,11 @@ function List({
   }
 
   /**
-   * @param {string|number} a
-   * sort parameter a
-   * @param {string|number} b
-   * sort parameter b
-   * @returns {number}
-   * Sorting number.
+   * @param {string|number} a Sort parameter a
+   * @param {string|number} b Sort parameter b
+   * @returns {number} Sorting number.
    */
+  /* @TODO: Is this needed
   function sortData(a, b) {
     let sortVarA = a[sortBy.path];
     let sortVarB = b[sortBy.path];
@@ -179,6 +177,7 @@ function List({
 
     return 0;
   }
+  */
 
   /**
    * @returns {object}
@@ -190,7 +189,8 @@ function List({
       returnValue = returnValue.filter(filterDataFromSearchInput);
     }
     if (sortBy) {
-      returnValue = returnValue.sort(sortData);
+      // @TODO: Fix issue.
+      // returnValue = returnValue.sort(sortData);
     }
     if (sortBy.order === "desc") {
       returnValue = returnValue.reverse();

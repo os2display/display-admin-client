@@ -54,7 +54,7 @@ function TableBody({ columns, selectedRows, data, withChart }) {
   return (
     <tbody>
       {data.map((item) => (
-        <Fragment key={item.id}>
+        <Fragment key={item.id || item["@id"]}>
           <tr
             style={withChart ? { borderBottomColor: "transparent" } : {}}
             className={isRowSelected(item)}

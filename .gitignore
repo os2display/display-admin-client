@@ -28,3 +28,9 @@ yarn-error.log*
 # Cypress
 cypress/videos/*
 cypress/screenshots/*
+
+temp/
+
+# Json server
+data/node_modules
+

@@ -19,8 +19,9 @@ import EditGroup from "./components/edit-group/edit-group";
 import LocationsList from "./components/locations-list/locations-list";
 import EditLocation from "./components/edit-location/edit-location";
 import EditSlide from "./components/edit-slide/edit-slide";
-import PlaylistsList from "./components/playlists-list/playlists-list";
-import EditPlaylist from "./components/edit-playlist/edit-playlist";
+import PlaylistList from "./components/playlist/playlist-list";
+import PlaylistEdit from "./components/playlist/playlist-edit";
+import PlaylistCreate from "./components/playlist/playlist-create";
 import MediaList from "./components/media-list/media-list";
 import EditMedia from "./components/edit-media/edit-media";
 import ThemesList from "./components/themes-list/themes-list";
@@ -57,6 +58,9 @@ function App() {
               <TopBar />
               <main className="col p-3">
                 <Switch>
+                  <Route path="/playlists/create" component={PlaylistCreate} />
+                  <Route path="/playlists/edit/:id" component={PlaylistEdit} />
+                  <Route path="/playlists/list" component={PlaylistList} />
                   <Route path="/tags" component={TagList} />
                   <Route path="/screens" component={ScreenList} />
                   <Route path="/categories" component={CategoryList} />
@@ -68,9 +72,7 @@ function App() {
                   <Route path="/screen/:id" component={EditScreen} />
                   <Route path="/location/:id" component={EditLocation} />
                   <Route path="/slides" component={SlidesList} />
-                  <Route path="/playlists" component={PlaylistsList} />
                   <Route path="/media-list" component={MediaList} />
-                  <Route path="/playlist/:id" component={EditPlaylist} />
                   <Route path="/slide/:id" component={EditSlide} />
                   <Route path="/media/:id" component={EditMedia} />
                   <Route path="/themes/" component={ThemesList} />
