@@ -20,7 +20,7 @@ body,
 }
 
 // To make multicomponent look like bootstrap for now
-// @todo change when changing the frontend styling
+// @TODO: change when changing the frontend styling
 .invalid {
   .dropdown-container {
     border-color: $red;
@@ -35,4 +35,11 @@ body,
     font-size: 0.875em;
     color: $red;
   }
+}
+
+.toast-wrapper {
+  position: fixed;
+  right: 10px;
+  top: 90%;
+  background-color: white;
 }

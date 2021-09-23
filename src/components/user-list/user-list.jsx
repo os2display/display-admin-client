@@ -25,7 +25,7 @@ function UserList() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     fetch(`/fixtures/users/users.json`)
       .then((response) => response.json())
       .then((jsonData) => {
@@ -115,7 +115,7 @@ function UserList() {
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
-    // @TODO delete element
+    // @TODO: delete element
     setSelectedRows([]);
     setShowDeleteModal(false);
   }

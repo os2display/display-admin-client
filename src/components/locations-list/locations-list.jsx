@@ -30,7 +30,7 @@ function LocationsList() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     fetch(`/fixtures/locations/locations.json`)
       .then((response) => response.json())
       .then((jsonData) => {
@@ -171,7 +171,7 @@ function LocationsList() {
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
-    // @TODO delete element
+    // @TODO: delete element
     setSelectedRows([]);
     setShowDeleteModal(false);
   }

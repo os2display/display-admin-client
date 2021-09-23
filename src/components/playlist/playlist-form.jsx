@@ -1,14 +1,14 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import { Button, Form } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
-import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
+import Toast from "../util/toast/toast";
 // import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 // import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 // import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
@@ -16,7 +16,7 @@ import FormInputArea from "../util/forms/form-input-area";
 /**
  * The playlist form component.
  *
- * @param {object} props The props.
+ * @param {object} props - The props.
  * @param {object} props.playlist The playlist object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
@@ -39,30 +39,6 @@ function PlaylistForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [displaySaveSuccess, setDisplaySaveSuccess] = useState(false);
-  const displaySaveSuccessMilliseconds = 5000;
-
-  /**
-   * Display a banner if save is successful.
-   */
-  useEffect(() => {
-    // @TODO: Handle multiple saves.
-
-    let timer = null;
-
-    if (isSaveSuccess) {
-      setDisplaySaveSuccess(true);
-      timer = setTimeout(() => {
-        setDisplaySaveSuccess(false);
-      }, displaySaveSuccessMilliseconds);
-    }
-
-    return function cleanup() {
-      if (timer !== null) {
-        clearInterval(timer);
-      }
-    };
-  }, [isSaveSuccess]);
 
   return (
     <Form>
@@ -167,12 +143,7 @@ function PlaylistForm({
                 )}
               </>
             </Button>
-
-            {displaySaveSuccess && (
-              <Alert className="mt-2" variant="success">
-                {t("edit-playlist.saved")}
-              </Alert>
-            )}
+            <Toast show={isSaveSuccess} text={t("edit-playlist.saved")} />
           </ContentFooter>
         </>
       )}

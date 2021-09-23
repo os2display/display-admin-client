@@ -1,34 +1,32 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { ulid } from "ulid";
+import { useHistory } from "react-router-dom";
 import * as dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
-import { usePostV1PlaylistsMutation } from "../../redux/api/api.generated";
-import PlaylistForm from "./playlist-form";
+import { usePostV1ScreensMutation } from "../../redux/api/api.generated";
+import ScreenForm from "./screen-form";
 
 /**
- * The playlist edit component.
+ * The screen create component.
  *
- * @returns {object} The playlist edit page.
+ * @returns {object} The screen create page.
  */
-function PlaylistCreate() {
+function ScreenCreate() {
   const { t } = useTranslation("common");
-  const headerText = t("edit-playlist.create-new-playlist");
-
+  const headerText = t("edit-screen.create-new-screen");
+  const history = useHistory();
   const creationTime = dayjs().toISOString();
-  const newUlid = ulid();
-
+  const [newUlid] = useState(ulid());
   const [formStateObject, setFormStateObject] = useState({
     id: newUlid,
-    "@context": "/contexts/Playlist",
-    "@id": `/v1/playlists/${newUlid}`,
-    title: "New playlist",
+    "@context": "/contexts/Screen",
+    "@id": `/v1/screens/${newUlid}`,
+    title: "",
     description: "",
     modified: creationTime,
     created: creationTime,
     modifiedBy: "@TODO",
     createdBy: "@TODO",
-    slides: `/v1/slidesPlaylist?_expand=slide&playlistId=${newUlid}`,
-    onScreens: `/v1/playlists/${newUlid}/screens`,
     published: {
       from: creationTime,
       to: null,
@@ -36,9 +34,18 @@ function PlaylistCreate() {
   });
 
   const [
-    PostV1Playlist,
+    PostV1Screen,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
-  ] = usePostV1PlaylistsMutation();
+  ] = usePostV1ScreensMutation();
+
+  /**
+   * Redirect to screen edit.
+   */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      history.push(`/screen/edit/${newUlid}`);
+    }
+  }, [isSaveSuccess]);
 
   /**
    * Set state on change in input field
@@ -56,12 +63,12 @@ function PlaylistCreate() {
    * Handles submit.
    */
   function handleSubmit() {
-    PostV1Playlist({ body: formStateObject });
+    PostV1Screen({ body: formStateObject });
   }
 
   return (
-    <PlaylistForm
-      playlist={formStateObject}
+    <ScreenForm
+      screen={formStateObject}
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
@@ -73,4 +80,4 @@ function PlaylistCreate() {
   );
 }
 
-export default PlaylistCreate;
+export default ScreenCreate;

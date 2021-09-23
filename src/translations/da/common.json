@@ -91,6 +91,7 @@
       "screen-in-groups": "Skærmen er i følgende grupper"
     },
     "header": "Skærme",
+    "screens-get-error": "Der skete en fejl da skærmene skulle hentes",
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
     "change-view-calendar": "Kalender",
@@ -229,6 +230,7 @@
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
     "cancel-button": "Annuller",
+    "loading": "Henter spilleliste...",
     "saving": "Gemmer...",
     "saved": "Spillelisten er gemt",
     "playlist-name-label": "Spillelistens navn",
@@ -406,7 +408,12 @@
   },
   "edit-screen": {
     "create-new-screen": "Opret ny skærm",
+    "screen-resolution-height": "Højde",
+    "screen-resolution-width": "Bredde",
     "edit-screen": "Rediger følgende skærm",
+    "error": "Der skete en fejl",
+    "loading": "Henter skærm...",
+    "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",
     "cancel-button": "Annuller",
     "radio-button-horizontal": "Vandret layout",
@@ -429,8 +436,8 @@
     "screen-size-of-screen-label": "Størrelse på skærmen",
     "screen-size-of-screen-placeholder": "Angiv størrelsen på skærmen",
     "screen-resolution-of-screen-label": "Skærmens opløsning",
-    "screen-resolution-of-screen-placeholder": "Angiv skærmens opløsning",
-    "screen-resolution-of-screen-helptext": "Angiv skærmens opløsning (bxh), bredde og højde separeret med et x, eksempelvis 1920x1080"
+    "screen-resolution-of-screen-width-placeholder": "Angiv skærmens bredde",
+    "screen-resolution-of-screen-height-placeholder": "Angiv skærmens højde"
   },
   "nav-items": {
     "dashboard": "Oversigt",

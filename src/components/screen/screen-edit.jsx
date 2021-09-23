@@ -2,32 +2,32 @@ import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import {
-  useGetV1PlaylistsByIdQuery,
-  usePutV1PlaylistsByIdMutation,
+  useGetV1ScreensByIdQuery,
+  usePutV1ScreensByIdMutation,
 } from "../../redux/api/api.generated";
-import PlaylistForm from "./playlist-form";
+import ScreenForm from "./screen-form";
 
 /**
- * The playlist edit component.
+ * The screen edit component.
  *
- * @returns {object} The playlist edit page.
+ * @returns {object} The screen edit page.
  */
-function PlaylistEdit() {
+function ScreenEdit() {
   const { t } = useTranslation("common");
-  const headerText = t("edit-playlist.edit-playlist");
+  const headerText = t("edit-screen.edit-screen");
   const [formStateObject, setFormStateObject] = useState({});
   const { id } = useParams();
 
   const [
-    PutV1Playlists,
+    PutV1Screens,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
-  ] = usePutV1PlaylistsByIdMutation();
+  ] = usePutV1ScreensByIdMutation();
 
   const {
     data,
     error: loadError,
-    isLoading,
-  } = useGetV1PlaylistsByIdQuery({ id });
+    isLoading: isLoadingScreen,
+  } = useGetV1ScreensByIdQuery({ id });
 
   /**
    * Set loaded data into form state.
@@ -54,21 +54,22 @@ function PlaylistEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    PutV1Playlists({ id, body: formStateObject });
+    const saveData = { id, body: formStateObject };
+    PutV1Screens(saveData);
   }
 
   return (
-    <PlaylistForm
-      playlist={formStateObject}
-      headerText={`${headerText}: ${formStateObject && formStateObject.title}`}
+    <ScreenForm
+      screen={formStateObject}
+      headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={isLoading}
+      isLoading={isLoadingScreen}
       isSaveSuccess={isSaveSuccess}
       isSaving={isSaving}
-      errors={[loadError, saveError]}
+      errors={[saveError, loadError]}
     />
   );
 }
 
-export default PlaylistEdit;
+export default ScreenEdit;

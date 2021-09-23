@@ -80,7 +80,7 @@ function RenderFormElement({
           <h2 className={formData.formGroupClasses}>{formData.text}</h2>
         );
         break;
-      // TODO: This (header-h3) should be posible to create in a more efficient way, in combination with the above.
+      // @TODO: This (header-h3) should be posible to create in a more efficient way, in combination with the above.
       case "header-h3":
         if (data.required) {
           requiredFieldCallback(data.name);

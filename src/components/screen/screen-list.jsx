@@ -2,18 +2,21 @@ import { React, useEffect, useState } from "react";
 import { Button, Col } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import CampaignIcon from "./campaign-icon";
+import CampaignIcon from "../screen-list/campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
-import ListButton from "../util/list/list-button";
-import LiveIcon from "./live-icon";
+// import ListButton from "../util/list/list-button";
+import Toast from "../util/toast/toast";
+import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import { useGetV1ScreensQuery } from "../../redux/api/api.generated";
 import "./screen-list.scss";
+import Dimensions from "./dimension";
 
 /**
  * The screen list component.
@@ -31,16 +34,15 @@ function ScreenList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
-  const [screens, setScreens] = useState([]);
 
-  /**
-   * @param {Array} groupsArray
-   * The array of groups.
-   */
-  function openInfoModal(groupsArray) {
-    setInGroups(groupsArray);
-    setShowInfoModal(true);
-  }
+  // /**
+  //  * @param {Array} groupsArray
+  //  * The array of groups.
+  //  */
+  // function openInfoModal(groupsArray) {
+  //   setInGroups(groupsArray);
+  //   setShowInfoModal(true);
+  // }
 
   /**
    * Closes the info modal.
@@ -49,18 +51,6 @@ function ScreenList() {
     setShowInfoModal(false);
     setInGroups();
   }
-
-  /**
-   * Load content from fixture.
-   * TODO load real content.
-   */
-  useEffect(() => {
-    fetch(`/fixtures/screens/screens.json`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setScreens(jsonData);
-      });
-  }, []);
 
   /**
    * Set the view in url.
@@ -116,20 +106,21 @@ function ScreenList() {
       content: (data) => LiveIcon(data),
     },
     {
-      path: "name",
+      path: "title",
       sort: true,
       label: t("screens-list.columns.name"),
     },
     {
       sort: true,
       path: "onFollowingGroups",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.onFollowingGroups,
-          data.onFollowingGroups.length,
-          data.onFollowingGroups.length === 0
-        ),
+      // content: (data) =>
+      //   ListButton(
+      //     openInfoModal,
+      //     data.onFollowingGroups,
+      //     data.onFollowingGroups.length,
+      //     data.onFollowingGroups.length === 0
+      //   ),
+      content: () => <div>@TODO</div>,
       key: "groups",
       label: t("screens-list.columns.on-groups"),
     },
@@ -139,15 +130,15 @@ function ScreenList() {
       label: t("screens-list.columns.size"),
     },
     {
-      path: "dimensions",
       sort: true,
+      content: ({ dimensions }) => Dimensions(dimensions),
       label: t("screens-list.columns.dimensions"),
     },
     {
-      path: "overriddenByCampaign",
       sort: true,
       label: t("screens-list.columns.campaign"),
       content: (data) => CampaignIcon(data),
+      // @TODO: implement overridden by campaing
     },
     {
       key: "edit",
@@ -155,7 +146,7 @@ function ScreenList() {
         <LinkForList
           data={data}
           label={t("screens-list.edit-button")}
-          param="screen"
+          param="screen/edit"
         />
       ),
     },
@@ -206,12 +197,22 @@ function ScreenList() {
     setSelectedRows([]);
   }
 
+  const {
+    data,
+    error: screensGetError,
+    isLoading,
+  } = useGetV1ScreensQuery({ page: 1 });
+
   return (
     <>
+      <Toast
+        show={screensGetError}
+        text={t("screens-list.screens-get-error")}
+      />
       <ContentHeader
         title={t("screens-list.header")}
         newBtnTitle={t("screens-list.create-new-screen")}
-        newBtnLink="/screen/new"
+        newBtnLink="/screen/create"
       />
       <Col md="auto">
         {view === "list" && (
@@ -226,11 +227,11 @@ function ScreenList() {
         )}
       </Col>
       <ContentBody>
-        {screens.screens && (
+        {!isLoading && data && data["hydra:member"] && (
           <List
             columns={columns}
             selectedRows={selectedRows}
-            data={screens.screens}
+            data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             withChart={view === "calendar"}
           />

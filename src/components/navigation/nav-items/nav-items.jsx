@@ -23,7 +23,7 @@ function NavItems() {
   const [t] = useTranslation("common");
   return (
     <>
-      {/* TODO: Dashboard is hidden for now */}
+      {/* @TODO: Dashboard is hidden for now */}
       {/* <Nav.Item>
         <Link id="navbar_dashboard" className="nav-link" to="/dashboard">
           <FontAwesomeIcon className="me-2" icon={faTachometerAlt} />
@@ -32,7 +32,7 @@ function NavItems() {
       </Nav.Item>
       <hr className="d-none d-md-block" /> */}
 
-      {/* TODO: Show active item based on Route */}
+      {/* @TODO: Show active item based on Route */}
       <Nav.Item>
         <NavLink
           id="nav-items_content_slides"
@@ -86,11 +86,11 @@ function NavItems() {
         <NavLink
           id="nav-items_screens_screens"
           className="nav-link"
-          to="/screens"
+          to="/screen/list"
         >
           <FontAwesomeIcon className="me-2" icon={faDesktop} />
           {t("nav-items.screens-screens")}
-          <Link className="nav-add-new" to="/screen/new">
+          <Link className="nav-add-new" to="/screen/create">
             <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
           </Link>
         </NavLink>

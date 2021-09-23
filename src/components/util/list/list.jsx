@@ -203,7 +203,7 @@ function List({
    * Deletes selected data, and closes modal.
    */
   function handleDelete() {
-    // @TODO delete elements
+    // @TODO: delete elements
     setShowDeleteModal(false);
   }
 
@@ -213,7 +213,7 @@ function List({
    * @param {string} mergeName - the new name for the data.
    */
   function handleMerge(mergeName) {
-    // @TODO merge elements and remove console.log
+    // @TODO: merge elements and remove console.log
     console.log(mergeName); // eslint-disable-line
     setViewMergeModal(false);
   }

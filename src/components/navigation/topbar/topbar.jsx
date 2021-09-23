@@ -37,7 +37,7 @@ function TopBar() {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3" />
       <Navbar.Collapse id="basic-navbar-nav" className="px-3">
-        {/* TODO: Global searchbox: results show as list in popover when typing more than 3 characters */}
+        {/* @TODO: Global searchbox: results show as list in popover when typing more than 3 characters */}
         <div className="my-3 my-md-0">
           <FormControl
             placeholder={t("search-box.placeholder")}
@@ -69,7 +69,7 @@ function TopBar() {
               <Link
                 id="nav-items_add_screen"
                 className="dropdown-item"
-                to="/screens"
+                to="/screen/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faDesktop} />
                 {t("topbar.add_screen")}

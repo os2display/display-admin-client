@@ -30,7 +30,7 @@ function EditMedia() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     if (!newMedia) {
       fetch(`/fixtures/media/one_media.json`)
         .then((response) => response.json())
@@ -67,7 +67,7 @@ function EditMedia() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @todo make it save.
+   * @TODO: make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}

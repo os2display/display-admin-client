@@ -34,7 +34,7 @@ function LocationDropdown({
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     fetch("/fixtures/locations/locations.json")
       .then((response) => response.json())
       .then((jsonData) => {

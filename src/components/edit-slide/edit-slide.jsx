@@ -41,7 +41,7 @@ function EditSlide() {
    * Load content from fixture.
    */
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     if (!newSlide) {
       fetch("/fixtures/slides/slide.json")
         .then((response) => response.json())
@@ -80,7 +80,7 @@ function EditSlide() {
   }, [formStateObject.slideTemplate, templateOptions]);
 
   useEffect(() => {
-    // @TODO load real content.
+    // @TODO: load real content.
     fetch("/fixtures/templates/templates.json")
       .then((response) => response.json())
       .then((jsonData) => {
@@ -141,7 +141,7 @@ function EditSlide() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @todo make it save.
+   * @TODO: make it save.
    * @param {object} e
    * the submit event.
    * @returns {boolean}
