@@ -235,7 +235,7 @@ function ScreenForm({
           variant="secondary"
           type="button"
           id="screen_cancel"
-          onClick={() => history.push("/slide/list/")}
+          onClick={() => history.push("/screen/list/")}
           size="lg"
           className="me-3"
         >

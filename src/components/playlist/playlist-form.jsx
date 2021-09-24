@@ -113,7 +113,7 @@ function PlaylistForm({
               variant="secondary"
               type="button"
               id="playlist_cancel"
-              onClick={() => history.push("/slide/list/")}
+              onClick={() => history.push("/playlists/list/")}
               size="lg"
               className="me-3"
             >
