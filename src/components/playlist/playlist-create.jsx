@@ -21,7 +21,7 @@ function PlaylistCreate() {
     id: newUlid,
     "@context": "/contexts/Playlist",
     "@id": `/v1/playlists/${newUlid}`,
-    title: "New playlist",
+    title: "",
     description: "",
     modified: creationTime,
     created: creationTime,
