@@ -29,8 +29,8 @@ yarn-error.log*
 cypress/videos/*
 cypress/screenshots/*
 
+# Temp files
 temp/
 
-# Json server
-data/node_modules
-
+# API mock
+json-server/
