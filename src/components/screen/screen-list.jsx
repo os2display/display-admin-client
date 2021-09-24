@@ -14,9 +14,12 @@ import Toast from "../util/toast/toast";
 import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import { useGetV1ScreensQuery } from "../../redux/api/api.generated";
 import "./screen-list.scss";
 import Dimensions from "./dimension";
+import {
+  useGetV1ScreensQuery,
+  useDeleteV1ScreensByIdMutation,
+} from "../../redux/api/api.generated";
 
 /**
  * The screen list component.
@@ -34,6 +37,8 @@ function ScreenList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
+  const [DeleteV1Screens, { isSuccess: isDeleteSuccess }] =
+    useDeleteV1ScreensByIdMutation();
 
   // /**
   //  * @param {Array} groupsArray
@@ -77,13 +82,13 @@ function ScreenList() {
    *
    * @param {object} props
    * The props.
-   * @param {string} props.name
-   * The name of the tag.
+   * @param {string} props.title
+   * The title of the tag.
    * @param {number} props.id
    * The id of the tag
    */
-  function openDeleteModal({ id, name }) {
-    setSelectedRows([{ id, name }]);
+  function openDeleteModal({ id, title }) {
+    setSelectedRows([{ id, title }]);
     setShowDeleteModal(true);
   }
 
@@ -168,17 +173,10 @@ function ScreenList() {
 
   /**
    * Deletes screen, and closes modal.
-   *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the tag.
-   * @param {number} props.id
-   * The id of the tag
    */
-  // eslint-disable-next-line
-  function handleDelete({ id, name }) {
-    setSelectedRows([]);
+  function handleDelete() {
+    const [first] = selectedRows;
+    DeleteV1Screens({ id: first.id });
     setShowDeleteModal(false);
   }
 
@@ -209,6 +207,7 @@ function ScreenList() {
         show={screensGetError}
         text={t("screens-list.screens-get-error")}
       />
+      <Toast show={isDeleteSuccess} text={t("screens-list.deleted")} />
       <ContentHeader
         title={t("screens-list.header")}
         newBtnTitle={t("screens-list.create-new-screen")}

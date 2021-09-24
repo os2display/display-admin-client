@@ -1,0 +1,199 @@
+import { React, useEffect, useState } from "react";
+import { Button, Spinner } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
+import Form from "react-bootstrap/Form";
+import Toast from "../util/toast/toast";
+import ContentBody from "../util/content-body/content-body";
+import ContentFooter from "../util/content-footer/content-footer";
+// import SelectScreenTable from "../util/multi-and-table/select-screen-table";
+// import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
+// import RenderFormElement from "../util/forms/render-form-element";
+import Select from "../util/forms/select";
+import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
+import FormInput from "../util/forms/form-input";
+import FormCheckbox from "../util/forms/form-checkbox";
+
+/**
+ * The slide form component.
+ *
+ * @param {object} props - The props.
+ * @param {object} props.slide The slide object to modify in the form.
+ * @param {Function} props.handleInput Handles form input.
+ * @param {Function} props.handleSubmit Handles form submit.
+ * @param {boolean} props.isSaving Is the form saving?
+ * @param {string} props.headerText Headline text.
+ * @param {boolean|null} props.isSaveSuccess Is the save a success?
+ * @param {boolean|null} props.isLoading The data is loading.
+ * @param {Array} props.errors Array of errors.
+ * @returns {object} The slide form.
+ */
+function SlideForm({
+  slide,
+  handleInput,
+  handleSubmit,
+  isSaving,
+  headerText,
+  isSaveSuccess,
+  isLoading,
+  errors,
+}) {
+  const { t } = useTranslation("common");
+  const history = useHistory();
+  const [templateOptions, setTemplateOptions] = useState([]);
+  const { data: templates, isLoading: loadingTemplates } =
+    useGetV1TemplatesQuery({
+      page: 1,
+    });
+
+  useEffect(() => {
+    if (templates) {
+      setTemplateOptions(templates["hydra:member"]);
+    }
+  }, [templates]);
+
+  return (
+    <Form>
+      <Toast text={t("edit-slide.saved")} show={isSaveSuccess} />
+      <h1>{headerText}</h1>
+      {(isLoading || isSaving) && (
+        <>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="m-1"
+          />
+          {t("edit-slide.loading")}
+        </>
+      )}
+      {loadingTemplates && !isLoading && (
+        <>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="m-1"
+          />
+          {t("edit-slide.loading-templates")}
+        </>
+      )}
+      {!isLoading && (
+        <>
+          <ContentBody>
+            <FormInput
+              name="title"
+              type="text"
+              errors={errors}
+              label={t("edit-slide.slide-name-label")}
+              helpText={t("edit-slide.slide-name-placeholder")}
+              value={slide.title}
+              onChange={handleInput}
+            />
+          </ContentBody>
+          {templateOptions && (
+            <ContentBody>
+              <Select
+                value={slide.template}
+                name="template"
+                options={templateOptions}
+                onChange={handleInput}
+                label={t("edit-slide.slide-template-label")}
+                helpText={t("edit-slide.slide-template-help-text")}
+                errors={errors}
+              />
+            </ContentBody>
+          )}
+          {slide.slideTemplate && (
+            // todo fetch form data
+            <ContentBody>
+              {/* Render slide form from jsondata */}
+              {/* <section className="row">
+                {formData.map((data) => (
+                  <RenderFormElement
+                    key={data.name}
+                    data={data}
+                    errors={errors}
+                    onChange={handleInput}
+                    slide={slide}
+                  />
+                ))}
+              </section> */}
+            </ContentBody>
+          )}
+          <ContentBody>
+            <h3 className="h4">{t("edit-slide.slide-select-screen-title")}</h3>
+            {/* todo select screen will work when onscreen can be fetched */}
+            {/* <SelectScreenTable
+              handleChange={handleInput}
+              name="onScreens"
+              errors={errors}
+              selectedData={slide.onScreens}
+            /> */}
+          </ContentBody>
+          <ContentBody>
+            <h3 className="h4">
+              {t("edit-slide.slide-select-playlist-title")}
+            </h3>
+            {/* todo select playlst will work when onscreen can be fetched */}
+            {/* <SelectPlaylistTable
+              handleChange={handleInput}
+              name="onPlaylists"
+              errors={errors}
+              selectedData={slide.onPlaylists}
+            /> */}
+          </ContentBody>
+          <ContentBody>
+            <h3 className="h4">{t("edit-slide.slide-publish-title")}</h3>
+            <FormCheckbox
+              label={t("edit-slide.slide-publish-label")}
+              onChange={handleInput}
+              name="published"
+              value={slide.published}
+            />
+          </ContentBody>
+        </>
+      )}
+      <ContentFooter>
+        <Button
+          variant="secondary"
+          type="button"
+          id="slide_cancel"
+          onClick={() => history.goBack()}
+          className="me-md-3 col"
+          size="lg"
+        >
+          {t("edit-slide.cancel-button")}
+        </Button>
+        <Button
+          variant="primary"
+          type="button"
+          onClick={handleSubmit}
+          id="save_slide"
+          size="lg"
+          className="col"
+        >
+          {t("edit-slide.save-button")}
+        </Button>
+      </ContentFooter>
+    </Form>
+  );
+}
+
+SlideForm.propTypes = {
+  slide: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleInput: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  headerText: PropTypes.string.isRequired,
+  isSaveSuccess: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
+
+export default SlideForm;

@@ -37,11 +37,11 @@ function NavItems() {
         <NavLink
           id="nav-items_content_slides"
           className="nav-link"
-          to="/slides"
+          to="/slide/list"
         >
           <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
           {t("nav-items.content-slides")}
-          <Link className="nav-add-new" to="/slide/new">
+          <Link className="nav-add-new" to="/slide/create">
             <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
           </Link>
         </NavLink>

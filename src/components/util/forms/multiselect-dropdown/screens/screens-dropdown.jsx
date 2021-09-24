@@ -26,7 +26,7 @@ function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
   ]);
   const { data, isLoading } = useGetV1ScreensQuery({ page: 1 });
   /**
-   * Load content from fixture.
+   * Load screens
    */
   useEffect(() => {
     if (data) {
@@ -36,17 +36,21 @@ function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
   }, [data]);
 
   return (
-    <MultiSelectComponent
-      isLoading={isLoading}
-      handleSelection={handleScreenSelection}
-      options={options}
-      label={t("screens-dropdown.label")}
-      noSelectedString={t("screens-dropdown.nothing-selected")}
-      selected={selectedOptions}
-      name={name}
-      isCreatable
-      errors={errors}
-    />
+    <>
+      {options && (
+        <MultiSelectComponent
+          isLoading={isLoading}
+          handleSelection={handleScreenSelection}
+          options={options}
+          label={t("screens-dropdown.label")}
+          noSelectedString={t("screens-dropdown.nothing-selected")}
+          selected={selectedOptions}
+          name={name}
+          isCreatable
+          errors={errors}
+        />
+      )}
+    </>
   );
 }
 

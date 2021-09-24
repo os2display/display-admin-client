@@ -10,14 +10,13 @@ import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import CategoryList from "./components/category-list/category-list";
-import SlidesList from "./components/slides-list/slides-list";
+import SlidesList from "./components/slide/slides-list";
 import EditTag from "./components/edit-tag/edit-tag";
 import EditCategories from "./components/edit-categories/edit-category";
 import GroupsList from "./components/groups-list/groups-list";
 import EditGroup from "./components/edit-group/edit-group";
 import LocationsList from "./components/locations-list/locations-list";
 import EditLocation from "./components/edit-location/edit-location";
-import EditSlide from "./components/edit-slide/edit-slide";
 import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";
@@ -30,6 +29,8 @@ import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
+import SlideEdit from "./components/slide/slide-edit";
+import SlideCreate from "./components/slide/slide-create";
 import "./app.scss";
 
 /**
@@ -73,15 +74,16 @@ function App() {
                   <Route path="/category/:id" component={EditCategories} />
                   <Route path="/group/:id" component={EditGroup} />
                   <Route path="/location/:id" component={EditLocation} />
-                  <Route path="/slides" component={SlidesList} />
+                  <Route path="/slide/list" component={SlidesList} />
+                  <Route path="/slide/create" component={SlideCreate} />
+                  <Route path="/slide/edit/:id" component={SlideEdit} />
                   <Route path="/media-list" component={MediaList} />
-                  <Route path="/slide/:id" component={EditSlide} />
                   <Route path="/media/:id" component={EditMedia} />
                   <Route path="/themes/" component={ThemesList} />
                   <Route path="/theme/:id" component={EditTheme} />
                   <Route path="/users/" component={UserList} />
                   <Route path="/user/:id" component={EditUser} />
-                  <Redirect from="/" to="/slides" exact />
+                  <Redirect from="/" to="/slide/list" exact />
                 </Switch>
               </main>
             </Col>

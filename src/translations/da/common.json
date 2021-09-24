@@ -72,6 +72,8 @@
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
+    "slides-get-error": "Der skete en fejl da slides skulle hentes",
+    "deleted": "Slidet er blevet slettet",
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
     "delete-button": "Slet",
@@ -87,6 +89,7 @@
       "on-groups": "Tilknyttede grupper",
       "live": "Live"
     },
+    "deleted": "SKærmen er blevet slettet",
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     },
@@ -193,6 +196,10 @@
     "cancel-button": "Annuller"
   },
   "edit-slide": {
+    "loading": "Henter slide...",
+    "loading-templates": "Henter skabeloner...",
+    "saving": "Gemmer...",
+    "saved": "Slide er gemt",
     "create-new-slide": "Opret nyt slide",
     "edit-slide": "Rediger slide",
     "save-button": "Gem slide",
