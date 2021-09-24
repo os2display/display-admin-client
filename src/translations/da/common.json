@@ -131,6 +131,8 @@
     "edit-button": "Rediger"
   },
   "playlists-list": {
+    "playlists-get-error": "Der skete en fejl da spillelisterne skulle hentes",
+    "deleted": "Spillelisten er blevet slettet",
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
@@ -196,6 +198,7 @@
     "cancel-button": "Annuller"
   },
   "edit-slide": {
+    "error": "Der skete en fejl",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",
     "saving": "Gemmer...",
@@ -230,6 +233,7 @@
     "location-name-placeholder": "Udfyld lokationens navn"
   },
   "edit-playlist": {
+    "error": "Der skete en fejl",
     "create-new-playlist": "Opret ny spilleliste",
     "edit-playlist": "Rediger følgende spilleliste",
     "title-about": "Om spillelisten",

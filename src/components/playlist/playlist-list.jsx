@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Toast from "../util/toast/toast";
 import selectedHelper from "../util/helpers/selectedHelper";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -9,7 +10,10 @@ import LinkForList from "../util/list/link-for-list";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import { useGetV1PlaylistsQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1PlaylistsQuery,
+  useDeleteV1PlaylistsByIdMutation,
+} from "../../redux/api/api.generated";
 
 /**
  * The playlists list component.
@@ -25,6 +29,8 @@ function PlaylistList() {
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   /* eslint-disable-next-line no-unused-vars */
   const [infoModalTitle, setInfoModalTitle] = useState("");
+  const [DeleteV1Playlists, { isSuccess: isDeleteSuccess }] =
+    useDeleteV1PlaylistsByIdMutation();
 
   /**
    * Opens info modal with either categories or slides.
@@ -67,13 +73,13 @@ function PlaylistList() {
    *
    * @param {object} props
    * The props.
-   * @param {string} props.name
-   * The name of the playlist.
+   * @param {string} props.title
+   * The title of the playlist.
    * @param {number} props.id
    * The id of the playlist
    */
-  function openDeleteModal({ id, name }) {
-    setSelectedRows([{ id, name }]);
+  function openDeleteModal({ id, title }) {
+    setSelectedRows([{ id, title }]);
     setShowDeleteModal(true);
   }
 
@@ -142,18 +148,11 @@ function PlaylistList() {
   ];
 
   /**
-   * Deletes playlist, and closes modal.
-   *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the playlist.
-   * @param {number} props.id
-   * The id of the playlist
+   * Deletes slide, and closes modal.
    */
-  // eslint-disable-next-line
-  function handleDelete({ id, name }) {
-    // @TODO: delete element
+  function handleDelete() {
+    const [first] = selectedRows;
+    DeleteV1Playlists({ id: first.id });
     setSelectedRows([]);
     setShowDeleteModal(false);
   }
@@ -173,10 +172,19 @@ function PlaylistList() {
     setSelectedRows([]);
   }
 
-  const { data, error, isLoading } = useGetV1PlaylistsQuery({ page: 1 });
+  const {
+    data,
+    error: playlistsGetError,
+    isLoading,
+  } = useGetV1PlaylistsQuery({ page: 1 });
 
   return (
     <>
+      <Toast
+        show={playlistsGetError}
+        text={t("playlists-list.playlists-get-error")}
+      />
+      <Toast show={isDeleteSuccess} text={t("playlists-list.deleted")} />
       <ContentHeader
         title={t("playlists-list.header")}
         newBtnTitle={t("playlists-list.create-new-playlist")}
@@ -192,7 +200,6 @@ function PlaylistList() {
           />
         )}
         {isLoading && <Spinner animation="grow" />}
-        {!isLoading && error && <div>@TODO: Error</div>}
       </ContentBody>
       <DeleteModal
         show={showDeleteModal}

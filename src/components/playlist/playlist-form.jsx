@@ -113,7 +113,7 @@ function PlaylistForm({
               variant="secondary"
               type="button"
               id="playlist_cancel"
-              onClick={() => history.goBack()}
+              onClick={() => history.push("/slide/list/")}
               size="lg"
               className="me-3"
             >
@@ -144,6 +144,7 @@ function PlaylistForm({
               </>
             </Button>
             <Toast show={isSaveSuccess} text={t("edit-playlist.saved")} />
+            <Toast show={errors} text={t("edit-playlist.error")} />
           </ContentFooter>
         </>
       )}

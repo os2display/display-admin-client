@@ -153,7 +153,7 @@ function SlidesList() {
   ];
 
   /**
-   * Deletes screen, and closes modal.
+   * Deletes slide, and closes modal.
    */
   function handleDelete() {
     const [first] = selectedRows;
@@ -196,7 +196,6 @@ function SlidesList() {
     <>
       <Toast show={slidesGetError} text={t("slides-list.slides-get-error")} />
       <Toast show={isDeleteSuccess} text={t("slides-list.deleted")} />
-
       <ContentHeader
         title={t("slides-list.header")}
         newBtnTitle={t("slides-list.create-new-slide")}

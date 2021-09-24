@@ -55,7 +55,6 @@ function SlideForm({
 
   return (
     <Form>
-      <Toast text={t("edit-slide.saved")} show={isSaveSuccess} />
       <h1>{headerText}</h1>
       {(isLoading || isSaving) && (
         <>
@@ -164,7 +163,7 @@ function SlideForm({
           variant="secondary"
           type="button"
           id="slide_cancel"
-          onClick={() => history.goBack()}
+          onClick={() => history.push("/slide/list/")}
           className="me-md-3 col"
           size="lg"
         >
@@ -180,6 +179,8 @@ function SlideForm({
         >
           {t("edit-slide.save-button")}
         </Button>
+        <Toast show={isSaveSuccess} text={t("edit-slide.saved")} />
+        <Toast show={errors} text={t("edit-slide.error")} />
       </ContentFooter>
     </Form>
   );
