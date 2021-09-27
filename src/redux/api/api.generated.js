@@ -4,7 +4,7 @@ exports.useGetV1TemplatesByIdQuery = exports.useGetV1TemplatesQuery = exports.us
 var react_1 = require("@reduxjs/toolkit/query/react");
 var query_1 = require("@reduxjs/toolkit/query");
 exports.api = (0, react_1.createApi)({
-    baseQuery: (0, query_1.fetchBaseQuery)({ baseUrl: "/" }),
+    baseQuery: (0, query_1.fetchBaseQuery)({ baseUrl: "/api/" }),
     tagTypes: [],
     endpoints: function (build) { return ({
         getV1Layouts: build.query({

@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
   tagTypes: [],
   endpoints: (build) => ({
     getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({
