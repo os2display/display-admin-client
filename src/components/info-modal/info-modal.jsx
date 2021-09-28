@@ -1,5 +1,6 @@
 import { React } from "react";
 import PropTypes from "prop-types";
+import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 import ModalDialog from "../util/modal/modal-dialog";
 
@@ -26,7 +27,13 @@ function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
   const { t } = useTranslation("common");
 
   return (
-    <div id="info-modal">
+    <Modal
+      scrollable={true}
+      show={true}
+      size="m"
+      onHide={onClose}
+      id="info-modal"
+    >
       <ModalDialog
         title={title}
         onClose={onClose}
@@ -34,12 +41,12 @@ function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
         declineText={t("info-modal.decline-text")}
       >
         <ul>
-          {dataStructureToDisplay.map(({ name }) => (
-            <li>{name}</li>
+          {dataStructureToDisplay.map(({ title }) => (
+            <li>{title}</li>
           ))}
         </ul>
       </ModalDialog>
-    </div>
+    </Modal>
   );
 }
 InfoModal.defaultProps = {
