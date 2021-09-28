@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
+import { useGetV1PlaylistsQuery } from "../../../../../redux/api/api.generated";
 
 /**
  * @param {object} props
@@ -24,31 +25,17 @@ function PlaylistsDropdown({
   errors,
 }) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    // @TODO: load real content.
-    fetch("/fixtures/playlists/playlists.json")
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setOptions(jsonData.playlists);
-        setIsLoading(false);
-      });
-  }, []);
+  const { data, isLoading } = useGetV1PlaylistsQuery({});
 
   return (
     <>
-      {options && (
+      {!isLoading && data && data["hydra:member"] && (
         <>
           <MultiSelectComponent
             label={t("playlists-dropdown.label")}
             noSelectedString={t("playlists-dropdown.nothing-selected")}
             handleSelection={handlePlaylistSelection}
-            options={options}
+            options={data["hydra:member"]}
             selected={selected}
             name={name}
             isLoading={isLoading}

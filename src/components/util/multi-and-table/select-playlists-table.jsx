@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
@@ -6,6 +6,7 @@ import Table from "../table/table";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import InfoModal from "../../info-modal/info-modal";
 import ListButton from "../list/list-button";
+import { useGetV1SlidesByIdPlaylistsQuery } from "../../../redux/api/api.generated";
 
 /**
  * A multiselect and table for playlists.
@@ -21,11 +22,35 @@ import ListButton from "../list/list-button";
  * @returns {object}
  * An input.
  */
-function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
+function SelectPlaylistTable({
+  handleChange,
+  name,
+  selectedDataEndpoint,
+  errors,
+}) {
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
+  const [selectedData, setSelectedData] = useState();
   const [infoModalTitle, setInfoModalTitle] = useState("");
+  // id created below.
+  const id = selectedDataEndpoint.substring(
+    selectedDataEndpoint.lastIndexOf("=") + 1,
+    selectedDataEndpoint.length
+  );
+
+  const { data, isLoading } = useGetV1SlidesByIdPlaylistsQuery({
+    id: id,
+  });
+
+  /**
+   * Set loaded data into form state.
+   */
+  useEffect(() => {
+    if (data) {
+      setSelectedData(data["hydra:member"]);
+    }
+  }, [data]);
 
   /**
    * Opens info modal with either categories or slides.
@@ -69,38 +94,36 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
         return item.id;
       })
       .indexOf(id);
-    selectedData.splice(indexOfItemToRemove, 1);
-    const target = { value: selectedData, id: name };
+    let selectedDataCopy = [...selectedData];
+    let toRemove = selectedDataCopy.splice(indexOfItemToRemove, 1);
+    toRemove = { ...toRemove[0], toRemove: true, toAdd: false };
+    selectedDataCopy.push(toRemove);
+    setSelectedData(selectedDataCopy);
+    const target = { value: selectedDataCopy, id: name };
+    handleChange({ target });
+  }
+
+  /**
+   * Removes screen from list of screens.
+   *
+   * @param {object} props
+   * The props.
+   * @param {string} props.id
+   * The id of the screen
+   */
+  function handleAdd({ target }) {
+    let toAdd = target.value[0];
+    target.value.splice(0, 1);
+    toAdd = { ...toAdd, toRemove: false, toAdd: true };
+    target.value.push(toAdd);
     handleChange({ target });
   }
 
   // The columns for the table.
   const columns = [
     {
-      path: "name",
+      path: "title",
       label: t("select-playlists-table.columns.name"),
-    },
-    {
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          { data: data.slides, caller: "slides" },
-          data.slides?.length,
-          data.slides?.length === 0
-        ),
-      key: "slides",
-      label: t("select-playlists-table.columns.number-of-slides"),
-    },
-    {
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          { data: data.categories, caller: "categories" },
-          data.categories?.length,
-          data.categories?.length === 0
-        ),
-      key: "categories",
-      label: t("select-playlists-table.columns.number-of-categories"),
     },
     {
       key: "delete",
@@ -111,24 +134,28 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
       ),
     },
   ];
-
   return (
     <>
-      <PlaylistsDropdown
-        errors={errors}
-        name={name}
-        handlePlaylistSelection={handleChange}
-        selected={selectedData}
-      />
-      {selectedData.length > 0 && (
-        <Table columns={columns} data={selectedData} />
+      {!isLoading && selectedData && (
+        <>
+          <PlaylistsDropdown
+            errors={errors}
+            name={name}
+            handlePlaylistSelection={handleAdd}
+            selected={selectedData.filter(({ toRemove }) => !toRemove)}
+          />
+          <Table
+            columns={columns}
+            data={selectedData.filter(({ toRemove }) => !toRemove)}
+          />
+          <InfoModal
+            show={showInfoModal}
+            onClose={onCloseInfoModal}
+            dataStructureToDisplay={dataStructureToDisplay}
+            title={infoModalTitle}
+          />
+        </>
       )}
-      <InfoModal
-        show={showInfoModal}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={dataStructureToDisplay}
-        title={infoModalTitle}
-      />
     </>
   );
 }
@@ -136,6 +163,7 @@ function SelectPlaylistTable({ handleChange, name, selectedData, errors }) {
 SelectPlaylistTable.defaultProps = {
   errors: [],
   selectedData: [],
+  selectedDataEndpoint: "",
 };
 
 SelectPlaylistTable.propTypes = {
@@ -143,6 +171,7 @@ SelectPlaylistTable.propTypes = {
   selectedData: PropTypes.arrayOf(
     PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
   ),
+  selectedDataEndpoint: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };

@@ -44,7 +44,7 @@
       "pick": "Vælg slide",
       "name": "Navn",
       "template": "Skabelon",
-      "number-of-playlists": "Spillelister med kategorien",
+      "slide-on-playlists": "Spillelister",
       "published": "Udgivet",
       "preview": "Preview"
     },

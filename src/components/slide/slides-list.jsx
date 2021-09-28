@@ -8,12 +8,14 @@ import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
-// import ListButton from "../util/list/list-button";
+import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import TemplateLabelInList from "./template-label-in-list";
 import {
   useGetV1SlidesQuery,
   useDeleteV1SlidesByIdMutation,
+  useGetV1SlidesByIdPlaylistsQuery,
 } from "../../redux/api/api.generated";
 /**
  * The slides list component.
@@ -55,14 +57,14 @@ function SlidesList() {
     setShowDeleteModal(true);
   }
 
-  // /**
-  //  * @param {Array} playlistArray
-  //  * The array of playlists.
-  //  */
-  // function openInfoModal(playlistArray) {
-  //   setOnPlaylists(playlistArray);
-  //   setShowInfoModal(true);
-  // }
+  /**
+   * @param {Array} playlistArray
+   * The array of playlists.
+   */
+  function openInfoModal(playlistArray) {
+    setOnPlaylists(playlistArray);
+    setShowInfoModal(true);
+  }
 
   // The columns for the table.
   const columns = [
@@ -82,23 +84,16 @@ function SlidesList() {
       label: t("slides-list.columns.name"),
     },
     {
-      path: "template.@id",
+      content: (data) => TemplateLabelInList(data),
       sort: true,
       label: t("slides-list.columns.template"),
     },
     {
       sort: true,
-      path: "onFollowingPlaylists",
-      // content: (data) =>
-      //   ListButton(
-      //     openInfoModal,
-      //     data.onFollowingPlaylists,
-      //     data.onFollowingPlaylists.length,
-      //     data.onFollowingPlaylists.length === 0
-      //   ),
-      content: () => <div>todo</div>,
+      content: (data) =>
+        ListButton(openInfoModal, useGetV1SlidesByIdPlaylistsQuery, data.id),
       key: "playlists",
-      label: t("slides-list.columns.number-of-playlists"),
+      label: t("slides-list.columns.slide-on-playlists"),
     },
     {
       path: "published",
@@ -187,6 +182,7 @@ function SlidesList() {
   } = useGetV1SlidesQuery({
     page: 1,
   });
+
   return (
     <>
       <Toast show={slidesGetError} text={t("slides-list.slides-get-error")} />

@@ -8,7 +8,7 @@ import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 // import SelectScreenTable from "../util/multi-and-table/select-screen-table";
-// import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
+import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
 // import RenderFormElement from "../util/forms/render-form-element";
 import Select from "../util/forms/select";
 import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
@@ -88,7 +88,6 @@ function SlideForm({
             <FormInput
               name="title"
               type="text"
-              errors={errors}
               label={t("edit-slide.slide-name-label")}
               helpText={t("edit-slide.slide-name-placeholder")}
               value={slide.title}
@@ -104,7 +103,6 @@ function SlideForm({
                 onChange={handleInput}
                 label={t("edit-slide.slide-template-label")}
                 helpText={t("edit-slide.slide-template-help-text")}
-                errors={errors}
               />
             </ContentBody>
           )}
@@ -117,7 +115,6 @@ function SlideForm({
                   <RenderFormElement
                     key={data.name}
                     data={data}
-                    errors={errors}
                     onChange={handleInput}
                     slide={slide}
                   />
@@ -131,7 +128,6 @@ function SlideForm({
             {/* <SelectScreenTable
               handleChange={handleInput}
               name="onScreens"
-              errors={errors}
               selectedData={slide.onScreens}
             /> */}
           </ContentBody>
@@ -140,12 +136,11 @@ function SlideForm({
               {t("edit-slide.slide-select-playlist-title")}
             </h3>
             {/* todo select playlst will work when onscreen can be fetched */}
-            {/* <SelectPlaylistTable
+            <SelectPlaylistTable
               handleChange={handleInput}
-              name="onPlaylists"
-              errors={errors}
-              selectedData={slide.onPlaylists}
-            /> */}
+              name="playlists"
+              selectedDataEndpoint={slide.onPlaylists}
+            />
           </ContentBody>
           <ContentBody>
             <h3 className="h4">{t("edit-slide.slide-publish-title")}</h3>

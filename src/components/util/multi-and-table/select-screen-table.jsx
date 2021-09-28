@@ -15,18 +15,27 @@ import InfoModal from "../../info-modal/info-modal";
  * the props.
  * @param {string} props.name
  * The name for the input
- * @param {string} props.selectedData
+ * @param {string} props.selectedDataEndpoint
  * The data for the multidropdown.
  * @param {Array} props.errors
  * A list of errors, or null.
  * @returns {object}
  * An input.
  */
-function SelectScreenTable({ handleChange, name, selectedData, errors }) {
+function SelectScreenTable({
+  handleChange,
+  name,
+  selectedDataEndpoint,
+  errors,
+}) {
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
-
+  // id created below.
+  const id = template["@id"].substring(
+    template["@id"].lastIndexOf("/") + 1,
+    template["@id"].length
+  );
   /**
    * @param {Array} groupsArray
    * The array of groups.
@@ -133,14 +142,11 @@ function SelectScreenTable({ handleChange, name, selectedData, errors }) {
 
 SelectScreenTable.defaultProps = {
   errors: [],
-  selectedData: [],
 };
 
 SelectScreenTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedData: PropTypes.arrayOf(
-    PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
-  ),
+  selectedDataEndpoint: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };

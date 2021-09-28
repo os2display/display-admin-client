@@ -1,26 +1,43 @@
 import { React } from "react";
-
+import Spinner from "react-bootstrap/Spinner";
 /**
  * @param {Function} callback
  * The callback function
- * @param {object} callbackData
- * The data for the callback
- * @param {string} label
- * The label of the button.
+ * @param {object} apiGetCall
+ * The function to call to get relevant data.
+ * @param {string} id
+ * The id for fetching.
  * @param {boolean} disabled
  * Whether the button should be disabled.
  * @returns {object}
  * The list button.
  */
-function ListButton(callback, callbackData, label, disabled) {
+function ListButton(callback, apiGetCall, id) {
+  const { data } = apiGetCall({ id: id });
+
   return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={() => callback(callbackData)}
-    >
-      {label}
-    </button>
+    <>
+      {data && (
+        <button
+          className="btn btn-secondary"
+          type="button"
+          disabled={data.length === 0}
+          onClick={() => callback(data["hydra:member"])}
+        >
+          {data["hydra:member"].length}
+        </button>
+      )}
+      {!data && (
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+          className="m-1"
+        />
+      )}
+    </>
   );
 }
 
