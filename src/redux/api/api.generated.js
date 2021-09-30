@@ -4,7 +4,7 @@ exports.useGetV1TemplatesByIdQuery = exports.useGetV1TemplatesQuery = exports.us
 var react_1 = require("@reduxjs/toolkit/query/react");
 var query_1 = require("@reduxjs/toolkit/query");
 exports.api = (0, react_1.createApi)({
-    baseQuery: (0, query_1.fetchBaseQuery)({ baseUrl: "/api/" }),
+    baseQuery: (0, query_1.fetchBaseQuery)({ baseUrl: "http://displayapiservice.local.itkdev.dk/" }),
     tagTypes: [],
     endpoints: function (build) { return ({
         getV1Layouts: build.query({
@@ -176,6 +176,9 @@ exports.api = (0, react_1.createApi)({
             query: function (queryArg) { return ({
                 url: "/v1/slides/" + queryArg.id,
                 method: "PUT",
+                headers: {
+                    "content-type": "application/ld+json"
+                },
                 body: queryArg.body
             }); }
         }),

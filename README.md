@@ -15,6 +15,12 @@ git clone https://github.com/os2display/display-api-mock.git json-server
 docker-compose run json-server npm install
 ```
 
+### Create public/config file
+
+```bash
+cp public/example_config.json public/config.json
+```
+
 ### Up the containers
 
 ```bash

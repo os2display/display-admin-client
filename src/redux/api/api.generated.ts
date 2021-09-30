@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://displayapiservice.local.itkdev.dk/" }),
   tagTypes: [],
   endpoints: (build) => ({
     getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({
@@ -248,6 +248,9 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/slides/${queryArg.id}`,
         method: "PUT",
+        headers: {
+          "content-type": "application/ld+json"
+        },
         body: queryArg.body,
       }),
     }),
