@@ -21,6 +21,13 @@ docker-compose run json-server npm install
 cp public/example_config.json public/config.json
 ```
 
+And modify the entries to suit your setup.
+```json
+{
+  "api": "[WHERE TO FIND THE API]"
+}
+```
+
 ### Up the containers
 
 ```bash

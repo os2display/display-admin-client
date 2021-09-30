@@ -4,8 +4,11 @@
   "description": "Provides project for generating api from OpenAPI spec and converting from typescript to vanilla javascript.",
   "main": "index.js",
   "scripts": {
-    "start": "npx @rtk-incubator/rtk-query-codegen-openapi --hooks api.json > api.generated.ts && node_modules/typescript/bin/tsc api.generated.ts",
-    "start2": "npx @rtk-incubator/rtk-query-codegen-openapi --hooks api.json > api.generated.ts && sed -i 's/baseQuery: fetchBaseQuery.*/baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }),/' api.generated.ts && node_modules/typescript/bin/tsc api.generated.ts"
+    "generate": "npx @rtk-incubator/rtk-query-codegen-openapi --hooks api.json > api.generated.ts",
+    "replace1": "sed -i 's/import { fetchBaseQuery } from .*;/import extendedBaseQuery from \".\\\/dynamic-base-query\";/g' api.generated.ts",
+    "replace2": "sed -i 's/baseQuery: fetchBaseQuery.*,/baseQuery: extendedBaseQuery,/g' api.generated.ts",
+    "compile": "node_modules/typescript/bin/tsc api.generated.ts",
+    "start": "npm run generate && npm run replace1 && npm run replace2 && npm run compile"
   },
   "author": "ITKDev",
   "license": "ISC",
