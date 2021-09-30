@@ -10,11 +10,11 @@ import { useGetV1TemplatesByIdQuery } from "../../redux/api/api.generated";
  * @returns {object}
  * The template title.
  */
-function TemplateLabelInList({ template }) {
+function TemplateLabelInList({ templateInfo }) {
   // template id created below.
-  const id = template["@id"].substring(
-    template["@id"].lastIndexOf("/") + 1,
-    template["@id"].length
+  const id = templateInfo["@id"].substring(
+    templateInfo["@id"].lastIndexOf("/") + 1,
+    templateInfo["@id"].length
   );
 
   const { data } = useGetV1TemplatesByIdQuery({

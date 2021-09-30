@@ -592,4 +592,3 @@ export const {
   useGetV1TemplatesQuery,
   useGetV1TemplatesByIdQuery,
 } = api;
-

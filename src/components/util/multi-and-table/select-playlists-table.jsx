@@ -31,14 +31,17 @@ function SelectPlaylistTable({
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
-  const [selectedData, setSelectedData] = useState();
+  const [selectedData, setSelectedData] = useState([]);
+  const [originallySelectedData, setOriginallySelectedData] = useState([]);
   const [infoModalTitle, setInfoModalTitle] = useState("");
+  let id;
   // id created below.
-  const id = selectedDataEndpoint.substring(
-    selectedDataEndpoint.lastIndexOf("=") + 1,
-    selectedDataEndpoint.length
-  );
-
+  if (selectedDataEndpoint.length > 0) {
+    id = selectedDataEndpoint[0].substring(
+      selectedDataEndpoint[0].lastIndexOf("=") + 1,
+      selectedDataEndpoint[0].length
+    );
+  }
   const { data, isLoading } = useGetV1SlidesByIdPlaylistsQuery({
     id: id,
   });
@@ -49,6 +52,7 @@ function SelectPlaylistTable({
   useEffect(() => {
     if (data) {
       setSelectedData(data["hydra:member"]);
+      setOriginallySelectedData(data["hydra:member"]);
     }
   }, [data]);
 
@@ -116,6 +120,7 @@ function SelectPlaylistTable({
     target.value.splice(0, 1);
     toAdd = { ...toAdd, toRemove: false, toAdd: true };
     target.value.push(toAdd);
+    setSelectedData(target.value);
     handleChange({ target });
   }
 
@@ -136,7 +141,7 @@ function SelectPlaylistTable({
   ];
   return (
     <>
-      {!isLoading && selectedData && (
+      {!isLoading && (
         <>
           <PlaylistsDropdown
             errors={errors}
@@ -144,10 +149,12 @@ function SelectPlaylistTable({
             handlePlaylistSelection={handleAdd}
             selected={selectedData.filter(({ toRemove }) => !toRemove)}
           />
-          <Table
-            columns={columns}
-            data={selectedData.filter(({ toRemove }) => !toRemove)}
-          />
+          {selectedData.filter(({ toRemove }) => !toRemove).length > 0 && (
+            <Table
+              columns={columns}
+              data={selectedData.filter(({ toRemove }) => !toRemove)}
+            />
+          )}
           <InfoModal
             show={showInfoModal}
             onClose={onCloseInfoModal}
@@ -163,7 +170,7 @@ function SelectPlaylistTable({
 SelectPlaylistTable.defaultProps = {
   errors: [],
   selectedData: [],
-  selectedDataEndpoint: "",
+  selectedDataEndpoint: [],
 };
 
 SelectPlaylistTable.propTypes = {

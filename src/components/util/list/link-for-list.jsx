@@ -17,8 +17,12 @@ import PropTypes from "prop-types";
  * A link for the list.
  */
 function LinkForList({ data, param, label }) {
+  const id = data["@id"].substring(
+    data["@id"].lastIndexOf("/") + 1,
+    data["@id"].length
+  );
   return (
-    <Link className="btn btn-primary" to={`/${param}/${data.id}`}>
+    <Link className="btn btn-primary" to={`/${param}/${id}`}>
       {label}
     </Link>
   );

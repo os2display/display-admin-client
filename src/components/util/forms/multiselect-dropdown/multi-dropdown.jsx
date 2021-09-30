@@ -73,7 +73,7 @@ function MultiSelectComponent({
     const localMappedOptions = options.map((item) => {
       return {
         label: item.title,
-        value: item.id,
+        value: item["@id"],
         disabled: false,
       };
     });
@@ -81,7 +81,7 @@ function MultiSelectComponent({
     const localMappedSelected = selected.map((item) => {
       return {
         label: item.title,
-        value: item.id,
+        value: item["@id"],
         disabled: false,
       };
     });
@@ -116,7 +116,9 @@ function MultiSelectComponent({
    */
   function changeData(data) {
     const ids = data.map(({ value }) => value);
-    const dataToReturn = options.filter((option) => ids.includes(option.id));
+    const dataToReturn = options.filter((option) =>
+      ids.includes(option["@id"])
+    );
     // The below disabling of underscore dang
     // eslint-disable-next-line no-underscore-dangle
     const newData = data.filter(({ __isNew__ }) => __isNew__);

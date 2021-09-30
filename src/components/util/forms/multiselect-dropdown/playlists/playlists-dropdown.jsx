@@ -26,7 +26,6 @@ function PlaylistsDropdown({
 }) {
   const { t } = useTranslation("common");
   const { data, isLoading } = useGetV1PlaylistsQuery({});
-
   return (
     <>
       {!isLoading && data && data["hydra:member"] && (

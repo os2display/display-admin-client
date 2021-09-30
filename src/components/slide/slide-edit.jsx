@@ -26,6 +26,7 @@ function SlideEdit() {
     PutV1Slides,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1SlidesByIdMutation();
+  console.log(saveError);
   const [
     PutV1PlaylistsByIdSlideAndSlide,
     {
@@ -42,15 +43,14 @@ function SlideEdit() {
       isSuccess: deletePlaylistSuccess,
     },
   ] = useDeleteV1PlaylistsByIdSlideAndSlideIdMutation();
-  console.log("isDeletingPlaylists", isDeletingPlaylists);
-  console.log("deletePlaylistError", deletePlaylistError);
-  console.log("deletePlaylistSuccess", deletePlaylistSuccess);
   const { data, error: loadError, isLoading } = useGetV1SlidesByIdQuery({ id });
   /**
    * Set loaded data into form state.
    */
   useEffect(() => {
     if (data) {
+      const saveData = { id: id, body: data };
+      PutV1Slides(saveData);
       setFormStateObject(data);
     }
   }, [data]);
@@ -60,6 +60,7 @@ function SlideEdit() {
    */
   useEffect(() => {
     if (isSaveSuccess) {
+      debugger;
       if (playlistsToAdd.length > 0) {
         let toAdd = playlistsToAdd.splice(0, 1);
         let toAddId = toAdd[0].id;
@@ -91,14 +92,13 @@ function SlideEdit() {
    */
   function handleSubmit() {
     // save screen
-    const saveData = { id, body: formStateObject };
+    const saveData = { id: id, body: formStateObject };
     PutV1Slides(saveData);
     setPlaylistsToRemove(
-      formStateObject.playlists.filter(({ toRemove }) => toRemove)
+      formStateObject.playlists?.filter(({ toRemove }) => toRemove)
     );
-    setPlaylistsToAdd(formStateObject.playlists.filter(({ toAdd }) => toAdd));
+    setPlaylistsToAdd(formStateObject.playlists?.filter(({ toAdd }) => toAdd));
   }
-
   return (
     <SlideForm
       slide={formStateObject}
