@@ -17,6 +17,9 @@ docker-compose run json-server npm install
 
 ### Create public/config file
 
+By default the api that is requested is located at `/api/`.
+This can be configured by:
+
 ```bash
 cp public/example_config.json public/config.json
 ```

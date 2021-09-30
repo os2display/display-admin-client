@@ -73,6 +73,9 @@ jobs:
       - name: Install json-server
         run: docker-compose run json-server bash -c 'npm install'
 
+      - name: Make public/config.json
+        run: cp public/example_config.json public/config.json
+
       - name: Cypress run
         run: docker-compose run cypress run --browser ${{ matrix.browser }}
 
