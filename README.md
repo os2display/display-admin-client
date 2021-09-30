@@ -63,3 +63,18 @@ docker-compose run node yarn check-coding-standards
 ```bash
 docker-compose run node yarn apply-coding-standards
 ```
+
+### Redux Toolkit
+
+The communication with the API is generated from an OpenAPI specification with Redux Toolkit.
+
+```
+docker-compose exec node bash
+cd src/redux/api
+
+# Action: Replace api.json with new api.json OpenAPI specification
+
+# Install and run scripts to generate ned Redux Api slices. 
+npm install
+npm start
+```

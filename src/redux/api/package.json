@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "generate": "npx @rtk-incubator/rtk-query-codegen-openapi --hooks api.json > api.generated.ts",
-    "replace1": "sed -i 's/import { fetchBaseQuery } from .*;/import extendedBaseQuery from \".\\\/dynamic-base-query\";/g' api.generated.ts",
+    "replace1": "sed -i 's/import { fetchBaseQuery } from .*;/import extendedBaseQuery from \"..\\\/dynamic-base-query\";/g' api.generated.ts",
     "replace2": "sed -i 's/baseQuery: fetchBaseQuery.*,/baseQuery: extendedBaseQuery,/g' api.generated.ts",
     "compile": "node_modules/typescript/bin/tsc api.generated.ts",
     "start": "npm run generate && npm run replace1 && npm run replace2 && npm run compile"

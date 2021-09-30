@@ -1,5 +1,5 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import ConfigLoader from "../../config-loader";
+import ConfigLoader from "../config-loader";
 
 const extendedBaseQuery = async (args, api, extraOptions) => {
   const config = await ConfigLoader.loadConfig();

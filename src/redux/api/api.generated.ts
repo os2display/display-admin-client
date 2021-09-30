@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import extendedBaseQuery from "./dynamic-base-query";
+import extendedBaseQuery from "../dynamic-base-query";
 export const api = createApi({
   baseQuery: extendedBaseQuery,
   tagTypes: [],
