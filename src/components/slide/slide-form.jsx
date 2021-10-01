@@ -46,7 +46,12 @@ function SlideForm({
     useGetV1TemplatesQuery({
       page: 1,
     });
-
+  /**
+   * Set loaded data into form state.
+   */
+  useEffect(() => {
+    console.log(slide);
+  }, [slide]);
   useEffect(() => {
     if (templates) {
       setTemplateOptions(templates["hydra:member"]);
@@ -138,7 +143,7 @@ function SlideForm({
             {/* todo select playlst will work when onscreen can be fetched */}
             <SelectPlaylistTable
               handleChange={handleInput}
-              name="playlists"
+              name="onPlaylists"
               selectedDataEndpoint={slide.onPlaylists}
             />
           </ContentBody>

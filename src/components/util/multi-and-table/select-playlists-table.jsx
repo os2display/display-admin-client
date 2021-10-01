@@ -6,8 +6,7 @@ import Table from "../table/table";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import InfoModal from "../../info-modal/info-modal";
 import ListButton from "../list/list-button";
-import { useGetV1SlidesByIdPlaylistsQuery } from "../../../redux/api/api.generated";
-
+import { useGetV1PlaylistsQuery } from "../../../redux/api/api.generated";
 /**
  * A multiselect and table for playlists.
  *
@@ -32,29 +31,17 @@ function SelectPlaylistTable({
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [selectedData, setSelectedData] = useState([]);
-  const [originallySelectedData, setOriginallySelectedData] = useState([]);
+  const { data, isLoading } = useGetV1PlaylistsQuery({});
   const [infoModalTitle, setInfoModalTitle] = useState("");
-  let id;
-  // id created below.
-  if (selectedDataEndpoint.length > 0) {
-    id = selectedDataEndpoint[0].substring(
-      selectedDataEndpoint[0].lastIndexOf("=") + 1,
-      selectedDataEndpoint[0].length
-    );
-  }
-  const { data, isLoading } = useGetV1SlidesByIdPlaylistsQuery({
-    id: id,
-  });
 
-  /**
-   * Set loaded data into form state.
-   */
   useEffect(() => {
-    if (data) {
-      setSelectedData(data["hydra:member"]);
-      setOriginallySelectedData(data["hydra:member"]);
+    if (selectedDataEndpoint.length > 0 && data) {
+      const localMappedSelected = data["hydra:member"].filter((item) =>
+        selectedDataEndpoint.includes(item["@id"])
+      );
+      setSelectedData(localMappedSelected);
     }
-  }, [data]);
+  }, [selectedDataEndpoint, data]);
 
   /**
    * Opens info modal with either categories or slides.
@@ -92,35 +79,34 @@ function SelectPlaylistTable({
    * @param {string} props.id
    * The id of the screen
    */
-  function removeFromList({ id }) {
+  function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
       .map((item) => {
-        return item.id;
+        return item["@id"];
       })
-      .indexOf(id);
+      .indexOf(removeItem["@id"]);
     let selectedDataCopy = [...selectedData];
-    let toRemove = selectedDataCopy.splice(indexOfItemToRemove, 1);
-    toRemove = { ...toRemove[0], toRemove: true, toAdd: false };
-    selectedDataCopy.push(toRemove);
+    selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
-    const target = { value: selectedDataCopy, id: name };
+
+    const target = {
+      value: selectedDataCopy.map((item) => item["@id"]),
+      id: name,
+    };
     handleChange({ target });
   }
 
   /**
    * Removes screen from list of screens.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.id
+   * @param {object} target
+   * The target.
+   * @param {string} target.id
    * The id of the screen
    */
   function handleAdd({ target }) {
-    let toAdd = target.value[0];
-    target.value.splice(0, 1);
-    toAdd = { ...toAdd, toRemove: false, toAdd: true };
-    target.value.push(toAdd);
     setSelectedData(target.value);
+    target.value = target.value.map((item) => item["@id"]);
     handleChange({ target });
   }
 
@@ -141,19 +127,17 @@ function SelectPlaylistTable({
   ];
   return (
     <>
-      {!isLoading && (
+      {!isLoading && data && data["hydra:member"] && (
         <>
           <PlaylistsDropdown
             errors={errors}
             name={name}
+            data={data["hydra:member"]}
             handlePlaylistSelection={handleAdd}
-            selected={selectedData.filter(({ toRemove }) => !toRemove)}
+            selected={selectedData}
           />
-          {selectedData.filter(({ toRemove }) => !toRemove).length > 0 && (
-            <Table
-              columns={columns}
-              data={selectedData.filter(({ toRemove }) => !toRemove)}
-            />
+          {selectedData.length > 0 && (
+            <Table columns={columns} data={selectedData} />
           )}
           <InfoModal
             show={showInfoModal}
