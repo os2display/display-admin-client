@@ -15,6 +15,7 @@ import { useGetV1PlaylistsQuery } from "../../../../../redux/api/api.generated";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
+ * @param props.data
  * @returns {object}
  * The multidropdown of playlists.
  */

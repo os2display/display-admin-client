@@ -13,7 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
  * The list button.
  */
 function ListButton(callback, apiGetCall, id) {
-  const { data } = apiGetCall({ id: id });
+  const { data } = apiGetCall({ id });
 
   return (
     <>

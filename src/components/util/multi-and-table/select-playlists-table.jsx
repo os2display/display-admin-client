@@ -78,6 +78,7 @@ function SelectPlaylistTable({
    * The props.
    * @param {string} props.id
    * The id of the playlist
+   * @param removeItem
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
@@ -85,7 +86,7 @@ function SelectPlaylistTable({
         return item["@id"];
       })
       .indexOf(removeItem["@id"]);
-    let selectedDataCopy = [...selectedData];
+    const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
 
@@ -99,6 +100,7 @@ function SelectPlaylistTable({
   /**
    * Removes playlist from list of playlists.
    *
+   * @param target.target
    * @param {object} target
    * The target.
    * @param {string} target.id
