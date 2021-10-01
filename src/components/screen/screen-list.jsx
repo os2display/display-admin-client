@@ -83,9 +83,9 @@ function ScreenList() {
    * @param {object} props
    * The props.
    * @param {string} props.title
-   * The title of the tag.
+   * The title of the screen.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the screen
    */
   function openDeleteModal({ id, title }) {
     setSelectedRows([{ id, title }]);

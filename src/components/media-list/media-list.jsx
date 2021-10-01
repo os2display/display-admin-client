@@ -5,7 +5,6 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
-import TagDropdown from "../util/forms/multiselect-dropdown/tags/tag-dropdown";
 import SearchBox from "../util/search-box/search-box";
 import ContentBody from "../util/content-body/content-body";
 import "./media-list.scss";
@@ -25,28 +24,9 @@ import "./media-list.scss";
 function MediaList({ fromModal, handleSelected }) {
   // Translations
   const { t } = useTranslation("common");
-
-  // Url search paramters
-  /**
-   * @param {string} params
-   * the tags paramters from the url.
-   * @returns {object}
-   * Returns the tags from the url for the multiselect component.
-   */
-  function getTagsParams(params) {
-    let returnTags = [];
-    if (params) {
-      returnTags = params.split(",").map((tag) => {
-        const tagFields = tag.split("@");
-        return { name: tagFields[0], id: parseInt(tagFields[1], 10) };
-      });
-    }
-    return returnTags;
-  }
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search).get("search");
-  const tagsParams = new URLSearchParams(search).get("tags");
 
   // State
   const [media, setMedia] = useState([]);
@@ -55,7 +35,6 @@ function MediaList({ fromModal, handleSelected }) {
   const [searchText, setSearchText] = useState(
     searchParams === null ? "" : searchParams
   );
-  const [selectedTags, setSelectedTags] = useState(getTagsParams(tagsParams));
 
   // Disable delete button
   const disableDeleteButton = !selectedMedia.length > 0;
@@ -108,20 +87,7 @@ function MediaList({ fromModal, handleSelected }) {
    * returns object of paginated data array and length of data.
    */
   function getListData() {
-    let returnValue = [];
-    if (selectedTags.length > 0) {
-      media.forEach((element) => {
-        // Ids of the selected tags
-        const ids = selectedTags.map((a) => a.id);
-        // Creates an array where the intersection between media.tags and ids.
-        const filteredArray = element.tags.filter(({ id }) => ids.includes(id));
-        // If there is an overlap, the media has the tag and should be displayed.
-        if (filteredArray.length > 0) returnValue.push(element);
-      });
-    } else {
-      // If there are no selected tags, the media should just be displayed
-      returnValue = media;
-    }
+    let returnValue = media;
 
     // Filter by search text.
     if (searchText) {
@@ -140,25 +106,9 @@ function MediaList({ fromModal, handleSelected }) {
       if (searchText) {
         params.append("search", searchText);
       }
-      if (selectedTags.length > 0) {
-        const selectedTagsForUrl = selectedTags.map((a) => `${a.name}@${a.id}`);
-        params.append("tags", selectedTagsForUrl.join(","));
-      }
       history.replace({ search: params.toString() });
     }
-  }, [searchText, selectedTags]);
-
-  /**
-   * Sets selected tags.
-   *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * The target, which is the selected tags.
-   */
-  function onTagInput({ target }) {
-    setSelectedTags(target.value);
-  }
+  }, [searchText]);
 
   /**
    * Sets search text.
@@ -232,15 +182,6 @@ function MediaList({ fromModal, handleSelected }) {
               helpText={t("media-list.search-help-text")}
             />
           </Col>
-          <Col sm={12} md={6} className="mt-3 mt-md-0">
-            <TagDropdown
-              selected={selectedTags}
-              name="tags"
-              label={t("media-list.tags-select-label")}
-              handleTagSelection={onTagInput}
-              helpText={t("media-list.tags-select-help-text")}
-            />
-          </Col>
         </Row>
 
         <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5  media-list">
@@ -286,18 +227,6 @@ function MediaList({ fromModal, handleSelected }) {
                   <div className="row">
                     <div className="col">
                       <span className="small">{data.description}</span>
-                    </div>
-                  </div>
-                  <div className="row mt-1">
-                    <div className="col">
-                      {data.tags.map((tag) => (
-                        <span
-                          className="badge bg-light text-dark border me-1"
-                          key={tag.id}
-                        >
-                          {tag.name}{" "}
-                        </span>
-                      ))}
                     </div>
                   </div>
                 </div>

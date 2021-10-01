@@ -5,18 +5,6 @@ describe("media-list list tests", () => {
     cy.get(".media-item").should("have.length", 12);
   });
 
-  it("It filters list by tags (media-list)", () => {
-    cy.visit("/media-list");
-    cy.get(".media-list").should("not.be.empty");
-    cy.get(".media-item").should("have.length", 12);
-    cy.get(".dropdown-heading").eq(0).click();
-    cy.get('[type="checkbox"]').eq(2).check();
-    cy.get(".dropdown-heading").eq(0).click();
-    cy.get(".media-item").should("have.length", 9);
-    cy.visit("/media-list?tags=matrices%401%2Ctest%402%2Csystem-worthy%403");
-    cy.get(".media-item").should("have.length", 11);
-  });
-
   it("It selects images (media-list)", () => {
     cy.visit("/media-list");
     cy.get("#delete_media_button").should("be.disabled");

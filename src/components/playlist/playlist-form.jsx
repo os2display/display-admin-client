@@ -77,14 +77,6 @@ function PlaylistForm({
               value={playlist.description}
               onChange={handleInput}
             />
-            {/* @TODO:
-        <CategoriesDropdown
-          errors={errors}
-          name="playlistCategories"
-          handleCategorySelection={handleInput}
-          selected={playlist.playlistCategories}
-        />
-        */}
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("edit-playlist.title-screens")}</h2>

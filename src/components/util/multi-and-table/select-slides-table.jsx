@@ -85,10 +85,6 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
       label: t("select-slides-table.columns.number-of-playlists"),
     },
     {
-      path: "tags",
-      label: t("select-slides-table.columns.tags"),
-    },
-    {
       path: "published",
       content: (data) => Published(data),
       label: t("select-slides-table.columns.published"),

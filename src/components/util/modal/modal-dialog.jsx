@@ -23,7 +23,7 @@ import { useTranslation } from "react-i18next";
  * @param {string} props.btnVariant
  * The variant of the submit button.
  * @returns {object}
- * The TagList
+ * The the modal dialog
  */
 function ModalDialog({
   title,
