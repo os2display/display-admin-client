@@ -15,6 +15,23 @@ git clone https://github.com/os2display/display-api-mock.git json-server
 docker-compose run json-server npm install
 ```
 
+### Create public/config file
+
+By default the api that is requested is located at `/api/`.
+This can be configured by:
+
+```bash
+cp public/example_config.json public/config.json
+```
+
+And modify the entries to suit your setup.
+
+```json
+{
+  "api": "[WHERE TO FIND THE API]"
+}
+```
+
 ### Up the containers
 
 ```bash
@@ -45,4 +62,20 @@ docker-compose run node yarn check-coding-standards
 
 ```bash
 docker-compose run node yarn apply-coding-standards
+```
+
+### Redux Toolkit
+
+The communication with the API is generated from an OpenAPI
+specification with Redux Toolkit.
+
+```bash
+docker-compose exec node bash
+cd src/redux/api
+
+# Action: Replace api.json with new api.json OpenAPI specification
+
+# Install and run scripts to generate ned Redux Api slices. 
+npm install
+npm start
 ```

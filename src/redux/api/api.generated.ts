@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { fetchBaseQuery } from "@reduxjs/toolkit/query";
+import extendedBaseQuery from "../dynamic-base-query";
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
+  baseQuery: extendedBaseQuery,
   tagTypes: [],
   endpoints: (build) => ({
     getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({

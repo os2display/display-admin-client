@@ -34,3 +34,5 @@ temp/
 
 # API mock
 json-server/
+
+public/config.json

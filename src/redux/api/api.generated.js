@@ -2,9 +2,9 @@
 exports.__esModule = true;
 exports.useGetV1TemplatesByIdQuery = exports.useGetV1TemplatesQuery = exports.useGetV1SlidesByIdPlaylistsQuery = exports.useDeleteV1SlidesByIdMutation = exports.usePutV1SlidesByIdMutation = exports.useGetV1SlidesByIdQuery = exports.usePostV1SlidesMutation = exports.useGetV1SlidesQuery = exports.useDeletePlaylistScreenRegionItemMutation = exports.usePutPlaylistScreenRegionItemMutation = exports.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery = exports.useDeleteV1ScreensByIdMutation = exports.usePutV1ScreensByIdMutation = exports.useGetV1ScreensByIdQuery = exports.usePostV1ScreensMutation = exports.useGetV1ScreensQuery = exports.useDeleteV1ScreenGroupsByIdMutation = exports.usePutV1ScreenGroupsByIdMutation = exports.useGetV1ScreenGroupsByIdQuery = exports.usePostV1ScreenGroupsMutation = exports.useGetV1ScreenGroupsQuery = exports.useGetV1PlaylistsByIdSlidesQuery = exports.useDeleteV1PlaylistsByIdSlideAndSlideIdMutation = exports.usePutV1PlaylistsByIdSlideAndSlideIdMutation = exports.useGetV1PlaylistsByIdScreensQuery = exports.useDeleteV1PlaylistsByIdMutation = exports.usePutV1PlaylistsByIdMutation = exports.useGetV1PlaylistsByIdQuery = exports.usePostV1PlaylistsMutation = exports.useGetV1PlaylistsQuery = exports.useGetV1MediaByIdQuery = exports.useGetV1MediaQuery = exports.useGetV1LayoutsByIdQuery = exports.useGetV1LayoutsQuery = exports.api = void 0;
 var react_1 = require("@reduxjs/toolkit/query/react");
-var query_1 = require("@reduxjs/toolkit/query");
+var dynamic_base_query_1 = require("../dynamic-base-query");
 exports.api = (0, react_1.createApi)({
-    baseQuery: (0, query_1.fetchBaseQuery)({ baseUrl: "/api/" }),
+    baseQuery: dynamic_base_query_1["default"],
     tagTypes: [],
     endpoints: function (build) { return ({
         getV1Layouts: build.query({
