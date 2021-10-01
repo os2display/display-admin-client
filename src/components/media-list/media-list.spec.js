@@ -5,7 +5,6 @@ describe("media-list list tests", () => {
     cy.get(".media-item").should("have.length", 12);
   });
 
-
   it("It selects images (media-list)", () => {
     cy.visit("/media-list");
     cy.get("#delete_media_button").should("be.disabled");

@@ -116,7 +116,7 @@
       "pick": "Vælg spilleliste",
       "name": "Navn",
       "on-screens": "Skærme tilknyttet",
-      "number-of-slides": "Slides tilknyttede",
+      "number-of-slides": "Slides tilknyttede"
     },
     "info-modal": {
       "playlist-slides": "Spillelisten har følgende slides",
@@ -217,7 +217,7 @@
       "playlist-screens": "Spillelisten er på følgende skærme"
     },
     "info-modal": {
-      "playlist-slides": "Spillelisten har følgende slides",
+      "playlist-slides": "Spillelisten har følgende slides"
     },
     "remove-from-list": "Fjern fra liste"
   },
@@ -319,10 +319,10 @@
     "columns": {
       "pick": "Vælg spilleliste",
       "name": "Navn",
-      "number-of-slides": "Slides tilknyttede",
+      "number-of-slides": "Slides tilknyttede"
     },
     "info-modal": {
-      "playlist-slides": "Spillelisten har følgende slides",
+      "playlist-slides": "Spillelisten har følgende slides"
     },
     "remove-from-list": "Fjern fra liste"
   },
@@ -352,7 +352,7 @@
     "image-name-placeholder": "Skriv billedets navn",
     "image-description-label": "Beskrivelse af billedet",
     "image-description-placeholder": "Udfyld beskrivelse af billedet",
-    "image-description-help-text": "Denne beskrivelse benyttes til alt-text, og er derfor påkrævet",
+    "image-description-help-text": "Denne beskrivelse benyttes til alt-text, og er derfor påkrævet"
   },
   "drag-and-drop-table": {
     "table-header-for-indicator": "Drag and drop indikator",
