@@ -41,7 +41,6 @@ function EditMedia() {
                 url: jsonData.media.url,
                 mediaName: jsonData.media.name,
                 mediaDescription: jsonData.media.description,
-                mediaTags: jsonData.media.tags,
               },
             ],
           });

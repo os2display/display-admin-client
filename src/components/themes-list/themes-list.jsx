@@ -51,9 +51,9 @@ function ThemesList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the tag.
+   * The name of the theme.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the theme
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
@@ -128,9 +128,9 @@ function ThemesList() {
    * @param {object} props
    * The props.
    * @param {string} props.name
-   * The name of the tag.
+   * The name of the theme.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the theme
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import FormInput from "../forms/form-input";
-import TagDropdown from "../forms/multiselect-dropdown/tags/tag-dropdown";
 import "./image-uploader.scss";
 /**
  * @param {object} props
@@ -67,14 +66,6 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
           helpText={t("image.image-description-help-text")}
           value={image.mediaDescription}
           onChange={onChange}
-          formGroupClasses="mb-3"
-        />
-        <TagDropdown
-          selected={image.mediaTags || []}
-          name="mediaTags"
-          label={t("image.image-tags-label")}
-          handleTagSelection={onChange}
-          helpText={t("image.image-tags-help-text")}
           formGroupClasses="mb-3"
         />
         <Button

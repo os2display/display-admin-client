@@ -16,7 +16,7 @@ import {
   useDeleteV1SlidesByIdMutation,
 } from "../../redux/api/api.generated";
 /**
- * The category list component.
+ * The slides list component.
  *
  * @returns {object}
  * The SlidesList
@@ -46,9 +46,9 @@ function SlidesList() {
    * @param {object} props
    * The props.
    * @param {string} props.title
-   * The title of the tag.
+   * The title of the slide.
    * @param {number} props.id
-   * The id of the tag
+   * The id of the slide
    */
   function openDeleteModal({ id, title }) {
     setSelectedRows([{ id, title }]);
@@ -99,11 +99,6 @@ function SlidesList() {
       content: () => <div>todo</div>,
       key: "playlists",
       label: t("slides-list.columns.number-of-playlists"),
-    },
-    {
-      content: () => <div>todo</div>,
-      sort: true,
-      label: t("slides-list.columns.tags"),
     },
     {
       path: "published",

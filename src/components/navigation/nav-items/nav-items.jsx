@@ -47,11 +47,6 @@ function NavItems() {
         </NavLink>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
-        <NavLink id="nav-items_content_tags" className="nav-link" to="/tags">
-          {t("nav-items.content-tags")}
-        </NavLink>
-      </Nav.Item>
-      <Nav.Item className="nav-second-level">
         <NavLink
           id="nav-items_content_media"
           className="nav-link"
@@ -71,15 +66,6 @@ function NavItems() {
           <Link className="nav-add-new" to="/playlists/create">
             <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
           </Link>
-        </NavLink>
-      </Nav.Item>
-      <Nav.Item className="nav-second-level">
-        <NavLink
-          id="nav-items_playlists_categories"
-          className="nav-link"
-          to="/categories"
-        >
-          {t("nav-items.playlists-categories")}
         </NavLink>
       </Nav.Item>
       <Nav.Item>
