@@ -162,7 +162,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        title={infoModal}
+        modalTitle={infoModal}
       />
     </>
   );

@@ -24,7 +24,8 @@ import { useTranslation } from "react-i18next";
  * The helptext.
  * @param {string} props.formGroupClasses
  * The classes for the form-group element.
- * @param props.isRequired
+ * @param {boolean} props.isRequired
+ * If the select is required.
  * @returns {object}
  * The select component.
  */
@@ -106,7 +107,7 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
-  value: PropTypes.bool,
+  isRequired: PropTypes.bool,
   errorText: PropTypes.string,
   helpText: PropTypes.string,
   formGroupClasses: PropTypes.string,

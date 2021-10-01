@@ -29,8 +29,7 @@ function LinkForList({ data, param, label }) {
 }
 
 LinkForList.propTypes = {
-  data: PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
-    .isRequired,
+  data: PropTypes.shape(PropTypes.any).isRequired,
   param: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
 };

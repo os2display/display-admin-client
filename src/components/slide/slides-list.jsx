@@ -214,7 +214,7 @@ function SlidesList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        title={t("slides-list.info-modal.slide-on-playlists")}
+        modalTitle={t("slides-list.info-modal.slide-on-playlists")}
       />
     </>
   );

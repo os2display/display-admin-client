@@ -7,8 +7,6 @@ import Spinner from "react-bootstrap/Spinner";
  * The function to call to get relevant data.
  * @param {string} id
  * The id for fetching.
- * @param {boolean} disabled
- * Whether the button should be disabled.
  * @returns {object}
  * The list button.
  */
