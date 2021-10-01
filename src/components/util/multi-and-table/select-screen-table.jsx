@@ -7,7 +7,7 @@ import CampaignIcon from "../../screen-list/campaign-icon";
 import LiveIcon from "../../screen-list/live-icon";
 import ListButton from "../list/list-button";
 import InfoModal from "../../info-modal/info-modal";
-
+import { useGetV1ScreensQuery } from "../../../redux/api/api.generated";
 /**
  * A multiselect and table for screens.
  *
@@ -31,11 +31,18 @@ function SelectScreenTable({
   const { t } = useTranslation("common");
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [inGroups, setInGroups] = useState();
+  const [selectedData, setSelectedData] = useState([]);
+  const { data, isLoading } = useGetV1ScreensQuery({});
   // id created below.
-  const id = template["@id"].substring(
-    template["@id"].lastIndexOf("/") + 1,
-    template["@id"].length
-  );
+  useEffect(() => {
+    if (selectedDataEndpoint.length > 0 && data) {
+      const localMappedSelected = data["hydra:member"].filter((item) =>
+        selectedDataEndpoint.includes(item["@id"])
+      );
+      setSelectedData(localMappedSelected);
+    }
+  }, [selectedDataEndpoint, data]);
+
   /**
    * @param {Array} groupsArray
    * The array of groups.
@@ -51,23 +58,42 @@ function SelectScreenTable({
     setShowInfoModal(false);
     setInGroups();
   }
-
   /**
-   * Removes screen from list of screens.
+   * Removes playlist from list of playlists.
    *
    * @param {object} props
    * The props.
    * @param {string} props.id
-   * The id of the screen
+   * The id of the playlist
    */
-  function removeFromList({ id }) {
+  function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
       .map((item) => {
-        return item.id;
+        return item["@id"];
       })
-      .indexOf(id);
-    selectedData.splice(indexOfItemToRemove, 1);
-    const target = { value: selectedData, id: name };
+      .indexOf(removeItem["@id"]);
+    let selectedDataCopy = [...selectedData];
+    selectedDataCopy.splice(indexOfItemToRemove, 1);
+    setSelectedData(selectedDataCopy);
+
+    const target = {
+      value: selectedDataCopy.map((item) => item["@id"]),
+      id: name,
+    };
+    handleChange({ target });
+  }
+
+  /**
+   * Removes playlist from list of playlists.
+   *
+   * @param {object} target
+   * The target.
+   * @param {string} target.id
+   * The id of the playlist
+   */
+  function handleAdd({ target }) {
+    setSelectedData(target.value);
+    target.value = target.value.map((item) => item["@id"]);
     handleChange({ target });
   }
 
@@ -120,22 +146,27 @@ function SelectScreenTable({
 
   return (
     <>
-      <ScreensDropdown
-        errors={errors}
-        name={name}
-        handleScreenSelection={handleChange}
-        selected={selectedData}
-      />
-      {/* @TODO: this should work when real data is fetched */}
-      {/* {selectedData.length > 0 && (
-        <Table columns={columns} data={selectedData} />
-      )} */}
-      <InfoModal
-        show={showInfoModal}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={inGroups}
-        title={t("select-screen-table.info-modal.screen-in-groups")}
-      />
+      {!isLoading && data && data["hydra:member"] && (
+        <>
+          <ScreensDropdown
+            errors={errors}
+            name={name}
+            data={data["hydra:member"]}
+            handleScreenSelection={handleAdd}
+            selected={selectedData}
+          />
+          {/* @TODO: this should work when real data is fetched */}
+          {selectedData.length > 0 && (
+            <Table columns={columns} data={selectedData} />
+          )}
+          <InfoModal
+            show={showInfoModal}
+            onClose={onCloseInfoModal}
+            dataStructureToDisplay={inGroups}
+            title={t("select-screen-table.info-modal.screen-in-groups")}
+          />
+        </>
+      )}
     </>
   );
 }

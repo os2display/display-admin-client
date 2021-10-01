@@ -18,37 +18,34 @@ import { useGetV1ScreensQuery } from "../../../../../redux/api/api.generated";
  * @returns {object}
  * The multidropdown of playlists.
  */
-function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
+function ScreensDropdown({
+  handleScreenSelection,
+  selected,
+  name,
+  errors,
+  data,
+}) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
   const [selectedOptions, setSelectedOptions] = useState([
     { title: t("screens-dropdown.no-screens-configured"), id: 1 },
   ]);
-  const { data, isLoading } = useGetV1ScreensQuery({ page: 1 });
-  /**
-   * Load screens
-   */
-  useEffect(() => {
-    if (data) {
-      setOptions(data["hydra:member"]);
-      setSelectedOptions(selected);
-    }
-  }, [data]);
 
   return (
     <>
-      {options && (
-        <MultiSelectComponent
-          isLoading={isLoading}
-          handleSelection={handleScreenSelection}
-          options={options}
-          label={t("screens-dropdown.label")}
-          noSelectedString={t("screens-dropdown.nothing-selected")}
-          selected={selectedOptions}
-          name={name}
-          isCreatable
-          errors={errors}
-        />
+      {data && (
+        <>
+          <MultiSelectComponent
+            isLoading={isLoading}
+            handleSelection={handleScreenSelection}
+            options={options}
+            label={t("screens-dropdown.label")}
+            noSelectedString={t("screens-dropdown.nothing-selected")}
+            selected={selected}
+            name={name}
+            isCreatable
+            errors={errors}
+          />
+        </>
       )}
     </>
   );
