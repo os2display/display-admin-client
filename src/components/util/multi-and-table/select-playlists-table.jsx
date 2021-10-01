@@ -72,12 +72,12 @@ function SelectPlaylistTable({
   }
 
   /**
-   * Removes screen from list of screens.
+   * Removes playlist from list of playlists.
    *
    * @param {object} props
    * The props.
    * @param {string} props.id
-   * The id of the screen
+   * The id of the playlist
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
@@ -97,12 +97,12 @@ function SelectPlaylistTable({
   }
 
   /**
-   * Removes screen from list of screens.
+   * Removes playlist from list of playlists.
    *
    * @param {object} target
    * The target.
    * @param {string} target.id
-   * The id of the screen
+   * The id of the playlist
    */
   function handleAdd({ target }) {
     setSelectedData(target.value);
