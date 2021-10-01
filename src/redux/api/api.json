@@ -85,245 +85,7 @@
                         "description": "OK",
                         "content": {
                             "application/ld+json": {
-                                "examples": {
-                                    "4-way-split": {
-                                        "value": {
-                                            "@context": {
-                                                "@vocab": "http://displayapiservice.local.itkdev.dk/docs.jsonld#",
-                                                "hydra": "http://www.w3.org/ns/hydra/core#",
-                                                "title": "ScreenLayout/title",
-                                                "grid": "ScreenLayout/grid",
-                                                "regions": "ScreenLayout/regions"
-                                            },
-                                            "@type": "ScreenLayout",
-                                            "@id": "/v1/layout/01FFMSXWE1KJ259DPR1HYKHSP6",
-                                            "title": "4 way split",
-                                            "grid": {
-                                                "rows": 2,
-                                                "columns": 2
-                                            },
-                                            "regions": [
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 1",
-                                                    "gridArea": [
-                                                        "a"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 2",
-                                                    "gridArea": [
-                                                        "b"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 3",
-                                                    "gridArea": [
-                                                        "c"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 4",
-                                                    "gridArea": [
-                                                        "d"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "Complicated": {
-                                        "value": {
-                                            "@context": {
-                                                "@vocab": "http://displayapiservice.local.itkdev.dk/docs.jsonld#",
-                                                "hydra": "http://www.w3.org/ns/hydra/core#",
-                                                "title": "ScreenLayout/title",
-                                                "grid": "ScreenLayout/grid",
-                                                "regions": "ScreenLayout/regions"
-                                            },
-                                            "@type": "ScreenLayout",
-                                            "@id": "/v1/layout/01FFMSXWE30CZKREE4E1C6DQ5J",
-                                            "title": "4 way split",
-                                            "grid": {
-                                                "rows": 4,
-                                                "columns": 12
-                                            },
-                                            "regions": [
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 1",
-                                                    "gridArea": [
-                                                        "a",
-                                                        "d"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 2",
-                                                    "gridArea": [
-                                                        "e",
-                                                        "m"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 3",
-                                                    "gridArea": [
-                                                        "q",
-                                                        "y"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 4",
-                                                    "gridArea": [
-                                                        "cc",
-                                                        "oo"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 5",
-                                                    "gridArea": [
-                                                        "ss",
-                                                        "vv"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 6",
-                                                    "gridArea": [
-                                                        "f",
-                                                        "rr"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "3x3": {
-                                        "value": {
-                                            "@context": {
-                                                "@vocab": "http://displayapiservice.local.itkdev.dk/docs.jsonld#",
-                                                "hydra": "http://www.w3.org/ns/hydra/core#",
-                                                "title": "ScreenLayout/title",
-                                                "grid": "ScreenLayout/grid",
-                                                "regions": "ScreenLayout/regions"
-                                            },
-                                            "@type": "ScreenLayout",
-                                            "@id": "/v1/layout/01FFMSXWE6BGCBRH2M48ZZMHYR",
-                                            "title": "3x3",
-                                            "grid": {
-                                                "rows": 3,
-                                                "columns": 3
-                                            },
-                                            "regions": [
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 1",
-                                                    "gridArea": [
-                                                        "a"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 2",
-                                                    "gridArea": [
-                                                        "b"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 3",
-                                                    "gridArea": [
-                                                        "c"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 4",
-                                                    "gridArea": [
-                                                        "d"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 5",
-                                                    "gridArea": [
-                                                        "e"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 6",
-                                                    "gridArea": [
-                                                        "f"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 7",
-                                                    "gridArea": [
-                                                        "g"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 8",
-                                                    "gridArea": [
-                                                        "h"
-                                                    ]
-                                                },
-                                                {
-                                                    "@context": "/contexts/ScreenLayoutRegions",
-                                                    "@id": "/v1/screen-layout-regions/01FFS94CHYW9268WFP1JF6H1VC",
-                                                    "@type": "ScreenLayoutRegions",
-                                                    "title": "Region 9",
-                                                    "gridArea": [
-                                                        "i"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
+                                "examples": null
                             }
                         },
                         "headers": {}
@@ -411,6 +173,83 @@
                 ],
                 "deprecated": false
             },
+            "post": {
+                "operationId": "postMediaCollection",
+                "tags": [
+                    "Media"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Media resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Media.Media.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Media.Media"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Media.Media"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Creates a Media resource.",
+                "description": "Creates a Media resource.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "license",
+                                    "file"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "license": {
+                                        "type": "string"
+                                    },
+                                    "modifiedBy": {
+                                        "type": "string"
+                                    },
+                                    "createdBy": {
+                                        "type": "string"
+                                    },
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
             "parameters": []
         },
         "/v1/media/{id}": {
@@ -449,6 +288,114 @@
                             "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "delete-v1-media-id",
+                "tags": [
+                    "Media"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Media resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete a Media resource.",
+                "description": "Delete a Media resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/media/{id}/slides": {
+            "get": {
+                "operationId": "get-v1-media-slides",
+                "tags": [
+                    "Media"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieves a collection of Slide resources base on Playlist.",
+                "description": "Retrieves a collection of Slide resources.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "id",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
                         "explode": false,
                         "allowReserved": false
                     }
@@ -532,6 +479,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/Playlist.Playlist"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Playlist.Playlist"
+                                }
                             }
                         },
                         "links": {}
@@ -555,6 +507,11 @@
                             }
                         },
                         "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Playlist.PlaylistInput"
+                            }
+                        },
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/Playlist.PlaylistInput"
                             }
@@ -626,6 +583,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/Playlist.Playlist"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Playlist.Playlist"
+                                }
                             }
                         },
                         "links": {}
@@ -669,6 +631,11 @@
                             }
                         },
                         "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Playlist.PlaylistInput"
+                            }
+                        },
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/Playlist.PlaylistInput"
                             }
@@ -815,6 +782,14 @@
                                         "$ref": "#/components/schemas/Screen.Screen"
                                     }
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Screen.Screen"
+                                    }
+                                }
                             }
                         }
                     }
@@ -891,6 +866,11 @@
                                 }
                             },
                             "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Playlist.Playlist"
+                                }
+                            },
+                            "multipart/form-data": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Playlist.Playlist"
                                 }
@@ -1194,6 +1174,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/ScreenGroup.ScreenGroup"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroup.ScreenGroup"
+                                }
                             }
                         },
                         "links": {}
@@ -1220,6 +1205,11 @@
                             "schema": {
                                 "$ref": "#/components/schemas/ScreenGroup.ScreenGroupInput"
                             }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScreenGroup.ScreenGroupInput"
+                            }
                         }
                     },
                     "required": true
@@ -1239,31 +1229,7 @@
                         "description": "OK",
                         "content": {
                             "application/ld+json": {
-                                "examples": {
-                                    "Group": {
-                                        "value": {
-                                            "@context": {
-                                                "@vocab": "http://displayapiservice.local.itkdev.dk/docs.jsonld#",
-                                                "hydra": "http://www.w3.org/ns/hydra/core#",
-                                                "title": "ScreenGroup/title",
-                                                "description": "ScreenGroup/description",
-                                                "license": "ScreenGroup/license",
-                                                "created": "ScreenGroup/created",
-                                                "modified": "ScreenGroup/modified",
-                                                "modifiedBy": "ScreenGroup/modifiedBy",
-                                                "createdBy": "ScreenGroup/createdBy"
-                                            },
-                                            "@type": "ScreenGroup",
-                                            "@id": "/v1/screen-groups/01FFS94CJXKT2JBWEMTDP0JNFK",
-                                            "title": "Voluptas blanditiis non tempora cupiditate unde.",
-                                            "description": "Eos ea et modi impedit non quod. Ipsa ut et aut quis velit sit occaecati dolorem. Ut et quidem rerum aut ducimus nihil.",
-                                            "created": "2021-09-17T07:04:33+02:00",
-                                            "modified": "2021-09-17T07:04:33+02:00",
-                                            "modifiedBy": "",
-                                            "createdBy": ""
-                                        }
-                                    }
-                                }
+                                "examples": null
                             }
                         },
                         "headers": {}
@@ -1312,6 +1278,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/ScreenGroup.ScreenGroup"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroup.ScreenGroup"
+                                }
                             }
                         },
                         "links": {}
@@ -1355,6 +1326,11 @@
                             }
                         },
                         "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScreenGroup.ScreenGroupInput"
+                            }
+                        },
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/ScreenGroup.ScreenGroupInput"
                             }
@@ -1474,6 +1450,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/Screen.Screen"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Screen.Screen"
+                                }
                             }
                         },
                         "links": {}
@@ -1497,6 +1478,11 @@
                             }
                         },
                         "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Screen.ScreenInput"
+                            }
+                        },
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/Screen.ScreenInput"
                             }
@@ -1568,6 +1554,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/Screen.Screen"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Screen.Screen"
+                                }
                             }
                         },
                         "links": {}
@@ -1611,6 +1602,11 @@
                             }
                         },
                         "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Screen.ScreenInput"
+                            }
+                        },
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/Screen.ScreenInput"
                             }
@@ -1751,6 +1747,14 @@
                                 }
                             },
                             "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Playlist.Playlist"
+                                    }
+                                }
+                            },
+                            "multipart/form-data": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
@@ -2064,6 +2068,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/Slide.Slide"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Slide.Slide"
+                                }
                             }
                         },
                         "links": {}
@@ -2087,6 +2096,11 @@
                             }
                         },
                         "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Slide.SlideInput"
+                            }
+                        },
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/Slide.SlideInput"
                             }
@@ -2158,6 +2172,11 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/Slide.Slide"
                                 }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Slide.Slide"
+                                }
                             }
                         },
                         "links": {}
@@ -2201,6 +2220,11 @@
                             }
                         },
                         "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Slide.SlideInput"
+                            }
+                        },
+                        "multipart/form-data": {
                             "schema": {
                                 "$ref": "#/components/schemas/Slide.SlideInput"
                             }
@@ -2544,6 +2568,9 @@
                     "createdBy": {
                         "type": "string"
                     },
+                    "media": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
                     "assets": {
                         "type": "array",
                         "items": {
@@ -2556,14 +2583,6 @@
                 "type": "object",
                 "description": "",
                 "properties": {
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
                     "@context": {
                         "readOnly": true,
                         "oneOf": [
@@ -2591,6 +2610,14 @@
                             }
                         ]
                     },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
                     "title": {
                         "type": "string"
                     },
@@ -2613,6 +2640,9 @@
                     },
                     "createdBy": {
                         "type": "string"
+                    },
+                    "media": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
                     },
                     "assets": {
                         "type": "array",
@@ -2857,11 +2887,6 @@
                     "region": {
                         "type": "string",
                         "format": "iri-reference"
-                    },
-                    "id": {
-                        "readOnly": true,
-                        "type": "integer",
-                        "nullable": true
                     }
                 }
             },
@@ -2915,11 +2940,6 @@
                     "region": {
                         "type": "string",
                         "format": "iri-reference"
-                    },
-                    "id": {
-                        "readOnly": true,
-                        "type": "integer",
-                        "nullable": true
                     }
                 }
             },
@@ -3547,6 +3567,9 @@
                             "type": "string"
                         }
                     },
+                    "media": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
                     "content": {
                         "type": "array",
                         "items": {
@@ -3652,6 +3675,9 @@
                             "type": "string"
                         }
                     },
+                    "media": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
                     "content": {
                         "type": "array",
                         "items": {
@@ -3707,6 +3733,12 @@
                             "from": 0,
                             "to": 0
                         },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "media": {
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -3808,6 +3840,12 @@
                             "from": 0,
                             "to": 0
                         },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "media": {
                         "type": "array",
                         "items": {
                             "type": "string"
