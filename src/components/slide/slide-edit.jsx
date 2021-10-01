@@ -54,7 +54,10 @@ function SlideEdit() {
    */
   useEffect(() => {
     if (data) {
-      setFormStateObject(data);
+      console.log(data);
+      let dataCopy = { ...data };
+      dataCopy.templateInfo = dataCopy.templateInfo["@id"];
+      setFormStateObject(dataCopy);
       setOriginallySelectedPlaylists(data.onPlaylists);
     }
   }, [data]);

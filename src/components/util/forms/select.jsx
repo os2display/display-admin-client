@@ -37,6 +37,7 @@ function Select({
   errorText,
   helpText,
   formGroupClasses,
+  isRequired,
 }) {
   const { t } = useTranslation("common");
   const textOnError = errorText || t("select.validation-text");
@@ -62,6 +63,7 @@ function Select({
       </label>
       <select
         className={classes}
+        required={isRequired}
         id={name}
         name={name}
         value={value}
@@ -71,7 +73,7 @@ function Select({
           {t("select.nothing-selected")}
         </option>
         {options.map((option) => (
-          <option value={option.id} key={option.id}>
+          <option value={option["@id"]} key={option["@id"]}>
             {option.title}
           </option>
         ))}
@@ -88,6 +90,7 @@ Select.defaultProps = {
   helpText: "",
   value: "",
   formGroupClasses: "",
+  isRequired: false,
 };
 
 Select.propTypes = {
@@ -102,6 +105,7 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
+  value: PropTypes.bool,
   errorText: PropTypes.string,
   helpText: PropTypes.string,
   formGroupClasses: PropTypes.string,
