@@ -1,24 +1,29 @@
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import ConfigLoader from "../config-loader";
 
 const extendedBaseQuery = async (args, api, extraOptions) => {
   const config = await ConfigLoader.loadConfig();
   const baseUrl = config.api;
 
-  args.headers = {
-    'content-type': 'application/ld+json',
-    'accept': 'application/ld+json',
+  const newArgs = { ...args };
+
+  if (!Object.prototype.hasOwnProperty.call(newArgs, "headers")) {
+    newArgs.headers = {};
   }
 
-  const baseResult = await fetchBaseQuery({ baseUrl })(
-    args,
-    api,
-    extraOptions
-  )
+  if (!Object.prototype.hasOwnProperty.call(newArgs.headers, "content-type")) {
+    newArgs.headers["content-type"] = "application/ld+json";
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(newArgs.headers, "accept")) {
+    newArgs.headers.accept = "application/ld+json";
+  }
+
+  const baseResult = await fetchBaseQuery({ baseUrl })(args, api, extraOptions);
 
   return {
     ...baseResult,
-  }
-}
+  };
+};
 
 export default extendedBaseQuery;

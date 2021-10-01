@@ -50,7 +50,7 @@ function SlideEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    const saveData = { id, body: JSON.stringify(formStateObject) };
+    const saveData = { id, body: formStateObject };
     PutV1Slides(saveData);
   }
 

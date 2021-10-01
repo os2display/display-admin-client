@@ -1,7 +1,8 @@
-import { api as generatedApi } from './api/api.generated'
+import { api as generatedApi } from "./api/api.generated";
 
 /**
- * Entry point for modifying api endpoint.
+ * Entry point for modifying api endpoints.
  */
-export const api = generatedApi.enhanceEndpoints({
-})
+const api = generatedApi.enhanceEndpoints({});
+
+export default api;
