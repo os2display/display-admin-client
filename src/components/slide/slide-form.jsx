@@ -49,9 +49,7 @@ function SlideForm({
   /**
    * Set loaded data into form state.
    */
-  useEffect(() => {
-    console.log(slide);
-  }, [slide]);
+
   useEffect(() => {
     if (templates) {
       setTemplateOptions(templates["hydra:member"]);
@@ -61,7 +59,7 @@ function SlideForm({
   return (
     <Form>
       <h1>{headerText}</h1>
-      {(isLoading || isSaving) && (
+      {isLoading && (
         <>
           <Spinner
             as="span"
@@ -72,6 +70,19 @@ function SlideForm({
             className="m-1"
           />
           {t("edit-slide.loading")}
+        </>
+      )}
+      {isSaving && (
+        <>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="m-1"
+          />
+          {t("edit-slide.saving")}
         </>
       )}
       {loadingTemplates && !isLoading && (
@@ -102,8 +113,9 @@ function SlideForm({
           {templateOptions && (
             <ContentBody>
               <Select
-                value={slide.template}
-                name="template"
+                value={slide.templateInfo}
+                isRequired={true}
+                name="templateInfo"
                 options={templateOptions}
                 onChange={handleInput}
                 label={t("edit-slide.slide-template-label")}
@@ -127,15 +139,6 @@ function SlideForm({
               </section> */}
             </ContentBody>
           )}
-          <ContentBody>
-            <h3 className="h4">{t("edit-slide.slide-select-screen-title")}</h3>
-            {/* todo select screen will work when onscreen can be fetched */}
-            {/* <SelectScreenTable
-              handleChange={handleInput}
-              name="onScreens"
-              selectedData={slide.onScreens}
-            /> */}
-          </ContentBody>
           <ContentBody>
             <h3 className="h4">
               {t("edit-slide.slide-select-playlist-title")}
