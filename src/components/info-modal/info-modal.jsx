@@ -27,13 +27,7 @@ function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
   const { t } = useTranslation("common");
 
   return (
-    <Modal
-      scrollable={true}
-      show={true}
-      size="m"
-      onHide={onClose}
-      id="info-modal"
-    >
+    <Modal scrollable show size="m" onHide={onClose} id="info-modal">
       <ModalDialog
         title={title}
         onClose={onClose}

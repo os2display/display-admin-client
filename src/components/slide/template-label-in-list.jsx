@@ -7,6 +7,7 @@ import { useGetV1TemplatesByIdQuery } from "../../redux/api/api.generated";
  * The props.
  * @param {object} props.template
  * Object containing template id.
+ * @param props.templateInfo
  * @returns {object}
  * The template title.
  */
@@ -18,7 +19,7 @@ function TemplateLabelInList({ templateInfo }) {
   );
 
   const { data } = useGetV1TemplatesByIdQuery({
-    id: id,
+    id,
   });
 
   return (

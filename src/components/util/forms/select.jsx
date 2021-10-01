@@ -24,6 +24,7 @@ import { useTranslation } from "react-i18next";
  * The helptext.
  * @param {string} props.formGroupClasses
  * The classes for the form-group element.
+ * @param props.isRequired
  * @returns {object}
  * The select component.
  */

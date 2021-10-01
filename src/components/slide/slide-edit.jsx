@@ -54,8 +54,7 @@ function SlideEdit() {
    */
   useEffect(() => {
     if (data) {
-      console.log(data);
-      let dataCopy = { ...data };
+      const dataCopy = { ...data };
       dataCopy.templateInfo = dataCopy.templateInfo["@id"];
       setFormStateObject(dataCopy);
       setOriginallySelectedPlaylists(data.onPlaylists);
@@ -69,12 +68,12 @@ function SlideEdit() {
     if (isSaveSuccess) {
       if (playlistsToAdd.length > 0) {
         // remove first element for saving
-        let toAdd = playlistsToAdd.splice(0, 1).shift();
+        const toAdd = playlistsToAdd.splice(0, 1).shift();
         const toAddId = idFromUrl(toAdd);
         PutV1PlaylistsByIdSlideAndSlide({ id: toAddId, slideId: id });
       } else if (playlistsToRemove.length > 0) {
         // remove first element for deleting
-        let toRemove = playlistsToRemove.splice(0, 1).shift();
+        const toRemove = playlistsToRemove.splice(0, 1).shift();
         const toRemoveId = idFromUrl(toRemove);
         DeleteV1PlaylistsByIdSlideAndSlide({ id: toRemoveId, slideId: id });
       }
@@ -93,14 +92,17 @@ function SlideEdit() {
     setFormStateObject(localFormStateObject);
   }
 
+  /**
+   *
+   */
   function handleSavePlaylists() {
     const { onPlaylists } = formStateObject;
     // The elements removed from the original list
-    let ToRemove = originallySelectedPlaylists.filter(
+    const ToRemove = originallySelectedPlaylists.filter(
       (x) => !onPlaylists.includes(x)
     );
     // The elements added to the original list
-    let toAdd = onPlaylists.filter(
+    const toAdd = onPlaylists.filter(
       (x) => !originallySelectedPlaylists.includes(x)
     );
     setPlaylistsToRemove(ToRemove);
@@ -112,7 +114,7 @@ function SlideEdit() {
    */
   function handleSubmit() {
     // save screen
-    const saveData = { id: id, body: JSON.stringify(formStateObject) };
+    const saveData = { id, body: JSON.stringify(formStateObject) };
     PutV1Slides(saveData);
     handleSavePlaylists();
   }

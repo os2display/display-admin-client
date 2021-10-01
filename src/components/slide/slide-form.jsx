@@ -114,7 +114,7 @@ function SlideForm({
             <ContentBody>
               <Select
                 value={slide.templateInfo}
-                isRequired={true}
+                isRequired
                 name="templateInfo"
                 options={templateOptions}
                 onChange={handleInput}
