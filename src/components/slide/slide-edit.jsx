@@ -7,6 +7,7 @@ import {
   usePutV1PlaylistsByIdSlideAndSlideIdMutation,
   useDeleteV1PlaylistsByIdSlideAndSlideIdMutation,
 } from "../../redux/api/api.generated";
+import idFromUrl from "../util/helpers/id-from-url";
 import SlideForm from "./slide-form";
 
 /**
@@ -17,8 +18,10 @@ import SlideForm from "./slide-form";
 function SlideEdit() {
   const { t } = useTranslation("common");
   const headerText = t("edit-slide.edit-slide");
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState();
   const [playlistsToRemove, setPlaylistsToRemove] = useState([]);
+  const [originallySelectedPlaylists, setOriginallySelectedPlaylists] =
+    useState([]);
   const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
   const { id } = useParams();
 
@@ -26,7 +29,7 @@ function SlideEdit() {
     PutV1Slides,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1SlidesByIdMutation();
-  console.log(saveError);
+
   const [
     PutV1PlaylistsByIdSlideAndSlide,
     {
@@ -35,6 +38,7 @@ function SlideEdit() {
       isSuccess: savePlaylistSuccess,
     },
   ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
+
   const [
     DeleteV1PlaylistsByIdSlideAndSlide,
     {
@@ -43,34 +47,33 @@ function SlideEdit() {
       isSuccess: deletePlaylistSuccess,
     },
   ] = useDeleteV1PlaylistsByIdSlideAndSlideIdMutation();
+
   const { data, error: loadError, isLoading } = useGetV1SlidesByIdQuery({ id });
   /**
    * Set loaded data into form state.
    */
   useEffect(() => {
     if (data) {
-      const saveData = { id: id, body: data };
-      PutV1Slides(saveData);
       setFormStateObject(data);
+      setOriginallySelectedPlaylists(data.onPlaylists);
     }
   }, [data]);
 
   /**
-   * Set loaded data into form state.
+   * When the slide is saved, the playlists will be saved.
    */
   useEffect(() => {
     if (isSaveSuccess) {
-      debugger;
       if (playlistsToAdd.length > 0) {
-        let toAdd = playlistsToAdd.splice(0, 1);
-        let toAddId = toAdd[0].id;
-        const saveData = { id: toAddId, slideId: id };
-        PutV1PlaylistsByIdSlideAndSlide(saveData);
+        // remove first element for saving
+        let toAdd = playlistsToAdd.splice(0, 1).shift();
+        const toAddId = idFromUrl(toAdd);
+        PutV1PlaylistsByIdSlideAndSlide({ id: toAddId, slideId: id });
       } else if (playlistsToRemove.length > 0) {
-        let toRemove = playlistsToRemove.splice(0, 1);
-        let toRemoveId = toRemove[0].id;
-        const saveData = { id: toRemoveId, slideId: id };
-        DeleteV1PlaylistsByIdSlideAndSlide(saveData);
+        // remove first element for deleting
+        let toRemove = playlistsToRemove.splice(0, 1).shift();
+        const toRemoveId = idFromUrl(toRemove);
+        DeleteV1PlaylistsByIdSlideAndSlide({ id: toRemoveId, slideId: id });
       }
     }
   }, [isSaveSuccess, deletePlaylistSuccess, savePlaylistSuccess]);
@@ -87,31 +90,48 @@ function SlideEdit() {
     setFormStateObject(localFormStateObject);
   }
 
+  function handleSavePlaylists() {
+    const { onPlaylists } = formStateObject;
+    // The elements removed from the original list
+    let ToRemove = originallySelectedPlaylists.filter(
+      (x) => !onPlaylists.includes(x)
+    );
+    // The elements added to the original list
+    let toAdd = onPlaylists.filter(
+      (x) => !originallySelectedPlaylists.includes(x)
+    );
+    setPlaylistsToRemove(ToRemove);
+    setPlaylistsToAdd(toAdd);
+  }
+
   /**
    * Handles submit.
    */
   function handleSubmit() {
     // save screen
-    const saveData = { id: id, body: formStateObject };
+    const saveData = { id: id, body: JSON.stringify(formStateObject) };
     PutV1Slides(saveData);
-    setPlaylistsToRemove(
-      formStateObject.playlists?.filter(({ toRemove }) => toRemove)
-    );
-    setPlaylistsToAdd(formStateObject.playlists?.filter(({ toAdd }) => toAdd));
+    handleSavePlaylists();
   }
   return (
-    <SlideForm
-      slide={formStateObject}
-      headerText={`${headerText}: ${formStateObject && formStateObject.title}`}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isLoading={isLoading || isDeletingPlaylists}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
-      errors={
-        loadError || saveError || savePlaylistError || deletePlaylistError
-      }
-    />
+    <>
+      {formStateObject && (
+        <SlideForm
+          slide={formStateObject}
+          headerText={`${headerText}: ${
+            formStateObject && formStateObject.title
+          }`}
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading || isDeletingPlaylists || isSavingPlaylists}
+          isSaveSuccess={isSaveSuccess}
+          isSaving={isSaving}
+          errors={
+            loadError || saveError || savePlaylistError || deletePlaylistError
+          }
+        />
+      )}
+    </>
   );
 }
 

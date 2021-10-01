@@ -23,21 +23,20 @@ function PlaylistsDropdown({
   selected,
   name,
   errors,
+  data,
 }) {
   const { t } = useTranslation("common");
-  const { data, isLoading } = useGetV1PlaylistsQuery({});
   return (
     <>
-      {!isLoading && data && data["hydra:member"] && (
+      {data && (
         <>
           <MultiSelectComponent
             label={t("playlists-dropdown.label")}
             noSelectedString={t("playlists-dropdown.nothing-selected")}
             handleSelection={handlePlaylistSelection}
-            options={data["hydra:member"]}
+            options={data}
             selected={selected}
             name={name}
-            isLoading={isLoading}
             errors={errors}
           />
         </>
