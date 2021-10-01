@@ -226,7 +226,7 @@ function LocationsList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        title={infoModalTitle}
+        modalTitle={infoModalTitle}
       />
     </>
   );

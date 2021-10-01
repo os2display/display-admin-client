@@ -246,7 +246,7 @@ function ScreenList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={inGroups}
-        title={t("screens-list.info-modal.screen-in-groups")}
+        modalTitle={t("screens-list.info-modal.screen-in-groups")}
       />
     </>
   );

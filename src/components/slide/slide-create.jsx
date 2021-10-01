@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import * as dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
@@ -47,8 +46,10 @@ function SlideCreate() {
       isSuccess: isSaveSuccess,
     },
   ] = usePostV1SlidesMutation();
+
   /**
-   * When the slide is saved, the playlists will be saved.
+   * When the slide is saved, the playlist(s) will be saved.
+   * When saved, it redirects to edit slide.
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
@@ -79,7 +80,7 @@ function SlideCreate() {
   }
 
   /**
-   *
+   * Set playlist to save state
    */
   function handleSavePlaylists() {
     const { onPlaylists } = formStateObject;
@@ -94,6 +95,7 @@ function SlideCreate() {
   function handleSubmit() {
     formStateObject.created = new Date().toISOString();
     formStateObject.modified = new Date().toISOString();
+    // Change templateinfo to the format accepted by the api
     if (formStateObject.templateInfo) {
       formStateObject.templateInfo = { "@id": formStateObject.templateInfo };
     }
@@ -112,7 +114,7 @@ function SlideCreate() {
       isLoading={false}
       isSaveSuccess={isSaveSuccess}
       isSaving={isSavingPlaylists || isSavingSlide}
-      errors={[saveError]}
+      errors={saveError || savePlaylistError}
     />
   );
 }

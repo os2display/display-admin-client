@@ -211,7 +211,7 @@ function PlaylistList() {
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
-        title={infoModalTitle}
+        modalTitle={infoModalTitle}
       />
     </>
   );

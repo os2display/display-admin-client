@@ -15,12 +15,12 @@ import ModalDialog from "../util/modal/modal-dialog";
  * Callback on close modal.
  * @param {Array} props.dataStructureToDisplay
  * The playlists to list.
- * @param {string} props.title
+ * @param {string} props.modalTitle
  * The info modal string.
  * @returns {object}
  * The modal.
  */
-function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
+function InfoModal({ show, onClose, dataStructureToDisplay, modalTitle }) {
   if (!show || dataStructureToDisplay.length === 0) {
     return <></>;
   }
@@ -29,7 +29,7 @@ function InfoModal({ show, onClose, dataStructureToDisplay, title }) {
   return (
     <Modal scrollable show size="m" onHide={onClose} id="info-modal">
       <ModalDialog
-        title={title}
+        title={modalTitle}
         onClose={onClose}
         showAcceptButton={false}
         declineText={t("info-modal.decline-text")}
@@ -53,7 +53,7 @@ InfoModal.propTypes = {
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ),
   onClose: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
+  modalTitle: PropTypes.string.isRequired,
 };
 
 export default InfoModal;

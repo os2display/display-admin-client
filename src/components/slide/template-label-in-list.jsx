@@ -5,9 +5,8 @@ import { useGetV1TemplatesByIdQuery } from "../../redux/api/api.generated";
 /**
  * @param {object} props
  * The props.
- * @param {object} props.template
+ * @param {object} props.templateInfo
  * Object containing template id.
- * @param props.templateInfo
  * @returns {object}
  * The template title.
  */
@@ -40,7 +39,7 @@ function TemplateLabelInList({ templateInfo }) {
 }
 
 TemplateLabelInList.propTypes = {
-  template: PropTypes.objectOf(PropTypes.any).isRequired,
+  templateInfo: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default TemplateLabelInList;

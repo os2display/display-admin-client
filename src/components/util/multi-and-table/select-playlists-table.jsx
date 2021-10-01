@@ -4,8 +4,7 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
-import InfoModal from "../../info-modal/info-modal";
-import ListButton from "../list/list-button";
+// import InfoModal from "../../info-modal/info-modal";
 import { useGetV1PlaylistsQuery } from "../../../redux/api/api.generated";
 /**
  * A multiselect and table for playlists.
@@ -14,8 +13,6 @@ import { useGetV1PlaylistsQuery } from "../../../redux/api/api.generated";
  * the props.
  * @param {string} props.name
  * The name for the input
- * @param {string} props.selectedData
- * The data for the multidropdown.
  * @param {Array} props.errors
  * A list of errors, or null.
  * @returns {object}
@@ -28,11 +25,11 @@ function SelectPlaylistTable({
   errors,
 }) {
   const { t } = useTranslation("common");
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
+  // const [showInfoModal, setShowInfoModal] = useState(false);
+  // const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [selectedData, setSelectedData] = useState([]);
   const { data, isLoading } = useGetV1PlaylistsQuery({});
-  const [infoModalTitle, setInfoModalTitle] = useState("");
+  // const [infoModalTitle, setInfoModalTitle] = useState("");
 
   useEffect(() => {
     if (selectedDataEndpoint.length > 0 && data) {
@@ -43,42 +40,39 @@ function SelectPlaylistTable({
     }
   }, [selectedDataEndpoint, data]);
 
-  /**
-   * Opens info modal with either categories or slides.
-   *
-   * @param {object} props
-   * The props
-   * @param {Array} props.data
-   * The data to sum up in the modal
-   * @param {string} props.caller
-   * Which infomodal is opened, categories or slides.
-   */
-  function openInfoModal({ data, caller }) {
-    const localInfoModalTitle =
-      caller === "categories"
-        ? t("select-playlists-table.info-modal.playlist-categories")
-        : t("select-playlists-table.info-modal.playlist-slides");
-    setInfoModalTitle(localInfoModalTitle);
-    setDataStructureToDisplay(data);
-    setShowInfoModal(true);
-  }
+  // /**
+  //  * Opens info modal with either categories or slides.
+  //  *
+  //  * @param {object} props
+  //  * The props
+  //  * @param {Array} props.data
+  //  * The data to sum up in the modal
+  //  * @param {string} props.caller
+  //  * Which infomodal is opened, categories or slides.
+  //  */
+  // function openInfoModal({ data, caller }) {
+  //   const localInfoModalTitle =
+  //     caller === "categories"
+  //       ? t("select-playlists-table.info-modal.playlist-categories")
+  //       : t("select-playlists-table.info-modal.playlist-slides");
+  //   setInfoModalTitle(localInfoModalTitle);
+  //   setDataStructureToDisplay(data);
+  //   setShowInfoModal(true);
+  // }
 
-  /**
-   * Closes the info modal.
-   */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setDataStructureToDisplay();
-  }
+  // /**
+  //  * Closes the info modal.
+  //  */
+  // function onCloseInfoModal() {
+  //   setShowInfoModal(false);
+  //   setDataStructureToDisplay();
+  // }
 
   /**
    * Removes playlist from list of playlists.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.id
-   * The id of the playlist
-   * @param removeItem
+   * @param {object} removeItem
+   * The item to remove.
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
@@ -98,18 +92,15 @@ function SelectPlaylistTable({
   }
 
   /**
-   * Removes playlist from list of playlists.
+   * Adds playlist to list of playlists.
    *
-   * @param target.target
-   * @param {object} target
-   * The target.
-   * @param {string} target.id
-   * The id of the playlist
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
    */
   function handleAdd({ target }) {
-    setSelectedData(target.value);
-    target.value = target.value.map((item) => item["@id"]);
-    handleChange({ target });
+    const { value, name: localName } = target;
+    setSelectedData(value);
+    handleChange({ name: localName, value: value.map((item) => item["@id"]) });
   }
 
   // The columns for the table.
@@ -141,12 +132,12 @@ function SelectPlaylistTable({
           {selectedData.length > 0 && (
             <Table columns={columns} data={selectedData} />
           )}
-          <InfoModal
+          {/* <InfoModal
             show={showInfoModal}
             onClose={onCloseInfoModal}
             dataStructureToDisplay={dataStructureToDisplay}
-            title={infoModalTitle}
-          />
+            modalTitle={infoModalTitle}
+          /> */}
         </>
       )}
     </>
@@ -155,15 +146,11 @@ function SelectPlaylistTable({
 
 SelectPlaylistTable.defaultProps = {
   errors: [],
-  selectedData: [],
   selectedDataEndpoint: [],
 };
 
 SelectPlaylistTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedData: PropTypes.arrayOf(
-    PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
-  ),
   selectedDataEndpoint: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),

@@ -1,7 +1,8 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Table from "../table/table";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
 import CampaignIcon from "../../screen-list/campaign-icon";
 import LiveIcon from "../../screen-list/live-icon";
@@ -33,7 +34,8 @@ function SelectScreenTable({
   const [inGroups, setInGroups] = useState();
   const [selectedData, setSelectedData] = useState([]);
   const { data, isLoading } = useGetV1ScreensQuery({});
-  // id created below.
+
+  // Sets the selected data form endpoint ids.
   useEffect(() => {
     if (selectedDataEndpoint.length > 0 && data) {
       const localMappedSelected = data["hydra:member"].filter((item) =>
@@ -59,13 +61,10 @@ function SelectScreenTable({
     setInGroups();
   }
   /**
-   * Removes playlist from list of playlists.
+   * Removes screen from list of screens.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.id
-   * The id of the playlist
-   * @param removeItem
+   * @param {object} removeItem
+   * The item to remove.
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
@@ -85,27 +84,23 @@ function SelectScreenTable({
   }
 
   /**
-   * Removes playlist from list of playlists.
+   * Adds screen to list of screens.
    *
-   * @param target.target
-   * @param {object} target
-   * The target.
-   * @param {string} target.id
-   * The id of the playlist
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
    */
   function handleAdd({ target }) {
-    setSelectedData(target.value);
-    target.value = target.value.map((item) => item["@id"]);
-    handleChange({ target });
+    const { value, name: localName } = target;
+    setSelectedData(value);
+    handleChange({ name: localName, value: value.map((item) => item["@id"]) });
   }
 
   // The columns for the table.
-  /* eslint-disable-next-line no-unused-vars */
   const columns = [
     {
       path: "live",
       label: t("select-screen-table.columns.live"),
-      content: (data) => LiveIcon(data),
+      content: (screen) => LiveIcon(screen),
     },
     {
       path: "name",
@@ -113,12 +108,12 @@ function SelectScreenTable({
     },
     {
       path: "onFollowingGroups",
-      content: (data) =>
+      content: (screen) =>
         ListButton(
           openInfoModal,
-          data.onFollowingGroups,
-          data.onFollowingGroups?.length,
-          data.onFollowingGroups?.length === 0
+          screen.onFollowingGroups,
+          screen.onFollowingGroups?.length,
+          screen.onFollowingGroups?.length === 0
         ),
       key: "groups",
       label: t("select-screen-table.columns.on-groups"),
@@ -134,12 +129,12 @@ function SelectScreenTable({
     {
       path: "overriddenByCampaign",
       label: t("select-screen-table.columns.campaign"),
-      content: (screenData) => CampaignIcon(screenData),
+      content: (screen) => CampaignIcon(screen),
     },
     {
       key: "delete",
-      content: (screenData) => (
-        <Button variant="danger" onClick={() => removeFromList(screenData)}>
+      content: (screen) => (
+        <Button variant="danger" onClick={() => removeFromList(screen)}>
           {t("select-screen-table.remove-from-list")}
         </Button>
       ),
@@ -157,7 +152,6 @@ function SelectScreenTable({
             handleScreenSelection={handleAdd}
             selected={selectedData}
           />
-          {/* @TODO: this should work when real data is fetched */}
           {selectedData.length > 0 && (
             <Table columns={columns} data={selectedData} />
           )}
@@ -165,7 +159,7 @@ function SelectScreenTable({
             show={showInfoModal}
             onClose={onCloseInfoModal}
             dataStructureToDisplay={inGroups}
-            title={t("select-screen-table.info-modal.screen-in-groups")}
+            modalTitle={t("select-screen-table.info-modal.screen-in-groups")}
           />
         </>
       )}

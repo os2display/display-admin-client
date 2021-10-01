@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
-import { useGetV1PlaylistsQuery } from "../../../../../redux/api/api.generated";
 
 /**
  * @param {object} props
@@ -15,7 +14,8 @@ import { useGetV1PlaylistsQuery } from "../../../../../redux/api/api.generated";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
- * @param props.data
+ * @param {Array} props.data
+ * The data for options.
  * @returns {object}
  * The multidropdown of playlists.
  */
@@ -59,6 +59,7 @@ PlaylistsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };
