@@ -114,7 +114,7 @@ function SlideCreate() {
       isLoading={false}
       isSaveSuccess={isSaveSuccess}
       isSaving={isSavingPlaylists || isSavingSlide}
-      errors={saveError || savePlaylistError}
+      errors={saveError || savePlaylistError || false}
     />
   );
 }
