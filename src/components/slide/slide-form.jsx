@@ -6,11 +6,10 @@ import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
-import ContentFooter from "../util/content-footer/content-footer";
-// import SelectScreenTable from "../util/multi-and-table/select-screen-table";
-import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
-// import RenderFormElement from "../util/forms/render-form-element";
 import Select from "../util/forms/select";
+import TemplateRender from "./template-render";
+import ContentFooter from "../util/content-footer/content-footer";
+import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
 import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -49,7 +48,6 @@ function SlideForm({
   /**
    * Set loaded data into form state.
    */
-
   useEffect(() => {
     if (templates) {
       setTemplateOptions(templates["hydra:member"]);
@@ -123,27 +121,15 @@ function SlideForm({
               />
             </ContentBody>
           )}
-          {slide.slideTemplate && (
-            // todo fetch form data
+          {slide.templateInfo && typeof slide.templateInfo === "string" && (
             <ContentBody>
-              {/* Render slide form from jsondata */}
-              {/* <section className="row">
-                {formData.map((data) => (
-                  <RenderFormElement
-                    key={data.name}
-                    data={data}
-                    onChange={handleInput}
-                    slide={slide}
-                  />
-                ))}
-              </section> */}
+              <TemplateRender slide={slide} handleInput={handleInput} />
             </ContentBody>
           )}
           <ContentBody>
             <h3 className="h4">
               {t("edit-slide.slide-select-playlist-title")}
             </h3>
-            {/* todo select playlst will work when onscreen can be fetched */}
             <SelectPlaylistTable
               handleChange={handleInput}
               name="onPlaylists"
@@ -165,7 +151,7 @@ function SlideForm({
         <Button
           variant="secondary"
           type="button"
-          id="slide_cancel"
+          id="cancel_slide"
           onClick={() => history.push("/slide/list/")}
           className="me-md-3 col"
           size="lg"
