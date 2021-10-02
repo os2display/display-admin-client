@@ -52,28 +52,27 @@ function InfoModal({
     setPaginatedDataStructure(dataStructureToDisplayCopy);
     setIndex(index + paginationVariables);
   }
+
   return (
-    <>
-      <Modal scrollable show size="m" onHide={onClose} id="info-modal">
-        <ModalDialog
-          title={modalTitle}
-          onClose={onClose}
-          showAcceptButton={false}
-          declineText={t("info-modal.decline-text")}
-        >
-          <ul>
-            {paginatedDataStructure.map((item) => (
-              <ListEntry apiCall={apiCall} dataUrl={item} />
-            ))}
-          </ul>
-          {!(index > paginatedDataStructure.length) && (
-            <Button variant="primary" onClick={() => displayMore()}>
-              {t("info-modal.show-more-elements")}
-            </Button>
-          )}
-        </ModalDialog>
-      </Modal>
-    </>
+    <Modal scrollable show size="m" onHide={onClose} id="info-modal">
+      <ModalDialog
+        title={modalTitle}
+        onClose={onClose}
+        showAcceptButton={false}
+        declineText={t("info-modal.decline-text")}
+      >
+        <ul>
+          {paginatedDataStructure.map((item) => (
+            <ListEntry apiCall={apiCall} dataUrl={item} key={item} />
+          ))}
+        </ul>
+        {!(index > paginatedDataStructure.length) && (
+          <Button variant="primary" onClick={() => displayMore()}>
+            {t("info-modal.show-more-elements")}
+          </Button>
+        )}
+      </ModalDialog>
+    </Modal>
   );
 }
 InfoModal.defaultProps = {
@@ -82,9 +81,7 @@ InfoModal.defaultProps = {
 
 InfoModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  dataStructureToDisplay: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
-  ),
+  dataStructureToDisplay: PropTypes.arrayOf(PropTypes.string),
   apiCall: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   modalTitle: PropTypes.string.isRequired,

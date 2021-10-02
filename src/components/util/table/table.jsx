@@ -47,6 +47,7 @@ Table.defaultProps = {
   selectedRows: [],
   onSort: () => {},
   sortColumn: {},
+  withChart: false,
 };
 
 Table.propTypes = {
@@ -57,6 +58,6 @@ Table.propTypes = {
   onSort: PropTypes.func,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes,
-  withChart: PropTypes.bool.isRequired,
+  withChart: PropTypes.bool,
 };
 export default Table;

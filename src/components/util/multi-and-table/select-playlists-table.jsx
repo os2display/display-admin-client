@@ -98,9 +98,11 @@ function SelectPlaylistTable({
    * @param {object} props.target - the target.
    */
   function handleAdd({ target }) {
-    const { value, name: localName } = target;
+    const { value, id } = target;
     setSelectedData(value);
-    handleChange({ name: localName, value: value.map((item) => item["@id"]) });
+    handleChange({
+      target: { name: id, value: value.map((item) => item["@id"]) },
+    });
   }
 
   // The columns for the table.
@@ -151,7 +153,7 @@ SelectPlaylistTable.defaultProps = {
 
 SelectPlaylistTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedDataEndpoint: PropTypes.string,
+  selectedDataEndpoint: PropTypes.arrayOf(PropTypes.string),
   handleChange: PropTypes.func.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };

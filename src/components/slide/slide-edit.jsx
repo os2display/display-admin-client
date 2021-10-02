@@ -118,6 +118,7 @@ function SlideEdit() {
     PutV1Slides(saveData);
     handleSavePlaylists();
   }
+
   return (
     <>
       {formStateObject && (
@@ -132,7 +133,11 @@ function SlideEdit() {
           isSaveSuccess={isSaveSuccess}
           isSaving={isSaving}
           errors={
-            loadError || saveError || savePlaylistError || deletePlaylistError
+            loadError ||
+            saveError ||
+            savePlaylistError ||
+            deletePlaylistError ||
+            false
           }
         />
       )}

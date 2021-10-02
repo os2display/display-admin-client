@@ -183,7 +183,7 @@ function SlideForm({
           {t("edit-slide.save-button")}
         </Button>
         <Toast show={isSaveSuccess} text={t("edit-slide.saved")} />
-        <Toast show={errors} text={t("edit-slide.error")} />
+        <Toast show={!!errors} text={t("edit-slide.error")} />
       </ContentFooter>
     </Form>
   );
@@ -197,7 +197,10 @@ SlideForm.propTypes = {
   headerText: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.any).isRequired,
+  errors: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.any),
+    PropTypes.bool,
+  ]).isRequired,
 };
 
 export default SlideForm;

@@ -18,7 +18,7 @@ function ContentFooter({ children }) {
 }
 
 ContentFooter.propTypes = {
-  children: PropTypes.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default ContentFooter;
