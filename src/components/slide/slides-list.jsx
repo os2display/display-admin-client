@@ -15,7 +15,7 @@ import TemplateLabelInList from "./template-label-in-list";
 import {
   useGetV1SlidesQuery,
   useDeleteV1SlidesByIdMutation,
-  useGetV1SlidesByIdPlaylistsQuery,
+  useGetV1PlaylistsByIdQuery,
 } from "../../redux/api/api.generated";
 /**
  * The slides list component.
@@ -58,11 +58,11 @@ function SlidesList() {
   }
 
   /**
-   * @param {Array} playlistArray
+   * @param {Array} playlistData
    * The array of playlists.
    */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
+  function openInfoModal(playlistData) {
+    setOnPlaylists(playlistData);
     setShowInfoModal(true);
   }
 
@@ -86,23 +86,23 @@ function SlidesList() {
     {
       content: (data) => TemplateLabelInList(data),
       sort: true,
+      key: "template",
       label: t("slides-list.columns.template"),
     },
     {
-      sort: true,
-      content: (data) =>
-        ListButton(openInfoModal, useGetV1SlidesByIdPlaylistsQuery, data.id),
       key: "playlists",
+      sort: true,
+      content: (data) => ListButton(openInfoModal, data.onPlaylists),
       label: t("slides-list.columns.slide-on-playlists"),
     },
     {
-      path: "published",
+      key: "published",
       sort: true,
       content: (data) => Published(data),
       label: t("slides-list.columns.published"),
     },
     {
-      key: "edit",
+      key: "quick-edit",
       content: () => (
         <>
           {/* @TODO: make quick edit modal */}
@@ -118,13 +118,8 @@ function SlidesList() {
     },
     {
       key: "edit",
-      content: (data) => (
-        <LinkForList
-          data={data}
-          param="slide/edit"
-          label={t("slides-list.edit-button")}
-        />
-      ),
+      content: (data) =>
+        LinkForList(data["@id"], "slide/edit", t("slides-list.edit-button")),
     },
     {
       key: "delete",
@@ -212,6 +207,7 @@ function SlidesList() {
       />
       <InfoModal
         show={showInfoModal}
+        apiCall={useGetV1PlaylistsByIdQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
         modalTitle={t("slides-list.info-modal.slide-on-playlists")}

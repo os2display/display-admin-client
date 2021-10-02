@@ -49,7 +49,8 @@
       "preview": "Preview"
     },
     "info-modal": {
-      "slide-on-playlists": "Slidet er på de følgende spillelister"
+      "slide-on-playlists": "Slidet er på de følgende spillelister",
+      "show-more-elements": "Vis flere elementer"
     },
     "slides-get-error": "Der skete en fejl da slides skulle hentes",
     "deleted": "Slidet er blevet slettet",

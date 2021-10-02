@@ -3,16 +3,12 @@ import Spinner from "react-bootstrap/Spinner";
 /**
  * @param {Function} callback
  * The callback function
- * @param {object} apiGetCall
- * The function to call to get relevant data.
- * @param {string} id
- * The id for fetching.
+ * @param {object} data
+ * The data for callback
  * @returns {object}
  * The list button.
  */
-function ListButton(callback, apiGetCall, id) {
-  const { data } = apiGetCall({ id });
-
+function ListButton(callback, data) {
   return (
     <>
       {data && (
@@ -20,9 +16,9 @@ function ListButton(callback, apiGetCall, id) {
           className="btn btn-secondary"
           type="button"
           disabled={data.length === 0}
-          onClick={() => callback(data["hydra:member"])}
+          onClick={() => callback(data)}
         >
-          {data["hydra:member"].length}
+          {data.length}
         </button>
       )}
       {!data && (
