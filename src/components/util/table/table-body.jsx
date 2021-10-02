@@ -54,13 +54,13 @@ function TableBody({ columns, selectedRows, data, withChart }) {
   return (
     <tbody>
       {data.map((item) => (
-        <Fragment key={item.id || item["@id"]}>
+        <Fragment key={item["@id"]}>
           <tr
             style={withChart ? { borderBottomColor: "transparent" } : {}}
             className={isRowSelected(item)}
           >
             {columns.map((column) => (
-              <td key={item.id + (column.path || column.key)}>
+              <td key={`${item["@id"]}${column.path || column.key}`}>
                 {renderCell(item, column)}
               </td>
             ))}

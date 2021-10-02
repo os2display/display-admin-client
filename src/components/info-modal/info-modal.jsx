@@ -1,9 +1,10 @@
-import { React } from "react";
+import { React, useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
+import { Button } from "react-bootstrap";
 import ModalDialog from "../util/modal/modal-dialog";
-
+import ListEntry from "./list-entry";
 /**
  * Info modal component, that displays an info string.
  *
@@ -13,6 +14,8 @@ import ModalDialog from "../util/modal/modal-dialog";
  * Whether to show the modal.
  * @param {Function} props.onClose
  * Callback on close modal.
+ * @param {Function} props.apiCall
+ * apiCall for data.
  * @param {Array} props.dataStructureToDisplay
  * The playlists to list.
  * @param {string} props.modalTitle
@@ -20,27 +23,57 @@ import ModalDialog from "../util/modal/modal-dialog";
  * @returns {object}
  * The modal.
  */
-function InfoModal({ show, onClose, dataStructureToDisplay, modalTitle }) {
-  if (!show || dataStructureToDisplay.length === 0) {
+function InfoModal({
+  show,
+  onClose,
+  apiCall,
+  dataStructureToDisplay,
+  modalTitle,
+}) {
+  if (!show) {
     return <></>;
   }
   const { t } = useTranslation("common");
+  const paginationVariables = 10;
+  const [index, setIndex] = useState(paginationVariables);
+  const [paginatedDataStructure, setPaginatedDataStructure] = useState(
+    dataStructureToDisplay.slice(0, index)
+  );
 
+  /**
+   * Displays more list entries.
+   */
+  function displayMore() {
+    let dataStructureToDisplayCopy = dataStructureToDisplay;
+    dataStructureToDisplayCopy = dataStructureToDisplayCopy.slice(
+      0,
+      index + paginationVariables
+    );
+    setPaginatedDataStructure(dataStructureToDisplayCopy);
+    setIndex(index + paginationVariables);
+  }
   return (
-    <Modal scrollable show size="m" onHide={onClose} id="info-modal">
-      <ModalDialog
-        title={modalTitle}
-        onClose={onClose}
-        showAcceptButton={false}
-        declineText={t("info-modal.decline-text")}
-      >
-        <ul>
-          {dataStructureToDisplay.map(({ title }) => (
-            <li>{title}</li>
-          ))}
-        </ul>
-      </ModalDialog>
-    </Modal>
+    <>
+      <Modal scrollable show size="m" onHide={onClose} id="info-modal">
+        <ModalDialog
+          title={modalTitle}
+          onClose={onClose}
+          showAcceptButton={false}
+          declineText={t("info-modal.decline-text")}
+        >
+          <ul>
+            {paginatedDataStructure.map((item) => (
+              <ListEntry apiCall={apiCall} dataUrl={item} />
+            ))}
+          </ul>
+          {!(index > paginatedDataStructure.length) && (
+            <Button variant="primary" onClick={() => displayMore()}>
+              {t("info-modal.show-more-elements")}
+            </Button>
+          )}
+        </ModalDialog>
+      </Modal>
+    </>
   );
 }
 InfoModal.defaultProps = {
@@ -52,6 +85,7 @@ InfoModal.propTypes = {
   dataStructureToDisplay: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ),
+  apiCall: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   modalTitle: PropTypes.string.isRequired,
 };
