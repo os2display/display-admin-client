@@ -4,57 +4,56 @@ Cypress.on("uncaught:exception", () => {
   return false;
 });
 
-describe("Edit slide page tests", () => {
-  it("It validates new slide", () => {
-    cy.visit("/slide/new");
+describe("Slide pages work", () => {
+  it("It loads create slide page", () => {
+    cy.visit("/slide/create");
     cy.get("#save_slide")
       .invoke("text")
       .should("match", /^Gem slide/);
-    cy.get("#save_slide").click();
-    cy.get("#save_slide")
-      .invoke("text")
-      .should("match", /^Gem slide/);
-    cy.get("#slideName").type("x");
-    cy.get("#slideTemplate").select("Text-and-image");
-    cy.get("#title").type("x");
-    cy.get("#duration").type(1);
-    cy.get("#box-align").select("Toppen");
-    cy.get("#save_slide").click();
-    cy.get("#save_slide").should("not.exist");
   });
 
-  it("It validates already existing slide", () => {
-    cy.visit("/slide/32");
-    cy.get("#slideName").clear();
-    cy.get("#save_slide")
-      .invoke("text")
-      .should("match", /^Gem slide/);
-    cy.get("#save_slide").click();
-    cy.get("#save_slide")
-      .invoke("text")
-      .should("match", /^Gem slide/);
-    cy.get("#slideName").type("x");
-    cy.get("#box-align").select("Toppen");
-    cy.get("#save_slide").click();
-    cy.get("#save_slide").should("not.exist");
+  it("It can select playlist", () => {
+    cy.visit("/slide/create");
+    cy.get("tbody").should("not.exist");
+    cy.get(".dropdown-heading").eq(0).click();
+    cy.get('[type="checkbox"]').eq(1).check();
+    cy.get(".dropdown-heading").eq(0).click();
+    cy.get("tbody").find("tr td").should("have.length", 2);
+    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").should("not.exist");
   });
 
-  it("It cancels already existing slide", () => {
-    cy.visit("/slides/");
-    cy.visit("/slide/32");
-    cy.get("#slide_cancel").click();
-    cy.get("#slide_cancel").should("not.exist");
-    cy.get("h1")
+  it("It loads create slide page", () => {
+    cy.visit("/slide/create");
+    cy.get("#save_slide")
       .invoke("text")
-      .should("match", /^Slides/);
+      .should("match", /^Gem slide/);
   });
-  it("It cancels new slide", () => {
-    cy.visit("/slides/");
-    cy.visit("/slide/new");
-    cy.get("#slide_cancel").click();
-    cy.get("#slide_cancel").should("not.exist");
-    cy.get("h1")
+
+  it("It loads template data", () => {
+    cy.visit("/slide/create");
+    cy.get("section")
+      .eq(2)
       .invoke("text")
-      .should("match", /^Slides/);
+      .should("not.match", /^Todo template data section/);
+    cy.get("select").select("Quote");
+    cy.get("section")
+      .eq(2)
+      .invoke("text")
+      .should("match", /^Todo template data section/);
+  });
+
+  it("It redirects on save", () => {
+    cy.visit("/slide/create");
+    cy.get("select").select("Quote");
+    cy.get("#save_slide").click();
+    cy.url().should("include", "slide/edit/");
+  });
+
+  it("It cancels create slide", () => {
+    cy.visit("/slide/create");
+    cy.get("#cancel_slide").should("exist");
+    cy.get("#cancel_slide").click();
+    cy.get("#cancel_slide").should("not.exist");
   });
 });
