@@ -24,38 +24,21 @@ function GroupsDropdown({
   selected,
   name,
   errors,
-  isCreatable,
+  data,
 }) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    // @TODO: load real content.
-    fetch("/fixtures/groups/groups.json")
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setOptions(jsonData.groups);
-        setIsLoading(false);
-      });
-  }, []);
 
   return (
     <>
-      {options && (
+      {data && (
         <>
           <MultiSelectComponent
             errors={errors}
             handleSelection={handleGroupsSelection}
-            options={options}
+            options={data}
             label={t("groups-dropdown.label")}
             selected={selected}
             name={name}
-            isLoading={isLoading}
-            isCreatable={isCreatable}
             noSelectedString={t("groups-dropdown.nothing-selected")}
           />
         </>

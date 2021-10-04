@@ -32,7 +32,7 @@ function GridGenerationAndSelect({
 }) {
   const { t } = useTranslation("common");
   const [key, setKey] = useState("region1");
-  const gridClasses = `grid ${layout}`;
+  const gridClasses = `grid ${layout || "horizontal"}`;
   // Rows and columns in grid defaults to 1.
   const configColumns = grid?.columns || 1;
   const configRows = grid?.rows || 1;
@@ -65,7 +65,7 @@ function GridGenerationAndSelect({
                 {regions &&
                   regions.map((data) => (
                     <div
-                      key={data.id}
+                      key={data["@id"]}
                       className={
                         key === data.id ? "grid-item selected" : "grid-item "
                       }

@@ -198,7 +198,6 @@ function SlidesList() {
         )}
         {isLoading && <Spinner animation="grow" />}
       </ContentBody>
-
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}

@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import set from "lodash.set";
 import {
   useGetV1ScreensByIdQuery,
   usePutV1ScreensByIdMutation,
@@ -15,7 +16,7 @@ import ScreenForm from "./screen-form";
 function ScreenEdit() {
   const { t } = useTranslation("common");
   const headerText = t("edit-screen.edit-screen");
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState();
   const { id } = useParams();
 
   const [
@@ -34,8 +35,8 @@ function ScreenEdit() {
    */
   useEffect(() => {
     if (data) {
+      debugger;
       setFormStateObject(data);
-      console.log(data);
     }
   }, [data]);
 
@@ -47,7 +48,7 @@ function ScreenEdit() {
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
-    localFormStateObject[target.id] = target.value;
+    set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
 
@@ -55,21 +56,25 @@ function ScreenEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    const saveData = { id, body: JSON.stringify(formStateObject) };
+    const saveData = { id, screenScreenInput: JSON.stringify(formStateObject) };
     PutV1Screens(saveData);
   }
 
   return (
-    <ScreenForm
-      screen={formStateObject}
-      headerText={headerText}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isLoading={isLoadingScreen}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
-      errors={saveError || loadError}
-    />
+    <>
+      {formStateObject && (
+        <ScreenForm
+          screen={formStateObject}
+          headerText={headerText}
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          isLoading={isLoadingScreen}
+          isSaveSuccess={isSaveSuccess}
+          isSaving={isSaving}
+          errors={saveError || loadError || false}
+        />
+      )}
+    </>
   );
 }
 
