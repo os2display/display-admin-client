@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "../screen-list/campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
+import { Spinner } from "react-bootstrap";
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -206,6 +207,12 @@ function ScreenList() {
    * Sets next page.
    *
    * @param {number} pageNumber - the next page.
+   */
+  function onChangePage(pageNumber) {
+    setPage(pageNumber);
+  }
+  /**
+   * Clears the selected rows.
    */
   function onChangePage(pageNumber) {
     setPage(pageNumber);
