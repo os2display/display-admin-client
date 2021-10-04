@@ -100,7 +100,6 @@ function ScreenForm({
           <ContentBody>
             <h2 className="h4">{t("edit-screen.screen-about")}</h2>
             <FormInput
-              errors={errors}
               name="title"
               type="text"
               label={t("edit-screen.screen-name-label")}
@@ -122,7 +121,6 @@ function ScreenForm({
             <h2 className="h4">{t("edit-screen.screen-groups")}</h2>
             {/* @TODO: make work when relevant data from api */}
             {/* <GroupsDropdown
-              errors={errors}
               name="screenGroups"
               isCreatable
               handleGroupsSelection={handleInput}
@@ -133,7 +131,6 @@ function ScreenForm({
             {/* @TODO: connect location to api data */}
             <h2 className="h4">{t("edit-screen.screen-location")}</h2>
             {/* <LocationDropdown
-              errors={errors}
               isCreatable
               name="screenLocations"
               handleLocationSelection={handleInput}
@@ -208,12 +205,11 @@ function ScreenForm({
               {layoutOptions && (
                 <div className="col-md-8">
                   <Select
-                    name="screenLayout"
+                    name="layout"
                     onChange={handleInput}
                     label={t("edit-screen.screen-layout-label")}
-                    errors={errors}
                     options={layoutOptions}
-                    value={screen.screenLayout}
+                    value={screen.layout}
                   />
                 </div>
               )}

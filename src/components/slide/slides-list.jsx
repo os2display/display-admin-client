@@ -143,7 +143,7 @@ function SlidesList() {
   function handleDelete() {
     const [first] = selectedRows;
     DeleteV1Slides({ id: first.id });
-    setSelectedRows([]);
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 
@@ -151,7 +151,7 @@ function SlidesList() {
    * Closes the delete modal.
    */
   function onCloseDeleteModal() {
-    setSelectedRows([]);
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 

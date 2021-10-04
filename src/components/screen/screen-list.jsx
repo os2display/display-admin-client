@@ -9,16 +9,18 @@ import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
-// import ListButton from "../util/list/list-button";
+import ListButton from "../util/list/list-button";
 import Toast from "../util/toast/toast";
 import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import "./screen-list.scss";
 import Dimensions from "./dimension";
+import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1ScreensQuery,
   useDeleteV1ScreensByIdMutation,
+  useGetV1ScreenGroupsByIdQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -40,14 +42,14 @@ function ScreenList() {
   const [DeleteV1Screens, { isSuccess: isDeleteSuccess }] =
     useDeleteV1ScreensByIdMutation();
 
-  // /**
-  //  * @param {Array} groupsArray
-  //  * The array of groups.
-  //  */
-  // function openInfoModal(groupsArray) {
-  //   setInGroups(groupsArray);
-  //   setShowInfoModal(true);
-  // }
+  /**
+   * @param {Array} groupsData
+   * The array of groups.
+   */
+  function openInfoModal(groupsData) {
+    setInGroups(groupsData);
+    setShowInfoModal(true);
+  }
 
   /**
    * Closes the info modal.
@@ -87,8 +89,8 @@ function ScreenList() {
    * @param {number} props.id
    * The id of the screen
    */
-  function openDeleteModal({ id, title }) {
-    setSelectedRows([{ id, title }]);
+  function openDeleteModal(item) {
+    setSelectedRows([{ id: item["@id"], title: item.title }]);
     setShowDeleteModal(true);
   }
 
@@ -117,15 +119,8 @@ function ScreenList() {
     },
     {
       sort: true,
-      path: "onFollowingGroups",
-      // content: (data) =>
-      //   ListButton(
-      //     openInfoModal,
-      //     data.onFollowingGroups,
-      //     data.onFollowingGroups.length,
-      //     data.onFollowingGroups.length === 0
-      //   ),
-      content: () => <div>@TODO</div>,
+      path: "inScreenGroups",
+      content: (data) => ListButton(openInfoModal, [data.inScreenGroups]),
       key: "groups",
       label: t("screens-list.columns.on-groups"),
     },
@@ -141,19 +136,14 @@ function ScreenList() {
     },
     {
       sort: true,
+      // @TODO: implement overridden by campaing
       label: t("screens-list.columns.campaign"),
       content: (data) => CampaignIcon(data),
-      // @TODO: implement overridden by campaing
     },
     {
       key: "edit",
-      content: (data) => (
-        <LinkForList
-          data={data}
-          label={t("screens-list.edit-button")}
-          param="screen/edit"
-        />
-      ),
+      content: (data) =>
+        LinkForList(data["@id"], "screen/edit", t("screens-list.edit-button")),
     },
     {
       key: "delete",
@@ -176,7 +166,8 @@ function ScreenList() {
    */
   function handleDelete() {
     const [first] = selectedRows;
-    DeleteV1Screens({ id: first.id });
+    DeleteV1Screens({ id: idFromUrl(first.id) });
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 
@@ -184,7 +175,7 @@ function ScreenList() {
    * Closes the delete modal.
    */
   function onCloseModal() {
-    setSelectedRows([]);
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 
@@ -244,6 +235,7 @@ function ScreenList() {
       />
       <InfoModal
         show={showInfoModal}
+        apiCall={useGetV1ScreenGroupsByIdQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={inGroups}
         modalTitle={t("screens-list.info-modal.screen-in-groups")}

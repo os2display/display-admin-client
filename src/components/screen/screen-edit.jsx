@@ -35,6 +35,7 @@ function ScreenEdit() {
   useEffect(() => {
     if (data) {
       setFormStateObject(data);
+      console.log(data);
     }
   }, [data]);
 
@@ -54,7 +55,7 @@ function ScreenEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    const saveData = { id, body: formStateObject };
+    const saveData = { id, body: JSON.stringify(formStateObject) };
     PutV1Screens(saveData);
   }
 
@@ -67,7 +68,7 @@ function ScreenEdit() {
       isLoading={isLoadingScreen}
       isSaveSuccess={isSaveSuccess}
       isSaving={isSaving}
-      errors={[saveError, loadError]}
+      errors={saveError || loadError}
     />
   );
 }
