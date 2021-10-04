@@ -113,8 +113,14 @@ function SlideEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    // save screen
-    const saveData = { id, body: JSON.stringify(formStateObject) };
+    formStateObject.modified = new Date().toISOString();
+    const saveData = {
+      id,
+      slideSlideInput: JSON.stringify({
+        ...formStateObject,
+        templateInfo: { "@id": formStateObject.templateInfo },
+      }),
+    };
     PutV1Slides(saveData);
     handleSavePlaylists();
   }
