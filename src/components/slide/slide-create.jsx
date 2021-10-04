@@ -57,7 +57,7 @@ function SlideCreate() {
         // remove first element for saving
         const toAdd = playlistsToAdd.splice(0, 1).shift();
         const toAddId = idFromUrl(toAdd);
-        PutV1PlaylistsByIdSlideAndSlide({
+        usePutV1ScreenGroupsByIdMutation({
           id: toAddId,
           slideId: idFromUrl(data["@id"]),
         });

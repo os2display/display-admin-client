@@ -316,6 +316,13 @@
     "new-name-placeholder": "Skriv det nye navn her",
     "accept-text": "Konsolider"
   },
+  "select-groups-table": {
+    "columns": {
+      "pick": "Vælg gruppe",
+      "name": "Navn"
+    },
+    "remove-from-list": "Fjern fra liste"
+  },
   "select-playlists-table": {
     "columns": {
       "pick": "Vælg spilleliste",
@@ -384,8 +391,8 @@
     "screen-description-label": "Beskrivelse af skærmen",
     "screen-description-placeholder": "Udfyld beskrivelsen af skærmen",
     "screen-layout-label": "Skærmens layout",
-    "screen-description-of-location-label": "Beskrivelse af skærmens lokation",
-    "screen-description-of-location-placeholder": "Udfyld beskrivelsem af skærmens lokation",
+    "screen-location-label": "Skærmens lokation",
+    "screen-location-placeholder": "Udfyld skærmens lokation",
     "screen-size-of-screen-label": "Størrelse på skærmen",
     "screen-size-of-screen-placeholder": "Angiv størrelsen på skærmen",
     "screen-resolution-of-screen-label": "Skærmens opløsning",

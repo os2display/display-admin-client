@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import SearchBox from "../search-box/search-box";
-import DeleteModal from "../../delete-modal/delete-modal";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
@@ -36,6 +35,10 @@ function List({
   showMerge,
   clearSelectedRows,
   withChart,
+  handlePageChange,
+  totalItems,
+  currentPage,
+  handleDelete,
 }) {
   const { t } = useTranslation("common");
   const { search } = useLocation();
@@ -56,10 +59,6 @@ function List({
     order: orderParams || "asc",
   });
   const pageSize = 10;
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(pageParams, 10) ? parseInt(pageParams, 10) : 1
-  );
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showMergeModal, setViewMergeModal] = useState(false);
 
   /**
@@ -67,23 +66,7 @@ function List({
    * Updates the search text state and url.
    */
   function handleSearch(newSearchText) {
-    setCurrentPage(1);
     setSearchText(newSearchText);
-  }
-
-  /**
-   * @param {Array} items
-   * The items to paginate.
-   * @param {number} pageNumber
-   * The chosen page.
-   * @param {number} sizeOfPage
-   * The page size
-   * @returns {Array}
-   * The paginated items.
-   */
-  function paginate(items, pageNumber, sizeOfPage) {
-    const startIndex = (pageNumber - 1) * sizeOfPage;
-    return items.slice(startIndex, startIndex + sizeOfPage);
   }
 
   /**
@@ -91,120 +74,46 @@ function List({
    */
   useEffect(() => {
     const params = new URLSearchParams(search);
-    if (searchText) {
-      params.delete("search");
-      params.append("search", searchText);
-    }
-    params.delete("sort");
-    params.append("sort", sortBy.path);
-    params.delete("order");
-    params.append("order", sortBy.order);
-    params.delete("page");
-    params.append("page", currentPage);
+    // if (searchText) {
+    //   params.delete("search");
+    //   params.append("search", searchText);
+    // }
+    // params.delete("sort");
+    // params.append("sort", sortBy.path);
+    // params.delete("order");
+    // params.append("order", sortBy.order);
     history.replace({ search: params.toString() });
   }, [searchText, sortBy, currentPage]);
 
   /**
-   * Closes delete modal.
+   * If they search or filter, the pagination is reset.
    */
-  function onCloseDeleteModal() {
-    setShowDeleteModal(false);
+  useEffect(() => {
+    if (pageParams) {
+      handlePageChange(parseInt(pageParams));
+    } else {
+      updateUrlAndChangePage(1);
+    }
+  }, [pageParams]);
+
+  function updateUrlAndChangePage(currentPage) {
+    const params = new URLSearchParams(search);
+    params.delete("page");
+    params.append("page", currentPage);
+    history.replace({ search: params.toString() });
+    handlePageChange(currentPage);
   }
+
+  /**
+   *Todo
+   */
+  function handleSort() {}
 
   /**
    * Closes merge modal.
    */
   function onCloseMergeModal() {
     setViewMergeModal(false);
-  }
-
-  /**
-   * @param {number} page
-   * Updates pagination page.
-   */
-  function handlePageChange(page) {
-    setCurrentPage(page);
-  }
-
-  /**
-   * @param {object} sortColumn
-   * Updates sortcolumn.
-   */
-  function handleSort(sortColumn) {
-    setCurrentPage(1);
-    setSortBy(sortColumn);
-  }
-
-  /**
-   * @param {object} dataToFilter
-   * Search filter function.
-   * @returns {boolean}
-   * Whether the searchtext is in the data entry.
-   */
-  function filterDataFromSearchInput(dataToFilter) {
-    let dataValuesString = Object.values(dataToFilter);
-    dataValuesString = dataValuesString
-      .filter((el) => {
-        return typeof el === "string" || typeof el === "number";
-      })
-      .join("");
-    return dataValuesString
-      .toLocaleLowerCase()
-      .includes(searchText.toLocaleLowerCase());
-  }
-
-  /**
-   * @param {string|number} a Sort parameter a
-   * @param {string|number} b Sort parameter b
-   * @returns {number} Sorting number.
-   */
-  /* @TODO: Is this needed
-  function sortData(a, b) {
-    let sortVarA = a[sortBy.path];
-    let sortVarB = b[sortBy.path];
-    sortVarA =
-      typeof sortVarA === "string" ? sortVarA.toLocaleLowerCase() : sortVarA;
-    sortVarB =
-      typeof sortVarB === "string" ? sortVarB.toLocaleLowerCase() : sortVarB;
-    sortVarA = Array.isArray(sortVarA) ? sortVarA.length : sortVarA;
-    sortVarB = Array.isArray(sortVarB) ? sortVarB.length : sortVarB;
-    if (sortVarA < sortVarB) {
-      return -1;
-    }
-    if (sortVarA > sortVarB) {
-      return 1;
-    }
-
-    return 0;
-  }
-  */
-
-  /**
-   * @returns {object}
-   * returns object of paginated data array and length of data.
-   */
-  function getTableData() {
-    let returnValue = data;
-    if (searchText) {
-      returnValue = returnValue.filter(filterDataFromSearchInput);
-    }
-    if (sortBy) {
-      // @TODO: Fix issue.
-      // returnValue = returnValue.sort(sortData);
-    }
-    if (sortBy.order === "desc") {
-      returnValue = returnValue.reverse();
-    }
-    const paginated = paginate(returnValue, currentPage, pageSize);
-    return { data: paginated, length: returnValue.length };
-  }
-
-  /**
-   * Deletes selected data, and closes modal.
-   */
-  function handleDelete() {
-    // @TODO: delete elements
-    setShowDeleteModal(false);
   }
 
   /**
@@ -226,7 +135,7 @@ function List({
             variant="danger"
             id="delete-button"
             disabled={disableDeleteButton}
-            onClick={() => setShowDeleteModal(true)}
+            onClick={() => handleDelete()}
             className="me-3"
           >
             {t("list.delete-button")}
@@ -255,23 +164,17 @@ function List({
       </Row>
       <Table
         onSort={handleSort}
-        data={getTableData().data}
+        data={data}
         sortColumn={sortBy}
         columns={columns}
         selectedRows={selectedRows}
         withChart={withChart}
       />
       <Pagination
-        itemsCount={getTableData().length}
+        itemsCount={totalItems}
         pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
-      <DeleteModal
-        show={showDeleteModal}
-        handleAccept={handleDelete}
-        onClose={onCloseDeleteModal}
-        selectedRows={selectedRows}
+        currentPage={parseInt(pageParams)}
+        onPageChange={updateUrlAndChangePage}
       />
       <MergeModal
         show={showMergeModal}
@@ -286,6 +189,7 @@ function List({
 List.defaultProps = {
   showMerge: false,
   withChart: false,
+  currentPage: 1,
 };
 
 List.propTypes = {
@@ -296,6 +200,10 @@ List.propTypes = {
   selectedRows: SelectedRowsProptypes.isRequired,
   showMerge: PropTypes.bool,
   clearSelectedRows: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
   withChart: PropTypes.bool,
+  totalItems: PropTypes.number.isRequired,
+  currentPage: PropTypes.number,
 };
 export default List;

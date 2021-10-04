@@ -4,7 +4,7 @@
  * @returns {Array} updated array with currently selected rows.
  */
 function selectedHelper(row, selectedData) {
-  const { id } = row;
+  const id = row["@id"];
   const alreadySelected = selectedData.find((x) => x.id === id);
   if (alreadySelected) {
     selectedData.splice(selectedData.indexOf(alreadySelected), 1);

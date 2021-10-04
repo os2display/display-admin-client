@@ -11,8 +11,7 @@ import Select from "../util/forms/select";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
-// import GroupsDropdown from "../util/forms/multiselect-dropdown/groups/groups-dropdown";
-// import LocationDropdown from "../util/forms/multiselect-dropdown/locations/location-dropdown";
+import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import RadioButtons from "../util/forms/radio-buttons";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
@@ -71,14 +70,14 @@ function ScreenForm({
   useEffect(() => {
     if (layoutOptions) {
       const localGrid = layoutOptions.find(
-        (layout) => layout.id === screen.screenLayout
+        (layout) => layout["@id"] === screen.layout
       );
       if (localGrid) {
         setGrid(localGrid);
       }
     }
-  }, [screen.screenLayout, layoutOptions]);
-
+  }, [screen.layout, layoutOptions]);
+  console.log(screen);
   return (
     <Form>
       <h1>{headerText}</h1>
@@ -119,33 +118,21 @@ function ScreenForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("edit-screen.screen-groups")}</h2>
-            {/* @TODO: make work when relevant data from api */}
-            {/* <GroupsDropdown
-              name="screenGroups"
-              isCreatable
-              handleGroupsSelection={handleInput}
-              selected={screen.screenGroups}
-            /> */}
+            <SelectGroupsTable
+              handleChange={handleInput}
+              name="inScreenGroups"
+              selectedDataEndpoint={screen.inScreenGroups}
+            />
           </ContentBody>
           <ContentBody>
-            {/* @TODO: connect location to api data */}
             <h2 className="h4">{t("edit-screen.screen-location")}</h2>
-            {/* <LocationDropdown
-              isCreatable
-              name="screenLocations"
-              handleLocationSelection={handleInput}
-              selected={screen.screenLocations}
-              formGroupClasses="mb-3"
-            /> */}
             <FormInput
-              name="descriptionOfLocation"
+              name="location"
               type="text"
               required
-              label={t("edit-screen.screen-description-of-location-label")}
-              helpText={t(
-                "edit-screen.screen-description-of-location-placeholder"
-              )}
-              value={screen.descriptionOfLocation}
+              label={t("edit-screen.screen-location-label")}
+              helpText={t("edit-screen.screen-location-placeholder")}
+              value={screen.location}
               onChange={handleInput}
             />
           </ContentBody>
@@ -177,7 +164,7 @@ function ScreenForm({
                   placeholder={t(
                     "edit-screen.screen-resolution-of-screen-height-placeholder"
                   )}
-                  value={screen.dimensions?.height || ""}
+                  value={screen.dimensions.height}
                   onChange={handleInput}
                 />
               </Col>
@@ -193,7 +180,7 @@ function ScreenForm({
                   placeholder={t(
                     "edit-screen.screen-resolution-of-screen-width-placeholder"
                   )}
-                  value={screen.dimensions?.width || ""}
+                  value={screen.dimensions.width}
                   onChange={handleInput}
                 />
               </Col>
@@ -217,9 +204,9 @@ function ScreenForm({
                 <GridGenerationAndSelect
                   grid={grid?.grid}
                   layout={screen.horizontalOrVertical}
-                  regions={grid?.regions}
+                  regions={grid.regions}
                   handleInput={handleInput}
-                  selectedData={screen.screenLayout}
+                  selectedData={screen.layout}
                 />
               )}
             </div>
@@ -261,7 +248,10 @@ ScreenForm.propTypes = {
   headerText: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.any).isRequired,
+  errors: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.any),
+    PropTypes.bool,
+  ]).isRequired,
 };
 
 export default ScreenForm;

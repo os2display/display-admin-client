@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "../screen-list/campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
+import { Spinner } from "react-bootstrap";
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -35,9 +36,12 @@ function ScreenList() {
   const history = useHistory();
   const viewParams = new URLSearchParams(search).get("view");
   const [view, setView] = useState(viewParams ?? "list");
+  const [page, setPage] = useState();
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [screensToDelete, setScreensToDelete] = useState([]);
   const [inGroups, setInGroups] = useState();
   const [DeleteV1Screens, { isSuccess: isDeleteSuccess }] =
     useDeleteV1ScreensByIdMutation();
@@ -90,7 +94,9 @@ function ScreenList() {
    * The id of the screen
    */
   function openDeleteModal(item) {
-    setSelectedRows([{ id: item["@id"], title: item.title }]);
+    if (item) {
+      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
+    }
     setShowDeleteModal(true);
   }
 
@@ -131,11 +137,13 @@ function ScreenList() {
     },
     {
       sort: true,
+      key: "dimensions",
       content: ({ dimensions }) => Dimensions(dimensions),
       label: t("screens-list.columns.dimensions"),
     },
     {
       sort: true,
+      key: "campaign",
       // @TODO: implement overridden by campaing
       label: t("screens-list.columns.campaign"),
       content: (data) => CampaignIcon(data),
@@ -162,11 +170,25 @@ function ScreenList() {
   ];
 
   /**
+   * When the slide is saved, the playlist(s) will be saved.
+   * When saved, it redirects to edit slide.
+   */
+  useEffect(() => {
+    if (screensToDelete.length > 0) {
+      setIsDeleting(true);
+      const screenToDelete = screensToDelete.splice(0, 1).shift();
+      const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
+      DeleteV1Screens({ id: screenToDeleteId });
+    } else if (isDeleteSuccess) {
+      window.location.reload(false);
+    }
+  }, [screensToDelete, isDeleteSuccess]);
+
+  /**
    * Deletes screen, and closes modal.
    */
   function handleDelete() {
-    const [first] = selectedRows;
-    DeleteV1Screens({ id: idFromUrl(first.id) });
+    setScreensToDelete(selectedRows);
     clearSelectedRows();
     setShowDeleteModal(false);
   }
@@ -185,12 +207,18 @@ function ScreenList() {
   function clearSelectedRows() {
     setSelectedRows([]);
   }
+  /**
+   * Clears the selected rows.
+   */
+  function onChangePage(pageNumber) {
+    setPage(pageNumber);
+  }
 
   const {
     data,
     error: screensGetError,
     isLoading,
-  } = useGetV1ScreensQuery({ page: 1 });
+  } = useGetV1ScreensQuery({ page: page });
 
   return (
     <>
@@ -217,15 +245,22 @@ function ScreenList() {
         )}
       </Col>
       <ContentBody>
-        {!isLoading && data && data["hydra:member"] && (
-          <List
-            columns={columns}
-            selectedRows={selectedRows}
-            data={data["hydra:member"]}
-            clearSelectedRows={clearSelectedRows}
-            withChart={view === "calendar"}
-          />
-        )}
+        <>
+          {!(isLoading || isDeleting) && data && data["hydra:member"] && (
+            <List
+              handlePageChange={onChangePage}
+              totalItems={data["hydra:totalItems"]}
+              currentPage={page}
+              columns={columns}
+              selectedRows={selectedRows}
+              data={data["hydra:member"]}
+              clearSelectedRows={clearSelectedRows}
+              withChart={view === "calendar"}
+              handleDelete={openDeleteModal}
+            />
+          )}
+          {(isLoading || isDeleting) && <Spinner animation="grow" />}
+        </>
       </ContentBody>
       <DeleteModal
         show={showDeleteModal}
