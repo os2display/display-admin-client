@@ -11,20 +11,17 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import MergeModal from "../../merge-modal/merge-modal";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.data
- * The data for the list.
- * @param {Array} props.columns
- * The columns for the table.
- * @param {Array} props.selectedRows
- * The selected rows, for styling.
- * @param {object} props.showMerge
- * Whether to show the merge button.
- * @param {Function} props.clearSelectedRows
- * Callback to clear the selected rows.
- * @param {boolean} props.withChart
- * If the list should display a gantt chart
+ * @param {object} props - The props.
+ * @param {Array} props.data - The data for the list.
+ * @param {Array} props.columns - The columns for the table.
+ * @param {Array} props.selectedRows - The selected rows, for styling.
+ * @param {object} props.showMerge - Whether to show the merge button.
+ * @param {Function} props.clearSelectedRows - Callback to clear the selected rows.
+ * @param {boolean} props.withChart - If the list should display a gantt chart
+ * @param {Function} props.handlePageChange - For changing the page
+ * @param {number} props.totalItems - the total items, for pagination.
+ * @param {number} props.currentPage - The current page.
+ * @param {Function} props.handleDelete - For deleting elements in the list.
  * @returns {object}
  * The List.
  */
@@ -54,10 +51,14 @@ function List({
   const [searchText, setSearchText] = useState(
     searchParams !== null ? searchParams : ""
   );
-  const [sortBy, setSortBy] = useState({
+  const [sortBy] = useState({
     path: sortParams || "name",
     order: orderParams || "asc",
   });
+  // const [sortBy, setSortBy] = useState({
+  //   path: sortParams || "name",
+  //   order: orderParams || "asc",
+  // });
   const pageSize = 10;
   const [showMergeModal, setViewMergeModal] = useState(false);
 
@@ -86,23 +87,26 @@ function List({
   }, [searchText, sortBy, currentPage]);
 
   /**
-   * If they search or filter, the pagination is reset.
+   * @param {number} nextPage - the next page.
+   */
+  function updateUrlAndChangePage(nextPage) {
+    const params = new URLSearchParams(search);
+    params.delete("page");
+    params.append("page", nextPage);
+    history.replace({ search: params.toString() });
+    handlePageChange(nextPage);
+  }
+
+  /**
+   * Sets page from url using callback
    */
   useEffect(() => {
     if (pageParams) {
-      handlePageChange(parseInt(pageParams));
+      handlePageChange(parseInt(pageParams, 10));
     } else {
       updateUrlAndChangePage(1);
     }
   }, [pageParams]);
-
-  function updateUrlAndChangePage(currentPage) {
-    const params = new URLSearchParams(search);
-    params.delete("page");
-    params.append("page", currentPage);
-    history.replace({ search: params.toString() });
-    handlePageChange(currentPage);
-  }
 
   /**
    *Todo
@@ -173,7 +177,7 @@ function List({
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}
-        currentPage={parseInt(pageParams)}
+        currentPage={parseInt(pageParams, 10)}
         onPageChange={updateUrlAndChangePage}
       />
       <MergeModal

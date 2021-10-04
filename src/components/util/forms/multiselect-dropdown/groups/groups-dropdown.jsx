@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
@@ -14,8 +14,8 @@ import MultiSelectComponent from "../multi-dropdown";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
- * @param {boolean} props.isCreatable
- * Whether it is possible to create in the multi dropdown.
+ * @param {Array} props.data
+ * The data for options.
  * @returns {object}
  * The multidropdown of groups.
  */
@@ -49,7 +49,6 @@ function GroupsDropdown({
 
 GroupsDropdown.defaultProps = {
   errors: null,
-  isCreatable: false,
 };
 
 GroupsDropdown.propTypes = {
@@ -63,7 +62,7 @@ GroupsDropdown.propTypes = {
   ).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
-  isCreatable: PropTypes.bool,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default GroupsDropdown;
