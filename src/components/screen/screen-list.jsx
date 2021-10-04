@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col } from "react-bootstrap";
+import { Button, Col, Spinner } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "../screen-list/campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
-import { Spinner } from "react-bootstrap";
+
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -84,14 +84,10 @@ function ScreenList() {
   }
 
   /**
-   * Opens the delete modal, for deleting row.
-   *
-   * @param {object} props
-   * The props.
-   * @param {string} props.title
-   * The title of the screen.
-   * @param {number} props.id
-   * The id of the screen
+   * Opens the delete modal
+
+   * @param {object} item
+   * The item to delete
    */
   function openDeleteModal(item) {
     if (item) {
@@ -170,8 +166,7 @@ function ScreenList() {
   ];
 
   /**
-   * When the slide is saved, the playlist(s) will be saved.
-   * When saved, it redirects to edit slide.
+   * Deletes multiple screens.
    */
   useEffect(() => {
     if (screensToDelete.length > 0) {
@@ -185,7 +180,14 @@ function ScreenList() {
   }, [screensToDelete, isDeleteSuccess]);
 
   /**
-   * Deletes screen, and closes modal.
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
+  /**
+   * Deletes screen(s), and closes modal.
    */
   function handleDelete() {
     setScreensToDelete(selectedRows);
@@ -202,13 +204,9 @@ function ScreenList() {
   }
 
   /**
-   * Clears the selected rows.
-   */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-  /**
-   * Clears the selected rows.
+   * Sets next page.
+   *
+   * @param {number} pageNumber - the next page.
    */
   function onChangePage(pageNumber) {
     setPage(pageNumber);
@@ -218,7 +216,7 @@ function ScreenList() {
     data,
     error: screensGetError,
     isLoading,
-  } = useGetV1ScreensQuery({ page: page });
+  } = useGetV1ScreensQuery({ page });
 
   return (
     <>
@@ -248,10 +246,10 @@ function ScreenList() {
         <>
           {!(isLoading || isDeleting) && data && data["hydra:member"] && (
             <List
-              handlePageChange={onChangePage}
+              columns={columns}
               totalItems={data["hydra:totalItems"]}
               currentPage={page}
-              columns={columns}
+              handlePageChange={onChangePage}
               selectedRows={selectedRows}
               data={data["hydra:member"]}
               clearSelectedRows={clearSelectedRows}

@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import idFromUrl from "../util/helpers/id-from-url";
 import { usePostV1ScreensMutation } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
 
@@ -23,7 +24,7 @@ function ScreenCreate() {
 
   const [
     PostV1Screen,
-    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
+    { data, isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostV1ScreensMutation();
 
   /**
@@ -34,8 +35,8 @@ function ScreenCreate() {
     if (isSaveSuccess && data) {
       if (groupsToAdd.length > 0) {
         // remove first element for saving
-        const toAdd = groupsToAdd.splice(0, 1).shift();
-        const toAddId = idFromUrl(toAdd);
+        // const toAdd = groupsToAdd.splice(0, 1).shift();
+        // const toAddId = idFromUrl(toAdd);
         // todo save screen group connection
       } else {
         history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
@@ -72,10 +73,12 @@ function ScreenCreate() {
     formStateObject.created = new Date().toISOString();
     formStateObject.modified = new Date().toISOString();
     formStateObject.dimensions.width = parseInt(
-      formStateObject.dimensions.width
+      formStateObject.dimensions.width,
+      10
     );
     formStateObject.dimensions.height = parseInt(
-      formStateObject.dimensions.height
+      formStateObject.dimensions.height,
+      10
     );
     const saveData = { screenScreenInput: JSON.stringify(formStateObject) };
     PostV1Screen(saveData);

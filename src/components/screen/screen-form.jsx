@@ -77,7 +77,7 @@ function ScreenForm({
       }
     }
   }, [screen.layout, layoutOptions]);
-  console.log(screen);
+
   return (
     <Form>
       <h1>{headerText}</h1>
