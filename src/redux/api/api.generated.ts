@@ -22,11 +22,39 @@ export const api = createApi({
         params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
+    postMediaCollection: build.mutation<
+      PostMediaCollectionApiResponse,
+      PostMediaCollectionApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/media`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
     getV1MediaById: build.query<
       GetV1MediaByIdApiResponse,
       GetV1MediaByIdApiArg
     >({
       query: (queryArg) => ({ url: `/v1/media/${queryArg.id}` }),
+    }),
+    deleteV1MediaById: build.mutation<
+      DeleteV1MediaByIdApiResponse,
+      DeleteV1MediaByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/media/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getV1MediaByIdSlides: build.query<
+      GetV1MediaByIdSlidesApiResponse,
+      GetV1MediaByIdSlidesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/media/${queryArg.id}/slides`,
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+      }),
     }),
     getV1Playlists: build.query<
       GetV1PlaylistsApiResponse,
@@ -44,7 +72,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/playlists`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.playlistPlaylistInput,
       }),
     }),
     getV1PlaylistsById: build.query<
@@ -60,7 +88,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/playlists/${queryArg.id}`,
         method: "PUT",
-        body: queryArg.body,
+        body: queryArg.playlistPlaylistInput,
       }),
     }),
     deleteV1PlaylistsById: build.mutation<
@@ -125,7 +153,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/screenGroups`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.screenGroupScreenGroupInput,
       }),
     }),
     getV1ScreenGroupsById: build.query<
@@ -141,7 +169,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/screenGroups/${queryArg.id}`,
         method: "PUT",
-        body: queryArg.body,
+        body: queryArg.screenGroupScreenGroupInput,
       }),
     }),
     deleteV1ScreenGroupsById: build.mutation<
@@ -166,7 +194,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/screens`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.screenScreenInput,
       }),
     }),
     getV1ScreensById: build.query<
@@ -182,7 +210,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/screens/${queryArg.id}`,
         method: "PUT",
-        body: queryArg.body,
+        body: queryArg.screenScreenInput,
       }),
     }),
     deleteV1ScreensById: build.mutation<
@@ -232,7 +260,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/slides`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.slideSlideInput,
       }),
     }),
     getV1SlidesById: build.query<
@@ -248,7 +276,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/slides/${queryArg.id}`,
         method: "PUT",
-        body: queryArg.body,
+        body: queryArg.slideSlideInput,
       }),
     }),
     deleteV1SlidesById: build.mutation<
@@ -302,9 +330,31 @@ export type GetV1MediaApiArg = {
   /** The number of items per page */
   itemsPerPage?: string;
 };
+export type PostMediaCollectionApiResponse = unknown;
+export type PostMediaCollectionApiArg = {
+  body: {
+    title: string;
+    description: string;
+    license: string;
+    modifiedBy?: string;
+    createdBy?: string;
+    file: Blob;
+  };
+};
 export type GetV1MediaByIdApiResponse = unknown;
 export type GetV1MediaByIdApiArg = {
   id: string;
+};
+export type DeleteV1MediaByIdApiResponse = unknown;
+export type DeleteV1MediaByIdApiArg = {
+  id: string;
+};
+export type GetV1MediaByIdSlidesApiResponse = unknown;
+export type GetV1MediaByIdSlidesApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
 };
 export type GetV1PlaylistsApiResponse = unknown;
 export type GetV1PlaylistsApiArg = {
@@ -315,7 +365,7 @@ export type GetV1PlaylistsApiArg = {
 export type PostV1PlaylistsApiResponse = unknown;
 export type PostV1PlaylistsApiArg = {
   /** The new Playlist resource */
-  body: string;
+  playlistPlaylistInput: PlaylistPlaylistInput;
 };
 export type GetV1PlaylistsByIdApiResponse = unknown;
 export type GetV1PlaylistsByIdApiArg = {
@@ -325,7 +375,7 @@ export type PutV1PlaylistsByIdApiResponse = unknown;
 export type PutV1PlaylistsByIdApiArg = {
   id: string;
   /** The updated Playlist resource */
-  body: string;
+  playlistPlaylistInput: PlaylistPlaylistInput;
 };
 export type DeleteV1PlaylistsByIdApiResponse = unknown;
 export type DeleteV1PlaylistsByIdApiArg = {
@@ -365,7 +415,7 @@ export type GetV1ScreenGroupsApiArg = {
 export type PostV1ScreenGroupsApiResponse = unknown;
 export type PostV1ScreenGroupsApiArg = {
   /** The new ScreenGroup resource */
-  body: string;
+  screenGroupScreenGroupInput: ScreenGroupScreenGroupInput;
 };
 export type GetV1ScreenGroupsByIdApiResponse = unknown;
 export type GetV1ScreenGroupsByIdApiArg = {
@@ -375,7 +425,7 @@ export type PutV1ScreenGroupsByIdApiResponse = unknown;
 export type PutV1ScreenGroupsByIdApiArg = {
   id: string;
   /** The updated ScreenGroup resource */
-  body: string;
+  screenGroupScreenGroupInput: ScreenGroupScreenGroupInput;
 };
 export type DeleteV1ScreenGroupsByIdApiResponse = unknown;
 export type DeleteV1ScreenGroupsByIdApiArg = {
@@ -390,7 +440,7 @@ export type GetV1ScreensApiArg = {
 export type PostV1ScreensApiResponse = unknown;
 export type PostV1ScreensApiArg = {
   /** The new Screen resource */
-  body: string;
+  screenScreenInput: ScreenScreenInput;
 };
 export type GetV1ScreensByIdApiResponse = unknown;
 export type GetV1ScreensByIdApiArg = {
@@ -400,7 +450,7 @@ export type PutV1ScreensByIdApiResponse = unknown;
 export type PutV1ScreensByIdApiArg = {
   id: string;
   /** The updated Screen resource */
-  body: string;
+  screenScreenInput: ScreenScreenInput;
 };
 export type DeleteV1ScreensByIdApiResponse = unknown;
 export type DeleteV1ScreensByIdApiArg = {
@@ -436,7 +486,7 @@ export type GetV1SlidesApiArg = {
 export type PostV1SlidesApiResponse = unknown;
 export type PostV1SlidesApiArg = {
   /** The new Slide resource */
-  body: string;
+  slideSlideInput: SlideSlideInput;
 };
 export type GetV1SlidesByIdApiResponse = unknown;
 export type GetV1SlidesByIdApiArg = {
@@ -446,7 +496,7 @@ export type PutV1SlidesByIdApiResponse = unknown;
 export type PutV1SlidesByIdApiArg = {
   id: string;
   /** The updated Slide resource */
-  body: string;
+  slideSlideInput: SlideSlideInput;
 };
 export type DeleteV1SlidesByIdApiResponse = unknown;
 export type DeleteV1SlidesByIdApiArg = {
@@ -469,11 +519,48 @@ export type GetV1TemplatesByIdApiResponse = unknown;
 export type GetV1TemplatesByIdApiArg = {
   id: string;
 };
+export type PlaylistPlaylistInput = {
+  title?: string;
+  description?: string;
+  modifiedBy?: string;
+  createdBy?: string;
+  published?: string[];
+};
+export type ScreenGroupScreenGroupInput = {
+  title?: string;
+  description?: string;
+  modifiedBy?: string;
+  createdBy?: string;
+};
+export type ScreenScreenInput = {
+  title?: string;
+  description?: string;
+  size?: string;
+  modifiedBy?: string;
+  createdBy?: string;
+  layout?: string;
+  location?: string;
+  dimensions?: string[];
+};
+export type SlideSlideInput = {
+  title?: string;
+  description?: string;
+  modifiedBy?: string;
+  createdBy?: string;
+  templateInfo?: string[];
+  duration?: number | null;
+  published?: string[];
+  media?: string[];
+  content?: string[];
+};
 export const {
   useGetV1LayoutsQuery,
   useGetV1LayoutsByIdQuery,
   useGetV1MediaQuery,
+  usePostMediaCollectionMutation,
   useGetV1MediaByIdQuery,
+  useDeleteV1MediaByIdMutation,
+  useGetV1MediaByIdSlidesQuery,
   useGetV1PlaylistsQuery,
   usePostV1PlaylistsMutation,
   useGetV1PlaylistsByIdQuery,
