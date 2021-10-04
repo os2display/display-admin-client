@@ -100,7 +100,7 @@ function SlideCreate() {
       formStateObject.templateInfo = { "@id": formStateObject.templateInfo };
     }
     // formStateObject.published = { from: creationTime, to: creationTime };
-    const saveData = { body: JSON.stringify(formStateObject) };
+    const saveData = { slideSlideInput: JSON.stringify(formStateObject) };
     PostV1Slide(saveData);
     handleSavePlaylists();
   }
