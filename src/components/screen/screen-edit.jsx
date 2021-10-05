@@ -15,7 +15,7 @@ import ScreenForm from "./screen-form";
  */
 function ScreenEdit() {
   const { t } = useTranslation("common");
-  const headerText = t("edit-screen.edit-screen");
+  const headerText = t("screen-edit.edit-screen-header");
   const [formStateObject, setFormStateObject] = useState();
   const { id } = useParams();
   const [
@@ -46,7 +46,8 @@ function ScreenEdit() {
    * @param {object} props.target - Event target.
    */
   function handleInput({ target }) {
-    const localFormStateObject = { ...formStateObject };
+    let localFormStateObject = { ...formStateObject };
+    localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
     set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
