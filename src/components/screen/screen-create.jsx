@@ -17,9 +17,17 @@ function ScreenCreate() {
   const headerText = t("edit-screen.create-new-screen");
   const history = useHistory();
   const [formStateObject, setFormStateObject] = useState({
-    modifiedBy: "@TODO",
-    createdBy: "@TODO",
-    dimensions: { height: 0, width: 0 },
+    title: "",
+    description: "",
+    size: "",
+    modifiedBy: "",
+    createdBy: "",
+    layout: "",
+    location: "",
+    dimensions: {
+      width: 0,
+      height: 0,
+    },
   });
 
   const [
@@ -39,7 +47,7 @@ function ScreenCreate() {
         // const toAddId = idFromUrl(toAdd);
         // todo save screen group connection
       } else {
-        history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
+        history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
       }
     }
   }, [isSaveSuccess]);
@@ -70,8 +78,6 @@ function ScreenCreate() {
    * Handles submit.
    */
   function handleSubmit() {
-    formStateObject.created = new Date().toISOString();
-    formStateObject.modified = new Date().toISOString();
     formStateObject.dimensions.width = parseInt(
       formStateObject.dimensions.width,
       10

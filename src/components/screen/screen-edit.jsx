@@ -18,7 +18,6 @@ function ScreenEdit() {
   const headerText = t("edit-screen.edit-screen");
   const [formStateObject, setFormStateObject] = useState();
   const { id } = useParams();
-
   const [
     PutV1Screens,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
