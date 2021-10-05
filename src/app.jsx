@@ -11,8 +11,6 @@ import ScreenList from "./components/screen/screen-list";
 import SlidesList from "./components/slide/slides-list";
 import GroupsList from "./components/groups-list/groups-list";
 import EditGroup from "./components/edit-group/edit-group";
-import LocationsList from "./components/locations-list/locations-list";
-import EditLocation from "./components/edit-location/edit-location";
 import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";
@@ -62,10 +60,8 @@ function App() {
                   <Route path="/screen/list" component={ScreenList} />
                   <Route path="/screen/create" component={ScreenCreate} />
                   <Route path="/screen/edit/:id" component={ScreenEdit} />
-                  <Route path="/locations" component={LocationsList} />
                   <Route path="/groups" component={GroupsList} />
                   <Route path="/group/:id" component={EditGroup} />
-                  <Route path="/location/:id" component={EditLocation} />
                   <Route path="/slide/list" component={SlidesList} />
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
