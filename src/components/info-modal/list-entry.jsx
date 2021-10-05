@@ -4,7 +4,7 @@ import { Spinner } from "react-bootstrap";
 import idFromUrl from "../util/helpers/id-from-url";
 
 /**
- * Info modal component, that displays an info string.
+ * List entry component.
  *
  * @param {object} props
  * Props.

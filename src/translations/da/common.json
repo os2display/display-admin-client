@@ -146,7 +146,7 @@
   "slide-create": {
     "create-slide-header": "Opret nyt slide"
   },
-  "edit-slide": {
+  "slide-form": {
     "error": "Der skete en fejl",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",

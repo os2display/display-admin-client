@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import {
   useGetV1SlidesByIdQuery,
   usePutV1SlidesByIdMutation,
-  usePutV1PlaylistsByIdSlideAndSlideIdMutation,
-  useDeleteV1PlaylistsByIdSlideAndSlideIdMutation,
+  // usePutV1PlaylistsByIdSlideAndSlideIdMutation,
+  // useDeleteV1PlaylistsByIdSlideAndSlideIdMutation,
 } from "../../redux/api/api.generated";
 import idFromUrl from "../util/helpers/id-from-url";
 import SlideForm from "./slide-form";
@@ -30,23 +30,23 @@ function SlideEdit() {
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1SlidesByIdMutation();
 
-  const [
-    PutV1PlaylistsByIdSlideAndSlide,
-    {
-      isLoading: isSavingPlaylists,
-      error: savePlaylistError,
-      isSuccess: savePlaylistSuccess,
-    },
-  ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
+  // const [
+  //   PutV1PlaylistsByIdSlideAndSlide,
+  //   {
+  //     isLoading: isSavingPlaylists,
+  //     error: savePlaylistError,
+  //     isSuccess: savePlaylistSuccess,
+  //   },
+  // ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
 
-  const [
-    DeleteV1PlaylistsByIdSlideAndSlide,
-    {
-      isLoading: isDeletingPlaylists,
-      error: deletePlaylistError,
-      isSuccess: deletePlaylistSuccess,
-    },
-  ] = useDeleteV1PlaylistsByIdSlideAndSlideIdMutation();
+  // const [
+  //   DeleteV1PlaylistsByIdSlideAndSlide,
+  //   {
+  //     isLoading: isDeletingPlaylists,
+  //     error: deletePlaylistError,
+  //     isSuccess: deletePlaylistSuccess,
+  //   },
+  // ] = useDeleteV1PlaylistsByIdSlideAndSlideIdMutation();
 
   const { data, error: loadError, isLoading } = useGetV1SlidesByIdQuery({ id });
   /**
@@ -68,14 +68,14 @@ function SlideEdit() {
     if (isSaveSuccess) {
       if (playlistsToAdd.length > 0) {
         // remove first element for saving
-        const toAdd = playlistsToAdd.splice(0, 1).shift();
-        const toAddId = idFromUrl(toAdd);
-        PutV1PlaylistsByIdSlideAndSlide({ id: toAddId, slideId: id });
+        // const toAdd = playlistsToAdd.splice(0, 1).shift();
+        // const toAddId = idFromUrl(toAdd);
+        // PutV1PlaylistsByIdSlideAndSlide({ id: toAddId, slideId: id });
       } else if (playlistsToRemove.length > 0) {
         // remove first element for deleting
-        const toRemove = playlistsToRemove.splice(0, 1).shift();
-        const toRemoveId = idFromUrl(toRemove);
-        DeleteV1PlaylistsByIdSlideAndSlide({ id: toRemoveId, slideId: id });
+        // const toRemove = playlistsToRemove.splice(0, 1).shift();
+        // const toRemoveId = idFromUrl(toRemove);
+        // DeleteV1PlaylistsByIdSlideAndSlide({ id: toRemoveId, slideId: id });
       }
     }
   }, [isSaveSuccess, deletePlaylistSuccess, savePlaylistSuccess]);

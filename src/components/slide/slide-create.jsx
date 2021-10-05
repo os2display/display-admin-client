@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   usePostV1SlidesMutation,
-  usePutV1PlaylistsByIdSlideAndSlideIdMutation,
+  // usePutV1PlaylistsByIdSlideAndSlideIdMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 
@@ -28,14 +28,14 @@ function SlideCreate() {
     },
   });
 
-  const [
-    PutV1PlaylistsByIdSlideAndSlide,
-    {
-      isLoading: isSavingPlaylists,
-      error: savePlaylistError,
-      isSuccess: savePlaylistSuccess,
-    },
-  ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
+  // const [
+  //   PutV1PlaylistsByIdSlideAndSlide,
+  //   {
+  //     isLoading: isSavingPlaylists,
+  //     error: savePlaylistError,
+  //     isSuccess: savePlaylistSuccess,
+  //   },
+  // ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
 
   const [
     PostV1Slide,
@@ -55,12 +55,12 @@ function SlideCreate() {
     if (isSaveSuccess && data) {
       if (playlistsToAdd.length > 0) {
         // remove first element for saving
-        const toAdd = playlistsToAdd.splice(0, 1).shift();
-        const toAddId = idFromUrl(toAdd);
-        PutV1PlaylistsByIdSlideAndSlide({
-          id: toAddId,
-          slideId: idFromUrl(data["@id"]),
-        });
+        // const toAdd = playlistsToAdd.splice(0, 1).shift();
+        // const toAddId = idFromUrl(toAdd);
+        // PutV1PlaylistsByIdSlideAndSlide({
+        //   id: toAddId,
+        //   slideId: idFromUrl(data["@id"]),
+        // });
       } else {
         history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
       }

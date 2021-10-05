@@ -34,8 +34,10 @@ function InfoModal({
     return <></>;
   }
   const { t } = useTranslation("common");
-  const paginationVariables = 10;
-  const [index, setIndex] = useState(paginationVariables);
+  // The info modal loads entries and displays the title.
+  // To not load too many entries, it has its own simple pagination.
+  const paginationVariable = 10;
+  const [index, setIndex] = useState(paginationVariable);
   const [paginatedDataStructure, setPaginatedDataStructure] = useState(
     dataStructureToDisplay.slice(0, index)
   );
@@ -47,10 +49,10 @@ function InfoModal({
     let dataStructureToDisplayCopy = dataStructureToDisplay;
     dataStructureToDisplayCopy = dataStructureToDisplayCopy.slice(
       0,
-      index + paginationVariables
+      index + paginationVariable
     );
     setPaginatedDataStructure(dataStructureToDisplayCopy);
-    setIndex(index + paginationVariables);
+    setIndex(index + paginationVariable);
   }
 
   return (
