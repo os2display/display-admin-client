@@ -1,10 +1,10 @@
-exports.__esModule = true;
 "use strict";
+exports.__esModule = true;
 exports.useGetV1TemplatesByIdQuery = exports.useGetV1TemplatesQuery = exports.useGetV1SlidesByIdPlaylistsQuery = exports.useDeleteV1SlidesByIdMutation = exports.usePutV1SlidesByIdMutation = exports.useGetV1SlidesByIdQuery = exports.usePostV1SlidesMutation = exports.useGetV1SlidesQuery = exports.useDeletePlaylistScreenRegionItemMutation = exports.usePutPlaylistScreenRegionItemMutation = exports.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery = exports.useDeleteV1ScreensByIdMutation = exports.usePutV1ScreensByIdMutation = exports.useGetV1ScreensByIdQuery = exports.usePostV1ScreensMutation = exports.useGetV1ScreensQuery = exports.useDeleteV1ScreenGroupsByIdMutation = exports.usePutV1ScreenGroupsByIdMutation = exports.useGetV1ScreenGroupsByIdQuery = exports.usePostV1ScreenGroupsMutation = exports.useGetV1ScreenGroupsQuery = exports.useGetV1PlaylistsByIdSlidesQuery = exports.useDeleteV1PlaylistsByIdSlideAndSlideIdMutation = exports.usePutV1PlaylistsByIdSlideAndSlideIdMutation = exports.useGetV1PlaylistsByIdScreensQuery = exports.useDeleteV1PlaylistsByIdMutation = exports.usePutV1PlaylistsByIdMutation = exports.useGetV1PlaylistsByIdQuery = exports.usePostV1PlaylistsMutation = exports.useGetV1PlaylistsQuery = exports.useGetV1MediaByIdSlidesQuery = exports.useDeleteV1MediaByIdMutation = exports.useGetV1MediaByIdQuery = exports.usePostMediaCollectionMutation = exports.useGetV1MediaQuery = exports.useGetV1LayoutsByIdQuery = exports.useGetV1LayoutsQuery = exports.api = void 0;
 var react_1 = require("@reduxjs/toolkit/query/react");
-var dynamic_base_query_1 = require("../dynamic-base-query");
+var query_1 = require("@reduxjs/toolkit/query");
 exports.api = (0, react_1.createApi)({
-    baseQuery: dynamic_base_query_1["default"],
+    baseQuery: (0, query_1.fetchBaseQuery)({ baseUrl: "http://displayapiservice.local.itkdev.dk" }),
     tagTypes: [],
     endpoints: function (build) {
         return ({
@@ -32,6 +32,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/media",
                         method: "POST",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.body
                     });
                 }
@@ -68,6 +72,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/playlists",
                         method: "POST",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.playlistPlaylistInput
                     });
                 }
@@ -80,6 +88,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/playlists/" + queryArg.id,
                         method: "PUT",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.playlistPlaylistInput
                     });
                 }
@@ -105,6 +117,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/playlists/" + queryArg.id + "/slide/" + queryArg.slideId,
                         method: "PUT",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.body
                     });
                 }
@@ -138,6 +154,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/screenGroups",
                         method: "POST",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.screenGroupScreenGroupInput
                     });
                 }
@@ -150,6 +170,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/screenGroups/" + queryArg.id,
                         method: "PUT",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.screenGroupScreenGroupInput
                     });
                 }
@@ -175,6 +199,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/screens",
                         method: "POST",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.screenScreenInput
                     });
                 }
@@ -187,6 +215,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/screens/" + queryArg.id,
                         method: "PUT",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.screenScreenInput
                     });
                 }
@@ -212,6 +244,10 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/screens/" + queryArg.id + "/regions/" + queryArg.regionId + "/playlists/" + queryArg.playlistId,
                         method: "PUT",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.body
                     });
                 }
@@ -237,18 +273,26 @@ exports.api = (0, react_1.createApi)({
                     return ({
                         url: "/v1/slides",
                         method: "POST",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.slideSlideInput
                     });
                 }
             }),
             getV1SlidesById: build.query({
-                query: function (queryArg) { return ({ url: "/v1/slides/" + queryArg.id }); }
+                query: function (queryArg) { return ({ url: "/v1/slides/" + queryArg.id, }); }
             }),
             putV1SlidesById: build.mutation({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/slides/" + queryArg.id,
                         method: "PUT",
+                        headers: {
+                            "content-type": "application/ld+json",
+                            accept: "application/ld+json",
+                        },
                         body: queryArg.slideSlideInput
                     });
                 }

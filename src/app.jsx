@@ -9,8 +9,7 @@ import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import SlidesList from "./components/slide/slides-list";
-import GroupsList from "./components/groups-list/groups-list";
-import EditGroup from "./components/edit-group/edit-group";
+import GroupsList from "./components/groups/groups-list";
 import LocationsList from "./components/locations-list/locations-list";
 import EditLocation from "./components/edit-location/edit-location";
 import PlaylistList from "./components/playlist/playlist-list";
@@ -27,7 +26,9 @@ import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
 import SlideEdit from "./components/slide/slide-edit";
 import SlideCreate from "./components/slide/slide-create";
+import GroupEdit from "./components/groups/group-edit";
 import "./app.scss";
+import GroupCreate from "./components/groups/group-create";
 
 /**
  * App component.
@@ -63,8 +64,9 @@ function App() {
                   <Route path="/screen/create" component={ScreenCreate} />
                   <Route path="/screen/edit/:id" component={ScreenEdit} />
                   <Route path="/locations" component={LocationsList} />
-                  <Route path="/groups" component={GroupsList} />
-                  <Route path="/group/:id" component={EditGroup} />
+                  <Route path="/group/list" component={GroupsList} />
+                  <Route path="/group/edit/:id" component={GroupEdit} />
+                  <Route path="/group/create" component={GroupCreate} />
                   <Route path="/location/:id" component={EditLocation} />
                   <Route path="/slide/list" component={SlidesList} />
                   <Route path="/slide/create" component={SlideCreate} />

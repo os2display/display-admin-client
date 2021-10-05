@@ -177,13 +177,23 @@
     "slide-select-playlist-title": "Spillelister",
     "slide-publish-title": "Udgivelse"
   },
-  "edit-group": {
-    "create-new-group": "Opret ny gruppe",
-    "edit-group": "Rediger følgende gruppe",
+  "group-form": {
+    "loading": "Henter gruppen...",
+    "saving": "Gemmer...",
+    "saved": "Gruppen blev gemt",
+    "error": "Der skete en fejl",
     "save-button": "Gem gruppen",
     "cancel-button": "Annuller",
-    "group-name-label": "Gruppens navn",
-    "group-name-placeholder": "Udfyld gruppens navn"
+    "group-title-label": "Gruppens navn",
+    "group-title-placeholder": "Udfyld gruppens navn",
+    "group-description-label": "Gruppens beskrivelse",
+    "group-description-placeholder": "Udfyld gruppens beskrivelse"
+  },
+  "group-create": {
+    "create-new-group-header": "Opret ny gruppe"
+  },
+  "group-edit": {
+    "edit-group-header": "Rediger følgende gruppe"
   },
   "edit-location": {
     "create-new-location": "Opret ny lokation",
