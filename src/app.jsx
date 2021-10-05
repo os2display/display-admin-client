@@ -25,7 +25,9 @@ import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
 import SlideEdit from "./components/slide/slide-edit";
 import SlideCreate from "./components/slide/slide-create";
+import GroupEdit from "./components/groups/group-edit";
 import "./app.scss";
+import GroupCreate from "./components/groups/group-create";
 
 /**
  * App component.
