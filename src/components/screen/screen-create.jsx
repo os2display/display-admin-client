@@ -14,7 +14,7 @@ import ScreenForm from "./screen-form";
 function ScreenCreate() {
   const { t } = useTranslation("common");
   const [groupsToAdd, setGroupsToAdd] = useState([]);
-  const headerText = t("edit-screen.create-new-screen");
+  const headerText = t("screen-create.create-screen-header");
   const history = useHistory();
   const [formStateObject, setFormStateObject] = useState({
     modifiedBy: "@TODO",

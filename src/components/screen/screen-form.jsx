@@ -50,17 +50,6 @@ function ScreenForm({
     page: 1,
   });
 
-  const radioButtonOptions = [
-    {
-      id: "horizontal",
-      label: t("edit-screen.radio-button-horizontal"),
-    },
-    {
-      id: "vertical",
-      label: t("edit-screen.radio-button-vertical"),
-    },
-  ];
-
   useEffect(() => {
     if (layouts) {
       setLayoutOptions(layouts["hydra:member"]);
@@ -91,33 +80,33 @@ function ScreenForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("edit-screen.loading")}
+          {t("screen-form.loading")}
         </>
       )}
       {!isLoading && (
         <>
           <ContentBody>
-            <h2 className="h4">{t("edit-screen.screen-about")}</h2>
+            <h2 className="h4">{t("screen-form.screen-about")}</h2>
             <FormInput
               name="title"
               type="text"
-              label={t("edit-screen.screen-name-label")}
-              invalidText={t("edit-screen.screen-name-validation")}
-              helpText={t("edit-screen.screen-name-placeholder")}
+              label={t("screen-form.screen-name-label")}
+              invalidText={t("screen-form.screen-name-validation")}
+              helpText={t("screen-form.screen-name-placeholder")}
               value={screen.title}
               onChange={handleInput}
             />
             <FormInputArea
               name="description"
               type="text"
-              label={t("edit-screen.screen-description-label")}
-              helpText={t("edit-screen.screen-description-placeholder")}
+              label={t("screen-form.screen-description-label")}
+              helpText={t("screen-form.screen-description-placeholder")}
               value={screen.description}
               onChange={handleInput}
             />
           </ContentBody>
           <ContentBody>
-            <h2 className="h4">{t("edit-screen.screen-groups")}</h2>
+            <h2 className="h4">{t("screen-form.screen-groups")}</h2>
             <SelectGroupsTable
               handleChange={handleInput}
               name="inScreenGroups"
@@ -125,44 +114,35 @@ function ScreenForm({
             />
           </ContentBody>
           <ContentBody>
-            <h2 className="h4">{t("edit-screen.screen-location")}</h2>
+            <h2 className="h4">{t("screen-form.screen-location")}</h2>
             <FormInput
               name="location"
               type="text"
               required
-              label={t("edit-screen.screen-location-label")}
-              helpText={t("edit-screen.screen-location-placeholder")}
+              label={t("screen-form.screen-location-label")}
+              helpText={t("screen-form.screen-location-placeholder")}
               value={screen.location}
               onChange={handleInput}
             />
           </ContentBody>
           <ContentBody>
-            <h2 className="h4">{t("edit-screen.screen-settings")}</h2>
+            <h2 className="h4">{t("screen-form.screen-settings")}</h2>
             <FormInput
               name="size"
               type="text"
-              label={t("edit-screen.screen-size-of-screen-label")}
-              helpText={t("edit-screen.screen-size-of-screen-placeholder")}
+              label={t("screen-form.screen-size-of-screen-label")}
+              helpText={t("screen-form.screen-size-of-screen-placeholder")}
               value={screen.size}
               onChange={handleInput}
-            />
-            <RadioButtons
-              options={radioButtonOptions}
-              radioGroupName="horizontalOrVertical"
-              selected={screen.horizontalOrVertical}
-              handleChange={handleInput}
-              label={t(
-                "edit-screen.radio-buttons-horizontal-or-vertical-label"
-              )}
             />
             <Row className="g-2">
               <Col md>
                 <FormInput
                   name="dimensions.height"
                   type="number"
-                  label={t("edit-screen.screen-resolution-height")}
+                  label={t("screen-form.screen-resolution-height")}
                   placeholder={t(
-                    "edit-screen.screen-resolution-of-screen-height-placeholder"
+                    "screen-form.screen-resolution-of-screen-height-placeholder"
                   )}
                   value={screen.dimensions.height}
                   onChange={handleInput}
@@ -176,9 +156,9 @@ function ScreenForm({
                 <FormInput
                   name="dimensions.width"
                   type="number"
-                  label={t("edit-screen.screen-resolution-width")}
+                  label={t("screen-form.screen-resolution-width")}
                   placeholder={t(
-                    "edit-screen.screen-resolution-of-screen-width-placeholder"
+                    "screen-form.screen-resolution-of-screen-width-placeholder"
                   )}
                   value={screen.dimensions.width}
                   onChange={handleInput}
@@ -187,14 +167,14 @@ function ScreenForm({
             </Row>
           </ContentBody>
           <ContentBody>
-            <h2 className="h4">{t("edit-screen.screen-layout")}</h2>
+            <h2 className="h4">{t("screen-form.screen-layout")}</h2>
             <div className="row">
               {layoutOptions && (
                 <div className="col-md-8">
                   <Select
                     name="layout"
                     onChange={handleInput}
-                    label={t("edit-screen.screen-layout-label")}
+                    label={t("screen-form.screen-layout-label")}
                     options={layoutOptions}
                     value={screen.layout}
                   />
@@ -203,7 +183,7 @@ function ScreenForm({
               {grid?.grid && (
                 <GridGenerationAndSelect
                   grid={grid?.grid}
-                  layout={screen.horizontalOrVertical}
+                  vertical={screen.dimensions.height > screen.dimensions.width}
                   regions={grid.regions}
                   handleInput={handleInput}
                   selectedData={screen.layout}
@@ -222,7 +202,7 @@ function ScreenForm({
           size="lg"
           className="me-3"
         >
-          {t("edit-screen.cancel-button")}
+          {t("screen-form.cancel-button")}
         </Button>
         <Button
           variant="primary"
@@ -231,10 +211,10 @@ function ScreenForm({
           size="lg"
           onClick={handleSubmit}
         >
-          {t("edit-screen.save-button")}
+          {t("screen-form.save-button")}
         </Button>
-        <Toast show={isSaveSuccess} text={t("edit-screen.saved")} />
-        <Toast show={errors} text={t("edit-screen.error")} />
+        <Toast show={isSaveSuccess} text={t("screen-form.saved")} />
+        <Toast show={errors} text={t("screen-form.error")} />
       </ContentFooter>
     </Form>
   );
