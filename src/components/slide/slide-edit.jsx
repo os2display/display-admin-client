@@ -17,7 +17,7 @@ import SlideForm from "./slide-form";
  */
 function SlideEdit() {
   const { t } = useTranslation("common");
-  const headerText = t("edit-slide.edit-slide");
+  const headerText = t("slide-edit.edit-slide-header");
   const [formStateObject, setFormStateObject] = useState();
   const [playlistsToRemove, setPlaylistsToRemove] = useState([]);
   const [originallySelectedPlaylists, setOriginallySelectedPlaylists] =

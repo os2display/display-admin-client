@@ -17,7 +17,7 @@ function SlideCreate() {
   const { t } = useTranslation("common");
   const history = useHistory();
   const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
-  const headerText = t("edit-slide.create-new-slide");
+  const headerText = t("slide-create.create-slide-header");
   const [formStateObject, setFormStateObject] = useState({
     "@type": "Slide",
     modifiedBy: "todo",

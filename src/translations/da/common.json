@@ -140,14 +140,18 @@
     "media-validation": "Der skal uploades et eller flere billeder til denne template",
     "cancel-button": "Annuller"
   },
+  "slide-edit": {
+    "edit-slide-header": "Rediger slide"
+  },
+  "slide-create": {
+    "create-slide-header": "Opret nyt slide"
+  },
   "edit-slide": {
     "error": "Der skete en fejl",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",
     "saving": "Gemmer...",
     "saved": "Slide er gemt",
-    "create-new-slide": "Opret nyt slide",
-    "edit-slide": "Rediger slide",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
     "slide-name-label": "Slidets navn",
@@ -155,7 +159,6 @@
     "slide-template-label": "Vælg en skabelon til dit slide",
     "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide.",
     "slide-publish-label": "Marker for at udgive dette slide",
-    "slide-select-screen-title": "Skærme",
     "slide-select-playlist-title": "Spillelister",
     "slide-publish-title": "Udgivelse"
   },

@@ -67,7 +67,7 @@ function SlideForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("edit-slide.loading")}
+          {t("slide-form.loading")}
         </>
       )}
       {isSaving && (
@@ -80,7 +80,7 @@ function SlideForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("edit-slide.saving")}
+          {t("slide-form.saving")}
         </>
       )}
       {loadingTemplates && !isLoading && (
@@ -93,7 +93,7 @@ function SlideForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("edit-slide.loading-templates")}
+          {t("slide-form.loading-templates")}
         </>
       )}
       {!isLoading && (
@@ -102,8 +102,8 @@ function SlideForm({
             <FormInput
               name="title"
               type="text"
-              label={t("edit-slide.slide-name-label")}
-              helpText={t("edit-slide.slide-name-placeholder")}
+              label={t("slide-form.slide-name-label")}
+              helpText={t("slide-form.slide-name-placeholder")}
               value={slide.title}
               onChange={handleInput}
             />
@@ -116,8 +116,8 @@ function SlideForm({
                 name="templateInfo"
                 options={templateOptions}
                 onChange={handleInput}
-                label={t("edit-slide.slide-template-label")}
-                helpText={t("edit-slide.slide-template-help-text")}
+                label={t("slide-form.slide-template-label")}
+                helpText={t("slide-form.slide-template-help-text")}
               />
             </ContentBody>
           )}
@@ -128,7 +128,7 @@ function SlideForm({
           )}
           <ContentBody>
             <h3 className="h4">
-              {t("edit-slide.slide-select-playlist-title")}
+              {t("slide-form.slide-select-playlist-title")}
             </h3>
             <SelectPlaylistTable
               handleChange={handleInput}
@@ -137,9 +137,9 @@ function SlideForm({
             />
           </ContentBody>
           <ContentBody>
-            <h3 className="h4">{t("edit-slide.slide-publish-title")}</h3>
+            <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
             <FormCheckbox
-              label={t("edit-slide.slide-publish-label")}
+              label={t("slide-form.slide-publish-label")}
               onChange={handleInput}
               name="published"
               value={slide.published}
@@ -156,7 +156,7 @@ function SlideForm({
           className="me-md-3 col"
           size="lg"
         >
-          {t("edit-slide.cancel-button")}
+          {t("slide-form.cancel-button")}
         </Button>
         <Button
           variant="primary"
@@ -166,10 +166,10 @@ function SlideForm({
           size="lg"
           className="col"
         >
-          {t("edit-slide.save-button")}
+          {t("slide-form.save-button")}
         </Button>
-        <Toast show={isSaveSuccess} text={t("edit-slide.saved")} />
-        <Toast show={!!errors} text={t("edit-slide.error")} />
+        <Toast show={isSaveSuccess} text={t("slide-form.saved")} />
+        <Toast show={!!errors} text={t("slide-form.error")} />
       </ContentFooter>
     </Form>
   );
