@@ -130,16 +130,7 @@ function ScreenForm({
             /> */}
           </ContentBody>
           <ContentBody>
-            {/* @TODO: connect location to api data */}
             <h2 className="h4">{t("edit-screen.screen-location")}</h2>
-            {/* <LocationDropdown
-              errors={errors}
-              isCreatable
-              name="screenLocations"
-              handleLocationSelection={handleInput}
-              selected={screen.screenLocations}
-              formGroupClasses="mb-3"
-            /> */}
             <FormInput
               name="descriptionOfLocation"
               type="text"

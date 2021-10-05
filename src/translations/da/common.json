@@ -91,24 +91,6 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "locations-list": {
-    "columns": {
-      "pick": "Vælg lokation",
-      "name": "Navn",
-      "created-by": "Oprettet af",
-      "on-screens": "Skærme tilknyttet",
-      "on-groups": "Tilknyttede grupper"
-    },
-    "info-modal": {
-      "location-on-group": "Lokationen er tilknyttet følgende grupper",
-      "location-on-screen": "Lokationen er tilknyttet følgende skærme",
-      "location-in-groups": "Lokationen er i følgende grupper"
-    },
-    "header": "Lokationer",
-    "create-new-location": "Opret ny lokation",
-    "delete-button": "Slet",
-    "edit-button": "Rediger"
-  },
   "playlists-list": {
     "playlists-get-error": "Der skete en fejl da spillelisterne skulle hentes",
     "deleted": "Spillelisten er blevet slettet",
@@ -183,14 +165,6 @@
     "cancel-button": "Annuller",
     "group-name-label": "Gruppens navn",
     "group-name-placeholder": "Udfyld gruppens navn"
-  },
-  "edit-location": {
-    "create-new-location": "Opret ny lokation",
-    "edit-location": "Rediger følgende lokation",
-    "save-button": "Gem lokationen",
-    "cancel-button": "Annuller",
-    "location-name-label": "Lokationens navn",
-    "location-name-placeholder": "Udfyld lokationens navn"
   },
   "edit-playlist": {
     "error": "Der skete en fejl",
@@ -286,10 +260,6 @@
   "groups-dropdown": {
     "label": "Vælg en eller flere grupper",
     "nothing-selected": "Vælg en af grupperne"
-  },
-  "locations-dropdown": {
-    "label": "Vælg en eller flere lokationer",
-    "nothing-selected": "Vælg en af lokationerne"
   },
   "playlists-dropdown": {
     "label": "Vælg en eller flere spillelister",
@@ -399,7 +369,6 @@
     "screens": "Skærme",
     "screens-screens": "Skærme",
     "screens-groups": "Grupper",
-    "screens-locations": "Lokationer",
     "playlists": "Spillelister",
     "playlists-playlists": "Spillelister",
     "configuration": "Indstillinger",
