@@ -15,7 +15,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @returns {object}
  * A list entry with the title of called element.
  */
-function ListEntry({ apiCall, dataUrl }) {
+function TitleFetcher({ apiCall, dataUrl }) {
   const { data } = apiCall({ id: idFromUrl(dataUrl) });
   return (
     <>
@@ -34,9 +34,9 @@ function ListEntry({ apiCall, dataUrl }) {
   );
 }
 
-ListEntry.propTypes = {
+TitleFetcher.propTypes = {
   apiCall: PropTypes.func.isRequired,
   dataUrl: PropTypes.string.isRequired,
 };
 
-export default ListEntry;
+export default TitleFetcher;

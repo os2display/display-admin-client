@@ -1,5 +1,6 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
+import idFromUrl from "../helpers/id-from-url";
 /**
  * @param {Function} callback
  * The callback function
@@ -8,20 +9,41 @@ import Spinner from "react-bootstrap/Spinner";
  * @returns {object}
  * The list button.
  */
-function ListButton(callback, data) {
+function ListButton(callback, inputData, apiCall) {
+  const [label, setLabel] = useState("");
+  let data;
+  if (!Array.isArray(inputData)) {
+    data = apiCall({ id: idFromUrl(inputData), page: 1, itemsPerPage: 0 });
+  }
+
+  useEffect(() => {
+    if (Array.isArray(inputData)) {
+      setLabel(inputData.length.toString());
+    }
+  }, []);
+
+  /**
+   * Set label.
+   */
+  useEffect(() => {
+    if (data?.data) {
+      setLabel(data.data["hydra:totalItems"].toString());
+    }
+  }, [data]);
+
   return (
     <>
-      {data && (
+      {label && (
         <button
           className="btn btn-secondary"
           type="button"
-          disabled={data.length === 0}
-          onClick={() => callback(data)}
+          disabled={label === "0"}
+          onClick={() => callback(inputData)}
         >
-          {data.length}
+          {label}
         </button>
       )}
-      {!data && (
+      {!label && (
         <Spinner
           as="span"
           animation="border"
