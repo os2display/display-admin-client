@@ -64,7 +64,10 @@ FormCheckbox.defaultProps = {
 
 FormCheckbox.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.bool,
+  value: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.any),
+    PropTypes.bool,
+  ]),
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   formGroupClasses: PropTypes.string,

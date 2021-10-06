@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
-import { useGetV1ScreensQuery } from "../../../../../redux/api/api.generated";
 
 /**
  * @param {object} props
@@ -15,40 +14,35 @@ import { useGetV1ScreensQuery } from "../../../../../redux/api/api.generated";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
+ * @param {Array} props.data
+ * The data for options.
  * @returns {object}
  * The multidropdown of playlists.
  */
-function ScreensDropdown({ handleScreenSelection, selected, name, errors }) {
+function ScreensDropdown({
+  handleScreenSelection,
+  selected,
+  name,
+  errors,
+  data,
+}) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
-  const [selectedOptions, setSelectedOptions] = useState([
-    { title: t("screens-dropdown.no-screens-configured"), id: 1 },
-  ]);
-  const { data, isLoading } = useGetV1ScreensQuery({ page: 1 });
-  /**
-   * Load screens
-   */
-  useEffect(() => {
-    if (data) {
-      setOptions(data["hydra:member"]);
-      setSelectedOptions(selected);
-    }
-  }, [data]);
 
   return (
     <>
-      {options && (
-        <MultiSelectComponent
-          isLoading={isLoading}
-          handleSelection={handleScreenSelection}
-          options={options}
-          label={t("screens-dropdown.label")}
-          noSelectedString={t("screens-dropdown.nothing-selected")}
-          selected={selectedOptions}
-          name={name}
-          isCreatable
-          errors={errors}
-        />
+      {data && (
+        <>
+          <MultiSelectComponent
+            handleSelection={handleScreenSelection}
+            options={data}
+            label={t("screens-dropdown.label")}
+            noSelectedString={t("screens-dropdown.nothing-selected")}
+            selected={selected}
+            name={name}
+            isCreatable
+            errors={errors}
+          />
+        </>
       )}
     </>
   );
@@ -68,6 +62,7 @@ ScreensDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ),
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };

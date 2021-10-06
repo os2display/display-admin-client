@@ -1,26 +1,37 @@
 import { React } from "react";
-
+import Spinner from "react-bootstrap/Spinner";
 /**
  * @param {Function} callback
  * The callback function
- * @param {object} callbackData
- * The data for the callback
- * @param {string} label
- * The label of the button.
- * @param {boolean} disabled
- * Whether the button should be disabled.
+ * @param {object} data
+ * The data for callback
  * @returns {object}
  * The list button.
  */
-function ListButton(callback, callbackData, label, disabled) {
+function ListButton(callback, data) {
   return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={() => callback(callbackData)}
-    >
-      {label}
-    </button>
+    <>
+      {data && (
+        <button
+          className="btn btn-secondary"
+          type="button"
+          disabled={data.length === 0}
+          onClick={() => callback(data)}
+        >
+          {data.length}
+        </button>
+      )}
+      {!data && (
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+          className="m-1"
+        />
+      )}
+    </>
   );
 }
 

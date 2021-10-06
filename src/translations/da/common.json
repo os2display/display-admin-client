@@ -44,12 +44,13 @@
       "pick": "Vælg slide",
       "name": "Navn",
       "template": "Skabelon",
-      "number-of-playlists": "Spillelister med kategorien",
+      "slide-on-playlists": "Spillelister",
       "published": "Udgivet",
       "preview": "Preview"
     },
     "info-modal": {
-      "slide-on-playlists": "Slidet er på de følgende spillelister"
+      "slide-on-playlists": "Slidet er på de følgende spillelister",
+      "show-more-elements": "Vis flere elementer"
     },
     "slides-get-error": "Der skete en fejl da slides skulle hentes",
     "deleted": "Slidet er blevet slettet",
@@ -139,14 +140,18 @@
     "media-validation": "Der skal uploades et eller flere billeder til denne template",
     "cancel-button": "Annuller"
   },
-  "edit-slide": {
+  "slide-edit": {
+    "edit-slide-header": "Rediger slide"
+  },
+  "slide-create": {
+    "create-slide-header": "Opret nyt slide"
+  },
+  "slide-form": {
     "error": "Der skete en fejl",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",
     "saving": "Gemmer...",
     "saved": "Slide er gemt",
-    "create-new-slide": "Opret nyt slide",
-    "edit-slide": "Rediger slide",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
     "slide-name-label": "Slidets navn",
@@ -154,7 +159,6 @@
     "slide-template-label": "Vælg en skabelon til dit slide",
     "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide.",
     "slide-publish-label": "Marker for at udgive dette slide",
-    "slide-select-screen-title": "Skærme",
     "slide-select-playlist-title": "Spillelister",
     "slide-publish-title": "Udgivelse"
   },

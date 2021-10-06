@@ -6,11 +6,10 @@ import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
-import ContentFooter from "../util/content-footer/content-footer";
-// import SelectScreenTable from "../util/multi-and-table/select-screen-table";
-// import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
-// import RenderFormElement from "../util/forms/render-form-element";
 import Select from "../util/forms/select";
+import TemplateRender from "./template-render";
+import ContentFooter from "../util/content-footer/content-footer";
+import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
 import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -46,7 +45,9 @@ function SlideForm({
     useGetV1TemplatesQuery({
       page: 1,
     });
-
+  /**
+   * Set loaded data into form state.
+   */
   useEffect(() => {
     if (templates) {
       setTemplateOptions(templates["hydra:member"]);
@@ -56,7 +57,7 @@ function SlideForm({
   return (
     <Form>
       <h1>{headerText}</h1>
-      {(isLoading || isSaving) && (
+      {isLoading && (
         <>
           <Spinner
             as="span"
@@ -66,7 +67,20 @@ function SlideForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("edit-slide.loading")}
+          {t("slide-form.loading")}
+        </>
+      )}
+      {isSaving && (
+        <>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="m-1"
+          />
+          {t("slide-form.saving")}
         </>
       )}
       {loadingTemplates && !isLoading && (
@@ -79,7 +93,7 @@ function SlideForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("edit-slide.loading-templates")}
+          {t("slide-form.loading-templates")}
         </>
       )}
       {!isLoading && (
@@ -88,9 +102,8 @@ function SlideForm({
             <FormInput
               name="title"
               type="text"
-              errors={errors}
-              label={t("edit-slide.slide-name-label")}
-              helpText={t("edit-slide.slide-name-placeholder")}
+              label={t("slide-form.slide-name-label")}
+              helpText={t("slide-form.slide-name-placeholder")}
               value={slide.title}
               onChange={handleInput}
             />
@@ -98,59 +111,35 @@ function SlideForm({
           {templateOptions && (
             <ContentBody>
               <Select
-                value={slide.template}
-                name="template"
+                value={slide.templateInfo}
+                isRequired
+                name="templateInfo"
                 options={templateOptions}
                 onChange={handleInput}
-                label={t("edit-slide.slide-template-label")}
-                helpText={t("edit-slide.slide-template-help-text")}
-                errors={errors}
+                label={t("slide-form.slide-template-label")}
+                helpText={t("slide-form.slide-template-help-text")}
               />
             </ContentBody>
           )}
-          {slide.slideTemplate && (
-            // todo fetch form data
+          {slide.templateInfo && typeof slide.templateInfo === "string" && (
             <ContentBody>
-              {/* Render slide form from jsondata */}
-              {/* <section className="row">
-                {formData.map((data) => (
-                  <RenderFormElement
-                    key={data.name}
-                    data={data}
-                    errors={errors}
-                    onChange={handleInput}
-                    slide={slide}
-                  />
-                ))}
-              </section> */}
+              <TemplateRender slide={slide} handleInput={handleInput} />
             </ContentBody>
           )}
           <ContentBody>
-            <h3 className="h4">{t("edit-slide.slide-select-screen-title")}</h3>
-            {/* todo select screen will work when onscreen can be fetched */}
-            {/* <SelectScreenTable
-              handleChange={handleInput}
-              name="onScreens"
-              errors={errors}
-              selectedData={slide.onScreens}
-            /> */}
-          </ContentBody>
-          <ContentBody>
             <h3 className="h4">
-              {t("edit-slide.slide-select-playlist-title")}
+              {t("slide-form.slide-select-playlist-title")}
             </h3>
-            {/* todo select playlst will work when onscreen can be fetched */}
-            {/* <SelectPlaylistTable
+            <SelectPlaylistTable
               handleChange={handleInput}
               name="onPlaylists"
-              errors={errors}
-              selectedData={slide.onPlaylists}
-            /> */}
+              selectedDataEndpoint={slide.onPlaylists}
+            />
           </ContentBody>
           <ContentBody>
-            <h3 className="h4">{t("edit-slide.slide-publish-title")}</h3>
+            <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
             <FormCheckbox
-              label={t("edit-slide.slide-publish-label")}
+              label={t("slide-form.slide-publish-label")}
               onChange={handleInput}
               name="published"
               value={slide.published}
@@ -162,12 +151,12 @@ function SlideForm({
         <Button
           variant="secondary"
           type="button"
-          id="slide_cancel"
+          id="cancel_slide"
           onClick={() => history.push("/slide/list/")}
           className="me-md-3 col"
           size="lg"
         >
-          {t("edit-slide.cancel-button")}
+          {t("slide-form.cancel-button")}
         </Button>
         <Button
           variant="primary"
@@ -177,10 +166,10 @@ function SlideForm({
           size="lg"
           className="col"
         >
-          {t("edit-slide.save-button")}
+          {t("slide-form.save-button")}
         </Button>
-        <Toast show={isSaveSuccess} text={t("edit-slide.saved")} />
-        <Toast show={errors} text={t("edit-slide.error")} />
+        <Toast show={isSaveSuccess} text={t("slide-form.saved")} />
+        <Toast show={!!errors} text={t("slide-form.error")} />
       </ContentFooter>
     </Form>
   );
@@ -194,7 +183,10 @@ SlideForm.propTypes = {
   headerText: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.any).isRequired,
+  errors: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.any),
+    PropTypes.bool,
+  ]).isRequired,
 };
 
 export default SlideForm;

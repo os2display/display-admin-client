@@ -49,9 +49,13 @@ function Toast({ text, show }) {
   );
 }
 
+Toast.defaultProps = {
+  show: false,
+};
+
 Toast.propTypes = {
   text: PropTypes.string.isRequired,
-  show: PropTypes.bool.isRequired,
+  show: PropTypes.bool,
 };
 
 export default Toast;

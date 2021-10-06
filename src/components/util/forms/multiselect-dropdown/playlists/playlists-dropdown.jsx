@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
@@ -14,6 +14,8 @@ import MultiSelectComponent from "../multi-dropdown";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
+ * @param {Array} props.data
+ * The data for options.
  * @returns {object}
  * The multidropdown of playlists.
  */
@@ -22,36 +24,20 @@ function PlaylistsDropdown({
   selected,
   name,
   errors,
+  data,
 }) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    // @TODO: load real content.
-    fetch("/fixtures/playlists/playlists.json")
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setOptions(jsonData.playlists);
-        setIsLoading(false);
-      });
-  }, []);
-
   return (
     <>
-      {options && (
+      {data && (
         <>
           <MultiSelectComponent
             label={t("playlists-dropdown.label")}
             noSelectedString={t("playlists-dropdown.nothing-selected")}
             handleSelection={handlePlaylistSelection}
-            options={options}
+            options={data}
             selected={selected}
             name={name}
-            isLoading={isLoading}
             errors={errors}
           />
         </>
@@ -73,6 +59,7 @@ PlaylistsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };

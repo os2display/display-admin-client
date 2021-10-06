@@ -8,12 +8,14 @@ import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import Published from "./published";
 import LinkForList from "../util/list/link-for-list";
-// import ListButton from "../util/list/list-button";
+import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import TemplateLabelInList from "./template-label-in-list";
 import {
   useGetV1SlidesQuery,
   useDeleteV1SlidesByIdMutation,
+  useGetV1PlaylistsByIdQuery,
 } from "../../redux/api/api.generated";
 /**
  * The slides list component.
@@ -55,14 +57,14 @@ function SlidesList() {
     setShowDeleteModal(true);
   }
 
-  // /**
-  //  * @param {Array} playlistArray
-  //  * The array of playlists.
-  //  */
-  // function openInfoModal(playlistArray) {
-  //   setOnPlaylists(playlistArray);
-  //   setShowInfoModal(true);
-  // }
+  /**
+   * @param {Array} playlistData
+   * The array of playlists.
+   */
+  function openInfoModal(playlistData) {
+    setOnPlaylists(playlistData);
+    setShowInfoModal(true);
+  }
 
   // The columns for the table.
   const columns = [
@@ -82,32 +84,25 @@ function SlidesList() {
       label: t("slides-list.columns.name"),
     },
     {
-      path: "template.@id",
+      content: (data) => TemplateLabelInList(data),
       sort: true,
+      key: "template",
       label: t("slides-list.columns.template"),
     },
     {
-      sort: true,
-      path: "onFollowingPlaylists",
-      // content: (data) =>
-      //   ListButton(
-      //     openInfoModal,
-      //     data.onFollowingPlaylists,
-      //     data.onFollowingPlaylists.length,
-      //     data.onFollowingPlaylists.length === 0
-      //   ),
-      content: () => <div>todo</div>,
       key: "playlists",
-      label: t("slides-list.columns.number-of-playlists"),
+      sort: true,
+      content: (data) => ListButton(openInfoModal, data.onPlaylists),
+      label: t("slides-list.columns.slide-on-playlists"),
     },
     {
-      path: "published",
+      key: "published",
       sort: true,
       content: (data) => Published(data),
       label: t("slides-list.columns.published"),
     },
     {
-      key: "edit",
+      key: "quick-edit",
       content: () => (
         <>
           {/* @TODO: make quick edit modal */}
@@ -123,13 +118,8 @@ function SlidesList() {
     },
     {
       key: "edit",
-      content: (data) => (
-        <LinkForList
-          data={data}
-          param="slide/edit"
-          label={t("slides-list.edit-button")}
-        />
-      ),
+      content: (data) =>
+        LinkForList(data["@id"], "slide/edit", t("slides-list.edit-button")),
     },
     {
       key: "delete",
@@ -187,6 +177,7 @@ function SlidesList() {
   } = useGetV1SlidesQuery({
     page: 1,
   });
+
   return (
     <>
       <Toast show={slidesGetError} text={t("slides-list.slides-get-error")} />
@@ -216,9 +207,10 @@ function SlidesList() {
       />
       <InfoModal
         show={showInfoModal}
+        apiCall={useGetV1PlaylistsByIdQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        title={t("slides-list.info-modal.slide-on-playlists")}
+        modalTitle={t("slides-list.info-modal.slide-on-playlists")}
       />
     </>
   );

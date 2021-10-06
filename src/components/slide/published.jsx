@@ -13,11 +13,7 @@ import { useTranslation } from "react-i18next";
 function Published({ published }) {
   const { t } = useTranslation("common");
 
-  return (
-    <div className="m-2">
-      {published ? t("published.yes") : t("published.no")}
-    </div>
-  );
+  return <div>{published ? t("published.yes") : t("published.no")}</div>;
 }
 
 Published.propTypes = {
