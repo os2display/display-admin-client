@@ -19,7 +19,6 @@ function SlideCreate() {
   const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
   const headerText = t("slide-create.create-slide-header");
   const [formStateObject, setFormStateObject] = useState({
-    "@type": "Slide",
     modifiedBy: "todo",
     createdBy: "todo",
     published: {
@@ -28,14 +27,14 @@ function SlideCreate() {
     },
   });
 
-  // const [
-  //   PutV1PlaylistsByIdSlideAndSlide,
-  //   {
-  //     isLoading: isSavingPlaylists,
-  //     error: savePlaylistError,
-  //     isSuccess: savePlaylistSuccess,
-  //   },
-  // ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
+  const [
+    PutV1PlaylistsByIdSlideAndSlide,
+    {
+      isLoading: isSavingPlaylists,
+      error: savePlaylistError,
+      isSuccess: savePlaylistSuccess,
+    },
+  ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
 
   const [
     PostV1Slide,
