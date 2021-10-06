@@ -18,8 +18,8 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   if (!Object.prototype.hasOwnProperty.call(newArgs.headers, "accept")) {
     newArgs.headers.accept = "application/ld+json";
   }
-
-  const baseResult = await fetchBaseQuery({ baseUrl })(args, api, extraOptions);
+  console.log(newArgs)
+  const baseResult = await fetchBaseQuery({ baseUrl })(newArgs, api, extraOptions);
 
   return {
     ...baseResult,
