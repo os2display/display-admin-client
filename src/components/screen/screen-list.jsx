@@ -4,7 +4,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "../screen-list/campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
-
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -15,7 +14,6 @@ import Toast from "../util/toast/toast";
 import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import "./screen-list.scss";
 import Dimensions from "./dimension";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
@@ -23,6 +21,7 @@ import {
   useDeleteV1ScreensByIdMutation,
   useGetV1ScreenGroupsByIdQuery,
 } from "../../redux/api/api.generated";
+import "./screen-list.scss";
 
 /**
  * The screen list component.
@@ -85,7 +84,7 @@ function ScreenList() {
 
   /**
    * Opens the delete modal
-   
+
    * @param {object} item
    * The item to delete
    */
