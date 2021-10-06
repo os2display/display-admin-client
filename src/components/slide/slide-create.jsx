@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   usePostV1SlidesMutation,
-  // usePutV1PlaylistsByIdSlideAndSlideIdMutation,
+  usePutV1PlaylistsByIdSlideAndSlideIdMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 
