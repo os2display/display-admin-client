@@ -68,14 +68,14 @@ function SlideEdit() {
     if (isSaveSuccess) {
       if (playlistsToAdd.length > 0) {
         // remove first element for saving
-        // const toAdd = playlistsToAdd.splice(0, 1).shift();
-        // const toAddId = idFromUrl(toAdd);
-        // PutV1PlaylistsByIdSlideAndSlide({ id: toAddId, slideId: id });
+        const toAdd = playlistsToAdd.splice(0, 1).shift();
+        const toAddId = idFromUrl(toAdd);
+        PutV1PlaylistsByIdSlideAndSlide({ id: toAddId, slideId: id });
       } else if (playlistsToRemove.length > 0) {
         // remove first element for deleting
-        // const toRemove = playlistsToRemove.splice(0, 1).shift();
-        // const toRemoveId = idFromUrl(toRemove);
-        // DeleteV1PlaylistsByIdSlideAndSlide({ id: toRemoveId, slideId: id });
+        const toRemove = playlistsToRemove.splice(0, 1).shift();
+        const toRemoveId = idFromUrl(toRemove);
+        DeleteV1PlaylistsByIdSlideAndSlide({ id: toRemoveId, slideId: id });
       }
     }
   }, [isSaveSuccess, deletePlaylistSuccess, savePlaylistSuccess]);

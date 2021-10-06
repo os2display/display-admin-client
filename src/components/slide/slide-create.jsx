@@ -54,12 +54,12 @@ function SlideCreate() {
     if (isSaveSuccess && data) {
       if (playlistsToAdd.length > 0) {
         // remove first element for saving
-        // const toAdd = playlistsToAdd.splice(0, 1).shift();
-        // const toAddId = idFromUrl(toAdd);
-        // PutV1PlaylistsByIdSlideAndSlide({
-        //   id: toAddId,
-        //   slideId: idFromUrl(data["@id"]),
-        // });
+        const toAdd = playlistsToAdd.splice(0, 1).shift();
+        const toAddId = idFromUrl(toAdd);
+        PutV1PlaylistsByIdSlideAndSlide({
+          id: toAddId,
+          slideId: idFromUrl(data["@id"]),
+        });
       } else {
         history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
       }
