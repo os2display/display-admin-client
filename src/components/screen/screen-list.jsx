@@ -85,7 +85,7 @@ function ScreenList() {
 
   /**
    * Opens the delete modal
-
+   
    * @param {object} item
    * The item to delete
    */
