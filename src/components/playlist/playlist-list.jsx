@@ -181,7 +181,7 @@ function PlaylistList() {
     error: playlistsGetError,
     isLoading,
   } = useGetV1PlaylistsQuery({ page: page });
-  console.log(data);
+
   return (
     <>
       <Toast
