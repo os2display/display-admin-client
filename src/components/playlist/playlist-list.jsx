@@ -116,17 +116,17 @@ function PlaylistList() {
       sort: true,
       label: t("playlists-list.columns.name"),
     },
-    {
-      sort: true,
-      key: "slides",
-      label: t("playlists-list.columns.number-of-slides"),
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.slides,
-          useGetV1SlidesByIdPlaylistsQuery
-        ),
-    },
+    // {
+    //   sort: true,
+    //   key: "slides",
+    //   label: t("playlists-list.columns.number-of-slides"),
+    //   content: (data) =>
+    //     ListButton(
+    //       openInfoModal,
+    //       data.slides,
+    //       useGetV1SlidesByIdPlaylistsQuery
+    //     ),
+    // },
     {
       key: "edit",
       content: (data) =>

@@ -1,9 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1PlaylistsByIdQuery,
   usePutV1PlaylistsByIdMutation,
+  usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
 import PlaylistForm from "./playlist-form";
 
@@ -16,6 +18,8 @@ function PlaylistEdit() {
   const { t } = useTranslation("common");
   const headerText = t("edit-playlist.edit-playlist");
   const [formStateObject, setFormStateObject] = useState();
+  const [slidesToAdd, setSlidesToAdd] = useState([]);
+  const [originallySelectedSlides, setOriginallySelectedSlides] = useState([]);
   const { id } = useParams();
 
   const [
@@ -23,11 +27,48 @@ function PlaylistEdit() {
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1PlaylistsByIdMutation();
 
+  const [
+    PutV1PlaylistsByIdSlides,
+    {
+      isLoading: isSavingSlides,
+      error: saveErrorSlides,
+      isSuccess: isSaveSuccessSlides,
+    },
+  ] = usePutV1PlaylistsByIdSlidesMutation();
+
   const {
     data,
     error: loadError,
     isLoading,
   } = useGetV1PlaylistsByIdQuery({ id });
+
+  /**
+   * When the playlist is saved, the slide will be saved.
+   */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      PutV1PlaylistsByIdSlides({
+        id: id,
+        body: JSON.stringify(slidesToAdd),
+      });
+    }
+  }, [isSaveSuccess]);
+
+  function handleOriginallySelectedSlides(slides) {
+    setOriginallySelectedSlides(slides);
+  }
+
+  /**
+   *
+   */
+  function handleSaveSlides() {
+    const { slides } = formStateObject;
+    setSlidesToAdd(
+      slides.map((slide, index) => {
+        return { slide: idFromUrl(slide), weight: index };
+      })
+    );
+  }
 
   /**
    * Set loaded data into form state.
@@ -54,7 +95,13 @@ function PlaylistEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    PutV1Playlists({ id, body: formStateObject });
+    PutV1Playlists({
+      id,
+      playlistPlaylistInput: JSON.stringify(formStateObject),
+    });
+    if (Array.isArray(formStateObject.slides)) {
+      handleSaveSlides();
+    }
   }
 
   return (
@@ -68,9 +115,10 @@ function PlaylistEdit() {
           handleInput={handleInput}
           handleSubmit={handleSubmit}
           isLoading={isLoading}
-          isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
-          errors={loadError || saveError || false}
+          isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
+          isSaving={isSaving || isSavingSlides}
+          handleOriginallySelectedSlides={handleOriginallySelectedSlides}
+          errors={loadError || saveError || saveErrorSlides || false}
         />
       )}
     </>

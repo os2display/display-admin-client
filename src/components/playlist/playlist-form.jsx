@@ -38,6 +38,7 @@ function PlaylistForm({
   isSaveSuccess,
   isLoading,
   errors,
+  handleOriginallySelectedSlides,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
@@ -53,11 +54,13 @@ function PlaylistForm({
    */
   useEffect(() => {
     if (data && !Array.isArray(playlist.slides)) {
-      setSelectedSlides(
-        data["hydra:member"].map(({ slide }) => {
-          return slide;
-        })
+      let originallySelectedSlides = data["hydra:member"].map(({ slide }) => {
+        return slide;
+      });
+      handleOriginallySelectedSlides(
+        originallySelectedSlides.map((item) => item["@id"])
       );
+      setSelectedSlides(originallySelectedSlides);
     }
   }, [data]);
 

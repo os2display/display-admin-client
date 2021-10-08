@@ -46,7 +46,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
     const { value, id } = target;
     setSelectedData(value);
     handleChange({
-      target: { name: id, value: value.map((item) => item["@id"]) },
+      target: { id: id, value: value.map((item) => item["@id"]) },
     });
   }
 
@@ -141,7 +141,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
           {selectedData.length > 0 && (
             <DragAndDropTable
               columns={columns}
-              onDropped={handleChange}
+              onDropped={handleAdd}
               name={name}
               data={selectedData}
             />

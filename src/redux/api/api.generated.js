@@ -2,9 +2,9 @@
 exports.__esModule = true;
 exports.useGetV1TemplatesByIdQuery = exports.useGetV1TemplatesQuery = exports.useDeleteV1SlidesByIdMutation = exports.usePutV1SlidesByIdMutation = exports.useGetV1SlidesByIdQuery = exports.usePostV1SlidesMutation = exports.useGetV1SlidesQuery = exports.useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation = exports.usePutV1ScreensByIdScreenGroupsMutation = exports.useGetV1ScreensByIdScreenGroupsQuery = exports.useDeletePlaylistScreenRegionItemMutation = exports.usePutPlaylistScreenRegionItemMutation = exports.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery = exports.useDeleteV1ScreensByIdMutation = exports.usePutV1ScreensByIdMutation = exports.useGetV1ScreensByIdQuery = exports.usePostV1ScreensMutation = exports.useGetV1ScreensQuery = exports.useDeleteV1ScreenGroupsByIdMutation = exports.usePutV1ScreenGroupsByIdMutation = exports.useGetV1ScreenGroupsByIdQuery = exports.usePostV1ScreenGroupsMutation = exports.useGetV1ScreenGroupsQuery = exports.useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation = exports.usePutV1PlaylistsByIdSlidesMutation = exports.useGetV1PlaylistsByIdSlidesQuery = exports.useGetV1PlaylistsByIdScreensQuery = exports.useDeleteV1PlaylistsByIdMutation = exports.usePutV1PlaylistsByIdMutation = exports.useGetV1PlaylistsByIdQuery = exports.usePostV1PlaylistsMutation = exports.useGetV1PlaylistsQuery = exports.useGetV1MediaByIdSlidesQuery = exports.useDeleteV1MediaByIdMutation = exports.useGetV1MediaByIdQuery = exports.usePostMediaCollectionMutation = exports.useGetV1MediaQuery = exports.useGetV1LayoutsByIdQuery = exports.useGetV1LayoutsQuery = exports.api = void 0;
 var react_1 = require("@reduxjs/toolkit/query/react");
-var query_1 = require("@reduxjs/toolkit/query");
+var dynamic_base_query_1 = require("../dynamic-base-query");
 exports.api = (0, react_1.createApi)({
-    baseQuery: (0, query_1.fetchBaseQuery)({ baseUrl: "http://displayapiservice.local.itkdev.dk" }),
+    baseQuery: dynamic_base_query_1["default"],
     tagTypes: [],
     endpoints: function (build) {
         return ({

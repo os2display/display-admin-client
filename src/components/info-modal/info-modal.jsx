@@ -35,7 +35,6 @@ function InfoModal({
   if (!show) {
     return <></>;
   }
-  console.log(dataKey);
   const { t } = useTranslation("common");
   const paginationVariables = 10;
   const [totalItems, setTotalItems] = useState(dataStructureToDisplay.length);
@@ -69,7 +68,6 @@ function InfoModal({
       } else {
         mappedData = data.data["hydra:member"];
       }
-      debugger;
       setFetchedData(mappedData);
       setTotalItems(data.data["hydra:totalItems"]);
     }

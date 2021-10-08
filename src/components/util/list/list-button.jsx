@@ -10,7 +10,6 @@ import idFromUrl from "../helpers/id-from-url";
  * The list button.
  */
 function ListButton(callback, inputData, apiCall) {
-  console.log(inputData);
   const [label, setLabel] = useState("");
   let data;
   if (!Array.isArray(inputData)) {
