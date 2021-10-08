@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
@@ -9,9 +9,11 @@ import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import Toast from "../util/toast/toast";
+import { useGetV1PlaylistsByIdSlidesQuery } from "../../redux/api/api.generated";
 // import SelectScreenTable from "../util/multi-and-table/select-screen-table";
-// import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
+import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 // import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The playlist form component.
@@ -39,6 +41,25 @@ function PlaylistForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
+  const [selectedSlides, setSelectedSlides] = useState();
+  const {
+    data,
+    error: loadSelectedSlidesError,
+    isLoading: isLoadingSelectedSlides,
+  } = useGetV1PlaylistsByIdSlidesQuery({ id: idFromUrl(playlist.slides) });
+
+  /**
+   * Map loaded data.
+   */
+  useEffect(() => {
+    if (data) {
+      setSelectedSlides(
+        data["hydra:member"].map(({ slide }) => {
+          return slide;
+        })
+      );
+    }
+  }, [data]);
 
   return (
     <Form>
@@ -63,7 +84,6 @@ function PlaylistForm({
             <FormInput
               name="title"
               type="text"
-              errors={errors}
               label={t("edit-playlist.playlist-name-label")}
               placeholder={t("edit-playlist.playlist-name-placeholder")}
               value={playlist.title}
@@ -79,26 +99,14 @@ function PlaylistForm({
             />
           </ContentBody>
           <ContentBody>
-            <h2 className="h4">{t("edit-playlist.title-screens")}</h2>
-            {/* @TODO:
-        <SelectScreenTable
-          handleChange={handleInput}
-          name="playlistScreens"
-          errors={errors}
-          selectedData={playlist.onScreens}
-        />
-        */}
-          </ContentBody>
-          <ContentBody>
             <h2 className="h4">{t("edit-playlist.title-slides")}</h2>
-            {/* @TODO:
-        <SelectSlidesTable
-          handleChange={handleInput}
-          name="playlistSlides"
-          errors={errors}
-          selectedData={playlist.playlistSlides}
-        />
-        */}
+            {selectedSlides && (
+              <SelectSlidesTable
+                handleChange={handleInput}
+                name="slides"
+                selectedSlides={selectedSlides}
+              />
+            )}
           </ContentBody>
           <ContentFooter>
             <Button

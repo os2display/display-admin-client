@@ -17,39 +17,25 @@ import { useGetV1SlidesQuery } from "../../../../../redux/api/api.generated";
  * @returns {object}
  * The multidropdown of playlists.
  */
-function SlidesDropdown({ handleSlideSelection, selected, name, errors }) {
+function SlidesDropdown({
+  handleSlideSelection,
+  selected,
+  name,
+  errors,
+  data,
+}) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
-  const [selectedOptions, setSelectedOptions] = useState([
-    { title: t("slides-dropdown.no-slides-configured"), id: 1 },
-  ]);
-  const { data, isLoading } = useGetV1SlidesQuery({ page: 1 });
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    if (data) {
-      setOptions(data["hydra:member"]);
-      setSelectedOptions(selected);
-    }
-  }, [data]);
 
   return (
-    <>
-      {options && (
-        <MultiSelectComponent
-          isLoading={isLoading}
-          handleSelection={handleSlideSelection}
-          options={options}
-          label={t("slides-dropdown.label")}
-          noSelectedString={t("slides-dropdown.nothing-selected")}
-          selected={selectedOptions}
-          name={name}
-          errors={errors}
-        />
-      )}
-    </>
+    <MultiSelectComponent
+      handleSelection={handleSlideSelection}
+      options={data}
+      label={t("slides-dropdown.label")}
+      noSelectedString={t("slides-dropdown.nothing-selected")}
+      selected={selected}
+      name={name}
+      errors={errors}
+    />
   );
 }
 

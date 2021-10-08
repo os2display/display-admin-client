@@ -15,7 +15,7 @@ import PlaylistForm from "./playlist-form";
 function PlaylistEdit() {
   const { t } = useTranslation("common");
   const headerText = t("edit-playlist.edit-playlist");
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState();
   const { id } = useParams();
 
   const [
@@ -58,16 +58,22 @@ function PlaylistEdit() {
   }
 
   return (
-    <PlaylistForm
-      playlist={formStateObject}
-      headerText={`${headerText}: ${formStateObject && formStateObject.title}`}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isLoading={isLoading}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
-      errors={[loadError, saveError]}
-    />
+    <>
+      {formStateObject && (
+        <PlaylistForm
+          playlist={formStateObject}
+          headerText={`${headerText}: ${
+            formStateObject && formStateObject.title
+          }`}
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+          isSaveSuccess={isSaveSuccess}
+          isSaving={isSaving}
+          errors={loadError || saveError || false}
+        />
+      )}
+    </>
   );
 }
 

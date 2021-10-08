@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Toast as BootstrapToast } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 
@@ -13,7 +13,11 @@ import dayjs from "dayjs";
  * @returns {object}
  * The toast component.
  */
-function Toast({ text, show }) {
+function Toast({ text, show, title, error }) {
+  const { t } = useTranslation("common");
+  if (!title) {
+    title = t("toast.title");
+  }
   const [displayToast, setDisplayToast] = useState(false);
   const displayToastMilliseconds = 5000;
 
@@ -26,9 +30,11 @@ function Toast({ text, show }) {
     if (show) {
       if (displayToast) setDisplayToast(false);
       setDisplayToast(true);
-      timer = setTimeout(() => {
-        setDisplayToast(false);
-      }, displayToastMilliseconds);
+      if (!error) {
+        timer = setTimeout(() => {
+          setDisplayToast(false);
+        }, displayToastMilliseconds);
+      }
     }
 
     return function cleanup() {
@@ -39,26 +45,45 @@ function Toast({ text, show }) {
   }, [show]);
 
   return (
-    <div className="toast-wrapper">
-      <BootstrapToast animation={false} bg="success" show={displayToast}>
-        <BootstrapToast.Body>
-          {text} <small>{dayjs().format("HH:mm")}</small>
-        </BootstrapToast.Body>
-      </BootstrapToast>
-    </div>
+    <>
+      {displayToast && (
+        <div className="toast-wrapper">
+          <div
+            class={error ? "toast show bg-danger" : "toast show"}
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <div class="toast-header d-flex justify-content-between">
+              <strong class="p-1">{title}</strong>
+              <div>
+                <small class="text-muted">{dayjs().format("HH:mm")}</small>
+                <button
+                  type="button"
+                  class="btn-close"
+                  onClick={() => setDisplayToast(false)}
+                ></button>
+              </div>
+            </div>
+            <div class="toast-body">{text}</div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
 Toast.defaultProps = {
   show: false,
+  title: "",
+  error: false,
 };
 
 Toast.propTypes = {
   text: PropTypes.string.isRequired,
-  show: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.any),
-    PropTypes.bool,
-  ]),
+  show: PropTypes.bool,
+  title: PropTypes.string,
+  error: PropTypes.bool,
 };
 
 export default Toast;

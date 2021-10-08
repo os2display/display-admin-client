@@ -123,6 +123,9 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
+  "toast": {
+    "title": "Obs"
+  },
   "media-list": {
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",

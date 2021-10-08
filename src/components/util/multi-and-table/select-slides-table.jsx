@@ -1,11 +1,18 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import ListButton from "../list/list-button";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import InfoModal from "../../info-modal/info-modal";
 import Published from "../../slide/published";
+import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
+import TemplateLabelInList from "../../slide/template-label-in-list";
+import ListButton from "../list/list-button";
+import {
+  useGetV1SlidesQuery,
+  useGetV1PlaylistsByIdSlidesQuery,
+} from "../../../redux/api/api.generated";
+import idFromUrl from "../helpers/id-from-url";
 
 /**
  * A multiselect and table for slides.
@@ -16,15 +23,33 @@ import Published from "../../slide/published";
  * The name for the input
  * @param {string} props.selectedData
  * The data for the multidropdown.
- * @param {Array} props.errors
- * A list of errors, or null.
  * @returns {object}
  * An input.
  */
-function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
+function SelectSlidesTable({ handleChange, name, selectedSlides }) {
+  debugger;
   const { t } = useTranslation("common");
-  const [onPlaylists, setOnPlaylists] = useState();
+  const [selectedData, setSelectedData] = useState(selectedSlides);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const {
+    data: slides,
+    error: loadSlidesError,
+    isLoading: isLoadingSlides,
+  } = useGetV1SlidesQuery({});
+
+  /**
+   * Adds group to list of groups.
+   *
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
+   */
+  function handleAdd({ target }) {
+    const { value, id } = target;
+    setSelectedData(value);
+    handleChange({
+      target: { name: id, value: value.map((item) => item["@id"]) },
+    });
+  }
 
   /**
    * @param {Array} playlistArray
@@ -44,24 +69,27 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
   }
 
   /**
-   * Removes slide from list of slides.
+   * Removes playlist from list of groups.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.id
-   * The id of the slide
+   * @param {object} removeItem
+   * The item to remove.
    */
-  function removeFromList({ id }) {
+  function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
       .map((item) => {
-        return item.id;
+        return item["@id"];
       })
-      .indexOf(id);
-    selectedData.splice(indexOfItemToRemove, 1);
-    const target = { value: selectedData, id: name };
+      .indexOf(removeItem["@id"]);
+    const selectedDataCopy = [...selectedData];
+    selectedDataCopy.splice(indexOfItemToRemove, 1);
+    setSelectedData(selectedDataCopy);
+
+    const target = {
+      value: selectedDataCopy.map((item) => item["@id"]),
+      id: name,
+    };
     handleChange({ target });
   }
-
   /* eslint-disable-next-line no-unused-vars */
   const columns = [
     {
@@ -69,25 +97,22 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
       label: t("select-slides-table.columns.name"),
     },
     {
-      path: "template",
-      label: t("select-slides-table.columns.template"),
+      content: (data) => TemplateLabelInList(data),
+      sort: true,
+      key: "template",
+      label: t("slides-list.columns.template"),
     },
     {
-      path: "playlists",
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.playlists,
-          data.playlists?.length,
-          data.playlists?.length === 0
-        ),
       key: "playlists",
-      label: t("select-slides-table.columns.number-of-playlists"),
+      sort: true,
+      content: (data) => ListButton(openInfoModal, data.onPlaylists),
+      label: t("slides-list.columns.slide-on-playlists"),
     },
     {
-      path: "published",
+      key: "published",
+      sort: true,
       content: (data) => Published(data),
-      label: t("select-slides-table.columns.published"),
+      label: t("slides-list.columns.published"),
     },
     {
       key: "delete",
@@ -101,43 +126,44 @@ function SelectSlidesTable({ handleChange, name, selectedData, errors }) {
 
   return (
     <>
-      <SlidesDropdown
-        errors={errors}
-        name={name}
-        handleSlideSelection={handleChange}
-        selected={selectedData}
-      />
-      {/* @TODO: this should work when real data is fetched */}
-      {/* {selectedData.length > 0 && (
-        <DragAndDropTable
-          columns={columns}
-          onDropped={handleChange}
-          name={name}
-          data={selectedData}
-        />
-      )} */}
-      <InfoModal
-        show={showInfoModal}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={onPlaylists}
-        modalTitle={t("select-slides-table.info-modal.slide-on-playlists")}
-      />
+      {slides && slides["hydra:member"] && selectedSlides && (
+        <>
+          <SlidesDropdown
+            name={name}
+            handleSlideSelection={handleAdd}
+            selected={selectedData}
+            data={slides["hydra:member"]}
+          />
+          {selectedData.length > 0 && (
+            <DragAndDropTable
+              columns={columns}
+              onDropped={handleChange}
+              name={name}
+              data={selectedData}
+            />
+          )}
+          {/* <InfoModal
+              show={showInfoModal}
+              onClose={onCloseInfoModal}
+              dataStructureToDisplay={onPlaylists}
+              modalTitle={t(
+                "select-slides-table.info-modal.slide-on-playlists"
+              )}
+            /> */}
+        </>
+      )}
     </>
   );
 }
 
 SelectSlidesTable.defaultProps = {
-  errors: [],
-  selectedData: [],
+  selectedDataEndpoint: [],
 };
 
 SelectSlidesTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedData: PropTypes.arrayOf(
-    PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
-  ),
+  selectedDataEndpoint: PropTypes.arrayOf(PropTypes.string),
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default SelectSlidesTable;

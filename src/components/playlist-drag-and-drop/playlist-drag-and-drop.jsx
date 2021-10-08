@@ -72,7 +72,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
   // The columns of the list
   const columns = [
     {
-      path: "name",
+      path: "title",
       label: t("playlist-drag-and-drop.columns.name"),
     },
     {

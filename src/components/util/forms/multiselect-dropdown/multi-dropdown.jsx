@@ -55,6 +55,7 @@ function MultiSelectComponent({
   const [error, setError] = useState();
   const [mappedOptions, setMappedOptions] = useState();
   const [mappedSelected, setMappedSelected] = useState();
+  const [localOptions, setLocalOptions] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
   const nothingSelectedLabel =
     noSelectedString || t("multi-dropdown.nothing-selected");
@@ -76,7 +77,6 @@ function MultiSelectComponent({
         disabled: false,
       };
     });
-    setMappedOptions(localMappedOptions);
     const localMappedSelected = selected.map((item) => {
       return {
         label: item.title,
@@ -84,6 +84,14 @@ function MultiSelectComponent({
         disabled: false,
       };
     });
+    const optionsWithSelected = Object.values(
+      [...localMappedOptions, ...localMappedSelected].reduce((a, c) => {
+        a[c.value] = c;
+        return a;
+      }, {})
+    );
+    setMappedOptions(optionsWithSelected);
+    setLocalOptions(optionsWithSelected);
     setMappedSelected(localMappedSelected);
   }, [selected, selected.length]);
 
@@ -118,13 +126,20 @@ function MultiSelectComponent({
     const dataToReturn = options.filter((option) =>
       ids.includes(option["@id"])
     );
-    // The below disabling of underscore dang
+    const selectedOptions = Object.values(
+      [...selected, ...options]
+        .filter((option) => ids.includes(option["@id"]))
+        .reduce((a, c) => {
+          a[c["@id"]] = c;
+          return a;
+        }, {})
+    );
     // eslint-disable-next-line no-underscore-dangle
     const newData = data.filter(({ __isNew__ }) => __isNew__);
     if (newData.length > 0) {
       dataToReturn.unshift(newData);
     }
-    const target = { value: dataToReturn, id: name };
+    const target = { value: selectedOptions, id: name };
     handleSelection({ target });
   }
 

@@ -25,48 +25,8 @@ function SelectPlaylistTable({
   errors,
 }) {
   const { t } = useTranslation("common");
-  // const [showInfoModal, setShowInfoModal] = useState(false);
-  // const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [selectedData, setSelectedData] = useState([]);
   const { data, isLoading } = useGetV1PlaylistsQuery({});
-  // const [infoModalTitle, setInfoModalTitle] = useState("");
-
-  useEffect(() => {
-    if (selectedDataEndpoint.length > 0 && data) {
-      const localMappedSelected = data["hydra:member"].filter((item) =>
-        selectedDataEndpoint.includes(item["@id"])
-      );
-      setSelectedData(localMappedSelected);
-    }
-  }, [selectedDataEndpoint, data]);
-
-  // /**
-  //  * Opens info modal with either categories or slides.
-  //  *
-  //  * @param {object} props
-  //  * The props
-  //  * @param {Array} props.data
-  //  * The data to sum up in the modal
-  //  * @param {string} props.caller
-  //  * Which infomodal is opened, categories or slides.
-  //  */
-  // function openInfoModal({ data, caller }) {
-  //   const localInfoModalTitle =
-  //     caller === "categories"
-  //       ? t("select-playlists-table.info-modal.playlist-categories")
-  //       : t("select-playlists-table.info-modal.playlist-slides");
-  //   setInfoModalTitle(localInfoModalTitle);
-  //   setDataStructureToDisplay(data);
-  //   setShowInfoModal(true);
-  // }
-
-  // /**
-  //  * Closes the info modal.
-  //  */
-  // function onCloseInfoModal() {
-  //   setShowInfoModal(false);
-  //   setDataStructureToDisplay();
-  // }
 
   /**
    * Removes playlist from list of playlists.
