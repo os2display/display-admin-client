@@ -52,7 +52,7 @@ function PlaylistForm({
    * Map loaded data.
    */
   useEffect(() => {
-    if (data) {
+    if (data && !Array.isArray(playlist.slides)) {
       setSelectedSlides(
         data["hydra:member"].map(({ slide }) => {
           return slide;

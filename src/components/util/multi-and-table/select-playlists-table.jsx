@@ -18,16 +18,10 @@ import { useGetV1PlaylistsQuery } from "../../../redux/api/api.generated";
  * @returns {object}
  * An input.
  */
-function SelectPlaylistTable({
-  handleChange,
-  name,
-  selectedDataEndpoint,
-  errors,
-}) {
+function SelectPlaylistTable({ handleChange, name }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState([]);
   const { data, isLoading } = useGetV1PlaylistsQuery({});
-
   /**
    * Removes playlist from list of playlists.
    *

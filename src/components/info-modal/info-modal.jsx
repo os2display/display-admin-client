@@ -30,10 +30,12 @@ function InfoModal({
   apiCall,
   dataStructureToDisplay,
   modalTitle,
+  dataKey,
 }) {
   if (!show) {
     return <></>;
   }
+  console.log(dataKey);
   const { t } = useTranslation("common");
   const paginationVariables = 10;
   const [totalItems, setTotalItems] = useState(dataStructureToDisplay.length);
@@ -59,7 +61,16 @@ function InfoModal({
    */
   useEffect(() => {
     if (data?.data) {
-      setFetchedData(data.data["hydra:member"]);
+      let mappedData;
+      if (dataKey) {
+        mappedData = data.data["hydra:member"].map((item) => {
+          return item[dataKey];
+        });
+      } else {
+        mappedData = data.data["hydra:member"];
+      }
+      debugger;
+      setFetchedData(mappedData);
       setTotalItems(data.data["hydra:totalItems"]);
     }
   }, [data]);

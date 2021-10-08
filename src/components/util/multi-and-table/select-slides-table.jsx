@@ -1,18 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
-import InfoModal from "../../info-modal/info-modal";
 import Published from "../../slide/published";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import TemplateLabelInList from "../../slide/template-label-in-list";
 import ListButton from "../list/list-button";
+import InfoModal from "../../info-modal/info-modal";
 import {
   useGetV1SlidesQuery,
   useGetV1PlaylistsByIdSlidesQuery,
 } from "../../../redux/api/api.generated";
-import idFromUrl from "../helpers/id-from-url";
 
 /**
  * A multiselect and table for slides.
@@ -27,9 +26,9 @@ import idFromUrl from "../helpers/id-from-url";
  * An input.
  */
 function SelectSlidesTable({ handleChange, name, selectedSlides }) {
-  debugger;
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState(selectedSlides);
+  const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const {
     data: slides,
@@ -93,7 +92,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
   /* eslint-disable-next-line no-unused-vars */
   const columns = [
     {
-      path: "name",
+      path: "title",
       label: t("select-slides-table.columns.name"),
     },
     {
@@ -105,7 +104,12 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
     {
       key: "playlists",
       sort: true,
-      content: (data) => ListButton(openInfoModal, data.onPlaylists),
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.onPlaylists[0][0] || [],
+          useGetV1PlaylistsByIdSlidesQuery
+        ),
       label: t("slides-list.columns.slide-on-playlists"),
     },
     {
@@ -142,14 +146,14 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
               data={selectedData}
             />
           )}
-          {/* <InfoModal
-              show={showInfoModal}
-              onClose={onCloseInfoModal}
-              dataStructureToDisplay={onPlaylists}
-              modalTitle={t(
-                "select-slides-table.info-modal.slide-on-playlists"
-              )}
-            /> */}
+          <InfoModal
+            show={showInfoModal}
+            apiCall={useGetV1PlaylistsByIdSlidesQuery}
+            onClose={onCloseInfoModal}
+            dataStructureToDisplay={onPlaylists}
+            modalTitle={t("info-modal.playlist-slides")}
+            dataKey="slide"
+          />
         </>
       )}
     </>

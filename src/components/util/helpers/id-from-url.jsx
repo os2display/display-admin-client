@@ -3,7 +3,9 @@
  * @returns {string} the id
  */
 function idFromUrl(string) {
-  return string.match(/[A-Za-z0-9]{26}/).shift();
+  if (typeof string === "string") {
+    return string.match(/[A-Za-z0-9]{26}/).shift();
+  }
 }
 
 export default idFromUrl;
