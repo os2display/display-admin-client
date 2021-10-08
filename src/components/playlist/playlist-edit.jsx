@@ -19,7 +19,6 @@ function PlaylistEdit() {
   const headerText = t("edit-playlist.edit-playlist");
   const [formStateObject, setFormStateObject] = useState();
   const [slidesToAdd, setSlidesToAdd] = useState([]);
-  const [originallySelectedSlides, setOriginallySelectedSlides] = useState([]);
   const { id } = useParams();
 
   const [
@@ -43,31 +42,15 @@ function PlaylistEdit() {
   } = useGetV1PlaylistsByIdQuery({ id });
 
   /**
-   * When the playlist is saved, the slide will be saved.
-   */
-  useEffect(() => {
-    if (isSaveSuccess) {
-      PutV1PlaylistsByIdSlides({
-        id: id,
-        body: JSON.stringify(slidesToAdd),
-      });
-    }
-  }, [isSaveSuccess]);
-
-  function handleOriginallySelectedSlides(slides) {
-    setOriginallySelectedSlides(slides);
-  }
-
-  /**
+   * Set state on change in input field
    *
+   * @param {object} props - The props.
+   * @param {object} props.target - Event target.
    */
-  function handleSaveSlides() {
-    const { slides } = formStateObject;
-    setSlidesToAdd(
-      slides.map((slide, index) => {
-        return { slide: idFromUrl(slide), weight: index };
-      })
-    );
+  function handleInput({ target }) {
+    const localFormStateObject = { ...formStateObject };
+    localFormStateObject[target.id] = target.value;
+    setFormStateObject(localFormStateObject);
   }
 
   /**
@@ -80,15 +63,27 @@ function PlaylistEdit() {
   }, [data]);
 
   /**
-   * Set state on change in input field
-   *
-   * @param {object} props - The props.
-   * @param {object} props.target - Event target.
+   * When the playlist is saved, the slide will be saved.
    */
-  function handleInput({ target }) {
-    const localFormStateObject = { ...formStateObject };
-    localFormStateObject[target.id] = target.value;
-    setFormStateObject(localFormStateObject);
+  useEffect(() => {
+    if (isSaveSuccess) {
+      PutV1PlaylistsByIdSlides({
+        id: id,
+        body: JSON.stringify(slidesToAdd),
+      });
+    }
+  }, [isSaveSuccess]);
+
+  /**
+   *
+   */
+  function handleSaveSlides() {
+    const { slides } = formStateObject;
+    setSlidesToAdd(
+      slides.map((slide, index) => {
+        return { slide: idFromUrl(slide), weight: index };
+      })
+    );
   }
 
   /**
@@ -117,7 +112,6 @@ function PlaylistEdit() {
           isLoading={isLoading}
           isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
           isSaving={isSaving || isSavingSlides}
-          handleOriginallySelectedSlides={handleOriginallySelectedSlides}
           errors={loadError || saveError || saveErrorSlides || false}
         />
       )}

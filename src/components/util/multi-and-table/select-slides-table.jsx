@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,7 @@ import {
  */
 function SelectSlidesTable({ handleChange, name, selectedSlides }) {
   const { t } = useTranslation("common");
-  const [selectedData, setSelectedData] = useState(selectedSlides);
+  const [selectedData, setSelectedData] = useState();
   const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const {
@@ -35,6 +35,10 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
     error: loadSlidesError,
     isLoading: isLoadingSlides,
   } = useGetV1SlidesQuery({});
+
+  useEffect(() => {
+    setSelectedData(selectedSlides);
+  }, [selectedSlides]);
 
   /**
    * Adds group to list of groups.
@@ -130,7 +134,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
 
   return (
     <>
-      {slides && slides["hydra:member"] && selectedSlides && (
+      {slides && slides["hydra:member"] && (
         <>
           <SlidesDropdown
             name={name}
@@ -138,7 +142,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
             selected={selectedData}
             data={slides["hydra:member"]}
           />
-          {selectedData.length > 0 && (
+          {selectedData?.length > 0 && (
             <DragAndDropTable
               columns={columns}
               onDropped={handleAdd}

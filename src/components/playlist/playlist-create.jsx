@@ -1,9 +1,12 @@
-import { React, useState } from "react";
-import { ulid } from "ulid";
-import * as dayjs from "dayjs";
+import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { usePostV1PlaylistsMutation } from "../../redux/api/api.generated";
+import idFromUrl from "../util/helpers/id-from-url";
 import PlaylistForm from "./playlist-form";
+import { useHistory } from "react-router-dom";
+import {
+  usePostV1PlaylistsMutation,
+  usePutV1PlaylistsByIdSlidesMutation,
+} from "../../redux/api/api.generated";
 
 /**
  * The playlist edit component.
@@ -12,33 +15,34 @@ import PlaylistForm from "./playlist-form";
  */
 function PlaylistCreate() {
   const { t } = useTranslation("common");
+  const history = useHistory();
   const headerText = t("edit-playlist.create-new-playlist");
-
-  const creationTime = dayjs().toISOString();
-  const newUlid = ulid();
-
   const [formStateObject, setFormStateObject] = useState({
-    id: newUlid,
-    "@context": "/contexts/Playlist",
-    "@id": `/v1/playlists/${newUlid}`,
-    title: "",
-    description: "",
-    modified: creationTime,
-    created: creationTime,
-    modifiedBy: "@TODO",
-    createdBy: "@TODO",
-    slides: `/v1/slidesPlaylist?_expand=slide&playlistId=${newUlid}`,
-    onScreens: `/v1/playlists/${newUlid}/screens`,
+    slides: [],
+    title: "string",
+    description: "string",
+    modifiedBy: "string",
+    createdBy: "string",
     published: {
-      from: creationTime,
-      to: null,
+      from: "2021-11-17T06:15:04Z", // Todo
+      to: "2021-04-29T09:54:10Z", // Todo
     },
   });
+  const [slidesToAdd, setSlidesToAdd] = useState([]);
 
   const [
     PostV1Playlist,
-    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
+    { data, isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostV1PlaylistsMutation();
+
+  const [
+    PutV1PlaylistsByIdSlides,
+    {
+      isLoading: isSavingSlides,
+      error: saveErrorSlides,
+      isSuccess: isSaveSuccessSlides,
+    },
+  ] = usePutV1PlaylistsByIdSlidesMutation();
 
   /**
    * Set state on change in input field
@@ -53,10 +57,47 @@ function PlaylistCreate() {
   }
 
   /**
+   * When the screen is saved, the group(s) will be saved.
+   * When saved, it redirects to edit screen.
+   */
+  useEffect(() => {
+    if (isSaveSuccessSlides && data) {
+      history.push(`/playlists/edit/${idFromUrl(data["@id"])}`);
+    }
+  }, [isSaveSuccessSlides]);
+
+  /**
+   * When the playlist is saved, the slide will be saved.
+   */
+  useEffect(() => {
+    if (isSaveSuccess && data) {
+      PutV1PlaylistsByIdSlides({
+        id: idFromUrl(data["@id"]),
+        body: JSON.stringify(slidesToAdd),
+      });
+    }
+  }, [isSaveSuccess]);
+
+  /**
+   *
+   */
+  function handleSaveSlides() {
+    const { slides } = formStateObject;
+    setSlidesToAdd(
+      slides.map((slide, index) => {
+        return { slide: idFromUrl(slide), weight: index };
+      })
+    );
+  }
+
+  /**
    * Handles submit.
    */
   function handleSubmit() {
-    PostV1Playlist({ body: formStateObject });
+    PostV1Playlist({ playlistPlaylistInput: JSON.stringify(formStateObject) });
+    if (formStateObject.slides.length > 0) {
+      handleSaveSlides();
+    }
   }
 
   return (
@@ -66,9 +107,9 @@ function PlaylistCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={false}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
-      errors={[saveError]}
+      isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
+      isSaving={isSaving || isSavingSlides}
+      errors={saveError || saveErrorSlides || false}
     />
   );
 }

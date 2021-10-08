@@ -38,11 +38,10 @@ function PlaylistForm({
   isSaveSuccess,
   isLoading,
   errors,
-  handleOriginallySelectedSlides,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [selectedSlides, setSelectedSlides] = useState();
+  const [selectedSlides, setSelectedSlides] = useState([]);
   const {
     data,
     error: loadSelectedSlidesError,
@@ -57,9 +56,6 @@ function PlaylistForm({
       let originallySelectedSlides = data["hydra:member"].map(({ slide }) => {
         return slide;
       });
-      handleOriginallySelectedSlides(
-        originallySelectedSlides.map((item) => item["@id"])
-      );
       setSelectedSlides(originallySelectedSlides);
     }
   }, [data]);
