@@ -17,7 +17,6 @@ import idFromUrl from "../util/helpers/id-from-url";
  */
 function ListEntry({ apiCall, dataUrl }) {
   const { data } = apiCall({ id: idFromUrl(dataUrl) });
-
   return (
     <>
       {data && <li key={data["@id"]}>{data.title}</li>}

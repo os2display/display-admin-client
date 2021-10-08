@@ -19,7 +19,6 @@ import { useTranslation } from "react-i18next";
 function Pagination({ itemsCount, pageSize, onPageChange, currentPage }) {
   const { t } = useTranslation("common");
   const pageCount = Math.ceil(itemsCount / pageSize);
-
   // No need for pagination
   if (pageCount <= 1) return null;
 

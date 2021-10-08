@@ -36,12 +36,13 @@ function FormInputArea({ name, label, placeholder, value, onChange }) {
 
 FormInputArea.defaultProps = {
   value: "",
+  placeholder: "",
 };
 
 FormInputArea.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };

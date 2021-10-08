@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
@@ -14,8 +14,8 @@ import MultiSelectComponent from "../multi-dropdown";
  * The id of the form element
  * @param {Array} props.errors
  * A list of errors, or null.
- * @param {boolean} props.isCreatable
- * Whether it is possible to create in the multi dropdown.
+ * @param {Array} props.data
+ * The data for options.
  * @returns {object}
  * The multidropdown of groups.
  */
@@ -24,38 +24,21 @@ function GroupsDropdown({
   selected,
   name,
   errors,
-  isCreatable,
+  data,
 }) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    // @TODO: load real content.
-    fetch("/fixtures/groups/groups.json")
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setOptions(jsonData.groups);
-        setIsLoading(false);
-      });
-  }, []);
 
   return (
     <>
-      {options && (
+      {data && (
         <>
           <MultiSelectComponent
             errors={errors}
             handleSelection={handleGroupsSelection}
-            options={options}
+            options={data}
             label={t("groups-dropdown.label")}
             selected={selected}
             name={name}
-            isLoading={isLoading}
-            isCreatable={isCreatable}
             noSelectedString={t("groups-dropdown.nothing-selected")}
           />
         </>
@@ -66,7 +49,6 @@ function GroupsDropdown({
 
 GroupsDropdown.defaultProps = {
   errors: null,
-  isCreatable: false,
 };
 
 GroupsDropdown.propTypes = {
@@ -80,7 +62,7 @@ GroupsDropdown.propTypes = {
   ).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
-  isCreatable: PropTypes.bool,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default GroupsDropdown;

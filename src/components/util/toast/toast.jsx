@@ -55,7 +55,10 @@ Toast.defaultProps = {
 
 Toast.propTypes = {
   text: PropTypes.string.isRequired,
-  show: PropTypes.bool,
+  show: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.any),
+    PropTypes.bool,
+  ]),
 };
 
 export default Toast;

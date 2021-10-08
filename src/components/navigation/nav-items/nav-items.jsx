@@ -90,15 +90,6 @@ function NavItems() {
           {t("nav-items.screens-groups")}
         </NavLink>
       </Nav.Item>
-      <Nav.Item className="nav-second-level">
-        <NavLink
-          id="nav-items_screens_locations"
-          className="nav-link"
-          to="/locations"
-        >
-          {t("nav-items.screens-locations")}
-        </NavLink>
-      </Nav.Item>
       <Nav.Item>
         <NavLink id="nav-items_settings" className="nav-link" to="/settings">
           <FontAwesomeIcon className="me-2" icon={faCog} />

@@ -1,8 +1,9 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Button, Spinner, Toast } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
+import idFromUrl from "../util/helpers/id-from-url";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
@@ -25,8 +26,11 @@ import {
  */
 function SlidesList() {
   const { t } = useTranslation("common");
+  const [isDeleting, setIsDeleting] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
+  const [page, setPage] = useState();
+  const [slidesToDelete, setSlidesToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [DeleteV1Slides, { isSuccess: isDeleteSuccess }] =
@@ -43,17 +47,29 @@ function SlidesList() {
   }
 
   /**
-   * Opens the delete modal, for deleting row.
-   *
-   * @param {object} props
-   * The props.
-   * @param {string} props.title
-   * The title of the slide.
-   * @param {number} props.id
-   * The id of the slide
+   * Deletes multiple slides.
    */
-  function openDeleteModal({ id, title }) {
-    setSelectedRows([{ id, title }]);
+  useEffect(() => {
+    if (slidesToDelete.length > 0) {
+      setIsDeleting(true);
+      const slideToDelete = slidesToDelete.splice(0, 1).shift();
+      const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
+      DeleteV1Slides({ id: slideToDeleteId });
+    } else if (isDeleteSuccess) {
+      window.location.reload(false);
+    }
+  }, [slidesToDelete, isDeleteSuccess]);
+
+  /**
+   * Opens the delete modal
+   *
+   * @param {object} item
+   * The item to delete
+   */
+  function openDeleteModal(item) {
+    if (item) {
+      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
+    }
     setShowDeleteModal(true);
   }
 
@@ -138,20 +154,35 @@ function SlidesList() {
   ];
 
   /**
-   * Deletes slide, and closes modal.
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
+  /**
+   * Deletes slide(s), and closes modal.
    */
   function handleDelete() {
-    const [first] = selectedRows;
-    DeleteV1Slides({ id: first.id });
-    setSelectedRows([]);
+    setSlidesToDelete(selectedRows);
+    clearSelectedRows();
     setShowDeleteModal(false);
+  }
+
+  /**
+   * Sets next page.
+   *
+   * @param {number} pageNumber - the next page.
+   */
+  function onChangePage(pageNumber) {
+    setPage(pageNumber);
   }
 
   /**
    * Closes the delete modal.
    */
   function onCloseDeleteModal() {
-    setSelectedRows([]);
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 
@@ -161,13 +192,6 @@ function SlidesList() {
   function onCloseInfoModal() {
     setShowInfoModal(false);
     setOnPlaylists();
-  }
-
-  /**
-   * Clears the selected rows.
-   */
-  function clearSelectedRows() {
-    setSelectedRows([]);
   }
 
   const {
@@ -188,17 +212,20 @@ function SlidesList() {
         newBtnLink="/slide/create"
       />
       <ContentBody>
-        {!isLoading && data && data["hydra:member"] && (
+        {!(isLoading || isDeleting) && data && data["hydra:member"] && (
           <List
             columns={columns}
+            totalItems={data["hydra:totalItems"]}
+            currentPage={page}
+            handlePageChange={onChangePage}
             selectedRows={selectedRows}
             data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
+            handleDelete={openDeleteModal}
           />
         )}
-        {isLoading && <Spinner animation="grow" />}
+        {(isLoading || isDeleting) && <Spinner animation="grow" />}
       </ContentBody>
-
       <DeleteModal
         show={showDeleteModal}
         onClose={onCloseDeleteModal}
