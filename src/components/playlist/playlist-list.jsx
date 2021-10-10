@@ -15,7 +15,7 @@ import ContentBody from "../util/content-body/content-body";
 import {
   useGetV1PlaylistsQuery,
   useDeleteV1PlaylistsByIdMutation,
-  useGetV1SlidesByIdPlaylistsQuery,
+  useGetV1PlaylistsByIdSlidesQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -116,17 +116,17 @@ function PlaylistList() {
       sort: true,
       label: t("playlists-list.columns.name"),
     },
-    // {
-    //   sort: true,
-    //   key: "slides",
-    //   label: t("playlists-list.columns.number-of-slides"),
-    //   content: (data) =>
-    //     ListButton(
-    //       openInfoModal,
-    //       data.slides,
-    //       useGetV1SlidesByIdPlaylistsQuery
-    //     ),
-    // },
+    {
+      sort: true,
+      key: "slides",
+      label: t("playlists-list.columns.number-of-slides"),
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.slides,
+          useGetV1PlaylistsByIdSlidesQuery
+        ),
+    },
     {
       key: "edit",
       content: (data) =>
@@ -217,9 +217,10 @@ function PlaylistList() {
       />
       <InfoModal
         show={showInfoModal}
-        apiCall={useGetV1SlidesByIdPlaylistsQuery}
+        apiCall={useGetV1PlaylistsByIdSlidesQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}
+        dataKey="slide"
         modalTitle={t("info-modal.playlist-slides")}
       />
     </>

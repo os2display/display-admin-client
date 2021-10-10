@@ -36,14 +36,18 @@ function InfoModal({
     return <></>;
   }
   const { t } = useTranslation("common");
-  const paginationVariables = 10;
+  const paginationVariables = 5;
   const [totalItems, setTotalItems] = useState(dataStructureToDisplay.length);
   const [paginatedDataStructure, setPaginatedDataStructure] = useState();
   const [fetchedData, setFetchedData] = useState();
   const [page, setPage] = useState(1);
   let data;
   if (!Array.isArray(dataStructureToDisplay)) {
-    data = apiCall({ id: idFromUrl(dataStructureToDisplay), page: page });
+    data = apiCall({
+      id: idFromUrl(dataStructureToDisplay),
+      page: page,
+      itemsPerPage: 5,
+    });
   }
 
   useEffect(() => {
@@ -60,18 +64,21 @@ function InfoModal({
    */
   useEffect(() => {
     if (data?.data) {
-      let mappedData;
+      let mappedData = fetchedData || [];
       if (dataKey) {
-        mappedData = data.data["hydra:member"].map((item) => {
-          return item[dataKey];
-        });
+        mappedData = [
+          ...mappedData,
+          ...data.data["hydra:member"].map((item) => {
+            return item[dataKey];
+          }),
+        ];
       } else {
-        mappedData = data.data["hydra:member"];
+        mappedData = [...mappedData, ...data.data["hydra:member"]];
       }
       setFetchedData(mappedData);
       setTotalItems(data.data["hydra:totalItems"]);
     }
-  }, [data]);
+  }, [data?.data]);
 
   /**
    * Displays more list entries.
