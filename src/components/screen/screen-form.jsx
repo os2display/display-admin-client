@@ -12,10 +12,13 @@ import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
-import RadioButtons from "../util/forms/radio-buttons";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
-import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1LayoutsQuery,
+  useGetV1ScreensByIdScreenGroupsQuery,
+} from "../../redux/api/api.generated";
+import idFromUrl from "../util/helpers/id-from-url";
 import "./screen-form.scss";
 
 /**
@@ -50,6 +53,23 @@ function ScreenForm({
     page: 1,
   });
 
+  const [selectedGroups, setSelectedGroups] = useState([]);
+  const {
+    data,
+    error: loadSelectedGroupsError,
+    isLoading: isLoadingSelectedGroups,
+  } = useGetV1ScreensByIdScreenGroupsQuery({
+    id: idFromUrl(screen.inScreenGroups),
+  });
+  /**
+   * Map loaded data.
+   */
+  useEffect(() => {
+    if (data && !Array.isArray(screen.inScreenGroups)) {
+      setSelectedGroups(data["hydra:member"]);
+    }
+  }, [data]);
+
   useEffect(() => {
     if (layouts) {
       setLayoutOptions(layouts["hydra:member"]);
@@ -66,6 +86,7 @@ function ScreenForm({
       }
     }
   }, [screen.layout, layoutOptions]);
+
   return (
     <Form>
       <h1>{headerText}</h1>
@@ -106,11 +127,13 @@ function ScreenForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("screen-form.screen-groups")}</h2>
-            <SelectGroupsTable
-              handleChange={handleInput}
-              name="inScreenGroups"
-              selectedDataEndpoint={screen.inScreenGroups}
-            />
+            {selectedGroups && (
+              <SelectGroupsTable
+                handleChange={handleInput}
+                name="inScreenGroups"
+                selectedGroups={selectedGroups}
+              />
+            )}
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("screen-form.screen-location")}</h2>

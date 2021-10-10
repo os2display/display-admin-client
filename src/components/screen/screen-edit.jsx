@@ -2,9 +2,11 @@ import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1ScreensByIdQuery,
   usePutV1ScreensByIdMutation,
+  usePutV1ScreensByIdScreenGroupsMutation,
 } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
 
@@ -17,11 +19,21 @@ function ScreenEdit() {
   const { t } = useTranslation("common");
   const headerText = t("screen-edit.edit-screen-header");
   const [formStateObject, setFormStateObject] = useState();
+  const [groupsToAdd, setGroupsToAdd] = useState();
   const { id } = useParams();
   const [
     PutV1Screens,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1ScreensByIdMutation();
+
+  const [
+    PutV1ScreensByIdScreenGroups,
+    {
+      isLoading: isSavingGroups,
+      error: saveErrorGroups,
+      isSuccess: isSaveSuccessGroups,
+    },
+  ] = usePutV1ScreensByIdScreenGroupsMutation();
 
   const {
     data,
@@ -37,6 +49,18 @@ function ScreenEdit() {
       setFormStateObject(data);
     }
   }, [data]);
+
+  /**
+   * When the screen is saved, the groups will be saved.
+   */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      PutV1ScreensByIdScreenGroups({
+        id: id,
+        body: JSON.stringify(groupsToAdd),
+      });
+    }
+  }, [isSaveSuccess]);
 
   /**
    * Set state on change in input field
@@ -55,8 +79,14 @@ function ScreenEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    const saveData = { id, screenScreenInput: JSON.stringify(formStateObject) };
-    PutV1Screens(saveData);
+    PutV1Screens({ id, screenScreenInput: JSON.stringify(formStateObject) });
+    if (Array.isArray(formStateObject.inScreenGroups)) {
+      setGroupsToAdd(
+        formStateObject.inScreenGroups.map((group) => {
+          return idFromUrl(group);
+        })
+      );
+    }
   }
 
   return (
