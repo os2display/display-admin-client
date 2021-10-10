@@ -98,9 +98,9 @@ function ScreenEdit() {
           handleInput={handleInput}
           handleSubmit={handleSubmit}
           isLoading={isLoadingScreen}
-          isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
-          errors={saveError || loadError || false}
+          isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
+          isSaving={isSaving || isSavingGroups}
+          errors={saveError || loadError || saveErrorGroups || false}
         />
       )}
     </>

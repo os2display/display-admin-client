@@ -92,7 +92,7 @@ function SelectGroupsTable({ handleChange, name, selectedGroups }) {
             handleGroupsSelection={handleAdd}
             selected={selectedData}
           />
-          {selectedData.length > 0 && (
+          {selectedData?.length > 0 && (
             <Table columns={columns} data={selectedData} />
           )}
         </>
