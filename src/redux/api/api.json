@@ -595,11 +595,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
                     "404": {
                         "description": "Resource not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
                     }
                 },
                 "summary": "Update a Playlist resource.",
@@ -850,150 +850,9 @@
             },
             "parameters": []
         },
-        "/v1/playlists/{id}/slide/{slideId}": {
-            "put": {
-                "operationId": "put-v1-playlist-slide",
-                "tags": [
-                    "Playlists"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Playlist resource updated",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Playlist.Playlist.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Playlist.Playlist"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Playlist.Playlist"
-                                }
-                            }
-                        },
-                        "links": {}
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                },
-                "summary": "Link slide resource to playlist resource.",
-                "description": "Link slide resource to playlist resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "id",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "slideId",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "id",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "requestBody": {
-                    "description": "",
-                    "content": {
-                        "application/ld+json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": []
-                            }
-                        }
-                    },
-                    "required": false
-                },
-                "deprecated": false
-            },
-            "delete": {
-                "operationId": "delete-v1-playlist-slide",
-                "tags": [
-                    "Playlists"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Playlist resource deleted"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                },
-                "summary": "Unlink slide resource from playlist resource.",
-                "description": "Unlink slide resource from playlist resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "id",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "slideId",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "id",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
         "/v1/playlists/{id}/slides": {
             "get": {
-                "operationId": "get-v1-playlist-slides",
+                "operationId": "get-v1-playlist-slide-id",
                 "tags": [
                     "Playlists"
                 ],
@@ -1008,8 +867,8 @@
                         "headers": {}
                     }
                 },
-                "summary": "Retrieves a collection of Slide resources base on Playlist.",
-                "description": "Retrieves a collection of Slide resources.",
+                "summary": "Retrieves collection of weight Slide resources.",
+                "description": "Retrieves collection of weight Slide resources.",
                 "parameters": [
                     {
                         "name": "id",
@@ -1020,7 +879,7 @@
                         "allowEmptyValue": false,
                         "schema": {
                             "type": "string",
-                            "format": "id",
+                            "format": "ulid",
                             "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
@@ -1031,7 +890,7 @@
                         "name": "page",
                         "in": "query",
                         "description": "",
-                        "required": false,
+                        "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
                         "schema": {
@@ -1062,9 +921,177 @@
                 ],
                 "deprecated": false
             },
+            "put": {
+                "operationId": "put-v1-playlist-slide-id",
+                "tags": [
+                    "Playlists"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PlaylistSlide resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetPlaylistSlideItem": {
+                                "operationId": "getPlaylistSlideItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/playlist-slides/{id}`."
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "slide": {
+                                                "type": "string"
+                                            },
+                                            "playlist": {
+                                                "type": "string"
+                                            },
+                                            "weight": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Update the collection of slide on a playlist.",
+                "description": "Update the collection of slide on a playlist.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "slide": {
+                                            "type": "string",
+                                            "format": "ulid",
+                                            "pattern": "^[A-Za-z0-9]{26}$",
+                                            "description": "Slide ULID"
+                                        },
+                                        "weight": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
             "parameters": []
         },
-        "/v1/screenGroups": {
+        "/v1/playlists/{id}/slides/{slideId}": {
+            "delete": {
+                "operationId": "delete-v1-playlist-slide-id",
+                "tags": [
+                    "Playlists"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "PlaylistSlide resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete a slide from a playlist.",
+                "description": "Delete a slide from a playlist.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "slideId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screen-groups": {
             "get": {
                 "operationId": "get-v1-screen-groups",
                 "tags": [
@@ -1075,44 +1102,7 @@
                         "description": "OK",
                         "content": {
                             "application/ld+json": {
-                                "examples": {
-                                    "Groups": {
-                                        "value": {
-                                            "@id": "/v1/screenGroups",
-                                            "@type": "hydra:Collection",
-                                            "hydra:member": [
-                                                {
-                                                    "@type": "ScreenGroup",
-                                                    "@id": "/v1/screen-groups/01FFS94CJXKT2JBWEMTDP0JNFK",
-                                                    "title": "Voluptas blanditiis non tempora cupiditate unde.",
-                                                    "description": "Eos ea et modi impedit non quod. Ipsa ut et aut quis velit sit occaecati dolorem. Ut et quidem rerum aut ducimus nihil.",
-                                                    "created": "2021-09-17T07:04:33+02:00",
-                                                    "modified": "2021-09-17T07:04:33+02:00",
-                                                    "modifiedBy": "",
-                                                    "createdBy": ""
-                                                },
-                                                {
-                                                    "@type": "ScreenGroup",
-                                                    "@id": "/v1/screen-groups/01FFS94CK0TJN47KXMZ2FYEAH8",
-                                                    "title": "Qui perspiciatis et autem repellendus.",
-                                                    "description": "Dolor est eius officiis et. Et alias nemo rerum modi repellendus ipsa. Dolores nesciunt qui et et ratione.",
-                                                    "created": "2021-09-17T07:04:33+02:00",
-                                                    "modified": "2021-09-17T07:04:33+02:00",
-                                                    "modifiedBy": "",
-                                                    "createdBy": ""
-                                                }
-                                            ],
-                                            "hydra:totalItems": 2,
-                                            "hydra:view": {
-                                                "@id": "string",
-                                                "@type": "hydra:PartialCollectionView",
-                                                "hydra:first": "string",
-                                                "hydra:last": "string",
-                                                "hydra:next": "string"
-                                            }
-                                        }
-                                    }
-                                }
+                                "examples": null
                             }
                         },
                         "headers": {}
@@ -1218,7 +1208,7 @@
             },
             "parameters": []
         },
-        "/v1/screenGroups/{id}": {
+        "/v1/screen-groups/{id}": {
             "get": {
                 "operationId": "get-v1-screen-groups-id",
                 "tags": [
@@ -1290,11 +1280,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
                     "404": {
                         "description": "Resource not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
                     }
                 },
                 "summary": "Update a Screen group resource.",
@@ -1566,11 +1556,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
                     "404": {
                         "description": "Resource not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
                     }
                 },
                 "summary": "Update a Screen resource.",
@@ -1661,7 +1651,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Playlist collection",
+                        "description": "PlaylistScreenRegion collection",
                         "content": {
                             "application/ld+json": {
                                 "schema": {
@@ -1670,7 +1660,7 @@
                                         "hydra:member": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Playlist.Playlist.jsonld"
+                                                "$ref": "#/components/schemas/PlaylistScreenRegion.PlaylistScreenRegion.jsonld"
                                             }
                                         },
                                         "hydra:totalItems": {
@@ -1750,7 +1740,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Playlist.Playlist"
+                                        "$ref": "#/components/schemas/PlaylistScreenRegion.PlaylistScreenRegion"
                                     }
                                 }
                             },
@@ -1758,7 +1748,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Playlist.Playlist"
+                                        "$ref": "#/components/schemas/PlaylistScreenRegion.PlaylistScreenRegion"
                                     }
                                 }
                             }
@@ -1835,9 +1825,6 @@
                 ],
                 "deprecated": false
             },
-            "parameters": []
-        },
-        "/v1/screens/{id}/regions/{regionId}/playlists/{playlistId}": {
             "put": {
                 "operationId": "putPlaylistScreenRegionItem",
                 "tags": [
@@ -1847,17 +1834,17 @@
                     "200": {
                         "description": "Not used - remove the default 200 response"
                     },
+                    "201": {
+                        "description": "Created"
+                    },
                     "400": {
                         "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
                     },
                     "404": {
                         "description": "Not found"
                     },
-                    "201": {
-                        "description": "Created"
+                    "422": {
+                        "description": "Unprocessable entity"
                     }
                 },
                 "summary": "Add Playlist resource from screen region.",
@@ -1894,22 +1881,6 @@
                         "style": "simple",
                         "explode": false,
                         "allowReserved": false
-                    },
-                    {
-                        "name": "playlistId",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
                     }
                 ],
                 "requestBody": {
@@ -1917,8 +1888,21 @@
                     "content": {
                         "application/ld+json": {
                             "schema": {
-                                "type": "object",
-                                "properties": []
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "playlist": {
+                                            "type": "string",
+                                            "format": "ulid",
+                                            "pattern": "^[A-Za-z0-9]{26}$",
+                                            "description": "Playlist ULID"
+                                        },
+                                        "weight": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
                             }
                         }
                     },
@@ -1926,6 +1910,9 @@
                 },
                 "deprecated": false
             },
+            "parameters": []
+        },
+        "/v1/screens/{id}/regions/{regionId}/playlists/{playlistId}": {
             "delete": {
                 "operationId": "deletePlaylistScreenRegionItem",
                 "tags": [
@@ -1976,6 +1963,288 @@
                     },
                     {
                         "name": "playlistId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screens/{id}/screen-groups": {
+            "get": {
+                "operationId": "get-v1-screen-id-screen-groups",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ScreenGroup collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ScreenGroup.ScreenGroup.jsonld"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScreenGroup.ScreenGroup"
+                                    }
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ScreenGroup.ScreenGroup"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Retrieve ScreeGroups collection base on screen id.",
+                "description": "Retrieve ScreeGroups collection base on screen id.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "put-v1-screen-groups-screen",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Update the collection of ScreenGroups on a Screen.",
+                "description": "Update the collection of ScreenGroups on a Screen.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screens/{id}/screen-groups/{screenGroupId}": {
+            "delete": {
+                "operationId": "delete-v1-screen-group-screen-id",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ScreenGroup resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete a screen groups from a screen",
+                "description": "Delete a screen groups from a screen.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "screenGroupId",
                         "in": "path",
                         "description": "",
                         "required": true,
@@ -2184,11 +2453,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
                     "404": {
                         "description": "Resource not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
                     }
                 },
                 "summary": "Update a Slide resource.",
@@ -2263,79 +2532,6 @@
                             "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
-        "/v1/slides/{id}/playlists": {
-            "get": {
-                "operationId": "get-v1-playlist-with-slides",
-                "tags": [
-                    "Slides"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/ld+json": {
-                                "examples": null
-                            }
-                        },
-                        "headers": {}
-                    }
-                },
-                "summary": "Retrieves a collection of Playlists resources base on Slide.",
-                "description": "Retrieves a collection of Playlists resources.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "id",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "format": "int32",
-                            "default": 1
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "itemsPerPage",
-                        "in": "query",
-                        "description": "The number of items per page",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "default": "10"
-                        },
-                        "style": "form",
                         "explode": false,
                         "allowReserved": false
                     }
@@ -2872,7 +3068,7 @@
                     }
                 }
             },
-            "PlaylistScreenRegion": {
+            "PlaylistScreenRegion.PlaylistScreenRegion": {
                 "type": "object",
                 "description": "",
                 "properties": {
@@ -2880,17 +3076,12 @@
                         "type": "string",
                         "format": "iri-reference"
                     },
-                    "screen": {
-                        "type": "string",
-                        "format": "iri-reference"
-                    },
-                    "region": {
-                        "type": "string",
-                        "format": "iri-reference"
+                    "weight": {
+                        "type": "integer"
                     }
                 }
             },
-            "PlaylistScreenRegion.jsonld": {
+            "PlaylistScreenRegion.PlaylistScreenRegion.jsonld": {
                 "type": "object",
                 "description": "",
                 "properties": {
@@ -2933,13 +3124,69 @@
                         "type": "string",
                         "format": "iri-reference"
                     },
-                    "screen": {
+                    "weight": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "PlaylistSlide.PlaylistSlide": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "slide": {
                         "type": "string",
                         "format": "iri-reference"
                     },
-                    "region": {
+                    "weight": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "PlaylistSlide.PlaylistSlide.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "slide": {
                         "type": "string",
                         "format": "iri-reference"
+                    },
+                    "weight": {
+                        "type": "integer"
                     }
                 }
             },
