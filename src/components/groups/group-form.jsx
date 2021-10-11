@@ -47,7 +47,7 @@ function GroupForm({
    */
   useEffect(() => {
     if (data && !Array.isArray(playlist.slides)) {
-      let originallySelectedSlides = data["hydra:member"].map(({ slide }) => {
+      const originallySelectedSlides = data["hydra:member"].map(({ slide }) => {
         return slide;
       });
       setSelectedSlides(originallySelectedSlides);

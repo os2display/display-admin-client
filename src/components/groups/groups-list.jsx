@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import Toast from "../util/toast/toast";
-import { Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Toast from "../util/toast/toast";
+
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -43,6 +43,7 @@ function GroupsList() {
 
   /**
    * Opens the delete modal
+   *
    * @param {object} item
    * The item to delete
    */

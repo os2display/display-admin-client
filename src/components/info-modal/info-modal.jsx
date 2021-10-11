@@ -21,6 +21,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * The playlists to list.
  * @param {string} props.modalTitle
  * The info modal string.
+ * @param props.dataKey
  * @returns {object}
  * The modal.
  */
@@ -45,7 +46,7 @@ function InfoModal({
   if (!Array.isArray(dataStructureToDisplay)) {
     data = apiCall({
       id: idFromUrl(dataStructureToDisplay),
-      page: page,
+      page,
       itemsPerPage: 5,
     });
   }

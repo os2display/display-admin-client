@@ -50,7 +50,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
     const { value, id } = target;
     setSelectedData(value);
     handleChange({
-      target: { id: id, value: value.map((item) => item["@id"]) },
+      target: { id, value: value.map((item) => item["@id"]) },
     });
   }
 

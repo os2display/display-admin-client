@@ -68,7 +68,7 @@ function PlaylistEdit() {
   useEffect(() => {
     if (isSaveSuccess) {
       PutV1PlaylistsByIdSlides({
-        id: id,
+        id,
         body: JSON.stringify(slidesToAdd),
       });
     }

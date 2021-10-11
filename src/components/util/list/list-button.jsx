@@ -6,6 +6,8 @@ import idFromUrl from "../helpers/id-from-url";
  * The callback function
  * @param {object} data
  * The data for callback
+ * @param inputData
+ * @param apiCall
  * @returns {object}
  * The list button.
  */

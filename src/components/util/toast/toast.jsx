@@ -10,6 +10,8 @@ import dayjs from "dayjs";
  * The text to display
  * @param {boolean} props.show
  * Show toast
+ * @param props.title
+ * @param props.error
  * @returns {object}
  * The toast component.
  */
@@ -49,23 +51,23 @@ function Toast({ text, show, title, error }) {
       {displayToast && (
         <div className="toast-wrapper">
           <div
-            class={error ? "toast show bg-danger" : "toast show"}
+            className={error ? "toast show bg-danger" : "toast show"}
             role="alert"
             aria-live="polite"
             aria-atomic="true"
           >
-            <div class="toast-header d-flex justify-content-between">
-              <strong class="p-1">{title}</strong>
+            <div className="toast-header d-flex justify-content-between">
+              <strong className="p-1">{title}</strong>
               <div>
-                <small class="text-muted">{dayjs().format("HH:mm")}</small>
+                <small className="text-muted">{dayjs().format("HH:mm")}</small>
                 <button
                   type="button"
-                  class="btn-close"
+                  className="btn-close"
                   onClick={() => setDisplayToast(false)}
-                ></button>
+                />
               </div>
             </div>
-            <div class="toast-body">{text}</div>
+            <div className="toast-body">{text}</div>
           </div>
         </div>
       )}

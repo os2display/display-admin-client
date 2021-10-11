@@ -56,7 +56,7 @@ function ScreenEdit() {
   useEffect(() => {
     if (isSaveSuccess) {
       PutV1ScreensByIdScreenGroups({
-        id: id,
+        id,
         body: JSON.stringify(groupsToAdd),
       });
     }

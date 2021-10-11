@@ -89,6 +89,7 @@ function PlaylistList() {
 
   /**
    * Opens the delete modal
+   *
    * @param {object} item
    * The item to delete
    */
@@ -180,7 +181,7 @@ function PlaylistList() {
     data,
     error: playlistsGetError,
     isLoading,
-  } = useGetV1PlaylistsQuery({ page: page });
+  } = useGetV1PlaylistsQuery({ page });
 
   return (
     <>
