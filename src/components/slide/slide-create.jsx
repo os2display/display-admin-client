@@ -20,11 +20,19 @@ function SlideCreate() {
   const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
   const headerText = t("slide-create.create-slide-header");
   const [formStateObject, setFormStateObject] = useState({
-    modifiedBy: "todo",
-    createdBy: "todo",
+    title: "",
+    description: "",
+    duration: 10,
     published: {
-      from: "2021-11-17T06:15:04Z", // Todo
-      to: "2021-04-29T09:54:10Z", // Todo
+      from: "2020-12-25T03:58:27Z",
+      to: "2020-12-25T03:58:27Z",
+    },
+    media: [
+      "/v1/media/01FHG8B7M66G5ETZPDQFYMMNCK",
+      "/v1/media/01FHG8B7M66G5ETZPDQFYMMNCX",
+    ],
+    content: {
+      text: "Test text",
     },
   });
 
@@ -51,13 +59,23 @@ function SlideCreate() {
    * When the slide is saved, the playlists will be saved.
    */
   useEffect(() => {
-    if (isSaveSuccess) {
-      PutV1PlaylistsByIdSlides({
-        id,
-        body: JSON.stringify(playlistsToAdd),
-      });
+    if (isSaveSuccess && data) {
+      // PutV1PlaylistsByIdSlides({
+      //   id: idFromUrl(data["@id"]),
+      //   body: JSON.stringify(playlistsToAdd),
+      // });
     }
   }, [isSaveSuccess]);
+
+  /**
+   * When the screen and group(s) are saved.
+   * it redirects to edit screen.
+   */
+  useEffect(() => {
+    if (savePlaylistSuccess) {
+      history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
+    }
+  }, [savePlaylistSuccess]);
 
   /**
    * Set state on change in input field
@@ -75,12 +93,12 @@ function SlideCreate() {
    * Handles submit.
    */
   function handleSubmit() {
-    formStateObject.created = new Date().toISOString();
-    formStateObject.modified = new Date().toISOString();
     // Change templateinfo to the format accepted by the api
-    if (formStateObject.templateInfo) {
-      formStateObject.templateInfo = { "@id": formStateObject.templateInfo };
-    }
+    formStateObject.templateInfo = {
+      "@id": formStateObject.templateInfo,
+      options: { fade: false },
+    };
+    debugger;
     // formStateObject.published = { from: creationTime, to: creationTime };
     const saveData = { slideSlideInput: JSON.stringify(formStateObject) };
     PostV1Slide(saveData);

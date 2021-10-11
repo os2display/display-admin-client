@@ -52,10 +52,10 @@ function SlideEdit() {
    */
   useEffect(() => {
     if (isSaveSuccess) {
-      PutV1PlaylistsByIdSlides({
-        id,
-        body: JSON.stringify(playlistsToAdd),
-      });
+      // PutV1PlaylistsByIdSlides({
+      //   id,
+      //   body: JSON.stringify(playlistsToAdd),
+      // });
     }
   }, [isSaveSuccess]);
 
