@@ -60,7 +60,7 @@ function Toast({ text, show, title, error }) {
                 <button
                   type="button"
                   className="btn-close"
-                  aria-label={"toast.button-label"}
+                  aria-label="toast.button-label"
                   onClick={() => setDisplayToast(false)}
                 />
               </div>
