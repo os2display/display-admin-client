@@ -3,7 +3,10 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import idFromUrl from "../util/helpers/id-from-url";
-import { usePostV1ScreensMutation } from "../../redux/api/api.generated";
+import {
+  usePostV1ScreensMutation,
+  usePutV1ScreensByIdScreenGroupsMutation,
+} from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
 
 /**
@@ -13,15 +16,15 @@ import ScreenForm from "./screen-form";
  */
 function ScreenCreate() {
   const { t } = useTranslation("common");
-  const [groupsToAdd, setGroupsToAdd] = useState([]);
-  const headerText = t("edit-screen.create-new-screen");
+  const headerText = t("screen-create.create-screen-header");
+  const [groupsToAdd, setGroupsToAdd] = useState();
   const history = useHistory();
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
     size: "",
-    modifiedBy: "",
-    createdBy: "",
+    created: "2021-10-08T15:29:02+02:00",
+    modified: "2021-10-08T15:29:02+02:00",
     layout: "",
     location: "",
     dimensions: {
@@ -31,26 +34,40 @@ function ScreenCreate() {
   });
 
   const [
-    PostV1Screen,
+    PostV1Screens,
     { data, isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostV1ScreensMutation();
 
+  const [
+    PutV1ScreensByIdScreenGroups,
+    {
+      isLoading: isSavingGroups,
+      error: saveErrorGroups,
+      isSuccess: isSaveSuccessGroups,
+    },
+  ] = usePutV1ScreensByIdScreenGroupsMutation();
+
   /**
-   * When the screen is saved, the group(s) will be saved.
-   * When saved, it redirects to edit screen.
+   * When the screen is saved, the groups will be saved.
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      if (groupsToAdd.length > 0) {
-        // remove first element for saving
-        // const toAdd = groupsToAdd.splice(0, 1).shift();
-        // const toAddId = idFromUrl(toAdd);
-        // todo save screen group connection
-      } else {
-        history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
-      }
+      PutV1ScreensByIdScreenGroups({
+        id: idFromUrl(data["@id"]),
+        body: JSON.stringify(groupsToAdd),
+      });
     }
   }, [isSaveSuccess]);
+
+  /**
+   * When the screen and group(s) are saved.
+   * it redirects to edit screen.
+   */
+  useEffect(() => {
+    if (isSaveSuccessGroups && data) {
+      history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
+    }
+  }, [isSaveSuccessGroups]);
 
   /**
    * Set state on change in input field
@@ -65,16 +82,6 @@ function ScreenCreate() {
   }
 
   /**
-   * Set groups to save state
-   */
-  function handleSaveGroups() {
-    const { inScreenGroups } = formStateObject;
-    if (inScreenGroups) {
-      setGroupsToAdd(inScreenGroups);
-    }
-  }
-
-  /**
    * Handles submit.
    */
   function handleSubmit() {
@@ -86,9 +93,15 @@ function ScreenCreate() {
       formStateObject.dimensions.height,
       10
     );
-    const saveData = { screenScreenInput: JSON.stringify(formStateObject) };
-    PostV1Screen(saveData);
-    handleSaveGroups();
+    const { inScreenGroups } = formStateObject;
+    if (inScreenGroups.length > 0) {
+      setGroupsToAdd(
+        inScreenGroups.map((group) => {
+          return idFromUrl(group);
+        })
+      );
+    }
+    PostV1Screens({ screenScreenInput: JSON.stringify(formStateObject) });
   }
 
   return (
@@ -98,9 +111,9 @@ function ScreenCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={false}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
-      errors={saveError || false}
+      isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
+      isSaving={isSaving || isSavingGroups}
+      errors={saveError || saveErrorGroups || false}
     />
   );
 }

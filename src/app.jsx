@@ -9,8 +9,9 @@ import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import SlidesList from "./components/slide/slides-list";
-import GroupsList from "./components/groups-list/groups-list";
-import EditGroup from "./components/edit-group/edit-group";
+import GroupsList from "./components/groups/groups-list";
+import GroupCreate from "./components/groups/group-create";
+import GroupEdit from "./components/groups/group-edit";
 import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";
@@ -61,7 +62,8 @@ function App() {
                   <Route path="/screen/create" component={ScreenCreate} />
                   <Route path="/screen/edit/:id" component={ScreenEdit} />
                   <Route path="/groups" component={GroupsList} />
-                  <Route path="/group/:id" component={EditGroup} />
+                  <Route path="/groups/edit/:id" component={GroupEdit} />
+                  <Route path="/groups/create" component={GroupCreate} />
                   <Route path="/slide/list" component={SlidesList} />
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />

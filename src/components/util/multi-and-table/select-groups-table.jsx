@@ -12,29 +12,31 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
  * the props.
  * @param {string} props.name
  * The name for the input
- * @param {Array} props.errors
- * A list of errors, or null.
  * @returns {object}
  * An input.
  */
-function SelectGroupsTable({
-  handleChange,
-  name,
-  selectedDataEndpoint,
-  errors,
-}) {
+function SelectGroupsTable({ handleChange, name, selectedGroups }) {
   const { t } = useTranslation("common");
-  const [selectedData, setSelectedData] = useState([]);
-  const { data, isLoading } = useGetV1ScreenGroupsQuery({});
+  const [selectedData, setSelectedData] = useState();
+  const { data: groups } = useGetV1ScreenGroupsQuery({});
 
   useEffect(() => {
-    if (selectedDataEndpoint.length > 0 && data) {
-      const localMappedSelected = data["hydra:member"].filter((item) =>
-        selectedDataEndpoint.includes(item["@id"])
-      );
-      setSelectedData(localMappedSelected);
-    }
-  }, [selectedDataEndpoint, data]);
+    setSelectedData(selectedGroups);
+  }, [selectedGroups]);
+
+  /**
+   * Adds group to list of groups.
+   *
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
+   */
+  function handleAdd({ target }) {
+    const { value, id } = target;
+    setSelectedData(value);
+    handleChange({
+      target: { id, value: value.map((item) => item["@id"]) },
+    });
+  }
 
   /**
    * Removes playlist from list of groups.
@@ -59,20 +61,6 @@ function SelectGroupsTable({
     handleChange({ target });
   }
 
-  /**
-   * Adds group to list of groups.
-   *
-   * @param {object} props - the props.
-   * @param {object} props.target - the target.
-   */
-  function handleAdd({ target }) {
-    const { value, id } = target;
-    setSelectedData(value);
-    handleChange({
-      target: { name: id, value: value.map((item) => item["@id"]) },
-    });
-  }
-
   // The columns for the table.
   const columns = [
     {
@@ -90,16 +78,15 @@ function SelectGroupsTable({
   ];
   return (
     <>
-      {!isLoading && data && data["hydra:member"] && (
+      {groups && groups["hydra:member"] && (
         <>
           <GroupsDropdown
-            errors={errors}
             name={name}
-            data={data["hydra:member"]}
+            data={groups["hydra:member"]}
             handleGroupsSelection={handleAdd}
             selected={selectedData}
           />
-          {selectedData.length > 0 && (
+          {selectedData?.length > 0 && (
             <Table columns={columns} data={selectedData} />
           )}
         </>
@@ -108,16 +95,10 @@ function SelectGroupsTable({
   );
 }
 
-SelectGroupsTable.defaultProps = {
-  errors: [],
-  selectedDataEndpoint: [],
-};
-
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedDataEndpoint: PropTypes.arrayOf(PropTypes.string),
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string),
+  selectedGroups: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default SelectGroupsTable;

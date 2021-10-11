@@ -88,7 +88,7 @@
       "created-by": "Oprettet af"
     },
     "header": "Grupper",
-    "create-new-group": "Opret ny grupee",
+    "create-new-group": "Opret ny gruppe",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
@@ -102,8 +102,7 @@
       "number-of-slides": "Slides tilknyttede"
     },
     "info-modal": {
-      "playlist-slides": "Spillelisten har følgende slides",
-      "playlist-screens": "Spillelisten er på følgende skærme"
+      "playlist-slides": "Spillelisten har følgende slides"
     },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
@@ -123,6 +122,10 @@
     "create-new-theme": "Opret nyt tema",
     "delete-button": "Slet",
     "edit-button": "Rediger"
+  },
+  "toast": {
+    "title": "Obs",
+    "button-label": "Luk denne dialog"
   },
   "media-list": {
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
@@ -162,13 +165,23 @@
     "slide-select-playlist-title": "Spillelister",
     "slide-publish-title": "Udgivelse"
   },
-  "edit-group": {
-    "create-new-group": "Opret ny gruppe",
-    "edit-group": "Rediger følgende gruppe",
+  "group-form": {
+    "loading": "Henter gruppen...",
+    "saving": "Gemmer...",
+    "saved": "Gruppen blev gemt",
+    "error": "Der skete en fejl",
     "save-button": "Gem gruppen",
     "cancel-button": "Annuller",
-    "group-name-label": "Gruppens navn",
-    "group-name-placeholder": "Udfyld gruppens navn"
+    "group-title-label": "Gruppens navn",
+    "group-title-placeholder": "Udfyld gruppens navn",
+    "group-description-label": "Gruppens beskrivelse",
+    "group-description-placeholder": "Udfyld gruppens beskrivelse"
+  },
+  "group-create": {
+    "create-new-group-header": "Opret ny gruppe"
+  },
+  "group-edit": {
+    "edit-group-header": "Rediger følgende gruppe"
   },
   "edit-playlist": {
     "error": "Der skete en fejl",
@@ -339,25 +352,25 @@
     "table-header-for-indicator": "Drag and drop indikator",
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug espace til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
-  "edit-screen": {
-    "create-new-screen": "Opret ny skærm",
+  "screen-edit": {
+    "edit-screen-header": "Rediger følgende skærm"
+  },
+  "screen-create": {
+    "create-screen-header": "Opret ny skærm"
+  },
+  "screen-form": {
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
-    "edit-screen": "Rediger følgende skærm",
     "error": "Der skete en fejl",
     "loading": "Henter skærm...",
     "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",
     "cancel-button": "Annuller",
-    "radio-button-horizontal": "Vandret layout",
-    "radio-button-vertical": "Lodret layout",
-    "radio-buttons-horizontal-or-vertical-label": "Angiv om skærmen er vandret eller lodret",
     "screen-about": "Om skærmen",
     "screen-groups": "Grupper",
     "screen-location": "Lokation(er)",
     "screen-settings": "Opsætning",
     "screen-layout": "Layout",
-    "screen-playlists": "Spillelister",
     "screen-name-label": "Skærmens navn",
     "screen-name-placeholder": "Udfyld skærmens navn",
     "screen-name-validation": "Venligst udfyld skærmens navn",
@@ -368,7 +381,6 @@
     "screen-location-placeholder": "Udfyld skærmens lokation",
     "screen-size-of-screen-label": "Størrelse på skærmen",
     "screen-size-of-screen-placeholder": "Angiv størrelsen på skærmen",
-    "screen-resolution-of-screen-label": "Skærmens opløsning",
     "screen-resolution-of-screen-width-placeholder": "Angiv skærmens bredde",
     "screen-resolution-of-screen-height-placeholder": "Angiv skærmens højde"
   },

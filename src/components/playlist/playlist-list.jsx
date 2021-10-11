@@ -1,18 +1,21 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Toast from "../util/toast/toast";
 import selectedHelper from "../util/helpers/selectedHelper";
+import ListButton from "../util/list/list-button";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import LinkForList from "../util/list/link-for-list";
+import idFromUrl from "../util/helpers/id-from-url";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import {
   useGetV1PlaylistsQuery,
   useDeleteV1PlaylistsByIdMutation,
+  useGetV1PlaylistsByIdSlidesQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -24,38 +27,52 @@ import {
 function PlaylistList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [onSlides, setOnSlides] = useState();
+  const [page, setPage] = useState();
+  const [playlistsToDelete, setPlaylistsToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
-  /* eslint-disable-next-line no-unused-vars */
-  const [infoModalTitle, setInfoModalTitle] = useState("");
   const [DeleteV1Playlists, { isSuccess: isDeleteSuccess }] =
     useDeleteV1PlaylistsByIdMutation();
 
   /**
-   * Opens info modal with either categories or slides.
-   *
-   * @param {object} props
-   * The props
-   * @param {Array} props.data
-   * The data to sum up in the modal
-   * @param {string} props.modalTitle
-   * The title for the infomodal.
+   * @param {Array} slideData
+   * The array of playlists.
    */
-  /* @TODO: Re-add this.
-  function openInfoModal({ data, modalTitle }) {
-    setInfoModalTitle(modalTitle);
-    setDataStructureToDisplay(data);
+  function openInfoModal(slideData) {
+    setOnSlides(slideData);
     setShowInfoModal(true);
   }
-  */
+
+  /**
+   * Deletes multiple playlists.
+   */
+  useEffect(() => {
+    if (playlistsToDelete.length > 0) {
+      setIsDeleting(true);
+      const toDelete = playlistsToDelete.splice(0, 1).shift();
+      const toDeleteId = idFromUrl(toDelete["@id"]);
+      DeleteV1Playlists({ id: toDeleteId });
+    } else if (isDeleteSuccess) {
+      window.location.reload(false);
+    }
+  }, [playlistsToDelete, isDeleteSuccess]);
+
+  /**
+   * Sets next page.
+   *
+   * @param {number} pageNumber - the next page.
+   */
+  function onChangePage(pageNumber) {
+    setPage(pageNumber);
+  }
 
   /**
    * Closes the info modal.
    */
   function onCloseInfoModal() {
     setShowInfoModal(false);
-    setDataStructureToDisplay();
   }
 
   /**
@@ -69,17 +86,15 @@ function PlaylistList() {
   }
 
   /**
-   * Opens the delete modal, for deleting row.
+   * Opens the delete modal
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.title
-   * The title of the playlist.
-   * @param {number} props.id
-   * The id of the playlist
+   * @param {object} item
+   * The item to delete
    */
-  function openDeleteModal({ id, title }) {
-    setSelectedRows([{ id, title }]);
+  function openDeleteModal(item) {
+    if (item) {
+      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
+    }
     setShowDeleteModal(true);
   }
 
@@ -101,35 +116,24 @@ function PlaylistList() {
       label: t("playlists-list.columns.name"),
     },
     {
-      content: () => <div>@TODO</div>,
       sort: true,
-      path: "slides",
       key: "slides",
       label: t("playlists-list.columns.number-of-slides"),
-    },
-    {
-      content: () => <div>@TODO</div>,
-      sort: true,
-      path: "categories",
-      key: "categories",
-      label: t("playlists-list.columns.number-of-categories"),
-    },
-    {
-      sort: true,
-      path: "onFollowingScreens",
-      content: () => <div>@TODO:</div>,
-      key: "screens",
-      label: t("playlists-list.columns.on-screens"),
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.slides,
+          useGetV1PlaylistsByIdSlidesQuery
+        ),
     },
     {
       key: "edit",
-      content: (data) => (
-        <LinkForList
-          data={data}
-          label={t("playlists-list.edit-button")}
-          param="playlists/edit"
-        />
-      ),
+      content: (data) =>
+        LinkForList(
+          data["@id"],
+          "playlists/edit",
+          t("playlists-list.edit-button")
+        ),
     },
     {
       key: "delete",
@@ -148,12 +152,18 @@ function PlaylistList() {
   ];
 
   /**
-   * Deletes slide, and closes modal.
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
+  /**
+   * Deletes playlist(s), and closes modal.
    */
   function handleDelete() {
-    const [first] = selectedRows;
-    DeleteV1Playlists({ id: first.id });
-    setSelectedRows([]);
+    setPlaylistsToDelete(selectedRows);
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 
@@ -165,18 +175,11 @@ function PlaylistList() {
     setShowDeleteModal(false);
   }
 
-  /**
-   * Clears the selected rows.
-   */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
   const {
     data,
     error: playlistsGetError,
     isLoading,
-  } = useGetV1PlaylistsQuery({ page: 1 });
+  } = useGetV1PlaylistsQuery({ page });
 
   return (
     <>
@@ -191,12 +194,16 @@ function PlaylistList() {
         newBtnLink="/playlist/create"
       />
       <ContentBody>
-        {!isLoading && data && data["hydra:member"] && (
+        {!(isLoading || isDeleting) && data && data["hydra:member"] && (
           <List
             columns={columns}
+            totalItems={data["hydra:totalItems"]}
+            currentPage={page}
+            handlePageChange={onChangePage}
             selectedRows={selectedRows}
             data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
+            handleDelete={openDeleteModal}
           />
         )}
         {isLoading && <Spinner animation="grow" />}
@@ -209,9 +216,11 @@ function PlaylistList() {
       />
       <InfoModal
         show={showInfoModal}
+        apiCall={useGetV1PlaylistsByIdSlidesQuery}
         onClose={onCloseInfoModal}
-        dataStructureToDisplay={dataStructureToDisplay}
-        modalTitle={infoModalTitle}
+        dataStructureToDisplay={onSlides}
+        dataKey="slide"
+        modalTitle={t("info-modal.playlist-slides")}
       />
     </>
   );

@@ -1,9 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1PlaylistsByIdQuery,
   usePutV1PlaylistsByIdMutation,
+  usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
 import PlaylistForm from "./playlist-form";
 
@@ -15,7 +17,8 @@ import PlaylistForm from "./playlist-form";
 function PlaylistEdit() {
   const { t } = useTranslation("common");
   const headerText = t("edit-playlist.edit-playlist");
-  const [formStateObject, setFormStateObject] = useState({});
+  const [formStateObject, setFormStateObject] = useState();
+  const [slidesToAdd, setSlidesToAdd] = useState([]);
   const { id } = useParams();
 
   const [
@@ -23,20 +26,20 @@ function PlaylistEdit() {
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1PlaylistsByIdMutation();
 
+  const [
+    PutV1PlaylistsByIdSlides,
+    {
+      isLoading: isSavingSlides,
+      error: saveErrorSlides,
+      isSuccess: isSaveSuccessSlides,
+    },
+  ] = usePutV1PlaylistsByIdSlidesMutation();
+
   const {
     data,
     error: loadError,
     isLoading,
   } = useGetV1PlaylistsByIdQuery({ id });
-
-  /**
-   * Set loaded data into form state.
-   */
-  useEffect(() => {
-    if (data) {
-      setFormStateObject(data);
-    }
-  }, [data]);
 
   /**
    * Set state on change in input field
@@ -51,23 +54,68 @@ function PlaylistEdit() {
   }
 
   /**
+   * Set loaded data into form state.
+   */
+  useEffect(() => {
+    if (data) {
+      setFormStateObject(data);
+    }
+  }, [data]);
+
+  /**
+   * When the playlist is saved, the slide will be saved.
+   */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      PutV1PlaylistsByIdSlides({
+        id,
+        body: JSON.stringify(slidesToAdd),
+      });
+    }
+  }, [isSaveSuccess]);
+
+  /**
+   * Sets slides to save.
+   */
+  function handleSaveSlides() {
+    const { slides } = formStateObject;
+    setSlidesToAdd(
+      slides.map((slide, index) => {
+        return { slide: idFromUrl(slide), weight: index };
+      })
+    );
+  }
+
+  /**
    * Handles submit.
    */
   function handleSubmit() {
-    PutV1Playlists({ id, body: formStateObject });
+    PutV1Playlists({
+      id,
+      playlistPlaylistInput: JSON.stringify(formStateObject),
+    });
+    if (Array.isArray(formStateObject.slides)) {
+      handleSaveSlides();
+    }
   }
 
   return (
-    <PlaylistForm
-      playlist={formStateObject}
-      headerText={`${headerText}: ${formStateObject && formStateObject.title}`}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isLoading={isLoading}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
-      errors={[loadError, saveError]}
-    />
+    <>
+      {formStateObject && (
+        <PlaylistForm
+          playlist={formStateObject}
+          headerText={`${headerText}: ${
+            formStateObject && formStateObject.title
+          }`}
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+          isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
+          isSaving={isSaving || isSavingSlides}
+          errors={loadError || saveError || saveErrorSlides || false}
+        />
+      )}
+    </>
   );
 }
 

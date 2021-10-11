@@ -1,55 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
-import { useGetV1SlidesQuery } from "../../../../../redux/api/api.generated";
 /**
- * @param {object} props
- * the props.
- * @param {Function} props.handleSlideSelection
- * The callback when an option is selected
- * @param {Array} props.selected
- * The selected options
- * @param {string} props.name
- * The id of the form element
- * @param {Array} props.errors
- * A list of errors, or null.
- * @returns {object}
- * The multidropdown of playlists.
+ * @param {object} props - the props.
+ * @param {Function} props.handleSlideSelection - The callback when an option is selected
+ * @param {Array} props.selected - The selected options
+ * @param {string} props.name - The id of the form element
+ * @param {Array} props.errors - A list of errors, or null.
+ * @param {object} props.data - The data for the slides dropdown.
+ * @returns {object} - The multidropdown of playlists.
  */
-function SlidesDropdown({ handleSlideSelection, selected, name, errors }) {
+function SlidesDropdown({
+  handleSlideSelection,
+  selected,
+  name,
+  errors,
+  data,
+}) {
   const { t } = useTranslation("common");
-  const [options, setOptions] = useState();
-  const [selectedOptions, setSelectedOptions] = useState([
-    { title: t("slides-dropdown.no-slides-configured"), id: 1 },
-  ]);
-  const { data, isLoading } = useGetV1SlidesQuery({ page: 1 });
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    if (data) {
-      setOptions(data["hydra:member"]);
-      setSelectedOptions(selected);
-    }
-  }, [data]);
 
   return (
-    <>
-      {options && (
-        <MultiSelectComponent
-          isLoading={isLoading}
-          handleSelection={handleSlideSelection}
-          options={options}
-          label={t("slides-dropdown.label")}
-          noSelectedString={t("slides-dropdown.nothing-selected")}
-          selected={selectedOptions}
-          name={name}
-          errors={errors}
-        />
-      )}
-    </>
+    <MultiSelectComponent
+      handleSelection={handleSlideSelection}
+      options={data}
+      label={t("slides-dropdown.label")}
+      noSelectedString={t("slides-dropdown.nothing-selected")}
+      selected={selected}
+      name={name}
+      errors={errors}
+    />
   );
 }
 
@@ -69,6 +49,7 @@ SlidesDropdown.propTypes = {
   ),
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default SlidesDropdown;

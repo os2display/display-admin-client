@@ -199,7 +199,7 @@ function SlidesList() {
     error: slidesGetError,
     isLoading,
   } = useGetV1SlidesQuery({
-    page: 1,
+    page,
   });
 
   return (

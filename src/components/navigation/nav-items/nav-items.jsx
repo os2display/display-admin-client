@@ -85,7 +85,7 @@ function NavItems() {
         <NavLink
           id="nav-items_screens_groups"
           className="nav-link"
-          to="/groups"
+          to="/group/list"
         >
           {t("nav-items.screens-groups")}
         </NavLink>

@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Toast from "../util/toast/toast";
+
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -8,6 +10,11 @@ import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import idFromUrl from "../util/helpers/id-from-url";
+import {
+  useGetV1ScreenGroupsQuery,
+  useDeleteV1ScreenGroupsByIdMutation,
+} from "../../redux/api/api.generated";
 
 /**
  * The groups list component.
@@ -18,21 +25,12 @@ import ContentBody from "../util/content-body/content-body";
 function GroupsList() {
   const { t } = useTranslation("common");
   const [selectedRows, setSelectedRows] = useState([]);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [groups, setGroups] = useState([]);
-
-  /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    // @TODO: load real content.
-    fetch(`/fixtures/groups/groups.json`)
-      .then((response) => response.json())
-      .then((jsonData) => {
-        setGroups(jsonData);
-      });
-  }, []);
-
+  const [page, setPage] = useState();
+  const [groupsToDelete, setGroupsToDelete] = useState([]);
+  const [DeleteV1ScreenGroups, { isSuccess: isDeleteSuccess }] =
+    useDeleteV1ScreenGroupsByIdMutation();
   /**
    * Sets the selected row in state.
    *
@@ -44,19 +42,31 @@ function GroupsList() {
   }
 
   /**
-   * Opens the delete modal, for deleting row.
+   * Opens the delete modal
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the group.
-   * @param {number} props.id
-   * The id of the group
+   * @param {object} item
+   * The item to delete
    */
-  function openDeleteModal({ id, name }) {
-    setSelectedRows([{ id, name }]);
+  function openDeleteModal(item) {
+    if (item) {
+      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
+    }
     setShowDeleteModal(true);
   }
+
+  /**
+   * Deletes multiple groups.
+   */
+  useEffect(() => {
+    if (groupsToDelete.length > 0) {
+      setIsDeleting(true);
+      const groupToDelete = groupsToDelete.splice(0, 1).shift();
+      const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
+      DeleteV1ScreenGroups({ id: groupToDeleteId });
+    } else if (isDeleteSuccess) {
+      window.location.reload(false);
+    }
+  }, [groupsToDelete, isDeleteSuccess]);
 
   // The columns for the table.
   const columns = [
@@ -71,7 +81,7 @@ function GroupsList() {
       ),
     },
     {
-      path: "name",
+      path: "title",
       sort: true,
       label: t("groups-list.columns.name"),
     },
@@ -82,13 +92,8 @@ function GroupsList() {
     },
     {
       key: "edit",
-      content: (data) => (
-        <LinkForList
-          data={data}
-          label={t("groups-list.edit-button")}
-          param="group"
-        />
-      ),
+      content: (data) =>
+        LinkForList(data["@id"], "group/edit", t("groups-list.edit-button")),
     },
     {
       key: "delete",
@@ -107,19 +112,27 @@ function GroupsList() {
   ];
 
   /**
-   * Deletes group, and closes modal.
-   *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the group.
-   * @param {number} props.id
-   * The id of the group
+   * Clears the selected rows.
    */
-  // eslint-disable-next-line
-  function handleDelete({ id, name }) {
-    // @TODO: delete element
+  function clearSelectedRows() {
     setSelectedRows([]);
+  }
+
+  /**
+   * Sets next page.
+   *
+   * @param {number} pageNumber - the next page.
+   */
+  function onChangePage(pageNumber) {
+    setPage(pageNumber);
+  }
+
+  /**
+   * Deletes group(s), and closes modal.
+   */
+  function handleDelete() {
+    setGroupsToDelete(selectedRows);
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 
@@ -127,34 +140,39 @@ function GroupsList() {
    * Closes the delete modal.
    */
   function onCloseModal() {
-    setSelectedRows([]);
+    clearSelectedRows();
     setShowDeleteModal(false);
   }
 
-  /**
-   * Clears the selected rows.
-   */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
+  const {
+    data,
+    error: groupsGetError,
+    isLoading,
+  } = useGetV1ScreenGroupsQuery({ page });
 
   return (
     <>
+      <Toast show={groupsGetError} text={t("groups-list.groups-get-error")} />
+      <Toast show={isDeleteSuccess} text={t("groups-list.deleted")} />
       <ContentHeader
         title={t("groups-list.header")}
         newBtnTitle={t("groups-list.create-new-group")}
-        newBtnLink="/group/new"
+        newBtnLink="/group/create"
       />
       <ContentBody>
-        {groups.groups && (
+        {!(isLoading || isDeleting) && data && data["hydra:member"] && (
           <List
-            showMerge
             columns={columns}
+            totalItems={data["hydra:totalItems"]}
+            currentPage={page}
+            handlePageChange={onChangePage}
             selectedRows={selectedRows}
-            data={groups.groups}
+            data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
+            handleDelete={openDeleteModal}
           />
         )}
+        {(isLoading || isDeleting) && <Spinner animation="grow" />}
       </ContentBody>
       <DeleteModal
         show={showDeleteModal}

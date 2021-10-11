@@ -18,21 +18,21 @@ import "./grid.scss";
  * The selected data for the multidropdown.
  * @param {object} props.regions
  * The regions in the grid.
- * @param {string} props.layout
- * Either "horizontal" or "vertical", has styling associated
+ * @param {boolean} props.vertical
+ * True if the screen is vertical
  * @returns {object}
  * The component.
  */
 function GridGenerationAndSelect({
   grid,
-  layout,
+  vertical,
   regions,
   // handleInput,
   selectedData,
 }) {
   const { t } = useTranslation("common");
   const [key, setKey] = useState("region1");
-  const gridClasses = `grid ${layout || "horizontal"}`;
+  const gridClasses = `grid ${vertical ? "vertical" : "horizontal"}`;
   // Rows and columns in grid defaults to 1.
   const configColumns = grid?.columns || 1;
   const configRows = grid?.rows || 1;
@@ -119,7 +119,7 @@ GridGenerationAndSelect.propTypes = {
   selectedData: PropTypes.arrayOf(
     PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
   ).isRequired,
-  layout: PropTypes.string.isRequired,
+  vertical: PropTypes.bool.isRequired,
   // handleInput: PropTypes.func.isRequired,
   regions: PropTypes.arrayOf(
     PropTypes.shape({

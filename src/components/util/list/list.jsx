@@ -84,7 +84,8 @@ function List({
     // params.delete("order");
     // params.append("order", sortBy.order);
     history.replace({ search: params.toString() });
-  }, [searchText, sortBy, currentPage]);
+    handlePageChange(currentPage);
+  });
 
   /**
    * @param {number} nextPage - the next page.

@@ -19,7 +19,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1ScreensQuery,
   useDeleteV1ScreensByIdMutation,
-  useGetV1ScreenGroupsByIdQuery,
+  useGetV1ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated";
 import "./screen-list.scss";
 
@@ -120,8 +120,12 @@ function ScreenList() {
     },
     {
       sort: true,
-      path: "inScreenGroups",
-      content: (data) => ListButton(openInfoModal, [data.inScreenGroups]),
+      content: (data) =>
+        ListButton(
+          openInfoModal,
+          data.inScreenGroups,
+          useGetV1ScreensByIdScreenGroupsQuery
+        ),
       key: "groups",
       label: t("screens-list.columns.on-groups"),
     },
@@ -267,7 +271,7 @@ function ScreenList() {
       />
       <InfoModal
         show={showInfoModal}
-        apiCall={useGetV1ScreenGroupsByIdQuery}
+        apiCall={useGetV1ScreensByIdScreenGroupsQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={inGroups}
         modalTitle={t("screens-list.info-modal.screen-in-groups")}
