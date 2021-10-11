@@ -25,6 +25,7 @@ function ScreensDropdown({
   name,
   errors,
   data,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
 
@@ -41,6 +42,7 @@ function ScreensDropdown({
             name={name}
             isCreatable
             errors={errors}
+            filterCallback={filterCallback}
           />
         </>
       )}

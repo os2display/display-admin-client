@@ -21,7 +21,7 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
 function SelectGroupsTable({ handleChange, name, groupId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const { data: groups } = useGetV1ScreenGroupsQuery({});
+  const { data: groups } = useGetV1ScreenGroupsQuery({ page: 1 });
 
   const {
     data,
@@ -36,7 +36,6 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
    */
   useEffect(() => {
     if (data) {
-      debugger;
       setSelectedData(data["hydra:member"]);
     }
   }, [data]);
@@ -53,6 +52,15 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
     handleChange({
       target: { id, value: value.map((item) => item["@id"]) },
     });
+  }
+
+  /**
+   * Fetches data for the multi component // todo
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
   }
 
   /**
@@ -102,6 +110,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
             data={groups["hydra:member"]}
             handleGroupsSelection={handleAdd}
             selected={selectedData}
+            filterCallback={onFilter}
           />
           {selectedData?.length > 0 && (
             <Table columns={columns} data={selectedData} />

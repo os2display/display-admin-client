@@ -66,7 +66,6 @@ function InfoModal({
    */
   useEffect(() => {
     if (data?.data) {
-      debugger;
       let mappedData = fetchedData || [];
       if (dataKey) {
         mappedData = [

@@ -8,6 +8,8 @@ import MultiSelectComponent from "../multi-dropdown";
  * the props.
  * @param {Function} props.handleGroupsSelection
  * The callback when an option is selected
+ * @param {Function} props.onFilter
+ * The callback for search in the multicomponent
  * @param {Array} props.selected
  * The selected options
  * @param {string} props.name
@@ -25,6 +27,7 @@ function GroupsDropdown({
   name,
   errors,
   data,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
 
@@ -39,6 +42,7 @@ function GroupsDropdown({
             label={t("groups-dropdown.label")}
             selected={selected}
             name={name}
+            filterCallback={filterCallback}
             noSelectedString={t("groups-dropdown.nothing-selected")}
           />
         </>
@@ -53,6 +57,7 @@ GroupsDropdown.defaultProps = {
 
 GroupsDropdown.propTypes = {
   handleGroupsSelection: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,

@@ -25,6 +25,7 @@ function PlaylistsDropdown({
   name,
   errors,
   data,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
   return (
@@ -39,6 +40,7 @@ function PlaylistsDropdown({
             selected={selected}
             name={name}
             errors={errors}
+            filterCallback={filterCallback}
           />
         </>
       )}

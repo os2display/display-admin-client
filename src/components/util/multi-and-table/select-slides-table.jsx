@@ -82,6 +82,15 @@ function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
   }
 
   /**
+   * Fetches data for the multi component // todo
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
+
+  /**
    * Removes playlist from list of groups.
    *
    * @param {object} removeItem
@@ -151,6 +160,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
             handleSlideSelection={handleAdd}
             selected={selectedData}
             data={slides["hydra:member"]}
+            filterCallback={onFilter}
           />
           {selectedData?.length > 0 && (
             <DragAndDropTable

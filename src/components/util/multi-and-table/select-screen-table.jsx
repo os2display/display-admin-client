@@ -84,6 +84,15 @@ function SelectScreenTable({
   }
 
   /**
+   * Fetches data for the multi component // todo
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
+
+  /**
    * Adds screen to list of screens.
    *
    * @param {object} props - the props.
@@ -151,6 +160,7 @@ function SelectScreenTable({
             data={data["hydra:member"]}
             handleScreenSelection={handleAdd}
             selected={selectedData}
+            filterCallback={onFilter}
           />
           {selectedData.length > 0 && (
             <Table columns={columns} data={selectedData} />

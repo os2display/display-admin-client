@@ -98,8 +98,6 @@ function SlideCreate() {
       "@id": formStateObject.templateInfo,
       options: { fade: false },
     };
-    debugger;
-    // formStateObject.published = { from: creationTime, to: creationTime };
     const saveData = { slideSlideInput: JSON.stringify(formStateObject) };
     PostV1Slide(saveData);
     const { onPlaylists } = formStateObject;

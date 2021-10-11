@@ -44,6 +44,15 @@ function SelectPlaylistTable({ handleChange, name }) {
   }
 
   /**
+   * Fetches data for the multi component // todo
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
+
+  /**
    * Adds playlist to list of playlists.
    *
    * @param {object} props - the props.
@@ -77,6 +86,7 @@ function SelectPlaylistTable({ handleChange, name }) {
       {!isLoading && data && data["hydra:member"] && (
         <>
           <PlaylistsDropdown
+            filterCallback={onFilter}
             name={name}
             data={data["hydra:member"]}
             handlePlaylistSelection={handleAdd}

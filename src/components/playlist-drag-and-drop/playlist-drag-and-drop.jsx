@@ -50,6 +50,15 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
   }
 
   /**
+   * Fetches data for the multi component // todo
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
+
+  /**
    * Removes playlist from list of playlists, and closes modal.
    *
    * @param {object} props
@@ -145,6 +154,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
     <>
       <div className="mb-3">
         <PlaylistsDropdown
+          filterCallback={onFilter}
           name={name}
           handlePlaylistSelection={handleChange}
           selected={data}

@@ -50,6 +50,7 @@ function MultiSelectComponent({
   errorText,
   label,
   helpText,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
   const [error, setError] = useState();
@@ -108,6 +109,9 @@ function MultiSelectComponent({
   function filterOptions(optionsToFilter, filter) {
     if (!filter) {
       return optionsToFilter;
+    }
+    if (filter.length > 2) {
+      filterCallback(filter);
     }
     const re = new RegExp(filter, "i");
     return optionsToFilter.filter(

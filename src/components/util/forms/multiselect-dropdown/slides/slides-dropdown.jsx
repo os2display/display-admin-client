@@ -17,6 +17,7 @@ function SlidesDropdown({
   name,
   errors,
   data,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
 
@@ -29,6 +30,7 @@ function SlidesDropdown({
       selected={selected}
       name={name}
       errors={errors}
+      filterCallback={filterCallback}
     />
   );
 }
