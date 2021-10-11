@@ -7,17 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import ContentBody from "../util/content-body/content-body";
-import Select from "../util/forms/select";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
-import {
-  useGetV1LayoutsQuery,
-  useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../redux/api/api.generated";
+import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
+import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import idFromUrl from "../util/helpers/id-from-url";
 import "./screen-form.scss";
 
@@ -48,11 +45,20 @@ function ScreenForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [grid, setGrid] = useState();
+  const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
   });
+
+  /**
+   * Fetches data for the multi component // todo
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
 
   useEffect(() => {
     if (layouts) {
@@ -62,14 +68,28 @@ function ScreenForm({
 
   useEffect(() => {
     if (layoutOptions) {
-      const localGrid = layoutOptions.find(
+      const selectedLayout = layoutOptions.find(
         (layout) => layout["@id"] === screen.layout
       );
-      if (localGrid) {
-        setGrid(localGrid);
+      if (selectedLayout) {
+        setSelectedLayout(selectedLayout);
       }
     }
   }, [screen.layout, layoutOptions]);
+
+  /**
+   * Adds group to list of groups.
+   *
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
+   */
+  function handleAdd({ target }) {
+    const { value, id } = target;
+    setSelectedLayout(value);
+    handleInput({
+      target: { id, value: value.map((item) => item["@id"]).shift() },
+    });
+  }
 
   return (
     <Form>
@@ -175,20 +195,26 @@ function ScreenForm({
             <div className="row">
               {layoutOptions && (
                 <div className="col-md-8">
-                  <Select
-                    name="layout"
-                    onChange={handleInput}
-                    label={t("screen-form.screen-layout-label")}
-                    options={layoutOptions}
-                    value={screen.layout}
-                  />
+                  {selectedLayout && (
+                    <MultiSelectComponent
+                      label={t("screen-form.screen-layout-label")}
+                      noSelectedString={t(
+                        "playlists-dropdown.nothing-selected"
+                      )}
+                      handleSelection={handleAdd}
+                      options={layoutOptions}
+                      selected={[selectedLayout]}
+                      name="layout"
+                      filterCallback={onFilter}
+                    />
+                  )}
                 </div>
               )}
-              {grid?.grid && (
+              {selectedLayout?.grid && (
                 <GridGenerationAndSelect
-                  grid={grid?.grid}
+                  grid={selectedLayout?.grid}
                   vertical={screen.dimensions.height > screen.dimensions.width}
-                  regions={grid.regions}
+                  regions={selectedLayout.regions}
                   handleInput={handleInput}
                   selectedData={screen.layout}
                 />

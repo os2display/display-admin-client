@@ -19,8 +19,6 @@ import contentString from "../../helpers/content-string";
  * The callback when an option is selected
  * @param {Array} props.selected
  * The selected options
- * @param {boolean} props.isCreatable
- * Whether the multi dropdown can create new options.
  * @param {string} props.name
  * The id of the form element
  * @param {boolean} props.isLoading
@@ -42,7 +40,6 @@ function MultiSelectComponent({
   options,
   handleSelection,
   selected,
-  isCreatable,
   name,
   isLoading,
   noSelectedString,
@@ -51,6 +48,7 @@ function MultiSelectComponent({
   label,
   helpText,
   filterCallback,
+  singleSelect,
 }) {
   const { t } = useTranslation("common");
   const [error, setError] = useState();
@@ -126,10 +124,8 @@ function MultiSelectComponent({
    */
   function changeData(data) {
     const ids = data.map(({ value }) => value);
-    const dataToReturn = options.filter((option) =>
-      ids.includes(option["@id"])
-    );
-    const selectedOptions = Object.values(
+
+    let selectedOptions = Object.values(
       [...selected, ...options]
         .filter((option) => ids.includes(option["@id"]))
         .reduce((a, c) => {
@@ -138,11 +134,11 @@ function MultiSelectComponent({
           return aCopy;
         }, {})
     );
-    // eslint-disable-next-line no-underscore-dangle
-    const newData = data.filter(({ __isNew__ }) => __isNew__);
-    if (newData.length > 0) {
-      dataToReturn.unshift(newData);
+
+    if (singleSelect) {
+      selectedOptions = [selectedOptions[selectedOptions.length - 1]];
     }
+
     const target = { value: selectedOptions, id: name };
     handleSelection({ target });
   }
@@ -167,9 +163,10 @@ function MultiSelectComponent({
         <div className={`mb-3 ${error ? "invalid" : ""}`}>
           <Form.Label htmlFor={name}>{label}</Form.Label>
           <MultiSelect
-            isCreatable={isCreatable}
+            isCreatable={false}
             options={mappedOptions}
             value={mappedSelected}
+            hasSelectAll={false}
             filterOptions={filterOptions}
             onChange={changeData}
             id={name}
@@ -186,7 +183,6 @@ function MultiSelectComponent({
 }
 
 MultiSelectComponent.defaultProps = {
-  isCreatable: false,
   noSelectedString: null,
   isLoading: false,
   errors: [],
@@ -194,6 +190,7 @@ MultiSelectComponent.defaultProps = {
   helpText: null,
   selected: [],
   options: [],
+  singleSelect: true,
 };
 
 MultiSelectComponent.propTypes = {
@@ -212,7 +209,6 @@ MultiSelectComponent.propTypes = {
       disabled: PropTypes.bool,
     })
   ),
-  isCreatable: PropTypes.bool,
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
@@ -220,6 +216,7 @@ MultiSelectComponent.propTypes = {
   errorText: PropTypes.string,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
+  singleSelect: PropTypes.bool,
 };
 
 export default MultiSelectComponent;

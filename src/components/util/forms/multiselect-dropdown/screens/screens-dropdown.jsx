@@ -40,7 +40,6 @@ function ScreensDropdown({
             noSelectedString={t("screens-dropdown.nothing-selected")}
             selected={selected}
             name={name}
-            isCreatable
             errors={errors}
             filterCallback={filterCallback}
           />
