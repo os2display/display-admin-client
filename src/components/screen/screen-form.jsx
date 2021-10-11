@@ -44,6 +44,7 @@ function ScreenForm({
   isSaveSuccess,
   isLoading,
   errors,
+  groupId,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
@@ -52,23 +53,6 @@ function ScreenForm({
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
   });
-
-  const [selectedGroups, setSelectedGroups] = useState([]);
-  const {
-    data,
-    error: loadSelectedGroupsError,
-    isLoading: isLoadingSelectedGroups,
-  } = useGetV1ScreensByIdScreenGroupsQuery({
-    id: idFromUrl(screen.inScreenGroups),
-  });
-  /**
-   * Map loaded data.
-   */
-  useEffect(() => {
-    if (data && !Array.isArray(screen.inScreenGroups)) {
-      setSelectedGroups(data["hydra:member"]);
-    }
-  }, [data]);
 
   useEffect(() => {
     if (layouts) {
@@ -127,13 +111,11 @@ function ScreenForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("screen-form.screen-groups")}</h2>
-            {!isLoadingSelectedGroups && selectedGroups && (
-              <SelectGroupsTable
-                handleChange={handleInput}
-                name="inScreenGroups"
-                selectedGroups={selectedGroups}
-              />
-            )}
+            <SelectGroupsTable
+              handleChange={handleInput}
+              name="inScreenGroups"
+              groupId={groupId}
+            />
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("screen-form.screen-location")}</h2>
@@ -236,10 +218,7 @@ function ScreenForm({
           {t("screen-form.save-button")}
         </Button>
         <Toast show={isSaveSuccess} text={t("screen-form.saved")} />
-        <Toast
-          show={errors || loadSelectedGroupsError}
-          text={t("screen-form.error")}
-        />
+        <Toast show={errors} text={t("screen-form.error")} />
       </ContentFooter>
     </Form>
   );

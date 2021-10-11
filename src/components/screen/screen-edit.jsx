@@ -19,6 +19,7 @@ function ScreenEdit() {
   const { t } = useTranslation("common");
   const headerText = t("screen-edit.edit-screen-header");
   const [formStateObject, setFormStateObject] = useState();
+  const [groupId, setGroupId] = useState();
   const [groupsToAdd, setGroupsToAdd] = useState();
   const { id } = useParams();
   const [
@@ -40,6 +41,15 @@ function ScreenEdit() {
     error: loadError,
     isLoading: isLoadingScreen,
   } = useGetV1ScreensByIdQuery({ id });
+
+  /**
+   * Set loaded data into form state.
+   */
+  useEffect(() => {
+    if (formStateObject && !groupId) {
+      setGroupId(idFromUrl(formStateObject.inScreenGroups));
+    }
+  }, [formStateObject]);
 
   /**
    * Set loaded data into form state.
@@ -91,7 +101,7 @@ function ScreenEdit() {
 
   return (
     <>
-      {formStateObject && (
+      {formStateObject && groupId && (
         <ScreenForm
           screen={formStateObject}
           headerText={headerText}
@@ -101,6 +111,7 @@ function ScreenEdit() {
           isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
           isSaving={isSaving || isSavingGroups}
           errors={saveError || loadError || saveErrorGroups || false}
+          groupId={groupId}
         />
       )}
     </>

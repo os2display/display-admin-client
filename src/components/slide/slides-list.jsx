@@ -175,6 +175,7 @@ function SlidesList() {
    * @param {number} pageNumber - the next page.
    */
   function onChangePage(pageNumber) {
+    console.log("sdf");
     setPage(pageNumber);
   }
 
@@ -199,7 +200,7 @@ function SlidesList() {
     error: slidesGetError,
     isLoading,
   } = useGetV1SlidesQuery({
-    page,
+    page: page,
   });
 
   return (
@@ -217,7 +218,7 @@ function SlidesList() {
             columns={columns}
             totalItems={data["hydra:totalItems"]}
             currentPage={page}
-            handlePageChange={onChangePage}
+            handlePageChange={() => onChangePage()}
             selectedRows={selectedRows}
             data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}

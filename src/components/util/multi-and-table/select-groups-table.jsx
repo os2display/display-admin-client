@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
-import { useGetV1ScreenGroupsQuery } from "../../../redux/api/api.generated";
+import {
+  useGetV1ScreenGroupsQuery,
+  useGetV1ScreensByIdScreenGroupsQuery,
+} from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 /**
  * A multiselect and table for groups.
@@ -15,14 +18,27 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
  * @returns {object}
  * An input.
  */
-function SelectGroupsTable({ handleChange, name, selectedGroups }) {
+function SelectGroupsTable({ handleChange, name, groupId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
   const { data: groups } = useGetV1ScreenGroupsQuery({});
 
+  const {
+    data,
+    error: loadSelectedGroupsError,
+    isLoading: isLoadingSelectedGroups,
+  } = useGetV1ScreensByIdScreenGroupsQuery({
+    id: groupId,
+  });
+
+  /**
+   * Map loaded data.
+   */
   useEffect(() => {
-    setSelectedData(selectedGroups);
-  }, [selectedGroups]);
+    if (data) {
+      setSelectedData(data["hydra:member"]);
+    }
+  }, [data]);
 
   /**
    * Adds group to list of groups.
