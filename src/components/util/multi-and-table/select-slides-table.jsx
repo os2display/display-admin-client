@@ -25,16 +25,30 @@ import {
  * @returns {object}
  * An input.
  */
-function SelectSlidesTable({ handleChange, name, selectedSlides }) {
+function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
   const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: slides } = useGetV1SlidesQuery({});
+  const {
+    data,
+    error: loadSelectedSlidesError,
+    isLoading: isLoadingSelectedSlides,
+  } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
+  /**
+   * Map loaded data.
+   */
   useEffect(() => {
-    setSelectedData(selectedSlides);
-  }, [selectedSlides]);
+    if (data) {
+      setSelectedData(
+        data["hydra:member"].map(({ slide }) => {
+          return slide;
+        })
+      );
+    }
+  }, [data]);
 
   /**
    * Adds group to list of groups.

@@ -9,7 +9,7 @@ import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import Toast from "../util/toast/toast";
-import { useGetV1PlaylistsByIdSlidesQuery } from "../../redux/api/api.generated";
+
 // import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 // import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
@@ -38,27 +38,10 @@ function PlaylistForm({
   isSaveSuccess,
   isLoading,
   errors,
+  slideId,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [selectedSlides, setSelectedSlides] = useState([]);
-  const {
-    data,
-    error: loadSelectedSlidesError,
-    isLoading: isLoadingSelectedSlides,
-  } = useGetV1PlaylistsByIdSlidesQuery({ id: idFromUrl(playlist.slides) });
-
-  /**
-   * Map loaded data.
-   */
-  useEffect(() => {
-    if (data && !Array.isArray(playlist.slides)) {
-      const originallySelectedSlides = data["hydra:member"].map(({ slide }) => {
-        return slide;
-      });
-      setSelectedSlides(originallySelectedSlides);
-    }
-  }, [data]);
 
   return (
     <Form>
@@ -99,13 +82,11 @@ function PlaylistForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("edit-playlist.title-slides")}</h2>
-            {!isLoadingSelectedSlides && selectedSlides && (
-              <SelectSlidesTable
-                handleChange={handleInput}
-                name="slides"
-                selectedSlides={selectedSlides}
-              />
-            )}
+            <SelectSlidesTable
+              handleChange={handleInput}
+              name="slides"
+              slideId={slideId}
+            />
           </ContentBody>
           <ContentFooter>
             <Button
@@ -143,10 +124,7 @@ function PlaylistForm({
               </>
             </Button>
             <Toast show={isSaveSuccess} text={t("edit-playlist.saved")} />
-            <Toast
-              show={errors || loadSelectedSlidesError}
-              text={t("edit-playlist.error")}
-            />
+            <Toast show={errors} text={t("edit-playlist.error")} />
           </ContentFooter>
         </>
       )}

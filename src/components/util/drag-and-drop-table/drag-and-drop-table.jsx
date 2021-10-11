@@ -116,7 +116,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
                 <>
                   {data.map((item, index) => (
                     <Draggable
-                      key={item.id}
+                      key={item["@id"]}
                       draggableId={item.title}
                       index={index}
                     >
