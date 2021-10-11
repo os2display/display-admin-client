@@ -53,7 +53,7 @@ function SelectPlaylistTable({ handleChange, name }) {
     const { value, id } = target;
     setSelectedData(value);
     handleChange({
-      target: { name: id, value: value.map((item) => item["@id"]) },
+      target: { id: id, value: value.map((item) => item["@id"]) },
     });
   }
 

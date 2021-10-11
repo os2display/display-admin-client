@@ -127,14 +127,14 @@ function SlideForm({
             </ContentBody>
           )}
           <ContentBody>
-            <h3 className="h4">
+            {/* <h3 className="h4">
               {t("slide-form.slide-select-playlist-title")}
             </h3>
             <SelectPlaylistTable
               handleChange={handleInput}
               name="onPlaylists"
               selectedDataEndpoint={slide.onPlaylists}
-            />
+            /> */}
           </ContentBody>
           <ContentBody>
             <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>

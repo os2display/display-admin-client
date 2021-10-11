@@ -5,6 +5,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import {
   usePostV1SlidesMutation,
   usePutV1PlaylistsByIdSlideAndSlideIdMutation,
+  usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 
@@ -28,13 +29,13 @@ function SlideCreate() {
   });
 
   const [
-    PutV1PlaylistsByIdSlideAndSlide,
+    PutV1PlaylistsByIdSlides,
     {
       isLoading: isSavingPlaylists,
       error: savePlaylistError,
       isSuccess: savePlaylistSuccess,
     },
-  ] = usePutV1PlaylistsByIdSlideAndSlideIdMutation();
+  ] = usePutV1PlaylistsByIdSlidesMutation();
 
   const [
     PostV1Slide,
@@ -47,24 +48,16 @@ function SlideCreate() {
   ] = usePostV1SlidesMutation();
 
   /**
-   * When the slide is saved, the playlist(s) will be saved.
-   * When saved, it redirects to edit slide.
+   * When the slide is saved, the playlists will be saved.
    */
   useEffect(() => {
-    if (isSaveSuccess && data) {
-      if (playlistsToAdd.length > 0) {
-        // remove first element for saving
-        const toAdd = playlistsToAdd.splice(0, 1).shift();
-        const toAddId = idFromUrl(toAdd);
-        PutV1PlaylistsByIdSlideAndSlide({
-          id: toAddId,
-          slideId: idFromUrl(data["@id"]),
-        });
-      } else {
-        history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
-      }
+    if (isSaveSuccess) {
+      PutV1PlaylistsByIdSlides({
+        id,
+        body: JSON.stringify(playlistsToAdd),
+      });
     }
-  }, [isSaveSuccess, savePlaylistSuccess]);
+  }, [isSaveSuccess]);
 
   /**
    * Set state on change in input field
@@ -76,16 +69,6 @@ function SlideCreate() {
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
-  }
-
-  /**
-   * Set playlist to save state
-   */
-  function handleSavePlaylists() {
-    const { onPlaylists } = formStateObject;
-    if (onPlaylists) {
-      setPlaylistsToAdd(onPlaylists);
-    }
   }
 
   /**
@@ -101,7 +84,10 @@ function SlideCreate() {
     // formStateObject.published = { from: creationTime, to: creationTime };
     const saveData = { slideSlideInput: JSON.stringify(formStateObject) };
     PostV1Slide(saveData);
-    handleSavePlaylists();
+    const { onPlaylists } = formStateObject;
+    if (Array.isArray(onPlaylists)) {
+      setPlaylistsToAdd(onPlaylists);
+    }
   }
 
   return (
@@ -111,7 +97,7 @@ function SlideCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={false}
-      isSaveSuccess={isSaveSuccess}
+      isSaveSuccess={isSaveSuccess || savePlaylistSuccess}
       isSaving={isSavingPlaylists || isSavingSlide}
       errors={saveError || savePlaylistError || false}
     />
