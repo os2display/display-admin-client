@@ -99,7 +99,7 @@ function PlaylistForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("edit-playlist.title-slides")}</h2>
-            {selectedSlides && (
+            {!isLoadingSelectedSlides && selectedSlides && (
               <SelectSlidesTable
                 handleChange={handleInput}
                 name="slides"
@@ -143,7 +143,10 @@ function PlaylistForm({
               </>
             </Button>
             <Toast show={isSaveSuccess} text={t("edit-playlist.saved")} />
-            <Toast show={errors} text={t("edit-playlist.error")} />
+            <Toast
+              show={errors || loadSelectedSlidesError}
+              text={t("edit-playlist.error")}
+            />
           </ContentFooter>
         </>
       )}

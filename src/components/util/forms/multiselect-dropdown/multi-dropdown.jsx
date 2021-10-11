@@ -55,7 +55,6 @@ function MultiSelectComponent({
   const [error, setError] = useState();
   const [mappedOptions, setMappedOptions] = useState();
   const [mappedSelected, setMappedSelected] = useState();
-  const [localOptions, setLocalOptions] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
   const nothingSelectedLabel =
     noSelectedString || t("multi-dropdown.nothing-selected");
@@ -86,12 +85,12 @@ function MultiSelectComponent({
     });
     const optionsWithSelected = Object.values(
       [...localMappedOptions, ...localMappedSelected].reduce((a, c) => {
-        a[c.value] = c;
-        return a;
+        const aCopy = { ...a };
+        aCopy[c.value] = c;
+        return aCopy;
       }, {})
     );
     setMappedOptions(optionsWithSelected);
-    setLocalOptions(optionsWithSelected);
     setMappedSelected(localMappedSelected);
   }, [selected, selected.length]);
 
@@ -130,8 +129,9 @@ function MultiSelectComponent({
       [...selected, ...options]
         .filter((option) => ids.includes(option["@id"]))
         .reduce((a, c) => {
-          a[c["@id"]] = c;
-          return a;
+          const aCopy = { ...a };
+          aCopy[c["@id"]] = c;
+          return aCopy;
         }, {})
     );
     // eslint-disable-next-line no-underscore-dangle

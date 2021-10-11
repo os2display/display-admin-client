@@ -33,7 +33,6 @@ function PlaylistList() {
   const [playlistsToDelete, setPlaylistsToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
   const [DeleteV1Playlists, { isSuccess: isDeleteSuccess }] =
     useDeleteV1PlaylistsByIdMutation();
 
@@ -74,7 +73,6 @@ function PlaylistList() {
    */
   function onCloseInfoModal() {
     setShowInfoModal(false);
-    setDataStructureToDisplay();
   }
 
   /**
@@ -154,6 +152,13 @@ function PlaylistList() {
   ];
 
   /**
+   * Clears the selected rows.
+   */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
+  /**
    * Deletes playlist(s), and closes modal.
    */
   function handleDelete() {
@@ -168,13 +173,6 @@ function PlaylistList() {
   function onCloseModal() {
     setSelectedRows([]);
     setShowDeleteModal(false);
-  }
-
-  /**
-   * Clears the selected rows.
-   */
-  function clearSelectedRows() {
-    setSelectedRows([]);
   }
 
   const {

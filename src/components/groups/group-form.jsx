@@ -35,24 +35,6 @@ function GroupForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [selectedGroups, setSelectedGroups] = useState([]);
-  const {
-    data,
-    error: loadSelectedGroupsError,
-    isLoading: isLoadingSelectedGroups,
-  } = useGetV1PlaylistsByIdSlidesQuery({ id: idFromUrl(playlist.slides) });
-
-  /**
-   * Map loaded data.
-   */
-  useEffect(() => {
-    if (data && !Array.isArray(playlist.slides)) {
-      const originallySelectedSlides = data["hydra:member"].map(({ slide }) => {
-        return slide;
-      });
-      setSelectedSlides(originallySelectedSlides);
-    }
-  }, [data]);
 
   return (
     <Form>

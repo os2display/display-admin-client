@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
@@ -13,8 +13,6 @@ import { useGetV1PlaylistsQuery } from "../../../redux/api/api.generated";
  * the props.
  * @param {string} props.name
  * The name for the input
- * @param {Array} props.errors
- * A list of errors, or null.
  * @returns {object}
  * An input.
  */
@@ -79,7 +77,6 @@ function SelectPlaylistTable({ handleChange, name }) {
       {!isLoading && data && data["hydra:member"] && (
         <>
           <PlaylistsDropdown
-            errors={errors}
             name={name}
             data={data["hydra:member"]}
             handlePlaylistSelection={handleAdd}
@@ -100,16 +97,9 @@ function SelectPlaylistTable({ handleChange, name }) {
   );
 }
 
-SelectPlaylistTable.defaultProps = {
-  errors: [],
-  selectedDataEndpoint: [],
-};
-
 SelectPlaylistTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedDataEndpoint: PropTypes.arrayOf(PropTypes.string),
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default SelectPlaylistTable;

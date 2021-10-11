@@ -177,12 +177,12 @@ function ThemesList() {
         handleAccept={handleDelete}
         selectedRows={selectedRows}
       />
-      <InfoModal
+      {/* <InfoModal
         show={showInfoModal}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={dataStructureToDisplay}
         modalTitle={infoModalTitle}
-      />
+      /> */}
     </>
   );
 }

@@ -30,11 +30,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
   const [selectedData, setSelectedData] = useState();
   const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const {
-    data: slides,
-    error: loadSlidesError,
-    isLoading: isLoadingSlides,
-  } = useGetV1SlidesQuery({});
+  const { data: slides } = useGetV1SlidesQuery({});
 
   useEffect(() => {
     setSelectedData(selectedSlides);
@@ -164,14 +160,10 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
   );
 }
 
-SelectSlidesTable.defaultProps = {
-  selectedDataEndpoint: [],
-};
-
 SelectSlidesTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedDataEndpoint: PropTypes.arrayOf(PropTypes.string),
   handleChange: PropTypes.func.isRequired,
+  selectedSlides: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default SelectSlidesTable;

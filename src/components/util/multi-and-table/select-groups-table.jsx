@@ -12,19 +12,13 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
  * the props.
  * @param {string} props.name
  * The name for the input
- * @param {Array} props.errors
- * A list of errors, or null.
  * @returns {object}
  * An input.
  */
 function SelectGroupsTable({ handleChange, name, selectedGroups }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const {
-    data: groups,
-    error: loadGroupsError,
-    isLoading: isLoadingGroups,
-  } = useGetV1ScreenGroupsQuery({});
+  const { data: groups } = useGetV1ScreenGroupsQuery({});
 
   useEffect(() => {
     setSelectedData(selectedGroups);
@@ -101,16 +95,10 @@ function SelectGroupsTable({ handleChange, name, selectedGroups }) {
   );
 }
 
-SelectGroupsTable.defaultProps = {
-  errors: [],
-  selectedDataEndpoint: [],
-};
-
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,
-  selectedDataEndpoint: PropTypes.arrayOf(PropTypes.string),
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string),
+  selectedGroups: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default SelectGroupsTable;

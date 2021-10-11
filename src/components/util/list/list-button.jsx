@@ -2,14 +2,10 @@ import { React, useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import idFromUrl from "../helpers/id-from-url";
 /**
- * @param {Function} callback
- * The callback function
- * @param {object} data
- * The data for callback
- * @param inputData
- * @param apiCall
- * @returns {object}
- * The list button.
+ * @param {Function} callback - The callback function
+ * @param  {object} inputData - The data for callback
+ * @param {Function} apiCall - The api to call
+ * @returns {object} - The list button.
  */
 function ListButton(callback, inputData, apiCall) {
   const [label, setLabel] = useState("");

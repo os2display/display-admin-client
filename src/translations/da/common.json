@@ -124,7 +124,8 @@
     "edit-button": "Rediger"
   },
   "toast": {
-    "title": "Obs"
+    "title": "Obs",
+    "button-label": "Luk denne dialog"
   },
   "media-list": {
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",

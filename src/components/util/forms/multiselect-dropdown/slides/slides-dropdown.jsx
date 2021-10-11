@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
-import { useGetV1SlidesQuery } from "../../../../../redux/api/api.generated";
 /**
- * @param {object} props
- * the props.
- * @param {Function} props.handleSlideSelection
- * The callback when an option is selected
- * @param {Array} props.selected
- * The selected options
- * @param {string} props.name
- * The id of the form element
- * @param {Array} props.errors
- * A list of errors, or null.
- * @param props.data
- * @returns {object}
- * The multidropdown of playlists.
+ * @param {object} props - the props.
+ * @param {Function} props.handleSlideSelection - The callback when an option is selected
+ * @param {Array} props.selected - The selected options
+ * @param {string} props.name - The id of the form element
+ * @param {Array} props.errors - A list of errors, or null.
+ * @param {object} props.data - The data for the slides dropdown.
+ * @returns {object} - The multidropdown of playlists.
  */
 function SlidesDropdown({
   handleSlideSelection,
@@ -56,6 +49,7 @@ SlidesDropdown.propTypes = {
   ),
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default SlidesDropdown;

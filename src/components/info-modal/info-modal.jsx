@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import PropTypes, { array } from "prop-types";
+import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 import { Button } from "react-bootstrap";
@@ -21,7 +21,8 @@ import idFromUrl from "../util/helpers/id-from-url";
  * The playlists to list.
  * @param {string} props.modalTitle
  * The info modal string.
- * @param props.dataKey
+ * @param {string} props.dataKey
+ * The data key for mapping the data.
  * @returns {object}
  * The modal.
  */
@@ -124,6 +125,7 @@ function InfoModal({
 }
 InfoModal.defaultProps = {
   dataStructureToDisplay: [],
+  dataKey: "",
 };
 
 InfoModal.propTypes = {
@@ -132,6 +134,7 @@ InfoModal.propTypes = {
   apiCall: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   modalTitle: PropTypes.string.isRequired,
+  dataKey: PropTypes.string,
 };
 
 export default InfoModal;

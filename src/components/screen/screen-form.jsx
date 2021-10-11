@@ -127,7 +127,7 @@ function ScreenForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("screen-form.screen-groups")}</h2>
-            {selectedGroups && (
+            {!isLoadingSelectedGroups && selectedGroups && (
               <SelectGroupsTable
                 handleChange={handleInput}
                 name="inScreenGroups"
@@ -236,7 +236,10 @@ function ScreenForm({
           {t("screen-form.save-button")}
         </Button>
         <Toast show={isSaveSuccess} text={t("screen-form.saved")} />
-        <Toast show={errors} text={t("screen-form.error")} />
+        <Toast
+          show={errors || loadSelectedGroupsError}
+          text={t("screen-form.error")}
+        />
       </ContentFooter>
     </Form>
   );

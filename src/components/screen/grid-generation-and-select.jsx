@@ -18,7 +18,7 @@ import "./grid.scss";
  * The selected data for the multidropdown.
  * @param {object} props.regions
  * The regions in the grid.
- * @param {bool} props.vertical
+ * @param {boolean} props.vertical
  * True if the screen is vertical
  * @returns {object}
  * The component.
