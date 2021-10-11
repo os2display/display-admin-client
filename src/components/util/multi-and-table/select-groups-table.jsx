@@ -36,6 +36,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
    */
   useEffect(() => {
     if (data) {
+      debugger;
       setSelectedData(data["hydra:member"]);
     }
   }, [data]);

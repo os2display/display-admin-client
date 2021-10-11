@@ -8,6 +8,7 @@ import idFromUrl from "../helpers/id-from-url";
  * @returns {object} - The list button.
  */
 function ListButton(callback, inputData, apiCall) {
+  console.log(idFromUrl(inputData));
   const [label, setLabel] = useState("");
   let data;
   if (!Array.isArray(inputData)) {

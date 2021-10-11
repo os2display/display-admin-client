@@ -61,9 +61,9 @@ function App() {
                   <Route path="/screen/list" component={ScreenList} />
                   <Route path="/screen/create" component={ScreenCreate} />
                   <Route path="/screen/edit/:id" component={ScreenEdit} />
-                  <Route path="/groups" component={GroupsList} />
-                  <Route path="/groups/edit/:id" component={GroupEdit} />
-                  <Route path="/groups/create" component={GroupCreate} />
+                  <Route path="/group/list" component={GroupsList} />
+                  <Route path="/group/edit/:id" component={GroupEdit} />
+                  <Route path="/group/create" component={GroupCreate} />
                   <Route path="/slide/list" component={SlidesList} />
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
