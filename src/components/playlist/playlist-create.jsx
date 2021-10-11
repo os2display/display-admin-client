@@ -79,7 +79,7 @@ function PlaylistCreate() {
   }, [isSaveSuccess]);
 
   /**
-   *
+   * Sets slides to save.
    */
   function handleSaveSlides() {
     const { slides } = formStateObject;
