@@ -33,8 +33,6 @@ function SlideEdit() {
     if (data) {
       const dataCopy = { ...data };
       dataCopy.templateInfo = dataCopy.templateInfo["@id"];
-      console.log(dataCopy);
-
       setFormStateObject(dataCopy);
     }
   }, [data]);
