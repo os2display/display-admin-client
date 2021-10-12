@@ -16,6 +16,7 @@ import MultiSelectComponent from "../multi-dropdown";
  * A list of errors, or null.
  * @param {Array} props.data
  * The data for options.
+ * @param props.filterCallback
  * @returns {object}
  * The multidropdown of playlists.
  */

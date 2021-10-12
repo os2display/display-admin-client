@@ -76,7 +76,7 @@ function SlideEdit() {
    */
   function handleSubmit() {
     const saveData = {
-      id: id,
+      id,
       slideSlideInput: JSON.stringify({
         ...formStateObject,
         templateInfo: {

@@ -154,6 +154,7 @@ function SlideForm({
                 selected={selectedTemplate}
                 name="templateInfo"
                 filterCallback={onFilter}
+                singleSelect
               />
             </ContentBody>
           )}

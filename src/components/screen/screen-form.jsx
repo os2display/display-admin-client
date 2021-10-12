@@ -30,6 +30,7 @@ import "./screen-form.scss";
  * @param {boolean|null} props.isSaveSuccess - isSaveSuccess Is the save a success?
  * @param {boolean|null} props.isLoading - isLoading The data is loading.
  * @param {Array} props.errors - errors Array of errors.
+ * @param props.groupId
  * @returns {object} The screen form.
  */
 function ScreenForm({
@@ -203,6 +204,7 @@ function ScreenForm({
                     selected={selectedLayout}
                     name="layout"
                     filterCallback={onFilter}
+                    singleSelect
                   />
                 </div>
               )}

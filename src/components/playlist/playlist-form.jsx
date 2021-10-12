@@ -27,6 +27,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {boolean|null} props.isSaveSuccess Is the save a success?
  * @param {boolean|null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
+ * @param props.slideId
  * @returns {object} The playlist form.
  */
 function PlaylistForm({

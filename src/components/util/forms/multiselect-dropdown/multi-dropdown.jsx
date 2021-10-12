@@ -33,6 +33,8 @@ import contentString from "../../helpers/content-string";
  * The input label
  * @param {string} props.helpText
  * Help text for the dropdown.
+ * @param props.filterCallback
+ * @param props.singleSelect
  * @returns {object}
  * The multidropdown
  */
@@ -190,7 +192,7 @@ MultiSelectComponent.defaultProps = {
   helpText: null,
   selected: [],
   options: [],
-  singleSelect: true,
+  singleSelect: false,
 };
 
 MultiSelectComponent.propTypes = {
