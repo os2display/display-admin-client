@@ -175,7 +175,6 @@ function SlidesList() {
    * @param {number} pageNumber - the next page.
    */
   function onChangePage(pageNumber) {
-    console.log("sdf");
     setPage(pageNumber);
   }
 
