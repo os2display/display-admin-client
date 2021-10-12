@@ -6,12 +6,11 @@ import MultiSelectComponent from "../multi-dropdown";
 /**
  * @param {object} props - the props.
  * @param {Function} props.handleGroupsSelection - the callback when an option is selected
- * @param {Function} props.onFilter - the callback for search in the multicomponent
+ * @param {Function} props.filterCallback - the callback for search in the multicomponent
  * @param {Array} props.selected - the selected options
  * @param {string} props.name - the id of the form element
  * @param {Array} props.errors - a list of errors, or null.
  * @param {Array} props.data - the data for options.
- * @param {Function} props.filterCallback - the callback on search filter.
  * @returns {object} - the multidropdown of groups.
  */
 function GroupsDropdown({

@@ -1,12 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import idFromUrl from "../util/helpers/id-from-url";
 import set from "lodash.set";
-import {
-  usePostV1SlidesMutation,
-  usePutV1PlaylistsByIdSlidesMutation,
-} from "../../redux/api/api.generated";
+import idFromUrl from "../util/helpers/id-from-url";
+import { usePostV1SlidesMutation } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 
 /**
@@ -66,24 +63,24 @@ function SlideCreate() {
    * Handles submit.
    */
   function handleSubmit() {
-    let data = {
-      title: formStateObject.title,
-      description: formStateObject.description,
-      modifiedBy: formStateObject.modifiedBy,
-      published: {
-        from: "2021-11-17T06:15:04Z", // Todo
-        to: "2021-04-29T09:54:10Z", // Todo
-      },
-      createdBy: formStateObject.createdBy,
-      templateInfo: {
-        "@id": formStateObject.templateInfo,
-        options: { fade: false },
-      },
-      duration: 38823,
-      content: { text: formStateObject.content.text },
+    const saveData = {
+      slideSlideInput: JSON.stringify({
+        title: formStateObject.title,
+        description: formStateObject.description,
+        modifiedBy: formStateObject.modifiedBy,
+        published: {
+          from: "2021-11-17T06:15:04Z", // Todo
+          to: "2021-04-29T09:54:10Z", // Todo
+        },
+        createdBy: formStateObject.createdBy,
+        templateInfo: {
+          "@id": formStateObject.templateInfo,
+          options: { fade: false },
+        },
+        duration: 38823,
+        content: { text: formStateObject.content.text },
+      }),
     };
-    debugger;
-    const saveData = { slideSlideInput: JSON.stringify(data) };
     PostV1Slide(saveData);
   }
 

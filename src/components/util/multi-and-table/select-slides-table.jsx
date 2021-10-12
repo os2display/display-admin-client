@@ -177,7 +177,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   );
 }
 
-SelectSlidesTable.propTypes = {
+SelectSlidesTable.defaultProps = {
   slideId: "",
 };
 

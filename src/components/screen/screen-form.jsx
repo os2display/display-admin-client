@@ -68,7 +68,7 @@ function ScreenForm({
 
   useEffect(() => {
     if (layoutOptions) {
-      let localSelectedLayout = layoutOptions.find(
+      const localSelectedLayout = layoutOptions.find(
         (layout) => layout["@id"] === screen.layout
       );
       if (localSelectedLayout) {

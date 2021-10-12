@@ -56,22 +56,20 @@ function SlideEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    let data = {
-      title: formStateObject.title,
-      description: formStateObject.description,
-      modifiedBy: formStateObject.modifiedBy,
-      createdBy: formStateObject.createdBy,
-      templateInfo: {
-        "@id": formStateObject.templateInfo,
-        options: { fade: false },
-      },
-      duration: 38823,
-      content: { text: formStateObject.content.text },
-    };
-    debugger;
     const saveData = {
       id,
-      slideSlideInput: JSON.stringify(data),
+      slideSlideInput: JSON.stringify({
+        title: formStateObject.title,
+        description: formStateObject.description,
+        modifiedBy: formStateObject.modifiedBy,
+        createdBy: formStateObject.createdBy,
+        templateInfo: {
+          "@id": formStateObject.templateInfo,
+          options: { fade: false },
+        },
+        duration: 38823,
+        content: { text: formStateObject.content.text },
+      }),
     };
     PutV1Slides(saveData);
   }
