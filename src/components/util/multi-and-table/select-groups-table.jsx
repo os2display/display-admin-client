@@ -23,11 +23,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   const [selectedData, setSelectedData] = useState();
   const { data: groups } = useGetV1ScreenGroupsQuery({ page: 1 });
 
-  const {
-    data,
-    error: loadSelectedGroupsError,
-    isLoading: isLoadingSelectedGroups,
-  } = useGetV1ScreensByIdScreenGroupsQuery({
+  const { data } = useGetV1ScreensByIdScreenGroupsQuery({
     id: groupId,
   });
 
@@ -121,10 +117,14 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   );
 }
 
+SelectGroupsTable.defaultProps = {
+  groupId: "",
+};
+
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  selectedGroups: PropTypes.arrayOf(PropTypes.any).isRequired,
+  groupId: PropTypes.string,
 };
 
 export default SelectGroupsTable;

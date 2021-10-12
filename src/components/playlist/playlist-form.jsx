@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import { Button, Form } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
@@ -9,11 +9,9 @@ import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import Toast from "../util/toast/toast";
-
 // import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 // import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
-import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The playlist form component.
@@ -27,7 +25,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {boolean|null} props.isSaveSuccess Is the save a success?
  * @param {boolean|null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
- * @param props.slideId
+ * @param {string} props.slideId - the id of the slide.
  * @returns {object} The playlist form.
  */
 function PlaylistForm({
@@ -132,13 +130,14 @@ function PlaylistForm({
     </Form>
   );
 }
-
+PlaylistForm.defaultProps = { slideId: "" };
 PlaylistForm.propTypes = {
   playlist: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
+  slideId: PropTypes.string,
   isSaveSuccess: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   errors: PropTypes.arrayOf(PropTypes.any).isRequired,

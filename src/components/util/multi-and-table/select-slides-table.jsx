@@ -16,26 +16,19 @@ import {
 /**
  * A multiselect and table for slides.
  *
- * @param {string} props
- * the props.
- * @param {string} props.name
- * The name for the input
- * @param {string} props.selectedData
- * The data for the multidropdown.
- * @returns {object}
- * An input.
+ * @param {string} props - the props.
+ * @param {Function} props.handleChange - the callback on change.
+ * @param {string} props.name - the name for the input
+ * @param {string} props.slideId - the slide id.
+ * @returns {object} - A select slides table.
  */
-function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
+function SelectSlidesTable({ handleChange, name, slideId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
   const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: slides } = useGetV1SlidesQuery({});
-  const {
-    data,
-    error: loadSelectedSlidesError,
-    isLoading: isLoadingSelectedSlides,
-  } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
+  const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
   /**
    * Map loaded data.
@@ -119,7 +112,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
       label: t("select-slides-table.columns.name"),
     },
     {
-      content: (data) => TemplateLabelInList(data),
+      content: (templateData) => TemplateLabelInList(templateData),
       sort: true,
       key: "template",
       label: t("slides-list.columns.template"),
@@ -127,10 +120,10 @@ function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
     {
       key: "playlists",
       sort: true,
-      content: (data) =>
+      content: (playlistData) =>
         ListButton(
           openInfoModal,
-          data.onPlaylists[0][0] || [],
+          playlistData.onPlaylists[0][0] || [],
           useGetV1PlaylistsByIdSlidesQuery
         ),
       label: t("slides-list.columns.slide-on-playlists"),
@@ -138,7 +131,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
     {
       key: "published",
       sort: true,
-      content: (data) => Published(data),
+      content: (publishedData) => Published(publishedData),
       label: t("slides-list.columns.published"),
     },
     {
@@ -185,9 +178,13 @@ function SelectSlidesTable({ handleChange, name, selectedSlides, slideId }) {
 }
 
 SelectSlidesTable.propTypes = {
+  slideId: "",
+};
+
+SelectSlidesTable.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  selectedSlides: PropTypes.arrayOf(PropTypes.any).isRequired,
+  slideId: PropTypes.string,
 };
 
 export default SelectSlidesTable;

@@ -15,7 +15,6 @@ import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
-import idFromUrl from "../util/helpers/id-from-url";
 import "./screen-form.scss";
 
 /**
@@ -30,7 +29,7 @@ import "./screen-form.scss";
  * @param {boolean|null} props.isSaveSuccess - isSaveSuccess Is the save a success?
  * @param {boolean|null} props.isLoading - isLoading The data is loading.
  * @param {Array} props.errors - errors Array of errors.
- * @param props.groupId
+ * @param {string} props.groupId - the group id.
  * @returns {object} The screen form.
  */
 function ScreenForm({
@@ -69,11 +68,11 @@ function ScreenForm({
 
   useEffect(() => {
     if (layoutOptions) {
-      const selectedLayout = layoutOptions.find(
+      const localSelectedLayout = layoutOptions.find(
         (layout) => layout["@id"] === screen.layout
       );
-      if (selectedLayout) {
-        setSelectedLayout([selectedLayout]);
+      if (localSelectedLayout) {
+        setSelectedLayout([localSelectedLayout]);
       }
     }
   }, [screen.layout, layoutOptions]);
@@ -248,12 +247,17 @@ function ScreenForm({
   );
 }
 
+ScreenForm.defaultProps = {
+  groupId: "",
+};
+
 ScreenForm.propTypes = {
   screen: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
+  groupId: PropTypes.string,
   isSaveSuccess: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   errors: PropTypes.oneOfType([

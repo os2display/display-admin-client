@@ -9,7 +9,7 @@ import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import TemplateRender from "./template-render";
 import ContentFooter from "../util/content-footer/content-footer";
-import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
+// import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
 import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -39,7 +39,6 @@ function SlideForm({
   errors,
 }) {
   const { t } = useTranslation("common");
-  console.log(slide);
   const history = useHistory();
   const [templateOptions, setTemplateOptions] = useState();
   const [selectedTemplate, setSelectedTemplate] = useState([]);
