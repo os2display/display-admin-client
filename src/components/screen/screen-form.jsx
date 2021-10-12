@@ -45,7 +45,7 @@ function ScreenForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [selectedLayout, setSelectedLayout] = useState();
+  const [selectedLayout, setSelectedLayout] = useState([]);
   const [layoutOptions, setLayoutOptions] = useState();
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
@@ -72,7 +72,7 @@ function ScreenForm({
         (layout) => layout["@id"] === screen.layout
       );
       if (selectedLayout) {
-        setSelectedLayout(selectedLayout);
+        setSelectedLayout([selectedLayout]);
       }
     }
   }, [screen.layout, layoutOptions]);
@@ -195,19 +195,15 @@ function ScreenForm({
             <div className="row">
               {layoutOptions && (
                 <div className="col-md-8">
-                  {selectedLayout && (
-                    <MultiSelectComponent
-                      label={t("screen-form.screen-layout-label")}
-                      noSelectedString={t(
-                        "playlists-dropdown.nothing-selected"
-                      )}
-                      handleSelection={handleAdd}
-                      options={layoutOptions}
-                      selected={[selectedLayout]}
-                      name="layout"
-                      filterCallback={onFilter}
-                    />
-                  )}
+                  <MultiSelectComponent
+                    label={t("screen-form.screen-layout-label")}
+                    noSelectedString={t("playlists-dropdown.nothing-selected")}
+                    handleSelection={handleAdd}
+                    options={layoutOptions}
+                    selected={selectedLayout}
+                    name="layout"
+                    filterCallback={onFilter}
+                  />
                 </div>
               )}
               {selectedLayout?.grid && (

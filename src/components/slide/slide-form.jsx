@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
-import Select from "../util/forms/select";
+import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import TemplateRender from "./template-render";
 import ContentFooter from "../util/content-footer/content-footer";
 import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
@@ -39,8 +39,10 @@ function SlideForm({
   errors,
 }) {
   const { t } = useTranslation("common");
+  console.log(slide);
   const history = useHistory();
-  const [templateOptions, setTemplateOptions] = useState([]);
+  const [templateOptions, setTemplateOptions] = useState();
+  const [selectedTemplate, setSelectedTemplate] = useState([]);
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       page: 1,
@@ -53,6 +55,40 @@ function SlideForm({
       setTemplateOptions(templates["hydra:member"]);
     }
   }, [templates]);
+
+  useEffect(() => {
+    if (templateOptions) {
+      const localSelectedTemplate = templateOptions.find(
+        (template) => template["@id"] === slide.templateInfo
+      );
+      if (localSelectedTemplate) {
+        setSelectedTemplate([localSelectedTemplate]);
+      }
+    }
+  }, [templateOptions]);
+
+  /**
+   * Fetches data for the multi component // todo
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
+
+  /**
+   * Adds group to list of groups.
+   *
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
+   */
+  function handleAdd({ target }) {
+    const { value, id } = target;
+    setSelectedTemplate(value);
+    handleInput({
+      target: { id, value: value.map((item) => item["@id"]).shift() },
+    });
+  }
 
   return (
     <Form>
@@ -110,14 +146,14 @@ function SlideForm({
           </ContentBody>
           {templateOptions && (
             <ContentBody>
-              <Select
-                value={slide.templateInfo}
-                isRequired
-                name="templateInfo"
-                options={templateOptions}
-                onChange={handleInput}
+              <MultiSelectComponent
                 label={t("slide-form.slide-template-label")}
                 helpText={t("slide-form.slide-template-help-text")}
+                handleSelection={handleAdd}
+                options={templateOptions}
+                selected={selectedTemplate}
+                name="templateInfo"
+                filterCallback={onFilter}
               />
             </ContentBody>
           )}
