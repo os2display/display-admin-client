@@ -9,10 +9,13 @@ import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import TemplateRender from "./template-render";
 import ContentFooter from "../util/content-footer/content-footer";
-// import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
-import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1TemplatesQuery,
+  useGetV1TemplatesByIdQuery,
+} from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The slide form component.
@@ -46,6 +49,10 @@ function SlideForm({
     useGetV1TemplatesQuery({
       page: 1,
     });
+
+  const { data: template } = useGetV1TemplatesByIdQuery({
+    id: idFromUrl(slide.templateInfo),
+  });
   /**
    * Set loaded data into form state.
    */
@@ -54,17 +61,14 @@ function SlideForm({
       setTemplateOptions(templates["hydra:member"]);
     }
   }, [templates]);
-
+  /**
+   * Set loaded data into form state.
+   */
   useEffect(() => {
-    if (templateOptions) {
-      const localSelectedTemplate = templateOptions.find(
-        (template) => template["@id"] === slide.templateInfo
-      );
-      if (localSelectedTemplate) {
-        setSelectedTemplate([localSelectedTemplate]);
-      }
+    if (template) {
+      setSelectedTemplate([template]);
     }
-  }, [templateOptions]);
+  }, [template]);
 
   /**
    * Fetches data for the multi component // todo
@@ -158,20 +162,23 @@ function SlideForm({
             </ContentBody>
           )}
           {slide.templateInfo && typeof slide.templateInfo === "string" && (
-            <ContentBody>
-              <TemplateRender slide={slide} handleInput={handleInput} />
-            </ContentBody>
+            <>
+              <ContentBody>
+                <h3 className="h4">{t("slide-form.slide-content-header")}</h3>
+                <FormInput
+                  name="content.text"
+                  type="text"
+                  label={t("slide-form.slide-content-label")}
+                  helpText={t("slide-form.slide-content-label")}
+                  value={slide.content.text}
+                  onChange={handleInput}
+                />
+              </ContentBody>
+              {/* <ContentBody>
+               <TemplateRender slide={slide} handleInput={handleInput} />
+             </ContentBody> */}
+            </>
           )}
-          <ContentBody>
-            {/* <h3 className="h4">
-              {t("slide-form.slide-select-playlist-title")}
-            </h3>
-            <SelectPlaylistTable
-              handleChange={handleInput}
-              name="onPlaylists"
-              selectedDataEndpoint={slide.onPlaylists}
-            /> */}
-          </ContentBody>
           <ContentBody>
             <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
             <FormCheckbox

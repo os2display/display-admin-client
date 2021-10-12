@@ -45,7 +45,7 @@ function ScreenForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [selectedLayout, setSelectedLayout] = useState([]);
+  const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
@@ -68,11 +68,11 @@ function ScreenForm({
 
   useEffect(() => {
     if (layoutOptions) {
-      const localSelectedLayout = layoutOptions.find(
+      let localSelectedLayout = layoutOptions.find(
         (layout) => layout["@id"] === screen.layout
       );
       if (localSelectedLayout) {
-        setSelectedLayout([localSelectedLayout]);
+        setSelectedLayout(localSelectedLayout);
       }
     }
   }, [screen.layout, layoutOptions]);
@@ -200,7 +200,7 @@ function ScreenForm({
                     noSelectedString={t("playlists-dropdown.nothing-selected")}
                     handleSelection={handleAdd}
                     options={layoutOptions}
-                    selected={selectedLayout}
+                    selected={selectedLayout ? [selectedLayout] : []}
                     name="layout"
                     filterCallback={onFilter}
                     singleSelect
