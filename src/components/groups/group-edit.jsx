@@ -56,10 +56,15 @@ function GroupEdit() {
    */
   function handleSubmit() {
     const saveData = {
-      id,
-      screenGroupScreenGroupInput: JSON.stringify(formStateObject),
+      title: formStateObject.title,
+      description: formStateObject.description,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
     };
-    PutV1ScreenGroup(saveData);
+    PutV1ScreenGroup({
+      id,
+      screenGroupScreenGroupInput: JSON.stringify(saveData),
+    });
   }
 
   return (

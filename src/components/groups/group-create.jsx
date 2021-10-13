@@ -58,9 +58,14 @@ function GroupCreate() {
    */
   function handleSubmit() {
     const saveData = {
-      screenGroupScreenGroupInput: JSON.stringify(formStateObject),
+      title: formStateObject.title,
+      description: formStateObject.description,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
     };
-    PostV1ScreenGroups(saveData);
+    PostV1ScreenGroups({
+      screenGroupScreenGroupInput: JSON.stringify(saveData),
+    });
   }
 
   return (
