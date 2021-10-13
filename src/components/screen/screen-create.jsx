@@ -23,8 +23,8 @@ function ScreenCreate() {
     title: "",
     description: "",
     size: "",
-    created: "2021-10-08T15:29:02+02:00",
-    modified: "2021-10-08T15:29:02+02:00",
+    modifiedBy: "",
+    createdBy: "",
     layout: "",
     location: "",
     dimensions: {
