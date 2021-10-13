@@ -93,7 +93,7 @@ function ScreenCreate() {
       formStateObject.dimensions.height,
       10
     );
-    let saveData = {
+    const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
       size: formStateObject.size,

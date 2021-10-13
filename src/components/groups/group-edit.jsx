@@ -55,7 +55,7 @@ function GroupEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    let saveData = {
+    const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
