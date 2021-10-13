@@ -51,7 +51,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   }
 
   /**
-   * Fetches data for the multi component // todo
+   * Fetches data for the multi component // @TODO:
    *
    * @param {string} filter - the filter.
    */

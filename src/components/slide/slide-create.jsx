@@ -37,8 +37,8 @@ function SlideCreate() {
   ] = usePostV1SlidesMutation();
 
   /**
-   * When the screen and group(s) are saved.
-   * it redirects to edit screen.
+   * When the slide is saved,
+   * it redirects to edit slide.
    */
   useEffect(() => {
     if (isSaveSuccess) {
@@ -77,7 +77,7 @@ function SlideCreate() {
           "@id": formStateObject.templateInfo,
           options: { fade: false },
         },
-        duration: 38823,
+        duration: 38823, // @TODO:
         content: { text: formStateObject.content.text },
       }),
     };

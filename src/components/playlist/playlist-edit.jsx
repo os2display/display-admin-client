@@ -63,7 +63,7 @@ function PlaylistEdit() {
   }, [data]);
 
   /**
-   * Set loaded data into form state.
+   * Sets the id of slides for api call.
    */
   useEffect(() => {
     if (formStateObject && !slideId) {

@@ -65,7 +65,7 @@ function SlideEdit() {
           "@id": formStateObject.templateInfo,
           options: { fade: false },
         },
-        duration: 38823,
+        duration: 38823, // @TODO:
         content: { text: formStateObject.content.text },
       }),
     };

@@ -130,7 +130,11 @@ function PlaylistForm({
     </Form>
   );
 }
-PlaylistForm.defaultProps = { slideId: "" };
+
+PlaylistForm.defaultProps = {
+  slideId: "",
+};
+
 PlaylistForm.propTypes = {
   playlist: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
