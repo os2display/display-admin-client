@@ -7,7 +7,10 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
 import ContentBody from "../util/content-body/content-body";
-import { useGetV1MediaQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1MediaQuery,
+  useDeleteV1MediaByIdMutation,
+} from "../../redux/api/api.generated";
 import idFromUrl from "../util/helpers/id-from-url";
 import "./media-list.scss";
 
@@ -29,7 +32,8 @@ function MediaList({ fromModal, handleSelected }) {
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search).get("search");
-
+  const [DeleteV1Media, { isSuccess: isDeleteSuccess }] =
+    useDeleteV1MediaByIdMutation();
   const { data, error: loadError, isLoading } = useGetV1MediaQuery({ page: 1 });
 
   /**
@@ -92,8 +96,7 @@ function MediaList({ fromModal, handleSelected }) {
    * Deletes selected data, and closes modal.
    */
   function handleDelete() {
-    debugger;
-    selectedMedia;
+    // DeleteV1Media({ id: selectedMedia[0]['@id'] });
     setShowDeleteModal(false);
     setSelectedMedia([]);
   }
