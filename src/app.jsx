@@ -26,6 +26,7 @@ import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
 import SlideEdit from "./components/slide/slide-edit";
 import SlideCreate from "./components/slide/slide-create";
+import MediaCreate from "./components/media/media-create";
 import "./app.scss";
 
 /**
@@ -69,6 +70,7 @@ function App() {
                   <Route path="/slide/edit/:id" component={SlideEdit} />
                   <Route path="/media-list" component={MediaList} />
                   <Route path="/media/edit/:id" component={MediaEdit} />
+                  <Route path="/media/create" component={MediaCreate} />
                   <Route path="/themes/" component={ThemesList} />
                   <Route path="/theme/:id" component={EditTheme} />
                   <Route path="/users/" component={UserList} />

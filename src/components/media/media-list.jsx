@@ -31,6 +31,8 @@ function MediaList({ fromModal, handleSelected }) {
   const { t } = useTranslation("common");
   const { search } = useLocation();
   const history = useHistory();
+  const [mediaToDelete, setMediaToDelete] = useState([]);
+  const [isDeleting, setIsDeleting] = useState(false);
   const searchParams = new URLSearchParams(search).get("search");
   const [DeleteV1Media, { isSuccess: isDeleteSuccess }] =
     useDeleteV1MediaByIdMutation();
@@ -93,10 +95,24 @@ function MediaList({ fromModal, handleSelected }) {
   }
 
   /**
+   * Deletes multiple pieces of media.
+   */
+  useEffect(() => {
+    if (mediaToDelete.length > 0) {
+      setIsDeleting(true);
+      const toDelete = mediaToDelete.splice(0, 1).shift();
+      const toDeleteId = idFromUrl(toDelete["@id"]);
+      DeleteV1Media({ id: toDeleteId });
+    } else if (isDeleteSuccess) {
+      window.location.reload(false);
+    }
+  }, [mediaToDelete, isDeleteSuccess]);
+
+  /**
    * Deletes selected data, and closes modal.
    */
   function handleDelete() {
-    // DeleteV1Media({ id: selectedMedia[0]['@id'] });
+    setMediaToDelete(selectedMedia);
     setShowDeleteModal(false);
     setSelectedMedia([]);
   }
@@ -110,9 +126,12 @@ function MediaList({ fromModal, handleSelected }) {
   function handleChecked(data) {
     const mediaData = data;
     mediaData.selected = !mediaData.selected;
-    setSelectedMedia(selectedHelper(mediaData, [...selectedMedia]));
+    const selectedData = selectedHelper(mediaData, [...selectedMedia]).filter(
+      (media) => media.selected
+    );
+    setSelectedMedia(selectedData);
     if (fromModal) {
-      handleSelected(selectedHelper(mediaData, [...selectedMedia]));
+      handleSelected(selectedData);
     }
   }
 

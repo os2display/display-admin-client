@@ -1,14 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { useParams, Redirect } from "react-router";
 import { Form, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import ContentHeader from "../util/content-header/content-header";
-import ContentBody from "../util/content-body/content-body";
-import ContentFooter from "../util/content-footer/content-footer";
-import getFormErrors from "../util/helpers/form-errors-helper";
-import ImageUploader from "../util/image-uploader/image-uploader";
 import { useGetV1MediaByIdQuery } from "../../redux/api/api.generated";
+import MediaForm from "./media-form";
 
 /**
  * The edit media component.
@@ -19,13 +14,8 @@ import { useGetV1MediaByIdQuery } from "../../redux/api/api.generated";
 function MediaEdit() {
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({ images: [] });
-  const history = useHistory();
+  const [headerText, setHeaderText] = useState(t("media-edit.edit-media"));
   const { id } = useParams();
-  const [mediaName, setMediaName] = useState("");
-  const [media, setMedia] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState([]);
-  const requiredFields = ["mediaName", "mediaDescription", "mediaImages"];
   const { data, error: loadError, isLoading } = useGetV1MediaByIdQuery({ id });
 
   /**
@@ -36,6 +26,7 @@ function MediaEdit() {
       let dataCopy = { ...data };
       dataCopy.url = data.assets.uri;
       setFormStateObject({ images: [dataCopy] });
+      setHeaderText(`${headerText}: ${dataCopy.title}`);
     }
   }, [data]);
 
@@ -65,33 +56,18 @@ function MediaEdit() {
   }
   return (
     <>
-      <Form>
-        <ContentHeader title={t("edit-media.edit-media")} />
-        <ContentBody>
-          <ImageUploader
-            errors={errors}
-            multipleImages={false} // !!newmedia
-            handleImageUpload={handleInput}
-            inputImage={formStateObject.images}
-            name="images"
-            invalidText={t("edit-media.media-validation")}
-            showLibraryButton={false}
-          />
-        </ContentBody>
-        <ContentFooter>
-          <Button
-            variant="secondary"
-            type="button"
-            id="media_cancel"
-            onClick={() => history.goBack()}
-          >
-            {t("edit-media.cancel-button")}
-          </Button>
-          <Button variant="primary" onClick={handleSubmit} id="save_media">
-            {t("edit-media.save-button")}
-          </Button>
-        </ContentFooter>
-      </Form>
+      {formStateObject && (
+        <MediaForm
+          media={formStateObject}
+          headerText={headerText}
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+          isSaveSuccess={false} // todo
+          isSaving={false} // todo
+          errors={loadError || false}
+        />
+      )}
     </>
   );
 }

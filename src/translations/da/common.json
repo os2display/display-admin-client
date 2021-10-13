@@ -136,11 +136,14 @@
     "media-description": "Beskrivelse",
     "edit-button": "Rediger"
   },
-  "edit-media": {
-    "upload-new-media": "Upload",
-    "edit-media": "Rediger",
+  "media-create": {
+    "create-media": "Upload"
+  },
+  "media-edit": {
+    "edit-media": "Rediger"
+  },
+  "media-form": {
     "save-button": "Gem medie",
-    "media-validation": "Der skal uploades et eller flere billeder til denne template",
     "cancel-button": "Annuller"
   },
   "slide-edit": {
