@@ -174,7 +174,6 @@ function ImageUploader({
                 onImageRemove={onImageRemove}
                 index={index}
                 key={image.url}
-                errors={errors}
               />
             ))}
           </div>

@@ -7,6 +7,8 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
 import ContentBody from "../util/content-body/content-body";
+import { useGetV1MediaQuery } from "../../redux/api/api.generated";
+import idFromUrl from "../util/helpers/id-from-url";
 import "./media-list.scss";
 
 /**
@@ -28,6 +30,23 @@ function MediaList({ fromModal, handleSelected }) {
   const history = useHistory();
   const searchParams = new URLSearchParams(search).get("search");
 
+  const { data, error: loadError, isLoading } = useGetV1MediaQuery({ page: 1 });
+
+  /**
+   * Set loaded data into form state.
+   */
+  useEffect(() => {
+    if (data) {
+      const mappedData = data["hydra:member"].map((mediaItem) => {
+        return {
+          selected: false,
+          ...mediaItem,
+        };
+      });
+      setMedia(mappedData);
+    }
+  }, [data]);
+
   // State
   const [media, setMedia] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -40,61 +59,10 @@ function MediaList({ fromModal, handleSelected }) {
   const disableDeleteButton = !selectedMedia.length > 0;
 
   /**
-   * Load content from fixture.
-   */
-  useEffect(() => {
-    // @TODO: load real content.
-    fetch("/fixtures/media/media.json")
-      .then((response) => response.json())
-      .then((jsonData) => {
-        // Add selected = false, so the checkbox gets a value.
-        const mappedData = jsonData.media.map((mediaItem) => {
-          return {
-            selected: false,
-            ...mediaItem,
-          };
-        });
-        setMedia(mappedData);
-      });
-  }, []);
-
-  /**
    * Closes delete modal.
    */
   function onCloseDeleteModal() {
     setShowDeleteModal(false);
-  }
-
-  /**
-   * @param {object} props
-   * The props.
-   * @param {string} props.description
-   * The description should be searchable.
-   * @param {string} props.name
-   * The name should be searchable.
-   * @returns {boolean}
-   * Whether the searchtext is in the data entry.
-   */
-  function filterDataFromSearchInput({ description, name }) {
-    const dataValuesString = Object.values({ description, name }).join(" ");
-    return dataValuesString
-      .toLocaleLowerCase()
-      .includes(searchText.toLocaleLowerCase());
-  }
-
-  /**
-   * @returns {object}
-   * returns object of paginated data array and length of data.
-   */
-  function getListData() {
-    let returnValue = media;
-
-    // Filter by search text.
-    if (searchText) {
-      returnValue = returnValue.filter(filterDataFromSearchInput);
-    }
-
-    return returnValue;
   }
 
   /**
@@ -124,7 +92,8 @@ function MediaList({ fromModal, handleSelected }) {
    * Deletes selected data, and closes modal.
    */
   function handleDelete() {
-    // @TODO: delete elements
+    debugger;
+    selectedMedia;
     setShowDeleteModal(false);
     setSelectedMedia([]);
   }
@@ -185,7 +154,7 @@ function MediaList({ fromModal, handleSelected }) {
         </Row>
 
         <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5  media-list">
-          {getListData().map((data) => (
+          {media.map((data) => (
             <div key={data.id} className="col mb-3">
               <div
                 className={`card bg-light h-100 media-item +
@@ -197,7 +166,7 @@ function MediaList({ fromModal, handleSelected }) {
                   onClick={() => handleChecked(data)}
                 >
                   <img
-                    src={data.url}
+                    src={data.assets.uri}
                     className="card-img-top"
                     alt={data.description}
                   />
@@ -218,7 +187,7 @@ function MediaList({ fromModal, handleSelected }) {
                     <div className="col-auto ms-auto">
                       <Link
                         className="btn btn-primary btn-sm"
-                        to={`/media/${data.id}`}
+                        to={`/media/edit/${idFromUrl(data["@id"])}`}
                       >
                         {t("media-list.edit-button")}
                       </Link>

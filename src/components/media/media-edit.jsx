@@ -8,6 +8,7 @@ import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import getFormErrors from "../util/helpers/form-errors-helper";
 import ImageUploader from "../util/image-uploader/image-uploader";
+import { useGetV1MediaByIdQuery } from "../../redux/api/api.generated";
 
 /**
  * The edit media component.
@@ -15,39 +16,28 @@ import ImageUploader from "../util/image-uploader/image-uploader";
  * @returns {object}
  * The edit media page.
  */
-function EditMedia() {
+function MediaEdit() {
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({ images: [] });
   const history = useHistory();
   const { id } = useParams();
   const [mediaName, setMediaName] = useState("");
+  const [media, setMedia] = useState([]);
   const [submitted, setSubmitted] = useState(false);
-  const newMedia = id === "new";
   const [errors, setErrors] = useState([]);
   const requiredFields = ["mediaName", "mediaDescription", "mediaImages"];
+  const { data, error: loadError, isLoading } = useGetV1MediaByIdQuery({ id });
 
   /**
-   * Load content from fixture.
+   * Set loaded data into form state.
    */
   useEffect(() => {
-    // @TODO: load real content.
-    if (!newMedia) {
-      fetch(`/fixtures/media/one_media.json`)
-        .then((response) => response.json())
-        .then((jsonData) => {
-          setFormStateObject({
-            images: [
-              {
-                url: jsonData.media.url,
-                mediaName: jsonData.media.name,
-                mediaDescription: jsonData.media.description,
-              },
-            ],
-          });
-          setMediaName(jsonData.media.name);
-        });
+    if (data) {
+      let dataCopy = { ...data };
+      dataCopy.url = data.assets.uri;
+      setFormStateObject({ images: [dataCopy] });
     }
-  }, []);
+  }, [data]);
 
   /**
    * Set state on change in input field
@@ -64,50 +54,31 @@ function EditMedia() {
   }
 
   /**
-   * Handles validations, and goes back to list.
-   *
-   * @param {object} e
-   * the submit event.
-   * @returns {boolean}
-   * Boolean indicating whether to submit form.
+   * Handles submit.
    */
-  function handleSubmit(e) {
-    // @TODO: make it save.
-    e.preventDefault();
-    setErrors([]);
-    let returnValue = false;
-    const createdErrors = getFormErrors(requiredFields, formStateObject);
-    if (createdErrors.length > 0) {
-      setErrors(createdErrors);
-    } else {
-      setSubmitted(true);
-      returnValue = true;
-    }
-    return returnValue;
+  function handleSubmit() {
+    const saveData = {
+      id,
+      screenGroupScreenGroupInput: JSON.stringify(formStateObject),
+    };
+    PutV1ScreenGroup(saveData);
   }
-
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        {newMedia && <ContentHeader title={t("edit-media.upload-new-media")} />}
-        {!newMedia && (
-          <ContentHeader
-            title={`${t("edit-media.edit-media")}: ${mediaName}`}
-          />
-        )}
+      <Form>
+        <ContentHeader title={t("edit-media.edit-media")} />
         <ContentBody>
           <ImageUploader
             errors={errors}
-            multipleImages={!!newMedia}
+            multipleImages={false} // !!newmedia
             handleImageUpload={handleInput}
             inputImage={formStateObject.images}
-            name="mediaImages"
+            name="images"
             invalidText={t("edit-media.media-validation")}
             showLibraryButton={false}
           />
         </ContentBody>
         <ContentFooter>
-          {submitted && <Redirect to="/media-list" />}
           <Button
             variant="secondary"
             type="button"
@@ -116,7 +87,7 @@ function EditMedia() {
           >
             {t("edit-media.cancel-button")}
           </Button>
-          <Button variant="primary" type="submit" id="save_media">
+          <Button variant="primary" onClick={handleSubmit} id="save_media">
             {t("edit-media.save-button")}
           </Button>
         </ContentFooter>
@@ -125,4 +96,4 @@ function EditMedia() {
   );
 }
 
-export default EditMedia;
+export default MediaEdit;

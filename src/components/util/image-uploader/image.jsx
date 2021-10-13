@@ -41,30 +41,26 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
     <Row className="mb-3">
       <Col md="3" className="mb-3 mb-md-0">
         <div className="image h-100 justify-content-center d-flex rounded">
-          <img src={image.url} alt="" />
+          <img src={image.url} alt={image.description} />
         </div>
       </Col>
       <Col md="9">
         <FormInput
-          name="mediaName"
+          name="title"
           type="text"
-          errors={errors}
           label={t("image.image-name-label")}
           placeholder={t("image.image-name-placeholder")}
-          value={image.mediaName}
-          dataUrl={image.url}
+          value={image.title}
           onChange={onChange}
           formGroupClasses="mb-3"
         />
         <FormInput
-          name="mediaDescription"
+          name="description"
           type="text"
-          errors={errors}
-          dataUrl={image.url}
           label={t("image.image-description-label")}
           placeholder={t("image.image-description-placeholder")}
           helpText={t("image.image-description-help-text")}
-          value={image.mediaDescription}
+          value={image.description}
           onChange={onChange}
           formGroupClasses="mb-3"
         />
