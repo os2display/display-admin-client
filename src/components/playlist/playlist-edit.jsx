@@ -99,9 +99,19 @@ function PlaylistEdit() {
    * Handles submit.
    */
   function handleSubmit() {
+    let saveData = {
+      title: formStateObject.title,
+      description: formStateObject.description,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
+      published: {
+        from: formStateObject.published.from,
+        to: formStateObject.published.from,
+      },
+    };
     PutV1Playlists({
       id,
-      playlistPlaylistInput: JSON.stringify(formStateObject),
+      playlistPlaylistInput: JSON.stringify(saveData),
     });
     if (Array.isArray(formStateObject.slides)) {
       handleSaveSlides();

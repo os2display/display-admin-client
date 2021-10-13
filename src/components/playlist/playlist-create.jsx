@@ -94,7 +94,17 @@ function PlaylistCreate() {
    * Handles submit.
    */
   function handleSubmit() {
-    PostV1Playlist({ playlistPlaylistInput: JSON.stringify(formStateObject) });
+    let saveData = {
+      title: formStateObject.title,
+      description: formStateObject.description,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
+      published: {
+        from: formStateObject.published.from,
+        to: formStateObject.published.from,
+      },
+    };
+    PostV1Playlist({ playlistPlaylistInput: JSON.stringify(saveData) });
     if (formStateObject.slides.length > 0) {
       handleSaveSlides();
     }

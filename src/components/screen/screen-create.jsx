@@ -93,6 +93,19 @@ function ScreenCreate() {
       formStateObject.dimensions.height,
       10
     );
+    let saveData = {
+      title: formStateObject.title,
+      description: formStateObject.description,
+      size: formStateObject.size,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
+      layout: formStateObject.layout,
+      location: formStateObject.location,
+      dimensions: {
+        width: formStateObject.dimensions.width,
+        height: formStateObject.dimensions.height,
+      },
+    };
     const { inScreenGroups } = formStateObject;
     if (inScreenGroups?.length > 0) {
       setGroupsToAdd(
@@ -101,7 +114,7 @@ function ScreenCreate() {
         })
       );
     }
-    PostV1Screens({ screenScreenInput: JSON.stringify(formStateObject) });
+    PostV1Screens({ screenScreenInput: JSON.stringify(saveData) });
   }
 
   return (

@@ -89,7 +89,28 @@ function ScreenEdit() {
    * Handles submit.
    */
   function handleSubmit() {
-    PutV1Screens({ id, screenScreenInput: JSON.stringify(formStateObject) });
+    formStateObject.dimensions.width = parseInt(
+      formStateObject.dimensions.width,
+      10
+    );
+    formStateObject.dimensions.height = parseInt(
+      formStateObject.dimensions.height,
+      10
+    );
+    let saveData = {
+      title: formStateObject.title,
+      description: formStateObject.description,
+      size: formStateObject.size,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
+      layout: formStateObject.layout,
+      location: formStateObject.location,
+      dimensions: {
+        width: formStateObject.dimensions.width,
+        height: formStateObject.dimensions.height,
+      },
+    };
+    PutV1Screens({ id, screenScreenInput: JSON.stringify(saveData) });
     if (Array.isArray(formStateObject.inScreenGroups)) {
       setGroupsToAdd(
         formStateObject.inScreenGroups.map((group) => {
