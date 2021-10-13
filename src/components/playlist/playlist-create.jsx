@@ -62,7 +62,7 @@ function PlaylistCreate() {
    */
   useEffect(() => {
     if (isSaveSuccessSlides && data) {
-      history.push(`/playlists/edit/${idFromUrl(data["@id"])}`);
+      history.push(`/playlist/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccessSlides]);
 

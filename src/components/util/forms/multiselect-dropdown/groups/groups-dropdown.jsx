@@ -4,20 +4,14 @@ import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
 
 /**
- * @param {object} props
- * the props.
- * @param {Function} props.handleGroupsSelection
- * The callback when an option is selected
- * @param {Array} props.selected
- * The selected options
- * @param {string} props.name
- * The id of the form element
- * @param {Array} props.errors
- * A list of errors, or null.
- * @param {Array} props.data
- * The data for options.
- * @returns {object}
- * The multidropdown of groups.
+ * @param {object} props - the props.
+ * @param {Function} props.handleGroupsSelection - the callback when an option is selected
+ * @param {Function} props.filterCallback - the callback for search in the multicomponent
+ * @param {Array} props.selected - the selected options
+ * @param {string} props.name - the id of the form element
+ * @param {Array} props.errors - a list of errors, or null.
+ * @param {Array} props.data - the data for options.
+ * @returns {object} - the multidropdown of groups.
  */
 function GroupsDropdown({
   handleGroupsSelection,
@@ -25,6 +19,7 @@ function GroupsDropdown({
   name,
   errors,
   data,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
 
@@ -39,6 +34,7 @@ function GroupsDropdown({
             label={t("groups-dropdown.label")}
             selected={selected}
             name={name}
+            filterCallback={filterCallback}
             noSelectedString={t("groups-dropdown.nothing-selected")}
           />
         </>
@@ -53,6 +49,7 @@ GroupsDropdown.defaultProps = {
 
 GroupsDropdown.propTypes = {
   handleGroupsSelection: PropTypes.func.isRequired,
+  filterCallback: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,

@@ -55,15 +55,15 @@ function App() {
               <TopBar />
               <main className="col p-3">
                 <Switch>
-                  <Route path="/playlists/create" component={PlaylistCreate} />
-                  <Route path="/playlists/edit/:id" component={PlaylistEdit} />
-                  <Route path="/playlists/list" component={PlaylistList} />
+                  <Route path="/playlist/create" component={PlaylistCreate} />
+                  <Route path="/playlist/edit/:id" component={PlaylistEdit} />
+                  <Route path="/playlist/list" component={PlaylistList} />
                   <Route path="/screen/list" component={ScreenList} />
                   <Route path="/screen/create" component={ScreenCreate} />
                   <Route path="/screen/edit/:id" component={ScreenEdit} />
-                  <Route path="/groups" component={GroupsList} />
-                  <Route path="/groups/edit/:id" component={GroupEdit} />
-                  <Route path="/groups/create" component={GroupCreate} />
+                  <Route path="/group/list" component={GroupsList} />
+                  <Route path="/group/edit/:id" component={GroupEdit} />
+                  <Route path="/group/create" component={GroupCreate} />
                   <Route path="/slide/list" component={SlidesList} />
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />

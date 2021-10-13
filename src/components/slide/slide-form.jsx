@@ -6,13 +6,16 @@ import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
-import Select from "../util/forms/select";
+import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import TemplateRender from "./template-render";
 import ContentFooter from "../util/content-footer/content-footer";
-import SelectPlaylistTable from "../util/multi-and-table/select-playlists-table";
-import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1TemplatesQuery,
+  useGetV1TemplatesByIdQuery,
+} from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The slide form component.
@@ -40,11 +43,16 @@ function SlideForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [templateOptions, setTemplateOptions] = useState([]);
+  const [templateOptions, setTemplateOptions] = useState();
+  const [selectedTemplate, setSelectedTemplate] = useState([]);
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       page: 1,
     });
+
+  const { data: template } = useGetV1TemplatesByIdQuery({
+    id: idFromUrl(slide.templateInfo),
+  });
   /**
    * Set loaded data into form state.
    */
@@ -53,6 +61,37 @@ function SlideForm({
       setTemplateOptions(templates["hydra:member"]);
     }
   }, [templates]);
+  /**
+   * Set loaded data into form state.
+   */
+  useEffect(() => {
+    if (template) {
+      setSelectedTemplate([template]);
+    }
+  }, [template]);
+
+  /**
+   * Fetches data for the multi component // @TODO:
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
+
+  /**
+   * Adds group to list of groups.
+   *
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
+   */
+  function handleAdd({ target }) {
+    const { value, id } = target;
+    setSelectedTemplate(value);
+    handleInput({
+      target: { id, value: value.map((item) => item["@id"]).shift() },
+    });
+  }
 
   return (
     <Form>
@@ -110,32 +149,37 @@ function SlideForm({
           </ContentBody>
           {templateOptions && (
             <ContentBody>
-              <Select
-                value={slide.templateInfo}
-                isRequired
-                name="templateInfo"
-                options={templateOptions}
-                onChange={handleInput}
+              <MultiSelectComponent
                 label={t("slide-form.slide-template-label")}
                 helpText={t("slide-form.slide-template-help-text")}
+                handleSelection={handleAdd}
+                options={templateOptions}
+                selected={selectedTemplate}
+                name="templateInfo"
+                filterCallback={onFilter}
+                singleSelect
               />
             </ContentBody>
           )}
           {slide.templateInfo && typeof slide.templateInfo === "string" && (
-            <ContentBody>
-              <TemplateRender slide={slide} handleInput={handleInput} />
-            </ContentBody>
+            <>
+              <ContentBody>
+                <h3 className="h4">{t("slide-form.slide-content-header")}</h3>
+                <FormInput
+                  name="content.text"
+                  type="text"
+                  label={t("slide-form.slide-content-label")}
+                  helpText={t("slide-form.slide-content-label")}
+                  value={slide.content.text}
+                  onChange={handleInput}
+                />
+              </ContentBody>
+              {/* @TODO: */}
+              {/* <ContentBody>
+               <TemplateRender slide={slide} handleInput={handleInput} />
+             </ContentBody> */}
+            </>
           )}
-          <ContentBody>
-            <h3 className="h4">
-              {t("slide-form.slide-select-playlist-title")}
-            </h3>
-            <SelectPlaylistTable
-              handleChange={handleInput}
-              name="onPlaylists"
-              selectedDataEndpoint={slide.onPlaylists}
-            />
-          </ContentBody>
           <ContentBody>
             <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
             <FormCheckbox

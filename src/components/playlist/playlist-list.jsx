@@ -131,7 +131,7 @@ function PlaylistList() {
       content: (data) =>
         LinkForList(
           data["@id"],
-          "playlists/edit",
+          "playlist/edit",
           t("playlists-list.edit-button")
         ),
     },

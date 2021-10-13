@@ -9,6 +9,7 @@ import MultiSelectComponent from "../multi-dropdown";
  * @param {string} props.name - The id of the form element
  * @param {Array} props.errors - A list of errors, or null.
  * @param {object} props.data - The data for the slides dropdown.
+ * @param {Function} props.filterCallback - the callback on search filter.
  * @returns {object} - The multidropdown of playlists.
  */
 function SlidesDropdown({
@@ -17,6 +18,7 @@ function SlidesDropdown({
   name,
   errors,
   data,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
 
@@ -29,6 +31,7 @@ function SlidesDropdown({
       selected={selected}
       name={name}
       errors={errors}
+      filterCallback={filterCallback}
     />
   );
 }
@@ -40,6 +43,7 @@ SlidesDropdown.defaultProps = {
 
 SlidesDropdown.propTypes = {
   handleSlideSelection: PropTypes.func.isRequired,
+  filterCallback: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.number,

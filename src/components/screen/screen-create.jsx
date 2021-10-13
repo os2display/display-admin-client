@@ -94,7 +94,7 @@ function ScreenCreate() {
       10
     );
     const { inScreenGroups } = formStateObject;
-    if (inScreenGroups.length > 0) {
+    if (inScreenGroups?.length > 0) {
       setGroupsToAdd(
         inScreenGroups.map((group) => {
           return idFromUrl(group);

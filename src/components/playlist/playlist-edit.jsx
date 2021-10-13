@@ -18,9 +18,9 @@ function PlaylistEdit() {
   const { t } = useTranslation("common");
   const headerText = t("edit-playlist.edit-playlist");
   const [formStateObject, setFormStateObject] = useState();
+  const [slideId, setSlideId] = useState();
   const [slidesToAdd, setSlidesToAdd] = useState([]);
   const { id } = useParams();
-
   const [
     PutV1Playlists,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
@@ -63,6 +63,15 @@ function PlaylistEdit() {
   }, [data]);
 
   /**
+   * Sets the id of slides for api call.
+   */
+  useEffect(() => {
+    if (formStateObject && !slideId) {
+      setSlideId(idFromUrl(formStateObject.slides));
+    }
+  }, [formStateObject]);
+
+  /**
    * When the playlist is saved, the slide will be saved.
    */
   useEffect(() => {
@@ -101,7 +110,7 @@ function PlaylistEdit() {
 
   return (
     <>
-      {formStateObject && (
+      {formStateObject && slideId && (
         <PlaylistForm
           playlist={formStateObject}
           headerText={`${headerText}: ${
@@ -113,6 +122,7 @@ function PlaylistEdit() {
           isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
           isSaving={isSaving || isSavingSlides}
           errors={loadError || saveError || saveErrorSlides || false}
+          slideId={slideId}
         />
       )}
     </>

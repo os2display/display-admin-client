@@ -217,7 +217,7 @@ function SlidesList() {
             columns={columns}
             totalItems={data["hydra:totalItems"]}
             currentPage={page}
-            handlePageChange={onChangePage}
+            handlePageChange={() => onChangePage()}
             selectedRows={selectedRows}
             data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}

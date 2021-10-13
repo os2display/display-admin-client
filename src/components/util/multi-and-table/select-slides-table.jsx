@@ -16,25 +16,32 @@ import {
 /**
  * A multiselect and table for slides.
  *
- * @param {string} props
- * the props.
- * @param {string} props.name
- * The name for the input
- * @param {string} props.selectedData
- * The data for the multidropdown.
- * @returns {object}
- * An input.
+ * @param {string} props - the props.
+ * @param {Function} props.handleChange - the callback on change.
+ * @param {string} props.name - the name for the input
+ * @param {string} props.slideId - the slide id.
+ * @returns {object} - A select slides table.
  */
-function SelectSlidesTable({ handleChange, name, selectedSlides }) {
+function SelectSlidesTable({ handleChange, name, slideId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
   const [onPlaylists, setOnPlaylists] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: slides } = useGetV1SlidesQuery({});
+  const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
+  /**
+   * Map loaded data.
+   */
   useEffect(() => {
-    setSelectedData(selectedSlides);
-  }, [selectedSlides]);
+    if (data) {
+      setSelectedData(
+        data["hydra:member"].map(({ slide }) => {
+          return slide;
+        })
+      );
+    }
+  }, [data]);
 
   /**
    * Adds group to list of groups.
@@ -68,6 +75,15 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
   }
 
   /**
+   * Fetches data for the multi component // @TODO:
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
+  }
+
+  /**
    * Removes playlist from list of groups.
    *
    * @param {object} removeItem
@@ -96,7 +112,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
       label: t("select-slides-table.columns.name"),
     },
     {
-      content: (data) => TemplateLabelInList(data),
+      content: (templateData) => TemplateLabelInList(templateData),
       sort: true,
       key: "template",
       label: t("slides-list.columns.template"),
@@ -104,10 +120,10 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
     {
       key: "playlists",
       sort: true,
-      content: (data) =>
+      content: (playlistData) =>
         ListButton(
           openInfoModal,
-          data.onPlaylists[0][0] || [],
+          playlistData.onPlaylists[0][0] || [],
           useGetV1PlaylistsByIdSlidesQuery
         ),
       label: t("slides-list.columns.slide-on-playlists"),
@@ -115,7 +131,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
     {
       key: "published",
       sort: true,
-      content: (data) => Published(data),
+      content: (publishedData) => Published(publishedData),
       label: t("slides-list.columns.published"),
     },
     {
@@ -137,6 +153,7 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
             handleSlideSelection={handleAdd}
             selected={selectedData}
             data={slides["hydra:member"]}
+            filterCallback={onFilter}
           />
           {selectedData?.length > 0 && (
             <DragAndDropTable
@@ -160,10 +177,14 @@ function SelectSlidesTable({ handleChange, name, selectedSlides }) {
   );
 }
 
+SelectSlidesTable.defaultProps = {
+  slideId: "",
+};
+
 SelectSlidesTable.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  selectedSlides: PropTypes.arrayOf(PropTypes.any).isRequired,
+  slideId: PropTypes.string,
 };
 
 export default SelectSlidesTable;

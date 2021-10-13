@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
-import { useGetV1ScreenGroupsQuery } from "../../../redux/api/api.generated";
+import {
+  useGetV1ScreenGroupsQuery,
+  useGetV1ScreensByIdScreenGroupsQuery,
+} from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 /**
  * A multiselect and table for groups.
@@ -15,14 +18,23 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
  * @returns {object}
  * An input.
  */
-function SelectGroupsTable({ handleChange, name, selectedGroups }) {
+function SelectGroupsTable({ handleChange, name, groupId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const { data: groups } = useGetV1ScreenGroupsQuery({});
+  const { data: groups } = useGetV1ScreenGroupsQuery({ page: 1 });
 
+  const { data } = useGetV1ScreensByIdScreenGroupsQuery({
+    id: groupId,
+  });
+
+  /**
+   * Map loaded data.
+   */
   useEffect(() => {
-    setSelectedData(selectedGroups);
-  }, [selectedGroups]);
+    if (data) {
+      setSelectedData(data["hydra:member"]);
+    }
+  }, [data]);
 
   /**
    * Adds group to list of groups.
@@ -36,6 +48,15 @@ function SelectGroupsTable({ handleChange, name, selectedGroups }) {
     handleChange({
       target: { id, value: value.map((item) => item["@id"]) },
     });
+  }
+
+  /**
+   * Fetches data for the multi component // @TODO:
+   *
+   * @param {string} filter - the filter.
+   */
+  function onFilter(filter) {
+    console.log(filter);
   }
 
   /**
@@ -85,6 +106,7 @@ function SelectGroupsTable({ handleChange, name, selectedGroups }) {
             data={groups["hydra:member"]}
             handleGroupsSelection={handleAdd}
             selected={selectedData}
+            filterCallback={onFilter}
           />
           {selectedData?.length > 0 && (
             <Table columns={columns} data={selectedData} />
@@ -95,10 +117,14 @@ function SelectGroupsTable({ handleChange, name, selectedGroups }) {
   );
 }
 
+SelectGroupsTable.defaultProps = {
+  groupId: "",
+};
+
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  selectedGroups: PropTypes.arrayOf(PropTypes.any).isRequired,
+  groupId: PropTypes.string,
 };
 
 export default SelectGroupsTable;

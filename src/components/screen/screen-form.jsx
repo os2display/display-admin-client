@@ -7,18 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import ContentBody from "../util/content-body/content-body";
-import Select from "../util/forms/select";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
-import {
-  useGetV1LayoutsQuery,
-  useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../redux/api/api.generated";
-import idFromUrl from "../util/helpers/id-from-url";
+import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
+import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import "./screen-form.scss";
 
 /**
@@ -33,6 +29,7 @@ import "./screen-form.scss";
  * @param {boolean|null} props.isSaveSuccess - isSaveSuccess Is the save a success?
  * @param {boolean|null} props.isLoading - isLoading The data is loading.
  * @param {Array} props.errors - errors Array of errors.
+ * @param {string} props.groupId - the group id.
  * @returns {object} The screen form.
  */
 function ScreenForm({
@@ -44,31 +41,24 @@ function ScreenForm({
   isSaveSuccess,
   isLoading,
   errors,
+  groupId,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [grid, setGrid] = useState();
+  const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
   });
 
-  const [selectedGroups, setSelectedGroups] = useState([]);
-  const {
-    data,
-    error: loadSelectedGroupsError,
-    isLoading: isLoadingSelectedGroups,
-  } = useGetV1ScreensByIdScreenGroupsQuery({
-    id: idFromUrl(screen.inScreenGroups),
-  });
   /**
-   * Map loaded data.
+   * Fetches data for the multi component // @TODO:
+   *
+   * @param {string} filter - the filter.
    */
-  useEffect(() => {
-    if (data && !Array.isArray(screen.inScreenGroups)) {
-      setSelectedGroups(data["hydra:member"]);
-    }
-  }, [data]);
+  function onFilter(filter) {
+    console.log(filter);
+  }
 
   useEffect(() => {
     if (layouts) {
@@ -78,14 +68,28 @@ function ScreenForm({
 
   useEffect(() => {
     if (layoutOptions) {
-      const localGrid = layoutOptions.find(
+      const localSelectedLayout = layoutOptions.find(
         (layout) => layout["@id"] === screen.layout
       );
-      if (localGrid) {
-        setGrid(localGrid);
+      if (localSelectedLayout) {
+        setSelectedLayout(localSelectedLayout);
       }
     }
   }, [screen.layout, layoutOptions]);
+
+  /**
+   * Adds group to list of groups.
+   *
+   * @param {object} props - the props.
+   * @param {object} props.target - the target.
+   */
+  function handleAdd({ target }) {
+    const { value, id } = target;
+    setSelectedLayout(value);
+    handleInput({
+      target: { id, value: value.map((item) => item["@id"]).shift() },
+    });
+  }
 
   return (
     <Form>
@@ -127,13 +131,11 @@ function ScreenForm({
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("screen-form.screen-groups")}</h2>
-            {!isLoadingSelectedGroups && selectedGroups && (
-              <SelectGroupsTable
-                handleChange={handleInput}
-                name="inScreenGroups"
-                selectedGroups={selectedGroups}
-              />
-            )}
+            <SelectGroupsTable
+              handleChange={handleInput}
+              name="inScreenGroups"
+              groupId={groupId}
+            />
           </ContentBody>
           <ContentBody>
             <h2 className="h4">{t("screen-form.screen-location")}</h2>
@@ -193,20 +195,23 @@ function ScreenForm({
             <div className="row">
               {layoutOptions && (
                 <div className="col-md-8">
-                  <Select
-                    name="layout"
-                    onChange={handleInput}
+                  <MultiSelectComponent
                     label={t("screen-form.screen-layout-label")}
+                    noSelectedString={t("playlists-dropdown.nothing-selected")}
+                    handleSelection={handleAdd}
                     options={layoutOptions}
-                    value={screen.layout}
+                    selected={selectedLayout ? [selectedLayout] : []}
+                    name="layout"
+                    filterCallback={onFilter}
+                    singleSelect
                   />
                 </div>
               )}
-              {grid?.grid && (
+              {selectedLayout?.grid && (
                 <GridGenerationAndSelect
-                  grid={grid?.grid}
+                  grid={selectedLayout?.grid}
                   vertical={screen.dimensions.height > screen.dimensions.width}
-                  regions={grid.regions}
+                  regions={selectedLayout.regions}
                   handleInput={handleInput}
                   selectedData={screen.layout}
                 />
@@ -236,14 +241,15 @@ function ScreenForm({
           {t("screen-form.save-button")}
         </Button>
         <Toast show={isSaveSuccess} text={t("screen-form.saved")} />
-        <Toast
-          show={errors || loadSelectedGroupsError}
-          text={t("screen-form.error")}
-        />
+        <Toast show={errors} text={t("screen-form.error")} />
       </ContentFooter>
     </Form>
   );
 }
+
+ScreenForm.defaultProps = {
+  groupId: "",
+};
 
 ScreenForm.propTypes = {
   screen: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -251,6 +257,7 @@ ScreenForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
+  groupId: PropTypes.string,
   isSaveSuccess: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   errors: PropTypes.oneOfType([

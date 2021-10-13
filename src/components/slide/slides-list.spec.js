@@ -1,4 +1,5 @@
 Cypress.on("uncaught:exception", () => {
+  // @TODO: fix when docker setup is fixed
   // returning false here prevents Cypress from
   // failing the test
   return false;

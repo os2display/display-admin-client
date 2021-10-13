@@ -4,20 +4,14 @@ import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
 
 /**
- * @param {object} props
- * the props.
- * @param {Function} props.handlePlaylistSelection
- * The callback when an option is selected
- * @param {Array} props.selected
- * The selected options
- * @param {string} props.name
- * The id of the form element
- * @param {Array} props.errors
- * A list of errors, or null.
- * @param {Array} props.data
- * The data for options.
- * @returns {object}
- * The multidropdown of playlists.
+ * @param {object} props - the props.
+ * @param {Function} props.handlePlaylistSelection - the callback when an option is selected
+ * @param {Array} props.selected - the selected options
+ * @param {string} props.name - the id of the form element
+ * @param {Array} props.errors - a list of errors, or null.
+ * @param {Array} props.data - the data for options.
+ * @param {Function} props.filterCallback - the callback on search filter.
+ * @returns {object} - the multidropdown of playlists.
  */
 function PlaylistsDropdown({
   handlePlaylistSelection,
@@ -25,6 +19,7 @@ function PlaylistsDropdown({
   name,
   errors,
   data,
+  filterCallback,
 }) {
   const { t } = useTranslation("common");
   return (
@@ -39,6 +34,7 @@ function PlaylistsDropdown({
             selected={selected}
             name={name}
             errors={errors}
+            filterCallback={filterCallback}
           />
         </>
       )}
@@ -59,6 +55,7 @@ PlaylistsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
+  filterCallback: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
