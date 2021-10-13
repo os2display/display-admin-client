@@ -19,10 +19,10 @@ function PlaylistCreate() {
   const headerText = t("edit-playlist.create-new-playlist");
   const [formStateObject, setFormStateObject] = useState({
     slides: [],
-    title: "string",
-    description: "string",
-    modifiedBy: "string",
-    createdBy: "string",
+    title: "",
+    description: "",
+    modifiedBy: "",
+    createdBy: "",
     published: {
       from: "2021-11-17T06:15:04Z", // Todo
       to: "2021-04-29T09:54:10Z", // Todo
