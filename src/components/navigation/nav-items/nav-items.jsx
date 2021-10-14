@@ -50,7 +50,7 @@ function NavItems() {
         <NavLink
           id="nav-items_content_media"
           className="nav-link"
-          to="/media-list"
+          to="/media/list"
         >
           {t("nav-items.content-media")}
         </NavLink>

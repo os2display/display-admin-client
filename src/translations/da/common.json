@@ -132,8 +132,6 @@
     "header": "Medier",
     "upload-new-media": "Upload",
     "delete-button": "Slet",
-    "media-name": "Navn",
-    "media-description": "Beskrivelse",
     "edit-button": "Rediger"
   },
   "media-create": {
@@ -144,7 +142,11 @@
   },
   "media-form": {
     "save-button": "Gem medie",
-    "cancel-button": "Annuller"
+    "cancel-button": "Annuller",
+    "back-to-list": "Tilbage til listen",
+    "saving": "Gemmer...",
+    "saved": "Mediet blev uploaded",
+    "error": "Der skete en fejl"
   },
   "slide-edit": {
     "edit-slide-header": "Rediger slide"
@@ -352,7 +354,7 @@
     "image-name-placeholder": "Skriv billedets navn",
     "image-description-label": "Beskrivelse af billedet",
     "image-description-placeholder": "Udfyld beskrivelse af billedet",
-    "image-description-help-text": "Denne beskrivelse benyttes til alt-text, og er derfor påkrævet"
+    "image-description-help-text": "Denne beskrivelse benyttes til alt-tekst, og er derfor påkrævet"
   },
   "drag-and-drop-table": {
     "table-header-for-indicator": "Drag and drop indikator",

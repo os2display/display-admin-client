@@ -39,7 +39,7 @@ function MediaForm({
   return (
     <Form>
       <h1>{headerText}</h1>
-      {isLoading && (
+      {isLoading && !isSaving && (
         <>
           <Spinner
             as="span"
@@ -49,7 +49,7 @@ function MediaForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("group-form.loading")}
+          {t("media-form.loading")}
         </>
       )}
       {isSaving && (
@@ -62,7 +62,7 @@ function MediaForm({
             aria-hidden="true"
             className="m-1"
           />
-          {t("group-form.saving")}
+          {t("media-form.saving")}
         </>
       )}
       {!isLoading && (
@@ -83,15 +83,29 @@ function MediaForm({
           variant="secondary"
           type="button"
           id="media_cancel"
-          onClick={() => history.goBack()}
+          className="m-1"
+          onClick={() => history.push("/media/list/")}
         >
           {t("media-form.cancel-button")}
         </Button>
-        <Button variant="primary" onClick={handleSubmit} id="save_media">
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          id="save_media"
+          className="m-1"
+        >
           {t("media-form.save-button")}
         </Button>
-        <Toast show={isSaveSuccess} text={t("group-form.saved")} />
-        <Toast show={!!errors} text={t("group-form.error")} />
+        <Button
+          variant="secondary"
+          id="back_to_list"
+          className="m-1"
+          onClick={() => history.push("/media/list/")}
+        >
+          {t("media-form.back-to-list")}
+        </Button>
+        <Toast show={isSaveSuccess} text={t("media-form.saved")} />
+        <Toast show={!!errors} text={t("media-form.error")} />
       </ContentFooter>
     </Form>
   );

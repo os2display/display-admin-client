@@ -14,11 +14,13 @@ import MediaForm from "./media-form";
 function MediaCreate() {
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({});
-  const headerText = t("media-create.media-create");
+  const [isSaving, setIsSaving] = useState(false);
+  const [mediaToCreate, setMediaToCreate] = useState([]);
+  const headerText = t("media-create.create-media");
 
   const [
     PostV1MediaCollection,
-    { data, isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
+    { data, isLoading, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -36,15 +38,36 @@ function MediaCreate() {
   }
 
   /**
+   * Saves multiple pieces of media.
+   */
+  useEffect(() => {
+    if (mediaToCreate.length > 0) {
+      setIsSaving(true);
+      const media = mediaToCreate.splice(0, 1).shift();
+      PostV1MediaCollection({ body: media });
+    } else if (isSaveSuccess) {
+      window.location.reload(false);
+    }
+  }, [mediaToCreate.length, isSaveSuccess]);
+
+  /**
    * Handles submit.
    */
   function handleSubmit() {
-    const saveData = {
-      id,
-      screenGroupScreenGroupInput: JSON.stringify(formStateObject),
-    };
-    PutV1ScreenGroup(saveData);
+    let localMediaToCreate = [];
+    formStateObject.images.forEach((element) => {
+      let formData = new FormData();
+      formData.append("file", element.file);
+      formData.append("title", element.title);
+      formData.append("description", element.description);
+      formData.append("license", element.license);
+      formData.append("modifiedBy", element.modfiedBy);
+      formData.append("createdBy", element.createdBy);
+      localMediaToCreate.push(formData);
+    });
+    setMediaToCreate(localMediaToCreate);
   }
+
   return (
     <MediaForm
       media={formStateObject}
@@ -52,9 +75,9 @@ function MediaCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={isLoading}
-      isSaveSuccess={false} // todo
-      isSaving={false} // todo
-      errors={loadError || false}
+      isSaveSuccess={isSaveSuccess} // todo
+      isSaving={isLoading || isSaving || false} // todo
+      errors={saveError || false}
     />
   );
 }

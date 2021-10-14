@@ -20,8 +20,6 @@ import MediaModal from "../../media-modal/media-modal";
  * The name of the image field.
  * @param {boolean} props.multipleImages
  * Whether the user should be able to upload multiple images.
- * @param {Array} props.errors
- * A list of errors, or null.
  * @param {string} props.invalidText
  * Text on error.
  * @param {boolean} props.showLibraryButton
@@ -34,21 +32,13 @@ function ImageUploader({
   handleImageUpload,
   name,
   multipleImages,
-  errors,
   invalidText,
   showLibraryButton,
 }) {
   const { t } = useTranslation("common");
   const [images, setImages] = useState([]);
-  const [error, setError] = useState();
   const invalidInputText = invalidText || t("image-uploader.validation-text");
   const [showMediaModal, setShowMediaModal] = useState(false);
-  /**
-   * Handle errors.
-   */
-  useEffect(() => {
-    setError(errors && errors.includes(name));
-  }, [errors]);
 
   /**
    * @param {object} image
@@ -104,7 +94,7 @@ function ImageUploader({
   };
 
   return (
-    <div className={error ? "invalid" : ""}>
+    <div className={false ? "invalid" : ""}>
       <ImageUploading
         multiple
         value={images}
@@ -149,7 +139,7 @@ function ImageUploader({
                       ? "drag-drop-area drag-drop-area-active"
                       : "drag-drop-area"
                   }
-                  style={error ? { borderColor: "red" } : {}}
+                  style={false ? { borderColor: "red" } : {}}
                   onDrop={dragProps.onDrop}
                   onDragEnter={dragProps.onDragEnter}
                   onDragLeave={dragProps.onDragLeave}
@@ -179,7 +169,7 @@ function ImageUploader({
           </div>
         )}
       </ImageUploading>
-      {error && (
+      {false && (
         <div className="invalid-feedback-image-uploader">
           {invalidInputText}
         </div>
@@ -198,7 +188,6 @@ function ImageUploader({
 ImageUploader.defaultProps = {
   inputImage: [],
   multipleImages: false,
-  errors: [],
   invalidText: null,
   showLibraryButton: true,
 };
@@ -208,7 +197,6 @@ ImageUploader.propTypes = {
   handleImageUpload: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   multipleImages: PropTypes.bool,
-  errors: PropTypes.arrayOf(PropTypes.string),
   invalidText: PropTypes.string,
   showLibraryButton: PropTypes.bool,
 };

@@ -7,13 +7,7 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
 import ContentBody from "../util/content-body/content-body";
-import {
-  useGetV1MediaQuery,
-  useDeleteV1MediaByIdMutation,
-} from "../../redux/api/api.generated";
-import idFromUrl from "../util/helpers/id-from-url";
 import "./media-list.scss";
-import Pagination from "../util/paginate/pagination";
 
 /**
  * The media list component.
@@ -32,36 +26,7 @@ function MediaList({ fromModal, handleSelected }) {
   const { t } = useTranslation("common");
   const { search } = useLocation();
   const history = useHistory();
-  const pageSize = 10;
-  const [totalItems, setTotalItems] = useState();
-  const [mediaToDelete, setMediaToDelete] = useState([]);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const pageParams = new URLSearchParams(search).get("page");
   const searchParams = new URLSearchParams(search).get("search");
-  const [page, setPage] = useState(parseInt(pageParams ? pageParams : 1, 10));
-  const [DeleteV1Media, { isSuccess: isDeleteSuccess }] =
-    useDeleteV1MediaByIdMutation();
-  const {
-    data,
-    error: loadError,
-    isLoading,
-  } = useGetV1MediaQuery({ page: page });
-
-  /**
-   * Set loaded data into form state.
-   */
-  useEffect(() => {
-    if (data) {
-      const mappedData = data["hydra:member"].map((mediaItem) => {
-        return {
-          selected: false,
-          ...mediaItem,
-        };
-      });
-      setMedia(mappedData);
-      setTotalItems(data["hydra:totalItems"]);
-    }
-  }, [data]);
 
   // State
   const [media, setMedia] = useState([]);
@@ -75,6 +40,25 @@ function MediaList({ fromModal, handleSelected }) {
   const disableDeleteButton = !selectedMedia.length > 0;
 
   /**
+   * Load content from fixture.
+   */
+  useEffect(() => {
+    // @TODO: load real content.
+    fetch("/fixtures/media/media.json")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        // Add selected = false, so the checkbox gets a value.
+        const mappedData = jsonData.media.map((mediaItem) => {
+          return {
+            selected: false,
+            ...mediaItem,
+          };
+        });
+        setMedia(mappedData);
+      });
+  }, []);
+
+  /**
    * Closes delete modal.
    */
   function onCloseDeleteModal() {
@@ -82,14 +66,35 @@ function MediaList({ fromModal, handleSelected }) {
   }
 
   /**
-   * @param {number} nextPage - the next page.
+   * @param {object} props
+   * The props.
+   * @param {string} props.description
+   * The description should be searchable.
+   * @param {string} props.name
+   * The name should be searchable.
+   * @returns {boolean}
+   * Whether the searchtext is in the data entry.
    */
-  function updateUrlAndChangePage(nextPage) {
-    const params = new URLSearchParams(search);
-    params.delete("page");
-    params.append("page", nextPage);
-    history.replace({ search: params.toString() });
-    setPage(nextPage);
+  function filterDataFromSearchInput({ description, name }) {
+    const dataValuesString = Object.values({ description, name }).join(" ");
+    return dataValuesString
+      .toLocaleLowerCase()
+      .includes(searchText.toLocaleLowerCase());
+  }
+
+  /**
+   * @returns {object}
+   * returns object of paginated data array and length of data.
+   */
+  function getListData() {
+    let returnValue = media;
+
+    // Filter by search text.
+    if (searchText) {
+      returnValue = returnValue.filter(filterDataFromSearchInput);
+    }
+
+    return returnValue;
   }
 
   /**
@@ -97,13 +102,10 @@ function MediaList({ fromModal, handleSelected }) {
    */
   useEffect(() => {
     if (!fromModal) {
-      const params = new URLSearchParams(search);
+      const params = new URLSearchParams();
       if (searchText) {
-        params.delete("search");
         params.append("search", searchText);
       }
-      params.delete("page");
-      params.append("page", page);
       history.replace({ search: params.toString() });
     }
   }, [searchText]);
@@ -119,24 +121,10 @@ function MediaList({ fromModal, handleSelected }) {
   }
 
   /**
-   * Deletes multiple pieces of media.
-   */
-  useEffect(() => {
-    if (mediaToDelete.length > 0) {
-      setIsDeleting(true);
-      const toDelete = mediaToDelete.splice(0, 1).shift();
-      const toDeleteId = idFromUrl(toDelete["@id"]);
-      DeleteV1Media({ id: toDeleteId });
-    } else if (isDeleteSuccess) {
-      window.location.reload(false);
-    }
-  }, [mediaToDelete, isDeleteSuccess]);
-
-  /**
    * Deletes selected data, and closes modal.
    */
   function handleDelete() {
-    setMediaToDelete(selectedMedia);
+    // @TODO: delete elements
     setShowDeleteModal(false);
     setSelectedMedia([]);
   }
@@ -150,12 +138,9 @@ function MediaList({ fromModal, handleSelected }) {
   function handleChecked(data) {
     const mediaData = data;
     mediaData.selected = !mediaData.selected;
-    const selectedData = selectedHelper(mediaData, [...selectedMedia]).filter(
-      (media) => media.selected
-    );
-    setSelectedMedia(selectedData);
+    setSelectedMedia(selectedHelper(mediaData, [...selectedMedia]));
     if (fromModal) {
-      handleSelected(selectedData);
+      handleSelected(selectedHelper(mediaData, [...selectedMedia]));
     }
   }
 
@@ -200,7 +185,7 @@ function MediaList({ fromModal, handleSelected }) {
         </Row>
 
         <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5  media-list">
-          {media.map((data) => (
+          {getListData().map((data) => (
             <div key={data.id} className="col mb-3">
               <div
                 className={`card bg-light h-100 media-item +
@@ -212,7 +197,7 @@ function MediaList({ fromModal, handleSelected }) {
                   onClick={() => handleChecked(data)}
                 >
                   <img
-                    src={data.assets.uri}
+                    src={data.url}
                     className="card-img-top"
                     alt={data.description}
                   />
@@ -233,7 +218,7 @@ function MediaList({ fromModal, handleSelected }) {
                     <div className="col-auto ms-auto">
                       <Link
                         className="btn btn-primary btn-sm"
-                        to={`/media/edit/${idFromUrl(data["@id"])}`}
+                        to={`/media/${data.id}`}
                       >
                         {t("media-list.edit-button")}
                       </Link>
@@ -250,12 +235,6 @@ function MediaList({ fromModal, handleSelected }) {
           ))}
         </div>
       </ContentBody>
-      <Pagination
-        itemsCount={totalItems}
-        pageSize={pageSize}
-        currentPage={page}
-        onPageChange={updateUrlAndChangePage}
-      />
       <DeleteModal
         show={showDeleteModal}
         handleAccept={handleDelete}
