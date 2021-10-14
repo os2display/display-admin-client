@@ -64,6 +64,15 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
           onChange={onChange}
           formGroupClasses="mb-3"
         />
+        <FormInput
+          name="license"
+          type="text"
+          label={t("image.image-license-label")}
+          placeholder={t("image.image-license-placeholder")}
+          value={image.license}
+          onChange={onChange}
+          formGroupClasses="mb-3"
+        />
         <Button
           className="mt-3"
           variant="danger"
