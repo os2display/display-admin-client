@@ -21,7 +21,7 @@ import FormInput from "../util/forms/form-input";
  * @param {boolean|null} props.isSaveSuccess Is the save a success?
  * @param {boolean|null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
- * @returns {object} The slide form.
+ * @returns {object} The group form.
  */
 function GroupForm({
   group,
@@ -91,7 +91,7 @@ function GroupForm({
         <Button
           variant="secondary"
           type="button"
-          id="cancel_slide"
+          id="cancel_group"
           onClick={() => history.push("/group/list/")}
           className="me-md-3 col"
           size="lg"
@@ -102,7 +102,7 @@ function GroupForm({
           variant="primary"
           type="button"
           onClick={handleSubmit}
-          id="save_slide"
+          id="save_group"
           size="lg"
           className="col"
         >
