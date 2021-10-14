@@ -73,8 +73,8 @@ function MediaCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={isLoading}
-      isSaveSuccess={isSaveSuccess} // todo
-      isSaving={isLoading || isSaving || false} // todo
+      isSaveSuccess={isSaveSuccess}
+      isSaving={isLoading || isSaving || false}
       errors={saveError || false}
     />
   );
