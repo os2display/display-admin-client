@@ -16,7 +16,7 @@ import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";
 import MediaList from "./components/media/media-list";
-import MediaEdit from "./components/media/media-edit";
+// import MediaEdit from "./components/media/media-edit";
 import ThemesList from "./components/themes-list/themes-list";
 import commonDa from "./translations/da/common.json";
 import EditTheme from "./components/edit-theme/edit-theme";
@@ -69,7 +69,7 @@ function App() {
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
                   <Route path="/media/list" component={MediaList} />
-                  <Route path="/media/edit/:id" component={MediaEdit} />
+                  {/* <Route path="/media/edit/:id" component={MediaEdit} /> */}
                   <Route path="/media/create" component={MediaCreate} />
                   <Route path="/themes/" component={ThemesList} />
                   <Route path="/theme/:id" component={EditTheme} />

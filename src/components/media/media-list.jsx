@@ -264,14 +264,14 @@ function MediaList({ fromModal, handleSelected }) {
                       <div className="col-auto">
                         <h2 className="h6">{data.name}</h2>
                       </div>
-                      <div className="col-auto ms-auto">
+                      {/* <div className="col-auto ms-auto">
                         <Link
                           className="btn btn-primary btn-sm"
                           to={`/media/edit/${idFromUrl(data["@id"])}`}
                         >
                           {t("media-list.edit-button")}
                         </Link>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="row">
                       <div className="col">
