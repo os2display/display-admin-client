@@ -1,8 +1,9 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Toast from "../util/toast/toast";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
@@ -30,49 +31,54 @@ import Pagination from "../util/paginate/pagination";
 function MediaList({ fromModal, handleSelected }) {
   // Translations
   const { t } = useTranslation("common");
+
+  // Url params
   const { search } = useLocation();
-  const history = useHistory();
-  const pageSize = 10;
-  const [totalItems, setTotalItems] = useState();
-  const [mediaToDelete, setMediaToDelete] = useState([]);
-  const [isDeleting, setIsDeleting] = useState(false);
   const pageParams = new URLSearchParams(search).get("page");
   const searchParams = new URLSearchParams(search).get("search");
-  const [page, setPage] = useState(parseInt(pageParams ? pageParams : 1, 10));
+
+  // Misc
+  const history = useHistory();
+  const pageSize = 10;
+
+  // State
+  const [mediaToDelete, setMediaToDelete] = useState([]);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [totalItems, setTotalItems] = useState(0);
+  const [media, setMedia] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedMedia, setSelectedMedia] = useState([]);
+  const [page, setPage] = useState(parseInt(pageParams || 1, 10));
+  const [searchText, setSearchText] = useState(
+    searchParams === null ? "" : searchParams
+  );
+
+  // Delete method
   const [DeleteV1Media, { isSuccess: isDeleteSuccess }] =
     useDeleteV1MediaByIdMutation();
+
+  // Get method
   const {
-    data,
+    data: mediaData,
     error: loadError,
     isLoading,
-  } = useGetV1MediaQuery({ page: page });
+  } = useGetV1MediaQuery({ page });
 
   /**
    * Set loaded data into form state.
    */
   useEffect(() => {
-    if (data) {
-      const mappedData = data["hydra:member"].map((mediaItem) => {
+    if (mediaData) {
+      const mappedData = mediaData["hydra:member"].map((mediaItem) => {
         return {
           selected: false,
           ...mediaItem,
         };
       });
       setMedia(mappedData);
-      setTotalItems(data["hydra:totalItems"]);
+      setTotalItems(mediaData["hydra:totalItems"]);
     }
-  }, [data]);
-
-  // State
-  const [media, setMedia] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedMedia, setSelectedMedia] = useState([]);
-  const [searchText, setSearchText] = useState(
-    searchParams === null ? "" : searchParams
-  );
-
-  // Disable delete button
-  const disableDeleteButton = !selectedMedia.length > 0;
+  }, [mediaData]);
 
   /**
    * Closes delete modal.
@@ -144,14 +150,14 @@ function MediaList({ fromModal, handleSelected }) {
   /**
    * Sets the selected media in state.
    *
-   * @param {object} data
+   * @param {object} inputData
    * The selected media.
    */
-  function handleChecked(data) {
-    const mediaData = data;
-    mediaData.selected = !mediaData.selected;
-    const selectedData = selectedHelper(mediaData, [...selectedMedia]).filter(
-      (media) => media.selected
+  function handleChecked(inputData) {
+    const localMedia = inputData;
+    localMedia.selected = !localMedia.selected;
+    const selectedData = selectedHelper(localMedia, [...selectedMedia]).filter(
+      ({ selected }) => selected
     );
     setSelectedMedia(selectedData);
     if (fromModal) {
@@ -161,6 +167,8 @@ function MediaList({ fromModal, handleSelected }) {
 
   return (
     <>
+      <Toast show={loadError} text={t("media-list.media-get-error")} />
+      <Toast show={isDeleteSuccess} text={t("playlists-list.deleted")} />
       <Row className="align-items-center justify-content-between mt-2">
         <Col>
           <h1>{t("media-list.header")}</h1>
@@ -177,7 +185,7 @@ function MediaList({ fromModal, handleSelected }) {
                 <Button
                   variant="danger"
                   id="delete_media_button"
-                  disabled={disableDeleteButton}
+                  disabled={!selectedMedia.length > 0}
                   onClick={() => setShowDeleteModal(true)}
                 >
                   {t("media-list.delete-button")}
@@ -198,57 +206,84 @@ function MediaList({ fromModal, handleSelected }) {
             />
           </Col>
         </Row>
-
-        <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5  media-list">
-          {media.map((data) => (
-            <div key={data.id} className="col mb-3">
-              <div
-                className={`card bg-light h-100 media-item +
+        {isDeleting && (
+          <>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="m-1"
+            />
+            {t("media-list.deleting")}
+          </>
+        )}
+        {isLoading && !isDeleting && (
+          <>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="m-1"
+            />
+            {t("media-list.loading")}
+          </>
+        )}
+        {!isDeleting && !isLoading && (
+          <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5 media-list">
+            {media.map((data) => (
+              <div key={data["@id"]} className="col mb-3">
+                <div
+                  className={`card bg-light h-100 media-item +
                   ${data.selected ? " selected" : ""}`}
-              >
-                <button
-                  type="button"
-                  className="media-item-button"
-                  onClick={() => handleChecked(data)}
                 >
-                  <img
-                    src={data.assets.uri}
-                    className="card-img-top"
-                    alt={data.description}
+                  <button
+                    type="button"
+                    className="media-item-button"
+                    onClick={() => handleChecked(data)}
+                  >
+                    <img
+                      src={data.assets.uri}
+                      className="card-img-top"
+                      alt={data.description}
+                    />
+                  </button>
+                  <Form.Check
+                    type="checkbox"
+                    checked={data.selected}
+                    tabIndex={-1}
+                    aria-label={t("media-list.checkbox-form-aria-label")}
+                    readOnly
                   />
-                </button>
-                <Form.Check
-                  type="checkbox"
-                  checked={data.selected}
-                  tabIndex={-1}
-                  aria-label={t("media-list.checkbox-form-aria-label")}
-                  readOnly
-                />
 
-                <div className="card-body">
-                  <div className="row align-items-center">
-                    <div className="col-auto">
-                      <h2 className="h6">{data.name}</h2>
+                  <div className="card-body">
+                    <div className="row align-items-center">
+                      <div className="col-auto">
+                        <h2 className="h6">{data.name}</h2>
+                      </div>
+                      <div className="col-auto ms-auto">
+                        <Link
+                          className="btn btn-primary btn-sm"
+                          to={`/media/edit/${idFromUrl(data["@id"])}`}
+                        >
+                          {t("media-list.edit-button")}
+                        </Link>
+                      </div>
                     </div>
-                    <div className="col-auto ms-auto">
-                      <Link
-                        className="btn btn-primary btn-sm"
-                        to={`/media/edit/${idFromUrl(data["@id"])}`}
-                      >
-                        {t("media-list.edit-button")}
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col">
-                      <span className="small">{data.description}</span>
+                    <div className="row">
+                      <div className="col">
+                        <span className="small">{data.description}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </ContentBody>
       <Pagination
         itemsCount={totalItems}

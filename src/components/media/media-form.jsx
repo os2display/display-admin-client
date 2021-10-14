@@ -10,10 +10,10 @@ import ContentFooter from "../util/content-footer/content-footer";
 import ImageUploader from "../util/image-uploader/image-uploader";
 
 /**
- * The slide form component.
+ * The media form component.
  *
  * @param {object} props - The props.
- * @param {object} props.group The slide object to modify in the form.
+ * @param {object} props.media The media object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {boolean} props.isSaving Is the form saving?
@@ -112,7 +112,7 @@ function MediaForm({
 }
 
 MediaForm.propTypes = {
-  group: PropTypes.objectOf(PropTypes.any).isRequired,
+  media: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isSaving: PropTypes.bool.isRequired,

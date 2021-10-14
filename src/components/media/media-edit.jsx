@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useParams, Redirect } from "react-router";
-import { Form, Button } from "react-bootstrap";
+import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useGetV1MediaByIdQuery } from "../../redux/api/api.generated";
 import MediaForm from "./media-form";
@@ -23,7 +22,7 @@ function MediaEdit() {
    */
   useEffect(() => {
     if (data) {
-      let dataCopy = { ...data };
+      const dataCopy = { ...data };
       dataCopy.url = data.assets.uri;
       setFormStateObject({ images: [dataCopy] });
       setHeaderText(`${headerText}: ${dataCopy.title}`);
@@ -47,13 +46,7 @@ function MediaEdit() {
   /**
    * Handles submit.
    */
-  function handleSubmit() {
-    const saveData = {
-      id,
-      screenGroupScreenGroupInput: JSON.stringify(formStateObject),
-    };
-    PutV1ScreenGroup(saveData);
-  }
+  function handleSubmit() {}
   return (
     <>
       {formStateObject && (

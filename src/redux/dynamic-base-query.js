@@ -12,7 +12,10 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   }
 
   // post or put from media pages
-  if (!newArgs.url.indexOf("media") === -1 && !Object.prototype.hasOwnProperty.call(newArgs.headers, "content-type")) {
+  if (
+    !newArgs.url.indexOf("media") === -1 &&
+    !Object.prototype.hasOwnProperty.call(newArgs.headers, "content-type")
+  ) {
     newArgs.headers["content-type"] = "application/ld+json";
   }
 

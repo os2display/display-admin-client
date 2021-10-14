@@ -57,7 +57,7 @@ function ScreenForm({
    * @param {string} filter - the filter.
    */
   function onFilter(filter) {
-    console.log(filter);
+    console.log(filter); // eslint-disable-line no-console
   }
 
   useEffect(() => {

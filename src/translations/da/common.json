@@ -128,11 +128,15 @@
     "button-label": "Luk denne dialog"
   },
   "media-list": {
+    "deleted": "Medierne er blevet slettet",
+    "media-get-error": "Der skete en fejl da medierne skulle hentes",
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
     "upload-new-media": "Upload",
     "delete-button": "Slet",
-    "edit-button": "Rediger"
+    "edit-button": "Rediger",
+    "deleting": "Sletter elementer...",
+    "loading": "Henter elementer..."
   },
   "media-create": {
     "create-media": "Upload"
@@ -349,6 +353,7 @@
     "deselect-all": "Fravælg alle"
   },
   "image": {
+    "image-currently-uploading": "Billedet du er ved at overføre",
     "remove-image": "Fjern billedet",
     "image-name-label": "Billedets navn",
     "image-name-placeholder": "Skriv billedets navn",

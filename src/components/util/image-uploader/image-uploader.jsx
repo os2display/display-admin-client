@@ -94,6 +94,7 @@ function ImageUploader({
   };
 
   return (
+    // @TODO: error handling
     <div className={false ? "invalid" : ""}>
       <ImageUploading
         multiple
@@ -139,6 +140,7 @@ function ImageUploader({
                       ? "drag-drop-area drag-drop-area-active"
                       : "drag-drop-area"
                   }
+                  // @TODO: error handling
                   style={false ? { borderColor: "red" } : {}}
                   onDrop={dragProps.onDrop}
                   onDragEnter={dragProps.onDragEnter}
@@ -169,12 +171,12 @@ function ImageUploader({
           </div>
         )}
       </ImageUploading>
+      {/* @TODO: error handling */}
       {false && (
         <div className="invalid-feedback-image-uploader">
           {invalidInputText}
         </div>
       )}
-
       <MediaModal
         show={showMediaModal}
         onClose={onCloseMediaModal}

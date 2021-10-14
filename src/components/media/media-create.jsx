@@ -1,15 +1,13 @@
 import { React, useState, useEffect } from "react";
-import { useParams, Redirect } from "react-router";
-import { Form, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { usePostMediaCollectionMutation } from "../../redux/api/api.generated";
 import MediaForm from "./media-form";
 
 /**
- * The edit media component.
+ * The create media component.
  *
  * @returns {object}
- * The edit media page.
+ * The create media page.
  */
 function MediaCreate() {
   const { t } = useTranslation("common");
@@ -20,7 +18,7 @@ function MediaCreate() {
 
   const [
     PostV1MediaCollection,
-    { data, isLoading, error: saveError, isSuccess: isSaveSuccess },
+    { isLoading, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -54,9 +52,9 @@ function MediaCreate() {
    * Handles submit.
    */
   function handleSubmit() {
-    let localMediaToCreate = [];
+    const localMediaToCreate = [];
     formStateObject.images.forEach((element) => {
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append("file", element.file);
       formData.append("title", element.title);
       formData.append("description", element.description);

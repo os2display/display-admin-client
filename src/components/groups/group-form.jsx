@@ -10,10 +10,10 @@ import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 
 /**
- * The slide form component.
+ * The group form component.
  *
  * @param {object} props - The props.
- * @param {object} props.group The slide object to modify in the form.
+ * @param {object} props.group The group object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {boolean} props.isSaving Is the form saving?

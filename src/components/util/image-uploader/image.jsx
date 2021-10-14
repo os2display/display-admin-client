@@ -9,8 +9,6 @@ import "./image-uploader.scss";
  * The props.
  * @param {object} props.inputImage
  * The image object.
- * @param {Array} props.errors
- * A list of errors, or null.
  * @param {Function} props.onImageRemove
  * A callback on remove image.
  * @param {Function} props.handleChange
@@ -20,7 +18,7 @@ import "./image-uploader.scss";
  * @returns {object}
  * The image uploader.
  */
-function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
+function Image({ inputImage, onImageRemove, handleChange, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
@@ -41,7 +39,7 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
     <Row className="mb-3">
       <Col md="3" className="mb-3 mb-md-0">
         <div className="image h-100 justify-content-center d-flex rounded">
-          <img src={image.url} alt={image.description} />
+          <img src={image.url} alt={t("image.image-currently-uploading")} />
         </div>
       </Col>
       <Col md="9">
@@ -85,15 +83,10 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
   );
 }
 
-Image.defaultProps = {
-  errors: [],
-};
-
 Image.propTypes = {
   inputImage: PropTypes.func.isRequired,
   onImageRemove: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string),
   index: PropTypes.number.isRequired,
 };
 
