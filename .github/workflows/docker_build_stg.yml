@@ -29,5 +29,5 @@ jobs:
           build-args: |
             APP_VERSION=${{ env.APP_VERSION }}
           push: true
-          tags: itkdev/itkdev/os2display-api-admin:${{ env.VERSION }}
+          tags: itkdev/os2display-admin-client:${{ env.VERSION }}
 
