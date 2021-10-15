@@ -9,8 +9,6 @@ import "./image-uploader.scss";
  * The props.
  * @param {object} props.inputImage
  * The image object.
- * @param {Array} props.errors
- * A list of errors, or null.
  * @param {Function} props.onImageRemove
  * A callback on remove image.
  * @param {Function} props.handleChange
@@ -20,7 +18,7 @@ import "./image-uploader.scss";
  * @returns {object}
  * The image uploader.
  */
-function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
+function Image({ inputImage, onImageRemove, handleChange, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
@@ -41,30 +39,35 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
     <Row className="mb-3">
       <Col md="3" className="mb-3 mb-md-0">
         <div className="image h-100 justify-content-center d-flex rounded">
-          <img src={image.url} alt="" />
+          <img src={image.url} alt={t("image.image-currently-uploading")} />
         </div>
       </Col>
       <Col md="9">
         <FormInput
-          name="mediaName"
+          name="title"
           type="text"
-          errors={errors}
           label={t("image.image-name-label")}
           placeholder={t("image.image-name-placeholder")}
-          value={image.mediaName}
-          dataUrl={image.url}
+          value={image.title}
           onChange={onChange}
           formGroupClasses="mb-3"
         />
         <FormInput
-          name="mediaDescription"
+          name="description"
           type="text"
-          errors={errors}
-          dataUrl={image.url}
           label={t("image.image-description-label")}
           placeholder={t("image.image-description-placeholder")}
           helpText={t("image.image-description-help-text")}
-          value={image.mediaDescription}
+          value={image.description}
+          onChange={onChange}
+          formGroupClasses="mb-3"
+        />
+        <FormInput
+          name="license"
+          type="text"
+          label={t("image.image-license-label")}
+          placeholder={t("image.image-license-placeholder")}
+          value={image.license}
           onChange={onChange}
           formGroupClasses="mb-3"
         />
@@ -80,15 +83,10 @@ function Image({ inputImage, onImageRemove, handleChange, errors, index }) {
   );
 }
 
-Image.defaultProps = {
-  errors: [],
-};
-
 Image.propTypes = {
   inputImage: PropTypes.func.isRequired,
   onImageRemove: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string),
   index: PropTypes.number.isRequired,
 };
 

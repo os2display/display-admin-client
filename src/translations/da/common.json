@@ -128,20 +128,29 @@
     "button-label": "Luk denne dialog"
   },
   "media-list": {
+    "deleted": "Medierne er blevet slettet",
+    "media-get-error": "Der skete en fejl da medierne skulle hentes",
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
     "upload-new-media": "Upload",
     "delete-button": "Slet",
-    "media-name": "Navn",
-    "media-description": "Beskrivelse",
-    "edit-button": "Rediger"
+    "edit-button": "Rediger",
+    "deleting": "Sletter elementer...",
+    "loading": "Henter elementer..."
   },
-  "edit-media": {
-    "upload-new-media": "Upload",
-    "edit-media": "Rediger",
+  "media-create": {
+    "create-media": "Upload"
+  },
+  "media-edit": {
+    "edit-media": "Rediger"
+  },
+  "media-form": {
     "save-button": "Gem medie",
-    "media-validation": "Der skal uploades et eller flere billeder til denne template",
-    "cancel-button": "Annuller"
+    "cancel-button": "Annuller",
+    "back-to-list": "Tilbage til listen",
+    "saving": "Gemmer...",
+    "saved": "Mediet blev uploaded",
+    "error": "Der skete en fejl"
   },
   "slide-edit": {
     "edit-slide-header": "Rediger slide"
@@ -344,12 +353,15 @@
     "deselect-all": "Fravælg alle"
   },
   "image": {
+    "image-currently-uploading": "Billedet du er ved at overføre",
     "remove-image": "Fjern billedet",
     "image-name-label": "Billedets navn",
     "image-name-placeholder": "Skriv billedets navn",
     "image-description-label": "Beskrivelse af billedet",
     "image-description-placeholder": "Udfyld beskrivelse af billedet",
-    "image-description-help-text": "Denne beskrivelse benyttes til alt-text, og er derfor påkrævet"
+    "image-description-help-text": "Denne beskrivelse benyttes til alt-tekst, og er derfor påkrævet",
+    "image-license-label": "Billedets licens",
+    "image-license-placeholder": "Udfyld billedets licens"
   },
   "drag-and-drop-table": {
     "table-header-for-indicator": "Drag and drop indikator",
