@@ -69,7 +69,7 @@ function App() {
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
                   <Route path="/media/list" component={MediaList} />
-                  {/* <Route path="/media/edit/:id" component={MediaEdit} /> */}
+                  {/* <Route path="/media/edit/:id" component={MediaEdit} /> @TODO: readd when the api supports putting media */}
                   <Route path="/media/create" component={MediaCreate} />
                   <Route path="/themes/" component={ThemesList} />
                   <Route path="/theme/:id" component={EditTheme} />
