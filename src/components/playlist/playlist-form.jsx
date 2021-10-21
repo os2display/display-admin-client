@@ -4,14 +4,13 @@ import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
+import RRule from "../rrule/rrule";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import Toast from "../util/toast/toast";
-// import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
-// import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
 
 /**
  * The playlist form component.
@@ -77,6 +76,14 @@ function PlaylistForm({
               placeholder={t("edit-playlist.playlist-description-placeholder")}
               value={playlist.description}
               onChange={handleInput}
+            />
+          </ContentBody>
+          <ContentBody>
+            <h2 className="h4">{t("edit-playlist.schedule-header")}</h2>
+            <RRule
+              value={playlist.schedule}
+              name="schedule"
+              handleChange={handleInput}
             />
           </ContentBody>
           <ContentBody>

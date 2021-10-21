@@ -210,7 +210,8 @@
     "playlist-name-label": "Spillelistens navn",
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
-    "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten"
+    "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten",
+    "schedule-header": "Planlægning"
   },
   "playlist-drag-and-drop": {
     "columns": {
