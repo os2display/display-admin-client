@@ -23,7 +23,13 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/media",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            title: queryArg.title,
+                            description: queryArg.description,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
@@ -51,16 +57,42 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/media/" + queryArg.id + "/slides",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            published: queryArg.published,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
             getV1Playlists: build.query({
                 query: function (queryArg) {
-                    return ({
-                        url: "/v1/playlists",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
-                    });
+                    if (queryArg.orderBy == "title") {
+                        return ({
+                            url: "/v1/playlists",
+                            params: {
+                                page: queryArg.page,
+                                itemsPerPage: queryArg.itemsPerPage,
+                                title: queryArg.title,
+                                description: queryArg.description,
+                                published: queryArg.published,
+                                "order[title]": queryArg.order
+                            }
+                        });
+                    } else {
+                        return ({
+                            url: "/v1/playlists",
+                            params: {
+                                page: queryArg.page,
+                                itemsPerPage: queryArg.itemsPerPage,
+                                title: queryArg.title,
+                                description: queryArg.description,
+                                published: queryArg.published,
+                                "order[description]": queryArg.order
+                            }
+                        });
+                    }
                 }
             }),
             postV1Playlists: build.mutation({
@@ -96,7 +128,11 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/playlists/" + queryArg.id + "/screens",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
@@ -104,7 +140,11 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/playlists/" + queryArg.id + "/slides",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            published: queryArg.published
+                        }
                     });
                 }
             }),
@@ -129,7 +169,13 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/screen-groups",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            title: queryArg.title,
+                            description: queryArg.description,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
@@ -166,7 +212,13 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/screens",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            title: queryArg.title,
+                            description: queryArg.description,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
@@ -228,7 +280,11 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/screens/" + queryArg.id + "/screen-groups",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
@@ -253,7 +309,14 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/slides",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            title: queryArg.title,
+                            description: queryArg.description,
+                            published: queryArg.published,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
@@ -290,7 +353,13 @@ exports.api = (0, react_1.createApi)({
                 query: function (queryArg) {
                     return ({
                         url: "/v1/templates",
-                        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                        params: {
+                            page: queryArg.page,
+                            itemsPerPage: queryArg.itemsPerPage,
+                            title: queryArg.title,
+                            description: queryArg.description,
+                            order: queryArg.order
+                        }
                     });
                 }
             }),
