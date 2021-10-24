@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, Spinner, Toast } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -20,7 +20,6 @@ import MergeModal from "../../merge-modal/merge-modal";
  * @param {boolean} props.withChart - If the list should display a gantt chart
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
- * @param {number} props.currentPage - The current page.
  * @param {Function} props.handleDelete - For deleting elements in the list.
  * @returns {object} The List.
  */
@@ -28,66 +27,53 @@ function List({
   data,
   columns,
   selectedRows,
-  showMerge,
   clearSelectedRows,
+  deleteSuccess,
+  error,
   withChart,
   handlePageChange,
+  handleSort,
+  handleSearch,
   totalItems,
-  currentPage,
+  isLoading,
   handleDelete,
 }) {
   const { t } = useTranslation("common");
-  const { search } = useLocation();
   const history = useHistory();
+  // Page params
+  const { search } = useLocation();
   const searchParams = new URLSearchParams(search).get("search");
   const sortParams = new URLSearchParams(search).get("sort");
   const orderParams = new URLSearchParams(search).get("order");
   const pageParams = new URLSearchParams(search).get("page");
-  // At least two rows must be selected for merge.
-  const disableMergeButton = selectedRows.length < 2;
+
   // At least one row must be selected for deletion.
   const disableDeleteButton = !selectedRows.length > 0;
-  const [searchText, setSearchText] = useState(
-    searchParams !== null ? searchParams : ""
-  );
-  const [sortBy] = useState({
-    path: sortParams || "name",
-    order: orderParams || "asc",
-  });
-  // const [sortBy, setSortBy] = useState({
-  //   path: sortParams || "name",
-  //   order: orderParams || "asc",
-  // });
   const pageSize = 10;
-  const [showMergeModal, setViewMergeModal] = useState(false);
 
-  /** @param {string} newSearchText Updates the search text state and url. */
-  function handleSearch(newSearchText) {
-    setSearchText(newSearchText);
+  function updateUrlParams(dataKey, value) {
+    const params = new URLSearchParams(search);
+    params.delete(dataKey);
+    if (value) {
+      params.append(dataKey, value);
+    }
+    history.replace({ search: params.toString() });
   }
 
-  /** If they search or filter, the pagination is reset. */
-  useEffect(() => {
-    const params = new URLSearchParams(search);
-    // if (searchText) {
-    //   params.delete("search");
-    //   params.append("search", searchText);
-    // }
-    // params.delete("sort");
-    // params.append("sort", sortBy.path);
-    // params.delete("order");
-    // params.append("order", sortBy.order);
-    history.replace({ search: params.toString() });
-    handlePageChange(currentPage);
-  }, []);
+  /** @param {string} newSearchText Updates the search text state and url. */
+  function onSearch(newSearchText) {
+    updateUrlParams("search", newSearchText);
+  }
 
   /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
-    const params = new URLSearchParams(search);
-    params.delete("page");
-    params.append("page", nextPage);
-    history.replace({ search: params.toString() });
-    handlePageChange(nextPage);
+    updateUrlParams("page", nextPage);
+  }
+
+  /** @param {number} sortByInput - The next page. */
+  function updateUrlAndSort(sortByInput) {
+    updateUrlParams("sort", sortByInput.path);
+    updateUrlParams("order", sortByInput.order);
   }
 
   /** Sets page from url using callback */
@@ -99,25 +85,35 @@ function List({
     }
   }, [pageParams]);
 
-  /** Todo */
-  function handleSort() {}
+  useEffect(() => {
+    if (pageParams && sortParams) {
+      handleSort({
+        path: sortParams,
+        order: orderParams,
+      });
+    } else {
+      updateUrlAndChangePage({
+        path: "title",
+        order: "asc",
+      });
+    }
+  }, [orderParams, sortParams]);
 
-  /** Closes merge modal. */
-  function onCloseMergeModal() {
-    setViewMergeModal(false);
-  }
-
-  /** Should handle merge. */
-  function handleMerge() {
-    // @TODO merge elements
-    setViewMergeModal(false);
-  }
+  useEffect(() => {
+    if (searchParams) {
+      handleSearch(searchParams);
+    } else {
+      handleSearch("");
+    }
+  }, [searchParams]);
 
   return (
     <>
+      <Toast show={deleteSuccess} text={t("list.get-error")} />
+      <Toast show={error} text={t("list.deleted")} />
       <Row className="my-2">
         <Col>
-          <SearchBox value={searchText} onChange={handleSearch} />
+          <SearchBox value={searchParams} onChange={onSearch} />
         </Col>
         <Col className="d-flex justify-content-end">
           <Button
@@ -129,18 +125,6 @@ function List({
           >
             {t("list.delete-button")}
           </Button>
-
-          {showMerge && (
-            <Button
-              className="me-3"
-              id="merge-button"
-              disabled={disableMergeButton}
-              onClick={() => setViewMergeModal(true)}
-              variant="success"
-            >
-              {t("list.merge-button")}
-            </Button>
-          )}
           <Button
             id="clear-rows-button"
             disabled={selectedRows.length === 0}
@@ -151,34 +135,34 @@ function List({
           </Button>
         </Col>
       </Row>
-      <Table
-        onSort={handleSort}
-        data={data}
-        sortColumn={sortBy}
-        columns={columns}
-        selectedRows={selectedRows}
-        withChart={withChart}
-      />
+      <Row>
+        <Col className="d-flex justify-content-center">
+          {isLoading && <Spinner animation="border" className="m-5" />}
+        </Col>
+      </Row>
+      {!isLoading && (
+        <Table
+          onSort={updateUrlAndSort}
+          data={data}
+          sortOrder={orderParams}
+          sortPath={sortParams}
+          columns={columns}
+          selectedRows={selectedRows}
+          withChart={withChart}
+        />
+      )}
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}
         currentPage={parseInt(pageParams, 10)}
         onPageChange={updateUrlAndChangePage}
       />
-      <MergeModal
-        show={showMergeModal}
-        handleAccept={handleMerge}
-        onClose={onCloseMergeModal}
-        dataStructureToDisplay={selectedRows}
-      />
     </>
   );
 }
 
 List.defaultProps = {
-  showMerge: false,
   withChart: false,
-  currentPage: 1,
 };
 
 List.propTypes = {
@@ -187,12 +171,10 @@ List.propTypes = {
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes.isRequired,
-  showMerge: PropTypes.bool,
   clearSelectedRows: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
   withChart: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
-  currentPage: PropTypes.number,
 };
 export default List;

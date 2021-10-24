@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Toast from "../util/toast/toast";
 import selectedHelper from "../util/helpers/selectedHelper";
 import ListButton from "../util/list/list-button";
 import List from "../util/list/list";
@@ -12,6 +11,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import Published from "../slide/published";
 import {
   useGetV1PlaylistsQuery,
   useDeleteV1PlaylistsByIdMutation,
@@ -25,25 +25,26 @@ import {
  */
 function PlaylistList() {
   const { t } = useTranslation("common");
+
+  // Local state
   const [selectedRows, setSelectedRows] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [sortBy, setSortBy] = useState();
   const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
   const [playlistsToDelete, setPlaylistsToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [searchText, setSearchText] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
+
+  // Delete call
   const [DeleteV1Playlists, { isSuccess: isDeleteSuccess }] =
     useDeleteV1PlaylistsByIdMutation();
-
-  /** @param {Array} slideData The array of playlists. */
-  function openInfoModal(slideData) {
-    setOnSlides(slideData);
-    setShowInfoModal(true);
-  }
 
   /** Deletes multiple playlists. */
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
+      // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       const toDelete = playlistsToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
@@ -52,29 +53,6 @@ function PlaylistList() {
       window.location.reload(false);
     }
   }, [playlistsToDelete, isDeleteSuccess]);
-
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-  }
-
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} data The selected row.
-   */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
-  }
 
   /**
    * Opens the delete modal
@@ -86,6 +64,71 @@ function PlaylistList() {
       setSelectedRows([{ "@id": item["@id"], title: item.title }]);
     }
     setShowDeleteModal(true);
+  }
+
+  /** Deletes playlist(s), and closes modal. */
+  function handleDelete() {
+    setPlaylistsToDelete(selectedRows);
+    clearSelectedRows();
+    setShowDeleteModal(false);
+  }
+
+  /** Closes the delete modal. */
+  function onCloseDeleteModal() {
+    setSelectedRows([]);
+    setShowDeleteModal(false);
+  }
+
+  /** @param {Array} slideData The array of playlists. */
+  function openInfoModal(slideData) {
+    setOnSlides(slideData);
+    setShowInfoModal(true);
+  }
+
+  /** Closes the info modal. */
+  function onCloseInfoModal() {
+    setShowInfoModal(false);
+  }
+
+  /**
+   * Sets next page.
+   *
+   * @param {number} pageNumber - The next page.
+   */
+  function onChangePage(pageNumber) {
+    setPage(pageNumber);
+  }
+
+  /**
+   * Handles sort.
+   *
+   * @param {Object} sortBy - How the data should be sorted.
+   */
+  function onChangeSort(sortBy) {
+    setSortBy(sortBy);
+  }
+
+  /**
+   * Handles search.
+   *
+   * @param {Object} searchText - The search text.
+   */
+  function onSearch(searchText) {
+    setSearchText(searchText);
+  }
+
+  /**
+   * Sets the selected row in state.
+   *
+   * @param {object} data The selected row.
+   */
+  function handleSelected(data) {
+    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  }
+
+  /** Clears the selected rows. */
+  function clearSelectedRows() {
+    setSelectedRows([]);
   }
 
   // The columns for the table.
@@ -106,15 +149,20 @@ function PlaylistList() {
       label: t("playlists-list.columns.name"),
     },
     {
-      sort: true,
+      path: "published",
+      label: t("playlists-list.columns.published"),
+      content: (data) => <Published published={data.published}></Published>,
+    },
+    {
       key: "slides",
       label: t("playlists-list.columns.number-of-slides"),
-      content: (data) =>
-        ListButton(
-          openInfoModal,
-          data.slides,
-          useGetV1PlaylistsByIdSlidesQuery
-        ),
+      content: (data) => (
+        <ListButton
+          callback={openInfoModal}
+          inputData={data.slides}
+          apiCall={useGetV1PlaylistsByIdSlidesQuery}
+        />
+      ),
     },
     {
       key: "edit",
@@ -128,73 +176,56 @@ function PlaylistList() {
     {
       key: "delete",
       content: (data) => (
-        <>
-          <Button
-            variant="danger"
-            disabled={selectedRows.length > 0}
-            onClick={() => openDeleteModal(data)}
-          >
-            {t("playlists-list.delete-button")}
-          </Button>
-        </>
+        <Button
+          variant="danger"
+          disabled={selectedRows.length > 0}
+          onClick={() => openDeleteModal(data)}
+        >
+          {t("playlists-list.delete-button")}
+        </Button>
       ),
     },
   ];
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
-  /** Deletes playlist(s), and closes modal. */
-  function handleDelete() {
-    setPlaylistsToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseModal() {
-    setSelectedRows([]);
-    setShowDeleteModal(false);
-  }
 
   const {
     data,
     error: playlistsGetError,
     isLoading,
-  } = useGetV1PlaylistsQuery({ page });
-
+  } = useGetV1PlaylistsQuery({
+    page: page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+  });
   return (
     <>
-      <Toast
-        show={playlistsGetError}
-        text={t("playlists-list.playlists-get-error")}
-      />
-      <Toast show={isDeleteSuccess} text={t("playlists-list.deleted")} />
       <ContentHeader
         title={t("playlists-list.header")}
         newBtnTitle={t("playlists-list.create-new-playlist")}
         newBtnLink="/playlist/create"
       />
-      <ContentBody>
-        {!(isLoading || isDeleting) && data && data["hydra:member"] && (
+      {data && data["hydra:member"] && (
+        <ContentBody>
           <List
+            error={playlistsGetError}
+            deleteSuccess={isDeleteSuccess}
             columns={columns}
+            isLoading={isLoading || isDeleting}
+            handleSort={onChangeSort}
+            handlePageChange={onChangePage}
             totalItems={data["hydra:totalItems"]}
             currentPage={page}
-            handlePageChange={onChangePage}
+            handleSearch={onSearch}
             selectedRows={selectedRows}
             data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
           />
-        )}
-        {isLoading && <Spinner animation="grow" />}
-      </ContentBody>
+        </ContentBody>
+      )}
       <DeleteModal
         show={showDeleteModal}
-        onClose={onCloseModal}
+        onClose={onCloseDeleteModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
       />

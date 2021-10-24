@@ -16,14 +16,23 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  * @param {boolean} props.withChart If the table should display a gantt chart
  * @returns {object} The table.
  */
-function Table({ columns, selectedRows, onSort, sortColumn, data, withChart }) {
+function Table({
+  columns,
+  selectedRows,
+  onSort,
+  sortPath,
+  sortOrder,
+  data,
+  withChart,
+}) {
   return (
     <div className="table-responsive">
       <table className="table table-hover">
         <TableHeader
           columns={columns}
           onSort={onSort}
-          sortColumn={sortColumn}
+          sortPath={sortPath}
+          sortOrder={sortOrder}
         />
         <TableBody
           withChart={withChart}

@@ -19,11 +19,8 @@ import "./table-header.scss";
  * @param {boolean} props.draggable If table has draggable rows.
  * @returns {object} The table body.
  */
-function TableHeader({ columns, sortColumn, onSort, draggable }) {
+function TableHeader({ columns, sortPath, sortOrder, onSort, draggable }) {
   const { t } = useTranslation("common");
-
-  let path = sortColumn?.path;
-  let order = sortColumn?.order;
 
   /**
    * Sorts the rows, according to chosenpath.
@@ -31,13 +28,13 @@ function TableHeader({ columns, sortColumn, onSort, draggable }) {
    * @param {object} chosenPath The sorting column
    */
   function sort(chosenPath) {
-    if (chosenPath === path) {
-      order = order === "asc" ? "desc" : "asc";
+    if (chosenPath === sortPath) {
+      sortOrder = sortOrder === "asc" ? "desc" : "asc";
     } else {
       path = chosenPath;
-      order = "asc";
+      sortOrder = "asc";
     }
-    onSort({ path, order });
+    onSort({ sortPath, sortOrder });
   }
 
   /**
@@ -47,10 +44,10 @@ function TableHeader({ columns, sortColumn, onSort, draggable }) {
    * @returns {object} The sorting icon.
    */
   function renderSortIcon(column) {
-    if (column.path !== path) {
+    if (column.path !== sortPath) {
       return <FontAwesomeIcon style={{ color: "grey" }} icon={faSort} />;
     }
-    if (order === "asc") {
+    if (sortOrder === "asc") {
       return <FontAwesomeIcon icon={faSortUp} />;
     }
     return <FontAwesomeIcon icon={faSortDown} />;

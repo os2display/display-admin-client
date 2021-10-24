@@ -7,7 +7,7 @@ import idFromUrl from "../helpers/id-from-url";
  * @param {Function} apiCall - The api to call
  * @returns {object} - The list button.
  */
-function ListButton(callback, inputData, apiCall) {
+function ListButton({ callback, inputData, apiCall }) {
   const [label, setLabel] = useState("");
   let data;
   if (!Array.isArray(inputData)) {

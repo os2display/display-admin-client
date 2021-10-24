@@ -93,9 +93,8 @@
     "edit-button": "Rediger"
   },
   "playlists-list": {
-    "playlists-get-error": "Der skete en fejl da spillelisterne skulle hentes",
-    "deleted": "Spillelisten er blevet slettet",
     "columns": {
+      "published": "Udgivet",
       "pick": "Vælg spilleliste",
       "name": "Navn",
       "on-screens": "Skærme tilknyttet",
@@ -351,7 +350,9 @@
   "list": {
     "delete-button": "Slet",
     "merge-button": "Konsolider",
-    "deselect-all": "Fravælg alle"
+    "deselect-all": "Fravælg alle",
+    "get-error": "Der skete en fejl da elementerne skulle hentes",
+    "deleted": "Element er blevet slettet"
   },
   "image": {
     "image-currently-uploading": "Billedet du er ved at overføre",
