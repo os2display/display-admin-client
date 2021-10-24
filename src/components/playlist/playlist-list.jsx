@@ -55,6 +55,20 @@ function PlaylistList() {
   }, [playlistsToDelete, isDeleteSuccess]);
 
   /**
+   * Sets the selected row in state.
+   *
+   * @param {object} data The selected row.
+   */
+  function handleSelected(data) {
+    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  }
+
+  /** Clears the selected rows. */
+  function clearSelectedRows() {
+    setSelectedRows([]);
+  }
+
+  /**
    * Opens the delete modal
    *
    * @param {object} item The item to delete
@@ -102,33 +116,19 @@ function PlaylistList() {
   /**
    * Handles sort.
    *
-   * @param {Object} sortBy - How the data should be sorted.
+   * @param {object} localSortBy - How the data should be sorted.
    */
-  function onChangeSort(sortBy) {
-    setSortBy(sortBy);
+  function onChangeSort(localSortBy) {
+    setSortBy(localSortBy);
   }
 
   /**
    * Handles search.
    *
-   * @param {Object} searchText - The search text.
+   * @param {object} localSearchText - The search text.
    */
-  function onSearch(searchText) {
-    setSearchText(searchText);
-  }
-
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} data The selected row.
-   */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
-  }
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
+  function onSearch(localSearchText) {
+    setSearchText(localSearchText);
   }
 
   // The columns for the table.
@@ -151,7 +151,8 @@ function PlaylistList() {
     {
       path: "published",
       label: t("playlists-list.columns.published"),
-      content: (data) => <Published published={data.published}></Published>,
+      // eslint-disable-next-line
+      content: ({ published }) => <Published published={published} />,
     },
     {
       key: "slides",
@@ -159,6 +160,7 @@ function PlaylistList() {
       content: (data) => (
         <ListButton
           callback={openInfoModal}
+          // eslint-disable-next-line
           inputData={data.slides}
           apiCall={useGetV1PlaylistsByIdSlidesQuery}
         />
@@ -192,7 +194,7 @@ function PlaylistList() {
     error: playlistsGetError,
     isLoading,
   } = useGetV1PlaylistsQuery({
-    page: page,
+    page,
     orderBy: sortBy?.path,
     order: sortBy?.order,
     title: searchText,
@@ -207,10 +209,10 @@ function PlaylistList() {
       {data && data["hydra:member"] && (
         <ContentBody>
           <List
-            error={playlistsGetError}
-            deleteSuccess={isDeleteSuccess}
+            error={playlistsGetError || false}
+            deleteSuccess={isDeleteSuccess || false}
             columns={columns}
-            isLoading={isLoading || isDeleting}
+            isLoading={isLoading || isDeleting || false}
             handleSort={onChangeSort}
             handlePageChange={onChangePage}
             totalItems={data["hydra:totalItems"]}

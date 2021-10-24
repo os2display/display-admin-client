@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect } from "react";
 import { Button, Col, Row, Spinner, Toast } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -8,19 +8,22 @@ import SearchBox from "../search-box/search-box";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
-import MergeModal from "../../merge-modal/merge-modal";
 
 /**
  * @param {object} props - The props.
  * @param {Array} props.data - The data for the list.
  * @param {Array} props.columns - The columns for the table.
  * @param {Array} props.selectedRows - The selected rows, for styling.
- * @param {object} props.showMerge - Whether to show the merge button.
  * @param {Function} props.clearSelectedRows - Callback to clear the selected rows.
  * @param {boolean} props.withChart - If the list should display a gantt chart
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
  * @param {Function} props.handleDelete - For deleting elements in the list.
+ * @param {boolean} props.deleteSuccess - If the calling component has deleted element with success.
+ * @param {boolean} props.error - If the calling component has an error.
+ * @param {Function} props.handleSort -  callback for sort.
+ * @param {Function} props.handleSearch - callback for seach.
+ * @param {boolean} props.isLoading - If the calling component is loading data.
  * @returns {object} The List.
  */
 function List({
@@ -51,6 +54,10 @@ function List({
   const disableDeleteButton = !selectedRows.length > 0;
   const pageSize = 10;
 
+  /**
+   * @param {string} dataKey - which data to delete/update
+   * @param {object} value - the update value
+   */
   function updateUrlParams(dataKey, value) {
     const params = new URLSearchParams(search);
     params.delete(dataKey);
@@ -176,5 +183,11 @@ List.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   withChart: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
+  deleteSuccess: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  handleSort: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };
+
 export default List;

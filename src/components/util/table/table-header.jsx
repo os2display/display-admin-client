@@ -7,16 +7,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import SortColumnProptypes from "../../proptypes/sort-column-proptypes";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import "./table-header.scss";
 
 /**
  * @param {object} props The props.
  * @param {Array} props.columns The columns for the table.
- * @param {object} props.sortColumn The column to sortby.
  * @param {Function} props.onSort Callback for on sort.
  * @param {boolean} props.draggable If table has draggable rows.
+ * @param {string} props.sortPath The path to sort by
+ * @param {string} props.sortOrder the order asc/desc
  * @returns {object} The table body.
  */
 function TableHeader({ columns, sortPath, sortOrder, onSort, draggable }) {
@@ -28,13 +28,16 @@ function TableHeader({ columns, sortPath, sortOrder, onSort, draggable }) {
    * @param {object} chosenPath The sorting column
    */
   function sort(chosenPath) {
+    let newSortOrder;
+    let newSortPath;
     if (chosenPath === sortPath) {
-      sortOrder = sortOrder === "asc" ? "desc" : "asc";
+      newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+      newSortPath = sortPath;
     } else {
-      path = chosenPath;
-      sortOrder = "asc";
+      newSortPath = chosenPath;
+      newSortOrder = "asc";
     }
-    onSort({ sortPath, sortOrder });
+    onSort({ path: newSortPath, order: newSortOrder });
   }
 
   /**
@@ -82,16 +85,16 @@ function TableHeader({ columns, sortPath, sortOrder, onSort, draggable }) {
 }
 
 TableHeader.defaultProps = {
-  sortColumn: {},
   onSort: () => {},
   draggable: false,
 };
 
 TableHeader.propTypes = {
-  sortColumn: SortColumnProptypes,
   columns: ColumnProptypes.isRequired,
   onSort: PropTypes.func,
   draggable: PropTypes.bool,
+  sortPath: PropTypes.string.isRequired,
+  sortOrder: PropTypes.string.isRequired,
 };
 
 export default TableHeader;
