@@ -99,6 +99,7 @@ function PlaylistCreate() {
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
+      schedule: formStateObject.schedule,
       published: {
         from: formStateObject.published.from,
         to: formStateObject.published.from,
