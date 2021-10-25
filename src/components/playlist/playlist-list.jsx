@@ -33,6 +33,7 @@ function PlaylistList() {
   const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
   const [playlistsToDelete, setPlaylistsToDelete] = useState([]);
+  const [isPublished, setIsPublished] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -111,6 +112,14 @@ function PlaylistList() {
    */
   function onChangePage(pageNumber) {
     setPage(pageNumber);
+  }
+  /**
+   * Sets is published
+   *
+   * @param {number} localIsPublished - Whether the playlist is published.
+   */
+  function onIsPublished(localIsPublished) {
+    setIsPublished(localIsPublished);
   }
 
   /**
@@ -198,6 +207,7 @@ function PlaylistList() {
     orderBy: sortBy?.path,
     order: sortBy?.order,
     title: searchText,
+    published: isPublished,
   });
   return (
     <>
@@ -216,12 +226,12 @@ function PlaylistList() {
             handleSort={onChangeSort}
             handlePageChange={onChangePage}
             totalItems={data["hydra:totalItems"]}
-            currentPage={page}
             handleSearch={onSearch}
             selectedRows={selectedRows}
             data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
+            handleIsPublished={onIsPublished}
           />
         </ContentBody>
       )}

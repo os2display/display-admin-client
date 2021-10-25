@@ -79,8 +79,12 @@ function List({
 
   /** @param {number} sortByInput - The next page. */
   function updateUrlAndSort(sortByInput) {
-    updateUrlParams("sort", sortByInput.path);
-    updateUrlParams("order", sortByInput.order);
+    const params = new URLSearchParams(search);
+    params.delete("sort");
+    params.delete("order");
+    params.append("sort", sortByInput.path);
+    params.append("order", sortByInput.order);
+    history.replace({ search: params.toString() });
   }
 
   /** Sets page from url using callback */
@@ -93,13 +97,13 @@ function List({
   }, [pageParams]);
 
   useEffect(() => {
-    if (pageParams && sortParams) {
+    if (orderParams && sortParams) {
       handleSort({
         path: sortParams,
         order: orderParams,
       });
     } else {
-      updateUrlAndChangePage({
+      updateUrlAndSort({
         path: "title",
         order: "asc",
       });

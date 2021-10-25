@@ -55,9 +55,13 @@ function ListButton({ callback, inputData, apiCall }) {
   );
 }
 
+ListButton.defaultProps = {
+  apiCall: () => {},
+};
+
 ListButton.propTypes = {
   inputData: PropTypes.objectOf(PropTypes.any).isRequired,
-  apiCall: PropTypes.bool.isRequired,
+  apiCall: PropTypes.bool,
   callback: PropTypes.func.isRequired,
 };
 
