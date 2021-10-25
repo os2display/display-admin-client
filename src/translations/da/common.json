@@ -171,7 +171,7 @@
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
-    "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide.",
+    "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide. Indtast søgning for at se installerede skabeloner.",
     "slide-publish-label": "Marker for at udgive dette slide",
     "slide-select-playlist-title": "Spillelister",
     "slide-publish-title": "Udgivelse"

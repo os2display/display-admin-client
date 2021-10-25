@@ -33,7 +33,6 @@ function MultiSelectComponent({
   name,
   isLoading,
   noSelectedString,
-  errors,
   errorText,
   label,
   helpText,
@@ -47,10 +46,6 @@ function MultiSelectComponent({
   const textOnError = errorText || t("multi-dropdown.validation-text");
   const nothingSelectedLabel =
     noSelectedString || t("multi-dropdown.nothing-selected");
-  /** Handle errors. */
-  useEffect(() => {
-    setError(errors && errors.includes(name));
-  }, [selected]);
 
   /** Map data to fit component. */
   useEffect(() => {
@@ -77,7 +72,7 @@ function MultiSelectComponent({
     );
     setMappedOptions(optionsWithSelected);
     setMappedSelected(localMappedSelected);
-  }, [selected, selected.length]);
+  }, [selected, selected.length, options]);
 
   /**
    * Filter to replace the default filter in multi-select. It matches the label name.
@@ -104,22 +99,24 @@ function MultiSelectComponent({
    * @param {Array} data The data to call back with
    */
   function changeData(data) {
-    const ids = data.map(({ value }) => value);
+    let selectedOptions = [];
+    if (data.length > 0) {
+      const ids = data.map(({ value }) => value);
+      selectedOptions = Object.values(
+        [...selected, ...options]
+          .filter((option) => ids.includes(option["@id"]))
+          .reduce((a, c) => {
+            const aCopy = { ...a };
+            aCopy[c["@id"]] = c;
+            return aCopy;
+          }, {})
+      );
 
-    let selectedOptions = Object.values(
-      [...selected, ...options]
-        .filter((option) => ids.includes(option["@id"]))
-        .reduce((a, c) => {
-          const aCopy = { ...a };
-          aCopy[c["@id"]] = c;
-          return aCopy;
-        }, {})
-    );
-
-    if (singleSelect) {
-      selectedOptions = [selectedOptions[selectedOptions.length - 1]];
+      if (singleSelect) {
+        selectedOptions = [selectedOptions[selectedOptions.length - 1]];
+      }
     }
-
+    console.log(selectedOptions);
     const target = { value: selectedOptions, id: name };
     handleSelection({ target });
   }

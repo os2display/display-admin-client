@@ -33,6 +33,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  */
 function SlideForm({
   slide,
+  template,
   handleInput,
   handleSubmit,
   isSaving,
@@ -43,28 +44,23 @@ function SlideForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [templateOptions, setTemplateOptions] = useState();
-  const [selectedTemplate, setSelectedTemplate] = useState([]);
+  const [templateOptions, setTemplateOptions] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState([template]);
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
-      page: 1,
+      title: searchText,
+      itemsPerPage: searchText ? 10 : 0,
     });
 
-  const { data: template } = useGetV1TemplatesByIdQuery({
-    id: idFromUrl(slide.templateInfo),
-  });
   /** Set loaded data into form state. */
   useEffect(() => {
     if (templates) {
-      setTemplateOptions(templates["hydra:member"]);
+      let localTemplateOptions = [...templates["hydra:member"]];
+      localTemplateOptions.push(template);
+      setTemplateOptions(localTemplateOptions);
     }
   }, [templates]);
-  /** Set loaded data into form state. */
-  useEffect(() => {
-    if (template) {
-      setSelectedTemplate([template]);
-    }
-  }, [template]);
 
   /**
    * Fetches data for the multi component // @TODO:
@@ -72,7 +68,7 @@ function SlideForm({
    * @param {string} filter - The filter.
    */
   function onFilter(filter) {
-    console.log(filter);
+    setSearchText(filter);
   }
 
   /**

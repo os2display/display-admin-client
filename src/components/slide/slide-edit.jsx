@@ -2,11 +2,13 @@ import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import idFromUrl from "../util/helpers/id-from-url";
+import SlideForm from "./slide-form";
 import {
   useGetV1SlidesByIdQuery,
   usePutV1SlidesByIdMutation,
+  useGetV1TemplatesByIdQuery,
 } from "../../redux/api/api.generated";
-import SlideForm from "./slide-form";
 
 /**
  * The slide edit component.
@@ -25,6 +27,10 @@ function SlideEdit() {
   ] = usePutV1SlidesByIdMutation();
 
   const { data, error: loadError, isLoading } = useGetV1SlidesByIdQuery({ id });
+
+  const { data: template } = useGetV1TemplatesByIdQuery({
+    id: idFromUrl(formStateObject?.templateInfo),
+  });
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -45,6 +51,7 @@ function SlideEdit() {
     let localFormStateObject = { ...formStateObject };
     localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
     set(localFormStateObject, target.id, target.value);
+    debugger;
     setFormStateObject(localFormStateObject);
   }
 
@@ -70,8 +77,9 @@ function SlideEdit() {
 
   return (
     <>
-      {formStateObject && (
+      {formStateObject && template && (
         <SlideForm
+          template={template}
           slide={formStateObject}
           headerText={`${headerText}: ${
             formStateObject && formStateObject.title
