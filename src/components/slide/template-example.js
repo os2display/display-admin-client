@@ -19,21 +19,19 @@ const templateExample = [
     "helpText": "Her kan du skrive teksten til slidet",
     "formGroupClasses": "col-md-6"
   },
+  // @TODO: Handle image.
+  /*
   {
     "input": "image",
     "name": "image",
     "label": "Billede"
   },
-  {
-    "input": "image",
-    "name": "image2",
-    "label": "Billede 2"
-  },
+   */
   {
     "input": "header-h3",
     "text": "Opsætning",
     "name": "header3",
-    "formGroupClasses": "h5 mb-3"
+    "formGroupClasses": "h5 mt-3 mb-3"
   },
   {
     "input": "input",

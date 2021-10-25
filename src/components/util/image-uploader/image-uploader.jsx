@@ -159,7 +159,6 @@ function ImageUploader({
               </>
             )}
             {imageList.map((image, index) => {
-              console.log(image, index);
               return (
                 <>
                   <Image

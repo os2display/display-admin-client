@@ -56,7 +56,7 @@ function SlideEdit() {
   }
 
   /**
-   *
+   * Update content field for id/value.
    * @param target
    */
   function handleContent({ target }) {
@@ -76,8 +76,8 @@ function SlideEdit() {
         title: formStateObject.title,
         description: formStateObject.description,
         // @TODO: Should these be filled out by the API instead?
-        modifiedBy: formStateObject.modifiedBy,
-        createdBy: formStateObject.createdBy,
+        // modifiedBy: formStateObject.modifiedBy,
+        // createdBy: formStateObject.createdBy,
         templateInfo: formStateObject.templateInfo,
         // Get duration from content.
         // @TODO: Consider a better solution.
@@ -85,6 +85,7 @@ function SlideEdit() {
         content: formStateObject.content,
       }),
     };
+
     PutV1Slides(saveData);
   }
 
