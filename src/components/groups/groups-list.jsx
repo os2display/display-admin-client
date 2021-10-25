@@ -1,8 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Toast from "../util/toast/toast";
-
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
@@ -23,13 +21,32 @@ import {
  */
 function GroupsList() {
   const { t } = useTranslation("common");
+
+  // Local state
   const [selectedRows, setSelectedRows] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [page, setPage] = useState();
   const [groupsToDelete, setGroupsToDelete] = useState([]);
+  const [sortBy, setSortBy] = useState();
+  const [searchText, setSearchText] = useState();
+
+  // Delete call
   const [DeleteV1ScreenGroups, { isSuccess: isDeleteSuccess }] =
     useDeleteV1ScreenGroupsByIdMutation();
+
+  /** Deletes multiple groups. */
+  useEffect(() => {
+    if (groupsToDelete.length > 0) {
+      setIsDeleting(true);
+      const groupToDelete = groupsToDelete.splice(0, 1).shift();
+      const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
+      DeleteV1ScreenGroups({ id: groupToDeleteId });
+    } else if (isDeleteSuccess) {
+      window.location.reload(false);
+    }
+  }, [groupsToDelete, isDeleteSuccess]);
+
   /**
    * Sets the selected row in state.
    *
@@ -37,6 +54,11 @@ function GroupsList() {
    */
   function handleSelected(data) {
     setSelectedRows(selectedHelper(data, [...selectedRows]));
+  }
+
+  /** Clears the selected rows. */
+  function clearSelectedRows() {
+    setSelectedRows([]);
   }
 
   /**
@@ -51,17 +73,45 @@ function GroupsList() {
     setShowDeleteModal(true);
   }
 
-  /** Deletes multiple groups. */
-  useEffect(() => {
-    if (groupsToDelete.length > 0) {
-      setIsDeleting(true);
-      const groupToDelete = groupsToDelete.splice(0, 1).shift();
-      const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
-      DeleteV1ScreenGroups({ id: groupToDeleteId });
-    } else if (isDeleteSuccess) {
-      window.location.reload(false);
-    }
-  }, [groupsToDelete, isDeleteSuccess]);
+  /** Deletes group(s), and closes modal. */
+  function handleDelete() {
+    setGroupsToDelete(selectedRows);
+    clearSelectedRows();
+    setShowDeleteModal(false);
+  }
+
+  /** Closes the delete modal. */
+  function onCloseModal() {
+    clearSelectedRows();
+    setShowDeleteModal(false);
+  }
+
+  /**
+   * Sets next page.
+   *
+   * @param {number} pageNumber - The next page.
+   */
+  function onChangePage(pageNumber) {
+    setPage(pageNumber);
+  }
+
+  /**
+   * Handles sort.
+   *
+   * @param {object} localSortBy - How the data should be sorted.
+   */
+  function onChangeSort(localSortBy) {
+    setSortBy(localSortBy);
+  }
+
+  /**
+   * Handles search.
+   *
+   * @param {object} localSearchText - The search text.
+   */
+  function onSearch(localSearchText) {
+    setSearchText(localSearchText);
+  }
 
   // The columns for the table.
   const columns = [
@@ -82,7 +132,6 @@ function GroupsList() {
     },
     {
       path: "createdBy",
-      sort: true,
       label: t("groups-list.columns.created-by"),
     },
     {
@@ -106,11 +155,6 @@ function GroupsList() {
     },
   ];
 
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
   /**
    * Sets next page.
    *
@@ -120,29 +164,19 @@ function GroupsList() {
     setPage(pageNumber);
   }
 
-  /** Deletes group(s), and closes modal. */
-  function handleDelete() {
-    setGroupsToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseModal() {
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
   const {
     data,
     error: groupsGetError,
     isLoading,
-  } = useGetV1ScreenGroupsQuery({ page });
+  } = useGetV1ScreenGroupsQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+  });
 
   return (
     <>
-      <Toast show={groupsGetError} text={t("groups-list.groups-get-error")} />
-      <Toast show={isDeleteSuccess} text={t("groups-list.deleted")} />
       <ContentHeader
         title={t("groups-list.header")}
         newBtnTitle={t("groups-list.create-new-group")}
@@ -159,9 +193,13 @@ function GroupsList() {
             data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
+            error={groupsGetError || false}
+            isLoading={isLoading || isDeleting || false}
+            deleteSuccess={isDeleteSuccess || false}
+            handleSort={onChangeSort}
+            handleSearch={onSearch}
           />
         )}
-        {(isLoading || isDeleting) && <Spinner animation="grow" />}
       </ContentBody>
       <DeleteModal
         show={showDeleteModal}

@@ -22,7 +22,7 @@ import {
 /**
  * The slides list component.
  *
- * @returns {object} The SlidesList
+ * @returns {object} The  slides list
  */
 function SlidesList() {
   const { t } = useTranslation("common");
@@ -248,8 +248,8 @@ function SlidesList() {
             error={slidesGetError || false}
             isLoading={isLoading || isDeleting || false}
             deleteSuccess={isDeleteSuccess || false}
-            handleSort={onChangeSort} // todo
-            handleSearch={onSearch} // todo
+            handleSort={onChangeSort}
+            handleSearch={onSearch}
           />
         </ContentBody>
       )}
