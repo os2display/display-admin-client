@@ -4,15 +4,18 @@
   &.nav-dark {
     .nav-item {
       margin-top: $spacer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .nav-add-new {
+        color: white;
+        margin-right: 20px;
+        &:hover {
+          color: $primary;
+        }
+      }
       .nav-link {
         color: white;
-        .nav-add-new {
-          color: white;
-          float: right;
-          &:hover {
-            color: $primary;
-          }
-        }
         &:hover {
           background-color: $gray-700;
           transition: background-color 0.2s ease-in-out;
