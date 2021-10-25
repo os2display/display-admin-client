@@ -32,7 +32,12 @@ function SlideEdit() {
   useEffect(() => {
     if (data) {
       const dataCopy = { ...data };
-      dataCopy.templateInfo = dataCopy.templateInfo["@id"];
+
+      // Make sure content is an object.
+      if (dataCopy.content instanceof Array) {
+        dataCopy.content = {};
+      }
+
       setFormStateObject(dataCopy);
     }
   }, [data]);
@@ -51,6 +56,17 @@ function SlideEdit() {
   }
 
   /**
+   *
+   * @param target
+   */
+  function handleContent({ target }) {
+    let localFormStateObject = { ...formStateObject };
+    localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
+    set(localFormStateObject.content, target.id, target.value);
+    setFormStateObject(localFormStateObject);
+  }
+
+  /**
    * Handles submit.
    */
   function handleSubmit() {
@@ -59,14 +75,14 @@ function SlideEdit() {
       slideSlideInput: JSON.stringify({
         title: formStateObject.title,
         description: formStateObject.description,
+        // @TODO: Should these be filled out by the API instead?
         modifiedBy: formStateObject.modifiedBy,
         createdBy: formStateObject.createdBy,
-        templateInfo: {
-          "@id": formStateObject.templateInfo,
-          options: { fade: false },
-        },
-        duration: 38823, // @TODO:
-        content: { text: formStateObject.content.text },
+        templateInfo: formStateObject.templateInfo,
+        // Get duration from content.
+        // @TODO: Consider a better solution.
+        duration: formStateObject?.content?.duration ? parseInt(formStateObject.content.duration) : null,
+        content: formStateObject.content,
       }),
     };
     PutV1Slides(saveData);
@@ -77,10 +93,9 @@ function SlideEdit() {
       {formStateObject && (
         <SlideForm
           slide={formStateObject}
-          headerText={`${headerText}: ${
-            formStateObject && formStateObject.title
-          }`}
+          headerText={`${headerText}: ${formStateObject?.title}`}
           handleInput={handleInput}
+          handleContent={handleContent}
           handleSubmit={handleSubmit}
           isLoading={isLoading}
           isSaveSuccess={isSaveSuccess}

@@ -75,7 +75,7 @@ function Select({
           {t("select.nothing-selected")}
         </option>
         {options.map((option) => (
-          <option value={option["@id"]} key={option["@id"]}>
+          <option value={option?.value || option["@id"]} key={option.key || option["@id"]}>
             {option.title}
           </option>
         ))}

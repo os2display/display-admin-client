@@ -7,20 +7,13 @@ import FormInput from "./form-input";
 import Select from "./select";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.data
- * The data to render in the form element.
- * @param {Function} props.requiredFieldCallback
- * If the form is required, a callback to add to validation.
- * @param {Array} props.errors
- * An error list, if there are validation errors.
- * @param {Function} props.onChange
- * Callback, if the value of the field changes.
- * @param {object} props.formStateObject
- * The form state.
- * @returns {object}
- * A form element.
+ * @param {object} props - The props.
+ * @param {Array} props.data - The data to render in the form element.
+ * @param {Function} props.requiredFieldCallback - If the form is required, a callback to add to validation.
+ * @param {Array} props.errors - An error list, if there are validation errors.
+ * @param {Function} props.onChange - Callback, if the value of the field changes.
+ * @param {object} props.formStateObject - The form state.
+ * @returns {object} - A form element.
  */
 function RenderFormElement({
   data,
@@ -32,13 +25,12 @@ function RenderFormElement({
   const { t } = useTranslation("common");
 
   /**
-   * @param {object} formData
-   * The data for form input.
-   * @returns {object|string}
-   * returns a rendered jsx object.
+   * @param {object} formData - The data for form input.
+   * @returns {object|string} - Returns a rendered jsx object.
    */
   function renderElement(formData) {
     let returnElement;
+
     switch (formData.input) {
       case "input":
         if (data.required) {
@@ -80,13 +72,29 @@ function RenderFormElement({
           <h2 className={formData.formGroupClasses}>{formData.text}</h2>
         );
         break;
-      // @TODO: This (header-h3) should be posible to create in a more efficient way, in combination with the above.
+      // @TODO: This (header-h3) should be possible to create in a more efficient way, in combination with the above.
       case "header-h3":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
         returnElement = (
           <h3 className={formData.formGroupClasses}>{formData.text}</h3>
+        );
+        break;
+      case "textarea":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
+        returnElement = (
+          <>
+            {formData?.label && <label htmlFor={formData.name} className="form-label">{formData.label}</label>}
+            <textarea onChange={onChange} name={formData.name} id={formData.name} className={formData.formGroupClasses + " form-control"} rows="3" defaultValue={formStateObject[formData.name]} />
+            {formData?.helpText &&
+              <small className="form-text text-muted">
+                {formData.helpText}
+              </small>
+            }
+          </>
         );
         break;
       case "select":
@@ -149,14 +157,7 @@ RenderFormElement.propTypes = {
     multipleImages: PropTypes.bool,
   }).isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
-  formStateObject: PropTypes.shape({
-    input: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    label: PropTypes.string,
-    helpText: PropTypes.string,
-    required: PropTypes.bool,
-  }).isRequired,
+  formStateObject: PropTypes.shape({}).isRequired,
   requiredFieldCallback: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 };

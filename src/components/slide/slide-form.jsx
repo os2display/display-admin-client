@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
-import TemplateRender from "./template-render";
+import ContentForm from "./content-form";
 import ContentFooter from "../util/content-footer/content-footer";
 import {
   useGetV1TemplatesQuery,
@@ -16,6 +16,7 @@ import {
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
 import idFromUrl from "../util/helpers/id-from-url";
+import templateExample from './template-example';
 
 /**
  * The slide form component.
@@ -34,6 +35,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 function SlideForm({
   slide,
   handleInput,
+  handleContent,
   handleSubmit,
   isSaving,
   headerText,
@@ -45,14 +47,19 @@ function SlideForm({
   const history = useHistory();
   const [templateOptions, setTemplateOptions] = useState();
   const [selectedTemplate, setSelectedTemplate] = useState([]);
+  const [contentFormElements, setContentFormElements] = useState([]);
+
+  // Load available templates.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       page: 1,
     });
 
+  // Load template.
   const { data: template } = useGetV1TemplatesByIdQuery({
-    id: idFromUrl(slide.templateInfo),
+    id: idFromUrl(slide.templateInfo['@id']),
   });
+
   /**
    * Set loaded data into form state.
    */
@@ -61,12 +68,16 @@ function SlideForm({
       setTemplateOptions(templates["hydra:member"]);
     }
   }, [templates]);
+
   /**
    * Set loaded data into form state.
    */
   useEffect(() => {
     if (template) {
       setSelectedTemplate([template]);
+
+      // @TODO: Load from template config.
+      setContentFormElements(templateExample);
     }
   }, [template]);
 
@@ -161,23 +172,11 @@ function SlideForm({
               />
             </ContentBody>
           )}
-          {slide.templateInfo && typeof slide.templateInfo === "string" && (
+          {slide.templateInfo && template && (
             <>
               <ContentBody>
-                <h3 className="h4">{t("slide-form.slide-content-header")}</h3>
-                <FormInput
-                  name="content.text"
-                  type="text"
-                  label={t("slide-form.slide-content-label")}
-                  helpText={t("slide-form.slide-content-label")}
-                  value={slide.content.text}
-                  onChange={handleInput}
-                />
+               <ContentForm content={slide.content} contentFormElements={contentFormElements} handleInput={handleContent} />
               </ContentBody>
-              {/* @TODO: */}
-              {/* <ContentBody>
-               <TemplateRender slide={slide} handleInput={handleInput} />
-             </ContentBody> */}
             </>
           )}
           <ContentBody>

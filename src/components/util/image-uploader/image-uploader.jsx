@@ -158,16 +158,21 @@ function ImageUploader({
                 </small>
               </>
             )}
-            {imageList.map((image, index) => (
-              <Image
-                inputImage={image}
-                handleChange={handleChange}
-                onImageUpdate={onImageUpdate}
-                onImageRemove={onImageRemove}
-                index={index}
-                key={image.url}
-              />
-            ))}
+            {imageList.map((image, index) => {
+              console.log(image, index);
+              return (
+                <>
+                  <Image
+                    inputImage={image}
+                    handleChange={handleChange}
+                    onImageUpdate={onImageUpdate}
+                    onImageRemove={onImageRemove}
+                    index={index}
+                    key={image.url}
+                  />
+                </>
+              )
+            })}
           </div>
         )}
       </ImageUploading>
