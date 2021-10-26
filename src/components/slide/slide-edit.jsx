@@ -59,11 +59,12 @@ function SlideEdit() {
    * Update content field for id/value.
    * @param target
    */
-  function handleContent({ target }) {
-    let localFormStateObject = { ...formStateObject };
+  function handleContent(e) {
+    console.log(e);
+/*    let localFormStateObject = { ...formStateObject };
     localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
     set(localFormStateObject.content, target.id, target.value);
-    setFormStateObject(localFormStateObject);
+    setFormStateObject(localFormStateObject);*/
   }
 
   /**
