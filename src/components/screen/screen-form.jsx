@@ -201,6 +201,7 @@ function ScreenForm({
                     noSelectedString={t("screen-form.nothing-selected")}
                     handleSelection={handleAdd}
                     options={layoutOptions}
+                    helpText={t("screen-form.search-to-se-possible-selections")}
                     selected={selectedLayout ? [selectedLayout] : []}
                     name="layout"
                     filterCallback={onFilter}

@@ -26,7 +26,7 @@ import RadioButtons from "../forms/radio-buttons";
  * @param {Function} props.handleSearch - callback for seach.
  * @param {boolean} props.isLoading - If the calling component is loading data.
  * @param {boolean} props.displayPublished - Whether to display the published filter
- * @param props.handleIsPublished
+ * @param {Function} props.handleIsPublished - callback for published filter.
  * @returns {object} The List.
  */
 function List({
