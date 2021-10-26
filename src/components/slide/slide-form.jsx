@@ -162,7 +162,6 @@ function SlideForm({
                   name="content.text"
                   type="text"
                   label={t("slide-form.slide-content-label")}
-                  helpText={t("slide-form.slide-content-label")}
                   value={slide.content.text}
                   onChange={handleInput}
                 />

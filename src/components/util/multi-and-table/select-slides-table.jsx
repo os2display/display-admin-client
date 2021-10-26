@@ -105,7 +105,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const columns = [
     {
       path: "title",
-      label: t("select-slides-table.columns.name"),
+      label: t("slides-list.name"),
     },
     {
       content: (templateData) => TemplateLabelInList(templateData),
@@ -166,7 +166,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
             apiCall={useGetV1PlaylistsByIdSlidesQuery}
             onClose={onCloseInfoModal}
             dataStructureToDisplay={onPlaylists}
-            modalTitle={t("info-modal.playlist-slides")}
+            modalTitle={t("select-slides-table.info-modal.playlist-slides")}
             dataKey="slide"
           />
         </>

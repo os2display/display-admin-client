@@ -198,7 +198,7 @@ function ScreenForm({
                 <div className="col-md-8">
                   <MultiSelectComponent
                     label={t("screen-form.screen-layout-label")}
-                    noSelectedString={t("playlists-dropdown.nothing-selected")}
+                    noSelectedString={t("screen-form.nothing-selected")}
                     handleSelection={handleAdd}
                     options={layoutOptions}
                     selected={selectedLayout ? [selectedLayout] : []}
