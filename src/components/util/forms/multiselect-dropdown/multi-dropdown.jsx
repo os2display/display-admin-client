@@ -18,7 +18,6 @@ import contentString from "../../helpers/content-string";
  * @param {string} props.name - The id of the form element
  * @param {boolean} props.isLoading - Whether the component is loading.
  * @param {string} props.noSelectedString - The label for when there is nothing selected.
- * @param {Array} props.errors - A list of errors, or null.
  * @param {string} props.errorText - The string to display on error.
  * @param {string} props.label - The input label
  * @param {string} props.helpText - Help text for the dropdown.
@@ -40,7 +39,7 @@ function MultiSelectComponent({
   singleSelect,
 }) {
   const { t } = useTranslation("common");
-  const [error, setError] = useState();
+  const [error] = useState();
   const [mappedOptions, setMappedOptions] = useState();
   const [mappedSelected, setMappedSelected] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
@@ -163,7 +162,6 @@ function MultiSelectComponent({
 MultiSelectComponent.defaultProps = {
   noSelectedString: null,
   isLoading: false,
-  errors: [],
   errorText: "",
   helpText: null,
   selected: [],
@@ -191,7 +189,6 @@ MultiSelectComponent.propTypes = {
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
-  errors: PropTypes.arrayOf(PropTypes.string),
   errorText: PropTypes.string,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,

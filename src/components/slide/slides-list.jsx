@@ -33,6 +33,7 @@ function SlidesList() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [page, setPage] = useState();
+  const [isPublished, setIsPublished] = useState();
   const [slidesToDelete, setSlidesToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -117,10 +118,14 @@ function SlidesList() {
   /**
    * Sets is published
    *
-   * @param {number} localIsPublished - Whether the playlist is published.
+   * @param {number} localIsPublished - Whether the slide is published.
    */
   function onIsPublished(localIsPublished) {
-    setIsPublished(localIsPublished);
+    if (localIsPublished === "all") {
+      setIsPublished(undefined);
+    } else {
+      setIsPublished(localIsPublished === "published");
+    }
   }
 
   /**
@@ -226,7 +231,9 @@ function SlidesList() {
     orderBy: sortBy?.path,
     order: sortBy?.order,
     title: searchText,
+    published: isPublished,
   });
+
   return (
     <>
       <ContentHeader
@@ -250,6 +257,8 @@ function SlidesList() {
             deleteSuccess={isDeleteSuccess || false}
             handleSort={onChangeSort}
             handleSearch={onSearch}
+            handleIsPublished={onIsPublished}
+            displayPublished
           />
         </ContentBody>
       )}

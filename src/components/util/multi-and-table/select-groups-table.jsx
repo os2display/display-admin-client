@@ -18,7 +18,11 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
 function SelectGroupsTable({ handleChange, name, groupId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const { data: groups } = useGetV1ScreenGroupsQuery({ page: 1 });
+  const [searchText, setSearchText] = useState("");
+  const { data: groups } = useGetV1ScreenGroupsQuery({
+    title: searchText,
+    itemsPerPage: searchText ? 10 : 0,
+  });
 
   const { data } = useGetV1ScreensByIdScreenGroupsQuery({
     id: groupId,
@@ -28,6 +32,12 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   useEffect(() => {
     if (data) {
       setSelectedData(data["hydra:member"]);
+      handleChange({
+        target: {
+          id: name,
+          value: data["hydra:member"].map((item) => item["@id"]),
+        },
+      });
     }
   }, [data]);
 
@@ -46,12 +56,12 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   }
 
   /**
-   * Fetches data for the multi component // @TODO:
+   * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
   function onFilter(filter) {
-    console.log(filter);
+    setSearchText(filter);
   }
 
   /**

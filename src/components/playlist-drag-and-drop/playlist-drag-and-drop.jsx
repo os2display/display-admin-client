@@ -11,12 +11,14 @@ import {
 } from "../../redux/api/api.generated";
 
 /**
- * An input for forms.
+ * A drag and drop component for playlists.
  *
  * @param {string} props The props.
- * @param {string} props.radioGroupName The name of the input
- * @param {string} props.label The label for the input
- * @returns {object} An input.
+ * @param {Function} props.handleChange - the callback when something changed
+ * @param {string} props.name - the id of the form element
+ * @param {string} props.screenId - the screen id for get request
+ * @param {string} props.regionId - the region id for get request
+ * @returns {object} A drag and drop component
  */
 function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
@@ -25,9 +27,9 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
-      regionId: regionId,
+      regionId,
+      page: 1,
     });
-
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
     itemsPerPage: searchText ? 10 : 0,
@@ -35,13 +37,25 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    if (selectedPlaylistsByRegion) {
-      setSelectedData(selectedPlaylistsByRegion["hydra:member"]);
+    if (
+      selectedPlaylistsByRegion &&
+      selectedPlaylistsByRegion["hydra:member"].length > 0
+    ) {
+      const listOfPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
+        ({ playlist }) => {
+          const playlistCopy = JSON.parse(JSON.stringify(playlist));
+          delete playlistCopy["@context"];
+          return playlistCopy;
+        }
+      );
+      const target = { value: listOfPlaylists, id: name };
+      handleChange({ target });
+      setSelectedData(listOfPlaylists);
     }
   }, [selectedPlaylistsByRegion]);
 
   /**
-   * Fetches data for the multi component // @TODO:
+   * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
@@ -52,8 +66,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   /**
    * Removes playlist from list of playlists, and closes modal.
    *
-   * @param {object} props The props.
-   * @param {string} props.value The id of the playlist
+   * @param {object} removeItem - Item to remove
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
@@ -77,10 +90,9 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
    */
   function handleAdd({ target }) {
     const { value, id } = target;
-    let selectedDataCopy = [...selectedData, ...value];
-    setSelectedData(selectedDataCopy);
+    setSelectedData(value);
     handleChange({
-      target: { id, value: value },
+      target: { id, value },
     });
   }
 
@@ -135,9 +147,8 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
 PlaylistDragAndDrop.propTypes = {
   name: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
-  ).isRequired,
+  screenId: PropTypes.string.isRequired,
+  regionId: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

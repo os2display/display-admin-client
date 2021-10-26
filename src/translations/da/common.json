@@ -348,11 +348,17 @@
     "checkbox-form-aria-label": "Vælg dette medie til massehandling"
   },
   "list": {
+    "published-label": "Udgivetfilter",
     "delete-button": "Slet",
     "merge-button": "Konsolider",
     "deselect-all": "Fravælg alle",
     "get-error": "Der skete en fejl da elementerne skulle hentes",
-    "deleted": "Element er blevet slettet"
+    "deleted": "Element er blevet slettet",
+    "radio-labels": {
+      "published": "Udgivet",
+      "not-published": "Ikke udgivet",
+      "all": "Alle"
+    }
   },
   "image": {
     "image-currently-uploading": "Billedet du er ved at overføre",
@@ -379,6 +385,7 @@
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
     "error": "Der skete en fejl",
+    "screen-region-playlists": "Spillelister tilknyttet regionen",
     "loading": "Henter skærm...",
     "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",

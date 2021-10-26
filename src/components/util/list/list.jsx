@@ -8,6 +8,7 @@ import SearchBox from "../search-box/search-box";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
+import RadioButtons from "../forms/radio-buttons";
 
 /**
  * @param {object} props - The props.
@@ -24,11 +25,14 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  * @param {Function} props.handleSort -  callback for sort.
  * @param {Function} props.handleSearch - callback for seach.
  * @param {boolean} props.isLoading - If the calling component is loading data.
+ * @param {boolean} props.displayPublished - Whether to display the published filter
+ * @param props.handleIsPublished
  * @returns {object} The List.
  */
 function List({
   data,
   columns,
+  displayPublished,
   selectedRows,
   clearSelectedRows,
   deleteSuccess,
@@ -40,6 +44,7 @@ function List({
   totalItems,
   isLoading,
   handleDelete,
+  handleIsPublished,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
@@ -49,7 +54,10 @@ function List({
   const sortParams = new URLSearchParams(search).get("sort");
   const orderParams = new URLSearchParams(search).get("order");
   const pageParams = new URLSearchParams(search).get("page");
-
+  let publishedParams;
+  if (displayPublished) {
+    publishedParams = new URLSearchParams(search).get("published");
+  }
   // At least one row must be selected for deletion.
   const disableDeleteButton = !selectedRows.length > 0;
   const pageSize = 10;
@@ -72,9 +80,19 @@ function List({
     updateUrlParams("search", newSearchText);
   }
 
+  /** @param {string} isPublished Updates the search text state and url. */
+  function onIsPublished({ target }) {
+    updateUrlParams("published", target.value);
+  }
+
   /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
     updateUrlParams("page", nextPage);
+  }
+
+  /** @param {number} isPublished - Is published. */
+  function updateUrlPublished(isPublished) {
+    updateUrlParams("published", isPublished);
   }
 
   /** @param {number} sortByInput - The next page. */
@@ -118,6 +136,15 @@ function List({
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    if (publishedParams) {
+      handleIsPublished(publishedParams);
+    } else {
+      updateUrlPublished("all");
+      handleIsPublished("all");
+    }
+  }, [publishedParams]);
+
   return (
     <>
       <Toast show={deleteSuccess} text={t("list.get-error")} />
@@ -151,6 +178,25 @@ function List({
           {isLoading && <Spinner animation="border" className="m-5" />}
         </Col>
       </Row>
+      <Row>
+        {displayPublished && (
+          <RadioButtons
+            label={t("list.published-label")}
+            labelScreenReaderOnly
+            selected={publishedParams}
+            radioGroupName="published"
+            options={[
+              { id: "all", label: t("list.radio-labels.all") },
+              { id: "published", label: t("list.radio-labels.published") },
+              {
+                id: "not-published",
+                label: t("list.radio-labels.not-published"),
+              },
+            ]}
+            handleChange={onIsPublished}
+          />
+        )}
+      </Row>
       {!isLoading && (
         <Table
           onSort={updateUrlAndSort}
@@ -174,6 +220,7 @@ function List({
 
 List.defaultProps = {
   withChart: false,
+  handleIsPublished: () => {},
 };
 
 List.propTypes = {
@@ -192,6 +239,8 @@ List.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   handleSort: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
+  displayPublished: PropTypes.bool.isRequired,
+  handleIsPublished: PropTypes.func,
 };
 
 export default List;

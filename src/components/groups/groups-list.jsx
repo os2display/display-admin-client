@@ -155,15 +155,6 @@ function GroupsList() {
     },
   ];
 
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
   const {
     data,
     error: groupsGetError,

@@ -72,7 +72,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   }
 
   /**
-   * Fetches data for the multi component // @TODO:
+   * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
