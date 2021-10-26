@@ -46,7 +46,9 @@ function SlideForm({
   const history = useHistory();
   const [templateOptions, setTemplateOptions] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [selectedTemplate, setSelectedTemplate] = useState([template]);
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    template ? [template] : []
+  );
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchText,
@@ -57,7 +59,9 @@ function SlideForm({
   useEffect(() => {
     if (templates) {
       let localTemplateOptions = [...templates["hydra:member"]];
-      localTemplateOptions.push(template);
+      if (template) {
+        localTemplateOptions.push(template);
+      }
       setTemplateOptions(localTemplateOptions);
     }
   }, [templates]);

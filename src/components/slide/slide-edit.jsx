@@ -51,7 +51,6 @@ function SlideEdit() {
     let localFormStateObject = { ...formStateObject };
     localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
     set(localFormStateObject, target.id, target.value);
-    debugger;
     setFormStateObject(localFormStateObject);
   }
 

@@ -56,13 +56,16 @@ function MultiSelectComponent({
         disabled: false,
       };
     });
-    const localMappedSelected = selected.map((item) => {
-      return {
-        label: item.title,
-        value: item["@id"],
-        disabled: false,
-      };
-    });
+    let localMappedSelected = [];
+    if (selected.length > 0) {
+      localMappedSelected = selected.map((item) => {
+        return {
+          label: item.title,
+          value: item["@id"],
+          disabled: false,
+        };
+      });
+    }
     const optionsWithSelected = Object.values(
       [...localMappedOptions, ...localMappedSelected].reduce((a, c) => {
         const aCopy = { ...a };

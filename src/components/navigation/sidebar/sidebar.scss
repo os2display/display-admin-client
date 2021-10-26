@@ -4,12 +4,13 @@
   &.nav-dark {
     .nav-item {
       margin-top: $spacer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: relative;
+      width: 100%;
       .nav-add-new {
         color: white;
-        margin-right: 20px;
+        position: absolute;
+        top: 16px;
+        right: 10px;
         &:hover {
           color: $primary;
         }
