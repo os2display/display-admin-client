@@ -14,6 +14,7 @@ import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
+import idFromUrl from "../util/helpers/id-from-url";
 import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import "./screen-form.scss";
 
@@ -209,6 +210,7 @@ function ScreenForm({
               )}
               {selectedLayout?.grid && (
                 <GridGenerationAndSelect
+                  screenId={idFromUrl(screen["@id"])}
                   grid={selectedLayout?.grid}
                   vertical={screen.dimensions.height > screen.dimensions.width}
                   regions={selectedLayout.regions}

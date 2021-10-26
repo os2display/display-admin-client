@@ -119,7 +119,6 @@ function MultiSelectComponent({
         selectedOptions = [selectedOptions[selectedOptions.length - 1]];
       }
     }
-    console.log(selectedOptions);
     const target = { value: selectedOptions, id: name };
     handleSelection({ target });
   }

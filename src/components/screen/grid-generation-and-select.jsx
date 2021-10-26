@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { Tabs, Tab } from "react-bootstrap";
 import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
-// import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
+import idFromUrl from "../util/helpers/id-from-url";
+import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
 import "./grid.scss";
 /**
  * The grid generator component.
@@ -20,8 +21,9 @@ function GridGenerationAndSelect({
   grid,
   vertical,
   regions,
-  // handleInput,
+  handleInput,
   selectedData,
+  screenId,
 }) {
   const { t } = useTranslation("common");
   const [key, setKey] = useState("region1");
@@ -33,21 +35,22 @@ function GridGenerationAndSelect({
     gridTemplateAreas: createGrid(configColumns, configRows),
   };
 
-  // /**
-  //  * @param {object} props
-  //  * the props.
-  //  * @param {object} props.target
-  //  * event target
-  //  */
-  // function handleChange({ target }) {
-  //   const localTarget = target.value.map((value) => {
-  //     return {
-  //       region: target.id,
-  //       ...value,
-  //     };
-  //   });
-  //   handleInput({ target: { value: localTarget, id: "playlists" } });
-  // }
+  /**
+   * @param {object} props
+   * the props.
+   * @param {object} props.target
+   * event target
+   */
+  function handleChange({ target }) {
+    const localTarget = target.value.map((value) => {
+      return {
+        region: target.id,
+        ...value,
+      };
+    });
+    handleInput({ target: { value: localTarget, id: "playlists" } });
+  }
+
   return (
     <>
       {selectedData && (
@@ -72,33 +75,26 @@ function GridGenerationAndSelect({
           </div>
           <div className="col-md-12">
             <h3 className="h5">{t("edit-screen.screen-playlists")}</h3>
-            <Tabs
-              defaultActiveKey="region1"
-              id="uncontrolled-tab-example"
-              activeKey={key}
-              onSelect={(k) => setKey(k)}
-            >
-              {regions &&
-                regions.map((data) => (
-                  <Tab
-                    className="mt-2"
-                    key={data.id}
-                    eventKey={data.id}
-                    title={data.name}
-                  >
-                    <div className="mt-3">
-                      {/* <PlaylistDragAndDrop
+            {regions.length > 0 && (
+              <Tabs
+                defaultActiveKey={regions[0]["@id"]}
+                id="tabs"
+                className="mb-3"
+              >
+                {regions &&
+                  regions.map((data) => (
+                    <Tab eventKey={data["@id"]} title={data.title}>
+                      <PlaylistDragAndDrop
                         id="playlist_drag_and_drop"
                         handleChange={handleChange}
-                        name={data.id}
-                        data={selectedData.filter(
-                          (playlistData) => playlistData.region === data.id
-                        )}
-                      /> */}
-                    </div>
-                  </Tab>
-                ))}
-            </Tabs>
+                        name={data["@id"]}
+                        screenId={screenId}
+                        regionId={idFromUrl(data["@id"])}
+                      />
+                    </Tab>
+                  ))}
+              </Tabs>
+            )}
           </div>
         </>
       )}

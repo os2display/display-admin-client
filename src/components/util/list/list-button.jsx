@@ -12,7 +12,6 @@ import idFromUrl from "../helpers/id-from-url";
 function ListButton({ callback, inputData, apiCall }) {
   const [label, setLabel] = useState("");
   let data;
-  debugger;
   if (!Array.isArray(inputData)) {
     data = apiCall({ id: idFromUrl(inputData), page: 1, itemsPerPage: 0 });
   }
