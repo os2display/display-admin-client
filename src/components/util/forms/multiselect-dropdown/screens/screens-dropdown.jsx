@@ -34,6 +34,7 @@ function ScreensDropdown({
             noSelectedString={t("screens-dropdown.nothing-selected")}
             selected={selected}
             name={name}
+            helpText={t("screens-dropdown.search-to-se-possible-selections")}
             errors={errors}
             filterCallback={filterCallback}
           />

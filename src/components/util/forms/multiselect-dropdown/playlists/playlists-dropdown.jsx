@@ -31,6 +31,7 @@ function PlaylistsDropdown({
       handleSelection={handlePlaylistSelection}
       options={data}
       selected={selected}
+      helpText={t("playlists-dropdown.search-to-se-possible-selections")}
       name={name}
       errors={errors}
       filterCallback={filterCallback}

@@ -26,6 +26,7 @@ function SlidesDropdown({
     <MultiSelectComponent
       handleSelection={handleSlideSelection}
       options={data}
+      helpText={t("slides-dropdown.search-to-se-possible-selections")}
       label={t("slides-dropdown.label")}
       noSelectedString={t("slides-dropdown.nothing-selected")}
       selected={selected}

@@ -199,6 +199,7 @@
     "columns": {
       "name": "Navn"
     },
+    "search-to-se-possible-selections": "For at se mulige spillelister, skal du fremsøge dem pr navn.",
     "remove-from-list": "Fjern fra liste"
   },
   "select-slides-table": {
@@ -241,6 +242,7 @@
     "nothing-selected": "Vælg en af mulighederne"
   },
   "groups-dropdown": {
+    "search-to-se-possible-selections": "For at se mulige grupper, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere grupper",
     "nothing-selected": "Vælg en af grupperne"
   },
@@ -249,11 +251,13 @@
     "nothing-selected": "Vælg en af spillelisterne"
   },
   "screens-dropdown": {
+    "search-to-se-possible-selections": "For at se mulige skærmes, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere skærme",
     "nothing-selected": "Vælg en af skærmene",
     "no-screens-configured": "Der er ikke nogle skærme konfigureret"
   },
   "slides-dropdown": {
+    "search-to-se-possible-selections": "For at se mulige slides, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere slides",
     "nothing-selected": "Vælg en af følgende slides"
   },
@@ -316,6 +320,7 @@
   },
   "screen-form": {
     "nothing-selected": "Vælg en af skabelonerne",
+    "search-to-se-possible-selections": "For at se mulige skærme, skal du fremsøge dem pr navn.",
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
     "error": "Der skete en fejl",
