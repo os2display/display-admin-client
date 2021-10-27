@@ -26,8 +26,7 @@ import "./screen-list.scss";
 /**
  * The screen list component.
  *
- * @returns {object}
- *   The screen list.
+ * @returns {object} The screen list.
  */
 function ScreenList() {
   const { t } = useTranslation("common");
@@ -45,26 +44,19 @@ function ScreenList() {
   const [DeleteV1Screens, { isSuccess: isDeleteSuccess }] =
     useDeleteV1ScreensByIdMutation();
 
-  /**
-   * @param {Array} groupsData
-   * The array of groups.
-   */
+  /** @param {Array} groupsData The array of groups. */
   function openInfoModal(groupsData) {
     setInGroups(groupsData);
     setShowInfoModal(true);
   }
 
-  /**
-   * Closes the info modal.
-   */
+  /** Closes the info modal. */
   function onCloseInfoModal() {
     setShowInfoModal(false);
     setInGroups();
   }
 
-  /**
-   * Set the view in url.
-   */
+  /** Set the view in url. */
   useEffect(() => {
     const params = new URLSearchParams(search);
     params.delete("view");
@@ -75,8 +67,7 @@ function ScreenList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data
-   * The selected row.
+   * @param {object} data The selected row.
    */
   function handleSelected(data) {
     setSelectedRows(selectedHelper(data, [...selectedRows]));
@@ -85,8 +76,7 @@ function ScreenList() {
   /**
    * Opens the delete modal
    *
-   * @param {object} item
-   * The item to delete
+   * @param {object} item The item to delete
    */
   function openDeleteModal(item) {
     if (item) {
@@ -168,9 +158,7 @@ function ScreenList() {
     },
   ];
 
-  /**
-   * Deletes multiple screens.
-   */
+  /** Deletes multiple screens. */
   useEffect(() => {
     if (screensToDelete.length > 0) {
       setIsDeleting(true);
@@ -182,25 +170,19 @@ function ScreenList() {
     }
   }, [screensToDelete, isDeleteSuccess]);
 
-  /**
-   * Clears the selected rows.
-   */
+  /** Clears the selected rows. */
   function clearSelectedRows() {
     setSelectedRows([]);
   }
 
-  /**
-   * Deletes screen(s), and closes modal.
-   */
+  /** Deletes screen(s), and closes modal. */
   function handleDelete() {
     setScreensToDelete(selectedRows);
     clearSelectedRows();
     setShowDeleteModal(false);
   }
 
-  /**
-   * Closes the delete modal.
-   */
+  /** Closes the delete modal. */
   function onCloseModal() {
     clearSelectedRows();
     setShowDeleteModal(false);
@@ -209,7 +191,7 @@ function ScreenList() {
   /**
    * Sets next page.
    *
-   * @param {number} pageNumber - the next page.
+   * @param {number} pageNumber - The next page.
    */
   function onChangePage(pageNumber) {
     setPage(pageNumber);

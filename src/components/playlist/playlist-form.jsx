@@ -21,10 +21,10 @@ import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {boolean} props.isSaving Is the form saving?
  * @param {string} props.headerText Headline text.
- * @param {boolean|null} props.isSaveSuccess Is the save a success?
- * @param {boolean|null} props.isLoading The data is loading.
+ * @param {boolean | null} props.isSaveSuccess Is the save a success?
+ * @param {boolean | null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
- * @param {string} props.slideId - the id of the slide.
+ * @param {string} props.slideId - The id of the slide.
  * @returns {object} The playlist form.
  */
 function PlaylistForm({

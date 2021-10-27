@@ -18,8 +18,8 @@ import FormInput from "../util/forms/form-input";
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {boolean} props.isSaving Is the form saving?
  * @param {string} props.headerText Headline text.
- * @param {boolean|null} props.isSaveSuccess Is the save a success?
- * @param {boolean|null} props.isLoading The data is loading.
+ * @param {boolean | null} props.isSaveSuccess Is the save a success?
+ * @param {boolean | null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
  * @returns {object} The group form.
  */

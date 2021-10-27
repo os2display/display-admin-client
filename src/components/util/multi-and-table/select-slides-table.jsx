@@ -16,10 +16,10 @@ import {
 /**
  * A multiselect and table for slides.
  *
- * @param {string} props - the props.
- * @param {Function} props.handleChange - the callback on change.
- * @param {string} props.name - the name for the input
- * @param {string} props.slideId - the slide id.
+ * @param {string} props - The props.
+ * @param {Function} props.handleChange - The callback on change.
+ * @param {string} props.name - The name for the input
+ * @param {string} props.slideId - The slide id.
  * @returns {object} - A select slides table.
  */
 function SelectSlidesTable({ handleChange, name, slideId }) {
@@ -30,9 +30,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const { data: slides } = useGetV1SlidesQuery({});
   const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
-  /**
-   * Map loaded data.
-   */
+  /** Map loaded data. */
   useEffect(() => {
     if (data) {
       setSelectedData(
@@ -46,8 +44,8 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   /**
    * Adds group to list of groups.
    *
-   * @param {object} props - the props.
-   * @param {object} props.target - the target.
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
     const { value, id } = target;
@@ -57,18 +55,13 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     });
   }
 
-  /**
-   * @param {Array} playlistArray
-   * The array of playlists.
-   */
+  /** @param {Array} playlistArray The array of playlists. */
   function openInfoModal(playlistArray) {
     setOnPlaylists(playlistArray);
     setShowInfoModal(true);
   }
 
-  /**
-   * Closes the info modal.
-   */
+  /** Closes the info modal. */
   function onCloseInfoModal() {
     setShowInfoModal(false);
     setOnPlaylists();
@@ -77,7 +70,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   /**
    * Fetches data for the multi component // @TODO:
    *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
     console.log(filter);
@@ -86,8 +79,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   /**
    * Removes playlist from list of groups.
    *
-   * @param {object} removeItem
-   * The item to remove.
+   * @param {object} removeItem The item to remove.
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData

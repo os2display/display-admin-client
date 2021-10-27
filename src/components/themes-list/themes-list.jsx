@@ -14,8 +14,7 @@ import ImageForList from "./image-for-list";
 /**
  * The themes list component.
  *
- * @returns {object}
- * The themes list
+ * @returns {object} The themes list
  */
 function ThemesList() {
   const { t } = useTranslation("common");
@@ -23,9 +22,7 @@ function ThemesList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [themes, setThemes] = useState([]);
 
-  /**
-   * Load content from fixture.
-   */
+  /** Load content from fixture. */
   useEffect(() => {
     // @TODO: load real content.
     fetch(`/fixtures/themes/themes.json`)
@@ -38,8 +35,7 @@ function ThemesList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data
-   * The selected row.
+   * @param {object} data The selected row.
    */
   function handleSelected(data) {
     setSelectedRows(selectedHelper(data, [...selectedRows]));
@@ -48,12 +44,9 @@ function ThemesList() {
   /**
    * Opens the delete modal, for deleting row.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the theme.
-   * @param {number} props.id
-   * The id of the theme
+   * @param {object} props The props.
+   * @param {string} props.name The name of the theme.
+   * @param {number} props.id The id of the theme
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
@@ -125,12 +118,9 @@ function ThemesList() {
   /**
    * Deletes screen, and closes modal.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the theme.
-   * @param {number} props.id
-   * The id of the theme
+   * @param {object} props The props.
+   * @param {string} props.name The name of the theme.
+   * @param {number} props.id The id of the theme
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
@@ -139,17 +129,13 @@ function ThemesList() {
     setShowDeleteModal(false);
   }
 
-  /**
-   * Closes the delete modal.
-   */
+  /** Closes the delete modal. */
   function onCloseDeleteModal() {
     setSelectedRows([]);
     setShowDeleteModal(false);
   }
 
-  /**
-   * Clears the selected rows.
-   */
+  /** Clears the selected rows. */
   function clearSelectedRows() {
     setSelectedRows([]);
   }

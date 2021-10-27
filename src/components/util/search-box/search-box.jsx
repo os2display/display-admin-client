@@ -8,16 +8,11 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param {object} props
- * The props.
- * @param {string} props.value
- * the value of the search box.
- * @param {Function} props.onChange
- * The callback for change in search box.
- * @param {boolean} props.showLabel
- * Whether to show the label.
- * @returns {object}
- * The search box.
+ * @param {object} props The props.
+ * @param {string} props.value The value of the search box.
+ * @param {Function} props.onChange The callback for change in search box.
+ * @param {boolean} props.showLabel Whether to show the label.
+ * @returns {object} The search box.
  */
 function SearchBox({ value, onChange, showLabel }) {
   const { t } = useTranslation("common");

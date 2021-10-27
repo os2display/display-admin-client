@@ -1,6 +1,6 @@
 /**
- * @param {object} string - the url to cut id from.
- * @returns {string} the id
+ * @param {object} string - The url to cut id from.
+ * @returns {string} The id
  */
 function idFromUrl(string) {
   if (typeof string === "string") {

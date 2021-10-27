@@ -7,22 +7,14 @@ import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.columns
- * The columns for the table.
- * @param {Array} props.selectedRows
- * The selected rows array.
- * @param {object} props.onSort
- * The callback for sort.
- * @param {object} props.sortColumn
- * The column to sortby.
- * @param {Array} props.data
- * The data to display in the table.
- * @param {boolean} props.withChart
- * If the table should display a gantt chart
- * @returns {object}
- * The table.
+ * @param {object} props The props.
+ * @param {Array} props.columns The columns for the table.
+ * @param {Array} props.selectedRows The selected rows array.
+ * @param {object} props.onSort The callback for sort.
+ * @param {object} props.sortColumn The column to sortby.
+ * @param {Array} props.data The data to display in the table.
+ * @param {boolean} props.withChart If the table should display a gantt chart
+ * @returns {object} The table.
  */
 function Table({ columns, selectedRows, onSort, sortColumn, data, withChart }) {
   return (

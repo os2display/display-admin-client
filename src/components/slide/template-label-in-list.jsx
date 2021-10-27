@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import Spinner from "react-bootstrap/Spinner";
 import { useGetV1TemplatesByIdQuery } from "../../redux/api/api.generated";
 /**
- * @param {object} props
- * The props.
- * @param {object} props.templateInfo
- * Object containing template id.
- * @returns {object}
- * The template title.
+ * @param {object} props The props.
+ * @param {object} props.templateInfo Object containing template id.
+ * @returns {object} The template title.
  */
 function TemplateLabelInList({ templateInfo }) {
   // template id created below.

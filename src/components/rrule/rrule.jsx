@@ -6,18 +6,16 @@ import "react-rrule-generator-ts/dist/index.css";
 /**
  * A RRule components component.
  *
- * @param {object} props - the props.
- * @param {Array} props.value - the value
- * @param {Function} props.handleChange - the callback when something changed
- * @param {string} props.name - the id of the form element
- * @returns {object} - the rrule component
+ * @param {object} props - The props.
+ * @param {Array} props.value - The value
+ * @param {Function} props.handleChange - The callback when something changed
+ * @param {string} props.name - The id of the form element
+ * @returns {object} - The rrule component
  */
 function Rrule({ value, handleChange, name }) {
   const [rule, setRule] = useState(value);
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (value && value.indexOf("\\n") > -1) {
       const localValue = `${value.split("\\n")[0]}
@@ -29,8 +27,7 @@ function Rrule({ value, handleChange, name }) {
   /**
    * A callback on changed data.
    *
-   * @param {Array} data
-   * The data to call back with
+   * @param {Array} data The data to call back with
    */
   function changeData(data) {
     const target = { value: data, id: name };

@@ -9,12 +9,9 @@ import { useGetV1PlaylistsQuery } from "../../../redux/api/api.generated";
 /**
  * A multiselect and table for playlists.
  *
- * @param {string} props
- * the props.
- * @param {string} props.name
- * The name for the input
- * @returns {object}
- * An input.
+ * @param {string} props The props.
+ * @param {string} props.name The name for the input
+ * @returns {object} An input.
  */
 function SelectPlaylistTable({ handleChange, name }) {
   const { t } = useTranslation("common");
@@ -23,8 +20,7 @@ function SelectPlaylistTable({ handleChange, name }) {
   /**
    * Removes playlist from list of playlists.
    *
-   * @param {object} removeItem
-   * The item to remove.
+   * @param {object} removeItem The item to remove.
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
@@ -46,7 +42,7 @@ function SelectPlaylistTable({ handleChange, name }) {
   /**
    * Fetches data for the multi component // @TODO:
    *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
     console.log(filter);
@@ -55,8 +51,8 @@ function SelectPlaylistTable({ handleChange, name }) {
   /**
    * Adds playlist to list of playlists.
    *
-   * @param {object} props - the props.
-   * @param {object} props.target - the target.
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
     const { value, id } = target;

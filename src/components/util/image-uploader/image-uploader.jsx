@@ -10,22 +10,15 @@ import Image from "./image";
 import MediaModal from "../../media-modal/media-modal";
 
 /**
- * @param {object} props
- * The props.
- * @param {object} props.inputImage
- * The image object.
- * @param {Function} props.handleImageUpload
- * Callback for image upload.
- * @param {string} props.name
- * The name of the image field.
- * @param {boolean} props.multipleImages
- * Whether the user should be able to upload multiple images.
- * @param {string} props.invalidText
- * Text on error.
- * @param {boolean} props.showLibraryButton
- * Whether to show the library button.
- * @returns {object}
- * The image uploader.
+ * @param {object} props The props.
+ * @param {object} props.inputImage The image object.
+ * @param {Function} props.handleImageUpload Callback for image upload.
+ * @param {string} props.name The name of the image field.
+ * @param {boolean} props.multipleImages Whether the user should be able to
+ *   upload multiple images.
+ * @param {string} props.invalidText Text on error.
+ * @param {boolean} props.showLibraryButton Whether to show the library button.
+ * @returns {object} The image uploader.
  */
 function ImageUploader({
   inputImage,
@@ -40,10 +33,7 @@ function ImageUploader({
   const invalidInputText = invalidText || t("image-uploader.validation-text");
   const [showMediaModal, setShowMediaModal] = useState(false);
 
-  /**
-   * @param {object} image
-   * The image with change.
-   */
+  /** @param {object} image The image with change. */
   function handleChange(image) {
     const localImages = [...images];
     const imageIndex = localImages.findIndex((img) => img.url === image.url);
@@ -56,27 +46,21 @@ function ImageUploader({
     handleImageUpload({ target });
   }
 
-  /**
-   * Sets the selected row in state.
-   *
-   */
+  /** Sets the selected row in state. */
   function onCloseMediaModal() {
     setShowMediaModal(false);
   }
   /**
    * Sets the selected row in state.
    *
-   * @param {Array} selectedImages
-   * The selected images from the modal
+   * @param {Array} selectedImages The selected images from the modal
    */
   function onAcceptMediaModal(selectedImages) {
     setImages(selectedImages);
     setShowMediaModal(false);
   }
 
-  /**
-   * Load content from fixture.
-   */
+  /** Load content from fixture. */
   useEffect(() => {
     // @TODO: load real content.
     setImages(Array.isArray(inputImage) ? inputImage : [inputImage]);

@@ -57,8 +57,8 @@ function PlaylistCreate() {
   }
 
   /**
-   * When the screen is saved, the group(s) will be saved.
-   * When saved, it redirects to edit screen.
+   * When the screen is saved, the group(s) will be saved. When saved, it
+   * redirects to edit screen.
    */
   useEffect(() => {
     if (isSaveSuccessSlides && data) {
@@ -66,9 +66,7 @@ function PlaylistCreate() {
     }
   }, [isSaveSuccessSlides]);
 
-  /**
-   * When the playlist is saved, the slide will be saved.
-   */
+  /** When the playlist is saved, the slide will be saved. */
   useEffect(() => {
     if (isSaveSuccess && data) {
       PutV1PlaylistsByIdSlides({
@@ -78,9 +76,7 @@ function PlaylistCreate() {
     }
   }, [isSaveSuccess]);
 
-  /**
-   * Sets slides to save.
-   */
+  /** Sets slides to save. */
   function handleSaveSlides() {
     const { slides } = formStateObject;
     setSlidesToAdd(
@@ -90,9 +86,7 @@ function PlaylistCreate() {
     );
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const saveData = {
       title: formStateObject.title,

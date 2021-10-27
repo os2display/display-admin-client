@@ -26,8 +26,8 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {boolean} props.isSaving Is the form saving?
  * @param {string} props.headerText Headline text.
- * @param {boolean|null} props.isSaveSuccess Is the save a success?
- * @param {boolean|null} props.isLoading The data is loading.
+ * @param {boolean | null} props.isSaveSuccess Is the save a success?
+ * @param {boolean | null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
  * @returns {object} The slide form.
  */
@@ -53,17 +53,13 @@ function SlideForm({
   const { data: template } = useGetV1TemplatesByIdQuery({
     id: idFromUrl(slide.templateInfo),
   });
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (templates) {
       setTemplateOptions(templates["hydra:member"]);
     }
   }, [templates]);
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (template) {
       setSelectedTemplate([template]);
@@ -73,7 +69,7 @@ function SlideForm({
   /**
    * Fetches data for the multi component // @TODO:
    *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
     console.log(filter);
@@ -82,8 +78,8 @@ function SlideForm({
   /**
    * Adds group to list of groups.
    *
-   * @param {object} props - the props.
-   * @param {object} props.target - the target.
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
     const { value, id } = target;

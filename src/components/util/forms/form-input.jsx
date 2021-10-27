@@ -6,18 +6,12 @@ import { useTranslation } from "react-i18next";
 /**
  * An input for forms.
  *
- * @param {string} props
- * the props.
- * @param {string} props.name
- * The name of the input
- * @param {string} props.label
- * The label for the input
- * @param {string} props.helpText
- * The helptext for the input, if it is needed.
- * @param {boolean} props.required
- * Whether the input is required.
- * @returns {object}
- * An input.
+ * @param {string} props The props.
+ * @param {string} props.name The name of the input
+ * @param {string} props.label The label for the input
+ * @param {string} props.helpText The helptext for the input, if it is needed.
+ * @param {boolean} props.required Whether the input is required.
+ * @returns {object} An input.
  */
 function FormInput({
   name,
@@ -38,9 +32,7 @@ function FormInput({
   const required = !!errors;
   const invalidInputText = invalidText || t("form-input.validation-text");
 
-  /**
-   * Handle errors.
-   */
+  /** Handle errors. */
   useEffect(() => {
     setError(errors && errors.includes(name));
   }, [errors]);

@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
 /**
- * @param {object} props - the props.
+ * @param {object} props - The props.
  * @param {Function} props.handleSlideSelection - The callback when an option is selected
  * @param {Array} props.selected - The selected options
  * @param {string} props.name - The id of the form element
  * @param {Array} props.errors - A list of errors, or null.
  * @param {object} props.data - The data for the slides dropdown.
- * @param {Function} props.filterCallback - the callback on search filter.
+ * @param {Function} props.filterCallback - The callback on search filter.
  * @returns {object} - The multidropdown of playlists.
  */
 function SlidesDropdown({

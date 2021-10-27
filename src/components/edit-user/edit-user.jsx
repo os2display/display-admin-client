@@ -12,8 +12,7 @@ import FormInput from "../util/forms/form-input";
 /**
  * The edit user component.
  *
- * @returns {object}
- * The edit user page.
+ * @returns {object} The edit user page.
  */
 function EditUser() {
   const { t } = useTranslation("common");
@@ -26,9 +25,7 @@ function EditUser() {
   const [errors, setErrors] = useState([]);
   const requiredFields = ["userName"];
 
-  /**
-   * Load content from fixture.
-   */
+  /** Load content from fixture. */
   useEffect(() => {
     // @TODO: load real content.
     if (!newUser) {
@@ -46,10 +43,8 @@ function EditUser() {
   /**
    * Set state on change in input field
    *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * event target
+   * @param {object} props The props.
+   * @param {object} props.target Event target
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
@@ -60,10 +55,8 @@ function EditUser() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @param {object} e
-   * the submit event.
-   * @returns {boolean}
-   * Boolean indicating whether to submit form.
+   * @param {object} e The submit event.
+   * @returns {boolean} Boolean indicating whether to submit form.
    */
   function handleSubmit(e) {
     // @TODO: make it save.

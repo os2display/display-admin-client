@@ -21,8 +21,7 @@ import {
 /**
  * The slides list component.
  *
- * @returns {object}
- * The SlidesList
+ * @returns {object} The SlidesList
  */
 function SlidesList() {
   const { t } = useTranslation("common");
@@ -39,16 +38,13 @@ function SlidesList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data
-   * The selected row.
+   * @param {object} data The selected row.
    */
   function handleSelected(data) {
     setSelectedRows(selectedHelper(data, [...selectedRows]));
   }
 
-  /**
-   * Deletes multiple slides.
-   */
+  /** Deletes multiple slides. */
   useEffect(() => {
     if (slidesToDelete.length > 0) {
       setIsDeleting(true);
@@ -63,8 +59,7 @@ function SlidesList() {
   /**
    * Opens the delete modal
    *
-   * @param {object} item
-   * The item to delete
+   * @param {object} item The item to delete
    */
   function openDeleteModal(item) {
     if (item) {
@@ -73,10 +68,7 @@ function SlidesList() {
     setShowDeleteModal(true);
   }
 
-  /**
-   * @param {Array} playlistData
-   * The array of playlists.
-   */
+  /** @param {Array} playlistData The array of playlists. */
   function openInfoModal(playlistData) {
     setOnPlaylists(playlistData);
     setShowInfoModal(true);
@@ -153,16 +145,12 @@ function SlidesList() {
     },
   ];
 
-  /**
-   * Clears the selected rows.
-   */
+  /** Clears the selected rows. */
   function clearSelectedRows() {
     setSelectedRows([]);
   }
 
-  /**
-   * Deletes slide(s), and closes modal.
-   */
+  /** Deletes slide(s), and closes modal. */
   function handleDelete() {
     setSlidesToDelete(selectedRows);
     clearSelectedRows();
@@ -172,23 +160,19 @@ function SlidesList() {
   /**
    * Sets next page.
    *
-   * @param {number} pageNumber - the next page.
+   * @param {number} pageNumber - The next page.
    */
   function onChangePage(pageNumber) {
     setPage(pageNumber);
   }
 
-  /**
-   * Closes the delete modal.
-   */
+  /** Closes the delete modal. */
   function onCloseDeleteModal() {
     clearSelectedRows();
     setShowDeleteModal(false);
   }
 
-  /**
-   * Closes the info modal.
-   */
+  /** Closes the info modal. */
   function onCloseInfoModal() {
     setShowInfoModal(false);
     setOnPlaylists();

@@ -12,16 +12,11 @@ import { useGetV1ScreensQuery } from "../../../redux/api/api.generated";
 /**
  * A multiselect and table for screens.
  *
- * @param {string} props
- * the props.
- * @param {string} props.name
- * The name for the input
- * @param {string} props.selectedDataEndpoint
- * The data for the multidropdown.
- * @param {Array} props.errors
- * A list of errors, or null.
- * @returns {object}
- * An input.
+ * @param {string} props The props.
+ * @param {string} props.name The name for the input
+ * @param {string} props.selectedDataEndpoint The data for the multidropdown.
+ * @param {Array} props.errors A list of errors, or null.
+ * @returns {object} An input.
  */
 function SelectScreenTable({
   handleChange,
@@ -45,17 +40,12 @@ function SelectScreenTable({
     }
   }, [selectedDataEndpoint, data]);
 
-  /**
-   * @param {Array} groupsArray
-   * The array of groups.
-   */
+  /** @param {Array} groupsArray The array of groups. */
   function openInfoModal(groupsArray) {
     setInGroups(groupsArray);
     setShowInfoModal(true);
   }
-  /**
-   * Closes the info modal.
-   */
+  /** Closes the info modal. */
   function onCloseInfoModal() {
     setShowInfoModal(false);
     setInGroups();
@@ -63,8 +53,7 @@ function SelectScreenTable({
   /**
    * Removes screen from list of screens.
    *
-   * @param {object} removeItem
-   * The item to remove.
+   * @param {object} removeItem The item to remove.
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
@@ -86,7 +75,7 @@ function SelectScreenTable({
   /**
    * Fetches data for the multi component // @TODO:
    *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
     console.log(filter);
@@ -95,8 +84,8 @@ function SelectScreenTable({
   /**
    * Adds screen to list of screens.
    *
-   * @param {object} props - the props.
-   * @param {object} props.target - the target.
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
     const { value, name: localName } = target;

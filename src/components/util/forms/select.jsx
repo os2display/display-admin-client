@@ -4,30 +4,18 @@ import { FormGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param {object} props
- * The props.
- * @param {string} props.name
- * The name of the select component.
- * @param {string} props.label
- * The label of the select component.
- * @param {string} props.value
- * The selected value.
- * @param {Array} props.options
- * The options for the select component.
- * @param {Function} props.onChange
- * The callback for when something is selected.
- * @param {Array} props.errors
- * A list of errors, or null.
- * @param {string} props.errorText
- * The string to display on error.
- * @param {string} props.helpText
- * The helptext.
- * @param {string} props.formGroupClasses
- * The classes for the form-group element.
- * @param {boolean} props.isRequired
- * If the select is required.
- * @returns {object}
- * The select component.
+ * @param {object} props The props.
+ * @param {string} props.name The name of the select component.
+ * @param {string} props.label The label of the select component.
+ * @param {string} props.value The selected value.
+ * @param {Array} props.options The options for the select component.
+ * @param {Function} props.onChange The callback for when something is selected.
+ * @param {Array} props.errors A list of errors, or null.
+ * @param {string} props.errorText The string to display on error.
+ * @param {string} props.helpText The helptext.
+ * @param {string} props.formGroupClasses The classes for the form-group element.
+ * @param {boolean} props.isRequired If the select is required.
+ * @returns {object} The select component.
  */
 function Select({
   name,
@@ -47,9 +35,7 @@ function Select({
   const [classes, setClasses] = useState("form-select");
   const required = !!errors;
 
-  /**
-   * Handle errors.
-   */
+  /** Handle errors. */
   useEffect(() => {
     if (errors && errors.includes(name)) {
       setError(true);

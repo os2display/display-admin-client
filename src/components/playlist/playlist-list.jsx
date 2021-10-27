@@ -21,8 +21,7 @@ import {
 /**
  * The playlists list component.
  *
- * @returns {object}
- * The playlists list.
+ * @returns {object} The playlists list.
  */
 function PlaylistList() {
   const { t } = useTranslation("common");
@@ -36,18 +35,13 @@ function PlaylistList() {
   const [DeleteV1Playlists, { isSuccess: isDeleteSuccess }] =
     useDeleteV1PlaylistsByIdMutation();
 
-  /**
-   * @param {Array} slideData
-   * The array of playlists.
-   */
+  /** @param {Array} slideData The array of playlists. */
   function openInfoModal(slideData) {
     setOnSlides(slideData);
     setShowInfoModal(true);
   }
 
-  /**
-   * Deletes multiple playlists.
-   */
+  /** Deletes multiple playlists. */
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
       setIsDeleting(true);
@@ -62,15 +56,13 @@ function PlaylistList() {
   /**
    * Sets next page.
    *
-   * @param {number} pageNumber - the next page.
+   * @param {number} pageNumber - The next page.
    */
   function onChangePage(pageNumber) {
     setPage(pageNumber);
   }
 
-  /**
-   * Closes the info modal.
-   */
+  /** Closes the info modal. */
   function onCloseInfoModal() {
     setShowInfoModal(false);
   }
@@ -78,8 +70,7 @@ function PlaylistList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data
-   * The selected row.
+   * @param {object} data The selected row.
    */
   function handleSelected(data) {
     setSelectedRows(selectedHelper(data, [...selectedRows]));
@@ -88,8 +79,7 @@ function PlaylistList() {
   /**
    * Opens the delete modal
    *
-   * @param {object} item
-   * The item to delete
+   * @param {object} item The item to delete
    */
   function openDeleteModal(item) {
     if (item) {
@@ -151,25 +141,19 @@ function PlaylistList() {
     },
   ];
 
-  /**
-   * Clears the selected rows.
-   */
+  /** Clears the selected rows. */
   function clearSelectedRows() {
     setSelectedRows([]);
   }
 
-  /**
-   * Deletes playlist(s), and closes modal.
-   */
+  /** Deletes playlist(s), and closes modal. */
   function handleDelete() {
     setPlaylistsToDelete(selectedRows);
     clearSelectedRows();
     setShowDeleteModal(false);
   }
 
-  /**
-   * Closes the delete modal.
-   */
+  /** Closes the delete modal. */
   function onCloseModal() {
     setSelectedRows([]);
     setShowDeleteModal(false);

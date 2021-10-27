@@ -6,14 +6,10 @@ import { useTranslation } from "react-i18next";
 /**
  * A checkbox for the list.
  *
- * @param {object} props
- * Props.
- * @param {Function} props.onSelected
- * The callback for onselected.
- * @param {boolean} props.selected
- * Whether the checkbox should display selected.
- * @returns {object}
- * A checkbox for the list.
+ * @param {object} props Props.
+ * @param {Function} props.onSelected The callback for onselected.
+ * @param {boolean} props.selected Whether the checkbox should display selected.
+ * @returns {object} A checkbox for the list.
  */
 function CheckboxForList({ selected, onSelected }) {
   const { t } = useTranslation("common");

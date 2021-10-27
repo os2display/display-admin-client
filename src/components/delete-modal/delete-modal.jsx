@@ -8,18 +8,12 @@ import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 /**
  * Delete modal component, a modal that deletes elements.
  *
- * @param {object} props
- * Props.
- * @param {boolean} props.show
- * Whether to show the modal.
- * @param {Function} props.onClose
- * Callback on close modal.
- * @param {Function} props.selectedRows
- * Rows that are selected for deletion
- * @param {Function} props.handleAccept
- * Callback on accept.
- * @returns {object}
- * The modal.
+ * @param {object} props Props.
+ * @param {boolean} props.show Whether to show the modal.
+ * @param {Function} props.onClose Callback on close modal.
+ * @param {Function} props.selectedRows Rows that are selected for deletion
+ * @param {Function} props.handleAccept Callback on accept.
+ * @returns {object} The modal.
  */
 function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
   if (!show) {

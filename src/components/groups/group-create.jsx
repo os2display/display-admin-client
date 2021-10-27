@@ -32,8 +32,8 @@ function GroupCreate() {
   ] = usePostV1ScreenGroupsMutation();
 
   /**
-   * When the screen is saved, the group(s) will be saved.
-   * When saved, it redirects to edit screen.
+   * When the screen is saved, the group(s) will be saved. When saved, it
+   * redirects to edit screen.
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
@@ -53,9 +53,7 @@ function GroupCreate() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const saveData = {
       title: formStateObject.title,

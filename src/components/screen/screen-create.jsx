@@ -47,9 +47,7 @@ function ScreenCreate() {
     },
   ] = usePutV1ScreensByIdScreenGroupsMutation();
 
-  /**
-   * When the screen is saved, the groups will be saved.
-   */
+  /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && data) {
       PutV1ScreensByIdScreenGroups({
@@ -59,10 +57,7 @@ function ScreenCreate() {
     }
   }, [isSaveSuccess]);
 
-  /**
-   * When the screen and group(s) are saved.
-   * it redirects to edit screen.
-   */
+  /** When the screen and group(s) are saved. it redirects to edit screen. */
   useEffect(() => {
     if (isSaveSuccessGroups && data) {
       history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
@@ -81,9 +76,7 @@ function ScreenCreate() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     formStateObject.dimensions.width = parseInt(
       formStateObject.dimensions.width,

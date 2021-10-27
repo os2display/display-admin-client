@@ -19,11 +19,10 @@ import MergeModal from "../../merge-modal/merge-modal";
  * @param {Function} props.clearSelectedRows - Callback to clear the selected rows.
  * @param {boolean} props.withChart - If the list should display a gantt chart
  * @param {Function} props.handlePageChange - For changing the page
- * @param {number} props.totalItems - the total items, for pagination.
+ * @param {number} props.totalItems - The total items, for pagination.
  * @param {number} props.currentPage - The current page.
  * @param {Function} props.handleDelete - For deleting elements in the list.
- * @returns {object}
- * The List.
+ * @returns {object} The List.
  */
 function List({
   data,
@@ -62,17 +61,12 @@ function List({
   const pageSize = 10;
   const [showMergeModal, setViewMergeModal] = useState(false);
 
-  /**
-   * @param {string} newSearchText
-   * Updates the search text state and url.
-   */
+  /** @param {string} newSearchText Updates the search text state and url. */
   function handleSearch(newSearchText) {
     setSearchText(newSearchText);
   }
 
-  /**
-   * If they search or filter, the pagination is reset.
-   */
+  /** If they search or filter, the pagination is reset. */
   useEffect(() => {
     const params = new URLSearchParams(search);
     // if (searchText) {
@@ -87,9 +81,7 @@ function List({
     handlePageChange(currentPage);
   }, []);
 
-  /**
-   * @param {number} nextPage - the next page.
-   */
+  /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
     const params = new URLSearchParams(search);
     params.delete("page");
@@ -98,9 +90,7 @@ function List({
     handlePageChange(nextPage);
   }
 
-  /**
-   * Sets page from url using callback
-   */
+  /** Sets page from url using callback */
   useEffect(() => {
     if (pageParams) {
       handlePageChange(parseInt(pageParams, 10));
@@ -109,21 +99,15 @@ function List({
     }
   }, [pageParams]);
 
-  /**
-   *Todo
-   */
+  /** Todo */
   function handleSort() {}
 
-  /**
-   * Closes merge modal.
-   */
+  /** Closes merge modal. */
   function onCloseMergeModal() {
     setViewMergeModal(false);
   }
 
-  /**
-   * Should handle merge.
-   */
+  /** Should handle merge. */
   function handleMerge() {
     // @TODO merge elements
     setViewMergeModal(false);

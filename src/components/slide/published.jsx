@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param {object} props
- * The props.
- * @param {boolean} props.published
- * Whether it is published or not.
- * @returns {object}
- * The published yes/no component.
+ * @param {object} props The props.
+ * @param {boolean} props.published Whether it is published or not.
+ * @returns {object} The published yes/no component.
  */
 function Published({ published }) {
   const { t } = useTranslation("common");

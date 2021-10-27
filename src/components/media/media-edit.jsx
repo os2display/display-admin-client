@@ -7,8 +7,7 @@ import MediaForm from "./media-form";
 /**
  * The edit media component.
  *
- * @returns {object}
- * The edit media page.
+ * @returns {object} The edit media page.
  */
 function MediaEdit() {
   const { t } = useTranslation("common");
@@ -17,9 +16,7 @@ function MediaEdit() {
   const { id } = useParams();
   const { data, error: loadError, isLoading } = useGetV1MediaByIdQuery({ id });
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (data) {
       const dataCopy = { ...data };
@@ -32,10 +29,8 @@ function MediaEdit() {
   /**
    * Set state on change in input field
    *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * event target
+   * @param {object} props The props.
+   * @param {object} props.target Event target
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
@@ -43,9 +38,7 @@ function MediaEdit() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {}
   return (
     <>

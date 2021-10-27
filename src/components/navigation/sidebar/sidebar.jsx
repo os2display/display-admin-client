@@ -8,8 +8,7 @@ import "./sidebar.scss";
 /**
  * The sidebar component.
  *
- * @returns {object}
- *   The SideBar
+ * @returns {object} The SideBar
  */
 function SideBar() {
   const [t] = useTranslation("common");

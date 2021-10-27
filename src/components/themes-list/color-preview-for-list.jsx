@@ -4,12 +4,9 @@ import PropTypes from "prop-types";
 /**
  * A link for the list
  *
- * @param {object} props
- * Props.
- * @param {object} props.data
- * Data data object with colors.ejs
- * @returns {object}
- * A link for the list.
+ * @param {object} props Props.
+ * @param {object} props.data Data data object with colors.ejs
+ * @returns {object} A link for the list.
  */
 function ColorPreviewForList({ data }) {
   const { primary, secondary, tertiary, fontColor } = data.colors;

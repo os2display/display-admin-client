@@ -7,18 +7,13 @@ import MediaList from "../media/media-list";
 /**
  * Delete modal component, a modal that deletes elements.
  *
- * @param {object} props
- * Props.
- * @param {boolean} props.show
- * Whether to show the modal.
- * @param {Function} props.onClose
- * Callback on close modal.
- * @param {Function} props.handleAccept
- * The are you sure you want to delete text.
- * @param {boolean} props.multiple
- * Whether it should be possible to choose multiple images.
- * @returns {object}
- * The modal.
+ * @param {object} props Props.
+ * @param {boolean} props.show Whether to show the modal.
+ * @param {Function} props.onClose Callback on close modal.
+ * @param {Function} props.handleAccept The are you sure you want to delete text.
+ * @param {boolean} props.multiple Whether it should be possible to choose
+ *   multiple images.
+ * @returns {object} The modal.
  */
 function MediaModal({ show, onClose, handleAccept, multiple }) {
   if (!show) {
@@ -27,10 +22,7 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
   const [selectedimages, setSelectedImages] = useState([]);
   const { t } = useTranslation("common");
 
-  /**
-   * @param {Array} images
-   * The images that are selected in the dialog.
-   */
+  /** @param {Array} images The images that are selected in the dialog. */
   function handleSelectedImages(images) {
     setSelectedImages(images);
     if (!multiple && images.length === 1) {

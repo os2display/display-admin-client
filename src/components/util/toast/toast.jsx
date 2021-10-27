@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import dayjs from "dayjs";
 
 /**
- * @param {object} props - the props.
- * @param {string} props.text - the text to display
- * @param {boolean} props.show - show toast
- * @param {string} props.title - the title of the toast.
- * @param {boolean} props.error - if the toast should be displayed as an error.
- * @returns {object} - the toast component.
+ * @param {object} props - The props.
+ * @param {string} props.text - The text to display
+ * @param {boolean} props.show - Show toast
+ * @param {string} props.title - The title of the toast.
+ * @param {boolean} props.error - If the toast should be displayed as an error.
+ * @returns {object} - The toast component.
  */
 function Toast({ text, show, title, error }) {
   const { t } = useTranslation("common");
@@ -20,9 +20,7 @@ function Toast({ text, show, title, error }) {
   const [displayToast, setDisplayToast] = useState(false);
   const displayToastMilliseconds = 5000;
 
-  /**
-   * Display the toast.
-   */
+  /** Display the toast. */
   useEffect(() => {
     let timer = null;
 

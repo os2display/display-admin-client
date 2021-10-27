@@ -9,22 +9,14 @@ import idFromUrl from "../util/helpers/id-from-url";
 /**
  * Info modal component, that displays an info string.
  *
- * @param {object} props
- * Props.
- * @param {boolean} props.show
- * Whether to show the modal.
- * @param {Function} props.onClose
- * Callback on close modal.
- * @param {Function} props.apiCall
- * apiCall for data.
- * @param {Array} props.dataStructureToDisplay
- * The playlists to list.
- * @param {string} props.modalTitle
- * The info modal string.
- * @param {string} props.dataKey
- * The data key for mapping the data.
- * @returns {object}
- * The modal.
+ * @param {object} props Props.
+ * @param {boolean} props.show Whether to show the modal.
+ * @param {Function} props.onClose Callback on close modal.
+ * @param {Function} props.apiCall ApiCall for data.
+ * @param {Array} props.dataStructureToDisplay The playlists to list.
+ * @param {string} props.modalTitle The info modal string.
+ * @param {string} props.dataKey The data key for mapping the data.
+ * @returns {object} The modal.
  */
 function InfoModal({
   show,
@@ -61,9 +53,7 @@ function InfoModal({
     }
   }, []);
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (data?.data) {
       let mappedData = fetchedData || [];
@@ -82,9 +72,7 @@ function InfoModal({
     }
   }, [data?.data]);
 
-  /**
-   * Displays more list entries.
-   */
+  /** Displays more list entries. */
   function displayMore() {
     setPage(page + 1);
     if (Array.isArray(dataStructureToDisplay)) {

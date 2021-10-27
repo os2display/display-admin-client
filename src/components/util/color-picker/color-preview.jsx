@@ -4,18 +4,12 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 
 /**
- * @param {object} props
- * the props.
- * @param {string} props.name
- * The name of the colorpreview field.
- * @param {string}  props.color
- * The color, a hex string or null.
- * @param {Function} props.openColorPicker
- * Callback for opening color picker.
- * @param {string} props.label
- * The label for the button
- * @returns {object}
- * The color previewer
+ * @param {object} props The props.
+ * @param {string} props.name The name of the colorpreview field.
+ * @param {string} props.color The color, a hex string or null.
+ * @param {Function} props.openColorPicker Callback for opening color picker.
+ * @param {string} props.label The label for the button
+ * @returns {object} The color previewer
  */
 function ColorPreview({ name, color, openColorPicker, label }) {
   return (

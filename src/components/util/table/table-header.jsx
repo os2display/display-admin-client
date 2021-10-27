@@ -12,18 +12,12 @@ import ColumnProptypes from "../../proptypes/column-proptypes";
 import "./table-header.scss";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.columns
- * The columns for the table.
- * @param {object} props.sortColumn
- * The column to sortby.
- * @param {Function} props.onSort
- * Callback for on sort.
- * @param {boolean} props.draggable
- * If table has draggable rows.
- * @returns {object}
- * The table body.
+ * @param {object} props The props.
+ * @param {Array} props.columns The columns for the table.
+ * @param {object} props.sortColumn The column to sortby.
+ * @param {Function} props.onSort Callback for on sort.
+ * @param {boolean} props.draggable If table has draggable rows.
+ * @returns {object} The table body.
  */
 function TableHeader({ columns, sortColumn, onSort, draggable }) {
   const { t } = useTranslation("common");
@@ -34,8 +28,7 @@ function TableHeader({ columns, sortColumn, onSort, draggable }) {
   /**
    * Sorts the rows, according to chosenpath.
    *
-   * @param {object} chosenPath
-   * The sorting column
+   * @param {object} chosenPath The sorting column
    */
   function sort(chosenPath) {
     if (chosenPath === path) {
@@ -50,10 +43,8 @@ function TableHeader({ columns, sortColumn, onSort, draggable }) {
   /**
    * Renders a search icon.
    *
-   * @param {object} column
-   * The sorting column.
-   * @returns {object}
-   * The sorting icon.
+   * @param {object} column The sorting column.
+   * @returns {object} The sorting icon.
    */
   function renderSortIcon(column) {
     if (column.path !== path) {

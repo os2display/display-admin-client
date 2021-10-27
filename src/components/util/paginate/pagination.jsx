@@ -3,18 +3,12 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param {object} props
- * The props.
- * @param {number} props.itemsCount
- * The amount of data to be spread out in pages.
- * @param {number} props.pageSize
- * The page size
- * @param {Function} props.onPageChange
- * The callback for page change.
- * @param {number} props.currentPage
- * The current page.
- * @returns {object}
- * The pagination.
+ * @param {object} props The props.
+ * @param {number} props.itemsCount The amount of data to be spread out in pages.
+ * @param {number} props.pageSize The page size
+ * @param {Function} props.onPageChange The callback for page change.
+ * @param {number} props.currentPage The current page.
+ * @returns {object} The pagination.
  */
 function Pagination({ itemsCount, pageSize, onPageChange, currentPage }) {
   const { t } = useTranslation("common");
