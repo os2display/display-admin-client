@@ -29,6 +29,7 @@ function ScreenEdit() {
     PutV1Screens,
     { isLoading: isSavingScreen, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1ScreensByIdMutation();
+
   const [
     putPlaylistScreenRegionItem,
     { error: savePlaylistError, isSuccess: isSavePlaylistSuccess },
@@ -73,7 +74,7 @@ function ScreenEdit() {
     }
   }, [isSaveSuccess]);
 
-  /** Deletes multiple groups. */
+  /** Adds playlists to regions. */
   useEffect(() => {
     if (playlistsToAdd && playlistsToAdd.length > 0) {
       setIsSaving(true);
@@ -179,7 +180,7 @@ function ScreenEdit() {
           handleSubmit={handleSubmit}
           isLoading={isLoadingScreen}
           isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
-          isSaving={isSavingScreen || isSavingGroups || isSaving}
+          isSaving={isSavingScreen || isSavingGroups || isSaving || false}
           errors={
             saveError ||
             loadError ||

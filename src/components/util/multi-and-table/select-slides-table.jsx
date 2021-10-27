@@ -109,13 +109,11 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     },
     {
       content: (templateData) => TemplateLabelInList(templateData),
-      sort: true,
       key: "template",
       label: t("slides-list.columns.template"),
     },
     {
       key: "playlists",
-      sort: true,
       content: (playlistData) => (
         <ListButton
           callback={openInfoModal}
@@ -128,7 +126,6 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     },
     {
       key: "published",
-      sort: true,
       content: (publishedData) => Published(publishedData),
       label: t("slides-list.columns.published"),
     },
