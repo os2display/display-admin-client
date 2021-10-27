@@ -22,7 +22,7 @@ import {
 /**
  * The slides list component.
  *
- * @returns {object} The  slides list
+ * @returns {object} The slides list
  */
 function SlidesList() {
   const { t } = useTranslation("common");

@@ -180,7 +180,7 @@ function ScreenEdit() {
           handleSubmit={handleSubmit}
           isLoading={isLoadingScreen}
           isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
-          isSaving={isSavingScreen || isSavingGroups || isSaving || false}
+          isSaving={isSavingScreen || isSavingGroups || isSaving || false}
           errors={
             saveError ||
             loadError ||

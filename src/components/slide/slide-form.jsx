@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
-import TemplateRender from "./template-render";
+// import TemplateRender from "./template-render";
 import ContentFooter from "../util/content-footer/content-footer";
 import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
@@ -25,7 +25,7 @@ import FormCheckbox from "../util/forms/form-checkbox";
  * @param {boolean | null} props.isSaveSuccess Is the save a success?
  * @param {boolean | null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
- * @param {object} props.template - the template for the slide.
+ * @param {object} props.template - The template for the slide.
  * @returns {object} The slide form.
  */
 function SlideForm({

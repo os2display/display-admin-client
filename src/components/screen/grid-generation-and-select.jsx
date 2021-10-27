@@ -39,10 +39,8 @@ function GridGenerationAndSelect({
   };
 
   /**
-   * @param {object} props
-   * the props.
-   * @param {object} props.target
-   * event target
+   * @param {object} props The props.
+   * @param {object} props.target Event target
    */
   function handleChange({ target }) {
     // Map to add region id to incoming data.
@@ -86,9 +84,7 @@ function GridGenerationAndSelect({
     handleInput({ target: { value: localSelectedPlaylists, id: "playlists" } });
   }
 
-  /**
-   * @param {string} id - the id of the selected tab
-   */
+  /** @param {string} id - The id of the selected tab */
   function handleSelect(id) {
     setKey(id);
   }

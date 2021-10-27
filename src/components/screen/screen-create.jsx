@@ -6,7 +6,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import {
   usePostV1ScreensMutation,
   usePutV1ScreensByIdScreenGroupsMutation,
-  usePutPlaylistScreenRegionItemMutation
+  usePutPlaylistScreenRegionItemMutation,
 } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
 
@@ -38,14 +38,18 @@ function ScreenCreate() {
 
   const [
     PostV1Screens,
-    { data, isLoading: isSavingScreen, error: saveError, isSuccess: isSaveSuccess },
+    {
+      data,
+      isLoading: isSavingScreen,
+      error: saveError,
+      isSuccess: isSaveSuccess,
+    },
   ] = usePostV1ScreensMutation();
 
   const [
     putPlaylistScreenRegionItem,
     { error: savePlaylistError, isSuccess: isSavePlaylistSuccess },
   ] = usePutPlaylistScreenRegionItemMutation();
-
 
   const [
     PutV1ScreensByIdScreenGroups,
@@ -177,7 +181,7 @@ function ScreenCreate() {
       handleSubmit={handleSubmit}
       isLoading={false}
       isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
-      isSaving={isSavingScreen || isSavingGroups|| isSaving || false}
+      isSaving={isSavingScreen || isSavingGroups || isSaving || false}
       errors={saveError || saveErrorGroups || savePlaylistError || false}
     />
   );

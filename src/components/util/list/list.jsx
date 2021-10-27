@@ -20,13 +20,14 @@ import RadioButtons from "../forms/radio-buttons";
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
  * @param {Function} props.handleDelete - For deleting elements in the list.
- * @param {boolean} props.deleteSuccess - If the calling component has deleted element with success.
+ * @param {boolean} props.deleteSuccess - If the calling component has deleted
+ *   element with success.
  * @param {boolean} props.error - If the calling component has an error.
- * @param {Function} props.handleSort -  callback for sort.
- * @param {Function} props.handleSearch - callback for seach.
+ * @param {Function} props.handleSort - Callback for sort.
+ * @param {Function} props.handleSearch - Callback for seach.
  * @param {boolean} props.isLoading - If the calling component is loading data.
  * @param {boolean} props.displayPublished - Whether to display the published filter
- * @param {Function} props.handleIsPublished - callback for published filter.
+ * @param {Function} props.handleIsPublished - Callback for published filter.
  * @returns {object} The List.
  */
 function List({
@@ -63,8 +64,8 @@ function List({
   const pageSize = 10;
 
   /**
-   * @param {string} dataKey - which data to delete/update
-   * @param {object} value - the update value
+   * @param {string} dataKey - Which data to delete/update
+   * @param {object} value - The update value
    */
   function updateUrlParams(dataKey, value) {
     const params = new URLSearchParams(search);

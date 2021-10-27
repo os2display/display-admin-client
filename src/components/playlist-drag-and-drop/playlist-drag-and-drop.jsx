@@ -14,10 +14,10 @@ import {
  * A drag and drop component for playlists.
  *
  * @param {string} props The props.
- * @param {Function} props.handleChange - the callback when something changed
- * @param {string} props.name - the id of the form element
- * @param {string} props.screenId - the screen id for get request
- * @param {string} props.regionId - the region id for get request
+ * @param {Function} props.handleChange - The callback when something changed
+ * @param {string} props.name - The id of the form element
+ * @param {string} props.screenId - The screen id for get request
+ * @param {string} props.regionId - The region id for get request
  * @returns {object} A drag and drop component
  */
 function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {

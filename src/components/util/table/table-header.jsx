@@ -16,7 +16,7 @@ import "./table-header.scss";
  * @param {Function} props.onSort Callback for on sort.
  * @param {boolean} props.draggable If table has draggable rows.
  * @param {string} props.sortPath The path to sort by
- * @param {string} props.sortOrder the order asc/desc
+ * @param {string} props.sortOrder The order asc/desc
  * @returns {object} The table body.
  */
 function TableHeader({ columns, sortPath, sortOrder, onSort, draggable }) {

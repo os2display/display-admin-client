@@ -13,7 +13,7 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  * @param {Array} props.data The data to display in the table.
  * @param {boolean} props.withChart If the table should display a gantt chart
  * @param {string} props.sortPath The path to sort by
- * @param {string} props.sortOrder the order asc/desc
+ * @param {string} props.sortOrder The order asc/desc
  * @returns {object} The table.
  */
 function Table({

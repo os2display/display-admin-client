@@ -11,7 +11,7 @@ import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import Toast from "../util/toast/toast";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
-import "./playlist-form.scss"
+import "./playlist-form.scss";
 
 /**
  * The playlist form component.
