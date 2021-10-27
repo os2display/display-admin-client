@@ -19,8 +19,7 @@ import {
 /**
  * The groups list component.
  *
- * @returns {object}
- * The groups list.
+ * @returns {object} The groups list.
  */
 function GroupsList() {
   const { t } = useTranslation("common");
@@ -34,8 +33,7 @@ function GroupsList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data
-   * The selected row.
+   * @param {object} data The selected row.
    */
   function handleSelected(data) {
     setSelectedRows(selectedHelper(data, [...selectedRows]));
@@ -44,8 +42,7 @@ function GroupsList() {
   /**
    * Opens the delete modal
    *
-   * @param {object} item
-   * The item to delete
+   * @param {object} item The item to delete
    */
   function openDeleteModal(item) {
     if (item) {
@@ -54,9 +51,7 @@ function GroupsList() {
     setShowDeleteModal(true);
   }
 
-  /**
-   * Deletes multiple groups.
-   */
+  /** Deletes multiple groups. */
   useEffect(() => {
     if (groupsToDelete.length > 0) {
       setIsDeleting(true);
@@ -111,9 +106,7 @@ function GroupsList() {
     },
   ];
 
-  /**
-   * Clears the selected rows.
-   */
+  /** Clears the selected rows. */
   function clearSelectedRows() {
     setSelectedRows([]);
   }
@@ -121,24 +114,20 @@ function GroupsList() {
   /**
    * Sets next page.
    *
-   * @param {number} pageNumber - the next page.
+   * @param {number} pageNumber - The next page.
    */
   function onChangePage(pageNumber) {
     setPage(pageNumber);
   }
 
-  /**
-   * Deletes group(s), and closes modal.
-   */
+  /** Deletes group(s), and closes modal. */
   function handleDelete() {
     setGroupsToDelete(selectedRows);
     clearSelectedRows();
     setShowDeleteModal(false);
   }
 
-  /**
-   * Closes the delete modal.
-   */
+  /** Closes the delete modal. */
   function onCloseModal() {
     clearSelectedRows();
     setShowDeleteModal(false);

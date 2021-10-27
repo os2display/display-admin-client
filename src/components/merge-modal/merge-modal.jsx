@@ -9,18 +9,12 @@ import FormInput from "../util/forms/form-input";
 /**
  * Merge modal component, a modal that merges elements together.
  *
- * @param {object} props
- * Props.
- * @param {boolean} props.show
- * Whether to show the modal.
- * @param {Function} props.onClose
- * Callback on close modal.
- * @param {Function} props.dataStructureToDisplay
- * Rows that are selected for deletion
- * @param {Function} props.handleAccept
- * Callback on accept.
- * @returns {object}
- * The modal.
+ * @param {object} props Props.
+ * @param {boolean} props.show Whether to show the modal.
+ * @param {Function} props.onClose Callback on close modal.
+ * @param {Function} props.dataStructureToDisplay Rows that are selected for deletion
+ * @param {Function} props.handleAccept Callback on accept.
+ * @returns {object} The modal.
  */
 function MergeModal({ show, onClose, dataStructureToDisplay, handleAccept }) {
   if (!show) {
@@ -29,9 +23,7 @@ function MergeModal({ show, onClose, dataStructureToDisplay, handleAccept }) {
   const [mergeName, setMergeName] = useState();
   const { t } = useTranslation("common");
 
-  /**
-   * @param {string} newMergeName - the new name for the merged data.
-   */
+  /** @param {string} newMergeName - The new name for the merged data. */
   function handleInput(newMergeName) {
     setMergeName(newMergeName);
   }

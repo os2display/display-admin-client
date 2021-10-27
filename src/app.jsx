@@ -32,8 +32,7 @@ import "./app.scss";
 /**
  * App component.
  *
- * @returns {object}
- * The component.
+ * @returns {object} The component.
  */
 function App() {
   i18next.init({

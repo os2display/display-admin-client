@@ -11,12 +11,9 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
 /**
  * A multiselect and table for groups.
  *
- * @param {string} props
- * the props.
- * @param {string} props.name
- * The name for the input
- * @returns {object}
- * An input.
+ * @param {string} props The props.
+ * @param {string} props.name The name for the input
+ * @returns {object} An input.
  */
 function SelectGroupsTable({ handleChange, name, groupId }) {
   const { t } = useTranslation("common");
@@ -27,9 +24,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
     id: groupId,
   });
 
-  /**
-   * Map loaded data.
-   */
+  /** Map loaded data. */
   useEffect(() => {
     if (data) {
       setSelectedData(data["hydra:member"]);
@@ -39,8 +34,8 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   /**
    * Adds group to list of groups.
    *
-   * @param {object} props - the props.
-   * @param {object} props.target - the target.
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
     const { value, id } = target;
@@ -53,7 +48,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   /**
    * Fetches data for the multi component // @TODO:
    *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
     console.log(filter);
@@ -62,8 +57,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   /**
    * Removes playlist from list of groups.
    *
-   * @param {object} removeItem
-   * The item to remove.
+   * @param {object} removeItem The item to remove.
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData

@@ -1,9 +1,6 @@
 import * as am4core from "@amcharts/amcharts4/core";
 
-/**
- * @param {object} target
- * The colorsset
- */
+/** @param {object} target The colorsset */
 function Am4ThemesColorTheme(target) {
   if (target instanceof am4core.ColorSet) {
     // Thanks to https://colorbrewer2.org/ for creating a

@@ -20,8 +20,7 @@ import "./topbar.scss";
 /**
  * The TopBar component.
  *
- * @returns {object}
- *   The TopBar
+ * @returns {object} The TopBar
  */
 function TopBar() {
   const [t] = useTranslation("common");

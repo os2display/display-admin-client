@@ -5,14 +5,10 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import Am4ThemesColorTheme from "./calendarColors";
 
 /**
- * @param {object} props
- * The props
- * @param {number} props.id
- * The id for the chart
- * @param {Array} props.playlists
- * the playlists to display in the chart.
- * @returns {object}
- * The gantt chart.
+ * @param {object} props The props
+ * @param {number} props.id The id for the chart
+ * @param {Array} props.playlists The playlists to display in the chart.
+ * @returns {object} The gantt chart.
  */
 function Calendar({ id, playlists }) {
   const chartId = `chart${id}`;

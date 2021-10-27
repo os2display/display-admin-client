@@ -1,6 +1,4 @@
-/**
- * Config loader.
- */
+/** Config loader. */
 export default class ConfigLoader {
   static async loadConfig() {
     return fetch("/config.json")

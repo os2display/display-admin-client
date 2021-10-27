@@ -6,29 +6,20 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 // import Calendar from "../../screen-list/calendar";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.columns
- * The columns for the table.
- * @param {Array} props.selectedRows
- * The selected rows array.
- * @param {Array} props.data
- * The data to display.
- * @param {boolean} props.withChart
- * If the table should display a gantt chart
- * @returns {object}
- * The table body.
+ * @param {object} props The props.
+ * @param {Array} props.columns The columns for the table.
+ * @param {Array} props.selectedRows The selected rows array.
+ * @param {Array} props.data The data to display.
+ * @param {boolean} props.withChart If the table should display a gantt chart
+ * @returns {object} The table body.
  */
 function TableBody({ columns, selectedRows, data, withChart }) {
   /**
    * Renders a cell with the content received.
    *
-   * @param {object} item
-   * The item to render.
-   * @param {object} column
-   * the column to render.
-   * @returns {object|string}
-   * returns a rendered jsx object, or the path.
+   * @param {object} item The item to render.
+   * @param {object} column The column to render.
+   * @returns {object | string} Returns a rendered jsx object, or the path.
    */
   function renderCell(item, column) {
     if (column.content) {
@@ -40,10 +31,8 @@ function TableBody({ columns, selectedRows, data, withChart }) {
   /**
    * Styles a row if it is selected.
    *
-   * @param {object} item
-   * The data item.
-   * @returns {string}
-   * Class for styling.
+   * @param {object} item The data item.
+   * @returns {string} Class for styling.
    */
   function isRowSelected(item) {
     let classes = "";

@@ -16,8 +16,7 @@ import "./nav-items.scss";
 /**
  * The nav items.
  *
- * @returns {object}
- *   nav items
+ * @returns {object} Nav items
  */
 function NavItems() {
   const [t] = useTranslation("common");

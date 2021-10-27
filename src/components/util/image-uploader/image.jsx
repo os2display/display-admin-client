@@ -5,28 +5,20 @@ import { useTranslation } from "react-i18next";
 import FormInput from "../forms/form-input";
 import "./image-uploader.scss";
 /**
- * @param {object} props
- * The props.
- * @param {object} props.inputImage
- * The image object.
- * @param {Function} props.onImageRemove
- * A callback on remove image.
- * @param {Function} props.handleChange
- * A callback on change.
- * @param {number} props.index
- * The index, used for image removal.
- * @returns {object}
- * The image uploader.
+ * @param {object} props The props.
+ * @param {object} props.inputImage The image object.
+ * @param {Function} props.onImageRemove A callback on remove image.
+ * @param {Function} props.handleChange A callback on change.
+ * @param {number} props.index The index, used for image removal.
+ * @returns {object} The image uploader.
  */
 function Image({ inputImage, onImageRemove, handleChange, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
   /**
-   * @param {object} props
-   * The props
-   * @param {object} props.target
-   * The onchange target.
+   * @param {object} props The props
+   * @param {object} props.target The onchange target.
    */
   function onChange({ target }) {
     const localImage = image;

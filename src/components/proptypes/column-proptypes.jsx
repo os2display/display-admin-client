@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
-/**
- * The proptypes for column, as these are in multiple places.
- */
+/** The proptypes for column, as these are in multiple places. */
 const ColumnProptypes = PropTypes.arrayOf(
   PropTypes.shape({
     path: PropTypes.string,

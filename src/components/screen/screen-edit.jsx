@@ -42,27 +42,21 @@ function ScreenEdit() {
     isLoading: isLoadingScreen,
   } = useGetV1ScreensByIdQuery({ id });
 
-  /**
-   * Sets the id of groups for api call.
-   */
+  /** Sets the id of groups for api call. */
   useEffect(() => {
     if (formStateObject && !groupId) {
       setGroupId(idFromUrl(formStateObject.inScreenGroups));
     }
   }, [formStateObject]);
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (data) {
       setFormStateObject(data);
     }
   }, [data]);
 
-  /**
-   * When the screen is saved, the groups will be saved.
-   */
+  /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess) {
       PutV1ScreensByIdScreenGroups({
@@ -85,9 +79,7 @@ function ScreenEdit() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     formStateObject.dimensions.width = parseInt(
       formStateObject.dimensions.width,

@@ -10,14 +10,10 @@ import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
 /**
  * An input for forms.
  *
- * @param {string} props
- * the props.
- * @param {string} props.radioGroupName
- * The name of the input
- * @param {string} props.label
- * The label for the input
- * @returns {object}
- * An input.
+ * @param {string} props The props.
+ * @param {string} props.radioGroupName The name of the input
+ * @param {string} props.label The label for the input
+ * @returns {object} An input.
  */
 function PlaylistDragAndDrop({ handleChange, name, data }) {
   const { t } = useTranslation("common");
@@ -28,12 +24,9 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
   /**
    * Opens info modal with either categories or slides.
    *
-   * @param {object} props
-   * The props
-   * @param {Array} props.displayData
-   * The data to sum up in the modal
-   * @param {string} props.modalTitle
-   * The title for the infomodal.
+   * @param {object} props The props
+   * @param {Array} props.displayData The data to sum up in the modal
+   * @param {string} props.modalTitle The title for the infomodal.
    */
   function openInfoModal({ displayData, modalTitle }) {
     setInfoModal(modalTitle);
@@ -41,9 +34,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
     setShowInfoModal(true);
   }
 
-  /**
-   * Closes the info modal.
-   */
+  /** Closes the info modal. */
   function onCloseInfoModal() {
     setShowInfoModal(false);
     setDataStructureToDisplay();
@@ -52,7 +43,7 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
   /**
    * Fetches data for the multi component // @TODO:
    *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
     console.log(filter);
@@ -61,10 +52,8 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
   /**
    * Removes playlist from list of playlists, and closes modal.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.value
-   * The id of the playlist
+   * @param {object} props The props.
+   * @param {string} props.value The id of the playlist
    */
   function handleRemove({ value }) {
     const indexOfItemToRemove = data

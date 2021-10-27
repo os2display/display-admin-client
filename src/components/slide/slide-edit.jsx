@@ -26,9 +26,7 @@ function SlideEdit() {
 
   const { data, error: loadError, isLoading } = useGetV1SlidesByIdQuery({ id });
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (data) {
       const dataCopy = { ...data };
@@ -50,9 +48,7 @@ function SlideEdit() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const saveData = {
       id,

@@ -6,14 +6,10 @@ import idFromUrl from "../util/helpers/id-from-url";
 /**
  * List entry component.
  *
- * @param {object} props
- * Props.
- * @param {Function} props.apiCall
- * apiCall for data.
- * @param {string} props.dataUrl
- * The url to get the data from.
- * @returns {object}
- * A list entry with the title of called element.
+ * @param {object} props Props.
+ * @param {Function} props.apiCall ApiCall for data.
+ * @param {string} props.dataUrl The url to get the data from.
+ * @returns {object} A list entry with the title of called element.
  */
 function TitleFetcher({ apiCall, dataUrl }) {
   const { data } = apiCall({ id: idFromUrl(dataUrl) });

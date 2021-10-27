@@ -8,20 +8,13 @@ import "./grid.scss";
 /**
  * The grid generator component.
  *
- * @param {object} props
- * Props.
- * @param {object} props.grid
- * The grid to generate.
-//  * @param {Function} props.handleInput
-//  * A callback on select in multiselect
- * @param {object} props.selectedData
- * The selected data for the multidropdown.
- * @param {object} props.regions
- * The regions in the grid.
- * @param {boolean} props.vertical
- * True if the screen is vertical
- * @returns {object}
- * The component.
+ * @param {object} props Props.
+ * @param {object} props.grid The grid to generate. // * @param {Function}
+ *   props.handleInput // * A callback on select in multiselect
+ * @param {object} props.selectedData The selected data for the multidropdown.
+ * @param {object} props.regions The regions in the grid.
+ * @param {boolean} props.vertical True if the screen is vertical
+ * @returns {object} The component.
  */
 function GridGenerationAndSelect({
   grid,

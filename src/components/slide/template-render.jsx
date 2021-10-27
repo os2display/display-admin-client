@@ -4,14 +4,10 @@ import RenderFormElement from "../util/forms/render-form-element";
 import { useGetV1TemplatesByIdQuery } from "../../redux/api/api.generated";
 import idFromUrl from "../util/helpers/id-from-url";
 /**
- * @param {object} props
- * The props.
- * @param {object} props.slide
- * The slide element
- * @param {Function} props.handleInput
- * Callback on input.
- * @returns {object}
- * The template.
+ * @param {object} props The props.
+ * @param {object} props.slide The slide element
+ * @param {Function} props.handleInput Callback on input.
+ * @returns {object} The template.
  */
 function TemplateRender({ slide, handleInput }) {
   const id = idFromUrl(slide.templateInfo);
@@ -21,9 +17,7 @@ function TemplateRender({ slide, handleInput }) {
     id,
   });
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (data) {
       setTemplateData([]);

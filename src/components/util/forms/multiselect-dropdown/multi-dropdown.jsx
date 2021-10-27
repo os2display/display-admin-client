@@ -6,25 +6,25 @@ import { useTranslation } from "react-i18next";
 import contentString from "../../helpers/content-string";
 
 /**
- * A searchablemultiselect component.
- * Using a multiselect from react-multi-select-component, and making
- * some adjustments, replacing default fuzzy search with string match
- * and displaying the values selected using contentstring-method.
+ * A searchablemultiselect component. Using a multiselect from
+ * react-multi-select-component, and making some adjustments, replacing default
+ * fuzzy search with string match and displaying the values selected using
+ * contentstring-method.
  *
- * @param {object} props - the props.
- * @param {Array} props.options - the option for the searchable dropdown.
- * @param {Function} props.handleSelection - the callback when an option is selected
- * @param {Array} props.selected - the selected options
- * @param {string} props.name - the id of the form element
- * @param {boolean} props.isLoading - whether the component is loading.
- * @param {string} props.noSelectedString - the label for when there is nothing selected.
- * @param {Array} props.errors - a list of errors, or null.
- * @param {string} props.errorText - the string to display on error.
- * @param {string} props.label - the input label
- * @param {string} props.helpText - help text for the dropdown.
- * @param {Function} props.filterCallback - the callback on search filter.
- * @param {boolean} props.singleSelect - if the dropdown is single select.
- * @returns {object} - the multidropdown
+ * @param {object} props - The props.
+ * @param {Array} props.options - The option for the searchable dropdown.
+ * @param {Function} props.handleSelection - The callback when an option is selected
+ * @param {Array} props.selected - The selected options
+ * @param {string} props.name - The id of the form element
+ * @param {boolean} props.isLoading - Whether the component is loading.
+ * @param {string} props.noSelectedString - The label for when there is nothing selected.
+ * @param {Array} props.errors - A list of errors, or null.
+ * @param {string} props.errorText - The string to display on error.
+ * @param {string} props.label - The input label
+ * @param {string} props.helpText - Help text for the dropdown.
+ * @param {Function} props.filterCallback - The callback on search filter.
+ * @param {boolean} props.singleSelect - If the dropdown is single select.
+ * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({
   options,
@@ -47,16 +47,12 @@ function MultiSelectComponent({
   const textOnError = errorText || t("multi-dropdown.validation-text");
   const nothingSelectedLabel =
     noSelectedString || t("multi-dropdown.nothing-selected");
-  /**
-   * Handle errors.
-   */
+  /** Handle errors. */
   useEffect(() => {
     setError(errors && errors.includes(name));
   }, [selected]);
 
-  /**
-   * Map data to fit component.
-   */
+  /** Map data to fit component. */
   useEffect(() => {
     const localMappedOptions = options.map((item) => {
       return {
@@ -84,15 +80,11 @@ function MultiSelectComponent({
   }, [selected, selected.length]);
 
   /**
-   * Filter to replace the default filter in multi-select.
-   * It matches the label name.
+   * Filter to replace the default filter in multi-select. It matches the label name.
    *
-   * @param {Array} optionsToFilter
-   * The options to filter in
-   * @param {string} filter
-   * The string to filter by
-   * @returns {Array}
-   * Array of matching values
+   * @param {Array} optionsToFilter The options to filter in
+   * @param {string} filter The string to filter by
+   * @returns {Array} Array of matching values
    */
   function filterOptions(optionsToFilter, filter) {
     if (!filter) {
@@ -109,8 +101,7 @@ function MultiSelectComponent({
   /**
    * A callback on changed data.
    *
-   * @param {Array} data
-   * The data to call back with
+   * @param {Array} data The data to call back with
    */
   function changeData(data) {
     const ids = data.map(({ value }) => value);
@@ -136,10 +127,8 @@ function MultiSelectComponent({
   /**
    * Renders the label in the multiselect.
    *
-   * @param {Array} valueSelected
-   * The value(s) selected to render label from.
-   * @returns {string}
-   * The string to use as a label
+   * @param {Array} valueSelected The value(s) selected to render label from.
+   * @returns {string} The string to use as a label
    */
   function customValueRenderer(valueSelected) {
     return valueSelected.length

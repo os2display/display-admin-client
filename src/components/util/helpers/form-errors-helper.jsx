@@ -1,12 +1,9 @@
 import PropTypes from "prop-types";
 
 /**
- * @param {Array} requiredFields
- * The fields that are required.
- * @param {object} formStateObject
- * The object to validate.
- * @returns {object}
- * A list of validation errors.
+ * @param {Array} requiredFields The fields that are required.
+ * @param {object} formStateObject The object to validate.
+ * @returns {object} A list of validation errors.
  */
 function getFormErrors(requiredFields, formStateObject) {
   /**

@@ -17,8 +17,7 @@ import "./edit-theme.scss";
 /**
  * The edit theme component.
  *
- * @returns {object}
- * The edit theme page.
+ * @returns {object} The edit theme page.
  */
 function EditTheme() {
   const { t } = useTranslation("common");
@@ -42,9 +41,7 @@ function EditTheme() {
     { name: "Arial", id: 2 },
     { name: "Comic sans", id: 1 },
   ];
-  /**
-   * Load content from fixture.
-   */
+  /** Load content from fixture. */
   useEffect(() => {
     // @TODO: load real content.
     if (!newTheme) {
@@ -67,10 +64,8 @@ function EditTheme() {
   /**
    * Set state on change in input field
    *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * event target
+   * @param {object} props The props.
+   * @param {object} props.target Event target
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
@@ -81,10 +76,8 @@ function EditTheme() {
   /**
    * Handles validations, and goes back to list.
    *
-   * @param {object} e
-   * the submit event.
-   * @returns {boolean}
-   * Boolean indicating whether to submit form.
+   * @param {object} e The submit event.
+   * @returns {boolean} Boolean indicating whether to submit form.
    */
   function handleSubmit(e) {
     // @TODO: make it save.
@@ -102,8 +95,8 @@ function EditTheme() {
   }
 
   /**
-   * @param {string} selectedColor
-   * A string or null, the selected color to open color picker for.
+   * @param {string} selectedColor A string or null, the selected color to open
+   *   color picker for.
    */
   function openColorPicker(selectedColor) {
     const newColorPickerValue =

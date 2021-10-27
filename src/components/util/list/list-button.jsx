@@ -3,7 +3,7 @@ import Spinner from "react-bootstrap/Spinner";
 import idFromUrl from "../helpers/id-from-url";
 /**
  * @param {Function} callback - The callback function
- * @param  {object} inputData - The data for callback
+ * @param {object} inputData - The data for callback
  * @param {Function} apiCall - The api to call
  * @returns {object} - The list button.
  */
@@ -20,9 +20,7 @@ function ListButton(callback, inputData, apiCall) {
     }
   }, []);
 
-  /**
-   * Set label.
-   */
+  /** Set label. */
   useEffect(() => {
     if (data?.data) {
       setLabel(data.data["hydra:totalItems"].toString());
