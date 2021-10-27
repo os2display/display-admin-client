@@ -46,6 +46,7 @@ function SlideForm({
   const [selectedTemplate, setSelectedTemplate] = useState(
     template ? [template] : []
   );
+
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchText,

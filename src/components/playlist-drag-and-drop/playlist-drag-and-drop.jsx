@@ -43,9 +43,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     ) {
       const listOfPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
         ({ playlist }) => {
-          const playlistCopy = JSON.parse(JSON.stringify(playlist));
-          delete playlistCopy["@context"];
-          return playlistCopy;
+          return playlist;
         }
       );
       const target = { value: listOfPlaylists, id: name };

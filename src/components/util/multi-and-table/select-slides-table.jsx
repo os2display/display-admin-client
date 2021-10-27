@@ -105,7 +105,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const columns = [
     {
       path: "title",
-      label: t("slides-list.name"),
+      label: t("slides-list.columns.name"),
     },
     {
       content: (templateData) => TemplateLabelInList(templateData),
