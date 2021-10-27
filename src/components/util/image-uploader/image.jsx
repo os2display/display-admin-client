@@ -18,7 +18,7 @@ import "./image-uploader.scss";
  * @returns {object}
  * The image uploader.
  */
-function Image({ inputImage, onImageRemove, handleChange, index }) {
+function Image({ id, inputImage, onImageRemove, handleChange, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
@@ -39,6 +39,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
     <Row className="mb-3">
       <Col md="3" className="mb-3 mb-md-0">
         <div className="image h-100 justify-content-center d-flex rounded">
+          {/* @TODO: Make a better check for differentiating between file upload and media archive selection */}
           <img src={image.url} alt={t("image.image-currently-uploading")} />
         </div>
       </Col>
@@ -84,7 +85,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
 }
 
 Image.propTypes = {
-  inputImage: PropTypes.func.isRequired,
+  inputImage: PropTypes.object.isRequired,
   onImageRemove: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,

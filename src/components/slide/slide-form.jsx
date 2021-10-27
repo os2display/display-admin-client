@@ -36,11 +36,13 @@ function SlideForm({
                      slide,
                      handleInput,
                      handleContent,
+                     handleMedia,
                      handleSubmit,
                      isSaving,
                      headerText,
                      isSaveSuccess,
                      isLoading,
+                     loadedMedia,
                      errors
                    }) {
   const { t } = useTranslation("common");
@@ -179,6 +181,8 @@ function SlideForm({
                   key={formElement.key}
                   data={formElement}
                   onChange={handleContent}
+                  onMediaChange={handleMedia}
+                  loadedMedia={loadedMedia}
                   formStateObject={slide.content}
                   requiredFieldCallback={() => {
                     return false;

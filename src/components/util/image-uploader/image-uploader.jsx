@@ -97,7 +97,7 @@ function ImageUploader({
     // @TODO: error handling
     <div className={false ? "invalid" : ""}>
       <ImageUploading
-        multiple
+        multiple={multipleImages ?? false}
         value={images}
         onChange={onChange}
         dataURLKey="url"
@@ -159,17 +159,16 @@ function ImageUploader({
               </>
             )}
             {imageList.map((image, index) => {
+              const key = image.file ? image.file.name : image['@id'];
               return (
-                <>
-                  <Image
-                    inputImage={image}
-                    handleChange={handleChange}
-                    onImageUpdate={onImageUpdate}
-                    onImageRemove={onImageRemove}
-                    index={index}
-                    key={image.url}
-                  />
-                </>
+                <Image
+                  inputImage={image}
+                  handleChange={handleChange}
+                  onImageUpdate={onImageUpdate}
+                  onImageRemove={onImageRemove}
+                  index={index}
+                  key={`image-${key}`}
+                />
               )
             })}
           </div>

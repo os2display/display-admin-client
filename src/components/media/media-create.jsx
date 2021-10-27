@@ -53,6 +53,7 @@ function MediaCreate() {
    */
   function handleSubmit() {
     const localMediaToCreate = [];
+
     formStateObject.images.forEach((element) => {
       const formData = new FormData();
       formData.append("file", element.file);
@@ -63,6 +64,7 @@ function MediaCreate() {
       formData.append("createdBy", element.createdBy);
       localMediaToCreate.push(formData);
     });
+
     setMediaToCreate(localMediaToCreate);
   }
 

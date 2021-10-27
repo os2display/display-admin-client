@@ -16,13 +16,20 @@ import Select from "../util/forms/select";
  * @returns {object} - A form element.
  */
 function RenderFormElement({
-  data,
-  requiredFieldCallback,
-  errors,
-  onChange,
-  formStateObject,
-}) {
+                             data,
+                             requiredFieldCallback,
+                             errors,
+                             onChange,
+                             onMediaChange,
+                             formStateObject,
+                             loadedMedia
+                           }) {
   const { t } = useTranslation("common");
+
+  const handleImageUpload = (target) => {
+    onMediaChange(data.name);
+    onChange(target);
+  };
 
   /**
    * @param {object} formData - The data for form input.
@@ -88,11 +95,13 @@ function RenderFormElement({
         returnElement = (
           <>
             {formData?.label && <label htmlFor={formData.name} className="form-label">{formData.label}</label>}
-            <textarea onChange={onChange} name={formData.name} id={formData.name} className={formData.formGroupClasses + " form-control"} rows="3" defaultValue={formStateObject[formData.name]} />
+            <textarea onChange={onChange} name={formData.name} id={formData.name}
+                      className={formData.formGroupClasses + " form-control"} rows="3"
+                      defaultValue={formStateObject[formData.name]} />
             {formData?.helpText &&
-              <small className="form-text text-muted">
-                {formData.helpText}
-              </small>
+            <small className="form-text text-muted">
+              {formData.helpText}
+            </small>
             }
           </>
         );
@@ -118,20 +127,41 @@ function RenderFormElement({
         if (data.required) {
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
+
+        let inputImage = { url: '' };
+
+        // Load image from loadedMedia if it is a @id
+        // @TODO: test if it is a @id
+        if (typeof formStateObject[formData.name] === 'string') {
+          inputImage = loadedMedia[formStateObject[formData.name]];
+        } else {
+          inputImage = formStateObject[formData.name];
+        }
+        // image.file ? image.url : image?.assets.uri
+        console.log('supplying input image', inputImage);
+
         returnElement = (
-          <ImageUploader
-            errors={formData.required ? errors : null}
-            multipleImages={data.multipleImages}
-            handleImageUpload={onChange}
-            inputImage={formStateObject[formData.name]}
-            name={formData.name}
-            invalidText={
-              data.multipleImages
-                ? t("render-form-element.images-invalid")
-                : t("render-form-element.image-invalid")
+          <>
+            {formData?.label && <label htmlFor={formData.name} className="form-label">{formData.label}</label>}
+            <ImageUploader
+              errors={formData.required ? errors : null}
+              multipleImages={data.multipleImages}
+              handleImageUpload={handleImageUpload}
+              inputImage={inputImage}
+              name={formData.name}
+              invalidText={
+                data.multipleImages
+                  ? t("render-form-element.images-invalid")
+                  : t("render-form-element.image-invalid")
+              }
+              formGroupClasses={formData.formGroupClasses}
+            />
+            {formData.helpText &&
+              <small className="form-text text-muted">
+                {formData.helpText}
+              </small>
             }
-            formGroupClasses={formData.formGroupClasses}
-          />
+          </>
         );
         break;
       default:
@@ -139,11 +169,12 @@ function RenderFormElement({
     }
     return returnElement;
   }
+
   return <>{renderElement(data)}</>;
 }
 
 RenderFormElement.defaultProps = {
-  errors: [],
+  errors: []
 };
 
 RenderFormElement.propTypes = {
@@ -154,12 +185,12 @@ RenderFormElement.propTypes = {
     label: PropTypes.string,
     helpText: PropTypes.string,
     required: PropTypes.bool,
-    multipleImages: PropTypes.bool,
+    multipleImages: PropTypes.bool
   }).isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({}).isRequired,
   requiredFieldCallback: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default RenderFormElement;

@@ -22,15 +22,20 @@ const templateExample = [
     "helpText": "Her kan du skrive teksten til slidet",
     "formGroupClasses": "col-md-6"
   },
-  // @TODO: Handle image.
-  /*
   {
     "key": "image-text-form-4",
+    "multipleImages": false,
     "input": "image",
     "name": "image",
     "label": "Billede"
   },
-   */
+  {
+    "key": "image-text-form-41",
+    "multipleImages": false,
+    "input": "image",
+    "name": "image2",
+    "label": "Billede 2"
+  },
   {
     "key": "image-text-form-5",
     "input": "header-h3",
@@ -83,21 +88,21 @@ const templateExample = [
     "input": "checkbox",
     "label": "Margin rundt om tekst",
     "name": "text-margin",
-    "formGroupClasses": "col-lg-3 mb-3"
+    "formGroupClasses": "col-md-6 mb-3"
   },
   {
     "key": "image-text-form-9",
     "input": "checkbox",
     "label": "Animeret tekst under overskrift",
     "name": "seperator",
-    "formGroupClasses": "col-lg-3 mb-3"
+    "formGroupClasses": "col-md-6 mb-3"
   },
   {
     "key": "image-text-form-10",
     "input": "checkbox",
     "label": "Teksten optager højest 50% af skærmen",
     "name": "half_size",
-    "formGroupClasses": "col-lg-3 mb-3"
+    "formGroupClasses": "col-md-6 mb-3"
   },
   {
     "key": "image-text-form-11",
@@ -105,7 +110,7 @@ const templateExample = [
     "label": "Overskriften er under teksten",
     "helpText": "Denne kan ikke kombineres med den animerede tekst under overskriften",
     "name": "reversed",
-    "formGroupClasses": "col-lg-3"
+    "formGroupClasses": "col-md-6"
   }
 ];
 
