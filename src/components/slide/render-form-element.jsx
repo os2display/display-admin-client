@@ -150,7 +150,8 @@ function RenderFormElement({
 
         // Fix input image format.
         if (inputImage?.assets?.uri) {
-          inputImage = { url: inputImage.assets.uri };
+          inputImage.url = inputImage.assets.uri;
+          inputImage.disableInput = true;
         }
 
         returnElement = (

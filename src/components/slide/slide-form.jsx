@@ -212,8 +212,8 @@ function SlideForm(
           type="button"
           id="cancel_slide"
           onClick={() => history.push("/slide/list/")}
-          className="me-md-3 col"
           size="lg"
+          className="me-3"
         >
           {t("slide-form.cancel-button")}
         </Button>
@@ -223,9 +223,23 @@ function SlideForm(
           onClick={handleSubmit}
           id="save_slide"
           size="lg"
-          className="col"
         >
-          {t("slide-form.save-button")}
+          <>
+            {!isSaving && t("slide-form.save-button")}
+            {isSaving && (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                  className="m-1"
+                />
+                {t("slide-form.saving")}
+              </>
+            )}
+          </>
         </Button>
         <Toast show={isSaveSuccess} text={t("slide-form.saved")} />
         <Toast show={!!errors} text={t("slide-form.error")} />

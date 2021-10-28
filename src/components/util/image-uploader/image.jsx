@@ -13,7 +13,7 @@ import "./image-uploader.scss";
  * @param {number} props.index The index, used for image removal.
  * @returns {object} The image uploader.
  */
-function Image({ inputImage, onImageRemove, handleChange, index }) {
+function Image({ inputImage, onImageRemove, handleChange, index, disabled }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
@@ -45,6 +45,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.title}
           onChange={onChange}
           formGroupClasses="mb-3"
+          disabled={image.disableInput}
         />
         <FormInput
           name="description"
@@ -55,6 +56,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.description}
           onChange={onChange}
           formGroupClasses="mb-3"
+          disabled={image.disableInput}
         />
         <FormInput
           name="license"
@@ -64,6 +66,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.license}
           onChange={onChange}
           formGroupClasses="mb-3"
+          disabled={image.disableInput}
         />
         <Button
           className="mt-3"
@@ -82,6 +85,7 @@ Image.propTypes = {
   onImageRemove: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default Image;
