@@ -76,7 +76,7 @@ exports.api = (0, react_1.createApi)({
                             title: queryArg.title,
                             description: queryArg.description,
                             published: queryArg.published,
-                            "order[title]": queryArg.order
+                            order: queryArg.order
                         }
                     });
                 }
@@ -350,9 +350,7 @@ exports.api = (0, react_1.createApi)({
                 }
             }),
             getV1TemplatesById: build.query({
-                query: function (queryArg) {
-                    return ({ url: "/v1/templates/" + queryArg.id });
-                }
+                query: function (queryArg) { return ({ url: "/v1/templates/" + queryArg.id }); }
             })
         });
     }

@@ -124,7 +124,7 @@ function GridGenerationAndSelect({
               >
                 {regions &&
                   regions.map((data) => (
-                    <Tab eventKey={data["@id"]} title={data.title}>
+                    <Tab eventKey={data["@id"]} key={data["@id"]} title={data.title}>
                       <PlaylistDragAndDrop
                         id="playlist_drag_and_drop"
                         handleChange={handleChange}

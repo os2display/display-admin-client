@@ -15,6 +15,7 @@ function TemplateLabelInList({ templateInfo }) {
   const { data } = useGetV1TemplatesByIdQuery({
     id,
   });
+
   return (
     <>
       {data && <div>{data.title}</div>}{" "}
