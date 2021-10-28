@@ -1,14 +1,16 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from 'react-redux';
 import set from "lodash.set";
 import {
-  useGetV1MediaByIdQuery,
   useGetV1SlidesByIdQuery,
   usePostMediaCollectionMutation,
-  usePutV1SlidesByIdMutation
+  usePutV1SlidesByIdMutation,
+  api
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The slide edit component.
@@ -18,22 +20,19 @@ import SlideForm from "./slide-form";
 function SlideEdit() {
   const { t } = useTranslation("common");
   const { id } = useParams();
+  const dispatch = useDispatch();
   const headerText = t("slide-edit.edit-slide-header");
   const [formStateObject, setFormStateObject] = useState();
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [loadedMedia, setLoadedMedia] = useState({});
-  const [mediaToLoad, setMediaToLoad] = useState([]);
-  const [mediumToLoad, setMediumToLoad] = useState(null);
 
   const [PutV1Slides,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess }
   ] = usePutV1SlidesByIdMutation();
 
   const { data: getSlideData, error: getSlideError, isLoading: getSlideIsLoading } = useGetV1SlidesByIdQuery({ id });
-
-  const { data: getMediaData, error: getMediaError, isLoading: getMediaIsLoading, isSuccess: getMediaIsSuccess } = useGetV1MediaByIdQuery({id: mediumToLoad});
 
   const [PostV1MediaCollection,
     { data: mediaData, isLoading: mediaIsLoading, error: saveMediaError, isSuccess: isSaveMediaSuccess }
@@ -103,8 +102,6 @@ function SlideEdit() {
    * Set loaded data into form state.
    */
   useEffect(() => {
-    console.log("useEffect: getSlideData");
-
     if (getSlideData) {
       const localFormStateObject = JSON.parse(JSON.stringify(getSlideData));
 
@@ -113,39 +110,31 @@ function SlideEdit() {
         localFormStateObject.content = {};
       }
 
-      // Set list of media to load.
-      setMediaToLoad(localFormStateObject.media);
+      // Upload media already added to the slide.
+      const promises = [];
 
-      if (localFormStateObject.media.length > 0) {
-        setMediumToLoad(localFormStateObject.media);
-      }
+      localFormStateObject.media.forEach((media) => {
+        promises.push(dispatch(api.endpoints.getV1MediaById.initiate({id: idFromUrl(media)})));
+      });
+
+      Promise.all(promises).then((results) => {
+        const newLoadedMedia = { ...loadedMedia };
+
+        results.forEach((result) => {
+          newLoadedMedia[result.data['@id']] = { ...result.data };
+        });
+
+        setLoadedMedia(newLoadedMedia);
+      });
 
       setFormStateObject(localFormStateObject);
     }
   }, [getSlideData]);
 
   /**
-   * Media has been loaded.
-   */
-  useEffect(() => {
-    console.log("useEffect: getMediaIsSuccess");
-
-    if (getMediaIsSuccess) {
-      const newLoadedMedia = { ...loadedMedia };
-      newLoadedMedia[getMediaData['@id']] = getMediaData;
-      setLoadedMedia(newLoadedMedia);
-
-      const newMediaToLoad = mediaToLoad.shift();
-      setMediaToLoad(newMediaToLoad);
-    }
-  }, [getMediaIsSuccess]);
-
-  /**
    * Handle submitting.
    */
   useEffect(() => {
-    console.log("useEffect: submittingMedia.length, submitting");
-
     if (submitting) {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
@@ -153,8 +142,6 @@ function SlideEdit() {
         // Submit media.
         PostV1MediaCollection({ body: media });
       } else {
-        console.log("All media is submitted.");
-
         // All media have been submitted. Submit slide.
         const saveData = {
           id,
@@ -177,12 +164,8 @@ function SlideEdit() {
    * Submitted media is successful.
    */
   useEffect(() => {
-    console.log("useEffect: isSaveMediaSuccess");
-
     if (submitting) {
       if (isSaveMediaSuccess) {
-        console.log("isSaveMediaSuccess");
-
         const newMediaFields = [...mediaFields];
         const firstMediaField = newMediaFields.shift();
         setMediaFields(newMediaFields);
@@ -209,8 +192,6 @@ function SlideEdit() {
    * Handle submitting is done.
    */
   useEffect(() => {
-    console.log("useEffect: isSaveSuccess");
-
     if (isSaveSuccess) {
       setSubmitting(false);
     }

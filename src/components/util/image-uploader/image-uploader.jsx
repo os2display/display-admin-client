@@ -198,7 +198,10 @@ ImageUploader.defaultProps = {
 };
 
 ImageUploader.propTypes = {
-  inputImage: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+  inputImage: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+    PropTypes.shape({ url: PropTypes.string })
+  ]),
   handleImageUpload: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   multipleImages: PropTypes.bool,

@@ -15,15 +15,16 @@ import Select from "../util/forms/select";
  * @param {object} props.formStateObject - The form state.
  * @returns {object} - A form element.
  */
-function RenderFormElement({
-                             data,
-                             requiredFieldCallback,
-                             errors,
-                             onChange,
-                             onMediaChange,
-                             formStateObject,
-                             loadedMedia
-                           }) {
+function RenderFormElement(
+  {
+    data,
+    requiredFieldCallback,
+    errors,
+    onChange,
+    onMediaChange,
+    formStateObject,
+    loadedMedia
+  }) {
   const { t } = useTranslation("common");
 
   const handleImageUpload = (target) => {
@@ -128,17 +129,19 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        let inputImage = { url: '' };
+        let inputImage = { url: "" };
 
         // Load image from loadedMedia if it is a @id
-        // @TODO: test if it is a @id
-        if (typeof formStateObject[formData.name] === 'string') {
+        if (typeof formStateObject[formData.name] === "string") {
           inputImage = loadedMedia[formStateObject[formData.name]];
         } else {
           inputImage = formStateObject[formData.name];
         }
-        // image.file ? image.url : image?.assets.uri
-        console.log('supplying input image', inputImage);
+
+        // Fix input image format.
+        if (inputImage?.assets?.uri) {
+          inputImage = { url: inputImage.assets.uri };
+        }
 
         returnElement = (
           <>
@@ -157,9 +160,9 @@ function RenderFormElement({
               formGroupClasses={formData.formGroupClasses}
             />
             {formData.helpText &&
-              <small className="form-text text-muted">
-                {formData.helpText}
-              </small>
+            <small className="form-text text-muted">
+              {formData.helpText}
+            </small>
             }
           </>
         );
