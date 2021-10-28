@@ -1,13 +1,13 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import set from "lodash.set";
 import {
   useGetV1SlidesByIdQuery,
   usePostMediaCollectionMutation,
   usePutV1SlidesByIdMutation,
-  api
+  api,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -28,14 +28,25 @@ function SlideEdit() {
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [loadedMedia, setLoadedMedia] = useState({});
 
-  const [PutV1Slides,
-    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess }
+  const [
+    PutV1Slides,
+    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1SlidesByIdMutation();
 
-  const { data: getSlideData, error: getSlideError, isLoading: getSlideIsLoading } = useGetV1SlidesByIdQuery({ id });
+  const {
+    data: getSlideData,
+    error: getSlideError,
+    isLoading: getSlideIsLoading,
+  } = useGetV1SlidesByIdQuery({ id });
 
-  const [PostV1MediaCollection,
-    { data: mediaData, isLoading: mediaIsLoading, error: saveMediaError, isSuccess: isSaveMediaSuccess }
+  const [
+    PostV1MediaCollection,
+    {
+      data: mediaData,
+      isLoading: mediaIsLoading,
+      error: saveMediaError,
+      isSuccess: isSaveMediaSuccess,
+    },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -45,17 +56,19 @@ function SlideEdit() {
    * @param {object} props.target - Event target.
    */
   function handleInput({ target }) {
-    let localFormStateObject = { ...formStateObject };
+    const localFormStateObject = { ...formStateObject };
     set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
 
   /**
    * Update content field for id/value.
+   *
+   * @param target.target
    * @param target
    */
   function handleContent({ target }) {
-    let localFormStateObject = { ...formStateObject };
+    const localFormStateObject = { ...formStateObject };
     set(localFormStateObject.content, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
@@ -77,7 +90,9 @@ function SlideEdit() {
 
     // Setup submittingMedia list.
     mediaFields.forEach((fieldName) => {
-      if (Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)) {
+      if (
+        Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)
+      ) {
         const contentField = formStateObject.content[fieldName];
         contentField.forEach((element) => {
           const formData = new FormData();
@@ -114,14 +129,18 @@ function SlideEdit() {
       const promises = [];
 
       localFormStateObject.media.forEach((media) => {
-        promises.push(dispatch(api.endpoints.getV1MediaById.initiate({id: idFromUrl(media)})));
+        promises.push(
+          dispatch(
+            api.endpoints.getV1MediaById.initiate({ id: idFromUrl(media) })
+          )
+        );
       });
 
       Promise.all(promises).then((results) => {
         const newLoadedMedia = { ...loadedMedia };
 
         results.forEach((result) => {
-          newLoadedMedia[result.data['@id']] = { ...result.data };
+          newLoadedMedia[result.data["@id"]] = { ...result.data };
         });
 
         setLoadedMedia(newLoadedMedia);
@@ -149,10 +168,12 @@ function SlideEdit() {
             title: formStateObject.title,
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
-            duration: formStateObject?.content?.duration ? parseInt(formStateObject.content.duration) : null,
+            duration: formStateObject?.content?.duration
+              ? parseInt(formStateObject.content.duration)
+              : null,
             content: formStateObject.content,
-            media: formStateObject.media
-          })
+            media: formStateObject.media,
+          }),
         };
 
         PutV1Slides(saveData);

@@ -15,6 +15,7 @@ import "./image-uploader.scss";
  * A callback on change.
  * @param {number} props.index
  * The index, used for image removal.
+ * @param props.id
  * @returns {object}
  * The image uploader.
  */

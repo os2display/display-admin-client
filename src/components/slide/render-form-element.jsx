@@ -13,18 +13,19 @@ import Select from "../util/forms/select";
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
  * @param {object} props.formStateObject - The form state.
+ * @param props.onMediaChange
+ * @param props.loadedMedia
  * @returns {object} - A form element.
  */
-function RenderFormElement(
-  {
-    data,
-    requiredFieldCallback,
-    errors,
-    onChange,
-    onMediaChange,
-    formStateObject,
-    loadedMedia
-  }) {
+function RenderFormElement({
+  data,
+  requiredFieldCallback,
+  errors,
+  onChange,
+  onMediaChange,
+  formStateObject,
+  loadedMedia,
+}) {
   const { t } = useTranslation("common");
 
   const handleImageUpload = (target) => {
@@ -95,15 +96,24 @@ function RenderFormElement(
         }
         returnElement = (
           <>
-            {formData?.label && <label htmlFor={formData.name} className="form-label">{formData.label}</label>}
-            <textarea onChange={onChange} name={formData.name} id={formData.name}
-                      className={formData.formGroupClasses + " form-control"} rows="3"
-                      defaultValue={formStateObject[formData.name]} />
-            {formData?.helpText &&
-            <small className="form-text text-muted">
-              {formData.helpText}
-            </small>
-            }
+            {formData?.label && (
+              <label htmlFor={formData.name} className="form-label">
+                {formData.label}
+              </label>
+            )}
+            <textarea
+              onChange={onChange}
+              name={formData.name}
+              id={formData.name}
+              className={`${formData.formGroupClasses} form-control`}
+              rows="3"
+              defaultValue={formStateObject[formData.name]}
+            />
+            {formData?.helpText && (
+              <small className="form-text text-muted">
+                {formData.helpText}
+              </small>
+            )}
           </>
         );
         break;
@@ -145,7 +155,11 @@ function RenderFormElement(
 
         returnElement = (
           <>
-            {formData?.label && <label htmlFor={formData.name} className="form-label">{formData.label}</label>}
+            {formData?.label && (
+              <label htmlFor={formData.name} className="form-label">
+                {formData.label}
+              </label>
+            )}
             <ImageUploader
               errors={formData.required ? errors : null}
               multipleImages={data.multipleImages}
@@ -159,11 +173,11 @@ function RenderFormElement(
               }
               formGroupClasses={formData.formGroupClasses}
             />
-            {formData.helpText &&
-            <small className="form-text text-muted">
-              {formData.helpText}
-            </small>
-            }
+            {formData.helpText && (
+              <small className="form-text text-muted">
+                {formData.helpText}
+              </small>
+            )}
           </>
         );
         break;
@@ -177,7 +191,7 @@ function RenderFormElement(
 }
 
 RenderFormElement.defaultProps = {
-  errors: []
+  errors: [],
 };
 
 RenderFormElement.propTypes = {
@@ -188,12 +202,12 @@ RenderFormElement.propTypes = {
     label: PropTypes.string,
     helpText: PropTypes.string,
     required: PropTypes.bool,
-    multipleImages: PropTypes.bool
+    multipleImages: PropTypes.bool,
   }).isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({}).isRequired,
   requiredFieldCallback: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default RenderFormElement;

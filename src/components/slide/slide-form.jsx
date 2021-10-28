@@ -10,7 +10,7 @@ import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropd
 import ContentFooter from "../util/content-footer/content-footer";
 import {
   useGetV1TemplatesQuery,
-  useGetV1TemplatesByIdQuery
+  useGetV1TemplatesByIdQuery,
 } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -30,22 +30,24 @@ import RenderFormElement from "./render-form-element";
  * @param {boolean|null} props.isSaveSuccess Is the save a success?
  * @param {boolean|null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
+ * @param props.handleContent
+ * @param props.handleMedia
+ * @param props.loadedMedia
  * @returns {object} The slide form.
  */
-function SlideForm(
-  {
-    slide,
-    handleInput,
-    handleContent,
-    handleMedia,
-    handleSubmit,
-    isSaving,
-    headerText,
-    isSaveSuccess,
-    isLoading,
-    loadedMedia,
-    errors
-  }) {
+function SlideForm({
+  slide,
+  handleInput,
+  handleContent,
+  handleMedia,
+  handleSubmit,
+  isSaving,
+  headerText,
+  isSaveSuccess,
+  isLoading,
+  loadedMedia,
+  errors,
+}) {
   const { t } = useTranslation("common");
   const history = useHistory();
   const [templateOptions, setTemplateOptions] = useState();
@@ -55,12 +57,12 @@ function SlideForm(
   // Load available templates.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
-      page: 1
+      page: 1,
     });
 
   // Load template.
   const { data: template } = useGetV1TemplatesByIdQuery({
-    id: idFromUrl(slide.templateInfo["@id"])
+    id: idFromUrl(slide.templateInfo["@id"]),
   });
 
   /**
@@ -103,7 +105,7 @@ function SlideForm(
     const { value, id } = target;
     setSelectedTemplate(value);
     handleInput({
-      target: { id, value: value.map((item) => item["@id"]).shift() }
+      target: { id, value: value.map((item) => item["@id"]).shift() },
     });
   }
 
@@ -241,8 +243,8 @@ SlideForm.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.any),
-    PropTypes.bool
-  ]).isRequired
+    PropTypes.bool,
+  ]).isRequired,
 };
 
 export default SlideForm;

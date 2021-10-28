@@ -159,7 +159,7 @@ function ImageUploader({
               </>
             )}
             {imageList.map((image, index) => {
-              const key = image.file ? image.file.name : image['@id'];
+              const key = image.file ? image.file.name : image["@id"];
               return (
                 <Image
                   inputImage={image}
@@ -169,7 +169,7 @@ function ImageUploader({
                   index={index}
                   key={`image-${key}`}
                 />
-              )
+              );
             })}
           </div>
         )}
@@ -200,7 +200,7 @@ ImageUploader.defaultProps = {
 ImageUploader.propTypes = {
   inputImage: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
-    PropTypes.shape({ url: PropTypes.string })
+    PropTypes.shape({ url: PropTypes.string }),
   ]),
   handleImageUpload: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
