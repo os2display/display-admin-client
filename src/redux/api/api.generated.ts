@@ -19,7 +19,13 @@ export const api = createApi({
     getV1Media: build.query<GetV1MediaApiResponse, GetV1MediaApiArg>({
       query: (queryArg) => ({
         url: `/v1/media`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
       }),
     }),
     postMediaCollection: build.mutation<
@@ -53,7 +59,12 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/media/${queryArg.id}/slides`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
       }),
     }),
     getV1Playlists: build.query<
@@ -62,7 +73,14 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/playlists`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
       }),
     }),
     postV1Playlists: build.mutation<
@@ -106,7 +124,11 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/playlists/${queryArg.id}/screens`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
       }),
     }),
     getV1PlaylistsByIdSlides: build.query<
@@ -115,7 +137,11 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/playlists/${queryArg.id}/slides`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          published: queryArg.published,
+        },
       }),
     }),
     putV1PlaylistsByIdSlides: build.mutation<
@@ -143,7 +169,13 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/screen-groups`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
       }),
     }),
     postV1ScreenGroups: build.mutation<
@@ -184,7 +216,13 @@ export const api = createApi({
     getV1Screens: build.query<GetV1ScreensApiResponse, GetV1ScreensApiArg>({
       query: (queryArg) => ({
         url: `/v1/screens`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
       }),
     }),
     postV1Screens: build.mutation<
@@ -256,7 +294,11 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/screens/${queryArg.id}/screen-groups`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
       }),
     }),
     putV1ScreensByIdScreenGroups: build.mutation<
@@ -281,7 +323,14 @@ export const api = createApi({
     getV1Slides: build.query<GetV1SlidesApiResponse, GetV1SlidesApiArg>({
       query: (queryArg) => ({
         url: `/v1/slides`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
       }),
     }),
     postV1Slides: build.mutation<PostV1SlidesApiResponse, PostV1SlidesApiArg>({
@@ -322,7 +371,13 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/templates`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
       }),
     }),
     getV1TemplatesById: build.query<
@@ -348,6 +403,14 @@ export type GetV1MediaApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type PostMediaCollectionApiResponse = unknown;
 export type PostMediaCollectionApiArg = {
@@ -374,12 +437,30 @@ export type GetV1MediaByIdSlidesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type GetV1PlaylistsApiResponse = unknown;
 export type GetV1PlaylistsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: number;
+  title?: string;
+  description?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type PostV1PlaylistsApiResponse = unknown;
 export type PostV1PlaylistsApiArg = {
@@ -406,6 +487,12 @@ export type GetV1PlaylistsByIdScreensApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type GetV1PlaylistsByIdSlidesApiResponse = unknown;
 export type GetV1PlaylistsByIdSlidesApiArg = {
@@ -413,6 +500,8 @@ export type GetV1PlaylistsByIdSlidesApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
 };
 export type PutV1PlaylistsByIdSlidesApiResponse = unknown;
 export type PutV1PlaylistsByIdSlidesApiArg = {
@@ -430,6 +519,12 @@ export type GetV1ScreenGroupsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+  };
 };
 export type PostV1ScreenGroupsApiResponse = unknown;
 export type PostV1ScreenGroupsApiArg = {
@@ -455,6 +550,14 @@ export type GetV1ScreensApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type PostV1ScreensApiResponse = unknown;
 export type PostV1ScreensApiArg = {
@@ -501,6 +604,10 @@ export type GetV1ScreensByIdScreenGroupsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+  };
 };
 export type PutV1ScreensByIdScreenGroupsApiResponse = unknown;
 export type PutV1ScreensByIdScreenGroupsApiArg = {
@@ -518,6 +625,16 @@ export type GetV1SlidesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type PostV1SlidesApiResponse = unknown;
 export type PostV1SlidesApiArg = {
@@ -543,6 +660,12 @@ export type GetV1TemplatesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type GetV1TemplatesByIdApiResponse = unknown;
 export type GetV1TemplatesByIdApiArg = {
@@ -551,6 +674,7 @@ export type GetV1TemplatesByIdApiArg = {
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
+  schedule?: string;
   modifiedBy?: string;
   createdBy?: string;
   published?: string[];

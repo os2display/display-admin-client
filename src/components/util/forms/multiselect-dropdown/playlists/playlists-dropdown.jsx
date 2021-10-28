@@ -23,23 +23,19 @@ function PlaylistsDropdown({
   filterCallback,
 }) {
   const { t } = useTranslation("common");
+
   return (
-    <>
-      {data && (
-        <>
-          <MultiSelectComponent
-            label={t("playlists-dropdown.label")}
-            noSelectedString={t("playlists-dropdown.nothing-selected")}
-            handleSelection={handlePlaylistSelection}
-            options={data}
-            selected={selected}
-            name={name}
-            errors={errors}
-            filterCallback={filterCallback}
-          />
-        </>
-      )}
-    </>
+    <MultiSelectComponent
+      label={t("playlists-dropdown.label")}
+      noSelectedString={t("playlists-dropdown.nothing-selected")}
+      handleSelection={handlePlaylistSelection}
+      options={data}
+      selected={selected}
+      helpText={t("playlists-dropdown.search-to-se-possible-selections")}
+      name={name}
+      errors={errors}
+      filterCallback={filterCallback}
+    />
   );
 }
 

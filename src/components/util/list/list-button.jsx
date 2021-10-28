@@ -1,13 +1,15 @@
 import { React, useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
+import PropTypes from "prop-types";
 import idFromUrl from "../helpers/id-from-url";
 /**
- * @param {Function} callback - The callback function
- * @param {object} inputData - The data for callback
- * @param {Function} apiCall - The api to call
+ * @param {object} props - The props.
+ * @param {Function} props.callback - The callback function
+ * @param {object} props.inputData - The data for callback
+ * @param {Function} props.apiCall - The api to call
  * @returns {object} - The list button.
  */
-function ListButton(callback, inputData, apiCall) {
+function ListButton({ callback, inputData, apiCall }) {
   const [label, setLabel] = useState("");
   let data;
   if (!Array.isArray(inputData)) {
@@ -52,5 +54,15 @@ function ListButton(callback, inputData, apiCall) {
     </>
   );
 }
+
+ListButton.defaultProps = {
+  apiCall: () => {},
+};
+
+ListButton.propTypes = {
+  inputData: PropTypes.objectOf(PropTypes.any).isRequired,
+  apiCall: PropTypes.bool,
+  callback: PropTypes.func.isRequired,
+};
 
 export default ListButton;

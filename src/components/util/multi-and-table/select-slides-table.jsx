@@ -26,8 +26,12 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
   const [onPlaylists, setOnPlaylists] = useState();
+  const [searchText, setSearchText] = useState("");
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const { data: slides } = useGetV1SlidesQuery({});
+  const { data: slides } = useGetV1SlidesQuery({
+    title: searchText,
+    itemsPerPage: searchText ? 10 : 0,
+  });
   const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
   /** Map loaded data. */
@@ -68,12 +72,12 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   }
 
   /**
-   * Fetches data for the multi component // @TODO:
+   * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
   function onFilter(filter) {
-    console.log(filter);
+    setSearchText(filter);
   }
 
   /**
@@ -101,28 +105,27 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const columns = [
     {
       path: "title",
-      label: t("select-slides-table.columns.name"),
+      label: t("slides-list.columns.name"),
     },
     {
       content: (templateData) => TemplateLabelInList(templateData),
-      sort: true,
       key: "template",
       label: t("slides-list.columns.template"),
     },
     {
       key: "playlists",
-      sort: true,
-      content: (playlistData) =>
-        ListButton(
-          openInfoModal,
-          playlistData.onPlaylists[0][0] || [],
-          useGetV1PlaylistsByIdSlidesQuery
-        ),
+      // eslint-disable-next-line react/prop-types
+      content: ({ onPlaylists: localOnPlaylists }) => (
+        <ListButton
+          callback={openInfoModal}
+          inputData={localOnPlaylists[0] || []}
+          apiCall={useGetV1PlaylistsByIdSlidesQuery}
+        />
+      ),
       label: t("slides-list.columns.slide-on-playlists"),
     },
     {
       key: "published",
-      sort: true,
       content: (publishedData) => Published(publishedData),
       label: t("slides-list.columns.published"),
     },
@@ -160,7 +163,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
             apiCall={useGetV1PlaylistsByIdSlidesQuery}
             onClose={onCloseInfoModal}
             dataStructureToDisplay={onPlaylists}
-            modalTitle={t("info-modal.playlist-slides")}
+            modalTitle={t("select-slides-table.info-modal.playlist-slides")}
             dataKey="slide"
           />
         </>

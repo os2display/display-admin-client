@@ -34,11 +34,6 @@
     "title-logo": "Logo",
     "title-typograpy": "Typografi"
   },
-  "calendar-list": {
-    "name-label": "Navn",
-    "in-groups-label": "I følgende grupper",
-    "live-label": "Live"
-  },
   "slides-list": {
     "columns": {
       "pick": "Vælg slide",
@@ -49,11 +44,8 @@
       "preview": "Preview"
     },
     "info-modal": {
-      "slide-on-playlists": "Slidet er på de følgende spillelister",
-      "show-more-elements": "Vis flere elementer"
+      "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
-    "slides-get-error": "Der skete en fejl da slides skulle hentes",
-    "deleted": "Slidet er blevet slettet",
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
     "delete-button": "Slet",
@@ -69,12 +61,10 @@
       "on-groups": "Tilknyttede grupper",
       "live": "Live"
     },
-    "deleted": "SKærmen er blevet slettet",
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     },
     "header": "Skærme",
-    "screens-get-error": "Der skete en fejl da skærmene skulle hentes",
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
     "change-view-calendar": "Kalender",
@@ -93,16 +83,14 @@
     "edit-button": "Rediger"
   },
   "playlists-list": {
-    "playlists-get-error": "Der skete en fejl da spillelisterne skulle hentes",
-    "deleted": "Spillelisten er blevet slettet",
     "columns": {
+      "published": "Udgivet",
       "pick": "Vælg spilleliste",
       "name": "Navn",
-      "on-screens": "Skærme tilknyttet",
       "number-of-slides": "Slides tilknyttede"
     },
     "info-modal": {
-      "playlist-slides": "Spillelisten har følgende slides"
+      "playlist-slides": "Playlisten indeholder følgende slides"
     },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
@@ -128,7 +116,6 @@
     "button-label": "Luk denne dialog"
   },
   "media-list": {
-    "deleted": "Medierne er blevet slettet",
     "media-get-error": "Der skete en fejl da medierne skulle hentes",
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
@@ -168,13 +155,11 @@
     "cancel-button": "Annuller",
     "slide-content-label": "Slidets indhold",
     "slide-content-header": "Slidets indhold",
-    "slide-content-placeholder": "Slidets indhold",
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
-    "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide.",
+    "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide. Indtast søgning for at se installerede skabeloner.",
     "slide-publish-label": "Marker for at udgive dette slide",
-    "slide-select-playlist-title": "Spillelister",
     "slide-publish-title": "Udgivelse"
   },
   "group-form": {
@@ -215,39 +200,14 @@
   },
   "playlist-drag-and-drop": {
     "columns": {
-      "pick": "Vælg spilleliste",
-      "name": "Navn",
-      "number-of-slides": "Slides tilknyttet",
-      "playlist-screens": "Spillelisten er på følgende skærme"
+      "name": "Navn"
     },
-    "info-modal": {
-      "playlist-slides": "Spillelisten har følgende slides"
-    },
-    "remove-from-list": "Fjern fra liste"
-  },
-  "select-screen-table": {
-    "columns": {
-      "name": "Navn",
-      "size": "Størrelse",
-      "dimensions": "Opløsning",
-      "live": "Live",
-      "campaign": "Kampagne",
-      "on-groups": "Tilknyttede grupper"
-    },
-    "info-modal": {
-      "screen-in-groups": "Skærmen er i følgende grupper"
-    },
+    "search-to-se-possible-selections": "For at se mulige spillelister, skal du fremsøge dem pr navn.",
     "remove-from-list": "Fjern fra liste"
   },
   "select-slides-table": {
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
-    },
-    "columns": {
-      "name": "Navn",
-      "template": "Skabelon",
-      "number-of-playlists": "Spillelister med kategorien",
-      "published": "Udgivet"
     },
     "remove-from-list": "Fjern fra liste"
   },
@@ -269,10 +229,7 @@
     "no": "Nej"
   },
   "modal-dialog": {
-    "yes": "Ja",
-    "no": "Nej",
     "cancel": "Annuller",
-    "save": "Gem og luk",
     "remove": "Slet"
   },
   "form-input": {
@@ -288,6 +245,7 @@
     "nothing-selected": "Vælg en af mulighederne"
   },
   "groups-dropdown": {
+    "search-to-se-possible-selections": "For at se mulige grupper, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere grupper",
     "nothing-selected": "Vælg en af grupperne"
   },
@@ -296,45 +254,27 @@
     "nothing-selected": "Vælg en af spillelisterne"
   },
   "screens-dropdown": {
+    "search-to-se-possible-selections": "For at se mulige skærmes, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere skærme",
     "nothing-selected": "Vælg en af skærmene",
     "no-screens-configured": "Der er ikke nogle skærme konfigureret"
   },
   "slides-dropdown": {
+    "search-to-se-possible-selections": "For at se mulige slides, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere slides",
-    "nothing-selected": "Vælg en af følgende slides",
-    "no-slides-configured": "Der er ikke nogle slides konfigureret"
+    "nothing-selected": "Vælg en af følgende slides"
   },
   "select": {
     "validation-text": "Dette felt skal udfyldes",
     "nothing-selected": "Der er ikke valgt noget"
   },
-  "merge-modal": {
-    "title": "Er du sikker på du vil konsolidere følgende",
-    "new-name-label": "Vælg et nyt navn",
-    "new-name-placeholder": "Skriv det nye navn her",
-    "accept-text": "Konsolider"
-  },
   "select-groups-table": {
     "columns": {
-      "pick": "Vælg gruppe",
       "name": "Navn"
     },
     "remove-from-list": "Fjern fra liste"
   },
-  "select-playlists-table": {
-    "columns": {
-      "pick": "Vælg spilleliste",
-      "name": "Navn",
-      "number-of-slides": "Slides tilknyttede"
-    },
-    "info-modal": {
-      "playlist-slides": "Spillelisten har følgende slides"
-    },
-    "remove-from-list": "Fjern fra liste"
-  },
   "image-uploader": {
-    "title": "Billede",
     "validation-text": "Dette felt skal udfyldes",
     "pick-image": "Vælg et billede",
     "pick-more-images": "Vælg et eller flere billeder",
@@ -349,9 +289,16 @@
     "checkbox-form-aria-label": "Vælg dette medie til massehandling"
   },
   "list": {
+    "published-label": "Udgivetfilter",
     "delete-button": "Slet",
-    "merge-button": "Konsolider",
-    "deselect-all": "Fravælg alle"
+    "deselect-all": "Fravælg alle",
+    "get-error": "Der skete en fejl da elementerne skulle hentes",
+    "deleted": "Element er blevet slettet",
+    "radio-labels": {
+      "published": "Udgivet",
+      "not-published": "Ikke udgivet",
+      "all": "Alle"
+    }
   },
   "image": {
     "image-currently-uploading": "Billedet du er ved at overføre",
@@ -375,9 +322,12 @@
     "create-screen-header": "Opret ny skærm"
   },
   "screen-form": {
+    "nothing-selected": "Vælg en af skabelonerne",
+    "search-to-se-possible-selections": "For at se mulige skærme, skal du fremsøge dem pr navn.",
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
     "error": "Der skete en fejl",
+    "screen-region-playlists": "Spillelister tilknyttet regionen",
     "loading": "Henter skærm...",
     "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",
@@ -402,25 +352,26 @@
   },
   "nav-items": {
     "dashboard": "Oversigt",
-    "content": "Indhold",
     "content-media": "Medier",
     "content-slides": "Slides",
-    "screens": "Skærme",
     "screens-screens": "Skærme",
     "screens-groups": "Grupper",
-    "playlists": "Spillelister",
     "playlists-playlists": "Spillelister",
     "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
     "configuration-users": "Brugere"
   },
   "topbar": {
+    "placeholder": "Indtast søgning her",
     "brand": "OS2Display",
     "add": "Ny",
-    "add_slide": "Nyt slide",
-    "add_screen": "Ny skærm",
-    "add_playlist": "Ny spilleliste",
+    "add-slide": "Nyt slide",
+    "add-screen": "Ny skærm",
+    "add-playlist": "Ny spilleliste",
     "user": "Username",
     "signout": "Log ud"
+  },
+  "sidebar": {
+    "brand": "OS2Display"
   }
 }

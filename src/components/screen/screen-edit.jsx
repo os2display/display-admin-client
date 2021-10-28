@@ -7,6 +7,7 @@ import {
   useGetV1ScreensByIdQuery,
   usePutV1ScreensByIdMutation,
   usePutV1ScreensByIdScreenGroupsMutation,
+  usePutPlaylistScreenRegionItemMutation,
 } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
 
@@ -20,12 +21,19 @@ function ScreenEdit() {
   const headerText = t("screen-edit.edit-screen-header");
   const [formStateObject, setFormStateObject] = useState();
   const [groupId, setGroupId] = useState();
+  const [isSaving, setIsSaving] = useState(false);
   const [groupsToAdd, setGroupsToAdd] = useState();
+  const [playlistsToAdd, setPlaylistsToAdd] = useState();
   const { id } = useParams();
   const [
     PutV1Screens,
-    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
+    { isLoading: isSavingScreen, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1ScreensByIdMutation();
+
+  const [
+    putPlaylistScreenRegionItem,
+    { error: savePlaylistError, isSuccess: isSavePlaylistSuccess },
+  ] = usePutPlaylistScreenRegionItemMutation();
 
   const [
     PutV1ScreensByIdScreenGroups,
@@ -58,13 +66,28 @@ function ScreenEdit() {
 
   /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
-    if (isSaveSuccess) {
+    if (isSaveSuccess && groupsToAdd) {
       PutV1ScreensByIdScreenGroups({
         id,
         body: JSON.stringify(groupsToAdd),
       });
     }
   }, [isSaveSuccess]);
+
+  /** Adds playlists to regions. */
+  useEffect(() => {
+    if (playlistsToAdd && playlistsToAdd.length > 0) {
+      setIsSaving(true);
+      const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
+      putPlaylistScreenRegionItem({
+        body: JSON.stringify(playlistToAdd.list),
+        id: playlistToAdd.screenId,
+        regionId: playlistToAdd.regionId,
+      });
+    } else {
+      setIsSaving(false);
+    }
+  }, [playlistsToAdd, isSavePlaylistSuccess, isSaveSuccess]);
 
   /**
    * Set state on change in input field
@@ -81,35 +104,70 @@ function ScreenEdit() {
 
   /** Handles submit. */
   function handleSubmit() {
-    formStateObject.dimensions.width = parseInt(
-      formStateObject.dimensions.width,
+    const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
+    localFormStateObject.dimensions.width = parseInt(
+      localFormStateObject.dimensions.width,
       10
     );
-    formStateObject.dimensions.height = parseInt(
-      formStateObject.dimensions.height,
+    localFormStateObject.dimensions.height = parseInt(
+      localFormStateObject.dimensions.height,
       10
     );
     const saveData = {
-      title: formStateObject.title,
-      description: formStateObject.description,
-      size: formStateObject.size,
-      modifiedBy: formStateObject.modifiedBy,
-      createdBy: formStateObject.createdBy,
-      layout: formStateObject.layout,
-      location: formStateObject.location,
+      title: localFormStateObject.title,
+      description: localFormStateObject.description,
+      size: localFormStateObject.size,
+      modifiedBy: localFormStateObject.modifiedBy,
+      createdBy: localFormStateObject.createdBy,
+      layout: localFormStateObject.layout,
+      location: localFormStateObject.location,
       dimensions: {
-        width: formStateObject.dimensions.width,
-        height: formStateObject.dimensions.height,
+        width: localFormStateObject.dimensions.width,
+        height: localFormStateObject.dimensions.height,
       },
     };
     PutV1Screens({ id, screenScreenInput: JSON.stringify(saveData) });
-    if (Array.isArray(formStateObject.inScreenGroups)) {
-      setGroupsToAdd(
-        formStateObject.inScreenGroups.map((group) => {
-          return idFromUrl(group);
+    setGroupsToAdd(
+      formStateObject.inScreenGroups.map((group) => {
+        return idFromUrl(group);
+      })
+    );
+    const toSave = [];
+    const formStateObjectPlaylists = formStateObject.playlists.map(
+      (playlist) => {
+        return {
+          id: idFromUrl(playlist["@id"]),
+          regionId: idFromUrl(playlist.region),
+        };
+      }
+    );
+
+    // Unique regions that will have a playlist connected.
+    const regions = [
+      ...new Set(
+        formStateObjectPlaylists.map((playlists) => playlists.regionId)
+      ),
+    ];
+
+    // Filter playlists by region
+    regions.forEach((element) => {
+      const filteredPlaylists = formStateObjectPlaylists
+        .map((localPlaylists, index) => {
+          if (element === localPlaylists.regionId) {
+            return { playlist: localPlaylists.id, weight: index };
+          }
+          return undefined;
         })
-      );
-    }
+        .filter((anyValue) => typeof anyValue !== "undefined");
+      // Collect playlists with according ids for saving
+      toSave.push({
+        list: filteredPlaylists,
+        regionId: element,
+        screenId: id,
+      });
+    });
+    // Set playlists to save
+    setPlaylistsToAdd(toSave);
   }
 
   return (
@@ -122,8 +180,14 @@ function ScreenEdit() {
           handleSubmit={handleSubmit}
           isLoading={isLoadingScreen}
           isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
-          isSaving={isSaving || isSavingGroups}
-          errors={saveError || loadError || saveErrorGroups || false}
+          isSaving={isSavingScreen || isSavingGroups || isSaving || false}
+          errors={
+            saveError ||
+            loadError ||
+            saveErrorGroups ||
+            savePlaylistError ||
+            false
+          }
           groupId={groupId}
         />
       )}

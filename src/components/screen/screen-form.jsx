@@ -14,6 +14,7 @@ import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
+import idFromUrl from "../util/helpers/id-from-url";
 import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import "./screen-form.scss";
 
@@ -52,11 +53,13 @@ function ScreenForm({
   });
 
   /**
-   * Fetches data for the multi component // @TODO:
+   * Fetches data for the multi component // @TODO: when api makes it possible
+   * to search in layouts
    *
    * @param {string} filter - The filter.
    */
   function onFilter(filter) {
+    // eslint-disable-next-line
     console.log(filter);
   }
 
@@ -197,9 +200,10 @@ function ScreenForm({
                 <div className="col-md-8">
                   <MultiSelectComponent
                     label={t("screen-form.screen-layout-label")}
-                    noSelectedString={t("playlists-dropdown.nothing-selected")}
+                    noSelectedString={t("screen-form.nothing-selected")}
                     handleSelection={handleAdd}
                     options={layoutOptions}
+                    helpText={t("screen-form.search-to-se-possible-selections")}
                     selected={selectedLayout ? [selectedLayout] : []}
                     name="layout"
                     filterCallback={onFilter}
@@ -209,6 +213,7 @@ function ScreenForm({
               )}
               {selectedLayout?.grid && (
                 <GridGenerationAndSelect
+                  screenId={idFromUrl(screen["@id"])}
                   grid={selectedLayout?.grid}
                   vertical={screen.dimensions.height > screen.dimensions.width}
                   regions={selectedLayout.regions}

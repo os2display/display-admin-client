@@ -124,7 +124,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
                             />
                           </td>
                           {columns.map((column) => (
-                            <td key={item.id + (column.path || column.key)}>
+                            <td key={item["@id"] + (column.path || column.key)}>
                               {renderCell(item, column)}
                             </td>
                           ))}

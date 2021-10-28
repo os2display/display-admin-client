@@ -18,7 +18,6 @@ import contentString from "../../helpers/content-string";
  * @param {string} props.name - The id of the form element
  * @param {boolean} props.isLoading - Whether the component is loading.
  * @param {string} props.noSelectedString - The label for when there is nothing selected.
- * @param {Array} props.errors - A list of errors, or null.
  * @param {string} props.errorText - The string to display on error.
  * @param {string} props.label - The input label
  * @param {string} props.helpText - Help text for the dropdown.
@@ -33,7 +32,6 @@ function MultiSelectComponent({
   name,
   isLoading,
   noSelectedString,
-  errors,
   errorText,
   label,
   helpText,
@@ -41,17 +39,12 @@ function MultiSelectComponent({
   singleSelect,
 }) {
   const { t } = useTranslation("common");
-  const [error, setError] = useState();
+  const [error] = useState();
   const [mappedOptions, setMappedOptions] = useState();
   const [mappedSelected, setMappedSelected] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
   const nothingSelectedLabel =
     noSelectedString || t("multi-dropdown.nothing-selected");
-  /** Handle errors. */
-  useEffect(() => {
-    setError(errors && errors.includes(name));
-  }, [selected]);
-
   /** Map data to fit component. */
   useEffect(() => {
     const localMappedOptions = options.map((item) => {
@@ -61,13 +54,16 @@ function MultiSelectComponent({
         disabled: false,
       };
     });
-    const localMappedSelected = selected.map((item) => {
-      return {
-        label: item.title,
-        value: item["@id"],
-        disabled: false,
-      };
-    });
+    let localMappedSelected = [];
+    if (selected.length > 0) {
+      localMappedSelected = selected.map((item) => {
+        return {
+          label: item.title,
+          value: item["@id"],
+          disabled: false,
+        };
+      });
+    }
     const optionsWithSelected = Object.values(
       [...localMappedOptions, ...localMappedSelected].reduce((a, c) => {
         const aCopy = { ...a };
@@ -77,7 +73,7 @@ function MultiSelectComponent({
     );
     setMappedOptions(optionsWithSelected);
     setMappedSelected(localMappedSelected);
-  }, [selected, selected.length]);
+  }, [selected, selected.length, options]);
 
   /**
    * Filter to replace the default filter in multi-select. It matches the label name.
@@ -104,22 +100,23 @@ function MultiSelectComponent({
    * @param {Array} data The data to call back with
    */
   function changeData(data) {
-    const ids = data.map(({ value }) => value);
+    let selectedOptions = [];
+    if (data.length > 0) {
+      const ids = data.map(({ value }) => value);
+      selectedOptions = Object.values(
+        [...selected, ...options]
+          .filter((option) => ids.includes(option["@id"]))
+          .reduce((a, c) => {
+            const aCopy = { ...a };
+            aCopy[c["@id"]] = c;
+            return aCopy;
+          }, {})
+      );
 
-    let selectedOptions = Object.values(
-      [...selected, ...options]
-        .filter((option) => ids.includes(option["@id"]))
-        .reduce((a, c) => {
-          const aCopy = { ...a };
-          aCopy[c["@id"]] = c;
-          return aCopy;
-        }, {})
-    );
-
-    if (singleSelect) {
-      selectedOptions = [selectedOptions[selectedOptions.length - 1]];
+      if (singleSelect) {
+        selectedOptions = [selectedOptions[selectedOptions.length - 1]];
+      }
     }
-
     const target = { value: selectedOptions, id: name };
     handleSelection({ target });
   }
@@ -164,7 +161,6 @@ function MultiSelectComponent({
 MultiSelectComponent.defaultProps = {
   noSelectedString: null,
   isLoading: false,
-  errors: [],
   errorText: "",
   helpText: null,
   selected: [],
@@ -192,7 +188,6 @@ MultiSelectComponent.propTypes = {
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
-  errors: PropTypes.arrayOf(PropTypes.string),
   errorText: PropTypes.string,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,

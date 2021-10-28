@@ -15,6 +15,7 @@ function RadioButtons({
   selected,
   options,
   handleChange,
+  labelScreenReaderOnly,
 }) {
   /**
    * Transforms the target to something the edit-components understand.
@@ -28,11 +29,16 @@ function RadioButtons({
   }
 
   return (
-    <>
-      <label htmlFor={`radios-${label}`}>{label}</label>
-      <div id={`radios-${label}`}>
+    <div className="d-flex">
+      <label
+        className={labelScreenReaderOnly ? "mr-2 sr-only" : "mr-2"}
+        htmlFor={`radios-${label}`}
+      >
+        {label}
+      </label>
+      <div id={`radios-${label}`} className="d-flex">
         {options.map(({ id, label: radioLabel }) => (
-          <div className="form-check" key={id}>
+          <div className="form-check mr-2" key={id}>
             <input
               className="form-check-input"
               type="radio"
@@ -47,7 +53,7 @@ function RadioButtons({
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -62,6 +68,7 @@ RadioButtons.propTypes = {
     })
   ).isRequired,
   handleChange: PropTypes.func.isRequired,
+  labelScreenReaderOnly: PropTypes.bool.isRequired,
 };
 
 export default RadioButtons;

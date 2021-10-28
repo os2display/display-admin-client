@@ -86,7 +86,7 @@ function InfoModal({
   }
 
   return (
-    <Modal scrollable show size="m" onHide={onClose} id="info-modal">
+    <Modal show size="m" onHide={onClose} id="info-modal">
       <ModalDialog
         title={modalTitle}
         onClose={onClose}

@@ -7,6 +7,11 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
 
   const newArgs = { ...args };
 
+  // Rewrite order so the api accepts it.
+  if (newArgs.params?.order) {
+    newArgs.params = { ...newArgs.params, "order[title]": args.params.order };
+  }
+
   if (!Object.prototype.hasOwnProperty.call(newArgs, "headers")) {
     newArgs.headers = {};
   }

@@ -1,5 +1,5 @@
-import { React, useEffect, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { React, useEffect } from "react";
+import { Button, Col, Row, Spinner, Toast } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -8,86 +8,102 @@ import SearchBox from "../search-box/search-box";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
-import MergeModal from "../../merge-modal/merge-modal";
+import RadioButtons from "../forms/radio-buttons";
 
 /**
  * @param {object} props - The props.
  * @param {Array} props.data - The data for the list.
  * @param {Array} props.columns - The columns for the table.
  * @param {Array} props.selectedRows - The selected rows, for styling.
- * @param {object} props.showMerge - Whether to show the merge button.
  * @param {Function} props.clearSelectedRows - Callback to clear the selected rows.
  * @param {boolean} props.withChart - If the list should display a gantt chart
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
- * @param {number} props.currentPage - The current page.
  * @param {Function} props.handleDelete - For deleting elements in the list.
+ * @param {boolean} props.deleteSuccess - If the calling component has deleted
+ *   element with success.
+ * @param {boolean} props.error - If the calling component has an error.
+ * @param {Function} props.handleSort - Callback for sort.
+ * @param {Function} props.handleSearch - Callback for seach.
+ * @param {boolean} props.isLoading - If the calling component is loading data.
+ * @param {boolean} props.displayPublished - Whether to display the published filter
+ * @param {Function} props.handleIsPublished - Callback for published filter.
  * @returns {object} The List.
  */
 function List({
   data,
   columns,
+  displayPublished,
   selectedRows,
-  showMerge,
   clearSelectedRows,
+  deleteSuccess,
+  error,
   withChart,
   handlePageChange,
+  handleSort,
+  handleSearch,
   totalItems,
-  currentPage,
+  isLoading,
   handleDelete,
+  handleIsPublished,
 }) {
   const { t } = useTranslation("common");
-  const { search } = useLocation();
   const history = useHistory();
+  // Page params
+  const { search } = useLocation();
   const searchParams = new URLSearchParams(search).get("search");
   const sortParams = new URLSearchParams(search).get("sort");
   const orderParams = new URLSearchParams(search).get("order");
   const pageParams = new URLSearchParams(search).get("page");
-  // At least two rows must be selected for merge.
-  const disableMergeButton = selectedRows.length < 2;
+  let publishedParams;
+  if (displayPublished) {
+    publishedParams = new URLSearchParams(search).get("published");
+  }
   // At least one row must be selected for deletion.
   const disableDeleteButton = !selectedRows.length > 0;
-  const [searchText, setSearchText] = useState(
-    searchParams !== null ? searchParams : ""
-  );
-  const [sortBy] = useState({
-    path: sortParams || "name",
-    order: orderParams || "asc",
-  });
-  // const [sortBy, setSortBy] = useState({
-  //   path: sortParams || "name",
-  //   order: orderParams || "asc",
-  // });
   const pageSize = 10;
-  const [showMergeModal, setViewMergeModal] = useState(false);
 
-  /** @param {string} newSearchText Updates the search text state and url. */
-  function handleSearch(newSearchText) {
-    setSearchText(newSearchText);
+  /**
+   * @param {string} dataKey - Which data to delete/update
+   * @param {object} value - The update value
+   */
+  function updateUrlParams(dataKey, value) {
+    const params = new URLSearchParams(search);
+    params.delete(dataKey);
+    if (value) {
+      params.append(dataKey, value);
+    }
+    history.replace({ search: params.toString() });
   }
 
-  /** If they search or filter, the pagination is reset. */
-  useEffect(() => {
-    const params = new URLSearchParams(search);
-    // if (searchText) {
-    //   params.delete("search");
-    //   params.append("search", searchText);
-    // }
-    // params.delete("sort");
-    // params.append("sort", sortBy.path);
-    // params.delete("order");
-    // params.append("order", sortBy.order);
-    history.replace({ search: params.toString() });
-    handlePageChange(currentPage);
-  }, []);
+  /** @param {string} newSearchText Updates the search text state and url. */
+  function onSearch(newSearchText) {
+    updateUrlParams("search", newSearchText);
+  }
+
+  /** @param {string} isPublished Updates the search text state and url. */
+  function onIsPublished({ target }) {
+    updateUrlParams("published", target.value);
+  }
 
   /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
+    updateUrlParams("page", nextPage);
+  }
+
+  /** @param {number} isPublished - Is published. */
+  function updateUrlPublished(isPublished) {
+    updateUrlParams("published", isPublished);
+  }
+
+  /** @param {number} sortByInput - The next page. */
+  function updateUrlAndSort(sortByInput) {
     const params = new URLSearchParams(search);
-    params.delete("page");
-    params.append("page", nextPage);
+    params.delete("sort");
+    params.delete("order");
+    params.append("sort", sortByInput.path);
+    params.append("order", sortByInput.order);
     history.replace({ search: params.toString() });
-    handlePageChange(nextPage);
   }
 
   /** Sets page from url using callback */
@@ -99,25 +115,44 @@ function List({
     }
   }, [pageParams]);
 
-  /** Todo */
-  function handleSort() {}
+  useEffect(() => {
+    if (orderParams && sortParams) {
+      handleSort({
+        path: sortParams,
+        order: orderParams,
+      });
+    } else {
+      updateUrlAndSort({
+        path: "title",
+        order: "asc",
+      });
+    }
+  }, [orderParams, sortParams]);
 
-  /** Closes merge modal. */
-  function onCloseMergeModal() {
-    setViewMergeModal(false);
-  }
+  useEffect(() => {
+    if (searchParams) {
+      handleSearch(searchParams);
+    } else {
+      handleSearch("");
+    }
+  }, [searchParams]);
 
-  /** Should handle merge. */
-  function handleMerge() {
-    // @TODO merge elements
-    setViewMergeModal(false);
-  }
+  useEffect(() => {
+    if (publishedParams) {
+      handleIsPublished(publishedParams);
+    } else {
+      updateUrlPublished("all");
+      handleIsPublished("all");
+    }
+  }, [publishedParams]);
 
   return (
     <>
+      <Toast show={deleteSuccess} text={t("list.get-error")} />
+      <Toast show={error} text={t("list.deleted")} />
       <Row className="my-2">
         <Col>
-          <SearchBox value={searchText} onChange={handleSearch} />
+          <SearchBox value={searchParams} onChange={onSearch} />
         </Col>
         <Col className="d-flex justify-content-end">
           <Button
@@ -129,18 +164,6 @@ function List({
           >
             {t("list.delete-button")}
           </Button>
-
-          {showMerge && (
-            <Button
-              className="me-3"
-              id="merge-button"
-              disabled={disableMergeButton}
-              onClick={() => setViewMergeModal(true)}
-              variant="success"
-            >
-              {t("list.merge-button")}
-            </Button>
-          )}
           <Button
             id="clear-rows-button"
             disabled={selectedRows.length === 0}
@@ -151,34 +174,54 @@ function List({
           </Button>
         </Col>
       </Row>
-      <Table
-        onSort={handleSort}
-        data={data}
-        sortColumn={sortBy}
-        columns={columns}
-        selectedRows={selectedRows}
-        withChart={withChart}
-      />
+      <Row>
+        <Col className="d-flex justify-content-center">
+          {isLoading && <Spinner animation="border" className="m-5" />}
+        </Col>
+      </Row>
+      <Row>
+        {displayPublished && (
+          <RadioButtons
+            label={t("list.published-label")}
+            labelScreenReaderOnly
+            selected={publishedParams}
+            radioGroupName="published"
+            options={[
+              { id: "all", label: t("list.radio-labels.all") },
+              { id: "published", label: t("list.radio-labels.published") },
+              {
+                id: "not-published",
+                label: t("list.radio-labels.not-published"),
+              },
+            ]}
+            handleChange={onIsPublished}
+          />
+        )}
+      </Row>
+      {!isLoading && (
+        <Table
+          onSort={updateUrlAndSort}
+          data={data}
+          sortOrder={orderParams}
+          sortPath={sortParams}
+          columns={columns}
+          selectedRows={selectedRows}
+          withChart={withChart}
+        />
+      )}
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}
         currentPage={parseInt(pageParams, 10)}
         onPageChange={updateUrlAndChangePage}
       />
-      <MergeModal
-        show={showMergeModal}
-        handleAccept={handleMerge}
-        onClose={onCloseMergeModal}
-        dataStructureToDisplay={selectedRows}
-      />
     </>
   );
 }
 
 List.defaultProps = {
-  showMerge: false,
   withChart: false,
-  currentPage: 1,
+  handleIsPublished: () => {},
 };
 
 List.propTypes = {
@@ -187,12 +230,18 @@ List.propTypes = {
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes.isRequired,
-  showMerge: PropTypes.bool,
   clearSelectedRows: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
   withChart: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
-  currentPage: PropTypes.number,
+  deleteSuccess: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  handleSort: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  displayPublished: PropTypes.bool.isRequired,
+  handleIsPublished: PropTypes.func,
 };
+
 export default List;

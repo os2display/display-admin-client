@@ -30,6 +30,7 @@ function ImageUploader({
 }) {
   const { t } = useTranslation("common");
   const [images, setImages] = useState([]);
+  const [error] = useState(false);
   const invalidInputText = invalidText || t("image-uploader.validation-text");
   const [showMediaModal, setShowMediaModal] = useState(false);
 
@@ -79,7 +80,7 @@ function ImageUploader({
 
   return (
     // @TODO: error handling
-    <div className={false ? "invalid" : ""}>
+    <div className={error ? "invalid" : ""}>
       <ImageUploading
         multiple
         value={images}
@@ -125,7 +126,7 @@ function ImageUploader({
                       : "drag-drop-area"
                   }
                   // @TODO: error handling
-                  style={false ? { borderColor: "red" } : {}}
+                  style={error ? { borderColor: "red" } : {}}
                   onDrop={dragProps.onDrop}
                   onDragEnter={dragProps.onDragEnter}
                   onDragLeave={dragProps.onDragLeave}
@@ -156,7 +157,7 @@ function ImageUploader({
         )}
       </ImageUploading>
       {/* @TODO: error handling */}
-      {false && (
+      {error && (
         <div className="invalid-feedback-image-uploader">
           {invalidInputText}
         </div>

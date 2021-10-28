@@ -34,6 +34,7 @@ function GroupsDropdown({
             label={t("groups-dropdown.label")}
             selected={selected}
             name={name}
+            helpText={t("groups-dropdown.search-to-se-possible-selections")}
             filterCallback={filterCallback}
             noSelectedString={t("groups-dropdown.nothing-selected")}
           />
