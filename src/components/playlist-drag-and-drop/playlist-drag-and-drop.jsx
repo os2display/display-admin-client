@@ -1,81 +1,97 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import ListButton from "../util/list/list-button";
-import InfoModal from "../info-modal/info-modal";
+import Published from "../slide/published";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
+import {
+  useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
+  useGetV1PlaylistsQuery,
+} from "../../redux/api/api.generated";
 
 /**
- * An input for forms.
+ * A drag and drop component for playlists.
  *
- * @param {string} props
- * the props.
- * @param {string} props.radioGroupName
- * The name of the input
- * @param {string} props.label
- * The label for the input
- * @returns {object}
- * An input.
+ * @param {string} props The props.
+ * @param {Function} props.handleChange - The callback when something changed
+ * @param {string} props.name - The id of the form element
+ * @param {string} props.screenId - The screen id for get request
+ * @param {string} props.regionId - The region id for get request
+ * @returns {object} A drag and drop component
  */
-function PlaylistDragAndDrop({ handleChange, name, data }) {
+function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [dataStructureToDisplay, setDataStructureToDisplay] = useState();
-  const [infoModal, setInfoModal] = useState("");
+  const [searchText, setSearchText] = useState();
+  const [selectedData, setSelectedData] = useState([]);
+  const { data: selectedPlaylistsByRegion } =
+    useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
+      id: screenId,
+      regionId,
+      page: 1,
+    });
+  const { data: playlists } = useGetV1PlaylistsQuery({
+    title: searchText,
+    itemsPerPage: searchText ? 10 : 0,
+  });
+
+  /** Set loaded data into form state. */
+  useEffect(() => {
+    if (
+      selectedPlaylistsByRegion &&
+      selectedPlaylistsByRegion["hydra:member"].length > 0
+    ) {
+      const listOfPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
+        ({ playlist }) => {
+          return playlist;
+        }
+      );
+      const target = { value: listOfPlaylists, id: name };
+      handleChange({ target });
+      setSelectedData(listOfPlaylists);
+    }
+  }, [selectedPlaylistsByRegion]);
 
   /**
-   * Opens info modal with either categories or slides.
+   * Fetches data for the multi component
    *
-   * @param {object} props
-   * The props
-   * @param {Array} props.displayData
-   * The data to sum up in the modal
-   * @param {string} props.modalTitle
-   * The title for the infomodal.
-   */
-  function openInfoModal({ displayData, modalTitle }) {
-    setInfoModal(modalTitle);
-    setDataStructureToDisplay(displayData);
-    setShowInfoModal(true);
-  }
-
-  /**
-   * Closes the info modal.
-   */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setDataStructureToDisplay();
-  }
-
-  /**
-   * Fetches data for the multi component // @TODO:
-   *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
-    console.log(filter);
+    setSearchText(filter);
   }
 
   /**
    * Removes playlist from list of playlists, and closes modal.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.value
-   * The id of the playlist
+   * @param {object} removeItem - Item to remove
    */
-  function handleRemove({ value }) {
-    const indexOfItemToRemove = data
+  function removeFromList(removeItem) {
+    const indexOfItemToRemove = selectedData
       .map((item) => {
-        return item.id;
+        return item["@id"];
       })
-      .indexOf(value);
+      .indexOf(removeItem["@id"]);
+    const selectedDataCopy = [...selectedData];
+    selectedDataCopy.splice(indexOfItemToRemove, 1);
+    setSelectedData(selectedDataCopy);
 
-    data.splice(indexOfItemToRemove, 1);
-    const target = { value: data, id: name };
+    const target = { value: selectedDataCopy, id: name };
     handleChange({ target });
+  }
+
+  /**
+   * Adds group to list of groups.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  function handleAdd({ target }) {
+    const { value, id } = target;
+    setSelectedData(value);
+    handleChange({
+      target: { id, value },
+    });
   }
 
   // The columns of the list
@@ -85,65 +101,15 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
       label: t("playlist-drag-and-drop.columns.name"),
     },
     {
-      content: (displayData) =>
-        ListButton(
-          openInfoModal,
-          {
-            displayData: displayData.slides,
-            modalTitle: t("playlist-drag-and-drop.info-modal.playlist-slides"),
-          },
-          displayData.slides?.length,
-          displayData.slides?.length === 0
-        ),
-      path: "slides",
-      key: "slides",
-      label: t("playlist-drag-and-drop.columns.number-of-slides"),
-    },
-    {
-      content: (displayData) =>
-        ListButton(
-          openInfoModal,
-          {
-            displayData: displayData.categories,
-            modalTitle: t(
-              "playlist-drag-and-drop.info-modal.playlist-categories"
-            ),
-          },
-          displayData.categories?.length,
-          displayData.categories?.length === 0
-        ),
-      path: "categories",
-      key: "categories",
-      label: t("playlist-drag-and-drop.columns.number-of-categories"),
-    },
-    {
-      path: "onFollowingScreens",
-      content: (displayData) =>
-        ListButton(
-          openInfoModal,
-          {
-            displayData: displayData.onFollowingScreens,
-            modalTitle: t("playlist-drag-and-drop.columns.playlist-screens"),
-          },
-          displayData.onFollowingScreens.length,
-          displayData.onFollowingScreens.length === 0
-        ),
-      key: "screens",
-      label: t("playlists-list.columns.on-screens"),
-    },
-    {
-      key: "edit",
-      content: () => (
-        <>
-          {/* @TODO: make quick edit modal */}
-          <Button variant="primary">Quick edit</Button>
-        </>
-      ),
+      path: "published",
+      label: t("playlists-list.columns.published"),
+      // eslint-disable-next-line react/prop-types
+      content: ({ published }) => <Published published={published} />,
     },
     {
       key: "delete",
       content: (playlistData) => (
-        <Button variant="danger" onClick={() => handleRemove(playlistData)}>
+        <Button variant="danger" onClick={() => removeFromList(playlistData)}>
           {t("playlist-drag-and-drop.remove-from-list")}
         </Button>
       ),
@@ -152,37 +118,35 @@ function PlaylistDragAndDrop({ handleChange, name, data }) {
 
   return (
     <>
-      <div className="mb-3">
-        <PlaylistsDropdown
-          filterCallback={onFilter}
-          name={name}
-          handlePlaylistSelection={handleChange}
-          selected={data}
-        />
-      </div>
-      {data.length > 0 && (
-        <DragAndDropTable
-          columns={columns}
-          onDropped={handleChange}
-          name={name}
-          data={data}
-        />
+      {playlists && playlists["hydra:member"] && selectedData && (
+        <>
+          <div className="mb-3">
+            <PlaylistsDropdown
+              filterCallback={onFilter}
+              name={name}
+              handlePlaylistSelection={handleAdd}
+              selected={selectedData}
+              data={playlists["hydra:member"]}
+            />
+          </div>
+          {selectedData.length > 0 && (
+            <DragAndDropTable
+              columns={columns}
+              onDropped={handleChange}
+              name={name}
+              data={selectedData}
+            />
+          )}
+        </>
       )}
-      <InfoModal
-        show={showInfoModal}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={dataStructureToDisplay}
-        modalTitle={infoModal}
-      />
     </>
   );
 }
 
 PlaylistDragAndDrop.propTypes = {
   name: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
-  ).isRequired,
+  screenId: PropTypes.string.isRequired,
+  regionId: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

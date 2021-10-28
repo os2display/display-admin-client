@@ -4,26 +4,16 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param {object} props
- * The props.
- * @param {string} props.title
- * The modal title
- * @param {string} props.acceptText
- * The text for the acceptbutton
- * @param {string} props.declineText
- * The text for the declinebutton
- * @param {Function} props.onClose
- * The callback for close.
- * @param {Function} props.handleAccept
- * The callback for accept.
- * @param {object} props.children
- * The children to be rendered.
- * @param {boolean} props.showAcceptButton
- * Whether to show the accept button.
- * @param {string} props.btnVariant
- * The variant of the submit button.
- * @returns {object}
- * The the modal dialog
+ * @param {object} props The props.
+ * @param {string} props.title The modal title
+ * @param {string} props.acceptText The text for the acceptbutton
+ * @param {string} props.declineText The text for the declinebutton
+ * @param {Function} props.onClose The callback for close.
+ * @param {Function} props.handleAccept The callback for accept.
+ * @param {object} props.children The children to be rendered.
+ * @param {boolean} props.showAcceptButton Whether to show the accept button.
+ * @param {string} props.btnVariant The variant of the submit button.
+ * @returns {object} The the modal dialog
  */
 function ModalDialog({
   title,
@@ -40,8 +30,8 @@ function ModalDialog({
   /**
    * For closing modals on escape key.
    *
-   * @param {object} props - the props.
-   * @param {string} props.key - the key input.
+   * @param {object} props - The props.
+   * @param {string} props.key - The key input.
    */
   function downHandler({ key }) {
     if (key === "Escape") {

@@ -1,7 +1,7 @@
 /**
- * @param {object} row - the selected row.
- * @param {Array} selectedData - the selected rows.
- * @returns {Array} updated array with currently selected rows.
+ * @param {object} row - The selected row.
+ * @param {Array} selectedData - The selected rows.
+ * @returns {Array} Updated array with currently selected rows.
  */
 function selectedHelper(row, selectedData) {
   const id = row["@id"];

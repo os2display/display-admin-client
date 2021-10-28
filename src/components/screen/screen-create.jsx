@@ -6,6 +6,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import {
   usePostV1ScreensMutation,
   usePutV1ScreensByIdScreenGroupsMutation,
+  usePutPlaylistScreenRegionItemMutation,
 } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
 
@@ -19,6 +20,8 @@ function ScreenCreate() {
   const headerText = t("screen-create.create-screen-header");
   const [groupsToAdd, setGroupsToAdd] = useState();
   const history = useHistory();
+  const [isSaving, setIsSaving] = useState(false);
+  const [playlistsToAdd, setPlaylistsToAdd] = useState();
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
@@ -35,8 +38,18 @@ function ScreenCreate() {
 
   const [
     PostV1Screens,
-    { data, isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
+    {
+      data,
+      isLoading: isSavingScreen,
+      error: saveError,
+      isSuccess: isSaveSuccess,
+    },
   ] = usePostV1ScreensMutation();
+
+  const [
+    putPlaylistScreenRegionItem,
+    { error: savePlaylistError, isSuccess: isSavePlaylistSuccess },
+  ] = usePutPlaylistScreenRegionItemMutation();
 
   const [
     PutV1ScreensByIdScreenGroups,
@@ -47,9 +60,7 @@ function ScreenCreate() {
     },
   ] = usePutV1ScreensByIdScreenGroupsMutation();
 
-  /**
-   * When the screen is saved, the groups will be saved.
-   */
+  /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && data) {
       PutV1ScreensByIdScreenGroups({
@@ -59,10 +70,22 @@ function ScreenCreate() {
     }
   }, [isSaveSuccess]);
 
-  /**
-   * When the screen and group(s) are saved.
-   * it redirects to edit screen.
-   */
+  /** Adds playlists to regions. */
+  useEffect(() => {
+    if (playlistsToAdd && playlistsToAdd.length > 0 && data) {
+      setIsSaving(true);
+      const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
+      putPlaylistScreenRegionItem({
+        body: JSON.stringify(playlistToAdd.list),
+        id: idFromUrl(data["@id"]),
+        regionId: playlistToAdd.regionId,
+      });
+    } else {
+      setIsSaving(false);
+    }
+  }, [playlistsToAdd, isSavePlaylistSuccess, isSaveSuccess]);
+
+  /** When the screen and group(s) are saved. it redirects to edit screen. */
   useEffect(() => {
     if (isSaveSuccessGroups && data) {
       history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
@@ -81,9 +104,7 @@ function ScreenCreate() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     formStateObject.dimensions.width = parseInt(
       formStateObject.dimensions.width,
@@ -115,6 +136,41 @@ function ScreenCreate() {
       );
     }
     PostV1Screens({ screenScreenInput: JSON.stringify(saveData) });
+    const toSave = [];
+    const formStateObjectPlaylists = formStateObject.playlists.map(
+      (playlist) => {
+        return {
+          id: idFromUrl(playlist["@id"]),
+          regionId: idFromUrl(playlist.region),
+        };
+      }
+    );
+
+    // Unique regions that will have a playlist connected.
+    const regions = [
+      ...new Set(
+        formStateObjectPlaylists.map((playlists) => playlists.regionId)
+      ),
+    ];
+
+    // Filter playlists by region
+    regions.forEach((element) => {
+      const filteredPlaylists = formStateObjectPlaylists
+        .map((localPlaylists, index) => {
+          if (element === localPlaylists.regionId) {
+            return { playlist: localPlaylists.id, weight: index };
+          }
+          return undefined;
+        })
+        .filter((anyValue) => typeof anyValue !== "undefined");
+      // Collect playlists with according ids for saving
+      toSave.push({
+        list: filteredPlaylists,
+        regionId: element,
+      });
+    });
+    // Set playlists to save
+    setPlaylistsToAdd(toSave);
   }
 
   return (
@@ -125,8 +181,8 @@ function ScreenCreate() {
       handleSubmit={handleSubmit}
       isLoading={false}
       isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
-      isSaving={isSaving || isSavingGroups}
-      errors={saveError || saveErrorGroups || false}
+      isSaving={isSavingScreen || isSavingGroups || isSaving || false}
+      errors={saveError || saveErrorGroups || savePlaylistError || false}
     />
   );
 }

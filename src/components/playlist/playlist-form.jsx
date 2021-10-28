@@ -4,14 +4,14 @@ import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
+import RRule from "../rrule/rrule";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import Toast from "../util/toast/toast";
-// import SelectScreenTable from "../util/multi-and-table/select-screen-table";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
-// import CategoriesDropdown from "../util/forms/multiselect-dropdown/categories/categories-dropdown";
+import "./playlist-form.scss";
 
 /**
  * The playlist form component.
@@ -22,10 +22,10 @@ import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {boolean} props.isSaving Is the form saving?
  * @param {string} props.headerText Headline text.
- * @param {boolean|null} props.isSaveSuccess Is the save a success?
- * @param {boolean|null} props.isLoading The data is loading.
+ * @param {boolean | null} props.isSaveSuccess Is the save a success?
+ * @param {boolean | null} props.isLoading The data is loading.
  * @param {Array} props.errors Array of errors.
- * @param {string} props.slideId - the id of the slide.
+ * @param {string} props.slideId - The id of the slide.
  * @returns {object} The playlist form.
  */
 function PlaylistForm({
@@ -77,6 +77,14 @@ function PlaylistForm({
               placeholder={t("edit-playlist.playlist-description-placeholder")}
               value={playlist.description}
               onChange={handleInput}
+            />
+          </ContentBody>
+          <ContentBody>
+            <h2 className="h4">{t("edit-playlist.schedule-header")}</h2>
+            <RRule
+              value={playlist.schedule}
+              name="schedule"
+              handleChange={handleInput}
             />
           </ContentBody>
           <ContentBody>

@@ -4,12 +4,10 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
 /**
- * @param {object} props
- * The props.
- * @param {boolean} props.overriddenByCampaign
- * Whether it is overridden by campaign or not.
- * @returns {object}
- * The published yes/no component.
+ * @param {object} props The props.
+ * @param {boolean} props.overriddenByCampaign Whether it is overridden by
+ *   campaign or not.
+ * @returns {object} The published yes/no component.
  */
 function CampaignIcon({ overriddenByCampaign }) {
   return (

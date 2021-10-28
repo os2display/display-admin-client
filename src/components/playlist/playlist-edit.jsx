@@ -53,27 +53,21 @@ function PlaylistEdit() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (data) {
       setFormStateObject(data);
     }
   }, [data]);
 
-  /**
-   * Sets the id of slides for api call.
-   */
+  /** Sets the id of slides for api call. */
   useEffect(() => {
     if (formStateObject && !slideId) {
       setSlideId(idFromUrl(formStateObject.slides));
     }
   }, [formStateObject]);
 
-  /**
-   * When the playlist is saved, the slide will be saved.
-   */
+  /** When the playlist is saved, the slide will be saved. */
   useEffect(() => {
     if (isSaveSuccess) {
       PutV1PlaylistsByIdSlides({
@@ -83,9 +77,7 @@ function PlaylistEdit() {
     }
   }, [isSaveSuccess]);
 
-  /**
-   * Sets slides to save.
-   */
+  /** Sets slides to save. */
   function handleSaveSlides() {
     const { slides } = formStateObject;
     setSlidesToAdd(
@@ -95,15 +87,14 @@ function PlaylistEdit() {
     );
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
+      schedule: formStateObject.schedule,
       published: {
         from: formStateObject.published.from,
         to: formStateObject.published.from,

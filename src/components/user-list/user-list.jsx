@@ -12,8 +12,7 @@ import DeleteModal from "../delete-modal/delete-modal";
 /**
  * The user list component.
  *
- * @returns {object}
- * The user list
+ * @returns {object} The user list
  */
 function UserList() {
   const { t } = useTranslation("common");
@@ -21,9 +20,7 @@ function UserList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [users, setUsers] = useState([]);
 
-  /**
-   * Load content from fixture.
-   */
+  /** Load content from fixture. */
   useEffect(() => {
     // @TODO: load real content.
     fetch(`/fixtures/users/users.json`)
@@ -36,8 +33,7 @@ function UserList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data
-   * The selected row.
+   * @param {object} data The selected row.
    */
   function handleSelected(data) {
     setSelectedRows(selectedHelper(data, [...selectedRows]));
@@ -46,12 +42,9 @@ function UserList() {
   /**
    * Opens the delete modal, for deleting row.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the user.
-   * @param {number} props.id
-   * The id of the user
+   * @param {object} props The props.
+   * @param {string} props.name The name of the user.
+   * @param {number} props.id The id of the user
    */
   function openDeleteModal({ id, name }) {
     setSelectedRows([{ id, name }]);
@@ -106,12 +99,9 @@ function UserList() {
   /**
    * Deletes user, and closes modal.
    *
-   * @param {object} props
-   * The props.
-   * @param {string} props.name
-   * The name of the user.
-   * @param {number} props.id
-   * The id of the user
+   * @param {object} props The props.
+   * @param {string} props.name The name of the user.
+   * @param {number} props.id The id of the user
    */
   // eslint-disable-next-line
   function handleDelete({ id, name }) {
@@ -120,9 +110,7 @@ function UserList() {
     setShowDeleteModal(false);
   }
 
-  /**
-   * Closes the delete modal.
-   */
+  /** Closes the delete modal. */
   function onCloseModal() {
     setSelectedRows([]);
     setShowDeleteModal(false);

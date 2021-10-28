@@ -36,10 +36,7 @@ function SlideCreate() {
     },
   ] = usePostV1SlidesMutation();
 
-  /**
-   * When the slide is saved,
-   * it redirects to edit slide.
-   */
+  /** When the slide is saved, it redirects to edit slide. */
   useEffect(() => {
     if (isSaveSuccess) {
       history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
@@ -59,9 +56,7 @@ function SlideCreate() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const saveData = {
       slideSlideInput: JSON.stringify({

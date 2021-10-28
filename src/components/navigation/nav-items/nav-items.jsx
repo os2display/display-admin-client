@@ -16,8 +16,7 @@ import "./nav-items.scss";
 /**
  * The nav items.
  *
- * @returns {object}
- *   nav items
+ * @returns {object} Nav items
  */
 function NavItems() {
   const [t] = useTranslation("common");
@@ -33,7 +32,7 @@ function NavItems() {
       <hr className="d-none d-md-block" /> */}
 
       {/* @TODO: Show active item based on Route */}
-      <Nav.Item>
+      <Nav.Item className="nav-item">
         <NavLink
           id="nav-items_content_slides"
           className="nav-link"
@@ -41,10 +40,10 @@ function NavItems() {
         >
           <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
           {t("nav-items.content-slides")}
-          <Link className="nav-add-new" to="/slide/create">
-            <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-          </Link>
         </NavLink>
+        <Link className="nav-add-new" to="/slide/create">
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+        </Link>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
         <NavLink
@@ -63,10 +62,10 @@ function NavItems() {
         >
           <FontAwesomeIcon className="me-2" icon={faStream} />
           {t("nav-items.playlists-playlists")}
-          <Link className="nav-add-new" to="/playlist/create">
-            <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-          </Link>
         </NavLink>
+        <Link className="nav-add-new" to="/playlist/create">
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+        </Link>
       </Nav.Item>
       <Nav.Item>
         <NavLink
@@ -76,10 +75,10 @@ function NavItems() {
         >
           <FontAwesomeIcon className="me-2" icon={faDesktop} />
           {t("nav-items.screens-screens")}
-          <Link className="nav-add-new" to="/screen/create">
-            <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-          </Link>
         </NavLink>
+        <Link className="nav-add-new" to="/screen/create">
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+        </Link>
       </Nav.Item>
       <Nav.Item className="nav-second-level">
         <NavLink

@@ -20,8 +20,7 @@ import "./topbar.scss";
 /**
  * The TopBar component.
  *
- * @returns {object}
- *   The TopBar
+ * @returns {object} The TopBar
  */
 function TopBar() {
   const [t] = useTranslation("common");
@@ -40,7 +39,7 @@ function TopBar() {
         {/* @TODO: Global searchbox: results show as list in popover when typing more than 3 characters */}
         <div className="my-3 my-md-0">
           <FormControl
-            placeholder={t("search-box.placeholder")}
+            placeholder={t("topbar.placeholder")}
             id="global-search-field"
             role="search"
             name="search"
@@ -63,7 +62,7 @@ function TopBar() {
                 to="/slides"
               >
                 <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
-                {t("topbar.add_slide")}
+                {t("topbar.add-slide")}
               </Link>
 
               <Link
@@ -72,7 +71,7 @@ function TopBar() {
                 to="/screen/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faDesktop} />
-                {t("topbar.add_screen")}
+                {t("topbar.add-screen")}
               </Link>
 
               <Link
@@ -81,7 +80,7 @@ function TopBar() {
                 to="/playlists"
               >
                 <FontAwesomeIcon className="me-2" icon={faStream} />
-                {t("topbar.add_playlist")}
+                {t("topbar.add-playlist")}
               </Link>
             </Dropdown.Menu>
           </Dropdown>

@@ -10,18 +10,13 @@ import TableHeader from "../table/table-header";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 
 /**
- * @param {object} props
- * The props.
- * @param {Array} props.columns
- * The columns for the table.
- * @param {Array} props.data
- * The data to display in the table.
- * @param {string} props.name
- * The id of the form element
- * @param {Function} props.onDropped
- * Callback for when an items is dropped and the list is reordered.
- * @returns {object}
- * The drag and drop table.
+ * @param {object} props The props.
+ * @param {Array} props.columns The columns for the table.
+ * @param {Array} props.data The data to display in the table.
+ * @param {string} props.name The id of the form element
+ * @param {Function} props.onDropped Callback for when an items is dropped and
+ *   the list is reordered.
+ * @returns {object} The drag and drop table.
  */
 function DragAndDropTable({ columns, data, name, onDropped }) {
   const { t } = useTranslation("common");
@@ -29,12 +24,9 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
   /**
    * Renders a cell with the content received.
    *
-   * @param {object} item
-   * The item to render.
-   * @param {object} column
-   * the column to render.
-   * @returns {object|string}
-   * returns a rendered jsx object, or the path.
+   * @param {object} item The item to render.
+   * @param {object} column The column to render.
+   * @returns {object | string} Returns a rendered jsx object, or the path.
    */
   function renderCell(item, column) {
     if (column.content) {
@@ -46,14 +38,10 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
   /**
    * Reorders an array after drag and drop.
    *
-   * @param {Array} listOfPlaylists
-   * The data to reorder
-   * @param {number} startIndex
-   * Start index of the dropped element
-   * @param {number} endIndex
-   * End index of the dropped element
-   * @returns {Array}
-   * Array of reordered elements after drag and drop.
+   * @param {Array} listOfPlaylists The data to reorder
+   * @param {number} startIndex Start index of the dropped element
+   * @param {number} endIndex End index of the dropped element
+   * @returns {Array} Array of reordered elements after drag and drop.
    */
   function reorder(listOfPlaylists, startIndex, endIndex) {
     const [removed] = listOfPlaylists.splice(startIndex, 1);
@@ -65,9 +53,8 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
   /**
    * Called when an item is dropped, callback with reordered data.
    *
-   * @param {object} result
-   * The result object of the drag and drop, has
-   * destination, source (startindex) and index (endindex).
+   * @param {object} result The result object of the drag and drop, has
+   *   destination, source (startindex) and index (endindex).
    */
   function onDragEnd(result) {
     // If dropped outside the list, return
@@ -137,7 +124,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
                             />
                           </td>
                           {columns.map((column) => (
-                            <td key={item.id + (column.path || column.key)}>
+                            <td key={item["@id"] + (column.path || column.key)}>
                               {renderCell(item, column)}
                             </td>
                           ))}

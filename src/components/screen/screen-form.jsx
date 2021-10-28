@@ -14,6 +14,7 @@ import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import Toast from "../util/toast/toast";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
+import idFromUrl from "../util/helpers/id-from-url";
 import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import "./screen-form.scss";
 
@@ -21,15 +22,15 @@ import "./screen-form.scss";
  * The screen form component.
  *
  * @param {object} props - The props.
- * @param {object} props.screen - screen The screen object to modify in the form.
- * @param {Function} props.handleInput - handleInput Handles form input.
- * @param {Function} props.handleSubmit - handleSubmit Handles form submit.
- * @param {boolean} props.isSaving - isSaving Is the form saving?
- * @param {string} props.headerText - headerText Headline text.
- * @param {boolean|null} props.isSaveSuccess - isSaveSuccess Is the save a success?
- * @param {boolean|null} props.isLoading - isLoading The data is loading.
- * @param {Array} props.errors - errors Array of errors.
- * @param {string} props.groupId - the group id.
+ * @param {object} props.screen - Screen The screen object to modify in the form.
+ * @param {Function} props.handleInput - HandleInput Handles form input.
+ * @param {Function} props.handleSubmit - HandleSubmit Handles form submit.
+ * @param {boolean} props.isSaving - IsSaving Is the form saving?
+ * @param {string} props.headerText - HeaderText Headline text.
+ * @param {boolean | null} props.isSaveSuccess - IsSaveSuccess Is the save a success?
+ * @param {boolean | null} props.isLoading - IsLoading The data is loading.
+ * @param {Array} props.errors - Errors Array of errors.
+ * @param {string} props.groupId - The group id.
  * @returns {object} The screen form.
  */
 function ScreenForm({
@@ -52,11 +53,13 @@ function ScreenForm({
   });
 
   /**
-   * Fetches data for the multi component // @TODO:
+   * Fetches data for the multi component // @TODO: when api makes it possible
+   * to search in layouts
    *
-   * @param {string} filter - the filter.
+   * @param {string} filter - The filter.
    */
   function onFilter(filter) {
+    // eslint-disable-next-line
     console.log(filter);
   }
 
@@ -80,8 +83,8 @@ function ScreenForm({
   /**
    * Adds group to list of groups.
    *
-   * @param {object} props - the props.
-   * @param {object} props.target - the target.
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
     const { value, id } = target;
@@ -197,9 +200,10 @@ function ScreenForm({
                 <div className="col-md-8">
                   <MultiSelectComponent
                     label={t("screen-form.screen-layout-label")}
-                    noSelectedString={t("playlists-dropdown.nothing-selected")}
+                    noSelectedString={t("screen-form.nothing-selected")}
                     handleSelection={handleAdd}
                     options={layoutOptions}
+                    helpText={t("screen-form.search-to-se-possible-selections")}
                     selected={selectedLayout ? [selectedLayout] : []}
                     name="layout"
                     filterCallback={onFilter}
@@ -209,6 +213,7 @@ function ScreenForm({
               )}
               {selectedLayout?.grid && (
                 <GridGenerationAndSelect
+                  screenId={idFromUrl(screen["@id"])}
                   grid={selectedLayout?.grid}
                   vertical={screen.dimensions.height > screen.dimensions.width}
                   regions={selectedLayout.regions}

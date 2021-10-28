@@ -19,14 +19,11 @@ import Pagination from "../util/paginate/pagination";
 /**
  * The media list component.
  *
- * @param {object} props
- * The props.
- * @param {boolean} props.fromModal
- * Whether it is opened from the modal, if it is, the upload and delete function should not be accesible.
- * @param {Function} props.handleSelected
- * Callback when closing modal.
- * @returns {object}
- * The media list.
+ * @param {object} props The props.
+ * @param {boolean} props.fromModal Whether it is opened from the modal, if it
+ *   is, the upload and delete function should not be accesible.
+ * @param {Function} props.handleSelected Callback when closing modal.
+ * @returns {object} The media list.
  */
 function MediaList({ fromModal, handleSelected }) {
   // Translations
@@ -64,9 +61,7 @@ function MediaList({ fromModal, handleSelected }) {
     isLoading,
   } = useGetV1MediaQuery({ page });
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (mediaData) {
       const mappedData = mediaData["hydra:member"].map((mediaItem) => {
@@ -80,16 +75,12 @@ function MediaList({ fromModal, handleSelected }) {
     }
   }, [mediaData]);
 
-  /**
-   * Closes delete modal.
-   */
+  /** Closes delete modal. */
   function onCloseDeleteModal() {
     setShowDeleteModal(false);
   }
 
-  /**
-   * @param {number} nextPage - the next page.
-   */
+  /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
     const params = new URLSearchParams(search);
     params.delete("page");
@@ -98,9 +89,7 @@ function MediaList({ fromModal, handleSelected }) {
     setPage(nextPage);
   }
 
-  /**
-   * Sets the url.
-   */
+  /** Sets the url. */
   useEffect(() => {
     if (!fromModal) {
       const params = new URLSearchParams(search);
@@ -117,16 +106,13 @@ function MediaList({ fromModal, handleSelected }) {
   /**
    * Sets search text.
    *
-   * @param {string} newSearchText
-   * Updates the search text state and url.
+   * @param {string} newSearchText Updates the search text state and url.
    */
   function handleSearch(newSearchText) {
     setSearchText(newSearchText);
   }
 
-  /**
-   * Deletes multiple pieces of media.
-   */
+  /** Deletes multiple pieces of media. */
   useEffect(() => {
     if (mediaToDelete.length > 0) {
       setIsDeleting(true);
@@ -138,9 +124,7 @@ function MediaList({ fromModal, handleSelected }) {
     }
   }, [mediaToDelete, isDeleteSuccess]);
 
-  /**
-   * Deletes selected data, and closes modal.
-   */
+  /** Deletes selected data, and closes modal. */
   function handleDelete() {
     setMediaToDelete(selectedMedia);
     setShowDeleteModal(false);
@@ -150,8 +134,7 @@ function MediaList({ fromModal, handleSelected }) {
   /**
    * Sets the selected media in state.
    *
-   * @param {object} inputData
-   * The selected media.
+   * @param {object} inputData The selected media.
    */
   function handleChecked(inputData) {
     const localMedia = inputData;

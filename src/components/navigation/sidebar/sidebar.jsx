@@ -8,8 +8,7 @@ import "./sidebar.scss";
 /**
  * The sidebar component.
  *
- * @returns {object}
- *   The SideBar
+ * @returns {object} The SideBar
  */
 function SideBar() {
   const [t] = useTranslation("common");
@@ -27,7 +26,7 @@ function SideBar() {
           href="/"
           className="text-white mb-2 mt-2 ms-3 d-none d-md-block"
         >
-          {t("topbar.brand")}
+          {t("sidebar.brand")}
         </Navbar.Brand>
         <NavItems />
       </Nav>

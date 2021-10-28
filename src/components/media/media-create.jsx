@@ -6,8 +6,7 @@ import MediaForm from "./media-form";
 /**
  * The create media component.
  *
- * @returns {object}
- * The create media page.
+ * @returns {object} The create media page.
  */
 function MediaCreate() {
   const { t } = useTranslation("common");
@@ -24,10 +23,8 @@ function MediaCreate() {
   /**
    * Set state on change in input field
    *
-   * @param {object} props
-   * The props.
-   * @param {object} props.target
-   * event target
+   * @param {object} props The props.
+   * @param {object} props.target Event target
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
@@ -35,9 +32,7 @@ function MediaCreate() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Saves multiple pieces of media.
-   */
+  /** Saves multiple pieces of media. */
   useEffect(() => {
     if (mediaToCreate.length > 0) {
       setIsSaving(true);
@@ -48,9 +43,7 @@ function MediaCreate() {
     }
   }, [mediaToCreate.length, isSaveSuccess]);
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const localMediaToCreate = [];
 

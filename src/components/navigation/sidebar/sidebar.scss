@@ -4,15 +4,19 @@
   &.nav-dark {
     .nav-item {
       margin-top: $spacer;
+      position: relative;
+      width: 100%;
+      .nav-add-new {
+        color: white;
+        position: absolute;
+        top: 16px;
+        right: 10px;
+        &:hover {
+          color: $primary;
+        }
+      }
       .nav-link {
         color: white;
-        .nav-add-new {
-          color: white;
-          float: right;
-          &:hover {
-            color: $primary;
-          }
-        }
         &:hover {
           background-color: $gray-700;
           transition: background-color 0.2s ease-in-out;

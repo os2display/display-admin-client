@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../multi-dropdown";
 
 /**
- * @param {object} props - the props.
- * @param {Function} props.handleScreenSelection - the callback when an option is selected
- * @param {Array} props.selected - the selected options
- * @param {string} props.name - the id of the form element
- * @param {Array} props.errors - a list of errors, or null.
- * @param {Array} props.data - the data for options.
- * @param {Function} props.filterCallback - the callback on search filter.
- * @returns {object} - the multidropdown of playlists.
+ * @param {object} props - The props.
+ * @param {Function} props.handleScreenSelection - The callback when an option is selected
+ * @param {Array} props.selected - The selected options
+ * @param {string} props.name - The id of the form element
+ * @param {Array} props.errors - A list of errors, or null.
+ * @param {Array} props.data - The data for options.
+ * @param {Function} props.filterCallback - The callback on search filter.
+ * @returns {object} - The multidropdown of playlists.
  */
 function ScreensDropdown({
   handleScreenSelection,
@@ -34,6 +34,7 @@ function ScreensDropdown({
             noSelectedString={t("screens-dropdown.nothing-selected")}
             selected={selected}
             name={name}
+            helpText={t("screens-dropdown.search-to-se-possible-selections")}
             errors={errors}
             filterCallback={filterCallback}
           />

@@ -30,9 +30,7 @@ function GroupEdit() {
     isLoading,
   } = useGetV1ScreenGroupsByIdQuery({ id });
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (data) {
       setFormStateObject(data);
@@ -51,9 +49,7 @@ function GroupEdit() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const saveData = {
       title: formStateObject.title,

@@ -4,18 +4,12 @@ import { ColorPicker as CP, useColor } from "react-color-palette";
 import "react-color-palette/lib/css/styles.css";
 
 /**
- * @param {object} props
- * The props.
- * @param {string}  props.color
- * The color, a hex string or null.
- * @param {boolean}  props.show
- * Whether to show the color picker.
- * @param  {Function} props.handleChange
- * Callback for picked color.
- * @param {Function} props.closeColorPicker
- * Callback for closing colorpicker.
- * @returns {object}
- * The color picker.
+ * @param {object} props The props.
+ * @param {string} props.color The color, a hex string or null.
+ * @param {boolean} props.show Whether to show the color picker.
+ * @param {Function} props.handleChange Callback for picked color.
+ * @param {Function} props.closeColorPicker Callback for closing colorpicker.
+ * @returns {object} The color picker.
  */
 function ColorPicker({ color, show, handleChange, closeColorPicker }) {
   if (!show) {
@@ -37,10 +31,7 @@ function ColorPicker({ color, show, handleChange, closeColorPicker }) {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, []);
-  /**
-   * @param {object} selectedColor
-   * The selected color object.
-   */
+  /** @param {object} selectedColor The selected color object. */
   function onPickedColor(selectedColor) {
     const returnTarget = { value: selectedColor.hex, id: show };
     handleChange({ target: returnTarget });
