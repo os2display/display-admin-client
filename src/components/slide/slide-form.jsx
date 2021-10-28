@@ -32,19 +32,20 @@ import RenderFormElement from "./render-form-element";
  * @param {Array} props.errors Array of errors.
  * @returns {object} The slide form.
  */
-function SlideForm({
-                     slide,
-                     handleInput,
-                     handleContent,
-                     handleMedia,
-                     handleSubmit,
-                     isSaving,
-                     headerText,
-                     isSaveSuccess,
-                     isLoading,
-                     loadedMedia,
-                     errors
-                   }) {
+function SlideForm(
+  {
+    slide,
+    handleInput,
+    handleContent,
+    handleMedia,
+    handleSubmit,
+    isSaving,
+    headerText,
+    isSaveSuccess,
+    isLoading,
+    loadedMedia,
+    errors
+  }) {
   const { t } = useTranslation("common");
   const history = useHistory();
   const [templateOptions, setTemplateOptions] = useState();
