@@ -172,11 +172,11 @@ function ScreenList() {
       label: t("screens-list.columns.name"),
     },
     {
-      content: (data) => (
+      // eslint-disable-next-line react/prop-types
+      content: ({ inScreenGroups }) => (
         <ListButton
           callback={openInfoModal}
-          // eslint-disable-next-line
-          inputData={data.inScreenGroups}
+          inputData={inScreenGroups}
           apiCall={useGetV1ScreensByIdScreenGroupsQuery}
         />
       ),

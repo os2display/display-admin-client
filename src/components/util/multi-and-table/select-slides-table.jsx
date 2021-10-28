@@ -114,11 +114,11 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     },
     {
       key: "playlists",
-      content: (playlistData) => (
+      // eslint-disable-next-line react/prop-types
+      content: ({ onPlaylists: localOnPlaylists }) => (
         <ListButton
           callback={openInfoModal}
-          // eslint-disable-next-line
-          inputData={playlistData.onPlaylists[0][0] || []}
+          inputData={localOnPlaylists[0] || []}
           apiCall={useGetV1PlaylistsByIdSlidesQuery}
         />
       ),

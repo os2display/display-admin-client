@@ -89,6 +89,9 @@
       "name": "Navn",
       "number-of-slides": "Slides tilknyttede"
     },
+    "info-modal": {
+      "playlist-slides": "Playlisten indeholder følgende slides"
+    },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
     "delete-button": "Slet",

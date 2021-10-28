@@ -164,17 +164,17 @@ function PlaylistList() {
     {
       path: "published",
       label: t("playlists-list.columns.published"),
-      // eslint-disable-next-line
+      // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
     },
     {
       key: "slides",
       label: t("playlists-list.columns.number-of-slides"),
-      content: (data) => (
+      // eslint-disable-next-line react/prop-types
+      content: ({ slides }) => (
         <ListButton
           callback={openInfoModal}
-          // eslint-disable-next-line
-          inputData={data.slides}
+          inputData={slides}
           apiCall={useGetV1PlaylistsByIdSlidesQuery}
         />
       ),
@@ -253,7 +253,7 @@ function PlaylistList() {
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}
         dataKey="slide"
-        modalTitle={t("info-modal.playlist-slides")}
+        modalTitle={t("playlists-list.info-modal.playlist-slides")}
       />
     </>
   );

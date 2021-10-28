@@ -103,7 +103,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     {
       path: "published",
       label: t("playlists-list.columns.published"),
-      // eslint-disable-next-line
+      // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
     },
     {

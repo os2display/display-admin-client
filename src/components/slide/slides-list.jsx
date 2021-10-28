@@ -164,7 +164,7 @@ function SlidesList() {
       label: t("slides-list.columns.name"),
     },
     {
-      // eslint-disable-next-line
+      // eslint-disable-next-line react/prop-types
       content: ({ templateInfo }) => (
         <TemplateLabelInList templateInfo={templateInfo} />
       ),
@@ -173,18 +173,15 @@ function SlidesList() {
     },
     {
       key: "playlists",
-      content: (data) => (
-        <ListButton
-          callback={openInfoModal}
-          // eslint-disable-next-line
-          inputData={data.onPlaylists}
-        />
+      // eslint-disable-next-line react/prop-types
+      content: ({ onPlaylists: localOnPlaylists }) => (
+        <ListButton callback={openInfoModal} inputData={localOnPlaylists} />
       ),
       label: t("slides-list.columns.slide-on-playlists"),
     },
     {
       key: "published",
-      // eslint-disable-next-line
+      // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
       label: t("slides-list.columns.published"),
     },
