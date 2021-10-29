@@ -16,9 +16,8 @@ import Select from "../util/forms/select";
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
  * @param {object} props.formStateObject - The form state.
- * @param props.onMediaChange
- * @param props.loadedMedia
- *
+ * @param {Function} props.onMediaChange - When media have changed call this function.
+ * @param {Array} props.loadedMedia - Array of loaded media entities.
  * @returns {object} - A form element.
  */
 function RenderFormElement({
@@ -43,6 +42,7 @@ function RenderFormElement({
    */
   function renderElement(formData) {
     let returnElement;
+    let inputImage = null;
 
     switch (formData.input) {
       case "input":
@@ -143,8 +143,6 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        let inputImage = null;
-
         // Load image from loadedMedia if it is a @id
         if (typeof formStateObject[formData.name] === "string") {
           inputImage = { ...loadedMedia[formStateObject[formData.name]] };
@@ -212,6 +210,8 @@ RenderFormElement.propTypes = {
   formStateObject: PropTypes.shape({}).isRequired,
   requiredFieldCallback: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onMediaChange: PropTypes.func.isRequired,
+  loadedMedia: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default RenderFormElement;

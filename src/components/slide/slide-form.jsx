@@ -28,8 +28,8 @@ import RenderFormElement from "./render-form-element";
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.loadedMedia Object of loaded media.
- * @param props.selectTemplate
- * @param props.selectedTemplate
+ * @param {Function} props.selectTemplate Function to handle select of template.
+ * @param {object} props.selectedTemplate Selected template.
  * @returns {object} The slide form.
  */
 function SlideForm({
@@ -67,8 +67,8 @@ function SlideForm({
 
     if (selectedTemplate) {
       // Get content form from template resources.
-      const contentFormElements = [...selectedTemplate?.resources?.admin];
-      setContentFormElements(contentFormElements);
+      const newContentFormElements = [...selectedTemplate?.resources?.admin];
+      setContentFormElements(newContentFormElements);
 
       newSelectedTemplates.push(selectedTemplate);
     }
@@ -231,6 +231,10 @@ function SlideForm({
   );
 }
 
+SlideForm.defaultProps = {
+  selectedTemplate: null,
+};
+
 SlideForm.propTypes = {
   slide: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
@@ -239,12 +243,20 @@ SlideForm.propTypes = {
   headerText: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
   selectTemplate: PropTypes.func.isRequired,
-  selectedTemplate: PropTypes.shape({ "@id": PropTypes.string }),
+  selectedTemplate: PropTypes.shape({
+    "@id": PropTypes.string,
+    resources: PropTypes.shape({
+      admin: PropTypes.arrayOf(PropTypes.any).isRequired,
+    }).isRequired,
+  }),
   isLoading: PropTypes.bool.isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.any),
     PropTypes.bool,
   ]).isRequired,
+  handleContent: PropTypes.func.isRequired,
+  handleMedia: PropTypes.func.isRequired,
+  loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default SlideForm;

@@ -38,35 +38,11 @@ function SlideCreate() {
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostV1SlidesMutation();
 
+  // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    {
-      data: mediaData,
-      isLoading: mediaIsLoading,
-      error: saveMediaError,
-      isSuccess: isSaveMediaSuccess,
-    },
+    { data: mediaData, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
-
-  /**
-   * Select template.
-   *
-   * @param {object} props - The props.
-   * @param {object} props.target - The target.
-   */
-  const selectTemplate = ({ target }) => {
-    const { value, id } = target;
-    let template = null;
-
-    if (value.length > 0) {
-      template = value[0];
-    }
-
-    setSelectedTemplate(template);
-    handleInput({
-      target: { id, value: { "@id": template["@id"] } },
-    });
-  };
 
   /**
    * Set state on change in input field
@@ -81,10 +57,30 @@ function SlideCreate() {
   }
 
   /**
+   * Select template.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  const selectTemplate = ({ target }) => {
+    const { value, id: targetId } = target;
+    let template = null;
+
+    if (value.length > 0) {
+      [template] = value;
+    }
+
+    setSelectedTemplate(template);
+    handleInput({
+      target: { id: targetId, value: { "@id": template["@id"] } },
+    });
+  };
+
+  /**
    * Update content field for id/value.
    *
-   * @param target.target
-   * @param target
+   * @param {object} props The props.
+   * @param {object} props.target The field and value that should be updated.
    */
   function handleContent({ target }) {
     const localFormStateObject = { ...formStateObject };
@@ -95,7 +91,7 @@ function SlideCreate() {
   /**
    * Handle change to a media.
    *
-   * @param fieldName
+   * @param {string} fieldName The field name.
    */
   function handleMedia(fieldName) {
     setMediaFields([...new Set([...mediaFields, fieldName])]);
@@ -147,7 +143,7 @@ function SlideCreate() {
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
-              ? parseInt(formStateObject.content.duration)
+              ? parseInt(formStateObject.content.duration, 10)
               : null,
             content: formStateObject.content,
             media: formStateObject.media,
@@ -179,8 +175,6 @@ function SlideCreate() {
         // Move to next media to upload.
         const newList = submittingMedia.slice(1);
         setSubmittingMedia(newList);
-      } else if (saveMediaError) {
-        console.log("saveMediaError");
       }
     }
   }, [isSaveMediaSuccess]);

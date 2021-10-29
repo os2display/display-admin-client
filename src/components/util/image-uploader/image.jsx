@@ -11,10 +11,9 @@ import "./image-uploader.scss";
  * @param {Function} props.onImageRemove A callback on remove image.
  * @param {Function} props.handleChange A callback on change.
  * @param {number} props.index The index, used for image removal.
- * @param props.disabled
  * @returns {object} The image uploader.
  */
-function Image({ inputImage, onImageRemove, handleChange, index, disabled }) {
+function Image({ inputImage, onImageRemove, handleChange, index }) {
   const { t } = useTranslation("common");
   const [image, setImage] = useState(inputImage);
 
@@ -82,11 +81,12 @@ function Image({ inputImage, onImageRemove, handleChange, index, disabled }) {
 }
 
 Image.propTypes = {
-  inputImage: PropTypes.object.isRequired,
+  inputImage: PropTypes.shape({
+    url: PropTypes.string,
+  }).isRequired,
   onImageRemove: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  disabled: PropTypes.bool,
 };
 
 export default Image;

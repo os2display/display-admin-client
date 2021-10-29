@@ -40,35 +40,11 @@ function SlideEdit() {
     isLoading: getSlideIsLoading,
   } = useGetV1SlidesByIdQuery({ id });
 
+  // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    {
-      data: mediaData,
-      isLoading: mediaIsLoading,
-      error: saveMediaError,
-      isSuccess: isSaveMediaSuccess,
-    },
+    { data: mediaData, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
-
-  /**
-   * Select template.
-   *
-   * @param {object} props - The props.
-   * @param {object} props.target - The target.
-   */
-  const selectTemplate = ({ target }) => {
-    const { value, id } = target;
-    let template = null;
-
-    if (value.length > 0) {
-      template = value[0];
-    }
-
-    setSelectedTemplate(template);
-    handleInput({
-      target: { id, value: { "@id": template["@id"] } },
-    });
-  };
 
   /**
    * Set state on change in input field
@@ -83,10 +59,30 @@ function SlideEdit() {
   }
 
   /**
+   * Select template.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  const selectTemplate = ({ target }) => {
+    const { value, id: targetId } = target;
+    let template = null;
+
+    if (value.length > 0) {
+      [template] = value;
+    }
+
+    setSelectedTemplate(template);
+    handleInput({
+      target: { id: targetId, value: { "@id": template["@id"] } },
+    });
+  };
+
+  /**
    * Update content field for id/value.
    *
-   * @param target.target
-   * @param target
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
    */
   function handleContent({ target }) {
     const localFormStateObject = { ...formStateObject };
@@ -97,7 +93,7 @@ function SlideEdit() {
   /**
    * Handle change to a media.
    *
-   * @param fieldName
+   * @param {string} fieldName The field that has a media.
    */
   function handleMedia(fieldName) {
     setMediaFields([...new Set([...mediaFields, fieldName])]);
@@ -133,9 +129,7 @@ function SlideEdit() {
   }
 
   useEffect(() => {
-    console.log("formStateObject", formStateObject);
     // Load template if set.
-
     if (
       formStateObject?.templateInfo &&
       Object.prototype.hasOwnProperty.call(formStateObject.templateInfo, "@id")
@@ -149,9 +143,8 @@ function SlideEdit() {
           const template = result.data;
           setSelectedTemplate(template);
         })
-        .catch((err) => {
+        .catch(() => {
           // @TODO: Handle error.
-          console.error(err);
         });
     }
   }, [formStateObject]);
@@ -208,7 +201,7 @@ function SlideEdit() {
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
-              ? parseInt(formStateObject.content.duration)
+              ? parseInt(formStateObject.content.duration, 10)
               : null,
             content: formStateObject.content,
             media: formStateObject.media,
@@ -240,8 +233,6 @@ function SlideEdit() {
         // Move to next media to upload.
         const newList = submittingMedia.slice(1);
         setSubmittingMedia(newList);
-      } else if (saveMediaError) {
-        console.log("saveMediaError");
       }
     }
   }, [isSaveMediaSuccess]);
