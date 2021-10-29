@@ -1,47 +1,72 @@
 import { React, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
-import idFromUrl from "../util/helpers/id-from-url";
-import { usePostV1SlidesMutation } from "../../redux/api/api.generated";
+import { useParams } from "react-router";
+import {
+  usePostMediaCollectionMutation,
+  usePostV1SlidesMutation,
+} from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 
 /**
- * The slide edit component.
+ * The slide create component.
  *
- * @returns {object} The slide edit page.
+ * @returns {object} The slide create page.
  */
 function SlideCreate() {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const { id } = useParams();
   const headerText = t("slide-create.create-slide-header");
+  const [mediaFields, setMediaFields] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [submittingMedia, setSubmittingMedia] = useState([]);
+  const [loadedMedia, setLoadedMedia] = useState({});
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+  // Initialize to empty slide object.
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
-    duration: 10,
-    createdBy: "sdf",
-    modifiedBy: "sdf",
-    content: {
-      text: "",
-    },
+    templateInfo: [],
+    duration: null,
+    content: {},
+    media: [],
   });
 
   const [
-    PostV1Slide,
-    {
-      data,
-      isLoading: isSavingSlide,
-      error: saveError,
-      isSuccess: isSaveSuccess,
-    },
+    PostV1Slides,
+    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostV1SlidesMutation();
 
-  /** When the slide is saved, it redirects to edit slide. */
-  useEffect(() => {
-    if (isSaveSuccess) {
-      history.push(`/slide/edit/${idFromUrl(data["@id"])}`);
+  const [
+    PostV1MediaCollection,
+    {
+      data: mediaData,
+      isLoading: mediaIsLoading,
+      error: saveMediaError,
+      isSuccess: isSaveMediaSuccess,
+    },
+  ] = usePostMediaCollectionMutation();
+
+  /**
+   * Select template.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  const selectTemplate = ({ target }) => {
+    const { value, id } = target;
+    let template = null;
+
+    if (value.length > 0) {
+      template = value[0];
     }
-  }, [isSaveSuccess]);
+
+    setSelectedTemplate(template);
+    handleInput({
+      target: { id, value: { "@id": template["@id"] } },
+    });
+  };
 
   /**
    * Set state on change in input field
@@ -50,46 +75,143 @@ function SlideCreate() {
    * @param {object} props.target - Event target.
    */
   function handleInput({ target }) {
-    let localFormStateObject = { ...formStateObject };
-    localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
+    const localFormStateObject = { ...formStateObject };
     set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
 
-  /** Handles submit. */
-  function handleSubmit() {
-    const saveData = {
-      slideSlideInput: JSON.stringify({
-        title: formStateObject.title,
-        description: formStateObject.description,
-        modifiedBy: formStateObject.modifiedBy,
-        published: {
-          from: "2021-11-17T06:15:04Z", // Todo
-          to: "2021-04-29T09:54:10Z", // Todo
-        },
-        createdBy: formStateObject.createdBy,
-        templateInfo: {
-          "@id": formStateObject.templateInfo,
-          options: { fade: false },
-        },
-        duration: 38823, // @TODO:
-        content: { text: formStateObject.content.text },
-      }),
-    };
-    PostV1Slide(saveData);
+  /**
+   * Update content field for id/value.
+   *
+   * @param target.target
+   * @param target
+   */
+  function handleContent({ target }) {
+    const localFormStateObject = { ...formStateObject };
+    set(localFormStateObject.content, target.id, target.value);
+    setFormStateObject(localFormStateObject);
   }
 
+  /**
+   * Handle change to a media.
+   *
+   * @param fieldName
+   */
+  function handleMedia(fieldName) {
+    setMediaFields([...new Set([...mediaFields, fieldName])]);
+  }
+
+  /** Handles submit. */
+  function handleSubmit() {
+    const newSubmittingMedia = [];
+
+    // Setup submittingMedia list.
+    mediaFields.forEach((fieldName) => {
+      if (
+        Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)
+      ) {
+        const contentField = formStateObject.content[fieldName];
+        contentField.forEach((element) => {
+          const formData = new FormData();
+          formData.append("file", element.file);
+          formData.append("title", element.title);
+          formData.append("description", element.description);
+          formData.append("license", element.license);
+          // @TODO: Should these be optional in the API?
+          formData.append("modifiedBy", "");
+          formData.append("createdBy", "");
+          newSubmittingMedia.push(formData);
+        });
+      }
+    });
+
+    // Trigger submitting hooks.
+    setSubmitting(true);
+    setSubmittingMedia(newSubmittingMedia);
+  }
+
+  /** Handle submitting. */
+  useEffect(() => {
+    if (submitting) {
+      if (submittingMedia.length > 0) {
+        const media = submittingMedia[0];
+
+        // Submit media.
+        PostV1MediaCollection({ body: media });
+      } else {
+        // All media have been submitted. Submit slide.
+        const saveData = {
+          id,
+          slideSlideInput: JSON.stringify({
+            title: formStateObject.title,
+            description: formStateObject.description,
+            templateInfo: formStateObject.templateInfo,
+            duration: formStateObject?.content?.duration
+              ? parseInt(formStateObject.content.duration)
+              : null,
+            content: formStateObject.content,
+            media: formStateObject.media,
+          }),
+        };
+
+        PostV1Slides(saveData);
+      }
+    }
+  }, [submittingMedia.length, submitting]);
+
+  /** Submitted media is successful. */
+  useEffect(() => {
+    if (submitting) {
+      if (isSaveMediaSuccess) {
+        const newMediaFields = [...mediaFields];
+        const firstMediaField = newMediaFields.shift();
+        setMediaFields(newMediaFields);
+
+        const newFormStateObject = { ...formStateObject };
+        newFormStateObject.media.push(mediaData["@id"]);
+        newFormStateObject.content[firstMediaField] = mediaData["@id"];
+        setFormStateObject(newFormStateObject);
+
+        const newLoadedMedia = { ...loadedMedia };
+        newLoadedMedia[mediaData["@id"]] = mediaData;
+        setLoadedMedia(newLoadedMedia);
+
+        // Move to next media to upload.
+        const newList = submittingMedia.slice(1);
+        setSubmittingMedia(newList);
+      } else if (saveMediaError) {
+        console.log("saveMediaError");
+      }
+    }
+  }, [isSaveMediaSuccess]);
+
+  /** Handle submitting is done. */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      setSubmitting(false);
+    }
+  }, [isSaveSuccess]);
+
   return (
-    <SlideForm
-      slide={formStateObject}
-      headerText={headerText}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isLoading={false}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSavingSlide}
-      errors={saveError || false}
-    />
+    <>
+      {formStateObject && (
+        <SlideForm
+          slide={formStateObject}
+          headerText={`${headerText}: ${formStateObject?.title}`}
+          handleInput={handleInput}
+          handleContent={handleContent}
+          handleMedia={handleMedia}
+          handleSubmit={handleSubmit}
+          selectTemplate={selectTemplate}
+          selectedTemplate={selectedTemplate}
+          loadedMedia={loadedMedia}
+          isLoading={false}
+          isSaveSuccess={isSaveSuccess}
+          isSaving={submitting || isSaving}
+          errors={saveError || false}
+        />
+      )}
+    </>
   );
 }
 

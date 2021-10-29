@@ -7,6 +7,8 @@ import FormInput from "../util/forms/form-input";
 import Select from "../util/forms/select";
 
 /**
+ * Render form elements for content form.
+ *
  * @param {object} props - The props.
  * @param {Array} props.data - The data to render in the form element.
  * @param {Function} props.requiredFieldCallback - If the form is required, a
@@ -16,6 +18,7 @@ import Select from "../util/forms/select";
  * @param {object} props.formStateObject - The form state.
  * @param props.onMediaChange
  * @param props.loadedMedia
+ *
  * @returns {object} - A form element.
  */
 function RenderFormElement({
@@ -140,19 +143,18 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        let inputImage = { url: "" };
+        let inputImage = null;
 
         // Load image from loadedMedia if it is a @id
         if (typeof formStateObject[formData.name] === "string") {
-          inputImage = loadedMedia[formStateObject[formData.name]];
-        } else {
-          inputImage = formStateObject[formData.name];
-        }
-
-        // Fix input image format.
-        if (inputImage?.assets?.uri) {
-          inputImage.url = inputImage.assets.uri;
+          inputImage = { ...loadedMedia[formStateObject[formData.name]] };
+          if (inputImage?.assets?.uri) {
+            inputImage.url = inputImage.assets.uri;
+          }
           inputImage.disableInput = true;
+        } else if (formStateObject[formData.name]?.file) {
+          inputImage = { ...formStateObject[formData.name] };
+          inputImage.url = inputImage.file.url;
         }
 
         returnElement = (

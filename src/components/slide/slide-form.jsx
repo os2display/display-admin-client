@@ -8,14 +8,9 @@ import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";
-import {
-  useGetV1TemplatesByIdQuery,
-  useGetV1TemplatesQuery,
-} from "../../redux/api/api.generated";
+import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
-import idFromUrl from "../util/helpers/id-from-url";
-import templateExample from "./template-example";
 import RenderFormElement from "./render-form-element";
 
 /**
@@ -33,6 +28,8 @@ import RenderFormElement from "./render-form-element";
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.loadedMedia Object of loaded media.
+ * @param props.selectTemplate
+ * @param props.selectedTemplate
  * @returns {object} The slide form.
  */
 function SlideForm({
@@ -41,6 +38,8 @@ function SlideForm({
   handleContent,
   handleMedia,
   handleSubmit,
+  selectTemplate,
+  selectedTemplate,
   isSaving,
   headerText,
   isSaveSuccess,
@@ -53,39 +52,37 @@ function SlideForm({
   const [templateOptions, setTemplateOptions] = useState([]);
   const [contentFormElements, setContentFormElements] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [selectedTemplate, setSelectedTemplate] = useState([]);
+  const [selectedTemplates, setSelectedTemplates] = useState([]);
 
+  // Load all templates. Assume no more than 1000.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchText,
-      itemsPerPage: searchText ? 10 : 0,
+      itemsPerPage: 10,
     });
 
-  // Load template.
-  const { data: template } = useGetV1TemplatesByIdQuery({
-    id: idFromUrl(slide.templateInfo["@id"]),
-  });
+  /** Load content form elements for template */
+  useEffect(() => {
+    const newSelectedTemplates = [];
+
+    if (selectedTemplate) {
+      // Get content form from template resources.
+      const contentFormElements = [...selectedTemplate?.resources?.admin];
+      setContentFormElements(contentFormElements);
+
+      newSelectedTemplates.push(selectedTemplate);
+    }
+
+    setSelectedTemplates(newSelectedTemplates);
+  }, [selectedTemplate]);
 
   /** Set loaded data into form state. */
   useEffect(() => {
     if (templates) {
       const localTemplateOptions = [...templates["hydra:member"]];
-      if (template) {
-        localTemplateOptions.push(template);
-      }
       setTemplateOptions(localTemplateOptions);
     }
   }, [templates]);
-
-  /** Set loaded data into form state. */
-  useEffect(() => {
-    if (template) {
-      setSelectedTemplate([template]);
-
-      // @TODO: Load from template config.
-      setContentFormElements(templateExample);
-    }
-  }, [template]);
 
   /**
    * Fetches data for the multi component
@@ -94,20 +91,6 @@ function SlideForm({
    */
   function onFilter(filter) {
     setSearchText(filter);
-  }
-
-  /**
-   * Adds group to list of groups.
-   *
-   * @param {object} props - The props.
-   * @param {object} props.target - The target.
-   */
-  function handleAdd({ target }) {
-    const { value, id } = target;
-    setSelectedTemplate(value);
-    handleInput({
-      target: { id, value: value.map((item) => item["@id"]).shift() },
-    });
   }
 
   return (
@@ -169,16 +152,16 @@ function SlideForm({
               <MultiSelectComponent
                 label={t("slide-form.slide-template-label")}
                 helpText={t("slide-form.slide-template-help-text")}
-                handleSelection={handleAdd}
+                handleSelection={selectTemplate}
                 options={templateOptions}
-                selected={selectedTemplate}
+                selected={selectedTemplates}
                 name="templateInfo"
                 filterCallback={onFilter}
                 singleSelect
               />
             </ContentBody>
           )}
-          {slide.templateInfo && template && contentFormElements && (
+          {selectedTemplate && contentFormElements && (
             <ContentBody>
               {contentFormElements.map((formElement) => (
                 <RenderFormElement
@@ -255,6 +238,8 @@ SlideForm.propTypes = {
   isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
+  selectTemplate: PropTypes.func.isRequired,
+  selectedTemplate: PropTypes.shape({ "@id": PropTypes.string }),
   isLoading: PropTypes.bool.isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.any),

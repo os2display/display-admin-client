@@ -27,6 +27,7 @@ function SlideEdit() {
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [loadedMedia, setLoadedMedia] = useState({});
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   const [
     PutV1Slides,
@@ -48,6 +49,26 @@ function SlideEdit() {
       isSuccess: isSaveMediaSuccess,
     },
   ] = usePostMediaCollectionMutation();
+
+  /**
+   * Select template.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  const selectTemplate = ({ target }) => {
+    const { value, id } = target;
+    let template = null;
+
+    if (value.length > 0) {
+      template = value[0];
+    }
+
+    setSelectedTemplate(template);
+    handleInput({
+      target: { id, value: { "@id": template["@id"] } },
+    });
+  };
 
   /**
    * Set state on change in input field
@@ -110,6 +131,30 @@ function SlideEdit() {
     setSubmitting(true);
     setSubmittingMedia(newSubmittingMedia);
   }
+
+  useEffect(() => {
+    console.log("formStateObject", formStateObject);
+    // Load template if set.
+
+    if (
+      formStateObject?.templateInfo &&
+      Object.prototype.hasOwnProperty.call(formStateObject.templateInfo, "@id")
+    ) {
+      dispatch(
+        api.endpoints.getV1TemplatesById.initiate({
+          id: idFromUrl(formStateObject.templateInfo["@id"]),
+        })
+      )
+        .then((result) => {
+          const template = result.data;
+          setSelectedTemplate(template);
+        })
+        .catch((err) => {
+          // @TODO: Handle error.
+          console.error(err);
+        });
+    }
+  }, [formStateObject]);
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -218,6 +263,8 @@ function SlideEdit() {
           handleContent={handleContent}
           handleMedia={handleMedia}
           handleSubmit={handleSubmit}
+          selectTemplate={selectTemplate}
+          selectedTemplate={selectedTemplate}
           loadedMedia={loadedMedia}
           isLoading={getSlideIsLoading}
           isSaveSuccess={isSaveSuccess}

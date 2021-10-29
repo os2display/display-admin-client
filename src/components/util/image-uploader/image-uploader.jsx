@@ -63,8 +63,9 @@ function ImageUploader({
 
   /** Load content from fixture. */
   useEffect(() => {
-    // @TODO: load real content.
-    setImages(Array.isArray(inputImage) ? inputImage : [inputImage]);
+    if (inputImage) {
+      setImages(Array.isArray(inputImage) ? inputImage : [inputImage]);
+    }
   }, [inputImage]);
 
   const onChange = (imageList) => {
@@ -144,7 +145,7 @@ function ImageUploader({
               </>
             )}
             {imageList.map((image, index) => {
-              const key = image.file ? image.file.name : image["@id"];
+              const key = image?.file ? image.file.name : image["@id"];
               return (
                 <Image
                   inputImage={image}
