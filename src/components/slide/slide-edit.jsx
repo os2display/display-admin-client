@@ -82,9 +82,7 @@ function SlideEdit() {
     setMediaFields([...new Set([...mediaFields, fieldName])]);
   }
 
-  /**
-   * Handles submit.
-   */
+  /** Handles submit. */
   function handleSubmit() {
     const newSubmittingMedia = [];
 
@@ -113,9 +111,7 @@ function SlideEdit() {
     setSubmittingMedia(newSubmittingMedia);
   }
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (getSlideData) {
       const localFormStateObject = JSON.parse(JSON.stringify(getSlideData));
@@ -150,9 +146,7 @@ function SlideEdit() {
     }
   }, [getSlideData]);
 
-  /**
-   * Handle submitting.
-   */
+  /** Handle submitting. */
   useEffect(() => {
     if (submitting) {
       if (submittingMedia.length > 0) {
@@ -181,9 +175,7 @@ function SlideEdit() {
     }
   }, [submittingMedia.length, submitting]);
 
-  /**
-   * Submitted media is successful.
-   */
+  /** Submitted media is successful. */
   useEffect(() => {
     if (submitting) {
       if (isSaveMediaSuccess) {
@@ -209,9 +201,7 @@ function SlideEdit() {
     }
   }, [isSaveMediaSuccess]);
 
-  /**
-   * Handle submitting is done.
-   */
+  /** Handle submitting is done. */
   useEffect(() => {
     if (isSaveSuccess) {
       setSubmitting(false);

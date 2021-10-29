@@ -11,6 +11,7 @@ import "./image-uploader.scss";
  * @param {Function} props.onImageRemove A callback on remove image.
  * @param {Function} props.handleChange A callback on change.
  * @param {number} props.index The index, used for image removal.
+ * @param props.disabled
  * @returns {object} The image uploader.
  */
 function Image({ inputImage, onImageRemove, handleChange, index, disabled }) {

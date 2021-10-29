@@ -8,7 +8,10 @@ import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";
-import { useGetV1TemplatesByIdQuery, useGetV1TemplatesQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1TemplatesByIdQuery,
+  useGetV1TemplatesQuery,
+} from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import FormCheckbox from "../util/forms/form-checkbox";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -32,20 +35,19 @@ import RenderFormElement from "./render-form-element";
  * @param {Array} props.loadedMedia Object of loaded media.
  * @returns {object} The slide form.
  */
-function SlideForm(
-  {
-    slide,
-    handleInput,
-    handleContent,
-    handleMedia,
-    handleSubmit,
-    isSaving,
-    headerText,
-    isSaveSuccess,
-    isLoading,
-    loadedMedia,
-    errors
-  }) {
+function SlideForm({
+  slide,
+  handleInput,
+  handleContent,
+  handleMedia,
+  handleSubmit,
+  isSaving,
+  headerText,
+  isSaveSuccess,
+  isLoading,
+  loadedMedia,
+  errors,
+}) {
   const { t } = useTranslation("common");
   const history = useHistory();
   const [templateOptions, setTemplateOptions] = useState([]);
@@ -56,12 +58,12 @@ function SlideForm(
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchText,
-      itemsPerPage: searchText ? 10 : 0
+      itemsPerPage: searchText ? 10 : 0,
     });
 
   // Load template.
   const { data: template } = useGetV1TemplatesByIdQuery({
-    id: idFromUrl(slide.templateInfo["@id"])
+    id: idFromUrl(slide.templateInfo["@id"]),
   });
 
   /** Set loaded data into form state. */
@@ -75,9 +77,7 @@ function SlideForm(
     }
   }, [templates]);
 
-  /**
-   * Set loaded data into form state.
-   */
+  /** Set loaded data into form state. */
   useEffect(() => {
     if (template) {
       setSelectedTemplate([template]);
@@ -106,7 +106,7 @@ function SlideForm(
     const { value, id } = target;
     setSelectedTemplate(value);
     handleInput({
-      target: { id, value: value.map((item) => item["@id"]).shift() }
+      target: { id, value: value.map((item) => item["@id"]).shift() },
     });
   }
 
@@ -258,8 +258,8 @@ SlideForm.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   errors: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.any),
-    PropTypes.bool
-  ]).isRequired
+    PropTypes.bool,
+  ]).isRequired,
 };
 
 export default SlideForm;

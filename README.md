@@ -61,6 +61,7 @@ The communication with the API is generated from an OpenAPI
 specification with Redux Toolkit.
 
 To regenerate (when the API specification has changed):
+
 ```bash
 docker-compose exec node bash
 cd src/redux/api

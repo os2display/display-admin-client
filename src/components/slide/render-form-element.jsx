@@ -9,7 +9,8 @@ import Select from "../util/forms/select";
 /**
  * @param {object} props - The props.
  * @param {Array} props.data - The data to render in the form element.
- * @param {Function} props.requiredFieldCallback - If the form is required, a callback to add to validation.
+ * @param {Function} props.requiredFieldCallback - If the form is required, a
+ *   callback to add to validation.
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
  * @param {object} props.formStateObject - The form state.
@@ -35,7 +36,7 @@ function RenderFormElement({
 
   /**
    * @param {object} formData - The data for form input.
-   * @returns {object|string} - Returns a rendered jsx object.
+   * @returns {object | string} - Returns a rendered jsx object.
    */
   function renderElement(formData) {
     let returnElement;
