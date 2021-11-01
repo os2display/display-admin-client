@@ -4,6 +4,7 @@ import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import FormInput from "../forms/form-input";
 import "./image-uploader.scss";
+
 /**
  * @param {object} props The props.
  * @param {object} props.inputImage The image object.
@@ -31,6 +32,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
     <Row className="mb-3">
       <Col md="3" className="mb-3 mb-md-0">
         <div className="image h-100 justify-content-center d-flex rounded">
+          {/* @TODO: Make a better check for differentiating between file upload and media archive selection */}
           <img src={image.url} alt={t("image.image-currently-uploading")} />
         </div>
       </Col>
@@ -43,6 +45,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.title}
           onChange={onChange}
           formGroupClasses="mb-3"
+          disabled={image.disableInput}
         />
         <FormInput
           name="description"
@@ -53,6 +56,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.description}
           onChange={onChange}
           formGroupClasses="mb-3"
+          disabled={image.disableInput}
         />
         <FormInput
           name="license"
@@ -62,6 +66,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.license}
           onChange={onChange}
           formGroupClasses="mb-3"
+          disabled={image.disableInput}
         />
         <Button
           className="mt-3"
@@ -76,7 +81,9 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
 }
 
 Image.propTypes = {
-  inputImage: PropTypes.func.isRequired,
+  inputImage: PropTypes.shape({
+    url: PropTypes.string,
+  }).isRequired,
   onImageRemove: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,

@@ -63,8 +63,9 @@ function ImageUploader({
 
   /** Load content from fixture. */
   useEffect(() => {
-    // @TODO: load real content.
-    setImages(Array.isArray(inputImage) ? inputImage : [inputImage]);
+    if (inputImage) {
+      setImages(Array.isArray(inputImage) ? inputImage : [inputImage]);
+    }
   }, [inputImage]);
 
   const onChange = (imageList) => {
@@ -82,7 +83,7 @@ function ImageUploader({
     // @TODO: error handling
     <div className={error ? "invalid" : ""}>
       <ImageUploading
-        multiple
+        multiple={multipleImages ?? false}
         value={images}
         onChange={onChange}
         dataURLKey="url"
@@ -143,16 +144,19 @@ function ImageUploader({
                 </small>
               </>
             )}
-            {imageList.map((image, index) => (
-              <Image
-                inputImage={image}
-                handleChange={handleChange}
-                onImageUpdate={onImageUpdate}
-                onImageRemove={onImageRemove}
-                index={index}
-                key={image.url}
-              />
-            ))}
+            {imageList.map((image, index) => {
+              const key = image?.file ? image.file.name : image["@id"];
+              return (
+                <Image
+                  inputImage={image}
+                  handleChange={handleChange}
+                  onImageUpdate={onImageUpdate}
+                  onImageRemove={onImageRemove}
+                  index={index}
+                  key={`image-${key}`}
+                />
+              );
+            })}
           </div>
         )}
       </ImageUploading>
@@ -180,7 +184,10 @@ ImageUploader.defaultProps = {
 };
 
 ImageUploader.propTypes = {
-  inputImage: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+  inputImage: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })),
+    PropTypes.shape({ url: PropTypes.string }),
+  ]),
   handleImageUpload: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   multipleImages: PropTypes.bool,

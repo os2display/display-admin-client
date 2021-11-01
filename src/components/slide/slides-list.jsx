@@ -186,21 +186,6 @@ function SlidesList() {
       label: t("slides-list.columns.published"),
     },
     {
-      key: "quick-edit",
-      content: () => (
-        <>
-          {/* @TODO: make quick edit modal */}
-          <Button variant="primary">Quick edit</Button>
-        </>
-      ),
-    },
-    {
-      key: "preview",
-      content: () => (
-        <Button variant="secondary">{t("slides-list.columns.preview")}</Button>
-      ),
-    },
-    {
       key: "edit",
       content: (data) =>
         LinkForList(data["@id"], "slide/edit", t("slides-list.edit-button")),

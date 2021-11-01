@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../util/modal/modal-dialog";
 import MediaList from "../media/media-list";
+
 /**
- * Delete modal component, a modal that deletes elements.
+ * Media modal component.
  *
  * @param {object} props Props.
  * @param {boolean} props.show Whether to show the modal.
@@ -19,7 +20,8 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
   if (!show) {
     return <></>;
   }
-  const [selectedimages, setSelectedImages] = useState([]);
+
+  const [selectedImages, setSelectedImages] = useState([]);
   const { t } = useTranslation("common");
 
   /** @param {Array} images The images that are selected in the dialog. */
@@ -31,7 +33,7 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
   }
 
   return (
-    <Modal show={show} size="xl" id="media-modal">
+    <Modal show={show} size="xl" id="media-modal" onHide={onClose}>
       <ModalDialog
         title={
           multiple
@@ -39,7 +41,7 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
             : t("media-modal.single-select-title")
         }
         onClose={onClose}
-        handleAccept={() => handleAccept(selectedimages)}
+        handleAccept={() => handleAccept(selectedImages)}
       >
         <MediaList fromModal handleSelected={handleSelectedImages} />
       </ModalDialog>

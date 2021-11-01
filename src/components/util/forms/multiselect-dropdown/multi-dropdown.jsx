@@ -45,6 +45,7 @@ function MultiSelectComponent({
   const textOnError = errorText || t("multi-dropdown.validation-text");
   const nothingSelectedLabel =
     noSelectedString || t("multi-dropdown.nothing-selected");
+
   /** Map data to fit component. */
   useEffect(() => {
     const localMappedOptions = options.map((item) => {

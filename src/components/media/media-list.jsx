@@ -247,7 +247,7 @@ function MediaList({ fromModal, handleSelected }) {
                       <div className="col-auto">
                         <h2 className="h6">{data.name}</h2>
                       </div>
-                      {/* @TODO: readd when the api supports putting media */}
+                      {/* @TODO: readd if the api supports putting media */}
                       {/* <div className="col-auto ms-auto">
                         <Link
                           className="btn btn-primary btn-sm"

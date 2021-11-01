@@ -26,6 +26,7 @@ function FormInput({
   errors,
   invalidText,
   formGroupClasses,
+  disabled,
 }) {
   const { t } = useTranslation("common");
   const [error, setError] = useState();
@@ -47,6 +48,7 @@ function FormInput({
         <FormControl
           name={name}
           id={name}
+          disabled={disabled}
           className={error ? "form-control is-invalid" : "form-control"}
           placeholder={placeholder}
           value={value}
@@ -72,6 +74,7 @@ FormInput.defaultProps = {
   onInvalid: () => {},
   errors: null,
   invalidText: null,
+  disabled: false,
 };
 
 FormInput.propTypes = {
@@ -87,6 +90,7 @@ FormInput.propTypes = {
   onInvalid: PropTypes.func,
   invalidText: PropTypes.string,
   formGroupClasses: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default FormInput;

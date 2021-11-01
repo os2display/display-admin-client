@@ -6,15 +6,6 @@ Currently, this is a create-react-app.
 
 ## Docker development setup
 
-### Get the api mock project
-
-```bash
-git clone https://github.com/os2display/display-api-mock.git json-server
-
-# Install npm packages
-docker-compose run json-server npm install
-```
-
 ### Create public/config file
 
 By default the api that is requested is located at `/api/`.
@@ -69,11 +60,13 @@ docker-compose run node yarn apply-coding-standards
 The communication with the API is generated from an OpenAPI
 specification with Redux Toolkit.
 
+To regenerate (when the API specification has changed):
+
 ```bash
 docker-compose exec node bash
 cd src/redux/api
 
-# Action: Replace api.json with new api.json OpenAPI specification
+# Action: Replace api.json with the new api.json OpenAPI specification
 
 # Install and run scripts to generate ned Redux Api slices. 
 npm install
