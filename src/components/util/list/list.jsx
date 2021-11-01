@@ -68,23 +68,33 @@ function List({
   /** Set url search params using pageParams and localstorage */
   useEffect(() => {
     const params = new URLSearchParams();
-    const page = pageParams || 1;
-    const localSearch = searchParams || localStorage.search || "";
-    const order = orderParams || localStorage.order || "asc";
-    const sort = sortParams || localStorage.sort || "title";
+
+    // published
     if (displayPublished) {
       const published = publishedParams || "all";
       params.delete("published");
       params.append("published", published);
     }
+
+    // page
+    const page = pageParams || 1;
     params.delete("page");
     params.append("page", page);
+
+    // order
+    const order = orderParams || localStorage.order || "asc";
     params.delete("order");
     params.append("order", order);
     localStorage.setItem("order", order);
+
+    // sort
+    const sort = sortParams || localStorage.sort || "title";
     params.delete("sort");
     params.append("sort", sort);
     localStorage.setItem("sort", sort);
+
+    // search
+    const localSearch = searchParams || localStorage.search || "";
     params.delete("search");
     if (localSearch) {
       localStorage.setItem("search", localSearch);
