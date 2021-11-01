@@ -49,6 +49,7 @@ function List({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
+
   // Page params
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search).get("search");
@@ -59,9 +60,52 @@ function List({
   if (displayPublished) {
     publishedParams = new URLSearchParams(search).get("published");
   }
+
   // At least one row must be selected for deletion.
   const disableDeleteButton = !selectedRows.length > 0;
   const pageSize = 10;
+
+  /** Set url search params using pageParams and localstorage */
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    // published
+    if (displayPublished) {
+      const published = publishedParams || "all";
+      params.delete("published");
+      params.append("published", published);
+    }
+
+    // page
+    const page = pageParams || 1;
+    params.delete("page");
+    params.append("page", page);
+
+    // order
+    const order = orderParams || localStorage.order || "asc";
+    params.delete("order");
+    params.append("order", order);
+    localStorage.setItem("order", order);
+
+    // sort
+    const sort = sortParams || localStorage.sort || "title";
+    params.delete("sort");
+    params.append("sort", sort);
+    localStorage.setItem("sort", sort);
+
+    // search
+    const localSearch = searchParams || localStorage.search || "";
+    params.delete("search");
+
+    if (localSearch) {
+      localStorage.setItem("search", localSearch);
+      params.append("search", localSearch);
+    } else {
+      localStorage.removeItem("search");
+    }
+
+    history.push({ search: params.toString() });
+  }, []);
 
   /**
    * @param {string} dataKey - Which data to delete/update
@@ -70,14 +114,13 @@ function List({
   function updateUrlParams(dataKey, value) {
     const params = new URLSearchParams(search);
     params.delete(dataKey);
-    if (value) {
-      params.append(dataKey, value);
-    }
-    history.replace({ search: params.toString() });
+    params.append(dataKey, value);
+    history.push({ search: params.toString() });
   }
 
   /** @param {string} newSearchText Updates the search text state and url. */
   function onSearch(newSearchText) {
+    localStorage.setItem("search", newSearchText); // Search should persist
     updateUrlParams("search", newSearchText);
   }
 
@@ -91,11 +134,6 @@ function List({
     updateUrlParams("page", nextPage);
   }
 
-  /** @param {number} isPublished - Is published. */
-  function updateUrlPublished(isPublished) {
-    updateUrlParams("published", isPublished);
-  }
-
   /** @param {number} sortByInput - The next page. */
   function updateUrlAndSort(sortByInput) {
     const params = new URLSearchParams(search);
@@ -103,6 +141,8 @@ function List({
     params.delete("order");
     params.append("sort", sortByInput.path);
     params.append("order", sortByInput.order);
+    localStorage.setItem("order", sortByInput.order);
+    localStorage.setItem("sort", sortByInput.path);
     history.replace({ search: params.toString() });
   }
 
@@ -110,25 +150,20 @@ function List({
   useEffect(() => {
     if (pageParams) {
       handlePageChange(parseInt(pageParams, 10));
-    } else {
-      updateUrlAndChangePage(1);
     }
   }, [pageParams]);
 
+  /** Sets sort from url using callback */
   useEffect(() => {
     if (orderParams && sortParams) {
       handleSort({
         path: sortParams,
         order: orderParams,
       });
-    } else {
-      updateUrlAndSort({
-        path: "title",
-        order: "asc",
-      });
     }
   }, [orderParams, sortParams]);
 
+  /** Sets search from url using callback */
   useEffect(() => {
     if (searchParams) {
       handleSearch(searchParams);
@@ -137,12 +172,10 @@ function List({
     }
   }, [searchParams]);
 
+  /** Sets published filter from url using callback */
   useEffect(() => {
     if (publishedParams) {
       handleIsPublished(publishedParams);
-    } else {
-      updateUrlPublished("all");
-      handleIsPublished("all");
     }
   }, [publishedParams]);
 
