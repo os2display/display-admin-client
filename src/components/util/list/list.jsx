@@ -67,8 +67,8 @@ function List({
     const params = new URLSearchParams();
     const page = pageParams || 1;
     const localSearch = searchParams || localStorage.search || "";
-    const order = orderParams || "asc";
-    const sort = sortParams || "title";
+    const order = orderParams || localStorage.order || "asc";
+    const sort = sortParams || localStorage.sort || "title";
     if (displayPublished) {
       const published = publishedParams || "all";
       params.delete("published");
@@ -78,8 +78,10 @@ function List({
     params.append("page", page);
     params.delete("order");
     params.append("order", order);
+    localStorage.setItem("order", order);
     params.delete("sort");
     params.append("sort", sort);
+    localStorage.setItem("sort", sort);
     params.delete("search");
     if (localSearch) {
       localStorage.setItem("search", localSearch);
@@ -124,6 +126,8 @@ function List({
     params.delete("order");
     params.append("sort", sortByInput.path);
     params.append("order", sortByInput.order);
+    localStorage.setItem("order", sortByInput.order);
+    localStorage.setItem("sort", sortByInput.path);
     history.replace({ search: params.toString() });
   }
 

@@ -2,7 +2,6 @@ import { React } from "react";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
-import FormControl from "react-bootstrap/FormControl";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,8 +14,8 @@ import {
   faUserCircle,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import NavItems from "../nav-items/nav-items";
 import "./topbar.scss";
+
 /**
  * The TopBar component.
  *
