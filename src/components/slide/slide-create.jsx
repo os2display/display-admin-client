@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
-import { useParams } from "react-router";
 import {
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
@@ -15,7 +14,6 @@ import SlideForm from "./slide-form";
  */
 function SlideCreate() {
   const { t } = useTranslation("common");
-  const { id } = useParams();
   const headerText = t("slide-create.create-slide-header");
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -137,7 +135,6 @@ function SlideCreate() {
       } else {
         // All media have been submitted. Submit slide.
         const saveData = {
-          id,
           slideSlideInput: JSON.stringify({
             title: formStateObject.title,
             description: formStateObject.description,
