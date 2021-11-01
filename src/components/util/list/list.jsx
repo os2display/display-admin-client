@@ -56,7 +56,10 @@ function List({
   const sortParams = new URLSearchParams(search).get("sort");
   const orderParams = new URLSearchParams(search).get("order");
   const pageParams = new URLSearchParams(search).get("page");
-  const publishedParams = new URLSearchParams(search).get("published");
+  let publishedParams;
+  if (displayPublished) {
+    publishedParams = new URLSearchParams(search).get("published");
+  }
 
   // At least one row must be selected for deletion.
   const disableDeleteButton = !selectedRows.length > 0;
