@@ -49,19 +49,46 @@ function List({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
+
   // Page params
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search).get("search");
   const sortParams = new URLSearchParams(search).get("sort");
   const orderParams = new URLSearchParams(search).get("order");
   const pageParams = new URLSearchParams(search).get("page");
-  let publishedParams;
-  if (displayPublished) {
-    publishedParams = new URLSearchParams(search).get("published");
-  }
+  const publishedParams = new URLSearchParams(search).get("published");
+
   // At least one row must be selected for deletion.
   const disableDeleteButton = !selectedRows.length > 0;
   const pageSize = 10;
+
+  /** Set url serach params using pageParams and localstorage */
+  useEffect(() => {
+    const params = new URLSearchParams();
+    const page = pageParams || 1;
+    const localSearch = searchParams || localStorage.search || "";
+    const order = orderParams || "asc";
+    const sort = sortParams || "title";
+    if (displayPublished) {
+      const published = publishedParams || "all";
+      params.delete("published");
+      params.append("published", published);
+    }
+    params.delete("page");
+    params.append("page", page);
+    params.delete("order");
+    params.append("order", order);
+    params.delete("sort");
+    params.append("sort", sort);
+    params.delete("search");
+    if (localSearch) {
+      localStorage.setItem("search", localSearch);
+      params.append("search", localSearch);
+    } else {
+      localStorage.removeItem("search");
+    }
+    history.push({ search: params.toString() });
+  }, []);
 
   /**
    * @param {string} dataKey - Which data to delete/update
@@ -70,14 +97,13 @@ function List({
   function updateUrlParams(dataKey, value) {
     const params = new URLSearchParams(search);
     params.delete(dataKey);
-    if (value) {
-      params.append(dataKey, value);
-    }
-    history.replace({ search: params.toString() });
+    params.append(dataKey, value);
+    history.push({ search: params.toString() });
   }
 
   /** @param {string} newSearchText Updates the search text state and url. */
   function onSearch(newSearchText) {
+    localStorage.setItem("search", newSearchText); // Search should persist
     updateUrlParams("search", newSearchText);
   }
 
@@ -89,11 +115,6 @@ function List({
   /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
     updateUrlParams("page", nextPage);
-  }
-
-  /** @param {number} isPublished - Is published. */
-  function updateUrlPublished(isPublished) {
-    updateUrlParams("published", isPublished);
   }
 
   /** @param {number} sortByInput - The next page. */
@@ -110,25 +131,20 @@ function List({
   useEffect(() => {
     if (pageParams) {
       handlePageChange(parseInt(pageParams, 10));
-    } else {
-      updateUrlAndChangePage(1);
     }
   }, [pageParams]);
 
+  /** Sets sort from url using callback */
   useEffect(() => {
     if (orderParams && sortParams) {
       handleSort({
         path: sortParams,
         order: orderParams,
       });
-    } else {
-      updateUrlAndSort({
-        path: "title",
-        order: "asc",
-      });
     }
   }, [orderParams, sortParams]);
 
+  /** Sets search from url using callback */
   useEffect(() => {
     if (searchParams) {
       handleSearch(searchParams);
@@ -137,12 +153,10 @@ function List({
     }
   }, [searchParams]);
 
+  /** Sets published filter from url using callback */
   useEffect(() => {
     if (publishedParams) {
       handleIsPublished(publishedParams);
-    } else {
-      updateUrlPublished("all");
-      handleIsPublished("all");
     }
   }, [publishedParams]);
 
