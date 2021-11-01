@@ -36,19 +36,6 @@ function TopBar() {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3" />
       <Navbar.Collapse id="basic-navbar-nav" className="px-3">
-        {/* @TODO: Global searchbox: results show as list in popover when typing more than 3 characters */}
-        <div className="my-3 my-md-0">
-          <FormControl
-            placeholder={t("topbar.placeholder")}
-            id="global-search-field"
-            role="search"
-            name="search"
-            className="form-control"
-          />
-        </div>
-        <Nav variant="dark" id="topbar" className="topbar-nav d-md-none">
-          <NavItems />
-        </Nav>
         <Nav className="ms-md-auto mt-3 mt-md-0">
           <Dropdown className="me-md-3 mb-2 mb-md-0">
             <Dropdown.Toggle variant="primary" id="topbar_add">
@@ -59,28 +46,27 @@ function TopBar() {
               <Link
                 id="nav-items_add_slide"
                 className="dropdown-item"
-                to="/slides"
+                to="/slide/create"
               >
                 <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
                 {t("topbar.add-slide")}
               </Link>
 
               <Link
-                id="nav-items_add_screen"
-                className="dropdown-item"
-                to="/screen/list"
-              >
-                <FontAwesomeIcon className="me-2" icon={faDesktop} />
-                {t("topbar.add-screen")}
-              </Link>
-
-              <Link
                 id="nav-items_add_playlist"
                 className="dropdown-item"
-                to="/playlists"
+                to="/playlist/create"
               >
                 <FontAwesomeIcon className="me-2" icon={faStream} />
                 {t("topbar.add-playlist")}
+              </Link>
+              <Link
+                id="nav-items_add_screen"
+                className="dropdown-item"
+                to="/screen/create"
+              >
+                <FontAwesomeIcon className="me-2" icon={faDesktop} />
+                {t("topbar.add-screen")}
               </Link>
             </Dropdown.Menu>
           </Dropdown>
