@@ -96,12 +96,14 @@ function List({
     // search
     const localSearch = searchParams || localStorage.search || "";
     params.delete("search");
+
     if (localSearch) {
       localStorage.setItem("search", localSearch);
       params.append("search", localSearch);
     } else {
       localStorage.removeItem("search");
     }
+
     history.push({ search: params.toString() });
   }, []);
 
