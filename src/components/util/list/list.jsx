@@ -62,7 +62,7 @@ function List({
   const disableDeleteButton = !selectedRows.length > 0;
   const pageSize = 10;
 
-  /** Set url serach params using pageParams and localstorage */
+  /** Set url search params using pageParams and localstorage */
   useEffect(() => {
     const params = new URLSearchParams();
     const page = pageParams || 1;
