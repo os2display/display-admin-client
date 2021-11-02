@@ -69,14 +69,15 @@ function SlideForm({
       // Get content form from template resources.
       const contentFormUrl = selectedTemplate?.resources?.admin;
 
-      fetch(contentFormUrl).then(response => response.json())
+      fetch(contentFormUrl)
+        .then((response) => response.json())
         .then((data) => {
           setContentFormElements(data);
-        },
-      ).catch((err) => {
-        // @TODO: Handle error case. Display error for user.
-        console.error(err)
-      });
+        })
+        .catch((err) => {
+          // @TODO: Handle error case. Display error for user.
+          console.error(err);
+        });
 
       newSelectedTemplates.push(selectedTemplate);
     }
