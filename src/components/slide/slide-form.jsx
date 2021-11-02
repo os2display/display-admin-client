@@ -76,7 +76,6 @@ function SlideForm({
         })
         .catch((err) => {
           // @TODO: Handle error case. Display error for user.
-          console.error(err);
         });
 
       newSelectedTemplates.push(selectedTemplate);
