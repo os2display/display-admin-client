@@ -67,8 +67,16 @@ function SlideForm({
 
     if (selectedTemplate) {
       // Get content form from template resources.
-      const newContentFormElements = [...selectedTemplate?.resources?.admin];
-      setContentFormElements(newContentFormElements);
+      const contentFormUrl = selectedTemplate?.resources?.admin;
+
+      fetch(contentFormUrl).then(response => response.json())
+        .then((data) => {
+          setContentFormElements(data);
+        },
+      ).catch((err) => {
+        // @TODO: Handle error case. Display error for user.
+        console.error(err)
+      });
 
       newSelectedTemplates.push(selectedTemplate);
     }
@@ -246,7 +254,7 @@ SlideForm.propTypes = {
   selectedTemplate: PropTypes.shape({
     "@id": PropTypes.string,
     resources: PropTypes.shape({
-      admin: PropTypes.arrayOf(PropTypes.any).isRequired,
+      admin: PropTypes.string.isRequired,
     }).isRequired,
   }),
   isLoading: PropTypes.bool.isRequired,
