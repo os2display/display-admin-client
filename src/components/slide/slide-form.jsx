@@ -74,7 +74,7 @@ function SlideForm({
         .then((data) => {
           setContentFormElements(data);
         })
-        .catch((err) => {
+        .catch(() => {
           // @TODO: Handle error case. Display error for user.
         });
 
