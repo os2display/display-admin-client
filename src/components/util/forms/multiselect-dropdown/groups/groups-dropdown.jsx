@@ -46,6 +46,7 @@ function GroupsDropdown({
 
 GroupsDropdown.defaultProps = {
   errors: null,
+  selected: [],
 };
 
 GroupsDropdown.propTypes = {
@@ -57,7 +58,7 @@ GroupsDropdown.propTypes = {
       label: PropTypes.number,
       disabled: PropTypes.bool,
     })
-  ).isRequired,
+  ),
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   data: PropTypes.arrayOf(PropTypes.any).isRequired,

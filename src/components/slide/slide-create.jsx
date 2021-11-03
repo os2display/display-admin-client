@@ -29,6 +29,7 @@ function SlideCreate() {
     duration: null,
     content: {},
     media: [],
+    published: { from: null, to: null },
   });
 
   const [
