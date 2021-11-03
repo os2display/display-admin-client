@@ -133,6 +133,13 @@ function SlideCreate() {
         // Submit media.
         PostV1MediaCollection({ body: media });
       } else {
+        const from = formStateObject.published.from
+          ? new Date(formStateObject.published.from).toISOString()
+          : null;
+        const to = formStateObject.published.to
+          ? new Date(formStateObject.published.to).toISOString()
+          : null;
+
         // All media have been submitted. Submit slide.
         const saveData = {
           slideSlideInput: JSON.stringify({
@@ -144,6 +151,10 @@ function SlideCreate() {
               : null,
             content: formStateObject.content,
             media: formStateObject.media,
+            published: {
+              from,
+              to,
+            },
           }),
         };
 
