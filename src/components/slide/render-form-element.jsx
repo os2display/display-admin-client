@@ -5,6 +5,7 @@ import ImageUploader from "../util/image-uploader/image-uploader";
 import FormCheckbox from "../util/forms/form-checkbox";
 import FormInput from "../util/forms/form-input";
 import Select from "../util/forms/select";
+import RichText from "../util/forms/rich-text";
 
 /**
  * Render form elements for content form.
@@ -51,6 +52,23 @@ function RenderFormElement({
         }
         returnElement = (
           <FormInput
+            name={formData.name}
+            type={formData.type}
+            errors={formData.required ? errors : null}
+            label={formData.label}
+            helpText={formData.helpText}
+            value={formStateObject[formData.name]}
+            onChange={onChange}
+            formGroupClasses={formData.formGroupClasses}
+          />
+        );
+        break;
+      case "rich-text-input":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
+        returnElement = (
+          <RichText
             name={formData.name}
             type={formData.type}
             errors={formData.required ? errors : null}

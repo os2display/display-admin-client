@@ -21,7 +21,7 @@ function FormCheckbox({
   formGroupClasses,
 }) {
   /**
-   * Transforms the target to something the edit-components understand.
+   * Transforms the target to something the form-components understand.
    *
    * @param {object} props The props
    * @param {object} props.target The object containing the values return via callback.
