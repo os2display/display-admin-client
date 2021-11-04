@@ -136,10 +136,10 @@ function SlideCreate() {
       } else {
         const from = formStateObject.published.from
           ? new Date(formStateObject.published.from).toISOString()
-          : null;
+          : 0;
         const to = formStateObject.published.to
           ? new Date(formStateObject.published.to).toISOString()
-          : null;
+          : 0;
 
         // All media have been submitted. Submit slide.
         const saveData = {
