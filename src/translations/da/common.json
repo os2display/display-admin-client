@@ -160,7 +160,7 @@
     "slide-template-label": "Vælg en skabelon til dit slide",
     "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide. Indtast søgning for at se installerede skabeloner.",
     "slide-from-label": "Udgivet fra",
-    "slide-til-label": "Udgivet til",
+    "slide-to-label": "Udgivet til",
     "slide-publish-title": "Udgivelse"
   },
   "group-form": {
