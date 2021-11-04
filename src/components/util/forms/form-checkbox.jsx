@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { FormCheck, FormGroup } from "react-bootstrap";
 
 /**
- * An input for forms.
+ * A checkbox for forms.
  *
  * @param {string} props The props.
- * @param {string} props.name The name of the input
- * @param {string} props.label The label for the input
- * @param {string} props.helpText The helptext for the input, if it is needed.
- * @param {boolean} props.required Whether the input is required.
- * @returns {object} An input.
+ * @param {string} props.name The name of the checkbox
+ * @param {string} props.label The label for the checkbox
+ * @param {string} props.helpText The helptext for the checkbox, if it is needed.
+ * @param {boolean} props.required Whether the checkbox is required.
+ * @returns {object} A checkbox.
  */
 function FormCheckbox({
   name,

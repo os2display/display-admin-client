@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 /**
- * An input for forms.
+ * Radio buttons for forms.
  *
  * @param {string} props The props.
- * @param {string} props.radioGroupName The name of the input
- * @param {string} props.label The label for the input
- * @returns {object} An input.
+ * @param {string} props.radioGroupName The name of the radio buttons
+ * @param {string} props.label The label for the radio buttons
+ * @returns {object} Radio buttons.
  */
 function RadioButtons({
   radioGroupName,
