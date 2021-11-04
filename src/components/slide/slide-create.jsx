@@ -66,8 +66,7 @@ function SlideCreate() {
     let template = null;
 
     if (value.length > 0) {
-      [template] = value;
-      debugger
+      template = value.shift();
     }
 
     setSelectedTemplate(template);

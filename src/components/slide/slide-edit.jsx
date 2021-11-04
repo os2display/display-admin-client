@@ -66,9 +66,10 @@ function SlideEdit() {
    */
   const selectTemplate = ({ target }) => {
     const { value, id: targetId } = target;
+    let template = null;
 
     if (value.length > 0) {
-      [template] = value;
+      template = value.shift();
     }
 
     setSelectedTemplate(template);

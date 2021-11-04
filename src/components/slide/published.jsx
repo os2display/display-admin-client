@@ -12,16 +12,23 @@ import dayjs from "dayjs";
 function Published({ published }) {
   const { t } = useTranslation("common");
   const [isPublished, setIsPublished] = useState(false);
-  let { from, to } = published;
+  const { from, to } = published;
   // extend isbetween
   useEffect(() => {
     dayjs.extend(isBetween);
-    if (from && to){
-      setIsPublished(dayjs(new Date()).isBetween(dayjs(from), dayjs(to), "minute"));
-
-    } else if (!from && to){
-      let today = new Date()
-      setIsPublished(dayjs(today).isBetween(dayjs(today.getMinutes() - 1), dayjs(to), "minute"));
+    if (from && to) {
+      setIsPublished(
+        dayjs(new Date()).isBetween(dayjs(from), dayjs(to), "minute")
+      );
+    } else if (!from && to) {
+      const today = new Date();
+      setIsPublished(
+        dayjs(today).isBetween(
+          dayjs(today.getMinutes() - 1),
+          dayjs(to),
+          "minute"
+        )
+      );
     }
   }, []);
   return <div>{isPublished ? t("published.yes") : t("published.no")}</div>;
