@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import isBetween from "dayjs/plugin/isBetween";
 import dayjs from "dayjs";
+
 /**
  * @param {object} props The props.
  * @param {object} props.published Object with from and to.
@@ -11,14 +12,18 @@ import dayjs from "dayjs";
 function Published({ published }) {
   const { t } = useTranslation("common");
   const [isPublished, setIsPublished] = useState(false);
-
-  const { from, to } = published;
+  let { from, to } = published;
   // extend isbetween
   useEffect(() => {
     dayjs.extend(isBetween);
-    setIsPublished(dayjs(new Date()).isBetween(dayjs(from), dayjs(to), "day"));
-  }, []);
+    if (from && to){
+      setIsPublished(dayjs(new Date()).isBetween(dayjs(from), dayjs(to), "minute"));
 
+    } else if (!from && to){
+      let today = new Date()
+      setIsPublished(dayjs(today).isBetween(dayjs(today.getMinutes() - 1), dayjs(to), "minute"));
+    }
+  }, []);
   return <div>{isPublished ? t("published.yes") : t("published.no")}</div>;
 }
 
