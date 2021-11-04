@@ -7,8 +7,9 @@ import PropTypes from "prop-types";
  * @param {string} props The props.
  * @param {string} props.name The name of the text area
  * @param {string} props.label The label for the text area
- * @param {string} props.helpText The helptext for the text area, if it is needed.
- * @param {boolean} props.required Whether the text area is required.
+ * @param {string} props.placeholder The placeholder for the text area
+ * @param {string} props.value The value of the text area
+ * @param {Function} props.onChange The callback for changes in the text area
  * @returns {object} An text area.
  */
 function FormInputArea({ name, label, placeholder, value, onChange }) {

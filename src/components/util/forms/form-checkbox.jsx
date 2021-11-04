@@ -9,6 +9,9 @@ import { FormCheck, FormGroup } from "react-bootstrap";
  * @param {string} props.name The name of the checkbox
  * @param {string} props.label The label for the checkbox
  * @param {string} props.helpText The helptext for the checkbox, if it is needed.
+ * @param {string} props.value The value of the checkbox
+ * @param {Function} props.onChange The callback for changes in the checkbox
+ * @param {string} props.formGroupClasses Classes for the formgroup
  * @param {boolean} props.required Whether the checkbox is required.
  * @returns {object} A checkbox.
  */
