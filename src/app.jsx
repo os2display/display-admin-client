@@ -18,7 +18,6 @@ import PlaylistCreate from "./components/playlist/playlist-create";
 import MediaList from "./components/media/media-list";
 // import MediaEdit from "./components/media/media-edit";
 import commonDa from "./translations/da/common.json";
-import EditTheme from "./components/edit-theme/edit-theme";
 import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
@@ -27,6 +26,8 @@ import SlideEdit from "./components/slide/slide-edit";
 import SlideCreate from "./components/slide/slide-create";
 import MediaCreate from "./components/media/media-create";
 import ThemesList from './components/themes/themes-list';
+import ThemeCreate from './components/themes/theme-create';
+import ThemeEdit from './components/themes/theme-edit';
 import "./app.scss";
 
 /**
@@ -71,7 +72,8 @@ function App() {
                   {/* <Route path="/media/edit/:id" component={MediaEdit} /> @TODO: readd when the api supports putting media */}
                   <Route path="/media/create" component={MediaCreate} />
                   <Route path="/themes/list" component={ThemesList} />
-                  <Route path="/theme/:id" component={EditTheme} />
+                  <Route path="/themes/edit/:id" component={ThemeEdit} />
+                  <Route path="/themes/create" component={ThemeCreate} />
                   <Route path="/users/" component={UserList} />
                   <Route path="/user/:id" component={EditUser} />
                   <Redirect from="/" to="/slide/list" exact />

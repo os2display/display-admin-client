@@ -41,7 +41,6 @@ function ThemesList() {
       setIsDeleting(true);
       const themeToDelete = themesToDelete.splice(0, 1).shift();
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
-      console.log(themeToDeleteId)
       DeleteV1Themes({ id: themeToDeleteId });
     } else if (isDeleteSuccess) {
       window.location.reload(false);
