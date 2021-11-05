@@ -10,7 +10,7 @@ import LinkForList from "../util/list/link-for-list";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import {
-  useGetV1TemplatesQuery,
+  useGetV1ThemesQuery,
   useDeleteV1ThemesByIdMutation,
 } from "../../redux/api/api.generated";
 
@@ -41,7 +41,7 @@ function ThemesList() {
       setIsDeleting(true);
       const themeToDelete = themesToDelete.splice(0, 1).shift();
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
-      debugger
+      console.log(themeToDeleteId)
       DeleteV1Themes({ id: themeToDeleteId });
     } else if (isDeleteSuccess) {
       window.location.reload(false);
@@ -161,16 +161,13 @@ function ThemesList() {
     data,
     error: themesGetError,
     isLoading,
-  } = useGetV1TemplatesQuery({
+  } = useGetV1ThemesQuery({
     page,
     orderBy: sortBy?.path,
     order: sortBy?.order,
     title: searchText,
   });
-  if (data && data["hydra:member"]) {
-  debugger
-  data["hydra:member"].forEach((element)=> console.log(element["@id"]))
-}
+
   return (
     <>
       <ContentHeader
