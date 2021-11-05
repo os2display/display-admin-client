@@ -60,8 +60,11 @@ ListButton.defaultProps = {
 };
 
 ListButton.propTypes = {
-  inputData: PropTypes.objectOf(PropTypes.any).isRequired,
-  apiCall: PropTypes.bool,
+  inputData: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.any).isRequired,
+    PropTypes.string,
+  ]).isRequired,
+  apiCall: PropTypes.func,
   callback: PropTypes.func.isRequired,
 };
 

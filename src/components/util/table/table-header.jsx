@@ -87,14 +87,16 @@ function TableHeader({ columns, sortPath, sortOrder, onSort, draggable }) {
 TableHeader.defaultProps = {
   onSort: () => {},
   draggable: false,
+  sortOrder: "asc",
+  sortPath: "title",
 };
 
 TableHeader.propTypes = {
   columns: ColumnProptypes.isRequired,
   onSort: PropTypes.func,
   draggable: PropTypes.bool,
-  sortPath: PropTypes.string.isRequired,
-  sortOrder: PropTypes.string.isRequired,
+  sortPath: PropTypes.string,
+  sortOrder: PropTypes.string,
 };
 
 export default TableHeader;

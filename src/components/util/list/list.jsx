@@ -185,7 +185,7 @@ function List({
       <Toast show={error} text={t("list.deleted")} />
       <Row className="my-2">
         <Col>
-          <SearchBox value={searchParams} onChange={onSearch} />
+          <SearchBox value={searchParams || ""} onChange={onSearch} />
         </Col>
         <Col className="d-flex justify-content-end">
           <Button
@@ -213,7 +213,7 @@ function List({
         </Col>
       </Row>
       <Row>
-        {displayPublished && (
+        {displayPublished && publishedParams && (
           <RadioButtons
             label={t("list.published-label")}
             labelScreenReaderOnly
@@ -255,6 +255,7 @@ function List({
 List.defaultProps = {
   withChart: false,
   handleIsPublished: () => {},
+  displayPublished: false,
 };
 
 List.propTypes = {
@@ -273,7 +274,7 @@ List.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   handleSort: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
-  displayPublished: PropTypes.bool.isRequired,
+  displayPublished: PropTypes.bool,
   handleIsPublished: PropTypes.func,
 };
 

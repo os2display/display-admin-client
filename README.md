@@ -2,7 +2,7 @@
 
 The admin for OS2Display ver. 2.
 
-Currently, this is a create-react-app.
+This is based on create-react-app.
 
 ## Docker development setup
 
@@ -68,7 +68,7 @@ cd src/redux/api
 
 # Action: Replace api.json with the new api.json OpenAPI specification
 
-# Install and run scripts to generate ned Redux Api slices. 
+# Install and run scripts to generate ned Redux Api slices.
 npm install
 npm start
 ```

@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Spinner, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -10,7 +10,6 @@ import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropd
 import ContentFooter from "../util/content-footer/content-footer";
 import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
-import FormCheckbox from "../util/forms/form-checkbox";
 import RenderFormElement from "./render-form-element";
 
 /**
@@ -188,12 +187,27 @@ function SlideForm({
           )}
           <ContentBody>
             <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
-            <FormCheckbox
-              label={t("slide-form.slide-publish-label")}
-              onChange={handleInput}
-              name="published"
-              value={slide.published}
-            />
+            <Row className="g-2">
+              <Col md>
+                <FormInput
+                  name="published.from"
+                  type="datetime-local"
+                  label={t("slide-form.slide-from-label")}
+                  value={slide.published.from}
+                  onChange={handleInput}
+                />
+              </Col>
+
+              <Col md>
+                <FormInput
+                  name="published.to"
+                  type="datetime-local"
+                  label={t("slide-form.slide-to-label")}
+                  value={slide.published.to}
+                  onChange={handleInput}
+                />
+              </Col>
+            </Row>
           </ContentBody>
         </>
       )}

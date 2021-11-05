@@ -152,7 +152,10 @@ PlaylistForm.propTypes = {
   slideId: PropTypes.string,
   isSaveSuccess: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.any).isRequired,
+  errors: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.any),
+    PropTypes.bool,
+  ]).isRequired,
 };
 
 export default PlaylistForm;

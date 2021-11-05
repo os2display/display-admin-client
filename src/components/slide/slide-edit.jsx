@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import set from "lodash.set";
+import dayjs from "dayjs";
 import {
   useGetV1SlidesByIdQuery,
   usePostMediaCollectionMutation,
@@ -28,7 +29,6 @@ function SlideEdit() {
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [loadedMedia, setLoadedMedia] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-
   const [
     PutV1Slides,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
@@ -69,7 +69,7 @@ function SlideEdit() {
     let template = null;
 
     if (value.length > 0) {
-      [template] = value;
+      template = value.shift();
     }
 
     setSelectedTemplate(template);
@@ -180,6 +180,14 @@ function SlideEdit() {
         setLoadedMedia(newLoadedMedia);
       });
 
+      // Set published to format accepted by bootstrap date component
+      localFormStateObject.published.from = dayjs(
+        localFormStateObject.published.from
+      ).format("YYYY-MM-DDTHH:mm");
+      localFormStateObject.published.to = dayjs(
+        localFormStateObject.published.to
+      ).format("YYYY-MM-DDTHH:mm");
+
       setFormStateObject(localFormStateObject);
     }
   }, [getSlideData]);
@@ -193,6 +201,13 @@ function SlideEdit() {
         // Submit media.
         PostV1MediaCollection({ body: media });
       } else {
+        const from = formStateObject.published.from
+          ? new Date(formStateObject.published.from).toISOString()
+          : null;
+        const to = formStateObject.published.to
+          ? new Date(formStateObject.published.to).toISOString()
+          : null;
+
         // All media have been submitted. Submit slide.
         const saveData = {
           id,
@@ -205,6 +220,10 @@ function SlideEdit() {
               : null,
             content: formStateObject.content,
             media: formStateObject.media,
+            published: {
+              from,
+              to,
+            },
           }),
         };
 
