@@ -3,14 +3,17 @@ import PropTypes from "prop-types";
 import { FormCheck, FormGroup } from "react-bootstrap";
 
 /**
- * An input for forms.
+ * A checkbox for forms.
  *
  * @param {string} props The props.
- * @param {string} props.name The name of the input
- * @param {string} props.label The label for the input
- * @param {string} props.helpText The helptext for the input, if it is needed.
- * @param {boolean} props.required Whether the input is required.
- * @returns {object} An input.
+ * @param {string} props.name The name of the checkbox
+ * @param {string} props.label The label for the checkbox
+ * @param {string} props.helpText The helptext for the checkbox, if it is needed.
+ * @param {string} props.value The value of the checkbox
+ * @param {Function} props.onChange The callback for changes in the checkbox
+ * @param {string} props.formGroupClasses Classes for the formgroup
+ * @param {boolean} props.required Whether the checkbox is required.
+ * @returns {object} A checkbox.
  */
 function FormCheckbox({
   name,
@@ -21,7 +24,7 @@ function FormCheckbox({
   formGroupClasses,
 }) {
   /**
-   * Transforms the target to something the edit-components understand.
+   * Transforms the target to something the form-components understand.
    *
    * @param {object} props The props
    * @param {object} props.target The object containing the values return via callback.

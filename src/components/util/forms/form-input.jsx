@@ -8,9 +8,16 @@ import { useTranslation } from "react-i18next";
  *
  * @param {string} props The props.
  * @param {string} props.name The name of the input
+ * @param {string} props.type The type of the input.
  * @param {string} props.label The label for the input
  * @param {string} props.helpText The helptext for the input, if it is needed.
- * @param {boolean} props.required Whether the input is required.
+ * @param {string} props.placeholder The placeholder for the input.
+ * @param {string} props.value The value of the input
+ * @param {Function} props.onChange The callback for changes in the input.
+ * @param {string} props.errors The errors for the input.
+ * @param {string} props.invalidText The text if the input is invalid
+ * @param {string} props.formGroupClasses Classes for the formgroup
+ * @param {string} props.disabled If the input is disabled
  * @returns {object} An input.
  */
 function FormInput({
@@ -21,8 +28,6 @@ function FormInput({
   placeholder,
   value,
   onChange,
-  dataMessage,
-  onInvalid,
   errors,
   invalidText,
   formGroupClasses,
@@ -53,8 +58,6 @@ function FormInput({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          data-message={dataMessage}
-          onInvalid={onInvalid}
           type={type}
         />
         {error && <div className="invalid-feedback">{invalidInputText}</div>}
@@ -70,8 +73,6 @@ FormInput.defaultProps = {
   placeholder: "",
   type: "text",
   value: "",
-  dataMessage: "",
-  onInvalid: () => {},
   errors: null,
   invalidText: null,
   disabled: false,
@@ -86,8 +87,6 @@ FormInput.propTypes = {
   helpText: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  dataMessage: PropTypes.string,
-  onInvalid: PropTypes.func,
   invalidText: PropTypes.string,
   formGroupClasses: PropTypes.string,
   disabled: PropTypes.bool,

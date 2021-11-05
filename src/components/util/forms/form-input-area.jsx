@@ -2,14 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 /**
- * An input for forms.
+ * An text area for forms.
  *
  * @param {string} props The props.
- * @param {string} props.name The name of the input
- * @param {string} props.label The label for the input
- * @param {string} props.helpText The helptext for the input, if it is needed.
- * @param {boolean} props.required Whether the input is required.
- * @returns {object} An input.
+ * @param {string} props.name The name of the text area
+ * @param {string} props.label The label for the text area
+ * @param {string} props.placeholder The placeholder for the text area
+ * @param {string} props.value The value of the text area
+ * @param {Function} props.onChange The callback for changes in the text area
+ * @returns {object} An text area.
  */
 function FormInputArea({ name, label, placeholder, value, onChange }) {
   return (
