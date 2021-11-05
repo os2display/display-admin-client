@@ -24,8 +24,8 @@ function PlaylistCreate() {
     modifiedBy: "",
     createdBy: "",
     published: {
-      from: "2021-11-17T06:15:04Z", // Todo
-      to: "2021-04-29T09:54:10Z", // Todo
+      from: null,
+      to: null,
     },
   });
   const [slidesToAdd, setSlidesToAdd] = useState([]);
