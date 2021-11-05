@@ -24,8 +24,8 @@ function PlaylistCreate() {
     modifiedBy: "",
     createdBy: "",
     published: {
-      from: new Date().toISOString(),
-      to: new Date().toISOString(),
+      from: null,
+      to: null,
     },
   });
   const [slidesToAdd, setSlidesToAdd] = useState([]);
