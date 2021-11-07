@@ -171,7 +171,7 @@ function SlideEdit() {
   }, [formStateObject]);
 
   useEffect(() => {
-    // Load theme if set
+    // Load theme if set, getTheme because if not, it runs on every time formstateobject is changed
     if (formStateObject?.theme && getTheme) {
       dispatch(
         api.endpoints.getV1ThemesById.initiate({
