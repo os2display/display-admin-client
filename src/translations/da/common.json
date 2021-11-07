@@ -136,6 +136,7 @@
     "error": "Der skete en fejl",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",
+    "loading-themes": "Henter temaer...",
     "saving": "Gemmer...",
     "saved": "Slide er gemt",
     "save-button": "Gem slide",
@@ -148,6 +149,7 @@
     "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide. Indtast søgning for at se installerede skabeloner.",
     "slide-from-label": "Udgivet fra",
     "slide-to-label": "Udgivet til",
+    "slide-theme-label": "Slidets tema",
     "slide-publish-title": "Udgivelse"
   },
   "theme-form": {

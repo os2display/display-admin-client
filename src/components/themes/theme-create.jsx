@@ -2,8 +2,8 @@ import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import ThemeForm from "./theme-form";
-import { usePostV1ThemesMutation } from '../../redux/api/api.generated';
-import idFromUrl from '../util/helpers/id-from-url';
+import { usePostV1ThemesMutation } from "../../redux/api/api.generated";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The themes create component.
@@ -15,11 +15,11 @@ function ThemeCreate() {
   const history = useHistory();
   const headerText = t("theme-create.create-new-theme");
   const [formStateObject, setFormStateObject] = useState({
-    "title": "",
-    "description": "",
-    "modifiedBy": "",
-    "createdBy": "",
-    "css": ""
+    title: "",
+    description: "",
+    modifiedBy: "",
+    createdBy: "",
+    css: "",
   });
 
   const [
@@ -39,42 +39,36 @@ function ThemeCreate() {
     setFormStateObject(localFormStateObject);
   }
 
-  /**
-   * When the theme is saved, it redirects to edit theme.
-   */
+  /** When the theme is saved, it redirects to edit theme. */
   useEffect(() => {
     if (isSaveSuccess && data) {
       history.push(`/themes/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
 
-
-
   /** Handles submit. */
   function handleSubmit() {
     const saveData = {
-      "title": formStateObject.title,
-      "description": formStateObject.description,
-      "modifiedBy": formStateObject.modifiedBy,
-      "createdBy": formStateObject.createdBy,
-      "css": formStateObject.css
+      title: formStateObject.title,
+      description: formStateObject.description,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
+      css: formStateObject.css,
     };
     postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
   }
 
   return (
-
-        <ThemeForm
-          theme={formStateObject}
-          headerText={`${headerText}: ${formStateObject?.title}`}
-          handleInput={handleInput}
-          handleSubmit={handleSubmit}
-          isLoading={false}
-          isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
-          errors={saveError || false}
-        />
-
+    <ThemeForm
+      theme={formStateObject}
+      headerText={`${headerText}: ${formStateObject?.title}`}
+      handleInput={handleInput}
+      handleSubmit={handleSubmit}
+      isLoading={false}
+      isSaveSuccess={isSaveSuccess}
+      isSaving={isSaving}
+      errors={saveError || false}
+    />
   );
 }
 

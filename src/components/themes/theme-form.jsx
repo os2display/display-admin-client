@@ -1,10 +1,10 @@
 import { React } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import FormInputArea from '../util/forms/form-input-area';
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
+import FormInputArea from "../util/forms/form-input-area";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -24,7 +24,6 @@ import FormInput from "../util/forms/form-input";
  * @param {Array} props.errors Array of errors.
  * @returns {object} The theme form.
  */
-
 function ThemeForm({
   theme,
   handleInput,
@@ -37,7 +36,6 @@ function ThemeForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-
 
   return (
     <Form>
@@ -87,7 +85,7 @@ function ThemeForm({
             />
           </ContentBody>
           <ContentBody>
-          <h2 className="h4">{t("theme-form.css-header")}</h2>
+            <h2 className="h4">{t("theme-form.css-header")}</h2>
             <FormInputArea
               name="css"
               type="text"
@@ -140,10 +138,6 @@ function ThemeForm({
     </Form>
   );
 }
-
-ThemeForm.defaultProps = {
-  selectedTemplate: null,
-};
 
 ThemeForm.propTypes = {
   theme: PropTypes.objectOf(PropTypes.any).isRequired,

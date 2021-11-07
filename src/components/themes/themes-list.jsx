@@ -114,8 +114,8 @@ function ThemesList() {
   }
 
   // The columns for the table.
-   // The columns for the table.
-   const columns = [
+  // The columns for the table.
+  const columns = [
     {
       key: "pick",
       label: t("themes-list.columns.pick"),

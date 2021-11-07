@@ -24,11 +24,14 @@ function SlideEdit() {
   const dispatch = useDispatch();
   const headerText = t("slide-edit.edit-slide-header");
   const [formStateObject, setFormStateObject] = useState();
+  const [getTheme, setGetTheme] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [loadedMedia, setLoadedMedia] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [selectedTheme, setSelectedTheme] = useState();
+
   const [
     PutV1Slides,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
@@ -75,6 +78,24 @@ function SlideEdit() {
     setSelectedTemplate(template);
     handleInput({
       target: { id: targetId, value: { "@id": template["@id"] } },
+    });
+  };
+
+  /**
+   * Select theme.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  const selectTheme = ({ target }) => {
+    const { value, id: targetId } = target;
+    let themeId = "";
+    if (value.length > 0) {
+      themeId = value[0]["@id"];
+    }
+    setSelectedTheme(value);
+    handleInput({
+      target: { id: targetId, value: themeId },
     });
   };
 
@@ -149,6 +170,25 @@ function SlideEdit() {
     }
   }, [formStateObject]);
 
+  useEffect(() => {
+    // Load theme if set
+    if (formStateObject?.theme && getTheme) {
+      dispatch(
+        api.endpoints.getV1ThemesById.initiate({
+          id: idFromUrl(formStateObject.theme),
+        })
+      )
+        .then((result) => {
+          const theme = result.data;
+          setGetTheme(false);
+          setSelectedTheme([theme]);
+        })
+        .catch(() => {
+          // @TODO: Handle error.
+        });
+    }
+  }, [formStateObject]);
+
   /** Set loaded data into form state. */
   useEffect(() => {
     if (getSlideData) {
@@ -187,7 +227,6 @@ function SlideEdit() {
       localFormStateObject.published.to = dayjs(
         localFormStateObject.published.to
       ).format("YYYY-MM-DDTHH:mm");
-
       setFormStateObject(localFormStateObject);
     }
   }, [getSlideData]);
@@ -213,6 +252,7 @@ function SlideEdit() {
           id,
           slideSlideInput: JSON.stringify({
             title: formStateObject.title,
+            theme: formStateObject.theme,
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
@@ -280,6 +320,8 @@ function SlideEdit() {
           isSaveSuccess={isSaveSuccess}
           isSaving={submitting || isSaving}
           errors={getSlideError || saveError || false}
+          selectTheme={selectTheme}
+          selectedTheme={selectedTheme}
         />
       )}
     </>

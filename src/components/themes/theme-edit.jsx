@@ -2,7 +2,10 @@ import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import ThemeForm from "./theme-form";
-import { usePutV1ThemesByIdMutation,useGetV1ThemesByIdQuery } from '../../redux/api/api.generated';
+import {
+  usePutV1ThemesByIdMutation,
+  useGetV1ThemesByIdQuery,
+} from "../../redux/api/api.generated";
 
 /**
  * The themes create component.
@@ -17,12 +20,11 @@ function ThemeEdit() {
 
   const [
     PutV1ThemesById,
-    { data, isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
+    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePutV1ThemesByIdMutation();
 
-
   const {
-    data:themeData,
+    data: themeData,
     error: loadError,
     isLoading,
   } = useGetV1ThemesByIdQuery({ id });
@@ -46,23 +48,21 @@ function ThemeEdit() {
     setFormStateObject(localFormStateObject);
   }
 
-
-
-
   /** Handles submit. */
   function handleSubmit() {
     const saveData = {
-      "title": formStateObject.title,
-      "description": formStateObject.description,
-      "modifiedBy": formStateObject.modifiedBy,
-      "createdBy": formStateObject.createdBy,
-      "css": formStateObject.css
+      title: formStateObject.title,
+      description: formStateObject.description,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
+      css: formStateObject.css,
     };
-    PutV1ThemesById({ themeThemeInput: JSON.stringify(saveData), id:id });
+    PutV1ThemesById({ themeThemeInput: JSON.stringify(saveData), id });
   }
 
   return (
-<>{formStateObject &&
+    <>
+      {formStateObject && (
         <ThemeForm
           theme={formStateObject}
           headerText={`${headerText}: ${formStateObject?.title}`}
@@ -73,9 +73,9 @@ function ThemeEdit() {
           isSaving={isSaving}
           errors={saveError || loadError || false}
         />
-      }
-        </>
-      );
+      )}
+    </>
+  );
 }
 
 export default ThemeEdit;

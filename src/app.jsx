@@ -25,9 +25,9 @@ import ScreenEdit from "./components/screen/screen-edit";
 import SlideEdit from "./components/slide/slide-edit";
 import SlideCreate from "./components/slide/slide-create";
 import MediaCreate from "./components/media/media-create";
-import ThemesList from './components/themes/themes-list';
-import ThemeCreate from './components/themes/theme-create';
-import ThemeEdit from './components/themes/theme-edit';
+import ThemesList from "./components/themes/themes-list";
+import ThemeCreate from "./components/themes/theme-create";
+import ThemeEdit from "./components/themes/theme-edit";
 import "./app.scss";
 
 /**
