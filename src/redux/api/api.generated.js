@@ -389,7 +389,6 @@ exports.api = (0, react_1.createApi)({
             }),
             deleteV1ThemesById: build.mutation({
                 query: function (queryArg) {
-                    debugger
                     return ({
                         url: "/v1/themes/" + queryArg.id,
                         method: "DELETE"
