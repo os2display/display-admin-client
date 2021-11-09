@@ -27,7 +27,7 @@ function SlideEdit() {
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
-  const [loadedMedia, setLoadedMedia] = useState({});
+  const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [
     PutV1Slides,
@@ -43,7 +43,7 @@ function SlideEdit() {
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: mediaData, isSuccess: isSaveMediaSuccess },
+    { data: savedMediaData, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -171,13 +171,13 @@ function SlideEdit() {
       });
 
       Promise.all(promises).then((results) => {
-        const newLoadedMedia = { ...loadedMedia };
+        const newMediaData = { ...mediaData };
 
         results.forEach((result) => {
-          newLoadedMedia[result.data["@id"]] = { ...result.data };
+          newMediaData[result.data["@id"]] = { ...result.data };
         });
 
-        setLoadedMedia(newLoadedMedia);
+        setMediaData(newMediaData);
       });
 
       // Set published to format accepted by bootstrap date component
@@ -241,13 +241,13 @@ function SlideEdit() {
         setMediaFields(newMediaFields);
 
         const newFormStateObject = { ...formStateObject };
-        newFormStateObject.media.push(mediaData["@id"]);
-        newFormStateObject.content[firstMediaField] = mediaData["@id"];
+        newFormStateObject.media.push(savedMediaData["@id"]);
+        newFormStateObject.content[firstMediaField] = savedMediaData["@id"];
         setFormStateObject(newFormStateObject);
 
-        const newLoadedMedia = { ...loadedMedia };
-        newLoadedMedia[mediaData["@id"]] = mediaData;
-        setLoadedMedia(newLoadedMedia);
+        const newMediaData = { ...mediaData };
+        newMediaData[savedMediaData["@id"]] = savedMediaData;
+        setMediaData(newMediaData);
 
         // Move to next media to upload.
         const newList = submittingMedia.slice(1);
@@ -275,7 +275,7 @@ function SlideEdit() {
           handleSubmit={handleSubmit}
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
-          loadedMedia={loadedMedia}
+          mediaData={mediaData}
           isLoading={getSlideIsLoading}
           isSaveSuccess={isSaveSuccess}
           isSaving={submitting || isSaving}

@@ -18,7 +18,7 @@ import RichText from "../util/forms/rich-text";
  * @param {Function} props.onChange - Callback, if the value of the field changes.
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onMediaChange - When media have changed call this function.
- * @param {Array} props.loadedMedia - Array of loaded media entities.
+ * @param {Array} props.mediaData - Array of loaded media entities.
  * @returns {object} - A form element.
  */
 function RenderFormElement({
@@ -28,7 +28,7 @@ function RenderFormElement({
   onChange,
   onMediaChange,
   formStateObject,
-  loadedMedia,
+  mediaData,
 }) {
   const { t } = useTranslation("common");
 
@@ -161,9 +161,9 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        // Load image from loadedMedia if it is a @id
+        // Load image from mediaData if it is a @id
         if (typeof formStateObject[formData.name] === "string") {
-          inputImage = { ...loadedMedia[formStateObject[formData.name]] };
+          inputImage = { ...mediaData[formStateObject[formData.name]] };
           if (inputImage?.assets?.uri) {
             inputImage.url = inputImage.assets.uri;
           }
@@ -230,7 +230,7 @@ RenderFormElement.propTypes = {
   requiredFieldCallback: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onMediaChange: PropTypes.func.isRequired,
-  loadedMedia: PropTypes.objectOf(PropTypes.object).isRequired,
+  mediaData: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default RenderFormElement;

@@ -18,7 +18,7 @@ function SlideCreate() {
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
-  const [loadedMedia, setLoadedMedia] = useState({});
+  const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   // Initialize to empty slide object.
@@ -40,7 +40,7 @@ function SlideCreate() {
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: mediaData, isSuccess: isSaveMediaSuccess },
+    { data: savedMediaData, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -173,13 +173,13 @@ function SlideCreate() {
         setMediaFields(newMediaFields);
 
         const newFormStateObject = { ...formStateObject };
-        newFormStateObject.media.push(mediaData["@id"]);
-        newFormStateObject.content[firstMediaField] = mediaData["@id"];
+        newFormStateObject.media.push(savedMediaData["@id"]);
+        newFormStateObject.content[firstMediaField] = savedMediaData["@id"];
         setFormStateObject(newFormStateObject);
 
-        const newLoadedMedia = { ...loadedMedia };
-        newLoadedMedia[mediaData["@id"]] = mediaData;
-        setLoadedMedia(newLoadedMedia);
+        const newMediaData = { ...mediaData };
+        newMediaData[savedMediaData["@id"]] = savedMediaData;
+        setMediaData(newMediaData);
 
         // Move to next media to upload.
         const newList = submittingMedia.slice(1);
@@ -207,7 +207,7 @@ function SlideCreate() {
           handleSubmit={handleSubmit}
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
-          loadedMedia={loadedMedia}
+          mediaData={mediaData}
           isLoading={false}
           isSaveSuccess={isSaveSuccess}
           isSaving={submitting || isSaving}

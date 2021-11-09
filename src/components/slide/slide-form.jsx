@@ -26,7 +26,7 @@ import RenderFormElement from "./render-form-element";
  * @param {Array} props.errors Array of errors.
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
- * @param {Array} props.loadedMedia Object of loaded media.
+ * @param {Array} props.mediaData Object of loaded media.
  * @param {Function} props.selectTemplate Function to handle select of template.
  * @param {object} props.selectedTemplate Selected template.
  * @returns {object} The slide form.
@@ -43,7 +43,7 @@ function SlideForm({
   headerText,
   isSaveSuccess,
   isLoading,
-  loadedMedia,
+  mediaData,
   errors,
 }) {
   const { t } = useTranslation("common");
@@ -177,7 +177,7 @@ function SlideForm({
                   onChange={handleContent}
                   onMediaChange={handleMedia}
                   name={formElement.name}
-                  loadedMedia={loadedMedia}
+                  mediaData={mediaData}
                   formStateObject={slide.content}
                   requiredFieldCallback={() => {
                     return false;
@@ -279,7 +279,7 @@ SlideForm.propTypes = {
   ]).isRequired,
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
-  loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default SlideForm;
