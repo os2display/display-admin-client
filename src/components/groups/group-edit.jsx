@@ -73,9 +73,11 @@ function GroupEdit() {
           }`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoading}
+          isLoading={isLoading || isSaving}
+          loadingMessage={
+            isLoading ? t("group-edit.loading") : t("group-edit.saving")
+          }
           isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
           errors={loadError || saveError || false}
         />
       )}
