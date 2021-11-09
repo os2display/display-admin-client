@@ -214,29 +214,34 @@ function SlideForm({
             </ContentBody>
           )}
           {selectedTemplate && contentFormElements && (
-            <ContentBody>
-              <RemoteComponentWrapper
-                url={selectedTemplate?.resources?.component}
-                slide={slide}
-                content={slide.content}
-                mediaFields={mediaFields}
-                loadedMedia={loadedMedia}
-              />
-              {contentFormElements.map((formElement) => (
-                <RenderFormElement
-                  key={formElement.key}
-                  data={formElement}
-                  onChange={handleContent}
-                  onMediaChange={handleMedia}
-                  name={formElement.name}
+            <>
+              <ContentBody>
+                <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
+                <RemoteComponentWrapper
+                  url={selectedTemplate?.resources?.component}
+                  slide={slide}
+                  content={slide.content}
+                  mediaFields={mediaFields}
                   loadedMedia={loadedMedia}
-                  formStateObject={slide.content}
-                  requiredFieldCallback={() => {
-                    return false;
-                  }}
                 />
-              ))}
-            </ContentBody>
+              </ContentBody>
+              <ContentBody>
+                {contentFormElements.map((formElement) => (
+                  <RenderFormElement
+                    key={formElement.key}
+                    data={formElement}
+                    onChange={handleContent}
+                    onMediaChange={handleMedia}
+                    name={formElement.name}
+                    loadedMedia={loadedMedia}
+                    formStateObject={slide.content}
+                    requiredFieldCallback={() => {
+                      return false;
+                    }}
+                  />
+                ))}
+              </ContentBody>
+            </>
           )}
           <ContentBody>
             <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
