@@ -329,6 +329,7 @@ function SlideEdit() {
           errors={getSlideError || saveError || false}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
+          mediaFields={mediaFields}
         />
       )}
     </>
