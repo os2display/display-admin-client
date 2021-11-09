@@ -9,7 +9,7 @@ import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import RadioButtons from "../forms/radio-buttons";
-import WithLoading from '../loading-component/with-loading';
+import WithLoading from "../loading-component/with-loading";
 
 /**
  * @param {object} props - The props.
@@ -226,15 +226,15 @@ function List({
           />
         )}
       </Row>
-        <Table
-          onSort={updateUrlAndSort}
-          data={data}
-          sortOrder={orderParams}
-          sortPath={sortParams}
-          columns={columns}
-          selectedRows={selectedRows}
-          withChart={withChart}
-        />
+      <Table
+        onSort={updateUrlAndSort}
+        data={data}
+        sortOrder={orderParams}
+        sortPath={sortParams}
+        columns={columns}
+        selectedRows={selectedRows}
+        withChart={withChart}
+      />
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}

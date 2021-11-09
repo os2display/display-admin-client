@@ -59,6 +59,8 @@
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     },
+    "loading": "Henter skærme",
+    "deleting": "Sletter skærme",
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
@@ -72,6 +74,8 @@
       "name": "Navn",
       "created-by": "Oprettet af"
     },
+    "loading": "Henter grupper",
+    "deleting": "Sletter grupper",
     "header": "Grupper",
     "create-new-group": "Opret ny gruppe",
     "delete-button": "Slet",
@@ -87,6 +91,8 @@
     "info-modal": {
       "playlist-slides": "Playlisten indeholder følgende slides"
     },
+    "loading": "Henter spillelister",
+    "deleting": "Sletter spillelister",
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
     "delete-button": "Slet",
@@ -136,7 +142,9 @@
     "error": "Der skete en fejl"
   },
   "slide-edit": {
-    "edit-slide-header": "Rediger slide"
+    "edit-slide-header": "Rediger slide",
+    "loading": "Henter slide",
+    "saving": "Gemmer slide"
   },
   "slide-create": {
     "create-slide-header": "Opret nyt slide"

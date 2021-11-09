@@ -229,6 +229,9 @@ function PlaylistList() {
             deleteSuccess={isDeleteSuccess || false}
             columns={columns}
             isLoading={isLoading || isDeleting || false}
+            loadingMessage={
+              isLoading ? t("playlists-list.loading") : t("playlists-list.deleting")
+            }
             handleSort={onChangeSort}
             handlePageChange={onChangePage}
             totalItems={data["hydra:totalItems"]}

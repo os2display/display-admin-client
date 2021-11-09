@@ -186,6 +186,9 @@ function GroupsList() {
             handleDelete={openDeleteModal}
             error={groupsGetError || false}
             isLoading={isLoading || isDeleting || false}
+            loadingMessage={
+              isLoading ? t("groups-list.loading") : t("groups-list.deleting")
+            }
             deleteSuccess={isDeleteSuccess || false}
             handleSort={onChangeSort}
             handleSearch={onSearch}

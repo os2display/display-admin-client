@@ -236,7 +236,9 @@ function SlidesList() {
             handleDelete={openDeleteModal}
             error={slidesGetError || false}
             isLoading={isLoading || isDeleting || false}
-            loadingMessage={isLoading ? t("slides-list.loading") : t("slides-list.deleting") }
+            loadingMessage={
+              isLoading ? t("slides-list.loading") : t("slides-list.deleting")
+            }
             deleteSuccess={isDeleteSuccess || false}
             handleSort={onChangeSort}
             handleSearch={onSearch}

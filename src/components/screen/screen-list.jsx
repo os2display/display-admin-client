@@ -262,6 +262,9 @@ function ScreenList() {
               clearSelectedRows={clearSelectedRows}
               withChart={view === "calendar"}
               handleDelete={openDeleteModal}
+              loadingMessage={
+                isLoading ? t("screens-list.loading") : t("screens-list.deleting")
+              }
               error={screensGetError || false}
               isLoading={isLoading || isDeleting || false}
               deleteSuccess={isDeleteSuccess || false}
