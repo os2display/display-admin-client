@@ -114,7 +114,6 @@ function ThemesList() {
   }
 
   // The columns for the table.
-  // The columns for the table.
   const columns = [
     {
       key: "pick",
@@ -123,6 +122,8 @@ function ThemesList() {
         <CheckboxForList
           onSelected={() => handleSelected(data)}
           selected={selectedRows.indexOf(data) > -1}
+          // eslint-disable-next-line react/destructuring-assignment
+          disabled={data.onSlides.length > 0}
         />
       ),
     },
@@ -136,6 +137,12 @@ function ThemesList() {
       label: t("themes-list.columns.created-by"),
     },
     {
+      key: "slides",
+      // eslint-disable-next-line react/prop-types
+      content: ({ onSlides }) => <>{onSlides.length}</>,
+      label: t("themes-list.columns.number-of-slides"),
+    },
+    {
       key: "edit",
       content: (data) =>
         LinkForList(data["@id"], "themes/edit", t("themes-list.edit-button")),
@@ -146,7 +153,8 @@ function ThemesList() {
         <>
           <Button
             variant="danger"
-            disabled={selectedRows.length > 0}
+            // eslint-disable-next-line react/destructuring-assignment
+            disabled={selectedRows.length > 0 || data.onSlides.length > 0}
             onClick={() => openDeleteModal(data)}
           >
             {t("themes-list.delete-button")}
