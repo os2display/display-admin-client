@@ -20,15 +20,23 @@ import "./remote-component-wrapper.scss";
  * @returns {object} The component.
  */
 function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
+  // Translations for checkbox label
   const { t } = useTranslation("common");
+
+  // Local slide and local content, to not accidentally mess with the actual content
   const [remoteComponentSlide, setRemoteComponentSlide] = useState();
   const [remoteComponentContent, setRemoteComponentContent] = useState(content);
   const [show, setShow] = useState(
     localStorage.getItem("preview-slide") || false
   );
+
+  // Remote compoent configuration
   const requires = createRequires(resolve);
   const RemoteComponent = createRemoteComponent({ requires });
+
   /**
+   * Changes the show value, and saves to localstorage
+   *
    * @param {object} props Props.
    * @param {boolean} props.target The returned value from the checkbox.
    */
@@ -39,6 +47,7 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
   }
 
   useEffect(() => {
+    // Only do stuff if it is visible.
     if (show) {
       let mediaObject = {};
       // Check if there is loaded media
