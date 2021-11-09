@@ -337,6 +337,7 @@ SlideForm.propTypes = {
     "@id": PropTypes.string,
     resources: PropTypes.shape({
       admin: PropTypes.string.isRequired,
+      component: PropTypes.string.isRequired,
     }).isRequired,
   }),
   isLoading: PropTypes.bool.isRequired,
