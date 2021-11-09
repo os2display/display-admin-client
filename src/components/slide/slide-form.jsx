@@ -61,6 +61,7 @@ function SlideForm({
   const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
+
   // Load all templates. Assume no more than 1000.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
@@ -119,6 +120,7 @@ function SlideForm({
   function onFilterTemplate(filter) {
     setSearchTextTemplate(filter);
   }
+
   /**
    * Fetches data for the multi component
    *

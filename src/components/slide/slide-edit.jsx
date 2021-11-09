@@ -25,6 +25,7 @@ function SlideEdit() {
   const headerText = t("slide-edit.edit-slide-header");
   const [formStateObject, setFormStateObject] = useState();
   const [getTheme, setGetTheme] = useState(true);
+  const [setGetTemplate, getTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
@@ -150,10 +151,14 @@ function SlideEdit() {
   }
 
   useEffect(() => {
-    // Load template if set.
+    // Load template if set, getTemplate because if not, it runs on every time formstateobject is changed
     if (
       formStateObject?.templateInfo &&
-      Object.prototype.hasOwnProperty.call(formStateObject.templateInfo, "@id")
+      Object.prototype.hasOwnProperty.call(
+        formStateObject.templateInfo,
+        "@id"
+      ) &&
+      getTemplate
     ) {
       dispatch(
         api.endpoints.getV1TemplatesById.initiate({
@@ -162,15 +167,14 @@ function SlideEdit() {
       )
         .then((result) => {
           const template = result.data;
+          setGetTemplate(false);
           setSelectedTemplate(template);
         })
         .catch(() => {
           // @TODO: Handle error.
         });
     }
-  }, [formStateObject]);
 
-  useEffect(() => {
     // Load theme if set, getTheme because if not, it runs on every time formstateobject is changed
     if (formStateObject?.theme && getTheme) {
       dispatch(
@@ -227,6 +231,7 @@ function SlideEdit() {
       localFormStateObject.published.to = dayjs(
         localFormStateObject.published.to
       ).format("YYYY-MM-DDTHH:mm");
+
       setFormStateObject(localFormStateObject);
     }
   }, [getSlideData]);
