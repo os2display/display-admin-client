@@ -75,7 +75,6 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
         // loop through content in slide, find images
         // Object.keys(slide.content).forEach(key => {
         Object.keys(content).forEach((value) => {
-
           if (typeof content[value] === "object" && content[value].length > 0) {
             // create a random string to refer to the not uploaded image by
             const randomString = (Math.random() + 1).toString(36).substring(2);
@@ -96,7 +95,6 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
             duration: 10000,
             ...{ mediaData: mediaObject },
           });
-
         });
       }
     }
