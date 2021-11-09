@@ -1,0 +1,9 @@
+.checkbox-for-list {
+  min-height: 50px;
+  border: none;
+  background-color: transparent;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}

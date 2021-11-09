@@ -99,7 +99,7 @@ function NavItems() {
         <NavLink
           id="nav-items_configuration_themes"
           className="nav-link"
-          to="/themes"
+          to="/themes/list"
         >
           {t("nav-items.configuration-themes")}
         </NavLink>

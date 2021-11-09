@@ -18,21 +18,11 @@
     "name-label": "Brugerens navn",
     "name-placeholder": "Udfyld brugerens navn"
   },
-  "edit-theme": {
-    "create-new-theme": "Opret nyt tema",
-    "edit-theme": "Rediger følgende tema",
-    "save-button": "Gem tema",
-    "cancel-button": "Annuller",
-    "name-label": "Temaets navn",
-    "name-placeholder": "Udfyld temaets navn",
-    "pick-primary-color": "Vælg primærfarve",
-    "pick-secondary-color": "Vælg sekundærfarve",
-    "pick-tertiary-color": "Vælg tertiærfarve",
-    "pick-font-color": "Font farve",
-    "font-label": "Vælg font",
-    "title-colors": "Temaets farver",
-    "title-logo": "Logo",
-    "title-typograpy": "Typografi"
+  "theme-create": {
+    "create-new-theme": "Opret nyt tema"
+  },
+  "theme-edit": {
+    "edit-theme": "Rediger følgende tema"
   },
   "slides-list": {
     "columns": {
@@ -102,9 +92,7 @@
       "pick": "Vælg tema",
       "name": "Navn",
       "created-by": "Oprettet af",
-      "colors": "Temaets farver",
-      "font": "Font",
-      "logo": "Logo"
+      "number-of-slides": "Antal tilknyttede slides"
     },
     "header": "Temaer",
     "create-new-theme": "Opret nyt tema",
@@ -149,6 +137,7 @@
     "error": "Der skete en fejl",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",
+    "loading-themes": "Henter temaer...",
     "saving": "Gemmer...",
     "saved": "Slide er gemt",
     "save-button": "Gem slide",
@@ -161,7 +150,20 @@
     "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide. Indtast søgning for at se installerede skabeloner.",
     "slide-from-label": "Udgivet fra",
     "slide-to-label": "Udgivet til",
+    "slide-theme-label": "Slidets tema",
     "slide-publish-title": "Udgivelse"
+  },
+  "theme-form": {
+    "loading": "Henter tema...",
+    "saving": "Gemmer...",
+    "error": "Der skete en fejl",
+    "theme-name-label": "Temaets navn",
+    "theme-description-label": "Temaets beskrivelse",
+    "css-header": "Temaets CSS",
+    "theme-css-label": "Temaets CSS",
+    "saved": "Temaet er gemt",
+    "save-button": "Gem tema",
+    "cancel-button": "Annuller"
   },
   "group-form": {
     "loading": "Henter gruppen...",
