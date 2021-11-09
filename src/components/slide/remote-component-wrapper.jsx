@@ -52,6 +52,7 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
       let mediaObject = {};
       // Check if there is loaded media
       setRemoteComponentContent(content);
+
       // If the loaded media exist both in content and loaded media
       // Then add it to the mediaobject
       if (Object.keys(loadedMedia).length > 0) {
@@ -68,11 +69,13 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
           ...{ mediaData: mediaObject },
         });
       }
+
       // If a image has just been uploaded, and not yet saved.
       if (mediaFields.length > 0) {
         // loop through content in slide, find images
         // Object.keys(slide.content).forEach(key => {
         Object.keys(content).forEach((value) => {
+
           if (typeof content[value] === "object" && content[value].length > 0) {
             // create a random string to refer to the not uploaded image by
             const randomString = (Math.random() + 1).toString(36).substring(2);
@@ -93,6 +96,7 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
             duration: 10000,
             ...{ mediaData: mediaObject },
           });
+
         });
       }
     }
