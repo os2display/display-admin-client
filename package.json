@@ -24,6 +24,7 @@
     "os2display-grid-generator": "^1.0.6",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-app-rewired": "^2.1.8",
     "react-beautiful-dnd": "^13.1.0",
     "react-bootstrap": "^1.6.1",
     "react-color-palette": "^6.1.0",
@@ -51,9 +52,9 @@
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
     "check-coding-standards": "yarn check-coding-standards/markdownlint && yarn lint:js && yarn lint:scss",
     "apply-coding-standards": "yarn apply-coding-standards/markdownlint && yarn lint:js:fix && yarn lint:scss:fix",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
