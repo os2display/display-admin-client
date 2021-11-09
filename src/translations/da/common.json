@@ -139,7 +139,6 @@
   "slide-form": {
     "error": "Der skete en fejl",
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
-    "configure-slide-title": "Slidekonfiguration",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",
     "loading-themes": "Henter temaer...",
