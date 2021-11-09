@@ -24,7 +24,9 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
   const { t } = useTranslation("common");
 
   // Local slide and local content, to not accidentally mess with the actual content
-  const [remoteComponentSlide, setRemoteComponentSlide] = useState();
+  const [remoteComponentSlide, setRemoteComponentSlide] = useState({
+    duration: 10000,
+  });
   const [remoteComponentContent, setRemoteComponentContent] = useState(content);
   const [show, setShow] = useState(
     localStorage.getItem("preview-slide") || false
