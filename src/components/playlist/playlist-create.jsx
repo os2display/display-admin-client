@@ -16,7 +16,7 @@ import {
 function PlaylistCreate() {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const headerText = t("edit-playlist.create-new-playlist");
+  const headerText = t("playlist-create.create-new-playlist");
   const [formStateObject, setFormStateObject] = useState({
     slides: [],
     title: "",
@@ -111,9 +111,9 @@ function PlaylistCreate() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
+      isLoading={isSaving || isSavingSlides}
+      loadingMessage={t("playlist-create.saving")}
       isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
-      isSaving={isSaving || isSavingSlides}
       errors={saveError || saveErrorSlides || false}
     />
   );

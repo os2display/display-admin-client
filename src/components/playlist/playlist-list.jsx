@@ -230,7 +230,9 @@ function PlaylistList() {
             columns={columns}
             isLoading={isLoading || isDeleting || false}
             loadingMessage={
-              isLoading ? t("playlists-list.loading") : t("playlists-list.deleting")
+              isLoading
+                ? t("playlists-list.loading")
+                : t("playlists-list.deleting")
             }
             handleSort={onChangeSort}
             handlePageChange={onChangePage}

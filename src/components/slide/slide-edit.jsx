@@ -323,10 +323,12 @@ function SlideEdit() {
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
           loadedMedia={loadedMedia}
-          isLoading={getSlideIsLoading}
-          isSaveSuccess={isSaveSuccess}
-          isSaving={submitting || isSaving}
+          isLoading={getSlideIsLoading || submitting || isSaving}
+          loadingMessage={
+            getSlideIsLoading ? t("slide-edit.loading") : t("slide-edit.saving")
+          }
           errors={getSlideError || saveError || false}
+          isSaveSuccess={isSaveSuccess}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
           mediaFields={mediaFields}

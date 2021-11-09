@@ -228,9 +228,9 @@ function SlideCreate() {
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
           loadedMedia={loadedMedia}
-          isLoading={false}
+          isLoading={submitting || isSaving}
+          loadingMessage={t("slide-create.saving")}
           isSaveSuccess={isSaveSuccess}
-          isSaving={submitting || isSaving}
           errors={saveError || false}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}

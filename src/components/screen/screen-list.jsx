@@ -263,7 +263,9 @@ function ScreenList() {
               withChart={view === "calendar"}
               handleDelete={openDeleteModal}
               loadingMessage={
-                isLoading ? t("screens-list.loading") : t("screens-list.deleting")
+                isLoading
+                  ? t("screens-list.loading")
+                  : t("screens-list.deleting")
               }
               error={screensGetError || false}
               isLoading={isLoading || isDeleting || false}

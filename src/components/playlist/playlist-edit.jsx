@@ -16,7 +16,7 @@ import PlaylistForm from "./playlist-form";
  */
 function PlaylistEdit() {
   const { t } = useTranslation("common");
-  const headerText = t("edit-playlist.edit-playlist");
+  const headerText = t("playlist-edit.edit-playlist");
   const [formStateObject, setFormStateObject] = useState();
   const [slideId, setSlideId] = useState();
   const [slidesToAdd, setSlidesToAdd] = useState([]);
@@ -117,9 +117,12 @@ function PlaylistEdit() {
           headerText={`${headerText}: ${
             formStateObject && formStateObject.title
           }`}
+          isLoading={isLoading || isSaving || isSavingSlides}
+          loadingMessage={
+            isLoading ? t("playlist-edit.loading") : t("playlist-edit.saving")
+          }
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoading}
           isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
           isSaving={isSaving || isSavingSlides}
           errors={loadError || saveError || saveErrorSlides || false}

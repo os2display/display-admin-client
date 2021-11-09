@@ -147,7 +147,8 @@
     "saving": "Gemmer slide"
   },
   "slide-create": {
-    "create-slide-header": "Opret nyt slide"
+    "create-slide-header": "Opret nyt slide",
+    "saving": "Gemmer slide"
   },
   "slide-form": {
     "error": "Der skete en fejl",
@@ -200,17 +201,21 @@
   "group-edit": {
     "edit-group-header": "Rediger følgende gruppe"
   },
-  "edit-playlist": {
-    "error": "Der skete en fejl",
-    "create-new-playlist": "Opret ny spilleliste",
+  "playlist-edit": {
     "edit-playlist": "Rediger følgende spilleliste",
+    "loading": "Henter spilleliste",
+    "saving": "Gemmer spilleliste"
+  },
+  "playlist-create": {
+    "create-new-playlist": "Opret ny spilleliste",
+    "saving": "Gemmer spilleliste"
+  },
+  "playlist-form": {
+    "error": "Der skete en fejl",
     "title-about": "Om spillelisten",
-    "title-screens": "Tilknyttede skærme",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
     "cancel-button": "Annuller",
-    "loading": "Henter spilleliste...",
-    "saving": "Gemmer...",
     "saved": "Spillelisten er gemt",
     "playlist-name-label": "Spillelistens navn",
     "playlist-name-placeholder": "Udfyld spillelistens navn",
