@@ -20,7 +20,6 @@ import "./playlist-form.scss";
  * @param {object} props.playlist The playlist object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
- * @param {boolean} props.isSaving Is the form saving?
  * @param {string} props.headerText Headline text.
  * @param {boolean | null} props.isSaveSuccess Is the save a success?
  * @param {Array} props.errors Array of errors.
@@ -31,7 +30,6 @@ function PlaylistForm({
   playlist,
   handleInput,
   handleSubmit,
-  isSaving,
   headerText,
   isSaveSuccess,
   errors,
@@ -113,7 +111,6 @@ PlaylistForm.propTypes = {
   playlist: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
   slideId: PropTypes.string,
   isSaveSuccess: PropTypes.bool.isRequired,

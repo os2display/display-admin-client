@@ -1,10 +1,10 @@
 import { React } from "react";
 import { useHistory } from "react-router-dom";
-import WithLoading from '../util/loading-component/with-loading';
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
+import WithLoading from "../util/loading-component/with-loading";
 import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -36,24 +36,24 @@ function GroupForm({
   return (
     <Form>
       <h1>{headerText}</h1>
-          <ContentBody>
-            <FormInput
-              name="title"
-              type="text"
-              label={t("group-form.group-title-label")}
-              placeholder={t("group-form.group-title-placeholder")}
-              value={group.title}
-              onChange={handleInput}
-            />
-            <FormInput
-              name="description"
-              type="text"
-              label={t("group-form.group-description-label")}
-              placeholder={t("group-form.group-description-placeholder")}
-              value={group.description}
-              onChange={handleInput}
-            />
-          </ContentBody>
+      <ContentBody>
+        <FormInput
+          name="title"
+          type="text"
+          label={t("group-form.group-title-label")}
+          placeholder={t("group-form.group-title-placeholder")}
+          value={group.title}
+          onChange={handleInput}
+        />
+        <FormInput
+          name="description"
+          type="text"
+          label={t("group-form.group-description-label")}
+          placeholder={t("group-form.group-description-placeholder")}
+          value={group.description}
+          onChange={handleInput}
+        />
+      </ContentBody>
       <ContentFooter>
         <Button
           variant="secondary"
@@ -94,4 +94,4 @@ GroupForm.propTypes = {
   ]).isRequired,
 };
 
-export default  WithLoading(GroupForm);
+export default WithLoading(GroupForm);

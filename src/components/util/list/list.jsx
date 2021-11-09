@@ -1,5 +1,5 @@
 import { React, useEffect } from "react";
-import { Button, Col, Row, Spinner, Toast } from "react-bootstrap";
+import { Button, Col, Row, Toast } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";

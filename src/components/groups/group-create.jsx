@@ -73,9 +73,7 @@ function GroupCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={isSavingGroup}
-      loadingMessage={
-       t("group-create.saving")
-      }
+      loadingMessage={t("group-create.saving")}
       isSaveSuccess={isSaveSuccess}
       errors={saveError || false}
     />

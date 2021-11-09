@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Spinner, Row, Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";

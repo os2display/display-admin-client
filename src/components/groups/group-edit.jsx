@@ -73,7 +73,7 @@ function GroupEdit() {
           }`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoading || isSaving}
+          isLoading={isLoading || isSaving}
           loadingMessage={
             isLoading ? t("group-edit.loading") : t("group-edit.saving")
           }

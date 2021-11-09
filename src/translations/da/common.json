@@ -184,8 +184,6 @@
     "cancel-button": "Annuller"
   },
   "group-form": {
-    "loading": "Henter gruppen...",
-    "saving": "Gemmer...",
     "saved": "Gruppen blev gemt",
     "error": "Der skete en fejl",
     "save-button": "Gem gruppen",
@@ -344,10 +342,13 @@
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug espace til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
   "screen-edit": {
-    "edit-screen-header": "Rediger følgende skærm"
+    "edit-screen-header": "Rediger følgende skærm",
+    "loading": "Henter skærm",
+    "saving": "Gemmer skærm"
   },
   "screen-create": {
-    "create-screen-header": "Opret ny skærm"
+    "create-screen-header": "Opret ny skærm",
+    "saving": "Gemmer skærm"
   },
   "screen-form": {
     "nothing-selected": "Vælg en af skabelonerne",
@@ -356,7 +357,6 @@
     "screen-resolution-width": "Bredde",
     "error": "Der skete en fejl",
     "screen-region-playlists": "Spillelister tilknyttet regionen",
-    "loading": "Henter skærm...",
     "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",
     "cancel-button": "Annuller",

@@ -178,9 +178,13 @@ function ScreenEdit() {
           headerText={headerText}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoadingScreen}
+          isLoading={
+            isLoadingScreen || isSavingScreen || isSavingGroups || isSaving
+          }
+          loadingMessage={
+            isLoadingScreen ? t("screen-edit.loading") : t("screen-edit.saving")
+          }
           isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
-          isSaving={isSavingScreen || isSavingGroups || isSaving || false}
           errors={
             saveError ||
             loadError ||

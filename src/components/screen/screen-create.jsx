@@ -179,8 +179,8 @@ function ScreenCreate() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
-      isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
+      isLoading={isSaveSuccess || isSaveSuccessGroups}
+      loadingMessage={t("screen-edit.saving")}
       isSaving={isSavingScreen || isSavingGroups || isSaving || false}
       errors={saveError || saveErrorGroups || savePlaylistError || false}
     />
