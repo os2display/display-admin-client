@@ -25,7 +25,7 @@ function SlideEdit() {
   const headerText = t("slide-edit.edit-slide-header");
   const [formStateObject, setFormStateObject] = useState();
   const [getTheme, setGetTheme] = useState(true);
-  const [setGetTemplate, getTemplate] = useState(true);
+  const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
@@ -225,13 +225,16 @@ function SlideEdit() {
       });
 
       // Set published to format accepted by bootstrap date component
-      localFormStateObject.published.from = dayjs(
-        localFormStateObject.published.from
-      ).format("YYYY-MM-DDTHH:mm");
-      localFormStateObject.published.to = dayjs(
-        localFormStateObject.published.to
-      ).format("YYYY-MM-DDTHH:mm");
-
+      if (localFormStateObject.published.from) {
+        localFormStateObject.published.from = dayjs(
+          localFormStateObject.published.from
+        ).format("YYYY-MM-DDTHH:mm");
+      }
+      if (localFormStateObject.published.to) {
+        localFormStateObject.published.to = dayjs(
+          localFormStateObject.published.to
+        ).format("YYYY-MM-DDTHH:mm");
+      }
       setFormStateObject(localFormStateObject);
     }
   }, [getSlideData]);
@@ -251,7 +254,6 @@ function SlideEdit() {
         const to = formStateObject.published.to
           ? new Date(formStateObject.published.to).toISOString()
           : null;
-
         // All media have been submitted. Submit slide.
         const saveData = {
           id,
