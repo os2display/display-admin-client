@@ -234,6 +234,7 @@ function SlideCreate() {
           errors={saveError || false}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
+          mediaFields={mediaFields}
         />
       )}
     </>

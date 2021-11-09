@@ -14,6 +14,7 @@ import {
 } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import RenderFormElement from "./render-form-element";
+import RemoteComponentWrapper from "./remote-component-wrapper";
 
 /**
  * The slide form component.
@@ -30,6 +31,7 @@ import RenderFormElement from "./render-form-element";
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.loadedMedia Object of loaded media.
+ * @param {object} props.mediaFields The uploaded but not yet saved media fields.
  * @param {Function} props.selectTemplate Function to handle select of template.
  * @param {object} props.selectedTemplate Selected template.
  * @param {Function} props.selectTheme Function to handle select of theme.
@@ -48,6 +50,7 @@ function SlideForm({
   headerText,
   isSaveSuccess,
   isLoading,
+  mediaFields,
   loadedMedia,
   errors,
   selectTheme,
@@ -93,7 +96,6 @@ function SlideForm({
 
       newSelectedTemplates.push(selectedTemplate);
     }
-
     setSelectedTemplates(newSelectedTemplates);
   }, [selectedTemplate]);
 
@@ -212,22 +214,33 @@ function SlideForm({
             </ContentBody>
           )}
           {selectedTemplate && contentFormElements && (
-            <ContentBody>
-              {contentFormElements.map((formElement) => (
-                <RenderFormElement
-                  key={formElement.key}
-                  data={formElement}
-                  onChange={handleContent}
-                  onMediaChange={handleMedia}
-                  name={formElement.name}
+            <>
+              <ContentBody>
+                <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
+                <RemoteComponentWrapper
+                  url={selectedTemplate?.resources?.component}
+                  content={slide.content}
+                  mediaFields={mediaFields}
                   loadedMedia={loadedMedia}
-                  formStateObject={slide.content}
-                  requiredFieldCallback={() => {
-                    return false;
-                  }}
                 />
-              ))}
-            </ContentBody>
+              </ContentBody>
+              <ContentBody>
+                {contentFormElements.map((formElement) => (
+                  <RenderFormElement
+                    key={formElement.key}
+                    data={formElement}
+                    onChange={handleContent}
+                    onMediaChange={handleMedia}
+                    name={formElement.name}
+                    loadedMedia={loadedMedia}
+                    formStateObject={slide.content}
+                    requiredFieldCallback={() => {
+                      return false;
+                    }}
+                  />
+                ))}
+              </ContentBody>
+            </>
           )}
           <ContentBody>
             <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
@@ -328,6 +341,7 @@ SlideForm.propTypes = {
     "@id": PropTypes.string,
     resources: PropTypes.shape({
       admin: PropTypes.string.isRequired,
+      component: PropTypes.string.isRequired,
     }).isRequired,
   }),
   isLoading: PropTypes.bool.isRequired,
@@ -338,6 +352,7 @@ SlideForm.propTypes = {
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
   loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SlideForm;

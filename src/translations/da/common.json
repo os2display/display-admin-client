@@ -10,6 +10,9 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
+  "remote-component-wrapper": {
+    "show-preview-label": "Vis preview af slide"
+  },
   "edit-user": {
     "create-new-user": "Opret ny bruger",
     "edit-user": "Rediger følgende bruger",
@@ -135,6 +138,7 @@
   },
   "slide-form": {
     "error": "Der skete en fejl",
+    "preview-slide-title": "Preview af slide du er ved at konfigurere",
     "loading": "Henter slide...",
     "loading-templates": "Henter skabeloner...",
     "loading-themes": "Henter temaer...",
