@@ -20,6 +20,7 @@ function SlideCreate() {
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [selectedTheme, setSelectedTheme] = useState();
 
   // Initialize to empty slide object.
   const [formStateObject, setFormStateObject] = useState({
@@ -72,6 +73,24 @@ function SlideCreate() {
     setSelectedTemplate(template);
     handleInput({
       target: { id: targetId, value: { "@id": template["@id"] } },
+    });
+  };
+
+  /**
+   * Select theme.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  const selectTheme = ({ target }) => {
+    const { value, id: targetId } = target;
+    let themeId = "";
+    if (value.length > 0) {
+      themeId = value[0]["@id"];
+    }
+    setSelectedTheme(value);
+    handleInput({
+      target: { id: targetId, value: themeId },
     });
   };
 
@@ -145,6 +164,7 @@ function SlideCreate() {
         const saveData = {
           slideSlideInput: JSON.stringify({
             title: formStateObject.title,
+            theme: formStateObject.theme,
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
@@ -212,6 +232,9 @@ function SlideCreate() {
           isSaveSuccess={isSaveSuccess}
           isSaving={submitting || isSaving}
           errors={saveError || false}
+          selectTheme={selectTheme}
+          selectedTheme={selectedTheme}
+          mediaFields={mediaFields}
         />
       )}
     </>

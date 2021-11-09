@@ -8,9 +8,13 @@ import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";
-import { useGetV1TemplatesQuery } from "../../redux/api/api.generated";
+import {
+  useGetV1TemplatesQuery,
+  useGetV1ThemesQuery,
+} from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import RenderFormElement from "./render-form-element";
+import RemoteComponentWrapper from "./remote-component-wrapper";
 
 /**
  * The slide form component.
@@ -27,8 +31,11 @@ import RenderFormElement from "./render-form-element";
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.mediaData Object of loaded media.
+ * @param {object} props.mediaFields The uploaded but not yet saved media fields.
  * @param {Function} props.selectTemplate Function to handle select of template.
  * @param {object} props.selectedTemplate Selected template.
+ * @param {Function} props.selectTheme Function to handle select of theme.
+ * @param {object} props.selectedTheme Selected theme.
  * @returns {object} The slide form.
  */
 function SlideForm({
@@ -44,21 +51,31 @@ function SlideForm({
   isSaveSuccess,
   isLoading,
   mediaData,
+  mediaFields,
   errors,
+  selectTheme,
+  selectedTheme,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
   const [templateOptions, setTemplateOptions] = useState([]);
   const [contentFormElements, setContentFormElements] = useState([]);
-  const [searchText, setSearchText] = useState("");
+  const [searchTextTemplate, setSearchTextTemplate] = useState("");
+  const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
+  const [themesOptions, setThemesOptions] = useState();
 
   // Load all templates. Assume no more than 1000.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
-      title: searchText,
+      title: searchTextTemplate,
       itemsPerPage: 10,
     });
+
+  const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
+    title: searchTextTheme,
+    itemsPerPage: searchTextTheme ? 10 : 0,
+  });
 
   /** Load content form elements for template */
   useEffect(() => {
@@ -79,7 +96,6 @@ function SlideForm({
 
       newSelectedTemplates.push(selectedTemplate);
     }
-
     setSelectedTemplates(newSelectedTemplates);
   }, [selectedTemplate]);
 
@@ -91,13 +107,29 @@ function SlideForm({
     }
   }, [templates]);
 
+  /** Set loaded data into form state. */
+  useEffect(() => {
+    if (themes) {
+      setThemesOptions(themes["hydra:member"]);
+    }
+  }, [themes]);
+
   /**
    * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
-  function onFilter(filter) {
-    setSearchText(filter);
+  function onFilterTemplate(filter) {
+    setSearchTextTemplate(filter);
+  }
+
+  /**
+   * Fetches data for the multi component
+   *
+   * @param {string} filter - The filter.
+   */
+  function onFilterTheme(filter) {
+    setSearchTextTheme(filter);
   }
 
   return (
@@ -142,6 +174,19 @@ function SlideForm({
           {t("slide-form.loading-templates")}
         </>
       )}
+      {loadingThemes && !isLoading && (
+        <>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="m-1"
+          />
+          {t("slide-form.loading-themes")}
+        </>
+      )}
       {!isLoading && (
         <>
           <ContentBody>
@@ -150,7 +195,7 @@ function SlideForm({
               type="text"
               label={t("slide-form.slide-name-label")}
               helpText={t("slide-form.slide-name-placeholder")}
-              value={slide.title}
+              value={slide.title || ""}
               onChange={handleInput}
             />
           </ContentBody>
@@ -163,28 +208,39 @@ function SlideForm({
                 options={templateOptions}
                 selected={selectedTemplates}
                 name="templateInfo"
-                filterCallback={onFilter}
+                filterCallback={onFilterTemplate}
                 singleSelect
               />
             </ContentBody>
           )}
           {selectedTemplate && contentFormElements && (
-            <ContentBody>
-              {contentFormElements.map((formElement) => (
-                <RenderFormElement
-                  key={formElement.key}
-                  data={formElement}
-                  onChange={handleContent}
-                  onMediaChange={handleMedia}
-                  name={formElement.name}
+            <>
+              <ContentBody>
+                <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
+                <RemoteComponentWrapper
+                  url={selectedTemplate?.resources?.component}
+                  content={slide.content}
+                  mediaFields={mediaFields}
                   mediaData={mediaData}
-                  formStateObject={slide.content}
-                  requiredFieldCallback={() => {
-                    return false;
-                  }}
                 />
-              ))}
-            </ContentBody>
+              </ContentBody>
+              <ContentBody>
+                {contentFormElements.map((formElement) => (
+                  <RenderFormElement
+                    key={formElement.key}
+                    data={formElement}
+                    onChange={handleContent}
+                    onMediaChange={handleMedia}
+                    name={formElement.name}
+                    mediaData={mediaData}
+                    formStateObject={slide.content}
+                    requiredFieldCallback={() => {
+                      return false;
+                    }}
+                  />
+                ))}
+              </ContentBody>
+            </>
           )}
           <ContentBody>
             <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
@@ -210,6 +266,19 @@ function SlideForm({
               </Col>
             </Row>
           </ContentBody>
+          {themesOptions && (
+            <ContentBody>
+              <MultiSelectComponent
+                label={t("slide-form.slide-theme-label")}
+                handleSelection={selectTheme}
+                options={themesOptions}
+                selected={selectedTheme}
+                name="theme"
+                filterCallback={onFilterTheme}
+                singleSelect
+              />
+            </ContentBody>
+          )}
         </>
       )}
       <ContentFooter>
@@ -264,12 +333,15 @@ SlideForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
+  selectedTheme: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
   selectTemplate: PropTypes.func.isRequired,
+  selectTheme: PropTypes.func.isRequired,
   selectedTemplate: PropTypes.shape({
     "@id": PropTypes.string,
     resources: PropTypes.shape({
       admin: PropTypes.string.isRequired,
+      component: PropTypes.string.isRequired,
     }).isRequired,
   }),
   isLoading: PropTypes.bool.isRequired,
@@ -280,6 +352,7 @@ SlideForm.propTypes = {
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SlideForm;

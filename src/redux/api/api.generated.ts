@@ -386,6 +386,50 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/v1/templates/${queryArg.id}` }),
     }),
+    getV1Themes: build.query<GetV1ThemesApiResponse, GetV1ThemesApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/themes`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    postV1Themes: build.mutation<PostV1ThemesApiResponse, PostV1ThemesApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/themes`,
+        method: "POST",
+        body: queryArg.themeThemeInput,
+      }),
+    }),
+    getV1ThemesById: build.query<
+      GetV1ThemesByIdApiResponse,
+      GetV1ThemesByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/themes/${queryArg.id}` }),
+    }),
+    putV1ThemesById: build.mutation<
+      PutV1ThemesByIdApiResponse,
+      PutV1ThemesByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/themes/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.themeThemeInput,
+      }),
+    }),
+    deleteV1ThemesById: build.mutation<
+      DeleteV1ThemesByIdApiResponse,
+      DeleteV1ThemesByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/themes/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 export type GetV1LayoutsApiResponse = unknown;
@@ -671,6 +715,37 @@ export type GetV1TemplatesByIdApiResponse = unknown;
 export type GetV1TemplatesByIdApiArg = {
   id: string;
 };
+export type GetV1ThemesApiResponse = unknown;
+export type GetV1ThemesApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
+};
+export type PostV1ThemesApiResponse = unknown;
+export type PostV1ThemesApiArg = {
+  /** The new Theme resource */
+  themeThemeInput: ThemeThemeInput;
+};
+export type GetV1ThemesByIdApiResponse = unknown;
+export type GetV1ThemesByIdApiArg = {
+  id: string;
+};
+export type PutV1ThemesByIdApiResponse = unknown;
+export type PutV1ThemesByIdApiArg = {
+  id: string;
+  /** The updated Theme resource */
+  themeThemeInput: ThemeThemeInput;
+};
+export type DeleteV1ThemesByIdApiResponse = unknown;
+export type DeleteV1ThemesByIdApiArg = {
+  id: string;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
@@ -701,10 +776,18 @@ export type SlideSlideInput = {
   modifiedBy?: string;
   createdBy?: string;
   templateInfo?: string[];
+  theme?: string;
   duration?: number | null;
   published?: string[];
   media?: string[];
   content?: string[];
+};
+export type ThemeThemeInput = {
+  title?: string;
+  description?: string;
+  modifiedBy?: string;
+  createdBy?: string;
+  css?: string;
 };
 export const {
   useGetV1LayoutsQuery,
@@ -746,5 +829,10 @@ export const {
   useDeleteV1SlidesByIdMutation,
   useGetV1TemplatesQuery,
   useGetV1TemplatesByIdQuery,
+  useGetV1ThemesQuery,
+  usePostV1ThemesMutation,
+  useGetV1ThemesByIdQuery,
+  usePutV1ThemesByIdMutation,
+  useDeleteV1ThemesByIdMutation,
 } = api;
 

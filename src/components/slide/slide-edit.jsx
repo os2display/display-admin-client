@@ -24,11 +24,15 @@ function SlideEdit() {
   const dispatch = useDispatch();
   const headerText = t("slide-edit.edit-slide-header");
   const [formStateObject, setFormStateObject] = useState();
+  const [getTheme, setGetTheme] = useState(true);
+  const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [selectedTheme, setSelectedTheme] = useState();
+
   const [
     PutV1Slides,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
@@ -75,6 +79,24 @@ function SlideEdit() {
     setSelectedTemplate(template);
     handleInput({
       target: { id: targetId, value: { "@id": template["@id"] } },
+    });
+  };
+
+  /**
+   * Select theme.
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - The target.
+   */
+  const selectTheme = ({ target }) => {
+    const { value, id: targetId } = target;
+    let themeId = "";
+    if (value.length > 0) {
+      themeId = value[0]["@id"];
+    }
+    setSelectedTheme(value);
+    handleInput({
+      target: { id: targetId, value: themeId },
     });
   };
 
@@ -129,10 +151,14 @@ function SlideEdit() {
   }
 
   useEffect(() => {
-    // Load template if set.
+    // Load template if set, getTemplate because if not, it runs on every time formstateobject is changed
     if (
       formStateObject?.templateInfo &&
-      Object.prototype.hasOwnProperty.call(formStateObject.templateInfo, "@id")
+      Object.prototype.hasOwnProperty.call(
+        formStateObject.templateInfo,
+        "@id"
+      ) &&
+      getTemplate
     ) {
       dispatch(
         api.endpoints.getV1TemplatesById.initiate({
@@ -141,7 +167,25 @@ function SlideEdit() {
       )
         .then((result) => {
           const template = result.data;
+          setGetTemplate(false);
           setSelectedTemplate(template);
+        })
+        .catch(() => {
+          // @TODO: Handle error.
+        });
+    }
+
+    // Load theme if set, getTheme because if not, it runs on every time formstateobject is changed
+    if (formStateObject?.theme && getTheme) {
+      dispatch(
+        api.endpoints.getV1ThemesById.initiate({
+          id: idFromUrl(formStateObject.theme),
+        })
+      )
+        .then((result) => {
+          const theme = result.data;
+          setGetTheme(false);
+          setSelectedTheme([theme]);
         })
         .catch(() => {
           // @TODO: Handle error.
@@ -181,13 +225,16 @@ function SlideEdit() {
       });
 
       // Set published to format accepted by bootstrap date component
-      localFormStateObject.published.from = dayjs(
-        localFormStateObject.published.from
-      ).format("YYYY-MM-DDTHH:mm");
-      localFormStateObject.published.to = dayjs(
-        localFormStateObject.published.to
-      ).format("YYYY-MM-DDTHH:mm");
-
+      if (localFormStateObject.published.from) {
+        localFormStateObject.published.from = dayjs(
+          localFormStateObject.published.from
+        ).format("YYYY-MM-DDTHH:mm");
+      }
+      if (localFormStateObject.published.to) {
+        localFormStateObject.published.to = dayjs(
+          localFormStateObject.published.to
+        ).format("YYYY-MM-DDTHH:mm");
+      }
       setFormStateObject(localFormStateObject);
     }
   }, [getSlideData]);
@@ -207,12 +254,12 @@ function SlideEdit() {
         const to = formStateObject.published.to
           ? new Date(formStateObject.published.to).toISOString()
           : null;
-
         // All media have been submitted. Submit slide.
         const saveData = {
           id,
           slideSlideInput: JSON.stringify({
             title: formStateObject.title,
+            theme: formStateObject.theme,
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
@@ -280,6 +327,9 @@ function SlideEdit() {
           isSaveSuccess={isSaveSuccess}
           isSaving={submitting || isSaving}
           errors={getSlideError || saveError || false}
+          selectTheme={selectTheme}
+          selectedTheme={selectedTheme}
+          mediaFields={mediaFields}
         />
       )}
     </>
