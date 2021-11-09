@@ -39,6 +39,8 @@
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
+    "loading": "Henter slides",
+    "deleting": "Sletter slides",
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
     "delete-button": "Slet",
@@ -89,6 +91,9 @@
     "create-new-playlist": "Opret ny spilleliste",
     "delete-button": "Slet",
     "edit-button": "Rediger"
+  },
+  "with-loading": {
+    "loading-data-message": "Henter data..."
   },
   "themes-list": {
     "columns": {

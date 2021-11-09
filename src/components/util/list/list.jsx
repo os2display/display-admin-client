@@ -9,6 +9,7 @@ import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import RadioButtons from "../forms/radio-buttons";
+import WithLoading from '../loading-component/with-loading';
 
 /**
  * @param {object} props - The props.
@@ -25,7 +26,6 @@ import RadioButtons from "../forms/radio-buttons";
  * @param {boolean} props.error - If the calling component has an error.
  * @param {Function} props.handleSort - Callback for sort.
  * @param {Function} props.handleSearch - Callback for seach.
- * @param {boolean} props.isLoading - If the calling component is loading data.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.handleIsPublished - Callback for published filter.
  * @returns {object} The List.
@@ -43,7 +43,6 @@ function List({
   handleSort,
   handleSearch,
   totalItems,
-  isLoading,
   handleDelete,
   handleIsPublished,
 }) {
@@ -207,11 +206,7 @@ function List({
           </Button>
         </Col>
       </Row>
-      <Row>
-        <Col className="d-flex justify-content-center">
-          {isLoading && <Spinner animation="border" className="m-5" />}
-        </Col>
-      </Row>
+
       <Row>
         {displayPublished && publishedParams && (
           <RadioButtons
@@ -231,7 +226,6 @@ function List({
           />
         )}
       </Row>
-      {!isLoading && (
         <Table
           onSort={updateUrlAndSort}
           data={data}
@@ -241,7 +235,6 @@ function List({
           selectedRows={selectedRows}
           withChart={withChart}
         />
-      )}
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}
@@ -271,11 +264,10 @@ List.propTypes = {
   totalItems: PropTypes.number.isRequired,
   deleteSuccess: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   handleSort: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   displayPublished: PropTypes.bool,
   handleIsPublished: PropTypes.func,
 };
 
-export default List;
+export default WithLoading(List);
