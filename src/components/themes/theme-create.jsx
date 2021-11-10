@@ -64,9 +64,9 @@ function ThemeCreate() {
       headerText={`${headerText}: ${formStateObject?.title}`}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
+      isLoading={isSaving}
+      loadingMessage={t("theme-create.saving")}
       isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
       errors={saveError || false}
     />
   );

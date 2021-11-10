@@ -69,8 +69,10 @@ function ThemeEdit() {
           handleInput={handleInput}
           handleSubmit={handleSubmit}
           isLoading={isLoading}
+          loadingMessage={
+            isLoading ? t("theme-edit.loading") : t("theme-edit.saving")
+          }
           isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
           errors={saveError || loadError || false}
         />
       )}

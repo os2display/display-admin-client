@@ -22,10 +22,13 @@
     "name-placeholder": "Udfyld brugerens navn"
   },
   "theme-create": {
-    "create-new-theme": "Opret nyt tema"
+    "create-new-theme": "Opret nyt tema",
+    "saving": "Gemmer tema"
   },
   "theme-edit": {
-    "edit-theme": "Rediger følgende tema"
+    "edit-theme": "Rediger følgende tema",
+    "loading": "Henter tema",
+    "saving": "Gemmer tema"
   },
   "slides-list": {
     "columns": {

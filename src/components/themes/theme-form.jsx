@@ -9,6 +9,7 @@ import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
+import WithLoading from '../groups/group-form';
 
 /**
  * The theme form component.
@@ -40,34 +41,6 @@ function ThemeForm({
   return (
     <Form>
       <h1>{headerText}</h1>
-      {isLoading && (
-        <>
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-            className="m-1"
-          />
-          {t("theme-form.loading")}
-        </>
-      )}
-      {isSaving && (
-        <>
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-            className="m-1"
-          />
-          {t("theme-form.saving")}
-        </>
-      )}
-      {!isLoading && (
-        <>
           <ContentBody>
             <FormInput
               name="title"
@@ -95,8 +68,6 @@ function ThemeForm({
             />
             <code>{theme.css}</code>
           </ContentBody>
-        </>
-      )}
       <ContentFooter>
         <Button
           variant="secondary"
@@ -114,23 +85,7 @@ function ThemeForm({
           onClick={handleSubmit}
           id="save_theme"
           size="lg"
-        >
-          <>
-            {!isSaving && t("theme-form.save-button")}
-            {isSaving && (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                  className="m-1"
-                />
-                {t("theme-form.saving")}
-              </>
-            )}
-          </>
+        >{t("theme-form.save-button")}
         </Button>
         <Toast show={isSaveSuccess} text={t("theme-form.saved")} />
         <Toast show={!!errors} text={t("theme-form.error")} />
@@ -153,4 +108,4 @@ ThemeForm.propTypes = {
   ]).isRequired,
 };
 
-export default ThemeForm;
+export default WithLoading(ThemeForm);
