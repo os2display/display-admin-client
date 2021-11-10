@@ -47,7 +47,6 @@ function SlideForm({
   selectedTemplate,
   headerText,
   isSaveSuccess,
-  isLoading,
   mediaFields,
   loadedMedia,
   errors,
@@ -176,6 +175,49 @@ function SlideForm({
           ))}
         </ContentBody>
       )}
+      {templateOptions && (
+        <ContentBody>
+          <MultiSelectComponent
+            label={t("slide-form.slide-template-label")}
+            helpText={t("slide-form.slide-template-help-text")}
+            handleSelection={selectTemplate}
+            options={templateOptions}
+            selected={selectedTemplates}
+            name="templateInfo"
+            filterCallback={onFilterTemplate}
+            singleSelect
+          />
+        </ContentBody>
+      )}
+      {selectedTemplate && contentFormElements && (
+        <>
+          <ContentBody>
+            <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
+            <RemoteComponentWrapper
+              url={selectedTemplate?.resources?.component}
+              content={slide.content}
+              mediaFields={mediaFields}
+              loadedMedia={loadedMedia}
+            />
+          </ContentBody>
+          <ContentBody>
+            {contentFormElements.map((formElement) => (
+              <RenderFormElement
+                key={formElement.key}
+                data={formElement}
+                onChange={handleContent}
+                onMediaChange={handleMedia}
+                name={formElement.name}
+                loadedMedia={loadedMedia}
+                formStateObject={slide.content}
+                requiredFieldCallback={() => {
+                  return false;
+                }}
+              />
+            ))}
+          </ContentBody>
+        </>
+      )}
       <ContentBody>
         <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
         <Row className="g-2">
@@ -187,64 +229,7 @@ function SlideForm({
               value={slide.published.from}
               onChange={handleInput}
             />
-          </ContentBody>
-          {templateOptions && (
-            <ContentBody>
-              <MultiSelectComponent
-                label={t("slide-form.slide-template-label")}
-                helpText={t("slide-form.slide-template-help-text")}
-                handleSelection={selectTemplate}
-                options={templateOptions}
-                selected={selectedTemplates}
-                name="templateInfo"
-                filterCallback={onFilterTemplate}
-                singleSelect
-              />
-            </ContentBody>
-          )}
-          {selectedTemplate && contentFormElements && (
-            <>
-              <ContentBody>
-                <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
-                <RemoteComponentWrapper
-                  url={selectedTemplate?.resources?.component}
-                  content={slide.content}
-                  mediaFields={mediaFields}
-                  loadedMedia={loadedMedia}
-                />
-              </ContentBody>
-              <ContentBody>
-                {contentFormElements.map((formElement) => (
-                  <RenderFormElement
-                    key={formElement.key}
-                    data={formElement}
-                    onChange={handleContent}
-                    onMediaChange={handleMedia}
-                    name={formElement.name}
-                    loadedMedia={loadedMedia}
-                    formStateObject={slide.content}
-                    requiredFieldCallback={() => {
-                      return false;
-                    }}
-                  />
-                ))}
-              </ContentBody>
-            </>
-          )}
-          <ContentBody>
-            <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
-            <Row className="g-2">
-              <Col md>
-                <FormInput
-                  name="published.from"
-                  type="datetime-local"
-                  label={t("slide-form.slide-from-label")}
-                  value={slide.published.from}
-                  onChange={handleInput}
-                />
-              </Col>
           </Col>
-
           <Col md>
             <FormInput
               name="published.to"
