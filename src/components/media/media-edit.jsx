@@ -49,8 +49,10 @@ function MediaEdit() {
           handleInput={handleInput}
           handleSubmit={handleSubmit}
           isLoading={isLoading}
+          loadingMessage={
+            isLoading ? t("media-edit.loading") : t("media-edit.saving")
+          }
           isSaveSuccess={false} // todo
-          isSaving={false} // todo
           errors={loadError || false}
         />
       )}

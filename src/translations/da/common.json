@@ -131,10 +131,13 @@
     "loading": "Henter elementer..."
   },
   "media-create": {
-    "create-media": "Upload"
+    "create-media": "Upload",
+    "saving": "Gemmer medie"
   },
   "media-edit": {
-    "edit-media": "Rediger"
+    "edit-media": "Rediger",
+    "loading": "Henter medie",
+    "saving": "Gemmer medie"
   },
   "media-form": {
     "save-button": "Gem medie",

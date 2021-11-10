@@ -17,7 +17,7 @@ function MediaCreate() {
 
   const [
     PostV1MediaCollection,
-    { isLoading, error: saveError, isSuccess: isSaveSuccess },
+    { isLoading:isSavingMedia, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -67,9 +67,9 @@ function MediaCreate() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={isLoading}
+      isLoading={isSavingMedia || isSaving}
+      loadingMessage={t("media-create.saving")}
       isSaveSuccess={isSaveSuccess}
-      isSaving={isLoading || isSaving || false}
       errors={saveError || false}
     />
   );
