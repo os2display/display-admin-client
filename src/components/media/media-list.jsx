@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Col, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Toast from "../util/toast/toast";
+import Toast from "../util/list/toast-component/toast";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";

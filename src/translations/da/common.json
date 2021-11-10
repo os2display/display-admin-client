@@ -148,20 +148,27 @@
   "slide-edit": {
     "edit-slide-header": "Rediger slide",
     "loading": "Henter slide",
-    "saving": "Gemmer slide"
+    "saving": "Gemmer slide",
+    "save-slide-error": "Da vi forsøgte at gemme \n {{title}} \n skete følgende fejl:\n {{error}}",
+    "get-slide-error": "Der skete en fejl da slide med id {{id}} skulle hentes",
+    "saved": "Slidet {{title}} er gemt",
+    "unamed-slide": "det unavngivne slide",
+    "unamed-media": "det unavngivne medie",
+    "error-save-media": "Der skete en fejl da vi forsøgte at gemme {{title}}: {{error}}",
+    "saved-media": "Media med {{title}} er gemt med id: {{id}}"
   },
   "slide-create": {
     "create-slide-header": "Opret nyt slide",
-    "saving": "Gemmer slide"
+    "saving": "Gemmer slide",
+    "save-slide-error": "Da vi forsøgte at gemme \n {{title}} \n skete følgende fejl:\n {{error}}",
+    "saved": "{{title}} er gemt",
+    "error-save-media": "Der skete en fejl da vi forsøgte at gemme {{title}}: {{error}}",
+    "unamed-slide": "Det unavngivne slide",
+    "unamed-media": "det unavngivne medie",
+    "saved-media": "Media med {{title}} er gemt med id: {{id}}"
   },
   "slide-form": {
-    "error": "Der skete en fejl",
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
-    "loading": "Henter slide...",
-    "loading-templates": "Henter skabeloner...",
-    "loading-themes": "Henter temaer...",
-    "saving": "Gemmer...",
-    "saved": "Slide er gemt",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
     "slide-content-label": "Slidets indhold",

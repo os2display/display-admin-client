@@ -9,7 +9,7 @@ import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
-import Toast from "../util/toast/toast";
+import Toast from "../util/list/toast-component/toast";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 import "./playlist-form.scss";
 

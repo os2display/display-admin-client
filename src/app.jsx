@@ -2,6 +2,8 @@ import { React } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -54,6 +56,7 @@ function App() {
             <SideBar />
             <Col lg={9} xl={10}>
               <TopBar />
+              <ToastContainer />
               <main className="col p-3">
                 <Switch>
                   <Route path="/playlist/create" component={PlaylistCreate} />

@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import Toast from "../util/toast/toast";
+import Toast from "../util/list/toast-component/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import ImageUploader from "../util/image-uploader/image-uploader";

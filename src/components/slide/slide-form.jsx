@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import Toast from "../util/toast/toast";
 import WithLoading from "../util/loading-component/with-loading";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
@@ -25,8 +24,6 @@ import RemoteComponentWrapper from "./remote-component-wrapper";
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {string} props.headerText Headline text.
- * @param {boolean | null} props.isSaveSuccess Is the save a success?
- * @param {Array} props.errors Array of errors.
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.loadedMedia Object of loaded media.
@@ -46,10 +43,8 @@ function SlideForm({
   selectTemplate,
   selectedTemplate,
   headerText,
-  isSaveSuccess,
   mediaFields,
   loadedMedia,
-  errors,
   selectTheme,
   selectedTheme,
 }) {
@@ -157,24 +152,6 @@ function SlideForm({
           />
         </ContentBody>
       )}
-      {selectedTemplate && contentFormElements && (
-        <ContentBody>
-          {contentFormElements.map((formElement) => (
-            <RenderFormElement
-              key={formElement.key}
-              data={formElement}
-              onChange={handleContent}
-              onMediaChange={handleMedia}
-              name={formElement.name}
-              loadedMedia={loadedMedia}
-              formStateObject={slide.content}
-              requiredFieldCallback={() => {
-                return false;
-              }}
-            />
-          ))}
-        </ContentBody>
-      )}
       {templateOptions && (
         <ContentBody>
           <MultiSelectComponent
@@ -275,8 +252,6 @@ function SlideForm({
         >
           {t("slide-form.save-button")}
         </Button>
-        <Toast show={isSaveSuccess} text={t("slide-form.saved")} />
-        <Toast show={!!errors} text={t("slide-form.error")} />
       </ContentFooter>
     </Form>
   );
@@ -292,7 +267,6 @@ SlideForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   selectedTheme: PropTypes.string.isRequired,
-  isSaveSuccess: PropTypes.bool.isRequired,
   selectTemplate: PropTypes.func.isRequired,
   selectTheme: PropTypes.func.isRequired,
   selectedTemplate: PropTypes.shape({
@@ -302,10 +276,6 @@ SlideForm.propTypes = {
       component: PropTypes.string.isRequired,
     }).isRequired,
   }),
-  errors: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.any),
-    PropTypes.bool,
-  ]).isRequired,
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
   loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,

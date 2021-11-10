@@ -11,7 +11,7 @@ import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
-import Toast from "../util/toast/toast";
+import Toast from "../util/list/toast-component/toast";
 import WithLoading from "../util/loading-component/with-loading";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../util/helpers/id-from-url";

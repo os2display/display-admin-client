@@ -1,11 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import displayToast from "../util/list/toast-component/display-toast";
 import {
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The slide create component.
@@ -41,7 +43,7 @@ function SlideCreate() {
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: mediaData, isSuccess: isSaveMediaSuccess },
+    { data: mediaData, error: saveMediaError, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -128,9 +130,9 @@ function SlideCreate() {
         contentField.forEach((element) => {
           const formData = new FormData();
           formData.append("file", element.file);
-          formData.append("title", element.title);
-          formData.append("description", element.description);
-          formData.append("license", element.license);
+          formData.append("title", element.title || "");
+          formData.append("description", element.description || "");
+          formData.append("license", element.license || "");
           // @TODO: Should these be optional in the API?
           formData.append("modifiedBy", "");
           formData.append("createdBy", "");
@@ -195,6 +197,15 @@ function SlideCreate() {
         const newFormStateObject = { ...formStateObject };
         newFormStateObject.media.push(mediaData["@id"]);
         newFormStateObject.content[firstMediaField] = mediaData["@id"];
+
+        // Display toast with success message
+        displayToast(
+          t("slide-create.saved-media", {
+            id: idFromUrl(mediaData["@id"]),
+            title: mediaData.title || t("slide-create.unamed-media"),
+          })
+        );
+
         setFormStateObject(newFormStateObject);
 
         const newLoadedMedia = { ...loadedMedia };
@@ -204,16 +215,49 @@ function SlideCreate() {
         // Move to next media to upload.
         const newList = submittingMedia.slice(1);
         setSubmittingMedia(newList);
+      } else if (saveMediaError) {
+        // If save media has error, display toast and set submitting false
+        setSubmitting(false);
+        displayToast(
+          t("slide-create.error-save-media", {
+            title:
+              submittingMedia[0].get("title") || t("slide-create.unamed-media"),
+            error: saveMediaError.data["hydra:description"],
+          }),
+          true
+        );
       }
     }
   }, [isSaveMediaSuccess]);
 
-  /** Handle submitting is done. */
+  // If save is success, display toast and set submitting false
   useEffect(() => {
     if (isSaveSuccess) {
       setSubmitting(false);
+      displayToast(
+        t("slide-create.saved", {
+          title: formStateObject.title || t("slide-create.unamed-slide"),
+        })
+      );
     }
   }, [isSaveSuccess]);
+
+  // If save has error, display toast and set submitting false
+  useEffect(() => {
+    if (saveError) {
+      const error = saveError.data
+        ? saveError.data["hydra:description"]
+        : saveError.error;
+      displayToast(
+        t("slide-create.save-slide-error", {
+          title: formStateObject.title || t("slide-create.unamed-slide"),
+          error,
+        }),
+        true
+      );
+      setSubmitting(false);
+    }
+  }, [saveError]);
 
   return (
     <>

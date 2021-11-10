@@ -10,6 +10,7 @@ import {
   usePutV1SlidesByIdMutation,
   api,
 } from "../../redux/api/api.generated";
+import displayToast from "../util/list/toast-component/display-toast";
 import SlideForm from "./slide-form";
 import idFromUrl from "../util/helpers/id-from-url";
 
@@ -47,7 +48,7 @@ function SlideEdit() {
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: mediaData, isSuccess: isSaveMediaSuccess },
+    { data: mediaData, error: saveMediaError, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -134,9 +135,9 @@ function SlideEdit() {
         contentField.forEach((element) => {
           const formData = new FormData();
           formData.append("file", element.file);
-          formData.append("title", element.title);
-          formData.append("description", element.description);
-          formData.append("license", element.license);
+          formData.append("title", element.title || "");
+          formData.append("description", element.description || "");
+          formData.append("license", element.license || "");
           // @TODO: Should these be optional in the API?
           formData.append("modifiedBy", "");
           formData.append("createdBy", "");
@@ -290,8 +291,16 @@ function SlideEdit() {
         const newFormStateObject = { ...formStateObject };
         newFormStateObject.media.push(mediaData["@id"]);
         newFormStateObject.content[firstMediaField] = mediaData["@id"];
-        setFormStateObject(newFormStateObject);
 
+        // Display toast with success message
+        displayToast(
+          t("slide-edit.saved-media", {
+            id: idFromUrl(mediaData["@id"]),
+            title: mediaData.title || t("slide-edit.unamed-media"),
+          })
+        );
+
+        setFormStateObject(newFormStateObject);
         const newLoadedMedia = { ...loadedMedia };
         newLoadedMedia[mediaData["@id"]] = mediaData;
         setLoadedMedia(newLoadedMedia);
@@ -299,16 +308,64 @@ function SlideEdit() {
         // Move to next media to upload.
         const newList = submittingMedia.slice(1);
         setSubmittingMedia(newList);
+      } else if (saveMediaError) {
+        // If save media has error, display toast and set submitting false
+        setSubmitting(false);
+        displayToast(
+          t("slide-edit.error-save-media", {
+            title:
+              submittingMedia[0].get("title") || t("slide-edit.unamed-media"),
+            error: saveMediaError.data["hydra:description"],
+          }),
+          true
+        );
       }
     }
-  }, [isSaveMediaSuccess]);
+  }, [isSaveMediaSuccess, saveMediaError]);
 
-  /** Handle submitting is done. */
+  // If save is success, display toast and set submitting false
   useEffect(() => {
     if (isSaveSuccess) {
+      displayToast(
+        t("slide-edit.saved", {
+          title: formStateObject.title || t("slide-create.unamed-slide"),
+        })
+      );
       setSubmitting(false);
     }
   }, [isSaveSuccess]);
+
+  // If save has error, display toast and set submitting false
+  useEffect(() => {
+    if (saveError) {
+      setSubmitting(false);
+      const error = saveError.data
+        ? saveError.data["hydra:description"]
+        : saveError.error;
+      displayToast(
+        t("slide-edit.save-slide-error", {
+          title: formStateObject.title || t("slide-create.unamed-slide"),
+          error,
+        }),
+        true
+      );
+      setSubmitting(false);
+    }
+  }, [saveError]);
+
+  // If getting slide has error, display toast
+  useEffect(() => {
+    if (getSlideError) {
+      displayToast(
+        t("slide-edit.get-slide-error", {
+          id,
+          error: getSlideError?.data["hydra:description"],
+        }),
+        true
+      );
+      setSubmitting(false);
+    }
+  }, [getSlideError]);
 
   return (
     <>
@@ -327,8 +384,6 @@ function SlideEdit() {
           loadingMessage={
             getSlideIsLoading ? t("slide-edit.loading") : t("slide-edit.saving")
           }
-          errors={getSlideError || saveError || false}
-          isSaveSuccess={isSaveSuccess}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
           mediaFields={mediaFields}
