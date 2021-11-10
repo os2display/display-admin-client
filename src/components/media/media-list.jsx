@@ -94,10 +94,8 @@ function MediaList({ fromModal, handleSelected }) {
   useEffect(() => {
     if (!fromModal) {
       const params = new URLSearchParams(search);
-      if (searchText) {
         params.delete("search");
         params.append("search", searchText);
-      }
       params.delete("page");
       params.append("page", page);
       history.replace({ search: params.toString() });
@@ -110,6 +108,7 @@ function MediaList({ fromModal, handleSelected }) {
    * @param {string} newSearchText Updates the search text state and url.
    */
   function handleSearch(newSearchText) {
+    setPage(1)
     setSearchText(newSearchText);
   }
 
