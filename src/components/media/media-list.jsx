@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Toast from "../util/toast/toast";
@@ -15,6 +15,7 @@ import {
 import idFromUrl from "../util/helpers/id-from-url";
 import "./media-list.scss";
 import Pagination from "../util/paginate/pagination";
+import ImageList from "./image-list";
 
 /**
  * The media list component.
@@ -59,7 +60,7 @@ function MediaList({ fromModal, handleSelected }) {
     data: mediaData,
     error: loadError,
     isLoading,
-  } = useGetV1MediaQuery({ page });
+  } = useGetV1MediaQuery({ page, title: searchText });
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -189,85 +190,11 @@ function MediaList({ fromModal, handleSelected }) {
             />
           </Col>
         </Row>
-        {isDeleting && (
-          <>
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-              className="m-1"
-            />
-            {t("media-list.deleting")}
-          </>
-        )}
-        {isLoading && !isDeleting && (
-          <>
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-              className="m-1"
-            />
-            {t("media-list.loading")}
-          </>
-        )}
-        {!isDeleting && !isLoading && (
-          <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5 media-list">
-            {media.map((data) => (
-              <div key={data["@id"]} className="col mb-3">
-                <div
-                  className={`card bg-light h-100 media-item +
-                  ${data.selected ? " selected" : ""}`}
-                >
-                  <button
-                    type="button"
-                    className="media-item-button"
-                    onClick={() => handleChecked(data)}
-                  >
-                    <img
-                      src={data.assets.uri}
-                      className="card-img-top"
-                      alt={data.description}
-                    />
-                  </button>
-                  <Form.Check
-                    type="checkbox"
-                    checked={data.selected}
-                    tabIndex={-1}
-                    aria-label={t("media-list.checkbox-form-aria-label")}
-                    readOnly
-                  />
-
-                  <div className="card-body">
-                    <div className="row align-items-center">
-                      <div className="col-auto">
-                        <h2 className="h6">{data.name}</h2>
-                      </div>
-                      {/* @TODO: readd if the api supports putting media */}
-                      {/* <div className="col-auto ms-auto">
-                        <Link
-                          className="btn btn-primary btn-sm"
-                          to={`/media/edit/${idFromUrl(data["@id"])}`}
-                        >
-                          {t("media-list.edit-button")}
-                        </Link>
-                      </div> */}
-                    </div>
-                    <div className="row">
-                      <div className="col">
-                        <span className="small">{data.description}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <ImageList
+          media={media}
+          isLoading={isLoading || isDeleting}
+          handleChecked={handleChecked}
+        />
       </ContentBody>
       <Pagination
         itemsCount={totalItems}

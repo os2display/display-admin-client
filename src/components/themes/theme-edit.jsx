@@ -68,7 +68,7 @@ function ThemeEdit() {
           headerText={`${headerText}: ${formStateObject?.title}`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoading}
+          isLoading={isLoading || isSaving}
           loadingMessage={
             isLoading ? t("theme-edit.loading") : t("theme-edit.saving")
           }

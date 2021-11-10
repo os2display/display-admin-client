@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { Spinner } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 
 /**
  * The loading wrapper
@@ -15,13 +14,12 @@ function WithLoading(Component) {
     loadingMessage,
     ...props
   }) {
-    const { t } = useTranslation("common");
     // eslint-disable-next-line react/jsx-props-no-spreading
     if (!isLoading) return <Component {...props} />;
     return (
       <div className="d-flex m-5 justify-content-center">
         <Spinner animation="border" className="mr-3" />
-        <h2>{loadingMessage || t("with-loading.loading-data-message")}</h2>
+        {loadingMessage && <h2>{loadingMessage}</h2>}
       </div>
     );
   };

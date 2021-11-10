@@ -8,7 +8,7 @@ import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import ImageUploader from "../util/image-uploader/image-uploader";
-import WithLoading from '../groups/group-form';
+import WithLoading from "../groups/group-form";
 
 /**
  * The media form component.
@@ -36,17 +36,17 @@ function MediaForm({
   return (
     <Form>
       <h1>{headerText}</h1>
-        <ContentBody>
-          <ImageUploader
-            errors={errors}
-            multipleImages={false} //@TODO: !!newmedia
-            handleImageUpload={handleInput}
-            inputImage={media.images}
-            name="images"
-            invalidText={t("edit-media.media-validation")}
-            showLibraryButton={false}
-          />
-        </ContentBody>
+      <ContentBody>
+        <ImageUploader
+          errors={errors}
+          multipleImages={false} // @TODO: !!newmedia
+          handleImageUpload={handleInput}
+          inputImage={media.images}
+          name="images"
+          invalidText={t("edit-media.media-validation")}
+          showLibraryButton={false}
+        />
+      </ContentBody>
       <ContentFooter>
         <Button
           variant="secondary"

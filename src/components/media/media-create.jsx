@@ -17,7 +17,7 @@ function MediaCreate() {
 
   const [
     PostV1MediaCollection,
-    { isLoading:isSavingMedia, error: saveError, isSuccess: isSaveSuccess },
+    { isLoading: isSavingMedia, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**

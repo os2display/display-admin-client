@@ -101,9 +101,6 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "with-loading": {
-    "loading-data-message": "Henter data..."
-  },
   "themes-list": {
     "columns": {
       "pick": "Vælg tema",
