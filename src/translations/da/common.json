@@ -124,6 +124,7 @@
     "upload-new-media": "Upload",
     "delete-button": "Slet",
     "edit-button": "Rediger",
+    "deleted": "Elementer er slettet",
     "deleting": "Sletter elementer...",
     "loading": "Henter elementer..."
   },

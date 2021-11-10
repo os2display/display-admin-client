@@ -94,8 +94,8 @@ function MediaList({ fromModal, handleSelected }) {
   useEffect(() => {
     if (!fromModal) {
       const params = new URLSearchParams(search);
-        params.delete("search");
-        params.append("search", searchText);
+      params.delete("search");
+      params.append("search", searchText);
       params.delete("page");
       params.append("page", page);
       history.replace({ search: params.toString() });
@@ -108,7 +108,7 @@ function MediaList({ fromModal, handleSelected }) {
    * @param {string} newSearchText Updates the search text state and url.
    */
   function handleSearch(newSearchText) {
-    setPage(1)
+    setPage(1);
     setSearchText(newSearchText);
   }
 
@@ -151,7 +151,7 @@ function MediaList({ fromModal, handleSelected }) {
   return (
     <>
       <Toast show={loadError} text={t("media-list.media-get-error")} />
-      <Toast show={isDeleteSuccess} text={t("playlists-list.deleted")} />
+      <Toast show={isDeleteSuccess} text={t("media-list.deleted")} />
       <Row className="align-items-center justify-content-between mt-2">
         <Col>
           <h1>{t("media-list.header")}</h1>
@@ -192,6 +192,9 @@ function MediaList({ fromModal, handleSelected }) {
         <ImageList
           media={media}
           isLoading={isLoading || isDeleting}
+          loadingMessage={
+            isLoading ? t("media-list.loading") : t("media-list.deleting")
+          }
           handleChecked={handleChecked}
         />
       </ContentBody>
