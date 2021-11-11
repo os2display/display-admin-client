@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
 import GroupForm from "./group-form";
 import idFromUrl from "../util/helpers/id-from-url";
+import { displaySuccess,displayError } from '../util/list/toast-component/display-toast';
 
 /**
  * The group edit component.
@@ -37,9 +38,23 @@ function GroupCreate() {
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
+      displaySuccess(t("group-create.saved", {
+        title: formStateObject.title || t("group-create.unamed-group"),
+      }))
       history.push(`/group/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
+
+  useEffect(() => {
+    if (saveError) {
+      displayError(t("group-create.save-group-error", {
+        title: formStateObject.title || t("group-create.unamed-group"),
+        error:saveError.data
+        ? saveError.data["hydra:description"]
+        : saveError.error
+      }))
+    }
+  }, [saveError]);
 
   /**
    * Set state on change in input field
@@ -56,7 +71,7 @@ function GroupCreate() {
   /** Handles submit. */
   function handleSubmit() {
     const saveData = {
-      title: formStateObject.title,
+      title: 234,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
@@ -74,8 +89,6 @@ function GroupCreate() {
       handleSubmit={handleSubmit}
       isLoading={isSavingGroup}
       loadingMessage={t("group-create.saving")}
-      isSaveSuccess={isSaveSuccess}
-      errors={saveError || false}
     />
   );
 }

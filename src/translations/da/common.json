@@ -206,7 +206,10 @@
   },
   "group-create": {
     "create-new-group-header": "Opret ny gruppe",
-    "saving": "Gemmer gruppe"
+    "saving": "Gemmer gruppe",
+    "saved": "{{title}} er gemt",
+    "unamed-group": "den unavngivne gruppe",
+    "save-group-error": "Da vi forsøgte at gemme \n {{title}} \n skete følgende fejl:\n {{error}}"
   },
   "group-edit": {
     "edit-group-header": "Rediger følgende gruppe",

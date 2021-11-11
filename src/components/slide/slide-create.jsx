@@ -246,9 +246,14 @@ function SlideCreate() {
   // If save has error, display toast and set submitting false
   useEffect(() => {
     if (saveError) {
-      const errorText = saveError.data
+      const errorText =    t("slide-create.save-slide-error", {
+        title: formStateObject.title || t("slide-create.unamed-slide"),
+        error:saveError.data
         ? saveError.data["hydra:description"]
-        : saveError.error;
+        : saveError.error
+      })
+
+
       displayError(errorText);
       setSubmitting(false);
     }

@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import WithLoading from "../util/loading-component/with-loading";
-import Toast from "../util/list/toast-component/toast";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
@@ -27,8 +26,6 @@ function GroupForm({
   handleInput,
   handleSubmit,
   headerText,
-  isSaveSuccess,
-  errors,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
@@ -75,8 +72,6 @@ function GroupForm({
         >
           {t("group-form.save-button")}
         </Button>
-        <Toast show={isSaveSuccess} text={t("group-form.saved")} />
-        <Toast show={!!errors} text={t("group-form.error")} />
       </ContentFooter>
     </Form>
   );
@@ -87,11 +82,6 @@ GroupForm.propTypes = {
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
-  isSaveSuccess: PropTypes.bool.isRequired,
-  errors: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.any),
-    PropTypes.bool,
-  ]).isRequired,
 };
 
 export default WithLoading(GroupForm);
