@@ -87,7 +87,7 @@ function MultiSelectComponent({
     if (!filter) {
       return optionsToFilter;
     }
-    if (filter.length > 2) {
+    if (filter.length > 0) {
       filterCallback(filter);
     }
     const re = new RegExp(filter, "i");

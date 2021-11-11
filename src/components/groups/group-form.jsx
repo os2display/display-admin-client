@@ -21,12 +21,7 @@ import FormInput from "../util/forms/form-input";
  * @param {Array} props.errors Array of errors.
  * @returns {object} The group form.
  */
-function GroupForm({
-  group,
-  handleInput,
-  handleSubmit,
-  headerText,
-}) {
+function GroupForm({ group, handleInput, handleSubmit, headerText }) {
   const { t } = useTranslation("common");
   const history = useHistory();
 

@@ -358,7 +358,10 @@
   "screen-edit": {
     "edit-screen-header": "Rediger følgende skærm",
     "loading": "Henter skærm",
-    "saving": "Gemmer skærm"
+    "saving": "Gemmer skærm",
+    "group-saved": "Gruppen er tilknyttet {{title}}",
+    "groups-saved": "Grupperne er tilknyttet {{title}}",
+    "unamed-screen": "unavngivet skærm"
   },
   "screen-create": {
     "create-screen-header": "Opret ny skærm",

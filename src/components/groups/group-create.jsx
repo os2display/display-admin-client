@@ -4,7 +4,10 @@ import { useHistory } from "react-router-dom";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
 import GroupForm from "./group-form";
 import idFromUrl from "../util/helpers/id-from-url";
-import { displaySuccess,displayError } from '../util/list/toast-component/display-toast';
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 
 /**
  * The group edit component.
@@ -38,21 +41,25 @@ function GroupCreate() {
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      displaySuccess(t("group-create.saved", {
-        title: formStateObject.title || t("group-create.unamed-group"),
-      }))
+      displaySuccess(
+        t("group-create.saved", {
+          title: formStateObject.title || t("group-create.unamed-group"),
+        })
+      );
       history.push(`/group/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
 
   useEffect(() => {
     if (saveError) {
-      displayError(t("group-create.save-group-error", {
-        title: formStateObject.title || t("group-create.unamed-group"),
-        error:saveError.data
-        ? saveError.data["hydra:description"]
-        : saveError.error
-      }))
+      displayError(
+        t("group-create.save-group-error", {
+          title: formStateObject.title || t("group-create.unamed-group"),
+          error: saveError.data
+            ? saveError.data["hydra:description"]
+            : saveError.error,
+        })
+      );
     }
   }, [saveError]);
 
