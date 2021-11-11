@@ -132,7 +132,7 @@ function SlideCreate() {
     // Set field as a field to look into for new references.
     setMediaFields([...new Set([...mediaFields, fieldId])]);
 
-    // @TODO: Handle removal of media.
+    const newField = [];
 
     // Handle each entry in field.
     if (Array.isArray(fieldValue)) {
@@ -146,11 +146,7 @@ function SlideCreate() {
             localFormStateObject.content[fieldId] = [];
           }
 
-          set(
-            localFormStateObject.content,
-            fieldId,
-            uniqWith([...localFormStateObject.content[fieldId], tempId])
-          );
+          newField.push(tempId);
 
           const newEntry = { ...entry };
           newEntry.tempId = tempId;
@@ -158,10 +154,16 @@ function SlideCreate() {
         }
         // Previously uploaded file.
         else {
-          // @TODO: Handle existing media.
+          newField.push(entry);
         }
       });
     }
+
+    set(
+      localFormStateObject.content,
+      fieldId,
+      newField
+    );
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
