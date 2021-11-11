@@ -154,7 +154,7 @@ function SlideCreate() {
         }
         // Previously uploaded file.
         else {
-          newField.push(entry);
+          newField.push(entry['@id']);
         }
       });
     }
