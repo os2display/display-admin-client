@@ -133,7 +133,7 @@ function ScreenEdit() {
       })
     );
     const toSave = [];
-    const formStateObjectPlaylists = formStateObject.playlists.map(
+    const formStateObjectPlaylists = formStateObject.playlists?.map(
       (playlist) => {
         return {
           id: idFromUrl(playlist["@id"]),
@@ -141,33 +141,34 @@ function ScreenEdit() {
         };
       }
     );
+    if (formStateObjectPlaylists.length > 0) {
+      // Unique regions that will have a playlist connected.
+      const regions = [
+        ...new Set(
+          formStateObjectPlaylists.map((playlists) => playlists.regionId)
+        ),
+      ];
 
-    // Unique regions that will have a playlist connected.
-    const regions = [
-      ...new Set(
-        formStateObjectPlaylists.map((playlists) => playlists.regionId)
-      ),
-    ];
-
-    // Filter playlists by region
-    regions.forEach((element) => {
-      const filteredPlaylists = formStateObjectPlaylists
-        .map((localPlaylists, index) => {
-          if (element === localPlaylists.regionId) {
-            return { playlist: localPlaylists.id, weight: index };
-          }
-          return undefined;
-        })
-        .filter((anyValue) => typeof anyValue !== "undefined");
-      // Collect playlists with according ids for saving
-      toSave.push({
-        list: filteredPlaylists,
-        regionId: element,
-        screenId: id,
+      // Filter playlists by region
+      regions.forEach((element) => {
+        const filteredPlaylists = formStateObjectPlaylists
+          .map((localPlaylists, index) => {
+            if (element === localPlaylists.regionId) {
+              return { playlist: localPlaylists.id, weight: index };
+            }
+            return undefined;
+          })
+          .filter((anyValue) => typeof anyValue !== "undefined");
+        // Collect playlists with according ids for saving
+        toSave.push({
+          list: filteredPlaylists,
+          regionId: element,
+          screenId: id,
+        });
       });
-    });
-    // Set playlists to save
-    setPlaylistsToAdd(toSave);
+      // Set playlists to save
+      setPlaylistsToAdd(toSave);
+    }
   }
 
   return (
