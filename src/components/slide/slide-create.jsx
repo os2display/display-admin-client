@@ -1,13 +1,16 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
-import displayToast from "../util/list/toast-component/display-toast";
 import {
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 import idFromUrl from "../util/helpers/id-from-url";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 
 /**
  * The slide create component.
@@ -199,7 +202,7 @@ function SlideCreate() {
         newFormStateObject.content[firstMediaField] = mediaData["@id"];
 
         // Display toast with success message
-        displayToast(
+        displaySuccess(
           t("slide-create.saved-media", {
             id: idFromUrl(mediaData["@id"]),
             title: mediaData.title || t("slide-create.unamed-media"),
@@ -218,14 +221,12 @@ function SlideCreate() {
       } else if (saveMediaError) {
         // If save media has error, display toast and set submitting false
         setSubmitting(false);
-        displayToast(
-          t("slide-create.error-save-media", {
-            title:
-              submittingMedia[0].get("title") || t("slide-create.unamed-media"),
-            error: saveMediaError.data["hydra:description"],
-          }),
-          true
-        );
+        const errorText = t("slide-create.error-save-media", {
+          title:
+            submittingMedia[0].get("title") || t("slide-create.unamed-media"),
+          error: saveMediaError.data["hydra:description"],
+        });
+        displayError(errorText);
       }
     }
   }, [isSaveMediaSuccess]);
@@ -234,7 +235,7 @@ function SlideCreate() {
   useEffect(() => {
     if (isSaveSuccess) {
       setSubmitting(false);
-      displayToast(
+      displaySuccess(
         t("slide-create.saved", {
           title: formStateObject.title || t("slide-create.unamed-slide"),
         })
@@ -245,16 +246,10 @@ function SlideCreate() {
   // If save has error, display toast and set submitting false
   useEffect(() => {
     if (saveError) {
-      const error = saveError.data
+      const errorText = saveError.data
         ? saveError.data["hydra:description"]
         : saveError.error;
-      displayToast(
-        t("slide-create.save-slide-error", {
-          title: formStateObject.title || t("slide-create.unamed-slide"),
-          error,
-        }),
-        true
-      );
+      displayError(errorText);
       setSubmitting(false);
     }
   }, [saveError]);

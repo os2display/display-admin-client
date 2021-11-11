@@ -56,7 +56,15 @@ function App() {
             <SideBar />
             <Col lg={9} xl={10}>
               <TopBar />
-              <ToastContainer />
+              <ToastContainer
+                autoClose="10000"
+                position="bottom-right"
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                progress={undefined}
+              />
               <main className="col p-3">
                 <Switch>
                   <Route path="/playlist/create" component={PlaylistCreate} />

@@ -10,7 +10,10 @@ import {
   usePutV1SlidesByIdMutation,
   api,
 } from "../../redux/api/api.generated";
-import displayToast from "../util/list/toast-component/display-toast";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 import SlideForm from "./slide-form";
 import idFromUrl from "../util/helpers/id-from-url";
 
@@ -293,7 +296,7 @@ function SlideEdit() {
         newFormStateObject.content[firstMediaField] = mediaData["@id"];
 
         // Display toast with success message
-        displayToast(
+        displaySuccess(
           t("slide-edit.saved-media", {
             id: idFromUrl(mediaData["@id"]),
             title: mediaData.title || t("slide-edit.unamed-media"),
@@ -311,13 +314,12 @@ function SlideEdit() {
       } else if (saveMediaError) {
         // If save media has error, display toast and set submitting false
         setSubmitting(false);
-        displayToast(
+        displayError(
           t("slide-edit.error-save-media", {
             title:
               submittingMedia[0].get("title") || t("slide-edit.unamed-media"),
             error: saveMediaError.data["hydra:description"],
-          }),
-          true
+          })
         );
       }
     }
@@ -326,11 +328,12 @@ function SlideEdit() {
   // If save is success, display toast and set submitting false
   useEffect(() => {
     if (isSaveSuccess) {
-      displayToast(
+      displaySuccess(
         t("slide-edit.saved", {
           title: formStateObject.title || t("slide-create.unamed-slide"),
         })
       );
+
       setSubmitting(false);
     }
   }, [isSaveSuccess]);
@@ -342,13 +345,13 @@ function SlideEdit() {
       const error = saveError.data
         ? saveError.data["hydra:description"]
         : saveError.error;
-      displayToast(
+      displayError(
         t("slide-edit.save-slide-error", {
           title: formStateObject.title || t("slide-create.unamed-slide"),
           error,
-        }),
-        true
+        })
       );
+
       setSubmitting(false);
     }
   }, [saveError]);
@@ -356,12 +359,11 @@ function SlideEdit() {
   // If getting slide has error, display toast
   useEffect(() => {
     if (getSlideError) {
-      displayToast(
+      displayError(
         t("slide-edit.get-slide-error", {
           id,
           error: getSlideError?.data["hydra:description"],
-        }),
-        true
+        })
       );
       setSubmitting(false);
     }
