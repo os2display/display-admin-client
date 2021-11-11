@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import set from "lodash.set";
 import dayjs from "dayjs";
+import { ulid } from "ulid";
 import {
   useGetV1SlidesByIdQuery,
   usePostMediaCollectionMutation,
@@ -12,7 +13,6 @@ import {
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
 import idFromUrl from "../util/helpers/id-from-url";
-import { ulid } from "ulid";
 
 /**
  * The slide edit component.
@@ -218,9 +218,6 @@ function SlideEdit() {
 
     const newField = [];
 
-    console.log('target:');
-    console.log(target);
-
     // Handle each entry in field.
     if (Array.isArray(fieldValue)) {
       fieldValue.forEach((entry) => {
@@ -241,16 +238,12 @@ function SlideEdit() {
         }
         // Previously uploaded file.
         else {
-          newField.push(entry['@id']);
+          newField.push(entry["@id"]);
         }
       });
     }
 
-    set(
-      localFormStateObject.content,
-      fieldId,
-      newField
-    );
+    set(localFormStateObject.content, fieldId, newField);
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
@@ -268,11 +261,11 @@ function SlideEdit() {
         const fieldData = formStateObject.content[fieldName];
 
         if (Array.isArray(fieldData)) {
-          fieldData.forEach((id) => {
-            const entry = mediaData[id];
+          fieldData.forEach((mediaId) => {
+            const entry = mediaData[mediaId];
 
             if (entry.file && entry.file instanceof File) {
-              newSubmittingMedia.push({ fieldName, entry, tempId: id });
+              newSubmittingMedia.push({ fieldName, entry, tempId: mediaId });
             }
           });
         }
@@ -350,8 +343,8 @@ function SlideEdit() {
 
         // Replace TEMP-- id with real id.
         newFormStateObject.content[submittedMedia.fieldName] =
-          newFormStateObject.content[submittedMedia.fieldName].map((id) =>
-            id === submittedMedia.tempId ? savedMediaData["@id"] : id
+          newFormStateObject.content[submittedMedia.fieldName].map((mediaId) =>
+            mediaId === submittedMedia.tempId ? savedMediaData["@id"] : mediaId
           );
         setFormStateObject(newFormStateObject);
 

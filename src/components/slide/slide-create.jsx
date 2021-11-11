@@ -2,7 +2,6 @@ import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import { ulid } from "ulid";
-import uniqWith from "lodash.uniqwith";
 import {
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
@@ -154,16 +153,12 @@ function SlideCreate() {
         }
         // Previously uploaded file.
         else {
-          newField.push(entry['@id']);
+          newField.push(entry["@id"]);
         }
       });
     }
 
-    set(
-      localFormStateObject.content,
-      fieldId,
-      newField
-    );
+    set(localFormStateObject.content, fieldId, newField);
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
@@ -262,8 +257,8 @@ function SlideCreate() {
 
         // Replace TEMP-- id with real id.
         newFormStateObject.content[submittedMedia.fieldName] =
-          newFormStateObject.content[submittedMedia.fieldName].map((id) =>
-            id === submittedMedia.tempId ? savedMediaData["@id"] : id
+          newFormStateObject.content[submittedMedia.fieldName].map((mediaId) =>
+            mediaId === submittedMedia.tempId ? savedMediaData["@id"] : mediaId
           );
         setFormStateObject(newFormStateObject);
 
