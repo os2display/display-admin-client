@@ -1,13 +1,13 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import { ulid } from "ulid";
+import uniqWith from "lodash.uniqwith";
 import {
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
-import { ulid } from "ulid";
-import uniqWith from "lodash.uniqwith";
 
 /**
  * The slide create component.
@@ -119,41 +119,6 @@ function SlideCreate() {
   }
 
   /**
-   * Handle change to a media entity.
-   *
-   * @param entry
-   * @param fieldId
-   * @param localFormStateObject
-   * @param localMediaData
-   * @param isArrayEntry
-   */
-  function handleMediaEntry(entry, fieldId, localFormStateObject, localMediaData, isArrayEntry) {
-    // Not uploaded file.
-    if (entry.file && entry.file instanceof File) {
-      // Create a tempId for the media.
-      const tempId = entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
-
-      if (isArrayEntry) {
-        if (!Array.isArray(localFormStateObject.content[fieldId])) {
-          localFormStateObject.content[fieldId] = [];
-        }
-
-        set(localFormStateObject.content, fieldId, uniqWith([...localFormStateObject.content[fieldId], tempId]));
-      }
-      else {
-        set(localFormStateObject.content, fieldId, tempId);
-      }
-
-      entry.tempId = tempId;
-      set(localMediaData, tempId, entry);
-    }
-    // Previously uploaded file.
-    else {
-      console.log('Previously uploaded file. @TODO');
-    }
-  }
-
-  /**
    * Handle change to a media.
    *
    * @param {string} fieldName The field name.
@@ -167,14 +132,35 @@ function SlideCreate() {
     // Set field as a field to look into for new references.
     setMediaFields([...new Set([...mediaFields, fieldId])]);
 
+    // @TODO: Handle removal of media.
+
     // Handle each entry in field.
     if (Array.isArray(fieldValue)) {
       fieldValue.forEach((entry) => {
-        handleMediaEntry(entry, fieldId, localFormStateObject, localMediaData, true);
+        // New file.
+        if (entry.file && entry.file instanceof File) {
+          // Create a tempId for the media.
+          const tempId = entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
+
+          if (!Array.isArray(localFormStateObject.content[fieldId])) {
+            localFormStateObject.content[fieldId] = [];
+          }
+
+          set(
+            localFormStateObject.content,
+            fieldId,
+            uniqWith([...localFormStateObject.content[fieldId], tempId])
+          );
+
+          const newEntry = { ...entry };
+          newEntry.tempId = tempId;
+          set(localMediaData, tempId, newEntry);
+        }
+        // Previously uploaded file.
+        else {
+          // @TODO: Handle existing media.
+        }
       });
-    }
-    else {
-      handleMediaEntry(fieldValue, fieldId, localFormStateObject, localMediaData, false);
     }
 
     setFormStateObject(localFormStateObject);
@@ -197,7 +183,7 @@ function SlideCreate() {
             const entry = mediaData[id];
 
             if (entry.file && entry.file instanceof File) {
-              newSubmittingMedia.push({fieldName, entry, tempId: id});
+              newSubmittingMedia.push({ fieldName, entry, tempId: id });
             }
           });
         }
@@ -214,7 +200,7 @@ function SlideCreate() {
     if (submitting) {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
-        const entry = media.entry;
+        const { entry } = media;
 
         // Submit media.
         const formData = new FormData();
@@ -273,8 +259,10 @@ function SlideCreate() {
         newFormStateObject.media.push(savedMediaData["@id"]);
 
         // Replace TEMP-- id with real id.
-        const newList = newFormStateObject.content[submittedMedia.fieldName].map((id) => id === submittedMedia.tempId ? savedMediaData["@id"] : id);
-        newFormStateObject.content[submittedMedia.fieldName] = newList;
+        newFormStateObject.content[submittedMedia.fieldName] =
+          newFormStateObject.content[submittedMedia.fieldName].map((id) =>
+            id === submittedMedia.tempId ? savedMediaData["@id"] : id
+          );
         setFormStateObject(newFormStateObject);
 
         const newMediaData = { ...mediaData };
@@ -313,7 +301,7 @@ function SlideCreate() {
           errors={saveError || false}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
-//          mediaFields={mediaFields}
+          mediaFields={mediaFields}
         />
       )}
     </>

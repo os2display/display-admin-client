@@ -51,7 +51,7 @@ function SlideForm({
   isSaveSuccess,
   isLoading,
   mediaData,
-//  mediaFields,
+  mediaFields,
   errors,
   selectTheme,
   selectedTheme,
@@ -217,14 +217,12 @@ function SlideForm({
             <>
               <ContentBody>
                 <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
-                {/*
                 <RemoteComponentWrapper
                   url={selectedTemplate?.resources?.component}
                   content={slide.content}
                   mediaFields={mediaFields}
                   mediaData={mediaData}
                 />
-                  */}
               </ContentBody>
               <ContentBody>
                 {contentFormElements.map((formElement) => (
@@ -252,7 +250,7 @@ function SlideForm({
                   name="published.from"
                   type="datetime-local"
                   label={t("slide-form.slide-from-label")}
-                  value={slide.published.from ?? ''}
+                  value={slide.published.from ?? ""}
                   onChange={handleInput}
                 />
               </Col>
@@ -262,7 +260,7 @@ function SlideForm({
                   name="published.to"
                   type="datetime-local"
                   label={t("slide-form.slide-to-label")}
-                  value={slide.published.to ?? ''}
+                  value={slide.published.to ?? ""}
                   onChange={handleInput}
                 />
               </Col>
@@ -335,10 +333,10 @@ SlideForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
-  selectedTheme: PropTypes.string,
   isSaveSuccess: PropTypes.bool.isRequired,
-  selectTemplate: PropTypes.func.isRequired,
   selectTheme: PropTypes.func.isRequired,
+  selectedTheme: PropTypes.string,
+  selectTemplate: PropTypes.func.isRequired,
   selectedTemplate: PropTypes.shape({
     "@id": PropTypes.string,
     resources: PropTypes.shape({
@@ -354,7 +352,7 @@ SlideForm.propTypes = {
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
-//  mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
+  mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SlideForm;

@@ -32,16 +32,14 @@ function RenderFormElement({
 }) {
   const { t } = useTranslation("common");
 
-  const handleImageUpload = (target) => {
-    onMediaChange(target);
-  };
-
   /**
    * @param {object} formData - The data for form input.
    * @returns {object | string} - Returns a rendered jsx object.
    */
   function renderElement(formData) {
     let returnElement;
+    let field;
+    let inputImages;
 
     switch (formData.input) {
       case "input":
@@ -159,17 +157,16 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        const field = formStateObject[formData.name];
-
-        let inputImages = null;
+        field = formStateObject[formData.name];
+        inputImages = null;
 
         if (Array.isArray(field)) {
           inputImages = [];
           field.forEach((mediaId) => {
-            if (mediaData.hasOwnProperty(mediaId)) {
+            if (Object.prototype.hasOwnProperty.call(mediaData, mediaId)) {
               inputImages.push(mediaData[mediaId]);
             }
-          })
+          });
         }
 
         returnElement = (
