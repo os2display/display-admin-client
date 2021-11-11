@@ -33,8 +33,7 @@ function RenderFormElement({
   const { t } = useTranslation("common");
 
   const handleImageUpload = (target) => {
-    onMediaChange(data.name);
-    onChange(target);
+    onMediaChange(target);
   };
 
   /**
@@ -43,7 +42,6 @@ function RenderFormElement({
    */
   function renderElement(formData) {
     let returnElement;
-    let inputImage = null;
 
     switch (formData.input) {
       case "input":
@@ -161,16 +159,17 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        // Load image from mediaData if it is a @id
-        if (typeof formStateObject[formData.name] === "string") {
-          inputImage = { ...mediaData[formStateObject[formData.name]] };
-          if (inputImage?.assets?.uri) {
-            inputImage.url = inputImage.assets.uri;
-          }
-          inputImage.disableInput = true;
-        } else if (formStateObject[formData.name]?.file) {
-          inputImage = { ...formStateObject[formData.name] };
-          inputImage.url = inputImage.file.url;
+        const field = formStateObject[formData.name];
+
+        let inputImages = null;
+
+        if (Array.isArray(field)) {
+          inputImages = [];
+          field.forEach((mediaId) => {
+            if (mediaData.hasOwnProperty(mediaId)) {
+              inputImages.push(mediaData[mediaId]);
+            }
+          })
         }
 
         returnElement = (
@@ -183,8 +182,8 @@ function RenderFormElement({
             <ImageUploader
               errors={formData.required ? errors : null}
               multipleImages={data.multipleImages}
-              handleImageUpload={handleImageUpload}
-              inputImage={inputImage}
+              handleImageUpload={onMediaChange}
+              inputImage={inputImages}
               name={formData.name}
               invalidText={
                 data.multipleImages
