@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import set from "lodash.set";
 import dayjs from "dayjs";
+import { ulid } from "ulid";
 import {
   useGetV1SlidesByIdQuery,
   usePostMediaCollectionMutation,
@@ -29,7 +30,7 @@ function SlideEdit() {
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
-  const [loadedMedia, setLoadedMedia] = useState({});
+  const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [selectedTheme, setSelectedTheme] = useState();
 
@@ -47,7 +48,7 @@ function SlideEdit() {
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: mediaData, isSuccess: isSaveMediaSuccess },
+    { data: savedMediaData, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -110,44 +111,6 @@ function SlideEdit() {
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject.content, target.id, target.value);
     setFormStateObject(localFormStateObject);
-  }
-
-  /**
-   * Handle change to a media.
-   *
-   * @param {string} fieldName The field that has a media.
-   */
-  function handleMedia(fieldName) {
-    setMediaFields([...new Set([...mediaFields, fieldName])]);
-  }
-
-  /** Handles submit. */
-  function handleSubmit() {
-    const newSubmittingMedia = [];
-
-    // Setup submittingMedia list.
-    mediaFields.forEach((fieldName) => {
-      if (
-        Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)
-      ) {
-        const contentField = formStateObject.content[fieldName];
-        contentField.forEach((element) => {
-          const formData = new FormData();
-          formData.append("file", element.file);
-          formData.append("title", element.title);
-          formData.append("description", element.description);
-          formData.append("license", element.license);
-          // @TODO: Should these be optional in the API?
-          formData.append("modifiedBy", "");
-          formData.append("createdBy", "");
-          newSubmittingMedia.push(formData);
-        });
-      }
-    });
-
-    // Trigger submitting hooks.
-    setSubmitting(true);
-    setSubmittingMedia(newSubmittingMedia);
   }
 
   useEffect(() => {
@@ -215,13 +178,13 @@ function SlideEdit() {
       });
 
       Promise.all(promises).then((results) => {
-        const newLoadedMedia = { ...loadedMedia };
+        const newMediaData = { ...mediaData };
 
         results.forEach((result) => {
-          newLoadedMedia[result.data["@id"]] = { ...result.data };
+          newMediaData[result.data["@id"]] = { ...result.data };
         });
 
-        setLoadedMedia(newLoadedMedia);
+        setMediaData(newMediaData);
       });
 
       // Set published to format accepted by bootstrap date component
@@ -239,22 +202,111 @@ function SlideEdit() {
     }
   }, [getSlideData]);
 
+  /**
+   * Handle change to a media.
+   *
+   * @param {string} fieldName The field name.
+   */
+  function handleMedia({ target }) {
+    const fieldValue = target.value;
+    const fieldId = target.id;
+    const localFormStateObject = { ...formStateObject };
+    const localMediaData = { ...mediaData };
+
+    // Set field as a field to look into for new references.
+    setMediaFields([...new Set([...mediaFields, fieldId])]);
+
+    const newField = [];
+
+    // Handle each entry in field.
+    if (Array.isArray(fieldValue)) {
+      fieldValue.forEach((entry) => {
+        // New file.
+        if (entry.file && entry.file instanceof File) {
+          if (!Array.isArray(localFormStateObject.content[fieldId])) {
+            localFormStateObject.content[fieldId] = [];
+          }
+
+          // Create a tempId for the media.
+          const tempId = entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
+
+          newField.push(tempId);
+
+          const newEntry = { ...entry };
+          newEntry.tempId = tempId;
+          set(localMediaData, tempId, newEntry);
+        }
+        // Previously uploaded file.
+        else {
+          newField.push(entry["@id"]);
+        }
+      });
+    }
+
+    set(localFormStateObject.content, fieldId, newField);
+
+    setFormStateObject(localFormStateObject);
+    setMediaData(localMediaData);
+  }
+
+  /** Handles submit. */
+  function handleSubmit() {
+    const newSubmittingMedia = [];
+
+    // Setup submittingMedia list.
+    mediaFields.forEach((fieldName) => {
+      if (
+        Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)
+      ) {
+        const fieldData = formStateObject.content[fieldName];
+
+        if (Array.isArray(fieldData)) {
+          fieldData.forEach((mediaId) => {
+            const entry = mediaData[mediaId];
+
+            if (entry.file && entry.file instanceof File) {
+              newSubmittingMedia.push({ fieldName, entry, tempId: mediaId });
+            }
+          });
+        }
+      }
+    });
+
+    // Trigger submitting hooks.
+    setSubmitting(true);
+    setSubmittingMedia(newSubmittingMedia);
+  }
+
   /** Handle submitting. */
   useEffect(() => {
     if (submitting) {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
+        const { entry } = media;
 
         // Submit media.
-        PostV1MediaCollection({ body: media });
+        const formData = new FormData();
+        formData.append("file", entry.file);
+        formData.append("title", entry.title);
+        formData.append("description", entry.description);
+        formData.append("license", entry.license);
+        // @TODO: Should these be optional in the API?
+        formData.append("modifiedBy", "");
+        formData.append("createdBy", "");
+
+        PostV1MediaCollection({ body: formData });
       } else {
+        // All media have been submitted. Submit slide.
+
+        // Set published.
         const from = formStateObject.published.from
           ? new Date(formStateObject.published.from).toISOString()
           : null;
         const to = formStateObject.published.to
           ? new Date(formStateObject.published.to).toISOString()
           : null;
-        // All media have been submitted. Submit slide.
+
+        // Construct data for submitting.
         const saveData = {
           id,
           slideSlideInput: JSON.stringify({
@@ -283,22 +335,25 @@ function SlideEdit() {
   useEffect(() => {
     if (submitting) {
       if (isSaveMediaSuccess) {
-        const newMediaFields = [...mediaFields];
-        const firstMediaField = newMediaFields.shift();
-        setMediaFields(newMediaFields);
+        const newSubmittingMedia = [...submittingMedia];
+        const submittedMedia = newSubmittingMedia.shift();
 
         const newFormStateObject = { ...formStateObject };
-        newFormStateObject.media.push(mediaData["@id"]);
-        newFormStateObject.content[firstMediaField] = mediaData["@id"];
+        newFormStateObject.media.push(savedMediaData["@id"]);
+
+        // Replace TEMP-- id with real id.
+        newFormStateObject.content[submittedMedia.fieldName] =
+          newFormStateObject.content[submittedMedia.fieldName].map((mediaId) =>
+            mediaId === submittedMedia.tempId ? savedMediaData["@id"] : mediaId
+          );
         setFormStateObject(newFormStateObject);
 
-        const newLoadedMedia = { ...loadedMedia };
-        newLoadedMedia[mediaData["@id"]] = mediaData;
-        setLoadedMedia(newLoadedMedia);
+        const newMediaData = { ...mediaData };
+        newMediaData[savedMediaData["@id"]] = savedMediaData;
+        setMediaData(newMediaData);
 
-        // Move to next media to upload.
-        const newList = submittingMedia.slice(1);
-        setSubmittingMedia(newList);
+        // Save new list.
+        setSubmittingMedia(newSubmittingMedia);
       }
     }
   }, [isSaveMediaSuccess]);
@@ -322,7 +377,7 @@ function SlideEdit() {
           handleSubmit={handleSubmit}
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
-          loadedMedia={loadedMedia}
+          mediaData={mediaData}
           isLoading={getSlideIsLoading}
           isSaveSuccess={isSaveSuccess}
           isSaving={submitting || isSaving}

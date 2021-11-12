@@ -30,7 +30,7 @@ import RemoteComponentWrapper from "./remote-component-wrapper";
  * @param {Array} props.errors Array of errors.
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
- * @param {Array} props.loadedMedia Object of loaded media.
+ * @param {Array} props.mediaData Object of loaded media.
  * @param {object} props.mediaFields The uploaded but not yet saved media fields.
  * @param {Function} props.selectTemplate Function to handle select of template.
  * @param {object} props.selectedTemplate Selected template.
@@ -50,8 +50,8 @@ function SlideForm({
   headerText,
   isSaveSuccess,
   isLoading,
+  mediaData,
   mediaFields,
-  loadedMedia,
   errors,
   selectTheme,
   selectedTheme,
@@ -221,7 +221,7 @@ function SlideForm({
                   url={selectedTemplate?.resources?.component}
                   content={slide.content}
                   mediaFields={mediaFields}
-                  loadedMedia={loadedMedia}
+                  mediaData={mediaData}
                 />
               </ContentBody>
               <ContentBody>
@@ -232,7 +232,7 @@ function SlideForm({
                     onChange={handleContent}
                     onMediaChange={handleMedia}
                     name={formElement.name}
-                    loadedMedia={loadedMedia}
+                    mediaData={mediaData}
                     formStateObject={slide.content}
                     requiredFieldCallback={() => {
                       return false;
@@ -250,7 +250,7 @@ function SlideForm({
                   name="published.from"
                   type="datetime-local"
                   label={t("slide-form.slide-from-label")}
-                  value={slide.published.from}
+                  value={slide.published.from ?? ""}
                   onChange={handleInput}
                 />
               </Col>
@@ -260,7 +260,7 @@ function SlideForm({
                   name="published.to"
                   type="datetime-local"
                   label={t("slide-form.slide-to-label")}
-                  value={slide.published.to}
+                  value={slide.published.to ?? ""}
                   onChange={handleInput}
                 />
               </Col>
@@ -325,6 +325,7 @@ function SlideForm({
 
 SlideForm.defaultProps = {
   selectedTemplate: null,
+  selectedTheme: [],
 };
 
 SlideForm.propTypes = {
@@ -333,10 +334,12 @@ SlideForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
-  selectedTheme: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
-  selectTemplate: PropTypes.func.isRequired,
   selectTheme: PropTypes.func.isRequired,
+  selectedTheme: PropTypes.arrayOf(
+    PropTypes.shape({ "@id": PropTypes.string.isRequired })
+  ),
+  selectTemplate: PropTypes.func.isRequired,
   selectedTemplate: PropTypes.shape({
     "@id": PropTypes.string,
     resources: PropTypes.shape({
@@ -351,7 +354,7 @@ SlideForm.propTypes = {
   ]).isRequired,
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
-  loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
   mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

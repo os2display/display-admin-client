@@ -18,7 +18,7 @@ import RichText from "../util/forms/rich-text";
  * @param {Function} props.onChange - Callback, if the value of the field changes.
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onMediaChange - When media have changed call this function.
- * @param {Array} props.loadedMedia - Array of loaded media entities.
+ * @param {Array} props.mediaData - Array of loaded media entities.
  * @returns {object} - A form element.
  */
 function RenderFormElement({
@@ -28,13 +28,24 @@ function RenderFormElement({
   onChange,
   onMediaChange,
   formStateObject,
-  loadedMedia,
+  mediaData,
 }) {
   const { t } = useTranslation("common");
 
-  const handleImageUpload = (target) => {
-    onMediaChange(data.name);
-    onChange(target);
+  const getInputImage = (formData) => {
+    const field = formStateObject[formData.name];
+    let inputImages = null;
+
+    if (Array.isArray(field)) {
+      inputImages = [];
+      field.forEach((mediaId) => {
+        if (Object.prototype.hasOwnProperty.call(mediaData, mediaId)) {
+          inputImages.push(mediaData[mediaId]);
+        }
+      });
+    }
+
+    return inputImages;
   };
 
   /**
@@ -43,7 +54,6 @@ function RenderFormElement({
    */
   function renderElement(formData) {
     let returnElement;
-    let inputImage = null;
 
     switch (formData.input) {
       case "input":
@@ -161,18 +171,6 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        // Load image from loadedMedia if it is a @id
-        if (typeof formStateObject[formData.name] === "string") {
-          inputImage = { ...loadedMedia[formStateObject[formData.name]] };
-          if (inputImage?.assets?.uri) {
-            inputImage.url = inputImage.assets.uri;
-          }
-          inputImage.disableInput = true;
-        } else if (formStateObject[formData.name]?.file) {
-          inputImage = { ...formStateObject[formData.name] };
-          inputImage.url = inputImage.file.url;
-        }
-
         returnElement = (
           <>
             {formData?.label && (
@@ -183,8 +181,8 @@ function RenderFormElement({
             <ImageUploader
               errors={formData.required ? errors : null}
               multipleImages={data.multipleImages}
-              handleImageUpload={handleImageUpload}
-              inputImage={inputImage}
+              handleImageUpload={onMediaChange}
+              inputImage={getInputImage(formData)}
               name={formData.name}
               invalidText={
                 data.multipleImages
@@ -230,7 +228,7 @@ RenderFormElement.propTypes = {
   requiredFieldCallback: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onMediaChange: PropTypes.func.isRequired,
-  loadedMedia: PropTypes.objectOf(PropTypes.object).isRequired,
+  mediaData: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export default RenderFormElement;

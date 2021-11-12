@@ -15,11 +15,11 @@ import "./remote-component-wrapper.scss";
  * @param {object} props Props.
  * @param {object} props.content The slide content.
  * @param {boolean} props.url The url for the remote component.
- * @param {Array} props.loadedMedia Object of loaded media.
+ * @param {Array} props.mediaData Object of loaded media.
  * @param {object} props.mediaFields The uploaded but not yet saved media fields.
  * @returns {object} The component.
  */
-function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
+function RemoteComponentWrapper({ content, url, mediaFields, mediaData }) {
   // Translations for checkbox label
   const { t } = useTranslation("common");
 
@@ -57,11 +57,11 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
 
       // If the loaded media exist both in content and loaded media
       // Then add it to the mediaobject
-      if (Object.keys(loadedMedia).length > 0) {
+      if (Object.keys(mediaData).length > 0) {
         Object.values(content).forEach((value) => {
-          if (loadedMedia[value]) {
+          if (mediaData[value]) {
             mediaObject = {
-              [value]: { assets: loadedMedia[value].assets },
+              [value]: { assets: mediaData[value].assets },
               ...mediaObject,
             };
           }
@@ -100,7 +100,7 @@ function RemoteComponentWrapper({ content, url, mediaFields, loadedMedia }) {
         });
       }
     }
-  }, [loadedMedia, mediaFields, show]);
+  }, [mediaData, mediaFields, show]);
 
   return (
     <>
@@ -131,7 +131,7 @@ RemoteComponentWrapper.propTypes = {
   content: PropTypes.objectOf(PropTypes.any).isRequired,
   url: PropTypes.string.isRequired,
   mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
-  loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default RemoteComponentWrapper;
