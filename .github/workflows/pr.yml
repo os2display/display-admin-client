@@ -75,7 +75,7 @@ jobs:
           PHP_FPM_SERVER: localhost
           NGINX_FPM_UPLOAD_MAX: 8M
         ports:
-          - '80'
+          - 80:80
       api:
         image: itkdev/os2display-api-service:alpha
         env:
