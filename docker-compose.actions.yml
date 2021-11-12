@@ -1,17 +1,8 @@
 version: "3.4"
 
-networks:
-  frontend:
-    external: true
-  app:
-    driver: bridge
-    internal: false
-
 services:
   node:
     image: node:14
-    networks:
-      - app
     working_dir: /app
     environment:
       - NODE_ENV=development
@@ -20,12 +11,10 @@ services:
 
   cypress:
     image: cypress/included:7.7.0
-    networks:
-      - app
-      - frontend
+    network_mode: "host"
     environment:
       - CYPRESS_VIDEO=false
-      - CYPRESS_baseUrl=http://host.docker.internal
+      - CYPRESS_baseUrl=http://127.0.0.1
       #- DISPLAY=host.docker.internal:0
     volumes:
       - .:/e2e

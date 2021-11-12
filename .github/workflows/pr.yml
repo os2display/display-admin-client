@@ -97,12 +97,12 @@ jobs:
         run: docker network create frontend
 
       - name: Install client
-        run: docker-compose --file docker-compose.test.yml run node yarn
+        run: docker-compose --file docker-compose.actions.yml run node yarn
 
       - name: Cypress run
-        run: docker-compose --file docker-compose.test.yml run cypress run --browser ${{ matrix.browser }}
+        run: docker-compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
         env:
-          API_PATH: http://localhost/
+          API_PATH: http://127.0.0.1/
 
 #      - name: Archive screenshots
 #        if: ${{ failure() }}
