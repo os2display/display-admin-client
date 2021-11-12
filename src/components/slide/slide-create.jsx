@@ -95,11 +95,14 @@ function SlideCreate() {
    */
   const selectTheme = ({ target }) => {
     const { value, id: targetId } = target;
-    let themeId = "";
+    let themeId = null;
+
     if (value.length > 0) {
       themeId = value[0]["@id"];
     }
+
     setSelectedTheme(value);
+
     handleInput({
       target: { id: targetId, value: themeId },
     });

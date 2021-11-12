@@ -325,6 +325,7 @@ function SlideForm({
 
 SlideForm.defaultProps = {
   selectedTemplate: null,
+  selectedTheme: [],
 };
 
 SlideForm.propTypes = {
@@ -335,7 +336,9 @@ SlideForm.propTypes = {
   headerText: PropTypes.string.isRequired,
   isSaveSuccess: PropTypes.bool.isRequired,
   selectTheme: PropTypes.func.isRequired,
-  selectedTheme: PropTypes.string,
+  selectedTheme: PropTypes.arrayOf(
+    PropTypes.shape({ "@id": PropTypes.string.isRequired })
+  ),
   selectTemplate: PropTypes.func.isRequired,
   selectedTemplate: PropTypes.shape({
     "@id": PropTypes.string,
