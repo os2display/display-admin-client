@@ -46,7 +46,7 @@ function RenderFormElement({
     }
 
     return inputImages;
-  }
+  };
 
   /**
    * @param {object} formData - The data for form input.

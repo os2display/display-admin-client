@@ -40,9 +40,7 @@ function ImageUploader({
     const imageIndex = localImages.findIndex((img) => img.url === image.url);
     localImages[imageIndex] = image;
 
-    const uniqueImages = [
-      ...new Set(localImages),
-    ];
+    const uniqueImages = [...new Set(localImages)];
 
     setImages(uniqueImages);
 
