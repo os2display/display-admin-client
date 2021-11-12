@@ -72,7 +72,7 @@ FormInput.defaultProps = {
   formGroupClasses: "",
   placeholder: "",
   type: "text",
-  value: "",
+  value: null,
   errors: null,
   invalidText: null,
   disabled: false,
