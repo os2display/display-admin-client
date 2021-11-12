@@ -115,8 +115,10 @@ function SlideCreate() {
    * @param {object} props.target The field and value that should be updated.
    */
   function handleContent({ target }) {
+    // Convert numbers
+    const value = target.type === 'number' ? target.valueAsNumber : target.value;
     const localFormStateObject = { ...formStateObject };
-    set(localFormStateObject.content, target.id, target.value);
+    set(localFormStateObject.content, target.id, value);
     setFormStateObject(localFormStateObject);
   }
 
