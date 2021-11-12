@@ -99,9 +99,11 @@ jobs:
       - name: Install client
         run: docker-compose run node yarn
 
-#      - name: Cypress run
-#        run: docker-compose run cypress run --browser ${{ matrix.browser }}
-#
+      - name: Cypress run
+        run: docker-compose run cypress run --browser ${{ matrix.browser }}
+        env:
+          API_PATH: http://localhost/
+
 #      - name: Archive screenshots
 #        if: ${{ failure() }}
 #        uses: actions/upload-artifact@v2
