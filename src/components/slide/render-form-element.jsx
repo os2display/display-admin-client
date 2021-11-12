@@ -32,14 +32,28 @@ function RenderFormElement({
 }) {
   const { t } = useTranslation("common");
 
+  const getInputImage = (formData) => {
+    const field = formStateObject[formData.name];
+    let inputImages = null;
+
+    if (Array.isArray(field)) {
+      inputImages = [];
+      field.forEach((mediaId) => {
+        if (Object.prototype.hasOwnProperty.call(mediaData, mediaId)) {
+          inputImages.push(mediaData[mediaId]);
+        }
+      });
+    }
+
+    return inputImages;
+  }
+
   /**
    * @param {object} formData - The data for form input.
    * @returns {object | string} - Returns a rendered jsx object.
    */
   function renderElement(formData) {
     let returnElement;
-    let field;
-    let inputImages;
 
     switch (formData.input) {
       case "input":
@@ -157,18 +171,6 @@ function RenderFormElement({
           requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
         }
 
-        field = formStateObject[formData.name];
-        inputImages = null;
-
-        if (Array.isArray(field)) {
-          inputImages = [];
-          field.forEach((mediaId) => {
-            if (Object.prototype.hasOwnProperty.call(mediaData, mediaId)) {
-              inputImages.push(mediaData[mediaId]);
-            }
-          });
-        }
-
         returnElement = (
           <>
             {formData?.label && (
@@ -180,7 +182,7 @@ function RenderFormElement({
               errors={formData.required ? errors : null}
               multipleImages={data.multipleImages}
               handleImageUpload={onMediaChange}
-              inputImage={inputImages}
+              inputImage={getInputImage(formData)}
               name={formData.name}
               invalidText={
                 data.multipleImages

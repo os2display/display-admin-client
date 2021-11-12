@@ -29,7 +29,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
   }
 
   const imageUrl = image.url ? image.url : image.assets?.uri;
-  const disableInput = image?.assets?.uri;
+  const disableInput = typeof image?.assets?.uri === 'string';
 
   return (
     <Row className="mb-3">

@@ -138,13 +138,12 @@ function SlideCreate() {
       fieldValue.forEach((entry) => {
         // New file.
         if (entry.file && entry.file instanceof File) {
-          // Create a tempId for the media.
-          const tempId = entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
-
           if (!Array.isArray(localFormStateObject.content[fieldId])) {
             localFormStateObject.content[fieldId] = [];
           }
 
+          // Create a tempId for the media.
+          const tempId = entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
           newField.push(tempId);
 
           const newEntry = { ...entry };
