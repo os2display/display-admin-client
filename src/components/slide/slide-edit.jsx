@@ -109,7 +109,8 @@ function SlideEdit() {
    */
   function handleContent({ target }) {
     // Convert numbers
-    const value = target.type === 'number' ? target.valueAsNumber : target.value;
+    const value =
+      target.type === "number" ? target.valueAsNumber : target.value;
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject.content, target.id, value);
     setFormStateObject(localFormStateObject);
