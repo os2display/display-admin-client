@@ -72,7 +72,7 @@ jobs:
       nginx-api:
         image: itkdev/os2display-api-service-nginx:alpha
         env:
-          PHP_FPM_SERVER: localhost
+          PHP_FPM_SERVER: 127.0.0.1
           NGINX_FPM_UPLOAD_MAX: 8M
         ports:
           - 80:80
@@ -88,6 +88,8 @@ jobs:
           APP_CORS_ALLOW_ORIGIN: '*'
           APP_DATABASE_URL: mysql://db:db@127.0.0.1:3306/db?serverVersion=mariadb-10.4.21
           APP_DEFAULT_DATE_FORMAT: Y-m-d\TH:i:s.v\Z
+        ports:
+          - 9000:9000
 
     steps:
       - name: Checkout
