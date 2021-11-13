@@ -68,34 +68,10 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      nginx-api:
-        image: itkdev/os2display-api-service-nginx:alpha
-        env:
-          PHP_FPM_SERVER: 127.0.0.1
-          NGINX_FPM_UPLOAD_MAX: 8M
-        ports:
-          - 80:80
-      api:
-        image: itkdev/os2display-api-service:alpha
-        env:
-          PHP_MAX_EXECUTION_TIME: 30
-          PHP_MEMORY_LIMIT: 128M
-          PHP_UPLOAD_MAX_FILESIZE: 8M
-          APP_ENV: prod
-          APP_TRUSTED_PROXIES: 127.0.0.1,REMOTE_ADDR
-          APP_SECRET: MySuperSecret
-          APP_CORS_ALLOW_ORIGIN: '*'
-          APP_DATABASE_URL: mysql://db:db@127.0.0.1:3306/db?serverVersion=mariadb-10.4.21
-          APP_DEFAULT_DATE_FORMAT: Y-m-d\TH:i:s.v\Z
-        ports:
-          - 9000:9000
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Setup network
         run: docker network create frontend
@@ -105,15 +81,20 @@ jobs:
 
       - name: Install and configure client
         run: |
-          docker-compose --file docker-compose.actions.yml run node yarn
           cp .docker/actions.config.json public/config.json
+          docker-compose --file docker-compose.actions.yml run node yarn
 
       - name: Run the application (and wait for it to be ready)
         run: |
           docker-compose --file docker-compose.actions.yml up -d
-          curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh --output wait-for-it.sh
-          chmod +x wait-for-it.sh
-          ./wait-for-it.sh http://127.0.0.1:3000/tags -- echo "Client is ready"
+          chmod +x .docker/wait-for-it.sh
+          ./.docker/wait-for-it.sh --timeout=30 --port=3000 127.0.0.1/tags  -- echo "Client is ready"
+
+      - name: Setup database and fixtures
+        run: |
+          docker-compose --file docker-compose.actions.yml exec -T api composer install -q --no-interaction --no-suggest --no-progress --prefer-dist
+          docker-compose --file docker-compose.actions.yml exec -T api bin/console doctrine:migrations:migrate --no-interaction
+          docker-compose --file docker-compose.actions.yml exec -T api bin/console hautelook:fixtures:load --env=dev --no-interaction
 
       - name: Cypress run
         run: docker-compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
