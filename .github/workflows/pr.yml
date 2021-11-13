@@ -50,7 +50,6 @@ jobs:
       - name: React coding standards
         run: yarn check-coding-standards
 
-#  @TODO: Fix test setup.
   cypress:
     name: Cypress
     runs-on: ubuntu-latest
@@ -95,21 +94,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Setup network
         run: docker network create frontend
 
-      - name: Install client
-        run: docker-compose --file docker-compose.actions.yml run node yarn
+      - name: Pull docker images
+        run: docker-compose --file docker-compose.actions.yml pull --quiet
+
+      - name: Install and configure client
+        run: |
+          docker-compose --file docker-compose.actions.yml run node yarn
+          cp .docker/actions.config.json public/config.json
+
+      - name: Run the application (and wait for it to be ready)
+        run: |
+          docker-compose --file docker-compose.actions.yml up -d
+          curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh --output wait-for-it.sh
+          chmod +x wait-for-it.sh
+          ./wait-for-it.sh http://127.0.0.1:3000/tags -- echo "Client is ready"
 
       - name: Cypress run
         run: docker-compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
-        env:
-          API_PATH: http://127.0.0.1/
 
-#      - name: Archive screenshots
-#        if: ${{ failure() }}
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: cypress-screenhosts-${{ matrix.browser }}
-#          path: cypress/screenshots
-#          retention-days: 7
+      - name: Archive screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenhosts-${{ matrix.browser }}
+          path: cypress/screenshots
+          retention-days: 7

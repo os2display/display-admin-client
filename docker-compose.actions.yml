@@ -3,18 +3,30 @@ version: "3.4"
 services:
   node:
     image: node:14
+    command: npm start
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     working_dir: /app
+    ports:
+      - "3000:3000"
     environment:
       - NODE_ENV=development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://node:3000/tags"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
     volumes:
       - .:/app:delegated
 
   cypress:
     image: cypress/included:7.7.0
-    network_mode: "host"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - CYPRESS_VIDEO=false
-      - CYPRESS_baseUrl=http://127.0.0.1
+      - CYPRESS_baseUrl=http://host.docker.internal:3000
       #- DISPLAY=host.docker.internal:0
     volumes:
       - .:/e2e
