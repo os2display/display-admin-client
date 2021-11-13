@@ -73,31 +73,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup network
-        run: docker network create frontend
-
       - name: Pull docker images
-        run: docker-compose --file docker-compose.actions.yml pull --quiet
+        run: docker compose --file docker-compose.actions.yml pull --quiet
 
       - name: Install and configure client
         run: |
           cp .docker/actions.config.json public/config.json
-          docker-compose --file docker-compose.actions.yml run node yarn
+          docker compose --file docker-compose.actions.yml run node yarn install
 
-      - name: Run the application (and wait for it to be ready)
-        run: |
-          docker-compose --file docker-compose.actions.yml up -d
-          chmod +x .docker/wait-for-it.sh
-          ./.docker/wait-for-it.sh --timeout=30 --port=3000 127.0.0.1/tags  -- echo "Client is ready"
+      - name: Run the application
+        run: docker compose --file docker-compose.actions.yml up -d
 
       - name: Setup database and fixtures
         run: |
-          docker-compose --file docker-compose.actions.yml exec -T api composer install -q --no-interaction --no-suggest --no-progress --prefer-dist
-          docker-compose --file docker-compose.actions.yml exec -T api bin/console doctrine:migrations:migrate --no-interaction
-          docker-compose --file docker-compose.actions.yml exec -T api bin/console hautelook:fixtures:load --env=dev --no-interaction
+          docker compose --file docker-compose.actions.yml exec -T api composer install -q --no-interaction --no-suggest --no-progress --prefer-dist
+          docker compose --file docker-compose.actions.yml exec -T api bin/console doctrine:migrations:migrate --no-interaction
+          docker compose --file docker-compose.actions.yml exec -T api bin/console hautelook:fixtures:load --env=dev --no-interaction
 
       - name: Cypress run
-        run: docker-compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
+        run: docker compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
 
       - name: Archive screenshots
         if: ${{ failure() }}

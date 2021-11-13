@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.7"
 
 services:
   api:
@@ -46,11 +46,14 @@ services:
 
   cypress:
     image: cypress/included:7.7.0
+    depends_on:
+      node:
+        condition: service_healthy
+    working_dir: /e2e
+    entrypoint: cypress
     environment:
       - CYPRESS_VIDEO=false
       - CYPRESS_baseUrl=http://node:3000
       #- DISPLAY=host.docker.internal:0
     volumes:
       - .:/e2e
-    working_dir: /e2e
-    entrypoint: cypress
