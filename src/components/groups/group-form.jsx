@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import WithLoading from "../util/loading-component/with-loading";
+import FormLoading from "../util/loading-component/form-loading";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
@@ -17,66 +17,83 @@ import FormInput from "../util/forms/form-input";
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {string} props.headerText Headline text.
- * @param {boolean | null} props.isSaveSuccess Is the save a success?
- * @param {Array} props.errors Array of errors.
+ * @param {boolean} props.isLoading Indicator of whether the form is loading
+ * @param {string} props.loadingMessage The loading message for the spinner
  * @returns {object} The group form.
  */
-function GroupForm({ group, handleInput, handleSubmit, headerText }) {
+function GroupForm({
+  group,
+  handleInput,
+  handleSubmit,
+  headerText,
+  isLoading,
+  loadingMessage,
+}) {
   const { t } = useTranslation("common");
   const history = useHistory();
 
   return (
-    <Form>
-      <h1>{headerText}</h1>
-      <ContentBody>
-        <FormInput
-          name="title"
-          type="text"
-          label={t("group-form.group-title-label")}
-          placeholder={t("group-form.group-title-placeholder")}
-          value={group.title}
-          onChange={handleInput}
-        />
-        <FormInput
-          name="description"
-          type="text"
-          label={t("group-form.group-description-label")}
-          placeholder={t("group-form.group-description-placeholder")}
-          value={group.description}
-          onChange={handleInput}
-        />
-      </ContentBody>
-      <ContentFooter>
-        <Button
-          variant="secondary"
-          type="button"
-          id="cancel_group"
-          onClick={() => history.push("/group/list/")}
-          className="me-md-3 col"
-          size="lg"
-        >
-          {t("group-form.cancel-button")}
-        </Button>
-        <Button
-          variant="primary"
-          type="button"
-          onClick={handleSubmit}
-          id="save_group"
-          size="lg"
-          className="col"
-        >
-          {t("group-form.save-button")}
-        </Button>
-      </ContentFooter>
-    </Form>
+    <>
+      <FormLoading isLoading={isLoading} loadingMessage={loadingMessage} />
+      <Form>
+        <h1>{headerText}</h1>
+        <ContentBody>
+          <FormInput
+            name="title"
+            type="text"
+            label={t("group-form.group-title-label")}
+            placeholder={t("group-form.group-title-placeholder")}
+            value={group.title}
+            onChange={handleInput}
+          />
+          <FormInput
+            name="description"
+            type="text"
+            label={t("group-form.group-description-label")}
+            placeholder={t("group-form.group-description-placeholder")}
+            value={group.description}
+            onChange={handleInput}
+          />
+        </ContentBody>
+        <ContentFooter>
+          <Button
+            variant="secondary"
+            type="button"
+            id="cancel_group"
+            onClick={() => history.push("/group/list/")}
+            className="me-md-3 col"
+            size="lg"
+          >
+            {t("group-form.cancel-button")}
+          </Button>
+          <Button
+            variant="primary"
+            type="button"
+            onClick={handleSubmit}
+            id="save_group"
+            size="lg"
+            className="col"
+          >
+            {t("group-form.save-button")}
+          </Button>
+        </ContentFooter>
+      </Form>
+    </>
   );
 }
+
+GroupForm.defaultProps = {
+  isLoading: false,
+  loadingMessage: "",
+};
 
 GroupForm.propTypes = {
   group: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
+  loadingMessage: PropTypes.string,
 };
 
-export default WithLoading(GroupForm);
+export default GroupForm;

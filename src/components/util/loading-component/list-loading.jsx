@@ -8,7 +8,7 @@ import { Spinner } from "react-bootstrap";
  * @param {object} Component - The component that is wrapped
  * @returns {object} The wrapper component.
  */
-function WithLoading(Component) {
+function ListLoading(Component) {
   return function WithLoadingComponent({
     isLoading,
     loadingMessage,
@@ -25,4 +25,4 @@ function WithLoading(Component) {
   };
 }
 
-export default WithLoading;
+export default ListLoading;

@@ -9,7 +9,7 @@ import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import RadioButtons from "../forms/radio-buttons";
-import WithLoading from "../loading-component/with-loading";
+import ListLoading from "../loading-component/list-loading";
 
 /**
  * @param {object} props - The props.
@@ -270,4 +270,4 @@ List.propTypes = {
   handleIsPublished: PropTypes.func,
 };
 
-export default WithLoading(List);
+export default ListLoading(List);

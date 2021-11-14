@@ -24,8 +24,11 @@ import idFromUrl from "../util/helpers/id-from-url";
  */
 function SlideEdit() {
   const { t } = useTranslation("common");
-  const { id } = useParams();
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("slide-edit.loading-messages.loading-slide")
+  );
   const headerText = t("slide-edit.edit-slide-header");
   const [formStateObject, setFormStateObject] = useState();
   const [getTheme, setGetTheme] = useState(true);
@@ -249,9 +252,16 @@ function SlideEdit() {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
 
+        setLoadingMessage(
+          t("slide-edit.loading-messages.saving-media", {
+            title: media.get("title") || t("slide-edit.unamed-media"),
+          })
+        );
+
         // Submit media.
         PostV1MediaCollection({ body: media });
       } else {
+        setLoadingMessage(t("slide-edit.loading-messages.saving-slide"));
         const from = formStateObject.published.from
           ? new Date(formStateObject.published.from).toISOString()
           : null;
@@ -297,9 +307,8 @@ function SlideEdit() {
 
         // Display toast with success message
         displaySuccess(
-          t("slide-edit.saved-media", {
-            id: idFromUrl(mediaData["@id"]),
-            title: mediaData.title || t("slide-edit.unamed-media"),
+          t("slide-edit.success-messages.saved-media", {
+            title: mediaData.title || t("slide-edit.unamed"),
           })
         );
 
@@ -315,9 +324,8 @@ function SlideEdit() {
         // If save media has error, display toast and set submitting false
         setSubmitting(false);
         displayError(
-          t("slide-edit.error-save-media", {
-            title:
-              submittingMedia[0].get("title") || t("slide-edit.unamed-media"),
+          t("slide-edit.error-messages.save-media-error", {
+            title: submittingMedia[0].get("title") || t("slide-edit.unamed"),
             error: saveMediaError.data["hydra:description"],
           })
         );
@@ -328,11 +336,7 @@ function SlideEdit() {
   // If save is success, display toast and set submitting false
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(
-        t("slide-edit.saved", {
-          title: formStateObject.title || t("slide-create.unamed-slide"),
-        })
-      );
+      displaySuccess(t("slide-edit.success-messages.saved-slide"));
 
       setSubmitting(false);
     }
@@ -342,17 +346,13 @@ function SlideEdit() {
   useEffect(() => {
     if (saveError) {
       setSubmitting(false);
-      const error = saveError.data
-        ? saveError.data["hydra:description"]
-        : saveError.error;
       displayError(
-        t("slide-edit.save-slide-error", {
-          title: formStateObject.title || t("slide-create.unamed-slide"),
-          error,
+        t("slide-edit.error-messages.save-slide-error", {
+          error: saveError.data
+            ? saveError.data["hydra:description"]
+            : saveError.error,
         })
       );
-
-      setSubmitting(false);
     }
   }, [saveError]);
 
@@ -360,11 +360,14 @@ function SlideEdit() {
   useEffect(() => {
     if (getSlideError) {
       displayError(
-        t("slide-edit.get-slide-error", {
+        t("slide-edit.error-messages.load-slide-error", {
+          error: getSlideError.error
+            ? getSlideError.error
+            : getSlideError.data["hydra:description"],
           id,
-          error: getSlideError?.data["hydra:description"],
         })
       );
+
       setSubmitting(false);
     }
   }, [getSlideError]);
@@ -383,9 +386,7 @@ function SlideEdit() {
           selectedTemplate={selectedTemplate}
           loadedMedia={loadedMedia}
           isLoading={getSlideIsLoading || submitting || isSaving}
-          loadingMessage={
-            getSlideIsLoading ? t("slide-edit.loading") : t("slide-edit.saving")
-          }
+          loadingMessage={loadingMessage}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
           mediaFields={mediaFields}

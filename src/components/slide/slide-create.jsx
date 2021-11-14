@@ -6,7 +6,6 @@ import {
   usePostV1SlidesMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
-import idFromUrl from "../util/helpers/id-from-url";
 import {
   displayError,
   displaySuccess,
@@ -20,6 +19,7 @@ import {
 function SlideCreate() {
   const { t } = useTranslation("common");
   const headerText = t("slide-create.create-slide-header");
+  const [loadingMessage, setLoadingMessage] = useState("");
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
@@ -123,7 +123,6 @@ function SlideCreate() {
   /** Handles submit. */
   function handleSubmit() {
     const newSubmittingMedia = [];
-
     // Setup submittingMedia list.
     mediaFields.forEach((fieldName) => {
       if (
@@ -154,10 +153,16 @@ function SlideCreate() {
     if (submitting) {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
-
+        setLoadingMessage(
+          t("slide-create.loading-messages.saving-media", {
+            title: media.get("title") || t("slide-create.unamed-media"),
+          })
+        );
         // Submit media.
         PostV1MediaCollection({ body: media });
       } else {
+        setLoadingMessage(t("slide-create.loading-messages.saving-slide"));
+
         const from = formStateObject.published.from
           ? new Date(formStateObject.published.from).toISOString()
           : null;
@@ -203,9 +208,8 @@ function SlideCreate() {
 
         // Display toast with success message
         displaySuccess(
-          t("slide-create.saved-media", {
-            id: idFromUrl(mediaData["@id"]),
-            title: mediaData.title || t("slide-create.unamed-media"),
+          t("slide-create.success-messages.saved-media", {
+            title: mediaData.title || t("slide-create.unamed"),
           })
         );
 
@@ -221,39 +225,34 @@ function SlideCreate() {
       } else if (saveMediaError) {
         // If save media has error, display toast and set submitting false
         setSubmitting(false);
-        const errorText = t("slide-create.error-save-media", {
-          title:
-            submittingMedia[0].get("title") || t("slide-create.unamed-media"),
-          error: saveMediaError.data["hydra:description"],
-        });
-        displayError(errorText);
+        displayError(
+          t("slide-create.error-messages.save-media-error", {
+            title: submittingMedia[0].get("title") || t("slide-create.unamed"),
+            error: saveMediaError.data["hydra:description"],
+          })
+        );
       }
     }
-  }, [isSaveMediaSuccess]);
+  }, [isSaveMediaSuccess, saveMediaError]);
 
   // If save is success, display toast and set submitting false
   useEffect(() => {
     if (isSaveSuccess) {
       setSubmitting(false);
-      displaySuccess(
-        t("slide-create.saved", {
-          title: formStateObject.title || t("slide-create.unamed-slide"),
-        })
-      );
+      displaySuccess(t("slide-create.success-messages.saved-slide"));
     }
   }, [isSaveSuccess]);
 
   // If save has error, display toast and set submitting false
   useEffect(() => {
     if (saveError) {
-      const errorText = t("slide-create.save-slide-error", {
-        title: formStateObject.title || t("slide-create.unamed-slide"),
-        error: saveError.data
-          ? saveError.data["hydra:description"]
-          : saveError.error,
-      });
-
-      displayError(errorText);
+      displayError(
+        t("slide-create.error-messages.save-slide-error", {
+          error: saveError.data
+            ? saveError.data["hydra:description"]
+            : saveError.error,
+        })
+      );
       setSubmitting(false);
     }
   }, [saveError]);
@@ -272,7 +271,7 @@ function SlideCreate() {
           selectedTemplate={selectedTemplate}
           loadedMedia={loadedMedia}
           isLoading={submitting || isSaving}
-          loadingMessage={t("slide-create.saving")}
+          loadingMessage={loadingMessage}
           isSaveSuccess={isSaveSuccess}
           errors={saveError || false}
           selectTheme={selectTheme}

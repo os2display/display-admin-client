@@ -27,12 +27,7 @@ function GroupCreate() {
 
   const [
     PostV1ScreenGroups,
-    {
-      data,
-      isLoading: isSavingGroup,
-      error: saveError,
-      isSuccess: isSaveSuccess,
-    },
+    { data, error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
   ] = usePostV1ScreenGroupsMutation();
 
   /**
@@ -53,7 +48,7 @@ function GroupCreate() {
   useEffect(() => {
     if (saveError) {
       displayError(
-        t("group-create.save-group-error", {
+        t("group-create.error-messages.save-group-error", {
           title: formStateObject.title || t("group-create.unamed-group"),
           error: saveError.data
             ? saveError.data["hydra:description"]
@@ -78,11 +73,12 @@ function GroupCreate() {
   /** Handles submit. */
   function handleSubmit() {
     const saveData = {
-      title: 234,
+      title:  formStateObject.title,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
     };
+
     PostV1ScreenGroups({
       screenGroupScreenGroupInput: JSON.stringify(saveData),
     });
@@ -94,8 +90,8 @@ function GroupCreate() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={isSavingGroup}
-      loadingMessage={t("group-create.saving")}
+      isLoading={isSaving}
+      loadingMessage={t("group-create.loading-messages.saving-group")}
     />
   );
 }

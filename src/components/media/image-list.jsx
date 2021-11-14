@@ -2,7 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-bootstrap";
-import WithLoading from "../util/loading-component/with-loading";
+import ListLoading from "../util/loading-component/list-loading";
 /**
  * The image list component.
  *
@@ -87,4 +87,4 @@ ImageList.propTypes = {
   handleChecked: PropTypes.func.isRequired,
 };
 
-export default WithLoading(ImageList);
+export default ListLoading(ImageList);

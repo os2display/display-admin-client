@@ -46,8 +46,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
           return playlist;
         }
       );
-      const target = { value: listOfPlaylists, id: name };
-      handleChange({ target });
+
       setSelectedData(listOfPlaylists);
     }
   }, [selectedPlaylistsByRegion]);

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import WithLoading from "../util/loading-component/with-loading";
+import FormLoading from "../util/loading-component/form-loading";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -32,6 +32,8 @@ import RemoteComponentWrapper from "./remote-component-wrapper";
  * @param {object} props.selectedTemplate Selected template.
  * @param {Function} props.selectTheme Function to handle select of theme.
  * @param {object} props.selectedTheme Selected theme.
+ * @param {boolean} props.isLoading Indicator of whether the form is loading
+ * @param {string} props.loadingMessage The loading message for the spinner
  * @returns {object} The slide form.
  */
 function SlideForm({
@@ -47,6 +49,8 @@ function SlideForm({
   loadedMedia,
   selectTheme,
   selectedTheme,
+  isLoading,
+  loadingMessage,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
@@ -125,140 +129,145 @@ function SlideForm({
   }
 
   return (
-    <Form>
-      <h1>{headerText}</h1>
-      <ContentBody>
-        <FormInput
-          name="title"
-          type="text"
-          label={t("slide-form.slide-name-label")}
-          helpText={t("slide-form.slide-name-placeholder")}
-          value={slide.title || ""}
-          onChange={handleInput}
-        />
-      </ContentBody>
-      {templateOptions && (
+    <>
+      <FormLoading isLoading={isLoading} loadingMessage={loadingMessage} />
+      <Form>
+        <h1>{headerText}</h1>
         <ContentBody>
-          <MultiSelectComponent
-            isLoading={loadingTemplates}
-            label={t("slide-form.slide-template-label")}
-            helpText={t("slide-form.slide-template-help-text")}
-            handleSelection={selectTemplate}
-            options={templateOptions}
-            selected={selectedTemplates}
-            name="templateInfo"
-            filterCallback={onFilterTemplate}
-            singleSelect
+          <FormInput
+            name="title"
+            type="text"
+            label={t("slide-form.slide-name-label")}
+            helpText={t("slide-form.slide-name-placeholder")}
+            value={slide.title || ""}
+            onChange={handleInput}
           />
         </ContentBody>
-      )}
-      {templateOptions && (
-        <ContentBody>
-          <MultiSelectComponent
-            label={t("slide-form.slide-template-label")}
-            helpText={t("slide-form.slide-template-help-text")}
-            handleSelection={selectTemplate}
-            options={templateOptions}
-            selected={selectedTemplates}
-            name="templateInfo"
-            filterCallback={onFilterTemplate}
-            singleSelect
-          />
-        </ContentBody>
-      )}
-      {selectedTemplate && contentFormElements && (
-        <>
+        {templateOptions && (
           <ContentBody>
-            <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
-            <RemoteComponentWrapper
-              url={selectedTemplate?.resources?.component}
-              content={slide.content}
-              mediaFields={mediaFields}
-              loadedMedia={loadedMedia}
+            <MultiSelectComponent
+              isLoading={loadingTemplates}
+              label={t("slide-form.slide-template-label")}
+              helpText={t("slide-form.slide-template-help-text")}
+              handleSelection={selectTemplate}
+              options={templateOptions}
+              selected={selectedTemplates}
+              name="templateInfo"
+              filterCallback={onFilterTemplate}
+              singleSelect
             />
           </ContentBody>
+        )}
+        {templateOptions && (
           <ContentBody>
-            {contentFormElements.map((formElement) => (
-              <RenderFormElement
-                key={formElement.key}
-                data={formElement}
-                onChange={handleContent}
-                onMediaChange={handleMedia}
-                name={formElement.name}
+            <MultiSelectComponent
+              label={t("slide-form.slide-template-label")}
+              helpText={t("slide-form.slide-template-help-text")}
+              handleSelection={selectTemplate}
+              options={templateOptions}
+              selected={selectedTemplates}
+              name="templateInfo"
+              filterCallback={onFilterTemplate}
+              singleSelect
+            />
+          </ContentBody>
+        )}
+        {selectedTemplate && contentFormElements && (
+          <>
+            <ContentBody>
+              <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
+              <RemoteComponentWrapper
+                url={selectedTemplate?.resources?.component}
+                content={slide.content}
+                mediaFields={mediaFields}
                 loadedMedia={loadedMedia}
-                formStateObject={slide.content}
-                requiredFieldCallback={() => {
-                  return false;
-                }}
               />
-            ))}
-          </ContentBody>
-        </>
-      )}
-      <ContentBody>
-        <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
-        <Row className="g-2">
-          <Col md>
-            <FormInput
-              name="published.from"
-              type="datetime-local"
-              label={t("slide-form.slide-from-label")}
-              value={slide.published.from}
-              onChange={handleInput}
-            />
-          </Col>
-          <Col md>
-            <FormInput
-              name="published.to"
-              type="datetime-local"
-              label={t("slide-form.slide-to-label")}
-              value={slide.published.to}
-              onChange={handleInput}
-            />
-          </Col>
-        </Row>
-      </ContentBody>
-      {themesOptions && (
+            </ContentBody>
+            <ContentBody>
+              {contentFormElements.map((formElement) => (
+                <RenderFormElement
+                  key={formElement.key}
+                  data={formElement}
+                  onChange={handleContent}
+                  onMediaChange={handleMedia}
+                  name={formElement.name}
+                  loadedMedia={loadedMedia}
+                  formStateObject={slide.content}
+                  requiredFieldCallback={() => {
+                    return false;
+                  }}
+                />
+              ))}
+            </ContentBody>
+          </>
+        )}
         <ContentBody>
-          <MultiSelectComponent
-            isLoading={loadingThemes}
-            label={t("slide-form.slide-theme-label")}
-            handleSelection={selectTheme}
-            options={themesOptions}
-            selected={selectedTheme}
-            name="theme"
-            filterCallback={onFilterTheme}
-            singleSelect
-          />
+          <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
+          <Row className="g-2">
+            <Col md>
+              <FormInput
+                name="published.from"
+                type="datetime-local"
+                label={t("slide-form.slide-from-label")}
+                value={slide.published.from}
+                onChange={handleInput}
+              />
+            </Col>
+            <Col md>
+              <FormInput
+                name="published.to"
+                type="datetime-local"
+                label={t("slide-form.slide-to-label")}
+                value={slide.published.to}
+                onChange={handleInput}
+              />
+            </Col>
+          </Row>
         </ContentBody>
-      )}
-      <ContentFooter>
-        <Button
-          variant="secondary"
-          type="button"
-          id="cancel_slide"
-          onClick={() => history.push("/slide/list/")}
-          size="lg"
-          className="me-3"
-        >
-          {t("slide-form.cancel-button")}
-        </Button>
-        <Button
-          variant="primary"
-          type="button"
-          onClick={handleSubmit}
-          id="save_slide"
-          size="lg"
-        >
-          {t("slide-form.save-button")}
-        </Button>
-      </ContentFooter>
-    </Form>
+        {themesOptions && (
+          <ContentBody>
+            <MultiSelectComponent
+              isLoading={loadingThemes}
+              label={t("slide-form.slide-theme-label")}
+              handleSelection={selectTheme}
+              options={themesOptions}
+              selected={selectedTheme}
+              name="theme"
+              filterCallback={onFilterTheme}
+              singleSelect
+            />
+          </ContentBody>
+        )}
+        <ContentFooter>
+          <Button
+            variant="secondary"
+            type="button"
+            id="cancel_slide"
+            onClick={() => history.push("/slide/list/")}
+            size="lg"
+            className="me-3"
+          >
+            {t("slide-form.cancel-button")}
+          </Button>
+          <Button
+            variant="primary"
+            type="button"
+            onClick={handleSubmit}
+            id="save_slide"
+            size="lg"
+          >
+            {t("slide-form.save-button")}
+          </Button>
+        </ContentFooter>
+      </Form>
+    </>
   );
 }
 
 SlideForm.defaultProps = {
   selectedTemplate: null,
+  isLoading: false,
+  loadingMessage: "",
 };
 
 SlideForm.propTypes = {
@@ -280,6 +289,8 @@ SlideForm.propTypes = {
   handleMedia: PropTypes.func.isRequired,
   loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,
   mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isLoading: PropTypes.bool,
+  loadingMessage: PropTypes.string,
 };
 
-export default WithLoading(SlideForm);
+export default SlideForm;

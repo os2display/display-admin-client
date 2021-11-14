@@ -1,6 +1,10 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { usePostMediaCollectionMutation } from "../../redux/api/api.generated";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 import MediaForm from "./media-form";
 
 /**
@@ -12,6 +16,7 @@ function MediaCreate() {
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
   const [mediaToCreate, setMediaToCreate] = useState([]);
   const headerText = t("media-create.create-media");
 
@@ -38,16 +43,42 @@ function MediaCreate() {
       setIsSaving(true);
       const media = mediaToCreate.splice(0, 1).shift();
       PostV1MediaCollection({ body: media });
-    } else if (isSaveSuccess) {
-      window.location.reload(false);
     }
   }, [mediaToCreate.length, isSaveSuccess]);
+  /** Saves multiple pieces of media. */
+
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("media-create.error-messages.save-media-error", {
+          error: saveError.data
+            ? saveError.data["hydra:description"]
+            : saveError.error,
+        })
+      );
+      setIsSaving(false);
+    }
+  }, [saveError]);
+
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("media-create.success-messages.saved-media"));
+      setIsSaving(false);
+      const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
+      localFormStateObject.images = [];
+      setFormStateObject(localFormStateObject);
+    }
+  }, [isSaveSuccess]);
 
   /** Handles submit. */
   function handleSubmit() {
     const localMediaToCreate = [];
-
     formStateObject.images.forEach((element) => {
+      setLoadingMessage(
+        t("media-create.loading-messages.saving-media", {
+          title: element.title || t("media-create.unamed"),
+        })
+      );
       const formData = new FormData();
       formData.append("file", element.file);
       formData.append("title", element.title);
@@ -68,7 +99,7 @@ function MediaCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={isSavingMedia || isSaving}
-      loadingMessage={t("media-create.saving")}
+      loadingMessage={loadingMessage}
       isSaveSuccess={isSaveSuccess}
       errors={saveError || false}
     />

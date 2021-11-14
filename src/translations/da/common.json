@@ -130,7 +130,16 @@
   },
   "media-create": {
     "create-media": "Upload",
-    "saving": "Gemmer medie"
+    "unamed": "unavngivet",
+    "loading-messages": {
+      "saving-media": "Gemmer {{title}}"
+    },
+    "success-messages": {
+      "saved-media": "Mediet er gemt"
+    },
+    "error-messages": {
+      "save-media-error": "Der skete en fejl da mediet skulle gemmes: {{error}}"
+    }
   },
   "media-edit": {
     "edit-media": "Rediger",
@@ -147,25 +156,39 @@
   },
   "slide-edit": {
     "edit-slide-header": "Rediger slide",
-    "loading": "Henter slide",
-    "saving": "Gemmer slide",
-    "save-slide-error": "Da vi forsøgte at gemme \n {{title}} \n skete følgende fejl:\n {{error}}",
-    "get-slide-error": "Der skete en fejl da slide med id {{id}} skulle hentes",
-    "saved": "Slidet {{title}} er gemt",
-    "unamed-slide": "det unavngivne slide",
     "unamed-media": "det unavngivne medie",
-    "error-save-media": "Der skete en fejl da vi forsøgte at gemme {{title}}: {{error}}",
-    "saved-media": "Media med {{title}} er gemt med id: {{id}}"
+    "unamed": "unavngivet",
+    "loading-messages": {
+      "saving-slide": "Gemmer slide",
+      "saving-media": "Mediet {{title}} bliver gemt",
+      "loading-slide": "Henter slide"
+    },
+    "success-messages": {
+      "saved-slide": "Slide er gemt, medier er tilknyttet",
+      "saved-media": "Mediet {{title}} er gemt"
+    },
+    "error-messages": {
+      "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
+      "save-media-error": "Der skete en fejl da mediet {{title}} skulle tilknyttes til slidet: {{error}}",
+      "load-slide-error": "Der skete en fejl da slidet med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "slide-create": {
-    "create-slide-header": "Opret nyt slide",
-    "saving": "Gemmer slide",
-    "save-slide-error": "Da vi forsøgte at gemme \n {{title}} \n skete følgende fejl:\n {{error}}",
-    "saved": "{{title}} er gemt",
-    "error-save-media": "Der skete en fejl da vi forsøgte at gemme {{title}}: {{error}}",
-    "unamed-slide": "Det unavngivne slide",
     "unamed-media": "det unavngivne medie",
-    "saved-media": "Media med {{title}} er gemt med id: {{id}}"
+    "unamed": "unavngivet",
+    "create-slide-header": "Opret nyt slide",
+    "loading-messages": {
+      "saving-slide": "Gemmer slide",
+      "saving-media": "Mediet {{title}} bliver gemt"
+    },
+    "success-messages": {
+      "saved-slide": "Slide er gemt, medier er tilknyttet",
+      "saved-media": "Mediet {{title}} er gemt"
+    },
+    "error-messages": {
+      "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
+      "save-media-error": "Der skete en fejl da mediet {{title}} skulle tilknyttes til slidet: {{error}}"
+    }
   },
   "slide-form": {
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
@@ -206,24 +229,60 @@
   },
   "group-create": {
     "create-new-group-header": "Opret ny gruppe",
-    "saving": "Gemmer gruppe",
-    "saved": "{{title}} er gemt",
-    "unamed-group": "den unavngivne gruppe",
-    "save-group-error": "Da vi forsøgte at gemme \n {{title}} \n skete følgende fejl:\n {{error}}"
+    "loading-messages": {
+      "saving-group": "Gemmer gruppen"
+    },
+    "success-messages": {
+      "saved-group": "Gruppen er gemt"
+    },
+    "error-messages": {
+      "save-group-error": "Der skete en fejl da gruppen skulle gemmes: {{error}}"
+    }
   },
   "group-edit": {
     "edit-group-header": "Rediger følgende gruppe",
-    "loading": "Henter gruppe",
-    "saving": "Gemmer gruppe"
+    "loading-messages": {
+      "saving-group": "Gemmer gruppen",
+      "loading-group": "Henter gruppen"
+    },
+    "success-messages": {
+      "saved-group": "Gruppen er gemt"
+    },
+    "error-messages": {
+      "save-group-error": "Der skete en fejl da gruppen skulle gemmes: {{error}}",
+      "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "playlist-edit": {
     "edit-playlist": "Rediger følgende spilleliste",
-    "loading": "Henter spilleliste",
-    "saving": "Gemmer spilleliste"
+    "loading-messages": {
+      "saving-playlist": "Gemmer spillelisten",
+      "saving-slides": "Tilknytter slides til spillelisten"
+    },
+    "success-messages": {
+      "saved-playlist": "Spillelisten er gemt",
+      "saved-slides": "Slides er tilknyttet spillelisten"
+    },
+    "error-messages": {
+      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
+      "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}",
+      "load-playlist-error": "Der skete en fejl da spillelisten med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "playlist-create": {
     "create-new-playlist": "Opret ny spilleliste",
-    "saving": "Gemmer spilleliste"
+    "loading-messages": {
+      "saving-playlist": "Gemmer spillelisten",
+      "saving-slides": "Tilknytter slides til spillelisten"
+    },
+    "success-messages": {
+      "saved-playlist": "Spillelisten er gemt",
+      "saved-slides": "Slides er tilknyttet spillelisten"
+    },
+    "error-messages": {
+      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
+      "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}"
+    }
   },
   "playlist-form": {
     "error": "Der skete en fejl",
@@ -291,7 +350,8 @@
   },
   "playlists-dropdown": {
     "label": "Vælg en eller flere spillelister",
-    "nothing-selected": "Vælg en af spillelisterne"
+    "nothing-selected": "Vælg en af spillelisterne",
+    "search-to-se-possible-selections": "For at se mulige spillelister, skal du fremsøge dem pr navn."
   },
   "screens-dropdown": {
     "search-to-se-possible-selections": "For at se mulige skærmes, skal du fremsøge dem pr navn.",
@@ -357,15 +417,41 @@
   },
   "screen-edit": {
     "edit-screen-header": "Rediger følgende skærm",
-    "loading": "Henter skærm",
-    "saving": "Gemmer skærm",
-    "group-saved": "Gruppen er tilknyttet {{title}}",
-    "groups-saved": "Grupperne er tilknyttet {{title}}",
-    "unamed-screen": "unavngivet skærm"
+    "loading-messages": {
+      "saving-screen": "Gemmer skærmen",
+      "saving-playlists": "Tilknytter spillelister til skærmens regioner",
+      "saving-groups": "Tilknytter grupper til skærmen"
+    },
+    "success-messages": {
+      "saved-screen": "Skærmen er gemt",
+      "saved-playlists": "Spillelister er tilknyttet til skærmens regioner",
+      "saved-groups": "Grupper er tilknyttet skærmen"
+    },
+    "error-messages": {
+      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes: {{error}}",
+      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner: {{error}}",
+      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen: {{error}}",
+      "load-screen-error": "Der skete en fejl da skærmen med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "screen-create": {
     "create-screen-header": "Opret ny skærm",
-    "saving": "Gemmer skærm"
+    "saving": "Gemmer skærm",
+    "loading-messages": {
+      "saving-screen": "Gemmer skærmen",
+      "saving-playlists": "Tilknytter spillelister til skærmens regioner",
+      "saving-groups": "Tilknytter grupper til skærmen"
+    },
+    "success-messages": {
+      "saved-screen": "Skærmen er gemt",
+      "saved-playlists": "Spillelister er tilknyttet til skærmens regioner",
+      "saved-groups": "Grupper er tilknyttet skærmen"
+    },
+    "error-messages": {
+      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes: {{error}}",
+      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner: {{error}}",
+      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen: {{error}}"
+    }
   },
   "screen-form": {
     "nothing-selected": "Vælg en af skabelonerne",

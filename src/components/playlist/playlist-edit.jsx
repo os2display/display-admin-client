@@ -3,6 +3,10 @@ import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
+import {
   useGetV1PlaylistsByIdQuery,
   usePutV1PlaylistsByIdMutation,
   usePutV1PlaylistsByIdSlidesMutation,
@@ -19,20 +23,17 @@ function PlaylistEdit() {
   const headerText = t("playlist-edit.edit-playlist");
   const [formStateObject, setFormStateObject] = useState();
   const [slideId, setSlideId] = useState();
+  const [loadingMessage, setLoadingMessage] = useState("");
+  const [savingSlides, setSavingSlides] = useState(false);
+  const [savingPlaylists, setSavingPlaylists] = useState(false);
   const [slidesToAdd, setSlidesToAdd] = useState([]);
   const { id } = useParams();
-  const [
-    PutV1Playlists,
-    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
-  ] = usePutV1PlaylistsByIdMutation();
+  const [PutV1Playlists, { error: saveError, isSuccess: isSaveSuccess }] =
+    usePutV1PlaylistsByIdMutation();
 
   const [
     PutV1PlaylistsByIdSlides,
-    {
-      isLoading: isSavingSlides,
-      error: saveErrorSlides,
-      isSuccess: isSaveSuccessSlides,
-    },
+    { error: saveErrorSlides, isSuccess: isSaveSuccessSlides },
   ] = usePutV1PlaylistsByIdSlidesMutation();
 
   const {
@@ -40,6 +41,59 @@ function PlaylistEdit() {
     error: loadError,
     isLoading,
   } = useGetV1PlaylistsByIdQuery({ id });
+
+  useEffect(() => {
+    if (isSaveSuccessSlides) {
+      setSavingSlides(false);
+      displaySuccess(t("playlist-edit.success-messages.saved-slides"));
+    }
+  }, [isSaveSuccessSlides]);
+
+  useEffect(() => {
+    if (saveErrorSlides) {
+      setSavingSlides(false);
+      displayError(
+        t("playlist-edit.error-messages.save-slides-error", {
+          error: saveErrorSlides.error
+            ? saveErrorSlides.error
+            : saveErrorSlides.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveErrorSlides]);
+
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("playlist-edit.success-messages.saved-playlist"));
+      setSavingPlaylists(false);
+    }
+  }, [isSaveSuccess]);
+
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("playlist-edit.error-messages.save-playlist-error", {
+          error: saveError.error
+            ? saveError.error
+            : saveError.data["hydra:description"],
+        })
+      );
+      setSavingPlaylists(false);
+    }
+  }, [saveError]);
+
+  useEffect(() => {
+    if (loadError) {
+      displayError(
+        t("playlist-edit.error-messages.load-playlist-error", {
+          error: loadError.error
+            ? loadError.error
+            : loadError.data["hydra:description"],
+          id,
+        })
+      );
+    }
+  }, [loadError]);
 
   /**
    * Set state on change in input field
@@ -69,7 +123,9 @@ function PlaylistEdit() {
 
   /** When the playlist is saved, the slide will be saved. */
   useEffect(() => {
-    if (isSaveSuccess) {
+    if (isSaveSuccess && slidesToAdd) {
+      setSavingSlides(true);
+      setLoadingMessage(t("playlist-edit.loading-messages.saving-slides"));
       PutV1PlaylistsByIdSlides({
         id,
         body: JSON.stringify(slidesToAdd),
@@ -80,15 +136,19 @@ function PlaylistEdit() {
   /** Sets slides to save. */
   function handleSaveSlides() {
     const { slides } = formStateObject;
-    setSlidesToAdd(
-      slides.map((slide, index) => {
-        return { slide: idFromUrl(slide), weight: index };
-      })
-    );
+    if (Array.isArray(slides)) {
+      setSlidesToAdd(
+        slides.map((slide, index) => {
+          return { slide: idFromUrl(slide), weight: index };
+        })
+      );
+    }
   }
 
   /** Handles submit. */
   function handleSubmit() {
+    setSavingPlaylists(true);
+    setLoadingMessage(t("playlist-edit.loading-messages.saving-playlist"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -117,15 +177,10 @@ function PlaylistEdit() {
           headerText={`${headerText}: ${
             formStateObject && formStateObject.title
           }`}
-          isLoading={isLoading || isSaving || isSavingSlides}
-          loadingMessage={
-            isLoading ? t("playlist-edit.loading") : t("playlist-edit.saving")
-          }
+          isLoading={savingPlaylists || savingSlides || isLoading}
+          loadingMessage={loadingMessage}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
-          isSaving={isSaving || isSavingSlides}
-          errors={loadError || saveError || saveErrorSlides || false}
           slideId={slideId}
         />
       )}
