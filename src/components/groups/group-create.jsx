@@ -36,11 +36,7 @@ function GroupCreate() {
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      displaySuccess(
-        t("group-create.saved", {
-          title: formStateObject.title || t("group-create.unamed-group"),
-        })
-      );
+      displaySuccess(t("group-create.success-messages.saved-group"));
       history.push(`/group/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
@@ -73,7 +69,7 @@ function GroupCreate() {
   /** Handles submit. */
   function handleSubmit() {
     const saveData = {
-      title:  formStateObject.title,
+      title: formStateObject.title,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,

@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import ThemeForm from "./theme-form";
+import { displaySuccess, displayError } from '../util/list/toast-component/display-toast';
 import { usePostV1ThemesMutation } from "../../redux/api/api.generated";
 import idFromUrl from "../util/helpers/id-from-url";
 
@@ -14,6 +15,7 @@ function ThemeCreate() {
   const { t } = useTranslation("common");
   const history = useHistory();
   const headerText = t("theme-create.create-new-theme");
+  const [loadingMessage] = useState(t("theme-create.loading-messages.saving-theme"));
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
@@ -58,6 +60,26 @@ function ThemeCreate() {
     postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
   }
 
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(
+        t("theme-create.success-messages.saved-theme")
+      );
+    }
+  }, [isSaveSuccess]);
+
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("theme-create.error-messages.save-theme-error", {
+          error: saveError.error
+            ? saveError.error
+            : saveError.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveError]);
+
   return (
     <ThemeForm
       theme={formStateObject}
@@ -65,7 +87,7 @@ function ThemeCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={isSaving}
-      loadingMessage={t("theme-create.saving")}
+      loadingMessage={loadingMessage}
       isSaveSuccess={isSaveSuccess}
       errors={saveError || false}
     />

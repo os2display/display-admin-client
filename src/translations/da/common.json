@@ -23,12 +23,29 @@
   },
   "theme-create": {
     "create-new-theme": "Opret nyt tema",
-    "saving": "Gemmer tema"
+    "loading-messages": {
+      "saving-theme": "Gemmer temaet"
+    },
+    "success-messages": {
+      "saved-theme": "Temaet er gemt"
+    },
+    "error-messages": {
+      "save-theme-error": "Der skete en fejl da temaet skulle gemmes: {{error}}"
+    }
   },
   "theme-edit": {
     "edit-theme": "Rediger følgende tema",
-    "loading": "Henter tema",
-    "saving": "Gemmer tema"
+    "loading-messages": {
+      "saving-theme": "Gemmer temaet",
+      "loading-theme": "Henter temaet"
+    },
+    "success-messages": {
+      "saved-theme": "Temaet er gemt"
+    },
+    "error-messages": {
+      "save-theme-error": "Der skete en fejl da temaet skulle gemmes: {{error}}",
+      "load-theme-error": "Der skete en fejl da temaet med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "slides-list": {
     "columns": {

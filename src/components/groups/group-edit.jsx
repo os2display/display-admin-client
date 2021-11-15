@@ -66,7 +66,7 @@ function GroupEdit() {
   useEffect(() => {
     if (loadError) {
       displayError(
-        t("playlist-edit.error-messages.load-playlist-error", {
+        t("group-edit.error-messages.load-group-error", {
           error: loadError.error
             ? loadError.error
             : loadError.data["hydra:description"],
