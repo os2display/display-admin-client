@@ -18,7 +18,7 @@ function TemplateLabelInList({ templateInfo }) {
 
   return (
     <>
-      {data && <div>{data.title}</div>}{" "}
+      {data && <div>{data.title}</div>}
       {!data && (
         <Spinner
           as="span"

@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
  * @param {string} props.loadingMessage The loading message for the spinner
  * @returns {object} The loading component for forms.
  */
-function FormLoading({ isLoading, loadingMessage }) {
+function LoadingComponent({ isLoading, loadingMessage }) {
   return (
     <>
       {isLoading && (
@@ -25,14 +25,14 @@ function FormLoading({ isLoading, loadingMessage }) {
   );
 }
 
-FormLoading.defaultProps = {
+LoadingComponent.defaultProps = {
   isLoading: false,
   loadingMessage: "",
 };
 
-FormLoading.propTypes = {
+LoadingComponent.propTypes = {
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,
 };
 
-export default FormLoading;
+export default LoadingComponent;

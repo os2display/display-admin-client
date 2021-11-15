@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import FormLoading from "../util/loading-component/form-loading";
+import LoadingComponent from "../util/loading-component/loading-component";
 import FormInputArea from "../util/forms/form-input-area";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -36,7 +36,10 @@ function ThemeForm({
   return (
     <>
       <Form>
-        <FormLoading isLoading={isLoading} loadingMessage={loadingMessage} />
+        <LoadingComponent
+          isLoading={isLoading}
+          loadingMessage={loadingMessage}
+        />
         <h1>{headerText}</h1>
         <ContentBody>
           <FormInput

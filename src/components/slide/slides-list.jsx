@@ -18,6 +18,7 @@ import {
   useDeleteV1SlidesByIdMutation,
   useGetV1PlaylistsByIdQuery,
 } from "../../redux/api/api.generated";
+import { displayError,displaySuccess} from "../util/list/toast-component/display-toast";
 
 /**
  * The slides list component.
@@ -29,7 +30,12 @@ function SlidesList() {
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
+  const [slides, setSlides] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("slides-list.loading-messages.loading-slides")
+  );
   const [sortBy, setSortBy] = useState();
+  const [deletingSlideTitle, setDeletingSlideTitle] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [page, setPage] = useState();
@@ -39,8 +45,20 @@ function SlidesList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
 
+  const {
+    data,
+    error: slidesGetError,
+    isLoading,
+  } = useGetV1SlidesQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+    published: isPublished,
+  });
+
   // Delete call
-  const [DeleteV1Slides, { isSuccess: isDeleteSuccess }] =
+  const [DeleteV1Slides, { isSuccess: isDeleteSuccess, error: deleteError }] =
     useDeleteV1SlidesByIdMutation();
 
   /** Deletes multiple slides. */
@@ -49,11 +67,40 @@ function SlidesList() {
       setIsDeleting(true);
       const slideToDelete = slidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
+      setDeletingSlideTitle(slideToDelete.title);
+      setLoadingMessage(
+        t("slides-list.loading-messages.deleting-slide", {
+          title: slideToDelete.title,
+        })
+      );
       DeleteV1Slides({ id: slideToDeleteId });
     } else if (isDeleteSuccess) {
-      window.location.reload(false);
+      setIsDeleting(false);
+      setPage(0)
+      displaySuccess(t("slides-list.success-messages.slide-delete", {title:deletingSlideTitle}))
     }
   }, [slidesToDelete, isDeleteSuccess]);
+
+  useEffect(() => {
+    if (deleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("slides-list.error-messages.slide-delete-error", {
+          title: deletingSlideTitle,
+          error: deleteError.error
+            ? deleteError.error
+            : deleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [deleteError]);
+
+  useEffect(() => {
+    if (data) {
+      console.log(data)
+      setSlides(data["hydra:member"]);
+    }
+  }, [data]);
 
   /**
    * Sets the selected row in state.
@@ -204,18 +251,6 @@ function SlidesList() {
     },
   ];
 
-  const {
-    data,
-    error: slidesGetError,
-    isLoading,
-  } = useGetV1SlidesQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-    published: isPublished,
-  });
-
   return (
     <>
       <ContentHeader
@@ -223,7 +258,7 @@ function SlidesList() {
         newBtnTitle={t("slides-list.create-new-slide")}
         newBtnLink="/slide/create"
       />
-      {data && data["hydra:member"] && (
+      {slides.length > 0 && (
         <ContentBody>
           <List
             columns={columns}
@@ -231,15 +266,12 @@ function SlidesList() {
             currentPage={page}
             handlePageChange={onChangePage}
             selectedRows={selectedRows}
-            data={data["hydra:member"]}
+            data={slides}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
             error={slidesGetError || false}
-            isLoading={isLoading || isDeleting || false}
-            loadingMessage={
-              isLoading ? t("slides-list.loading") : t("slides-list.deleting")
-            }
-            deleteSuccess={isDeleteSuccess || false}
+            isLoading={isLoading || isDeleting}
+            loadingMessage={loadingMessage}
             handleSort={onChangeSort}
             handleSearch={onSearch}
             handleIsPublished={onIsPublished}

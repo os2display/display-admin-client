@@ -59,8 +59,16 @@
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
-    "loading": "Henter slides",
-    "deleting": "Sletter slides",
+    "loading-messages": {
+      "loading-slides": "Henter slides",
+      "deleting-slide": "Sletter slide: {{title}}"
+    },
+    "error-messages": {
+      "slide-delete-error": "Der skete en fejl da {{title}} skulle slettes: {{error}}"
+    },
+    "success-messages": {
+      "slide-delete": "{{title}} er blevet slettet"
+    },
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
     "delete-button": "Slet",

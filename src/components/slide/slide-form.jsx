@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import FormLoading from "../util/loading-component/form-loading";
+import LoadingComponent from "../util/loading-component/loading-component";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -130,7 +130,7 @@ function SlideForm({
 
   return (
     <>
-      <FormLoading isLoading={isLoading} loadingMessage={loadingMessage} />
+      <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <h1>{headerText}</h1>
         <ContentBody>

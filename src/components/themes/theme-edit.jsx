@@ -2,7 +2,10 @@ import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import ThemeForm from "./theme-form";
-import { displaySuccess, displayError } from '../util/list/toast-component/display-toast';
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import {
   usePutV1ThemesByIdMutation,
   useGetV1ThemesByIdQuery,
@@ -17,7 +20,9 @@ function ThemeEdit() {
   const { t } = useTranslation("common");
   const headerText = t("theme-edit.edit-theme");
   const [formStateObject, setFormStateObject] = useState();
-  const [loadingMessage, setLoadingMessage] = useState(t("theme-edit.loading-messages.loading-theme"));
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("theme-edit.loading-messages.loading-theme")
+  );
   const { id } = useParams();
 
   const [
@@ -54,9 +59,7 @@ function ThemeEdit() {
 
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(
-        t("theme-edit.success-messages.saved-theme")
-      );
+      displaySuccess(t("theme-edit.success-messages.saved-theme"));
     }
   }, [isSaveSuccess]);
 
@@ -87,7 +90,7 @@ function ThemeEdit() {
 
   /** Handles submit. */
   function handleSubmit() {
-    setLoadingMessage(t("theme-edit.loading-messages.saving-theme"))
+    setLoadingMessage(t("theme-edit.loading-messages.saving-theme"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -107,9 +110,7 @@ function ThemeEdit() {
           handleInput={handleInput}
           handleSubmit={handleSubmit}
           isLoading={isLoading || isSaving}
-          loadingMessage={
-            loadingMessage
-          }
+          loadingMessage={loadingMessage}
         />
       )}
     </>

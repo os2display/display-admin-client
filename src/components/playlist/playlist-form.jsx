@@ -11,7 +11,7 @@ import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 import "./playlist-form.scss";
-import FormLoading from "../util/loading-component/form-loading";
+import LoadingComponent from "../util/loading-component/loading-component";
 
 /**
  * The playlist form component.
@@ -40,7 +40,7 @@ function PlaylistForm({
 
   return (
     <>
-      <FormLoading isLoading={isLoading} loadingMessage={loadingMessage} />
+      <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <h1>{headerText}</h1>
         <ContentBody>
