@@ -375,7 +375,7 @@ function SlideEdit() {
     }
   }, [isSaveMediaSuccess]);
 
-  /** If the slide is saved, display the success message */
+  /** If the media is not saved, display the error message */
   useEffect(() => {
     if (saveMediaError) {
       displayError(
@@ -387,7 +387,7 @@ function SlideEdit() {
     }
   }, [saveMediaError]);
 
-  /** Handle submitting is done. */
+  /** If the slide is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("slide-edit.success-messages.saved-slide"));

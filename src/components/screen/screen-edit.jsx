@@ -77,6 +77,7 @@ function ScreenEdit() {
     }
   }, [isSaveSuccess]);
 
+  // Groups are saved, display success
   useEffect(() => {
     if (isSaveSuccessGroups) {
       setSavingGroups(false);
@@ -84,6 +85,7 @@ function ScreenEdit() {
     }
   }, [isSaveSuccessGroups]);
 
+  // Groups are not saved, display error
   useEffect(() => {
     if (saveErrorGroups) {
       setSavingGroups(false);
@@ -95,6 +97,8 @@ function ScreenEdit() {
     }
   }, [saveErrorGroups]);
 
+  // Playlists are saved, display success
+
   useEffect(() => {
     if (isSavePlaylistSuccess) {
       setSavingPlaylists(false);
@@ -102,6 +106,7 @@ function ScreenEdit() {
     }
   }, [isSavePlaylistSuccess]);
 
+  // Playlists are not saved, display error
   useEffect(() => {
     if (savePlaylistError) {
       setSavingPlaylists(false);

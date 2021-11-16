@@ -46,6 +46,7 @@ function PlaylistCreate() {
     { error: saveErrorSlides, isSuccess: isSaveSuccessSlides },
   ] = usePutV1PlaylistsByIdSlidesMutation();
 
+  // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessSlides) {
       setSavingSlides(false);
@@ -53,6 +54,7 @@ function PlaylistCreate() {
     }
   }, [isSaveSuccessSlides]);
 
+  // Slides are not saved successfully, display a message
   useEffect(() => {
     if (saveErrorSlides) {
       setSavingSlides(false);
@@ -174,7 +176,7 @@ function PlaylistCreate() {
   return (
     <PlaylistForm
       playlist={formStateObject}
-      headerText={`${headerText}: ${formStateObject && formStateObject.title}`}
+      headerText={headerText}
       isLoading={savingPlaylists || savingSlides}
       loadingMessage={loadingMessage}
       handleInput={handleInput}

@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";

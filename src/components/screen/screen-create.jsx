@@ -71,6 +71,7 @@ function ScreenCreate() {
     }
   }, [data]);
 
+  /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && data && groupsToAdd) {
       PutV1ScreensByIdScreenGroups({
@@ -80,6 +81,7 @@ function ScreenCreate() {
     }
   }, [isSaveSuccess]);
 
+  // Groups are saved, display success
   useEffect(() => {
     if (isSaveSuccessGroups) {
       setSavingGroups(false);
@@ -87,6 +89,7 @@ function ScreenCreate() {
     }
   }, [isSaveSuccessGroups]);
 
+  // Groups are not saved, display error
   useEffect(() => {
     if (saveErrorGroups) {
       setSavingGroups(false);
@@ -100,6 +103,7 @@ function ScreenCreate() {
     }
   }, [saveErrorGroups]);
 
+  // Playlists are saved, display success
   useEffect(() => {
     if (isSavePlaylistSuccess) {
       setSavingPlaylists(false);
@@ -107,6 +111,7 @@ function ScreenCreate() {
     }
   }, [isSavePlaylistSuccess]);
 
+  // Playlists are not saved, display error
   useEffect(() => {
     if (savePlaylistError) {
       setSavingPlaylists(false);

@@ -200,7 +200,6 @@ function List({
           </Button>
         </Col>
       </Row>
-
       <Row>
         {displayPublished && publishedParams && (
           <RadioButtons

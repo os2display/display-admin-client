@@ -42,6 +42,7 @@ function PlaylistEdit() {
     isLoading,
   } = useGetV1PlaylistsByIdQuery({ id });
 
+  // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessSlides) {
       setSavingSlides(false);
@@ -49,6 +50,7 @@ function PlaylistEdit() {
     }
   }, [isSaveSuccessSlides]);
 
+  // Slides are not saved successfully, display a message
   useEffect(() => {
     if (saveErrorSlides) {
       setSavingSlides(false);

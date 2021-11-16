@@ -61,6 +61,7 @@ function SlidesList() {
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
       DeleteV1Slides({ id: slideToDeleteId });
     } else if (isDeleteSuccess) {
+      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
       localStorage.setItem(
         "messages",
         JSON.stringify([
@@ -275,6 +276,7 @@ function SlidesList() {
     }
   }, [data]);
 
+  // Error with retrieving list of slides
   useEffect(() => {
     if (slidesGetError) {
       displayError(

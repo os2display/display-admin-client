@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import RRule from "../rrule/rrule";
-
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";

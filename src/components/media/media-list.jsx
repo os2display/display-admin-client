@@ -128,6 +128,7 @@ function MediaList({ fromModal, handleSelected }) {
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Media({ id: toDeleteId });
     } else if (isDeleteSuccess) {
+      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
       localStorage.setItem(
         "messages",
         JSON.stringify([

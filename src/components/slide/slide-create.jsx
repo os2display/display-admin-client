@@ -294,7 +294,7 @@ function SlideCreate() {
     }
   }, [isSaveMediaSuccess]);
 
-  /** If the slide is saved, display the success message */
+  /** If the media is not saved, display the error message */
   useEffect(() => {
     if (saveMediaError) {
       displayError(

@@ -79,6 +79,7 @@ function ScreenList() {
       const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
       DeleteV1Screens({ id: screenToDeleteId });
     } else if (isDeleteSuccess) {
+      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
       localStorage.setItem(
         "messages",
         JSON.stringify([
@@ -291,6 +292,7 @@ function ScreenList() {
     }
   }, [data]);
 
+  // Error with retrieving list of screen
   useEffect(() => {
     if (screensGetError) {
       displayError(

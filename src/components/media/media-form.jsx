@@ -45,7 +45,6 @@ function MediaForm({
         <ContentBody>
           <ImageUploader
             errors={errors}
-            multipleImages={false} // @TODO: !!newmedia
             handleImageUpload={handleInput}
             inputImage={media.images}
             name="images"

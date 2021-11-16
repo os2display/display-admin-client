@@ -53,6 +53,7 @@ function ThemesList() {
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
       DeleteV1Themes({ id: themeToDeleteId });
     } else if (isDeleteSuccess) {
+      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
       localStorage.setItem(
         "messages",
         JSON.stringify([
@@ -234,6 +235,7 @@ function ThemesList() {
     }
   }, [data]);
 
+  // Error with retrieving list of themes
   useEffect(() => {
     if (themesGetError) {
       displayError(
