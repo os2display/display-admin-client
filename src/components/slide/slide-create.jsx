@@ -1,6 +1,7 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import { ulid } from "ulid";
 import {
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
@@ -20,10 +21,18 @@ function SlideCreate() {
   const { t } = useTranslation("common");
   const headerText = t("slide-create.create-slide-header");
   const [loadingMessage, setLoadingMessage] = useState("");
+
+  // Field names in content that contain media references.
   const [mediaFields, setMediaFields] = useState([]);
+  // Media data for each media reference.
+  const [mediaData, setMediaData] = useState({});
+
+  // Is in the process of submitting form.
   const [submitting, setSubmitting] = useState(false);
+  // Media that should be submitted.
   const [submittingMedia, setSubmittingMedia] = useState([]);
-  const [loadedMedia, setLoadedMedia] = useState({});
+
+  // The selected template and theme.
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [selectedTheme, setSelectedTheme] = useState();
 
@@ -38,12 +47,14 @@ function SlideCreate() {
     published: { from: null, to: null },
   });
 
+  // Handle for creating slide.
   const [
     PostV1Slides,
     { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostV1SlidesMutation();
 
   // @TODO: Handle errors.
+  // Handle for creating media.
   const [
     PostV1MediaCollection,
     { data: mediaData, error: saveMediaError, isSuccess: isSaveMediaSuccess },
@@ -89,11 +100,14 @@ function SlideCreate() {
    */
   const selectTheme = ({ target }) => {
     const { value, id: targetId } = target;
-    let themeId = "";
+    let themeId = null;
+
     if (value.length > 0) {
       themeId = value[0]["@id"];
     }
+
     setSelectedTheme(value);
+
     handleInput({
       target: { id: targetId, value: themeId },
     });
@@ -106,8 +120,11 @@ function SlideCreate() {
    * @param {object} props.target The field and value that should be updated.
    */
   function handleContent({ target }) {
+    // Convert numbers
+    const value =
+      target.type === "number" ? target.valueAsNumber : target.value;
     const localFormStateObject = { ...formStateObject };
-    set(localFormStateObject.content, target.id, target.value);
+    set(localFormStateObject.content, target.id, value);
     setFormStateObject(localFormStateObject);
   }
 
@@ -116,8 +133,45 @@ function SlideCreate() {
    *
    * @param {string} fieldName The field name.
    */
-  function handleMedia(fieldName) {
-    setMediaFields([...new Set([...mediaFields, fieldName])]);
+  function handleMedia({ target }) {
+    const fieldValue = target.value;
+    const fieldId = target.id;
+    const localFormStateObject = { ...formStateObject };
+    const localMediaData = { ...mediaData };
+
+    // Set field as a field to look into for new references.
+    setMediaFields([...new Set([...mediaFields, fieldId])]);
+
+    const newField = [];
+
+    // Handle each entry in field.
+    if (Array.isArray(fieldValue)) {
+      fieldValue.forEach((entry) => {
+        // New file.
+        if (entry.file && entry.file instanceof File) {
+          if (!Array.isArray(localFormStateObject.content[fieldId])) {
+            localFormStateObject.content[fieldId] = [];
+          }
+
+          // Create a tempId for the media.
+          const tempId = entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
+          newField.push(tempId);
+
+          const newEntry = { ...entry };
+          newEntry.tempId = tempId;
+          set(localMediaData, tempId, newEntry);
+        }
+        // Previously uploaded file.
+        else {
+          newField.push(entry["@id"]);
+        }
+      });
+    }
+
+    set(localFormStateObject.content, fieldId, newField);
+
+    setFormStateObject(localFormStateObject);
+    setMediaData(localMediaData);
   }
 
   /** Handles submit. */
@@ -128,18 +182,17 @@ function SlideCreate() {
       if (
         Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)
       ) {
-        const contentField = formStateObject.content[fieldName];
-        contentField.forEach((element) => {
-          const formData = new FormData();
-          formData.append("file", element.file);
-          formData.append("title", element.title || "");
-          formData.append("description", element.description || "");
-          formData.append("license", element.license || "");
-          // @TODO: Should these be optional in the API?
-          formData.append("modifiedBy", "");
-          formData.append("createdBy", "");
-          newSubmittingMedia.push(formData);
-        });
+        const fieldData = formStateObject.content[fieldName];
+
+        if (Array.isArray(fieldData)) {
+          fieldData.forEach((id) => {
+            const entry = mediaData[id];
+
+            if (entry.file && entry.file instanceof File) {
+              newSubmittingMedia.push({ fieldName, entry, tempId: id });
+            }
+          });
+        }
       }
     });
 
@@ -153,16 +206,30 @@ function SlideCreate() {
     if (submitting) {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
+
         setLoadingMessage(
           t("slide-create.loading-messages.saving-media", {
             title: media.get("title") || t("slide-create.unamed-media"),
           })
         );
-        // Submit media.
-        PostV1MediaCollection({ body: media });
-      } else {
-        setLoadingMessage(t("slide-create.loading-messages.saving-slide"));
 
+        const { entry } = media;
+
+        // Submit media.
+        const formData = new FormData();
+        formData.append("file", entry.file);
+        formData.append("title", entry.title);
+        formData.append("description", entry.description);
+        formData.append("license", entry.license);
+        // @TODO: Should these be optional in the API?
+        formData.append("modifiedBy", "");
+        formData.append("createdBy", "");
+
+        PostV1MediaCollection({ body: formData });
+      } else {
+        // All media have been submitted. Submit slide.
+
+        // Set published.
         const from = formStateObject.published.from
           ? new Date(formStateObject.published.from).toISOString()
           : null;
@@ -170,7 +237,7 @@ function SlideCreate() {
           ? new Date(formStateObject.published.to).toISOString()
           : null;
 
-        // All media have been submitted. Submit slide.
+        // Construct data for submitting.
         const saveData = {
           slideSlideInput: JSON.stringify({
             title: formStateObject.title,
@@ -198,9 +265,8 @@ function SlideCreate() {
   useEffect(() => {
     if (submitting) {
       if (isSaveMediaSuccess) {
-        const newMediaFields = [...mediaFields];
-        const firstMediaField = newMediaFields.shift();
-        setMediaFields(newMediaFields);
+        const newSubmittingMedia = [...submittingMedia];
+        const submittedMedia = newSubmittingMedia.shift();
 
         const newFormStateObject = { ...formStateObject };
         newFormStateObject.media.push(mediaData["@id"]);
@@ -213,11 +279,18 @@ function SlideCreate() {
           })
         );
 
+        newFormStateObject.media.push(savedMediaData["@id"]);
+
+        // Replace TEMP-- id with real id.
+        newFormStateObject.content[submittedMedia.fieldName] =
+          newFormStateObject.content[submittedMedia.fieldName].map((mediaId) =>
+            mediaId === submittedMedia.tempId ? savedMediaData["@id"] : mediaId
+          );
         setFormStateObject(newFormStateObject);
 
-        const newLoadedMedia = { ...loadedMedia };
-        newLoadedMedia[mediaData["@id"]] = mediaData;
-        setLoadedMedia(newLoadedMedia);
+        const newMediaData = { ...mediaData };
+        newMediaData[savedMediaData["@id"]] = savedMediaData;
+        setMediaData(newMediaData);
 
         // Move to next media to upload.
         const newList = submittingMedia.slice(1);
@@ -231,6 +304,8 @@ function SlideCreate() {
             error: saveMediaError.data["hydra:description"],
           })
         );
+        // Save new list.
+        setSubmittingMedia(newSubmittingMedia);
       }
     }
   }, [isSaveMediaSuccess, saveMediaError]);
@@ -269,11 +344,9 @@ function SlideCreate() {
           handleSubmit={handleSubmit}
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
-          loadedMedia={loadedMedia}
           isLoading={submitting || isSaving}
+          mediaData={mediaData}
           loadingMessage={loadingMessage}
-          isSaveSuccess={isSaveSuccess}
-          errors={saveError || false}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
           mediaFields={mediaFields}

@@ -39,11 +39,12 @@ function ImageUploader({
     const localImages = [...images];
     const imageIndex = localImages.findIndex((img) => img.url === image.url);
     localImages[imageIndex] = image;
-    const uniqueImages = [
-      ...new Set(localImages.map((localImage) => localImage)),
-    ];
+
+    const uniqueImages = [...new Set(localImages)];
+
     setImages(uniqueImages);
-    const target = { value: images, id: name };
+
+    const target = { value: uniqueImages, id: name };
     handleImageUpload({ target });
   }
 

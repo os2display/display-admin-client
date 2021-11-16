@@ -26,7 +26,7 @@ import RemoteComponentWrapper from "./remote-component-wrapper";
  * @param {string} props.headerText Headline text.
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
- * @param {Array} props.loadedMedia Object of loaded media.
+ * @param {Array} props.mediaData Object of loaded media.
  * @param {object} props.mediaFields The uploaded but not yet saved media fields.
  * @param {Function} props.selectTemplate Function to handle select of template.
  * @param {object} props.selectedTemplate Selected template.
@@ -47,6 +47,11 @@ function SlideForm({
   headerText,
   mediaFields,
   loadedMedia,
+  isSaveSuccess,
+  isLoading,
+  mediaData,
+  mediaFields,
+  errors,
   selectTheme,
   selectedTheme,
   isLoading,
@@ -268,6 +273,7 @@ SlideForm.defaultProps = {
   selectedTemplate: null,
   isLoading: false,
   loadingMessage: "",
+  selectedTheme: [],
 };
 
 SlideForm.propTypes = {
@@ -277,7 +283,12 @@ SlideForm.propTypes = {
   headerText: PropTypes.string.isRequired,
   selectedTheme: PropTypes.string.isRequired,
   selectTemplate: PropTypes.func.isRequired,
+  isSaveSuccess: PropTypes.bool.isRequired,
   selectTheme: PropTypes.func.isRequired,
+  selectedTheme: PropTypes.arrayOf(
+    PropTypes.shape({ "@id": PropTypes.string.isRequired })
+  ),
+  selectTemplate: PropTypes.func.isRequired,
   selectedTemplate: PropTypes.shape({
     "@id": PropTypes.string,
     resources: PropTypes.shape({
@@ -287,7 +298,7 @@ SlideForm.propTypes = {
   }),
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
-  loadedMedia: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
   mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,

@@ -28,12 +28,14 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
     handleChange(image);
   }
 
+  const imageUrl = image.url ? image.url : image.assets?.uri;
+  const disableInput = typeof image?.assets?.uri === "string";
+
   return (
     <Row className="mb-3">
       <Col md="3" className="mb-3 mb-md-0">
         <div className="image h-100 justify-content-center d-flex rounded">
-          {/* @TODO: Make a better check for differentiating between file upload and media archive selection */}
-          <img src={image.url} alt={t("image.image-currently-uploading")} />
+          <img src={imageUrl} alt={t("image.image-currently-uploading")} />
         </div>
       </Col>
       <Col md="9">
@@ -45,7 +47,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.title}
           onChange={onChange}
           formGroupClasses="mb-3"
-          disabled={image.disableInput}
+          disabled={disableInput}
         />
         <FormInput
           name="description"
@@ -56,7 +58,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.description}
           onChange={onChange}
           formGroupClasses="mb-3"
-          disabled={image.disableInput}
+          disabled={disableInput}
         />
         <FormInput
           name="license"
@@ -66,7 +68,7 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
           value={image.license}
           onChange={onChange}
           formGroupClasses="mb-3"
-          disabled={image.disableInput}
+          disabled={disableInput}
         />
         <Button
           className="mt-3"
