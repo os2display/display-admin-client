@@ -43,7 +43,7 @@ function ThemeEdit() {
     }
   }, [themeData]);
 
-  /** Set loaded data into form state. */
+  /** If the theme is not loaded, display the error message */
   useEffect(() => {
     if (loadError) {
       displayError(
@@ -57,12 +57,14 @@ function ThemeEdit() {
     }
   }, [loadError]);
 
+  /** If the theme is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("theme-edit.success-messages.saved-theme"));
     }
   }, [isSaveSuccess]);
 
+  /** If the theme is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(

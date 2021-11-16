@@ -41,6 +41,7 @@ function GroupCreate() {
     }
   }, [isSaveSuccess]);
 
+  /** If the group is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(

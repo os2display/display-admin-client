@@ -42,7 +42,7 @@ function GroupEdit() {
     }
   }, [data]);
 
-  /** Set loaded data into form state. */
+  /** If the group is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       setSavingGroup(false);
@@ -50,6 +50,7 @@ function GroupEdit() {
     }
   }, [isSaveSuccess]);
 
+  /** If the group is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(
@@ -63,6 +64,7 @@ function GroupEdit() {
     }
   }, [saveError]);
 
+  /** If the group is not loaded, display the error message */
   useEffect(() => {
     if (loadError) {
       displayError(

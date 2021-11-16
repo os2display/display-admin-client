@@ -120,6 +120,7 @@ function ScreenCreate() {
     }
   }, [savePlaylistError]);
 
+  /** If the screen is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("screen-create.success-messages.saved-screen"));
@@ -127,6 +128,7 @@ function ScreenCreate() {
     }
   }, [isSaveSuccess]);
 
+  /** If the screen is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(

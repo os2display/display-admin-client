@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -30,6 +29,7 @@ import MediaCreate from "./components/media/media-create";
 import ThemesList from "./components/themes/themes-list";
 import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
+import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
 /**

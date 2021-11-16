@@ -66,6 +66,7 @@ function PlaylistCreate() {
     }
   }, [saveErrorSlides]);
 
+  /** If the playlist is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("playlist-create.success-messages.saved-playlist"));
@@ -73,6 +74,7 @@ function PlaylistCreate() {
     }
   }, [isSaveSuccess]);
 
+  /** If the playlist is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(

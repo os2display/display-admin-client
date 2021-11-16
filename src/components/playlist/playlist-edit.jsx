@@ -62,6 +62,7 @@ function PlaylistEdit() {
     }
   }, [saveErrorSlides]);
 
+  /** If the playlist is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("playlist-edit.success-messages.saved-playlist"));
@@ -69,6 +70,7 @@ function PlaylistEdit() {
     }
   }, [isSaveSuccess]);
 
+  /** If the playlist is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(
@@ -82,6 +84,7 @@ function PlaylistEdit() {
     }
   }, [saveError]);
 
+  /** If the playlist is not loaded, display the error message */
   useEffect(() => {
     if (loadError) {
       displayError(

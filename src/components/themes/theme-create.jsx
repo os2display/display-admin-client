@@ -65,12 +65,14 @@ function ThemeCreate() {
     postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
   }
 
+  /** If the theme is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("theme-create.success-messages.saved-theme"));
     }
   }, [isSaveSuccess]);
 
+  /** If the theme is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(

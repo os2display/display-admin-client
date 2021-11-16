@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { usePostMediaCollectionMutation } from "../../redux/api/api.generated";
+import MediaForm from "./media-form";
 import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
-import MediaForm from "./media-form";
 
 /**
  * The create media component.
@@ -45,8 +45,8 @@ function MediaCreate() {
       PostV1MediaCollection({ body: media });
     }
   }, [mediaToCreate.length, isSaveSuccess]);
-  /** Saves multiple pieces of media. */
 
+  /** If the media is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(
@@ -60,6 +60,7 @@ function MediaCreate() {
     }
   }, [saveError]);
 
+  /** If the image is saved, display the success message, and remove image from ui */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("media-create.success-messages.saved-media"));

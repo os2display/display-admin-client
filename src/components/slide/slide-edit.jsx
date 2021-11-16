@@ -440,7 +440,7 @@ function SlideEdit() {
     }
   }, [isSaveMediaSuccess, saveMediaError]);
 
-  // If save is success, display toast and set submitting false
+  /** If the slide is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("slide-edit.success-messages.saved-slide"));
@@ -449,7 +449,7 @@ function SlideEdit() {
     }
   }, [isSaveSuccess]);
 
-  // If save has error, display toast and set submitting false
+  /** If the slide is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       setSubmitting(false);

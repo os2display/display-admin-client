@@ -9,7 +9,10 @@ import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
-import { displaySuccess, displayError } from '../util/list/toast-component/display-toast';
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import {
   useGetV1ScreenGroupsQuery,
   useDeleteV1ScreenGroupsByIdMutation,
@@ -38,8 +41,10 @@ function GroupsList() {
   );
 
   // Delete call
-  const [DeleteV1ScreenGroups, { isSuccess: isDeleteSuccess,error: isDeleteError }] =
-    useDeleteV1ScreenGroupsByIdMutation();
+  const [
+    DeleteV1ScreenGroups,
+    { isSuccess: isDeleteSuccess, error: isDeleteError },
+  ] = useDeleteV1ScreenGroupsByIdMutation();
 
   /** Deletes multiple groups. */
   useEffect(() => {
@@ -50,6 +55,7 @@ function GroupsList() {
       const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
       DeleteV1ScreenGroups({ id: groupToDeleteId });
     } else if (isDeleteSuccess) {
+      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
       localStorage.setItem(
         "messages",
         JSON.stringify([
@@ -57,32 +63,32 @@ function GroupsList() {
           t("groups-list.success-messages.group-delete"),
         ])
       );
+
       window.location.reload(false);
     }
   }, [groupsToDelete, isDeleteSuccess]);
 
- // Sets success-messages for local storage
- useEffect(() => {
-  if (isDeleteSuccess && groupsToDelete.length > 0) {
-    const localStorageMessagesCopy = [...localStorageMessages];
-    localStorageMessagesCopy.push(
-      t("groups-list.success-messages.group-delete")
-    );
-    setLocalStorageMessages(localStorageMessagesCopy);
-  }
-}, [isDeleteSuccess]);
+  // Sets success messages in local storage, because the page is reloaded
+  useEffect(() => {
+    if (isDeleteSuccess && groupsToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("groups-list.success-messages.group-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
 
-// Display success messages from successfully deleted slides.
-useEffect(() => {
-  const messages = JSON.parse(localStorage.getItem("messages"));
-  if (messages) {
-    messages.forEach((element) => {
-      displaySuccess(element);
-    });
-    localStorage.removeItem("messages");
-  }
-}, []);
-
+  // Displays the success messages from successfully deleted slides, and removes them from local storage.
+  useEffect(() => {
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -223,6 +229,7 @@ useEffect(() => {
     }
   }, [data]);
 
+  // Error with retrieving list of groups
   useEffect(() => {
     if (groupsGetError) {
       displayError(

@@ -115,6 +115,7 @@ function ScreenEdit() {
     }
   }, [savePlaylistError]);
 
+  /** If the screen is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("screen-edit.success-messages.saved-screen"));
@@ -122,6 +123,7 @@ function ScreenEdit() {
     }
   }, [isSaveSuccess]);
 
+  /** If the screen is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
       displayError(
@@ -135,6 +137,7 @@ function ScreenEdit() {
     }
   }, [saveError]);
 
+  /** If the screen is not loaded, display the error message */
   useEffect(() => {
     if (loadError) {
       displayError(
