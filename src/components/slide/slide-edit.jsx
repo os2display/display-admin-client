@@ -55,7 +55,11 @@ function SlideEdit() {
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: mediaData, error: saveMediaError, isSuccess: isSaveMediaSuccess },
+    {
+      data: savedMediaData,
+      error: saveMediaError,
+      isSuccess: isSaveMediaSuccess,
+    },
   ] = usePostMediaCollectionMutation();
 
   /**

@@ -57,7 +57,11 @@ function SlideCreate() {
   // Handle for creating media.
   const [
     PostV1MediaCollection,
-    { data: mediaData, error: saveMediaError, isSuccess: isSaveMediaSuccess },
+    {
+      data: savedMediaData,
+      error: saveMediaError,
+      isSuccess: isSaveMediaSuccess,
+    },
   ] = usePostMediaCollectionMutation();
 
   /**
