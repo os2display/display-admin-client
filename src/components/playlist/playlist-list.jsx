@@ -13,6 +13,10 @@ import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import Published from "../slide/published";
 import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
+import {
   useGetV1PlaylistsQuery,
   useDeleteV1PlaylistsByIdMutation,
   useGetV1PlaylistsByIdSlidesQuery,
@@ -37,23 +41,74 @@ function PlaylistList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [listData, setListData] = useState();
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("playlists-list.loading-messages.loading-playlists")
+  );
 
   // Delete call
-  const [DeleteV1Playlists, { isSuccess: isDeleteSuccess }] =
-    useDeleteV1PlaylistsByIdMutation();
+  const [
+    DeleteV1Playlists,
+    { isSuccess: isDeleteSuccess, error: isDeleteError },
+  ] = useDeleteV1PlaylistsByIdMutation();
 
   /** Deletes multiple playlists. */
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
       // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
+      setLoadingMessage(t("playlists-list.loading-messages.deleting-playlist"));
       const toDelete = playlistsToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Playlists({ id: toDeleteId });
     } else if (isDeleteSuccess) {
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("playlists-list.success-messages.playlist-delete"),
+        ])
+      );
       window.location.reload(false);
     }
   }, [playlistsToDelete, isDeleteSuccess]);
+
+  // Sets success-messages for local storage
+  useEffect(() => {
+    if (isDeleteSuccess && playlistsToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("playlists-list.success-messages.playlist-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
+
+  // Display success messages from successfully deleted slides.
+  useEffect(() => {
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("playlists-list.error-messages.playlist-delete-error", {
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [isDeleteError]);
 
   /**
    * Sets the selected row in state.
@@ -214,6 +269,24 @@ function PlaylistList() {
     published: isPublished,
   });
 
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (playlistsGetError) {
+      displayError(
+        t("playlists-list.error-messages.playlists-load-error", {
+          error: playlistsGetError.error
+            ? playlistsGetError.error
+            : playlistsGetError.data["hydra:description"],
+        })
+      );
+    }
+  }, [playlistsGetError]);
+
   return (
     <>
       <ContentHeader
@@ -221,28 +294,22 @@ function PlaylistList() {
         newBtnTitle={t("playlists-list.create-new-playlist")}
         newBtnLink="/playlist/create"
       />
-      {data && data["hydra:member"] && (
+      {listData && (
         <ContentBody>
           <List
             displayPublished
-            error={playlistsGetError || false}
-            deleteSuccess={isDeleteSuccess || false}
             columns={columns}
-            isLoading={isLoading || isDeleting || false}
-            loadingMessage={
-              isLoading
-                ? t("playlists-list.loading")
-                : t("playlists-list.deleting")
-            }
             handleSort={onChangeSort}
             handlePageChange={onChangePage}
-            totalItems={data["hydra:totalItems"]}
+            totalItems={listData["hydra:totalItems"]}
             handleSearch={onSearch}
             selectedRows={selectedRows}
-            data={data["hydra:member"]}
+            data={listData["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
             handleIsPublished={onIsPublished}
+            isLoading={isLoading || isDeleting}
+            loadingMessage={loadingMessage}
           />
         </ContentBody>
       )}

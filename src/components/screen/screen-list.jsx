@@ -20,6 +20,7 @@ import {
   useDeleteV1ScreensByIdMutation,
   useGetV1ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated";
+import { displaySuccess, displayError } from '../util/list/toast-component/display-toast';
 import "./screen-list.scss";
 
 /**
@@ -46,9 +47,14 @@ function ScreenList() {
   const [screensToDelete, setScreensToDelete] = useState([]);
   const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
+  const [listData, setListData] = useState();
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("screens-list.loading-messages.loading-screens")
+  );
 
   // Delete call
-  const [DeleteV1Screens, { isSuccess: isDeleteSuccess }] =
+  const [DeleteV1Screens, { isSuccess: isDeleteSuccess,error:isDeleteError }] =
     useDeleteV1ScreensByIdMutation();
 
   /** Set the view in url. */
@@ -63,13 +69,57 @@ function ScreenList() {
   useEffect(() => {
     if (screensToDelete.length > 0) {
       setIsDeleting(true);
+      setLoadingMessage(t("screens-list.loading-messages.deleting-screen"));
       const screenToDelete = screensToDelete.splice(0, 1).shift();
       const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
       DeleteV1Screens({ id: screenToDeleteId });
     } else if (isDeleteSuccess) {
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("screens-list.success-messages.screen-delete"),
+        ])
+      );
       window.location.reload(false);
     }
   }, [screensToDelete, isDeleteSuccess]);
+
+   // Sets success-messages for local storage
+   useEffect(() => {
+    if (isDeleteSuccess && slidesToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("screens-list.success-messages.screen-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
+
+  // Display success messages from successfully deleted slides.
+  useEffect(() => {
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("screens-list.error-messages.screen-delete-error", {
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [isDeleteError]);
 
   /**
    * Sets the selected row in state.
@@ -230,6 +280,24 @@ function ScreenList() {
     title: searchText,
   });
 
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (screensGetError) {
+      displayError(
+        t("screens-list.error-messages.screens-load-error", {
+          error: screensGetError.error
+            ? screensGetError.error
+            : screensGetError.data["hydra:description"],
+        })
+      );
+    }
+  }, [screensGetError]);
+
   return (
     <>
       <ContentHeader
@@ -251,25 +319,20 @@ function ScreenList() {
       </Col>
       <ContentBody>
         <>
-          {data && data["hydra:member"] && (
+          {listData && (
             <List
               columns={columns}
-              totalItems={data["hydra:totalItems"]}
+              totalItems={listData["hydra:totalItems"]}
+              data={listData["hydra:member"]}
               currentPage={page}
               handlePageChange={onChangePage}
               selectedRows={selectedRows}
-              data={data["hydra:member"]}
+              data={listData["hydra:member"]}
               clearSelectedRows={clearSelectedRows}
               withChart={view === "calendar"}
               handleDelete={openDeleteModal}
-              loadingMessage={
-                isLoading
-                  ? t("screens-list.loading")
-                  : t("screens-list.deleting")
-              }
-              error={screensGetError || false}
-              isLoading={isLoading || isDeleting || false}
-              deleteSuccess={isDeleteSuccess || false}
+              isLoading={isLoading || isDeleting}
+              loadingMessage={loadingMessage}
               handleSort={onChangeSort}
               handleSearch={onSearch}
             />

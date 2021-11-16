@@ -9,6 +9,7 @@ import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
+import { displaySuccess, displayError } from '../util/list/toast-component/display-toast';
 import {
   useGetV1ScreenGroupsQuery,
   useDeleteV1ScreenGroupsByIdMutation,
@@ -30,22 +31,72 @@ function GroupsList() {
   const [groupsToDelete, setGroupsToDelete] = useState([]);
   const [sortBy, setSortBy] = useState();
   const [searchText, setSearchText] = useState();
+  const [listData, setListData] = useState();
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("groups-list.loading-messages.loading-groups")
+  );
 
   // Delete call
-  const [DeleteV1ScreenGroups, { isSuccess: isDeleteSuccess }] =
+  const [DeleteV1ScreenGroups, { isSuccess: isDeleteSuccess,error: isDeleteError }] =
     useDeleteV1ScreenGroupsByIdMutation();
 
   /** Deletes multiple groups. */
   useEffect(() => {
     if (groupsToDelete.length > 0) {
       setIsDeleting(true);
+      setLoadingMessage(t("groups-list.loading-messages.deleting-group"));
       const groupToDelete = groupsToDelete.splice(0, 1).shift();
       const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
       DeleteV1ScreenGroups({ id: groupToDeleteId });
     } else if (isDeleteSuccess) {
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("groups-list.success-messages.group-delete"),
+        ])
+      );
       window.location.reload(false);
     }
   }, [groupsToDelete, isDeleteSuccess]);
+
+ // Sets success-messages for local storage
+ useEffect(() => {
+  if (isDeleteSuccess && groupsToDelete.length > 0) {
+    const localStorageMessagesCopy = [...localStorageMessages];
+    localStorageMessagesCopy.push(
+      t("groups-list.success-messages.group-delete")
+    );
+    setLocalStorageMessages(localStorageMessagesCopy);
+  }
+}, [isDeleteSuccess]);
+
+// Display success messages from successfully deleted slides.
+useEffect(() => {
+  const messages = JSON.parse(localStorage.getItem("messages"));
+  if (messages) {
+    messages.forEach((element) => {
+      displaySuccess(element);
+    });
+    localStorage.removeItem("messages");
+  }
+}, []);
+
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("groups-list.error-messages.group-delete-error", {
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [isDeleteError]);
 
   /**
    * Sets the selected row in state.
@@ -166,6 +217,24 @@ function GroupsList() {
     title: searchText,
   });
 
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (groupsGetError) {
+      displayError(
+        t("groups-list.error-messages.groups-load-error", {
+          error: groupsGetError.error
+            ? groupsGetError.error
+            : groupsGetError.data["hydra:description"],
+        })
+      );
+    }
+  }, [groupsGetError]);
+
   return (
     <>
       <ContentHeader
@@ -174,24 +243,21 @@ function GroupsList() {
         newBtnLink="/group/create"
       />
       <ContentBody>
-        {!(isLoading || isDeleting) && data && data["hydra:member"] && (
+        {listData && (
           <List
             columns={columns}
-            totalItems={data["hydra:totalItems"]}
+            totalItems={listData["hydra:totalItems"]}
             currentPage={page}
             handlePageChange={onChangePage}
             selectedRows={selectedRows}
-            data={data["hydra:member"]}
+            data={listData["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
-            error={groupsGetError || false}
-            isLoading={isLoading || isDeleting || false}
-            loadingMessage={
-              isLoading ? t("groups-list.loading") : t("groups-list.deleting")
-            }
             deleteSuccess={isDeleteSuccess || false}
             handleSort={onChangeSort}
             handleSearch={onSearch}
+            isLoading={isLoading || isDeleting}
+            loadingMessage={loadingMessage}
           />
         )}
       </ContentBody>

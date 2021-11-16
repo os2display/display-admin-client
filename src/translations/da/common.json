@@ -61,13 +61,14 @@
     },
     "loading-messages": {
       "loading-slides": "Henter slides",
-      "deleting-slide": "Sletter slide: {{title}}"
+      "deleting-slide": "Sletter slide(s)"
     },
     "error-messages": {
-      "slide-delete-error": "Der skete en fejl da {{title}} skulle slettes: {{error}}"
+      "slide-delete-error": "Der skete en fejl da {{title}} skulle slettes: {{error}}",
+      "slides-load-error": "Der skete en fejl da slides skulle hentes: {{error}}"
     },
     "success-messages": {
-      "slide-delete": "{{title}} er blevet slettet"
+      "slide-delete": "Slidet er blevet slettet"
     },
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
@@ -87,8 +88,17 @@
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     },
-    "loading": "Henter skærme",
-    "deleting": "Sletter skærme",
+    "loading-messages": {
+      "loading-screens": "Henter skærme",
+      "deleting-screen": "Sletter skærm(e)"
+    },
+    "error-messages": {
+      "screen-delete-error": "Der skete en fejl da skærmen skulle slettes: {{error}}",
+      "screens-load-error": "Der skete en fejl da skærmene skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "screen-delete": "Skærmen er blevet slettet"
+    },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
@@ -102,8 +112,17 @@
       "name": "Navn",
       "created-by": "Oprettet af"
     },
-    "loading": "Henter grupper",
-    "deleting": "Sletter grupper",
+    "loading-messages": {
+      "loading-groups": "Henter grupper",
+      "deleting-group": "Sletter gruppe(r)"
+    },
+    "error-messages": {
+      "group-delete-error": "Der skete en fejl da gruppen skulle slettes: {{error}}",
+      "groups-load-error": "Der skete en fejl da grupperne skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "group-delete": "Gruppen er blevet slettet"
+    },
     "header": "Grupper",
     "create-new-group": "Opret ny gruppe",
     "delete-button": "Slet",
@@ -119,8 +138,17 @@
     "info-modal": {
       "playlist-slides": "Playlisten indeholder følgende slides"
     },
-    "loading": "Henter spillelister",
-    "deleting": "Sletter spillelister",
+    "loading-messages": {
+      "loading-playlists": "Henter spillelister",
+      "deleting-playlist": "Sletter spilleliste: {{title}}"
+    },
+    "error-messages": {
+      "playlist-delete-error": "Der skete en fejl da spillelisten skulle slettes: {{error}}",
+      "playlists-load-error": "Der skete en fejl da spillelisterne skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "playlist-delete": "Spillelisten er blevet slettet"
+    },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
     "delete-button": "Slet",
@@ -132,6 +160,17 @@
       "name": "Navn",
       "created-by": "Oprettet af",
       "number-of-slides": "Antal tilknyttede slides"
+    },
+    "loading-messages": {
+      "loading-themes": "Henter temaer",
+      "deleting-theme": "Sletter tema(er)"
+    },
+    "error-messages": {
+      "theme-delete-error": "Der skete en fejl da temaet skulle slettes: {{error}}",
+      "themes-load-error": "Der skete en fejl da temaerne skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "theme-delete": "Temaet er blevet slettet"
     },
     "header": "Temaer",
     "create-new-theme": "Opret nyt tema",
@@ -149,9 +188,17 @@
     "upload-new-media": "Upload",
     "delete-button": "Slet",
     "edit-button": "Rediger",
-    "deleted": "Elementer er slettet",
-    "deleting": "Sletter elementer...",
-    "loading": "Henter elementer..."
+    "loading-messages": {
+      "loading-media": "Henter medier",
+      "deleting-media": "Sletter Medie(r)"
+    },
+    "error-messages": {
+      "media-delete-error": "Der skete en fejl da mediet skulle slettes: {{error}}",
+      "media-load-error": "Der skete en fejl da medier skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "media-delete": "Mediet er blevet slettet"
+    }
   },
   "media-create": {
     "create-media": "Upload",

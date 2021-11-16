@@ -14,11 +14,14 @@ import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import TemplateLabelInList from "./template-label-in-list";
 import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
+import {
   useGetV1SlidesQuery,
   useDeleteV1SlidesByIdMutation,
   useGetV1PlaylistsByIdQuery,
 } from "../../redux/api/api.generated";
-import { displayError,displaySuccess} from "../util/list/toast-component/display-toast";
 
 /**
  * The slides list component.
@@ -30,12 +33,7 @@ function SlidesList() {
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [slides, setSlides] = useState([]);
-  const [loadingMessage, setLoadingMessage] = useState(
-    t("slides-list.loading-messages.loading-slides")
-  );
   const [sortBy, setSortBy] = useState();
-  const [deletingSlideTitle, setDeletingSlideTitle] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [page, setPage] = useState();
@@ -44,63 +42,71 @@ function SlidesList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
-
-  const {
-    data,
-    error: slidesGetError,
-    isLoading,
-  } = useGetV1SlidesQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-    published: isPublished,
-  });
+  const [listData, setListData] = useState();
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("slides-list.loading-messages.loading-slides")
+  );
 
   // Delete call
-  const [DeleteV1Slides, { isSuccess: isDeleteSuccess, error: deleteError }] =
+  const [DeleteV1Slides, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1SlidesByIdMutation();
 
   /** Deletes multiple slides. */
   useEffect(() => {
     if (slidesToDelete.length > 0) {
       setIsDeleting(true);
+      setLoadingMessage(t("slides-list.loading-messages.deleting-slide"));
       const slideToDelete = slidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
-      setDeletingSlideTitle(slideToDelete.title);
-      setLoadingMessage(
-        t("slides-list.loading-messages.deleting-slide", {
-          title: slideToDelete.title,
-        })
-      );
       DeleteV1Slides({ id: slideToDeleteId });
     } else if (isDeleteSuccess) {
-      setIsDeleting(false);
-      setPage(0)
-      displaySuccess(t("slides-list.success-messages.slide-delete", {title:deletingSlideTitle}))
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("slides-list.success-messages.slide-delete"),
+        ])
+      );
+      window.location.reload(false);
     }
   }, [slidesToDelete, isDeleteSuccess]);
 
+  // Sets success-messages for local storage
   useEffect(() => {
-    if (deleteError) {
+    if (isDeleteSuccess && slidesToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("slides-list.success-messages.slide-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
+
+  // Display success messages from successfully deleted slides.
+  useEffect(() => {
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
       setIsDeleting(false);
       displayError(
         t("slides-list.error-messages.slide-delete-error", {
-          title: deletingSlideTitle,
-          error: deleteError.error
-            ? deleteError.error
-            : deleteError.data["hydra:description"],
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
         })
       );
     }
-  }, [deleteError]);
-
-  useEffect(() => {
-    if (data) {
-      console.log(data)
-      setSlides(data["hydra:member"]);
-    }
-  }, [data]);
+  }, [isDeleteError]);
 
   /**
    * Sets the selected row in state.
@@ -251,6 +257,36 @@ function SlidesList() {
     },
   ];
 
+  const {
+    data,
+    error: slidesGetError,
+    isLoading,
+  } = useGetV1SlidesQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+    published: isPublished,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (slidesGetError) {
+      displayError(
+        t("slides-list.error-messages.slides-load-error", {
+          error: slidesGetError.error
+            ? slidesGetError.error
+            : slidesGetError.data["hydra:description"],
+        })
+      );
+    }
+  }, [slidesGetError]);
+
   return (
     <>
       <ContentHeader
@@ -258,24 +294,23 @@ function SlidesList() {
         newBtnTitle={t("slides-list.create-new-slide")}
         newBtnLink="/slide/create"
       />
-      {slides.length > 0 && (
+      {listData && (
         <ContentBody>
           <List
             columns={columns}
-            totalItems={data["hydra:totalItems"]}
+            totalItems={listData["hydra:totalItems"]}
+            data={listData["hydra:member"]}
             currentPage={page}
             handlePageChange={onChangePage}
             selectedRows={selectedRows}
-            data={slides}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
-            error={slidesGetError || false}
-            isLoading={isLoading || isDeleting}
-            loadingMessage={loadingMessage}
             handleSort={onChangeSort}
             handleSearch={onSearch}
             handleIsPublished={onIsPublished}
             displayPublished
+            isLoading={isLoading || isDeleting}
+            loadingMessage={loadingMessage}
           />
         </ContentBody>
       )}

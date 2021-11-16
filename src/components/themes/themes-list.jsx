@@ -10,6 +10,10 @@ import LinkForList from "../util/list/link-for-list";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
+import {
   useGetV1ThemesQuery,
   useDeleteV1ThemesByIdMutation,
 } from "../../redux/api/api.generated";
@@ -30,9 +34,14 @@ function ThemesList() {
   const [themesToDelete, setThemesToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchText, setSearchText] = useState();
+  const [listData, setListData] = useState();
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("themes-list.loading-messages.loading-themes")
+  );
 
   // Delete call
-  const [DeleteV1Themes, { isSuccess: isDeleteSuccess }] =
+  const [DeleteV1Themes, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1ThemesByIdMutation();
 
   /** Deletes multiple themes. */
@@ -43,9 +52,52 @@ function ThemesList() {
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
       DeleteV1Themes({ id: themeToDeleteId });
     } else if (isDeleteSuccess) {
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("themes-list.success-messages.theme-delete"),
+        ])
+      );
       window.location.reload(false);
     }
   }, [themesToDelete, isDeleteSuccess]);
+
+  // Sets success-messages for local storage
+  useEffect(() => {
+    if (isDeleteSuccess && themesToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("themes-list.success-messages.theme-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
+
+  // Display success messages from successfully deleted slides.
+  useEffect(() => {
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("themes-list.error-messages.theme-delete-error", {
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [isDeleteError]);
 
   /**
    * Sets the selected row in state.
@@ -175,6 +227,24 @@ function ThemesList() {
     title: searchText,
   });
 
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (themesGetError) {
+      displayError(
+        t("themes-list.error-messages.themes-load-error", {
+          error: themesGetError.error
+            ? themesGetError.error
+            : themesGetError.data["hydra:description"],
+        })
+      );
+    }
+  }, [themesGetError]);
+
   return (
     <>
       <ContentHeader
@@ -184,21 +254,21 @@ function ThemesList() {
       />
       {data && data["hydra:member"] && (
         <ContentBody>
+          {listData&&
           <List
             columns={columns}
-            totalItems={data["hydra:totalItems"]}
+            totalItems={listData["hydra:totalItems"]}
+            data={listData["hydra:member"]}
             currentPage={page}
             handlePageChange={onChangePage}
             selectedRows={selectedRows}
-            data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
-            error={themesGetError || false}
-            isLoading={isLoading || isDeleting || false}
-            deleteSuccess={isDeleteSuccess || false}
             handleSort={onChangeSort}
             handleSearch={onSearch}
-          />
+            isLoading={isLoading || isDeleting}
+            loadingMessage={loadingMessage}
+          />}
         </ContentBody>
       )}
       <DeleteModal

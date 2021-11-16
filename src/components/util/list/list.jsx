@@ -1,5 +1,5 @@
 import { React, useEffect } from "react";
-import { Button, Col, Row, Toast } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -21,9 +21,7 @@ import ListLoading from "../loading-component/list-loading";
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
  * @param {Function} props.handleDelete - For deleting elements in the list.
- * @param {boolean} props.deleteSuccess - If the calling component has deleted
  *   element with success.
- * @param {boolean} props.error - If the calling component has an error.
  * @param {Function} props.handleSort - Callback for sort.
  * @param {Function} props.handleSearch - Callback for seach.
  * @param {boolean} props.displayPublished - Whether to display the published filter
@@ -36,8 +34,6 @@ function List({
   displayPublished,
   selectedRows,
   clearSelectedRows,
-  deleteSuccess,
-  error,
   withChart,
   handlePageChange,
   handleSort,
@@ -180,8 +176,6 @@ function List({
 
   return (
     <>
-      <Toast show={deleteSuccess} text={t("list.get-error")} />
-      <Toast show={error} text={t("list.deleted")} />
       <Row className="my-2">
         <Col>
           <SearchBox value={searchParams || ""} onChange={onSearch} />
@@ -262,8 +256,6 @@ List.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   withChart: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
-  deleteSuccess: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
   handleSort: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   displayPublished: PropTypes.bool,

@@ -8,14 +8,18 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
 import ContentBody from "../util/content-body/content-body";
+import idFromUrl from "../util/helpers/id-from-url";
+import Pagination from "../util/paginate/pagination";
+import ImageList from "./image-list";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 import {
   useGetV1MediaQuery,
   useDeleteV1MediaByIdMutation,
 } from "../../redux/api/api.generated";
-import idFromUrl from "../util/helpers/id-from-url";
 import "./media-list.scss";
-import Pagination from "../util/paginate/pagination";
-import ImageList from "./image-list";
 
 /**
  * The media list component.
@@ -50,15 +54,19 @@ function MediaList({ fromModal, handleSelected }) {
   const [searchText, setSearchText] = useState(
     searchParams === null ? "" : searchParams
   );
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("media-list.loading-messages.loading-media")
+  );
 
   // Delete method
-  const [DeleteV1Media, { isSuccess: isDeleteSuccess }] =
+  const [DeleteV1Media, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1MediaByIdMutation();
 
   // Get method
   const {
     data: mediaData,
-    error: loadError,
+    error: mediaLoadError,
     isLoading,
   } = useGetV1MediaQuery({ page, title: searchText });
 
@@ -117,12 +125,56 @@ function MediaList({ fromModal, handleSelected }) {
     if (mediaToDelete.length > 0) {
       setIsDeleting(true);
       const toDelete = mediaToDelete.splice(0, 1).shift();
+      setLoadingMessage(t("media-list.loading-messages.deleting-media"));
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Media({ id: toDeleteId });
     } else if (isDeleteSuccess) {
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("media-list.success-messages.media-delete"),
+        ])
+      );
       window.location.reload(false);
     }
   }, [mediaToDelete, isDeleteSuccess]);
+
+  // Display success messages from successfully deleted slides.
+  useEffect(() => {
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
+
+  // Sets success-messages for local storage
+  useEffect(() => {
+    if (isDeleteSuccess && playlistsToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("media-list.success-messages.media-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("media-list.error-messages.media-delete-error", {
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [isDeleteError]);
 
   /** Deletes selected data, and closes modal. */
   function handleDelete() {
@@ -148,10 +200,20 @@ function MediaList({ fromModal, handleSelected }) {
     }
   }
 
+  useEffect(() => {
+    if (mediaLoadError) {
+      displayError(
+        t("media-list.error-messages.media-load-error", {
+          error: mediaLoadError.error
+            ? mediaLoadError.error
+            : mediaLoadError.data["hydra:description"],
+        })
+      );
+    }
+  }, [mediaLoadError]);
+
   return (
     <>
-      <Toast show={loadError} text={t("media-list.media-get-error")} />
-      <Toast show={isDeleteSuccess} text={t("media-list.deleted")} />
       <Row className="align-items-center justify-content-between mt-2">
         <Col>
           <h1>{t("media-list.header")}</h1>
@@ -192,9 +254,7 @@ function MediaList({ fromModal, handleSelected }) {
         <ImageList
           media={media}
           isLoading={isLoading || isDeleting}
-          loadingMessage={
-            isLoading ? t("media-list.loading") : t("media-list.deleting")
-          }
+          loadingMessage={loadingMessage}
           handleChecked={handleChecked}
         />
       </ContentBody>
