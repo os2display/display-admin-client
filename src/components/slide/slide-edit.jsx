@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import set from "lodash.set";
 import dayjs from "dayjs";
 import { ulid } from "ulid";
+import SlideForm from "./slide-form";
+import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1SlidesByIdQuery,
   usePostMediaCollectionMutation,
@@ -15,8 +17,6 @@ import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
-import SlideForm from "./slide-form";
-import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The slide edit component.
@@ -125,44 +125,6 @@ function SlideEdit() {
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject.content, target.id, value);
     setFormStateObject(localFormStateObject);
-  }
-
-  /**
-   * Handle change to a media.
-   *
-   * @param {string} fieldName The field that has a media.
-   */
-  function handleMedia(fieldName) {
-    setMediaFields([...new Set([...mediaFields, fieldName])]);
-  }
-
-  /** Handles submit. */
-  function handleSubmit() {
-    const newSubmittingMedia = [];
-
-    // Setup submittingMedia list.
-    mediaFields.forEach((fieldName) => {
-      if (
-        Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)
-      ) {
-        const contentField = formStateObject.content[fieldName];
-        contentField.forEach((element) => {
-          const formData = new FormData();
-          formData.append("file", element.file);
-          formData.append("title", element.title || "");
-          formData.append("description", element.description || "");
-          formData.append("license", element.license || "");
-          // @TODO: Should these be optional in the API?
-          formData.append("modifiedBy", "");
-          formData.append("createdBy", "");
-          newSubmittingMedia.push(formData);
-        });
-      }
-    });
-
-    // Trigger submitting hooks.
-    setSubmitting(true);
-    setSubmittingMedia(newSubmittingMedia);
   }
 
   useEffect(() => {
@@ -335,13 +297,7 @@ function SlideEdit() {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
         const { entry } = media;
-
-        setLoadingMessage(
-          t("slide-edit.loading-messages.saving-media", {
-            title: media.get("title") || t("slide-edit.unamed-media"),
-          })
-        );
-
+        setLoadingMessage(t("slide-edit.loading-messages.saving-media"));
         // Submit media.
         const formData = new FormData();
         formData.append("file", entry.file);
@@ -398,33 +354,8 @@ function SlideEdit() {
         const submittedMedia = newSubmittingMedia.shift();
 
         const newFormStateObject = { ...formStateObject };
-        newFormStateObject.media.push(mediaData["@id"]);
-        newFormStateObject.content[firstMediaField] = mediaData["@id"];
-
         // Display toast with success message
-        displaySuccess(
-          t("slide-edit.success-messages.saved-media", {
-            title: mediaData.title || t("slide-edit.unamed"),
-          })
-        );
-
-        setFormStateObject(newFormStateObject);
-        const newLoadedMedia = { ...loadedMedia };
-        newLoadedMedia[mediaData["@id"]] = mediaData;
-        setLoadedMedia(newLoadedMedia);
-
-        // Move to next media to upload.
-        const newList = submittingMedia.slice(1);
-        setSubmittingMedia(newList);
-      } else if (saveMediaError) {
-        // If save media has error, display toast and set submitting false
-        setSubmitting(false);
-        displayError(
-          t("slide-edit.error-messages.save-media-error", {
-            title: submittingMedia[0].get("title") || t("slide-edit.unamed"),
-            error: saveMediaError.data["hydra:description"],
-          })
-        );
+        displaySuccess(t("slide-edit.success-messages.saved-media"));
         newFormStateObject.media.push(savedMediaData["@id"]);
 
         // Replace TEMP-- id with real id.
@@ -442,13 +373,24 @@ function SlideEdit() {
         setSubmittingMedia(newSubmittingMedia);
       }
     }
-  }, [isSaveMediaSuccess, saveMediaError]);
+  }, [isSaveMediaSuccess]);
 
   /** If the slide is saved, display the success message */
   useEffect(() => {
+    if (saveMediaError) {
+      displayError(
+        t("slide-edit.error-messages.save-media-error", {
+          title: submittingMedia[0].get("title") || t("slide-edit.unamed"),
+          error: saveMediaError.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveMediaError]);
+
+  /** Handle submitting is done. */
+  useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("slide-edit.success-messages.saved-slide"));
-
       setSubmitting(false);
     }
   }, [isSaveSuccess]);
@@ -495,6 +437,7 @@ function SlideEdit() {
           handleSubmit={handleSubmit}
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
+          isLoading={submitting || isSaving || getSlideIsLoading}
           loadingMessage={loadingMessage}
           mediaData={mediaData}
           selectTheme={selectTheme}

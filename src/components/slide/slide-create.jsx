@@ -2,11 +2,11 @@ import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import { ulid } from "ulid";
+import SlideForm from "./slide-form";
 import {
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
 } from "../../redux/api/api.generated";
-import SlideForm from "./slide-form";
 import {
   displayError,
   displaySuccess,
@@ -181,6 +181,7 @@ function SlideCreate() {
   /** Handles submit. */
   function handleSubmit() {
     const newSubmittingMedia = [];
+
     // Setup submittingMedia list.
     mediaFields.forEach((fieldName) => {
       if (
@@ -210,13 +211,11 @@ function SlideCreate() {
     if (submitting) {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
-
         setLoadingMessage(
           t("slide-create.loading-messages.saving-media", {
             title: media.get("title") || t("slide-create.unamed-media"),
           })
         );
-
         const { entry } = media;
 
         // Submit media.
@@ -273,8 +272,6 @@ function SlideCreate() {
         const submittedMedia = newSubmittingMedia.shift();
 
         const newFormStateObject = { ...formStateObject };
-        newFormStateObject.media.push(mediaData["@id"]);
-        newFormStateObject.content[firstMediaField] = mediaData["@id"];
 
         // Display toast with success message
         displaySuccess(
@@ -282,7 +279,6 @@ function SlideCreate() {
             title: mediaData.title || t("slide-create.unamed"),
           })
         );
-
         newFormStateObject.media.push(savedMediaData["@id"]);
 
         // Replace TEMP-- id with real id.
@@ -296,23 +292,23 @@ function SlideCreate() {
         newMediaData[savedMediaData["@id"]] = savedMediaData;
         setMediaData(newMediaData);
 
-        // Move to next media to upload.
-        const newList = submittingMedia.slice(1);
-        setSubmittingMedia(newList);
-      } else if (saveMediaError) {
-        // If save media has error, display toast and set submitting false
-        setSubmitting(false);
-        displayError(
-          t("slide-create.error-messages.save-media-error", {
-            title: submittingMedia[0].get("title") || t("slide-create.unamed"),
-            error: saveMediaError.data["hydra:description"],
-          })
-        );
         // Save new list.
         setSubmittingMedia(newSubmittingMedia);
       }
     }
-  }, [isSaveMediaSuccess, saveMediaError]);
+  }, [isSaveMediaSuccess]);
+
+  /** If the slide is saved, display the success message */
+  useEffect(() => {
+    if (saveMediaError) {
+      displayError(
+        t("slide-create.error-messages.save-media-error", {
+          title: submittingMedia[0].get("title") || t("slide-create.unamed"),
+          error: saveMediaError.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveMediaError]);
 
   /** If the slide is saved, display the success message */
   useEffect(() => {
@@ -335,7 +331,6 @@ function SlideCreate() {
       setSubmitting(false);
     }
   }, [saveError]);
-
   return (
     <>
       {formStateObject && (
@@ -348,8 +343,8 @@ function SlideCreate() {
           handleSubmit={handleSubmit}
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
-          isLoading={submitting || isSaving}
           mediaData={mediaData}
+          isLoading={submitting || isSaving}
           loadingMessage={loadingMessage}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}

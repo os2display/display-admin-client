@@ -92,7 +92,7 @@ function ScreenList() {
 
   // Sets success-messages for local storage
   useEffect(() => {
-    if (isDeleteSuccess && slidesToDelete.length > 0) {
+    if (isDeleteSuccess && screensToDelete.length > 0) {
       const localStorageMessagesCopy = [...localStorageMessages];
       localStorageMessagesCopy.push(
         t("screens-list.success-messages.screen-delete")
@@ -332,7 +332,6 @@ function ScreenList() {
               currentPage={page}
               handlePageChange={onChangePage}
               selectedRows={selectedRows}
-              data={listData["hydra:member"]}
               clearSelectedRows={clearSelectedRows}
               withChart={view === "calendar"}
               handleDelete={openDeleteModal}

@@ -47,6 +47,7 @@ function ThemesList() {
   /** Deletes multiple themes. */
   useEffect(() => {
     if (themesToDelete.length > 0) {
+      setLoadingMessage(t("themes-list.loading-messages.deleting-themes"));
       setIsDeleting(true);
       const themeToDelete = themesToDelete.splice(0, 1).shift();
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
