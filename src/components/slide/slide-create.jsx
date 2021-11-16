@@ -211,11 +211,7 @@ function SlideCreate() {
     if (submitting) {
       if (submittingMedia.length > 0) {
         const media = submittingMedia[0];
-        setLoadingMessage(
-          t("slide-create.loading-messages.saving-media", {
-            title: media.get("title") || t("slide-create.unamed-media"),
-          })
-        );
+        setLoadingMessage(t("slide-create.loading-messages.saving-media"));
         const { entry } = media;
 
         // Submit media.

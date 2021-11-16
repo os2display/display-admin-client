@@ -232,16 +232,16 @@
     "unamed": "unavngivet",
     "loading-messages": {
       "saving-slide": "Gemmer slide",
-      "saving-media": "Mediet {{title}} bliver gemt",
+      "saving-media": "Mediet bliver gemt",
       "loading-slide": "Henter slide"
     },
     "success-messages": {
       "saved-slide": "Slide er gemt, medier er tilknyttet",
-      "saved-media": "Mediet {{title}} er gemt"
+      "saved-media": "Mediet er gemt"
     },
     "error-messages": {
       "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
-      "save-media-error": "Der skete en fejl da mediet {{title}} skulle tilknyttes til slidet: {{error}}",
+      "save-media-error": "Der skete en fejl da mediet skulle tilknyttes til slidet: {{error}}",
       "load-slide-error": "Der skete en fejl da slidet med følgende id: {{id}} skulle hentes: {{error}}"
     }
   },

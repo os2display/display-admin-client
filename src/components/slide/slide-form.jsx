@@ -199,7 +199,6 @@ function SlideForm({
                 onChange={handleInput}
               />
             </Col>
-
             <Col md>
               <FormInput
                 name="published.to"
