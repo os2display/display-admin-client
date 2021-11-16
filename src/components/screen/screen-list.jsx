@@ -20,7 +20,10 @@ import {
   useDeleteV1ScreensByIdMutation,
   useGetV1ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated";
-import { displaySuccess, displayError } from '../util/list/toast-component/display-toast';
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import "./screen-list.scss";
 
 /**
@@ -54,8 +57,10 @@ function ScreenList() {
   );
 
   // Delete call
-  const [DeleteV1Screens, { isSuccess: isDeleteSuccess,error:isDeleteError }] =
-    useDeleteV1ScreensByIdMutation();
+  const [
+    DeleteV1Screens,
+    { isSuccess: isDeleteSuccess, error: isDeleteError },
+  ] = useDeleteV1ScreensByIdMutation();
 
   /** Set the view in url. */
   useEffect(() => {
@@ -85,8 +90,8 @@ function ScreenList() {
     }
   }, [screensToDelete, isDeleteSuccess]);
 
-   // Sets success-messages for local storage
-   useEffect(() => {
+  // Sets success-messages for local storage
+  useEffect(() => {
     if (isDeleteSuccess && slidesToDelete.length > 0) {
       const localStorageMessagesCopy = [...localStorageMessages];
       localStorageMessagesCopy.push(
