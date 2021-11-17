@@ -237,12 +237,12 @@
     "unamed": "unavngivet",
     "create-slide-header": "Opret nyt slide",
     "loading-messages": {
-      "saving-slide": "Gemmer slide", //HER
-      "saving-media": "Mediet {{title}} bliver gemt"
+      "saving-slide": "Gemmer slide",
+      "saving-media": "Mediet bliver gemt"
     },
     "success-messages": {
       "saved-slide": "Slide er gemt, medier er tilknyttet",
-      "saved-media": "Mediet {{title}} er gemt"
+      "saved-media": "Mediet er gemt"
     },
     "error-messages": {
       "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
@@ -253,8 +253,6 @@
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
-    "slide-content-label": "Slidets indhold",
-    "slide-content-header": "Slidets indhold",
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
@@ -265,20 +263,14 @@
     "slide-publish-title": "Udgivelse"
   },
   "theme-form": {
-    "loading": "Henter tema...",
-    "saving": "Gemmer...",
-    "error": "Der skete en fejl",
     "theme-name-label": "Temaets navn",
     "theme-description-label": "Temaets beskrivelse",
     "css-header": "Temaets CSS",
     "theme-css-label": "Temaets CSS",
-    "saved": "Temaet er gemt",
     "save-button": "Gem tema",
     "cancel-button": "Annuller"
   },
   "group-form": {
-    "saved": "Gruppen blev gemt",
-    "error": "Der skete en fejl",
     "save-button": "Gem gruppen",
     "cancel-button": "Annuller",
     "group-title-label": "Gruppens navn",
@@ -344,12 +336,10 @@
     }
   },
   "playlist-form": {
-    "error": "Der skete en fejl",
     "title-about": "Om spillelisten",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
     "cancel-button": "Annuller",
-    "saved": "Spillelisten er gemt",
     "playlist-name-label": "Spillelistens navn",
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
@@ -360,7 +350,6 @@
     "columns": {
       "name": "Navn"
     },
-    "search-to-se-possible-selections": "For at se mulige spillelister, skal du fremsøge dem pr navn.",
     "remove-from-list": "Fjern fra liste"
   },
   "select-slides-table": {
@@ -415,8 +404,7 @@
   "screens-dropdown": {
     "search-to-se-possible-selections": "For at se mulige skærmes, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere skærme",
-    "nothing-selected": "Vælg en af skærmene",
-    "no-screens-configured": "Der er ikke nogle skærme konfigureret"
+    "nothing-selected": "Vælg en af skærmene"
   },
   "slides-dropdown": {
     "search-to-se-possible-selections": "For at se mulige slides, skal du fremsøge dem pr navn.",
@@ -451,8 +439,6 @@
     "published-label": "Udgivetfilter",
     "delete-button": "Slet",
     "deselect-all": "Fravælg alle",
-    "get-error": "Der skete en fejl da elementerne skulle hentes",
-    "deleted": "Element er blevet slettet",
     "radio-labels": {
       "published": "Udgivet",
       "not-published": "Ikke udgivet",
@@ -495,7 +481,6 @@
   },
   "screen-create": {
     "create-screen-header": "Opret ny skærm",
-    "saving": "Gemmer skærm",
     "loading-messages": {
       "saving-screen": "Gemmer skærmen",
       "saving-playlists": "Tilknytter spillelister til skærmens regioner",
@@ -517,9 +502,7 @@
     "search-to-se-possible-selections": "For at se mulige skærme, skal du fremsøge dem pr navn.",
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
-    "error": "Der skete en fejl",
     "screen-region-playlists": "Spillelister tilknyttet regionen",
-    "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",
     "cancel-button": "Annuller",
     "screen-about": "Om skærmen",
@@ -552,7 +535,6 @@
     "configuration-users": "Brugere"
   },
   "topbar": {
-    "placeholder": "Indtast søgning her",
     "brand": "OS2Display",
     "add": "Ny",
     "add-slide": "Nyt slide",
