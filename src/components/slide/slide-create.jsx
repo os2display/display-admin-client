@@ -228,6 +228,7 @@ function SlideCreate() {
       } else {
         // All media have been submitted. Submit slide.
 
+        setLoadingMessage(t("slide-create.loading-messages.saving-slide"));
         // Set published.
         const from = formStateObject.published.from
           ? new Date(formStateObject.published.from).toISOString()

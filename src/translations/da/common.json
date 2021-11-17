@@ -53,8 +53,7 @@
       "name": "Navn",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "published": "Udgivet",
-      "preview": "Preview"
+      "published": "Udgivet"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
@@ -177,12 +176,7 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "toast": {
-    "title": "Obs",
-    "button-label": "Luk denne dialog"
-  },
   "media-list": {
-    "media-get-error": "Der skete en fejl da medierne skulle hentes",
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
     "upload-new-media": "Upload",
@@ -214,21 +208,15 @@
     }
   },
   "media-edit": {
-    "edit-media": "Rediger",
-    "loading": "Henter medie",
-    "saving": "Gemmer medie"
+    "edit-media": "Rediger"
   },
   "media-form": {
     "save-button": "Gem medie",
     "cancel-button": "Annuller",
-    "back-to-list": "Tilbage til listen",
-    "saving": "Gemmer...",
-    "saved": "Mediet blev uploaded",
-    "error": "Der skete en fejl"
+    "back-to-list": "Tilbage til listen"
   },
   "slide-edit": {
     "edit-slide-header": "Rediger slide",
-    "unamed-media": "det unavngivne medie",
     "unamed": "unavngivet",
     "loading-messages": {
       "saving-slide": "Gemmer slide",
@@ -246,11 +234,10 @@
     }
   },
   "slide-create": {
-    "unamed-media": "det unavngivne medie",
     "unamed": "unavngivet",
     "create-slide-header": "Opret nyt slide",
     "loading-messages": {
-      "saving-slide": "Gemmer slide",
+      "saving-slide": "Gemmer slide", //HER
       "saving-media": "Mediet {{title}} bliver gemt"
     },
     "success-messages": {

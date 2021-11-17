@@ -74,6 +74,7 @@ function ScreenCreate() {
   /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && data && groupsToAdd) {
+      setLoadingMessage(t("screen-create.loading-messages.saving-groups"));
       PutV1ScreensByIdScreenGroups({
         id: idFromUrl(data["@id"]),
         body: JSON.stringify(groupsToAdd),

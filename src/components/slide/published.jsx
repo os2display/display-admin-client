@@ -31,6 +31,7 @@ function Published({ published }) {
       );
     }
   }, []);
+
   return <div>{isPublished ? t("published.yes") : t("published.no")}</div>;
 }
 
