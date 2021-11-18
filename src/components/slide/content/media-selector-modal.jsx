@@ -96,8 +96,8 @@ function MediaSelectorModal({
         }
         onClose={handleReject}
         handleAccept={handleAccept}
-        acceptText={t("media-modal.select-multiple")}
-        declineText={t("media-modal.cancel")}
+        acceptText={t("slide-media-modal.accept")}
+        declineText={t("slide-media-modal.cancel")}
       >
         <SlideMediaList
           onItemClick={handleClick}

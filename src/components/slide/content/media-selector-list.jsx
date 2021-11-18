@@ -29,14 +29,14 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   const [media, setMedia] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
-  const [searchText, setSearchText] = useState("");
+  const [title, setTitle] = useState("");
 
   // Get method
   const {
     data: mediaData,
     error: loadError,
     isLoading,
-  } = useGetV1MediaQuery({ page });
+  } = useGetV1MediaQuery({ page, title });
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -60,23 +60,18 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
    * @param {string} newSearchText Updates the search text state and url.
    */
   function handleSearch(newSearchText) {
-    setSearchText(newSearchText);
+    setTitle(newSearchText);
   }
 
   return (
     <>
       <Toast show={loadError} text={t("media-list.media-get-error")} />
-      <Row className="align-items-center justify-content-between mt-2">
-        <Col>
-          <h1>{t("media-list.header")}</h1>
-        </Col>
-      </Row>
       <ContentBody>
         <Row className="mt-2 mb-2">
           <Col sm={12} md={6}>
             <SearchBox
               showLabel
-              value={searchText}
+              value={title}
               onChange={handleSearch}
               helpText={t("media-list.search-help-text")}
             />
@@ -131,7 +126,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
                     <div className="card-body">
                       <div className="row align-items-center">
                         <div className="col-auto">
-                          <h2 className="h6">{data.name}</h2>
+                          <h2 className="h6">{data.title}</h2>
                         </div>
                       </div>
                       <div className="row">
