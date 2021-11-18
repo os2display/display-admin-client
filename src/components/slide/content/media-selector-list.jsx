@@ -18,10 +18,10 @@ import Pagination from "../../util/paginate/pagination";
  * @param {object} props - The props.
  * @param {boolean} props.multiple - Is the list in multiple mode? This will enable checkbox for each element.
  * @param {function} props.onItemClick - Handler when item is clicked.
- * @param {Array} props.selectedMedia - List of selected media.
+ * @param {Array} props.selectedMediaIds - List of selected media ids.
  * @returns {JSXElement} - The media list.
  */
-function MediaList({ multiple, selectedMedia, onItemClick }) {
+function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   // Translations
   const { t } = useTranslation("common");
 
@@ -37,37 +37,19 @@ function MediaList({ multiple, selectedMedia, onItemClick }) {
   const {
     data: mediaData,
     error: loadError,
-    isLoading,
+    isLoading
   } = useGetV1MediaQuery({ page });
 
   /** Set loaded data into form state. */
   useEffect(() => {
     if (mediaData) {
       const mappedData = mediaData["hydra:member"].map((mediaItem) => {
-        return {
-          // @TODO: Is it in selectedMedia list?
-          selected: false,
-          ...mediaItem,
-        };
+        return { ...mediaItem };
       });
       setMedia(mappedData);
       setTotalItems(mediaData["hydra:totalItems"]);
     }
   }, [mediaData]);
-
-  /**
-   * Sets the selected media in state.
-   *
-   * @param {object} inputData The selected media.
-   */
-  function handleChecked(inputData) {
-    const localMedia = inputData;
-    localMedia.selected = !localMedia.selected;
-    const selectedData = selectedHelper(localMedia, [...selectedMedia]).filter(
-      ({ selected }) => selected
-    );
-    // @TODO
-  }
 
   /** @param {number} selectedPage - The selected page. */
   function updateUrlAndChangePage(selectedPage) {
@@ -117,49 +99,53 @@ function MediaList({ multiple, selectedMedia, onItemClick }) {
         )}
         {!isLoading && (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5 media-list">
-            {media.map((data) => (
-              <div key={data["@id"]} className="col mb-3">
-                <div
-                  className={`card bg-light h-100 media-item +
-                  ${data.selected ? " selected" : ""}`}
-                >
-                  <button
-                    type="button"
-                    className="media-item-button"
-                    onClick={() => handleChecked(data)}
-                  >
-                    <img
-                      src={data.assets.uri}
-                      className="card-img-top"
-                      alt={data.description}
-                    />
-                  </button>
+            {media.map((data) => {
+              const selected = selectedMediaIds.includes(data['@id']);
 
-                  {multiple &&
+              return (
+                <div key={data["@id"]} className="col mb-3">
+                  <div
+                    className={`card bg-light h-100 media-item +
+                  ${selected ? " selected" : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className="media-item-button"
+                      onClick={() => onItemClick(data)}
+                    >
+                      <img
+                        src={data.assets.uri}
+                        className="card-img-top"
+                        alt={data.description}
+                      />
+                    </button>
+
+                    {multiple &&
                     <Form.Check
                       type="checkbox"
-                      checked={data.selected}
+                      checked={selected}
                       tabIndex={-1}
                       aria-label={t("media-list.checkbox-form-aria-label")}
                       readOnly
                     />
-                  }
+                    }
 
-                  <div className="card-body">
-                    <div className="row align-items-center">
-                      <div className="col-auto">
-                        <h2 className="h6">{data.name}</h2>
+                    <div className="card-body">
+                      <div className="row align-items-center">
+                        <div className="col-auto">
+                          <h2 className="h6">{data.name}</h2>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col">
-                        <span className="small">{data.description}</span>
+                      <div className="row">
+                        <div className="col">
+                          <span className="small">{data.description}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </ContentBody>
@@ -173,18 +159,14 @@ function MediaList({ multiple, selectedMedia, onItemClick }) {
   );
 }
 
-MediaList.defaultProps = {
-  onItemClick: () => {},
-  multiple: false,
-  selectedMedia: [],
+MediaSelectorList.defaultProps = {
+  multiple: false
 };
 
-MediaList.propTypes = {
-  onItemClick: PropTypes.func,
-  multiple: PropTypes.bool,
-  selectedMedia: PropTypes.arrayOf(PropTypes.shape({
-    '@id': PropTypes.string.isRequired
-  })),
+MediaSelectorList.propTypes = {
+  selectedMediaIds: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  onItemClick: PropTypes.func.isRequired,
+  multiple: PropTypes.bool
 };
 
-export default MediaList;
+export default MediaSelectorList;

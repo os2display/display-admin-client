@@ -6,7 +6,7 @@ import {
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import FormCheckbox from "../../util/forms/form-checkbox";
-import { resolve } from "./remote-component.config";
+import { resolve } from "../../../remote-component.config";
 import "./remote-component-wrapper.scss";
 
 /**

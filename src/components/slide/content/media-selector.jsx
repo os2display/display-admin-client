@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import PropTypes from "prop-types";
 import ImageUploading from "react-images-uploading";
 import { Button } from "react-bootstrap";
@@ -10,48 +10,43 @@ import Image from "../../util/image-uploader/image";
 import MediaSelectorModal from "./media-selector-modal";
 
 /**
+ * Media selector.
+ *
  * @param {object} props - The props.
- * @param {object} props.selectedMedia - The selected images.
- * @param {Function} props.onSelectedMedia - Callback when selected images have changed.
- * @param {boolean} props.multiple - Whether the user should be able to upload multiple images.
- * @param {string} props.invalidText Text on error.
+ * @param {object} props.selectedMedia - The selected media.
+ * @param {Function} props.onSelectedMedia - Callback when selected media has changed.
+ * @param {boolean} props.multiple - Whether the user should be able to upload multiple media.
  * @param {boolean} props.enableMediaLibrary Whether to show the library button.
- * @returns {object} The image uploader.
+ * @returns {JSXElement} The media uploader.
  */
 function MediaSelector(
   {
     selectedMedia,
     multiple,
     onSelectedMedia,
-    invalidText,
     enableMediaLibrary,
-    enableDropZone
+    enableDropZone,
+    name
   }) {
   const { t } = useTranslation("common");
-  const invalidInputText = invalidText || t("image-uploader.validation-text");
   const [showMediaModal, setShowMediaModal] = useState(false);
-
-  // @TODO: Handles errors.
-  const [error] = useState(false);
 
   /** Close the modal */
   function closeModal() {
     setShowMediaModal(false);
   }
 
-  /** @TODO: Document */
-  const onChange = (images) => {
-    console.log('@TODO: onChange', images);
-    onSelectedMedia(images);
+  /** Handle image uploading change */
+  const imageUploadingChange = (data) => {
+    onSelectedMedia({target: {id: name, value: data}});
   }
 
   return (
-    // @TODO: error handling
-    <div className={error ? "invalid" : ""}>
+    <>
       <ImageUploading
         multiple={multiple}
         value={selectedMedia}
-        onChange={onChange}
+        onChange={imageUploadingChange}
         dataURLKey="url"
       >
         {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
@@ -88,7 +83,6 @@ function MediaSelector(
                           ? "drag-drop-area drag-drop-area-active"
                           : "drag-drop-area"
                       }
-                      style={error ? { borderColor: "red" } : {}}
                       onDrop={dragProps.onDrop}
                       onDragEnter={dragProps.onDragEnter}
                       onDragLeave={dragProps.onDragLeave}
@@ -114,7 +108,7 @@ function MediaSelector(
               return (
                 <Image
                   inputImage={image}
-                  handleChange={onChange}
+                  handleChange={onSelectedMedia}
                   onImageUpdate={onImageUpdate}
                   onImageRemove={onImageRemove}
                   index={index}
@@ -126,22 +120,17 @@ function MediaSelector(
         )}
       </ImageUploading>
 
-      {error && (
-        <div className="invalid-feedback-image-uploader">
-          {invalidInputText}
-        </div>
-      )}
-
       {enableMediaLibrary &&
         <MediaSelectorModal
-          selectedMedia={[]}
+          selectedMedia={selectedMedia}
           multiple={multiple}
           onClose={closeModal}
-          selectMedia={onChange}
+          selectMedia={onSelectedMedia}
           show={showMediaModal}
+          targetId={name}
         />
       }
-    </div>
+    </>
   );
 }
 
@@ -149,7 +138,6 @@ MediaSelector.defaultProps = {
   multiple: false,
   enableMediaLibrary: true,
   enableDropZone: true,
-  invalidText: null,
 };
 
 MediaSelector.propTypes = {
@@ -158,7 +146,7 @@ MediaSelector.propTypes = {
   multiple: PropTypes.bool,
   enableMediaLibrary: PropTypes.bool,
   enableDropZone: PropTypes.bool,
-  invalidText: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 export default MediaSelector;

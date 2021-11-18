@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Modal from "react-bootstrap/Modal";
@@ -17,31 +17,65 @@ import SlideMediaList from "./media-selector-list";
  * @param {Array} selectedMedia Selected media.
  * @returns {object} The modal.
  */
-function MediaSelectorModal({ show, onClose, selectMedia, selectedMedia,  multiple }) {
+function MediaSelectorModal({ show, onClose, selectMedia, selectedMedia, multiple, targetId }) {
   const { t } = useTranslation("common");
-  const [newSelected, setNewSelected] = useState([]);
+  const [selected, setSelected] = useState([]);
 
-  if (!show) {
-    return <></>;
-  }
+  useEffect(() => {
+    if (selectedMedia) {
+      const newSelected = selectedMedia.map((entry) => entry['@id']);
+      setSelected(newSelected);
+    }
+  }, [selectedMedia]);
 
-  const handleSelectMultiple = () => {
-    console.log('handleSelectMultiple');
-    console.log(newSelected);
+  const handleAccept = () => {
+    selectMedia({target: {id: targetId, value: selected}});
+    onClose();
   };
 
-  const handleClick = ({ target }) => {
-    console.log('handleClick');
-    console.log(target);
-
+  const handleClick = (data) => {
     if (!multiple) {
-      selectMedia()
+      selectMedia({target: {id: targetId, value: [data]}});
+      onClose();
+    }
+    else {
+      const newSelected = [];
+      let found = false;
+
+      [...selected].forEach((element) => {
+        if (element === data['@id'] || (Object.prototype.hasOwnProperty.call(element, '@id') && element['@id'] === data['@id'])) {
+          found = true;
+        }
+        else {
+          newSelected.push(element);
+        }
+      })
+
+      if (!found) {
+        newSelected.push(data);
+      }
+
+      setSelected(newSelected);
     }
   }
 
   const handleReject = () => {
-    console.log('handleReject');
     onClose();
+  }
+
+  const getSelectedIds = () => {
+    return selected.map((entry) => {
+      if (typeof entry === 'string') {
+        return entry;
+      }
+      else {
+        return entry['@id'];
+      }
+    });
+  }
+
+  if (!show) {
+    return <></>;
   }
 
   return (
@@ -53,14 +87,14 @@ function MediaSelectorModal({ show, onClose, selectMedia, selectedMedia,  multip
             : t("slide-media-modal.single-select-title")
         }
         onClose={handleReject}
-        handleAccept={handleSelectMultiple}
+        handleAccept={handleAccept}
         acceptText={t("media-modal.select-multiple")}
         declineText={t('media-modal.cancel')}
       >
-        <SlideMediaList onItemClick={handleClick} />
+        <SlideMediaList onItemClick={handleClick} selectedMediaIds={getSelectedIds()} multiple={multiple} />
       </ModalDialog>
     </Modal>
-  );
+    );
 }
 
 MediaSelectorModal.propTypes = {
@@ -69,6 +103,7 @@ MediaSelectorModal.propTypes = {
   selectedMedia: PropTypes.array.isRequired,
   selectMedia: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
+  targetId: PropTypes.string.isRequired,
 };
 
 export default MediaSelectorModal;

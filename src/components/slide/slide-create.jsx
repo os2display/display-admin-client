@@ -156,14 +156,25 @@ function SlideCreate() {
           newEntry.tempId = tempId;
           set(localMediaData, tempId, newEntry);
         }
+        // Previously selected file.
+        else if (typeof entry === 'string') {
+          newField.push(entry);
+        }
         // Previously uploaded file.
         else {
           newField.push(entry["@id"]);
+
+          if (!localMediaData.hasOwnProperty(entry["@id"])) {
+            set(localMediaData, entry["@id"], entry);
+
+            localFormStateObject.media.push(entry["@id"]);
+          }
         }
       });
     }
 
     set(localFormStateObject.content, fieldId, newField);
+    set(localFormStateObject.media, [...new Set([...localFormStateObject.media])]);
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
