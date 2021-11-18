@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import { resolve } from "../../../remote-component.config";
 import "./remote-component-wrapper.scss";
+import ErrorBoundary from "../../../error-boundary";
 
 /**
  * A remote component wrapper
@@ -32,16 +33,16 @@ function RemoteComponentWrapper({ slide, url, mediaData }) {
   useEffect(() => {
     if (slide) {
       // Local slide and local content, to not accidentally mess with the actual content.
-      const newSlide = {...slide};
+      const newSlide = { ...slide };
       newSlide.mediaData = mediaData;
       setRemoteComponentSlide(newSlide);
     }
-  }, [slide, mediaData])
+  }, [slide, mediaData]);
 
   /** Get show from local storage */
   useEffect(() => {
-    const localStorageShow = localStorage.getItem('preview-slide');
-    setShow(localStorageShow === 'true');
+    const localStorageShow = localStorage.getItem("preview-slide");
+    setShow(localStorageShow === "true");
   }, []);
 
   /**
@@ -67,13 +68,15 @@ function RemoteComponentWrapper({ slide, url, mediaData }) {
       {show && remoteComponentSlide && (
         <div className="remote-component-wrapper">
           <div className="remote-component-content">
-            <RemoteComponent
-              url={url}
-              slide={remoteComponentSlide}
-              content={remoteComponentSlide.content}
-              run={show}
-              slideDone={() => {}}
-            />
+            <ErrorBoundary errorText="remote-component.error-boundary-text">
+              <RemoteComponent
+                url={url}
+                slide={remoteComponentSlide}
+                content={remoteComponentSlide.content}
+                run={show}
+                slideDone={() => {}}
+              />
+            </ErrorBoundary>
           </div>
         </div>
       )}
@@ -82,7 +85,8 @@ function RemoteComponentWrapper({ slide, url, mediaData }) {
 }
 
 RemoteComponentWrapper.propTypes = {
-  slide: PropTypes.shape({content: PropTypes.shape({}).isRequired}),
+  slide: PropTypes.shape({ content: PropTypes.shape({}).isRequired })
+    .isRequired,
   url: PropTypes.string.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
 };

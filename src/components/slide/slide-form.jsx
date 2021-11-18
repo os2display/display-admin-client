@@ -31,7 +31,6 @@ import RemoteComponentWrapper from "./preview/remote-component-wrapper";
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.mediaData Object of loaded media.
- * @param {object} props.mediaFields The uploaded but not yet saved media fields.
  * @param {Function} props.selectTemplate Function to handle select of template.
  * @param {object} props.selectedTemplate Selected template.
  * @param {Function} props.selectTheme Function to handle select of theme.
@@ -51,7 +50,6 @@ function SlideForm({
   isSaveSuccess,
   isLoading,
   mediaData,
-  mediaFields,
   errors,
   selectTheme,
   selectedTheme,
@@ -355,7 +353,6 @@ SlideForm.propTypes = {
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
-  mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SlideForm;

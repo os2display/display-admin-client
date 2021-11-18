@@ -431,7 +431,6 @@ function SlideManager({
           errors={loadingError || saveErrorPut || saveErrorPost || false}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
-          mediaFields={mediaFields}
         />
       )}
     </>
@@ -442,6 +441,7 @@ SlideManager.defaultProps = {
   id: null,
   isLoading: false,
   loadingError: null,
+  initialState: null,
 };
 
 SlideManager.propTypes = {
