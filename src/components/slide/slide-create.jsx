@@ -18,11 +18,7 @@ function SlideCreate() {
     published: { from: null, to: null },
   };
 
-  return (
-    <>
-      {<SlideManager saveMethod={'POST'} initialState={data} />}
-    </>
-  );
+  return <SlideManager saveMethod={'POST'} initialState={data} />;
 }
 
 export default SlideCreate;

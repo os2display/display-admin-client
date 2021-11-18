@@ -19,11 +19,7 @@ function SlideEdit() {
     isLoading: isLoading,
   } = useGetV1SlidesByIdQuery({ id });
 
-  return (
-    <>
-      {data && <SlideManager saveMethod={'PUT'} initialState={data} id={id} loadingError={loadingError} isLoading={isLoading} />}
-    </>
-  );
+  return <SlideManager saveMethod={'PUT'} initialState={data} id={id} loadingError={loadingError} isLoading={isLoading} />;
 }
 
 export default SlideEdit;
