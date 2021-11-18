@@ -13,8 +13,8 @@ import {
   useGetV1ThemesQuery,
 } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
-import RenderFormElement from "./render-form-element";
-import RemoteComponentWrapper from "./remote-component-wrapper";
+import ContentForm from "./content/content-form";
+import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 
 /**
  * The slide form component.
@@ -65,13 +65,14 @@ function SlideForm({
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
 
-  // Load all templates. Assume no more than 1000.
+  // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
       itemsPerPage: 10,
     });
 
+  // Load themes.
   const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
     title: searchTextTheme,
     itemsPerPage: searchTextTheme ? 10 : 0,
@@ -226,7 +227,7 @@ function SlideForm({
               </ContentBody>
               <ContentBody>
                 {contentFormElements.map((formElement) => (
-                  <RenderFormElement
+                  <ContentForm
                     key={formElement.key}
                     data={formElement}
                     onChange={handleContent}
