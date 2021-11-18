@@ -1,14 +1,11 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Col, Form, Row, Spinner } from "react-bootstrap";
+import { Col, Form, Row, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Toast from "../../util/toast/toast";
-import selectedHelper from "../../util/helpers/selectedHelper";
 import SearchBox from "../../util/search-box/search-box";
 import ContentBody from "../../util/content-body/content-body";
-import {
-  useGetV1MediaQuery
-} from "../../../redux/api/api.generated";
+import { useGetV1MediaQuery } from "../../../redux/api/api.generated";
 import "../../media/media-list.scss";
 import Pagination from "../../util/paginate/pagination";
 
@@ -16,10 +13,11 @@ import Pagination from "../../util/paginate/pagination";
  * The media list component.
  *
  * @param {object} props - The props.
- * @param {boolean} props.multiple - Is the list in multiple mode? This will enable checkbox for each element.
- * @param {function} props.onItemClick - Handler when item is clicked.
+ * @param {boolean} props.multiple - Is the list in multiple mode? This will
+ *   enable checkbox for each element.
+ * @param {Function} props.onItemClick - Handler when item is clicked.
  * @param {Array} props.selectedMediaIds - List of selected media ids.
- * @returns {JSXElement} - The media list.
+ * @returns {object} - The media list.
  */
 function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   // Translations
@@ -37,7 +35,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   const {
     data: mediaData,
     error: loadError,
-    isLoading
+    isLoading,
   } = useGetV1MediaQuery({ page });
 
   /** Set loaded data into form state. */
@@ -100,7 +98,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
         {!isLoading && (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5 media-list">
             {media.map((data) => {
-              const selected = selectedMediaIds.includes(data['@id']);
+              const selected = selectedMediaIds.includes(data["@id"]);
 
               return (
                 <div key={data["@id"]} className="col mb-3">
@@ -120,15 +118,15 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
                       />
                     </button>
 
-                    {multiple &&
-                    <Form.Check
-                      type="checkbox"
-                      checked={selected}
-                      tabIndex={-1}
-                      aria-label={t("media-list.checkbox-form-aria-label")}
-                      readOnly
-                    />
-                    }
+                    {multiple && (
+                      <Form.Check
+                        type="checkbox"
+                        checked={selected}
+                        tabIndex={-1}
+                        aria-label={t("media-list.checkbox-form-aria-label")}
+                        readOnly
+                      />
+                    )}
 
                     <div className="card-body">
                       <div className="row align-items-center">
@@ -160,13 +158,13 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
 }
 
 MediaSelectorList.defaultProps = {
-  multiple: false
+  multiple: false,
 };
 
 MediaSelectorList.propTypes = {
   selectedMediaIds: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onItemClick: PropTypes.func.isRequired,
-  multiple: PropTypes.bool
+  multiple: PropTypes.bool,
 };
 
 export default MediaSelectorList;

@@ -15,19 +15,21 @@ import MediaSelectorModal from "./media-selector-modal";
  * @param {object} props - The props.
  * @param {object} props.selectedMedia - The selected media.
  * @param {Function} props.onSelectedMedia - Callback when selected media has changed.
- * @param {boolean} props.multiple - Whether the user should be able to upload multiple media.
+ * @param {boolean} props.multiple - Whether the user should be able to upload
+ *   multiple media.
  * @param {boolean} props.enableMediaLibrary Whether to show the library button.
- * @returns {JSXElement} The media uploader.
+ * @param {boolean} props.enableDropZone Enable the dropzone.
+ * @param {string} props.name Field name.
+ * @returns {object} The media uploader.
  */
-function MediaSelector(
-  {
-    selectedMedia,
-    multiple,
-    onSelectedMedia,
-    enableMediaLibrary,
-    enableDropZone,
-    name
-  }) {
+function MediaSelector({
+  selectedMedia,
+  multiple,
+  onSelectedMedia,
+  enableMediaLibrary,
+  enableDropZone,
+  name,
+}) {
   const { t } = useTranslation("common");
   const [showMediaModal, setShowMediaModal] = useState(false);
 
@@ -36,10 +38,14 @@ function MediaSelector(
     setShowMediaModal(false);
   }
 
-  /** Handle image uploading change */
+  /**
+   * Handle image uploading change
+   *
+   * @param {Array} data Array of media.
+   */
   const imageUploadingChange = (data) => {
-    onSelectedMedia({target: {id: name, value: data}});
-  }
+    onSelectedMedia({ target: { id: name, value: data } });
+  };
 
   return (
     <>
@@ -49,7 +55,14 @@ function MediaSelector(
         onChange={imageUploadingChange}
         dataURLKey="url"
       >
-        {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
+        {({
+          imageList,
+          onImageUpload,
+          onImageUpdate,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
           <div className="upload__image-wrapper bg-light border p-3 pb-0 rounded my-3">
             {(imageList.length === 0 || multiple) && (
               <>
@@ -75,7 +88,7 @@ function MediaSelector(
                   </Button>
                 )}
 
-                {enableDropZone &&
+                {enableDropZone && (
                   <>
                     <div
                       className={
@@ -98,7 +111,7 @@ function MediaSelector(
                       {t("image-uploader.help-text")}
                     </small>
                   </>
-                }
+                )}
               </>
             )}
 
@@ -120,16 +133,16 @@ function MediaSelector(
         )}
       </ImageUploading>
 
-      {enableMediaLibrary &&
+      {enableMediaLibrary && (
         <MediaSelectorModal
           selectedMedia={selectedMedia}
           multiple={multiple}
           onClose={closeModal}
           selectMedia={onSelectedMedia}
           show={showMediaModal}
-          targetId={name}
+          fieldName={name}
         />
-      }
+      )}
     </>
   );
 }
@@ -141,7 +154,8 @@ MediaSelector.defaultProps = {
 };
 
 MediaSelector.propTypes = {
-  selectedMedia: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string })).isRequired,
+  selectedMedia: PropTypes.arrayOf(PropTypes.shape({ url: PropTypes.string }))
+    .isRequired,
   onSelectedMedia: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
   enableMediaLibrary: PropTypes.bool,

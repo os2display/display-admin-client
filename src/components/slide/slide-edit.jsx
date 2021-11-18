@@ -1,8 +1,6 @@
 import { React } from "react";
 import { useParams } from "react-router";
-import {
-  useGetV1SlidesByIdQuery,
-} from "../../redux/api/api.generated";
+import { useGetV1SlidesByIdQuery } from "../../redux/api/api.generated";
 import SlideManager from "./slide-manager";
 
 /**
@@ -16,10 +14,18 @@ function SlideEdit() {
   const {
     data,
     error: loadingError,
-    isLoading: isLoading,
+    isLoading,
   } = useGetV1SlidesByIdQuery({ id });
 
-  return <SlideManager saveMethod={'PUT'} initialState={data} id={id} loadingError={loadingError} isLoading={isLoading} />;
+  return (
+    <SlideManager
+      saveMethod="PUT"
+      initialState={data}
+      id={id}
+      loadingError={loadingError}
+      isLoading={isLoading}
+    />
+  );
 }
 
 export default SlideEdit;

@@ -2,23 +2,36 @@ import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import { ulid } from "ulid";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import dayjs from "dayjs";
 import {
   api,
   usePostMediaCollectionMutation,
-  usePostV1SlidesMutation, usePutV1SlidesByIdMutation
+  usePostV1SlidesMutation,
+  usePutV1SlidesByIdMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
-import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 import idFromUrl from "../util/helpers/id-from-url";
-import dayjs from "dayjs";
 
 /**
  * The slide manager component.
  *
- * @returns {object} The slide create page.
+ * @param {object} props The props.
+ * @param {object} props.initialState Initial slide state.
+ * @param {string} props.saveMethod POST or PUT.
+ * @param {string | null} props.id Slide id.
+ * @param {boolean} props.isLoading Is the slide state loading?
+ * @param {object} props.loadingError Loading error.
+ * @returns {object} The slide form.
  */
-function SlideManager({ initialState, saveMethod, id, isLoading, loadingError }) {
+function SlideManager({
+  initialState,
+  saveMethod,
+  id,
+  isLoading,
+  loadingError,
+}) {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const headerText = t("slide-edit.edit-slide-header");
@@ -36,19 +49,27 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
 
   const [
     PutV1Slides,
-    { isLoading: isSavingPut, error: saveErrorPut, isSuccess: isSaveSuccessPut }
+    {
+      isLoading: isSavingPut,
+      error: saveErrorPut,
+      isSuccess: isSaveSuccessPut,
+    },
   ] = usePutV1SlidesByIdMutation();
 
   // Handler for creating slide.
   const [
     PostV1Slides,
-    { isLoading: isSavingPost, error: saveErrorPost, isSuccess: isSaveSuccessPost }
+    {
+      isLoading: isSavingPost,
+      error: saveErrorPost,
+      isSuccess: isSaveSuccessPost,
+    },
   ] = usePostV1SlidesMutation();
 
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: savedMediaData, isSuccess: isSaveMediaSuccess }
+    { data: savedMediaData, isSuccess: isSaveMediaSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -79,7 +100,7 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
 
     setSelectedTemplate(template);
     handleInput({
-      target: { id: targetId, value: { "@id": template["@id"] } }
+      target: { id: targetId, value: { "@id": template["@id"] } },
     });
   };
 
@@ -97,7 +118,7 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
     }
     setSelectedTheme(value);
     handleInput({
-      target: { id: targetId, value: themeId }
+      target: { id: targetId, value: themeId },
     });
   };
 
@@ -128,7 +149,7 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
     ) {
       dispatch(
         api.endpoints.getV1TemplatesById.initiate({
-          id: idFromUrl(formStateObject.templateInfo["@id"])
+          id: idFromUrl(formStateObject.templateInfo["@id"]),
         })
       )
         .then((result) => {
@@ -145,7 +166,7 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
     if (formStateObject?.theme && getTheme) {
       dispatch(
         api.endpoints.getV1ThemesById.initiate({
-          id: idFromUrl(formStateObject.theme)
+          id: idFromUrl(formStateObject.theme),
         })
       )
         .then((result) => {
@@ -248,7 +269,9 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
         else {
           newField.push(entry["@id"]);
 
-          if (!localMediaData.hasOwnProperty(entry["@id"])) {
+          if (
+            !Object.prototype.hasOwnProperty.call(localMediaData, entry["@id"])
+          ) {
             set(localMediaData, entry["@id"], entry);
 
             localFormStateObject.media.push(entry["@id"]);
@@ -258,7 +281,9 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
     }
 
     set(localFormStateObject.content, fieldId, newField);
-    set(localFormStateObject, "media", [...new Set([...localFormStateObject.media])]);
+    set(localFormStateObject, "media", [
+      ...new Set([...localFormStateObject.media]),
+    ]);
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
@@ -335,21 +360,19 @@ function SlideManager({ initialState, saveMethod, id, isLoading, loadingError })
             media: formStateObject.media,
             published: {
               from,
-              to
-            }
-          })
+              to,
+            },
+          }),
         };
 
         if (saveMethod === "POST") {
           PostV1Slides(saveData);
-        }
-        else if (saveMethod === 'PUT') {
-          const putData = {...saveData, id};
+        } else if (saveMethod === "PUT") {
+          const putData = { ...saveData, id };
 
           PutV1Slides(putData);
-        }
-        else {
-          throw 'Unsupported save method';
+        } else {
+          throw new Error("Unsupported save method");
         }
       }
     }
@@ -426,7 +449,7 @@ SlideManager.propTypes = {
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
-  loadingError: PropTypes.object,
+  loadingError: PropTypes.shape({}),
 };
 
 export default SlideManager;
