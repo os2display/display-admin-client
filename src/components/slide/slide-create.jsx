@@ -174,7 +174,7 @@ function SlideCreate() {
     }
 
     set(localFormStateObject.content, fieldId, newField);
-    set(localFormStateObject.media, [...new Set([...localFormStateObject.media])]);
+    set(localFormStateObject, 'media', [...new Set([...localFormStateObject.media])]);
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
