@@ -13,28 +13,36 @@ import "./remote-component-wrapper.scss";
  * A remote component wrapper
  *
  * @param {object} props Props.
- * @param {object} props.content The slide content.
+ * @param {object} props.slide The slide.
  * @param {boolean} props.url The url for the remote component.
- * @param {Array} props.mediaData Object of loaded media.
- * @param {object} props.mediaFields The uploaded but not yet saved media fields.
+ * @param {object} props.mediaData Object of loaded media.
  * @returns {object} The component.
  */
-function RemoteComponentWrapper({ content, url, mediaFields, mediaData }) {
-  // Translations for checkbox label
+function RemoteComponentWrapper({ slide, url, mediaData }) {
   const { t } = useTranslation("common");
 
-  // Local slide and local content, to not accidentally mess with the actual content
-  const [remoteComponentSlide, setRemoteComponentSlide] = useState({
-    duration: 10000,
-  });
-  const [remoteComponentContent, setRemoteComponentContent] = useState(content);
-  const [show, setShow] = useState(
-    localStorage.getItem("preview-slide") || false
-  );
+  const [show, setShow] = useState(false);
+  const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
 
-  // Remote compoent configuration
+  // Remote component configuration
   const requires = createRequires(resolve);
   const RemoteComponent = createRemoteComponent({ requires });
+
+  /** Create remoteComponentSlide from slide and mediaData */
+  useEffect(() => {
+    if (slide) {
+      // Local slide and local content, to not accidentally mess with the actual content.
+      const newSlide = {...slide};
+      newSlide.mediaData = mediaData;
+      setRemoteComponentSlide(newSlide);
+    }
+  }, [slide, mediaData])
+
+  /** Get show from local storage */
+  useEffect(() => {
+    const localStorageShow = localStorage.getItem('preview-slide');
+    setShow(localStorageShow === 'true');
+  }, []);
 
   /**
    * Changes the show value, and saves to localstorage
@@ -48,60 +56,6 @@ function RemoteComponentWrapper({ content, url, mediaFields, mediaData }) {
     setShow(value);
   }
 
-  useEffect(() => {
-    // Only do stuff if it is visible.
-    if (show) {
-      let mediaObject = {};
-      // Check if there is loaded media
-      setRemoteComponentContent(content);
-
-      // If the loaded media exist both in content and loaded media
-      // Then add it to the mediaobject
-      if (Object.keys(mediaData).length > 0) {
-        Object.values(content).forEach((value) => {
-          if (mediaData[value]) {
-            mediaObject = {
-              [value]: { assets: mediaData[value].assets },
-              ...mediaObject,
-            };
-          }
-        });
-        setRemoteComponentSlide({
-          duration: 10000,
-          ...{ mediaData: mediaObject },
-        });
-      }
-
-      // If a image has just been uploaded, and not yet saved.
-      if (mediaFields.length > 0) {
-        // loop through content in slide, find images
-        // Object.keys(slide.content).forEach(key => {
-        Object.keys(content).forEach((value) => {
-          if (typeof content[value] === "object" && content[value].length > 0) {
-            // create a random string to refer to the not uploaded image by
-            const randomString = (Math.random() + 1).toString(36).substring(2);
-            mediaObject = {
-              [randomString]: { assets: { uri: content[value][0].url } },
-              ...mediaObject,
-            };
-            // Copy
-            const remoteComponentContentCopy = JSON.parse(
-              JSON.stringify(remoteComponentContent)
-            );
-
-            // Use random string
-            remoteComponentContentCopy[value] = randomString;
-            setRemoteComponentContent(remoteComponentContentCopy);
-          }
-          setRemoteComponentSlide({
-            duration: 10000,
-            ...{ mediaData: mediaObject },
-          });
-        });
-      }
-    }
-  }, [mediaData, mediaFields, show]);
-
   return (
     <>
       <FormCheckbox
@@ -110,14 +64,14 @@ function RemoteComponentWrapper({ content, url, mediaFields, mediaData }) {
         name="show-preview"
         value={show}
       />
-      {show && (
+      {show && remoteComponentSlide && (
         <div className="remote-component-wrapper">
           <div className="remote-component-content">
             <RemoteComponent
               url={url}
               slide={remoteComponentSlide}
-              content={remoteComponentContent}
-              run
+              content={remoteComponentSlide.content}
+              run={show}
               slideDone={() => {}}
             />
           </div>
@@ -128,9 +82,8 @@ function RemoteComponentWrapper({ content, url, mediaFields, mediaData }) {
 }
 
 RemoteComponentWrapper.propTypes = {
-  content: PropTypes.objectOf(PropTypes.any).isRequired,
+  slide: PropTypes.shape({content: PropTypes.shape({}).isRequired}),
   url: PropTypes.string.isRequired,
-  mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

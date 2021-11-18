@@ -445,7 +445,7 @@ SlideManager.defaultProps = {
 };
 
 SlideManager.propTypes = {
-  initialState: PropTypes.shape({}).isRequired,
+  initialState: PropTypes.shape({}),
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,

@@ -220,8 +220,7 @@ function SlideForm({
                 <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
                 <RemoteComponentWrapper
                   url={selectedTemplate?.resources?.component}
-                  content={slide.content}
-                  mediaFields={mediaFields}
+                  slide={slide}
                   mediaData={mediaData}
                 />
               </ContentBody>
