@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import Toast from "../util/toast/toast";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";

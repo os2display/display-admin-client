@@ -215,9 +215,9 @@
     "cancel-button": "Annuller",
     "back-to-list": "Tilbage til listen"
   },
-  "slide-edit": {
+  "slide-manager": {
     "edit-slide-header": "Rediger slide",
-    "unamed": "unavngivet",
+    "create-slide-header": "Opret nyt slide",
     "loading-messages": {
       "saving-slide": "Gemmer slide",
       "saving-media": "Mediet bliver gemt",
@@ -231,22 +231,6 @@
       "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
       "save-media-error": "Der skete en fejl da mediet skulle tilknyttes til slidet: {{error}}",
       "load-slide-error": "Der skete en fejl da slidet med følgende id: {{id}} skulle hentes: {{error}}"
-    }
-  },
-  "slide-create": {
-    "unamed": "unavngivet",
-    "create-slide-header": "Opret nyt slide",
-    "loading-messages": {
-      "saving-slide": "Gemmer slide",
-      "saving-media": "Mediet bliver gemt"
-    },
-    "success-messages": {
-      "saved-slide": "Slide er gemt, medier er tilknyttet",
-      "saved-media": "Mediet er gemt"
-    },
-    "error-messages": {
-      "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
-      "save-media-error": "Der skete en fejl da mediet {{title}} skulle tilknyttes til slidet: {{error}}"
     }
   },
   "slide-media-modal": {

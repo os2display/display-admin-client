@@ -2,7 +2,6 @@ import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Col, Form, Row, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Toast from "../../util/toast/toast";
 import SearchBox from "../../util/search-box/search-box";
 import ContentBody from "../../util/content-body/content-body";
 import { useGetV1MediaQuery } from "../../../redux/api/api.generated";
@@ -65,7 +64,6 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
 
   return (
     <>
-      <Toast show={loadError} text={t("media-list.media-get-error")} />
       <ContentBody>
         <Row className="mt-2 mb-2">
           <Col sm={12} md={6}>

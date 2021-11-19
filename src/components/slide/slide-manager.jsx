@@ -12,6 +12,10 @@ import {
   usePutV1SlidesByIdMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import idFromUrl from "../util/helpers/id-from-url";
 
 /**
@@ -43,35 +47,84 @@ function SlideManager({
   const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [selectedTheme, setSelectedTheme] = useState();
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("slide-manager.loading-messages.loading-slide")
+  );
 
   // Initialize to empty slide object.
   const [formStateObject, setFormStateObject] = useState(null);
 
-  const [
-    PutV1Slides,
-    {
-      isLoading: isSavingPut,
-      error: saveErrorPut,
-      isSuccess: isSaveSuccessPut,
-    },
-  ] = usePutV1SlidesByIdMutation();
+  const [PutV1Slides, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
+    usePutV1SlidesByIdMutation();
 
   // Handler for creating slide.
-  const [
-    PostV1Slides,
-    {
-      isLoading: isSavingPost,
-      error: saveErrorPost,
-      isSuccess: isSaveSuccessPost,
-    },
-  ] = usePostV1SlidesMutation();
+  const [PostV1Slides, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
+    usePostV1SlidesMutation();
 
   // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
-    { data: savedMediaData, isSuccess: isSaveMediaSuccess },
+    {
+      data: savedMediaData,
+      isSuccess: isSaveMediaSuccess,
+      error: saveMediaError,
+    },
   ] = usePostMediaCollectionMutation();
 
+  // Slides are saved successfully, display a message
+  useEffect(() => {
+    if (isSaveMediaSuccess) {
+      displaySuccess(t("slide-manager.success-messages.saved-media"));
+    }
+  }, [isSaveMediaSuccess]);
+
+  // Slides are not saved successfully, display a message
+  useEffect(() => {
+    if (saveMediaError) {
+      displayError(
+        t("slide-manager.error-messages.save-media-error", {
+          error: saveMediaError.error
+            ? saveMediaError.error
+            : saveMediaError.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveMediaError]);
+
+  /** If the slide is saved, display the success message */
+  useEffect(() => {
+    if (isSaveSuccessPost || isSaveSuccessPut) {
+      displaySuccess(t("slide-manager.success-messages.saved-slide"));
+    }
+  }, [isSaveSuccessPost || isSaveSuccessPut]);
+
+  /** If the slide is saved with error, display the error message */
+  useEffect(() => {
+    if (saveErrorPut || saveErrorPost) {
+      const saveError = saveErrorPut || saveErrorPost;
+      displayError(
+        t("slide-manager.error-messages.save-slide-error", {
+          error: saveError.error
+            ? saveError.error
+            : saveError.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveErrorPut, saveErrorPost]);
+
+  /** If the slide is not loaded, display the error message */
+  useEffect(() => {
+    if (loadingError) {
+      displayError(
+        t("slide-manager.error-messages.load-slide-error", {
+          error: loadingError.error
+            ? loadingError.error
+            : loadingError.data["hydra:description"],
+          id,
+        })
+      );
+    }
+  }, [loadingError]);
   /**
    * Set state on change in input field
    *
@@ -425,10 +478,8 @@ function SlideManager({
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
           mediaData={mediaData}
-          isLoading={isLoading}
-          isSaveSuccess={isSaveSuccessPut || isSaveSuccessPost}
-          isSaving={submitting || isSavingPut || isSavingPost}
-          errors={loadingError || saveErrorPut || saveErrorPost || false}
+          isLoading={submittingMedia || submitting || isLoading}
+          loadingMessage={loadingMessage}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
         />
