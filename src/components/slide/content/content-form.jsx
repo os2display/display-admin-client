@@ -1,11 +1,11 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import ImageUploader from "../util/image-uploader/image-uploader";
-import FormCheckbox from "../util/forms/form-checkbox";
-import FormInput from "../util/forms/form-input";
-import Select from "../util/forms/select";
-import RichText from "../util/forms/rich-text";
+import MediaSelector from "./media-selector";
+import FormCheckbox from "../../util/forms/form-checkbox";
+import FormInput from "../../util/forms/form-input";
+import Select from "../../util/forms/select";
+import RichText from "../../util/forms/rich-text";
 
 /**
  * Render form elements for content form.
@@ -21,7 +21,7 @@ import RichText from "../util/forms/rich-text";
  * @param {Array} props.mediaData - Array of loaded media entities.
  * @returns {object} - A form element.
  */
-function RenderFormElement({
+function ContentForm({
   data,
   requiredFieldCallback,
   errors,
@@ -178,11 +178,12 @@ function RenderFormElement({
                 {formData.label}
               </label>
             )}
-            <ImageUploader
+
+            <MediaSelector
               errors={formData.required ? errors : null}
-              multipleImages={data.multipleImages}
-              handleImageUpload={onMediaChange}
-              inputImage={getInputImage(formData)}
+              multiple={data.multipleImages}
+              selectedMedia={getInputImage(formData)}
+              onSelectedMedia={onMediaChange}
               name={formData.name}
               invalidText={
                 data.multipleImages
@@ -191,6 +192,7 @@ function RenderFormElement({
               }
               formGroupClasses={formData.formGroupClasses}
             />
+
             {formData.helpText && (
               <small className="form-text text-muted">
                 {formData.helpText}
@@ -209,11 +211,11 @@ function RenderFormElement({
   return <>{renderElement(data)}</>;
 }
 
-RenderFormElement.defaultProps = {
+ContentForm.defaultProps = {
   errors: [],
 };
 
-RenderFormElement.propTypes = {
+ContentForm.propTypes = {
   data: PropTypes.shape({
     input: PropTypes.string,
     name: PropTypes.string,
@@ -231,4 +233,4 @@ RenderFormElement.propTypes = {
   mediaData: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
-export default RenderFormElement;
+export default ContentForm;

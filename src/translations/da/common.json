@@ -136,6 +136,11 @@
   "slide-create": {
     "create-slide-header": "Opret nyt slide"
   },
+  "slide-media-modal": {
+    "multiple-select-title": "Mediebibliotek",
+    "accept": "Ok",
+    "cancel": "Annullér"
+  },
   "slide-form": {
     "error": "Der skete en fejl",
     "preview-slide-title": "Preview af slide du er ved at konfigurere",

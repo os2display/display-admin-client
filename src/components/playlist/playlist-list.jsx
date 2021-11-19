@@ -11,7 +11,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import Published from "../slide/published";
+import Published from "../util/published";
 import {
   useGetV1PlaylistsQuery,
   useDeleteV1PlaylistsByIdMutation,
