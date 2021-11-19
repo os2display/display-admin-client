@@ -249,6 +249,11 @@
       "save-media-error": "Der skete en fejl da mediet {{title}} skulle tilknyttes til slidet: {{error}}"
     }
   },
+  "slide-media-modal": {
+    "multiple-select-title": "Mediebibliotek",
+    "accept": "Ok",
+    "cancel": "Annullér"
+  },
   "slide-form": {
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
     "save-button": "Gem slide",

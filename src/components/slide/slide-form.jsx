@@ -13,8 +13,8 @@ import {
   useGetV1ThemesQuery,
 } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
-import RenderFormElement from "./render-form-element";
-import RemoteComponentWrapper from "./remote-component-wrapper";
+import ContentForm from "./content/content-form";
+import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 
 /**
  * The slide form component.
@@ -27,7 +27,6 @@ import RemoteComponentWrapper from "./remote-component-wrapper";
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.mediaData Object of loaded media.
- * @param {object} props.mediaFields The uploaded but not yet saved media fields.
  * @param {Function} props.selectTemplate Function to handle select of template.
  * @param {object} props.selectedTemplate Selected template.
  * @param {Function} props.selectTheme Function to handle select of theme.
@@ -61,13 +60,14 @@ function SlideForm({
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
 
-  // Load all templates. Assume no more than 1000.
+  // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
       itemsPerPage: 10,
     });
 
+  // Load themes.
   const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
     title: searchTextTheme,
     itemsPerPage: searchTextTheme ? 10 : 0,
@@ -279,7 +279,6 @@ SlideForm.propTypes = {
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
-  mediaFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SlideForm;

@@ -7,12 +7,12 @@ import idFromUrl from "../util/helpers/id-from-url";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
-import Published from "./published";
+import Published from "../util/published";
 import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import TemplateLabelInList from "./template-label-in-list";
+import TemplateLabelInList from "../util/template-label-in-list";
 import {
   displayError,
   displaySuccess,

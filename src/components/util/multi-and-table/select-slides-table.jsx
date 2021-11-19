@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
-import Published from "../../slide/published";
+import Published from "../published";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
-import TemplateLabelInList from "../../slide/template-label-in-list";
+import TemplateLabelInList from "../template-label-in-list";
 import ListButton from "../list/list-button";
 import InfoModal from "../../info-modal/info-modal";
 import {
