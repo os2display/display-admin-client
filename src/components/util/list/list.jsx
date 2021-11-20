@@ -150,6 +150,7 @@ function List({
   useEffect(() => {
     if (pageParams) {
       handlePageChange(parseInt(pageParams, 10));
+      handlePageChange(parseInt(pageParams, 10));
     }
   }, [pageParams]);
 
