@@ -61,6 +61,7 @@ function ThemesList() {
           t("themes-list.success-messages.theme-delete"),
         ])
       );
+      // @TODO: refetch
       window.location.reload(false);
     }
   }, [themesToDelete, isDeleteSuccess]);

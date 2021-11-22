@@ -69,6 +69,7 @@ function SlidesList() {
           t("slides-list.success-messages.slide-delete"),
         ])
       );
+      // @TODO: refetch
       window.location.reload(false);
     }
   }, [slidesToDelete, isDeleteSuccess]);

@@ -71,6 +71,7 @@ function PlaylistList() {
           t("playlists-list.success-messages.playlist-delete"),
         ])
       );
+      // @TODO: refetch
       window.location.reload(false);
     }
   }, [playlistsToDelete, isDeleteSuccess]);

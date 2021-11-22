@@ -87,6 +87,7 @@ function ScreenList() {
           t("screens-list.success-messages.screen-delete"),
         ])
       );
+      // @TODO: refetch
       window.location.reload(false);
     }
   }, [screensToDelete, isDeleteSuccess]);

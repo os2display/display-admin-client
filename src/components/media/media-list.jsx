@@ -136,6 +136,7 @@ function MediaList({ fromModal, handleSelected }) {
           t("media-list.success-messages.media-delete"),
         ])
       );
+      // @TODO: refetch
       window.location.reload(false);
     }
   }, [mediaToDelete, isDeleteSuccess]);
