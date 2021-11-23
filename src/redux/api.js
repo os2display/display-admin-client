@@ -2,161 +2,170 @@ import { api as generatedApi } from "./api/api.generated";
 
 /** Entry point for modifying api endpoints. */
 const api = generatedApi.enhanceEndpoints({
-  addTagTypes: ['Slide', 'Screen', 'Playlist', 'Template', 'Theme', 'Media', 'Layout', 'ScreenGroup'],
+  addTagTypes: [
+    "Slide",
+    "Screen",
+    "Playlist",
+    "Template",
+    "Theme",
+    "Media",
+    "Layout",
+    "ScreenGroup",
+  ],
   endpoints: {
     getV1Layouts: {
-      providesTags: ['Layout'],
+      providesTags: ["Layout"],
     },
     getV1Media: {
-      providesTags: ['Media'],
+      providesTags: ["Media"],
     },
     postMediaCollection: {
-      providesTags: ['Media'],
-      invalidatesTags: ['Media'],
+      providesTags: ["Media"],
+      invalidatesTags: ["Media"],
     },
     getV1MediaById: {
-      providesTags: ['Media'],
+      providesTags: ["Media"],
     },
     deleteV1MediaById: {
-      providesTags: ['Media'],
-      invalidatesTags: ['Media'],
+      providesTags: ["Media"],
+      invalidatesTags: ["Media"],
     },
     getV1MediaByIdSlides: {
-      providesTags: ['Media'],
+      providesTags: ["Media"],
     },
     getV1Playlists: {
-      providesTags: ['Playlist'],
+      providesTags: ["Playlist"],
     },
     postV1Playlists: {
-      providesTags: ['Playlist'],
-      invalidatesTags: ['Playlist'],
+      providesTags: ["Playlist"],
+      invalidatesTags: ["Playlist"],
     },
     getV1PlaylistsById: {
-      providesTags: ['Playlist'],
+      providesTags: ["Playlist"],
     },
     putV1PlaylistsById: {
-      providesTags: ['Playlist'],
-      invalidatesTags: ['Playlist'],
+      providesTags: ["Playlist"],
+      invalidatesTags: ["Playlist"],
     },
     deleteV1PlaylistsById: {
-      providesTags: ['Playlist'],
-      invalidatesTags: ['Playlist'],
+      providesTags: ["Playlist"],
+      invalidatesTags: ["Playlist"],
     },
     getV1PlaylistsByIdScreens: {
-      providesTags: ['Playlist'],
+      providesTags: ["Playlist"],
     },
     getV1PlaylistsByIdSlides: {
-      providesTags: ['Playlist'],
+      providesTags: ["Playlist"],
     },
     putV1PlaylistsByIdSlides: {
-      providesTags: ['Playlist', 'Slide'],
-      invalidatesTags: ['Playlist', 'Slide'],
+      providesTags: ["Playlist", "Slide"],
+      invalidatesTags: ["Playlist", "Slide"],
     },
     deleteV1PlaylistsByIdSlidesAndSlideId: {
-      providesTags: ['Playlist', 'Slide'],
-      invalidatesTags: ['Playlist', 'Slide'],
+      providesTags: ["Playlist", "Slide"],
+      invalidatesTags: ["Playlist", "Slide"],
     },
     getV1ScreenGroups: {
-      providesTags: ['ScreenGroup'],
+      providesTags: ["ScreenGroup"],
     },
     postV1ScreenGroups: {
-      providesTags: ['ScreenGroup'],
-      invalidatesTags: ['ScreenGroup'],
+      providesTags: ["ScreenGroup"],
+      invalidatesTags: ["ScreenGroup"],
     },
     getV1ScreenGroupsById: {
-      providesTags: ['ScreenGroup'],
+      providesTags: ["ScreenGroup"],
     },
     putV1ScreenGroupsById: {
-      providesTags: ['ScreenGroup'],
-      invalidatesTags: ['ScreenGroup'],
+      providesTags: ["ScreenGroup"],
+      invalidatesTags: ["ScreenGroup"],
     },
     deleteV1ScreenGroupsById: {
-      providesTags: ['ScreenGroup'],
-      invalidatesTags: ['ScreenGroup'],
+      providesTags: ["ScreenGroup"],
+      invalidatesTags: ["ScreenGroup"],
     },
     getV1Screens: {
-      providesTags: ['Screen'],
+      providesTags: ["Screen"],
     },
     postV1Screens: {
-      providesTags: ['Screen'],
-      invalidatesTags: ['Screen'],
+      providesTags: ["Screen"],
+      invalidatesTags: ["Screen"],
     },
     getV1ScreensById: {
-      providesTags: ['Screen'],
+      providesTags: ["Screen"],
     },
     putV1ScreensById: {
-      providesTags: ['Screen'],
-      invalidatesTags: ['Screen'],
+      providesTags: ["Screen"],
+      invalidatesTags: ["Screen"],
     },
     deleteV1ScreensById: {
-      providesTags: ['Screen'],
-      invalidatesTags: ['Screen'],
+      providesTags: ["Screen"],
+      invalidatesTags: ["Screen"],
     },
     getV1ScreensByIdRegionsAndRegionIdPlaylists: {
-      providesTags: ['Screen', 'Playlist'],
+      providesTags: ["Screen", "Playlist"],
     },
     putPlaylistScreenRegionItem: {
-      providesTags: ['Screen'],
-      invalidatesTags: ['Screen'],
+      providesTags: ["Screen"],
+      invalidatesTags: ["Screen"],
     },
     deletePlaylistScreenRegionItem: {
-      providesTags: ['Screen'],
-      invalidatesTags: ['Screen'],
+      providesTags: ["Screen"],
+      invalidatesTags: ["Screen"],
     },
     getV1ScreensByIdScreenGroups: {
-      providesTags: ['Screen', 'ScreenGroup'],
+      providesTags: ["Screen", "ScreenGroup"],
     },
     putV1ScreensByIdScreenGroups: {
-      providesTags: ['Screen', 'ScreenGroup'],
-      invalidatesTags: ['Screen', 'ScreenGroup'],
+      providesTags: ["Screen", "ScreenGroup"],
+      invalidatesTags: ["Screen", "ScreenGroup"],
     },
     deleteV1ScreensByIdScreenGroupsAndScreenGroupId: {
-      providesTags: ['Screen', 'ScreenGroup'],
-      invalidatesTags: ['Screen', 'ScreenGroup'],
+      providesTags: ["Screen", "ScreenGroup"],
+      invalidatesTags: ["Screen", "ScreenGroup"],
     },
     getV1Slides: {
-      providesTags: ['Slide'],
+      providesTags: ["Slide"],
     },
     postV1Slides: {
-      providesTags: ['Slide'],
-      invalidatesTags: ['Slide'],
+      providesTags: ["Slide"],
+      invalidatesTags: ["Slide"],
     },
     getV1SlidesById: {
-      providesTags: ['Slide'],
+      providesTags: ["Slide"],
     },
     putV1SlidesById: {
-      providesTags: ['Slide'],
-      invalidatesTags: ['Slide'],
+      providesTags: ["Slide"],
+      invalidatesTags: ["Slide"],
     },
     deleteV1SlidesById: {
-      providesTags: ['Slide'],
-      invalidatesTags: ['Slide'],
+      providesTags: ["Slide"],
+      invalidatesTags: ["Slide"],
     },
     getV1Templates: {
-      providesTags: ['Template'],
+      providesTags: ["Template"],
     },
     getV1TemplatesById: {
-      providesTags: ['Template'],
+      providesTags: ["Template"],
     },
     getV1Themes: {
-      providesTags: ['Theme'],
+      providesTags: ["Theme"],
     },
     postV1Themes: {
-      providesTags: ['Theme'],
-      invalidatesTags: ['Theme'],
+      providesTags: ["Theme"],
+      invalidatesTags: ["Theme"],
     },
     getV1ThemesById: {
-      providesTags: ['Theme'],
+      providesTags: ["Theme"],
     },
     putV1ThemesById: {
-      providesTags: ['Theme'],
-      invalidatesTags: ['Theme'],
+      providesTags: ["Theme"],
+      invalidatesTags: ["Theme"],
     },
     deleteV1ThemesById: {
-      providesTags: ['Theme'],
-      invalidatesTags: ['Theme'],
+      providesTags: ["Theme"],
+      invalidatesTags: ["Theme"],
     },
-  }
+  },
 });
 
 export default api;
