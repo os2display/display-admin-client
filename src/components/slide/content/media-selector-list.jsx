@@ -31,11 +31,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   const [title, setTitle] = useState("");
 
   // Get method
-  const {
-    data: mediaData,
-    error: loadError,
-    isLoading,
-  } = useGetV1MediaQuery({ page, title });
+  const { data: mediaData, isLoading } = useGetV1MediaQuery({ page, title });
 
   /** Set loaded data into form state. */
   useEffect(() => {

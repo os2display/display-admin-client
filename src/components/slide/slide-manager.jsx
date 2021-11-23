@@ -368,6 +368,7 @@ function SlideManager({
     // Trigger submitting hooks.
     setSubmitting(true);
     setSubmittingMedia(newSubmittingMedia);
+    setLoadingMessage(t("slide-manager.loading-messages.saving-media"));
   }
 
   /** Handle submitting. */
@@ -419,8 +420,10 @@ function SlideManager({
         };
 
         if (saveMethod === "POST") {
+          setLoadingMessage(t("slide-manager.loading-messages.saving-slide"));
           PostV1Slides(saveData);
         } else if (saveMethod === "PUT") {
+          setLoadingMessage(t("slide-manager.loading-messages.saving-slide"));
           const putData = { ...saveData, id };
 
           PutV1Slides(putData);
@@ -500,7 +503,7 @@ SlideManager.propTypes = {
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
-  loadingError: PropTypes.shape({}),
+  loadingError: PropTypes.shape(PropTypes.any),
 };
 
 export default SlideManager;

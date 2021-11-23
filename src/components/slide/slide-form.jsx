@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Spinner, Row, Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -13,6 +13,7 @@ import {
 } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 import ContentForm from "./content/content-form";
+import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 
 /**
@@ -22,9 +23,7 @@ import RemoteComponentWrapper from "./preview/remote-component-wrapper";
  * @param {object} props.slide The slide object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
- * @param {boolean} props.isSaving Is the form saving?
  * @param {string} props.headerText Headline text.
- * @param {Array} props.errors Array of errors.
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
  * @param {Array} props.mediaData Object of loaded media.
@@ -130,7 +129,6 @@ function SlideForm({
 
   return (
     <>
-      {" "}
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <h1>{headerText}</h1>
@@ -147,6 +145,7 @@ function SlideForm({
         {templateOptions && (
           <ContentBody>
             <MultiSelectComponent
+              isLoading={loadingTemplates}
               label={t("slide-form.slide-template-label")}
               helpText={t("slide-form.slide-template-help-text")}
               handleSelection={selectTemplate}
@@ -212,6 +211,7 @@ function SlideForm({
         {themesOptions && (
           <ContentBody>
             <MultiSelectComponent
+              isLoading={loadingThemes}
               label={t("slide-form.slide-theme-label")}
               handleSelection={selectTheme}
               options={themesOptions}
@@ -251,13 +251,14 @@ function SlideForm({
 SlideForm.defaultProps = {
   selectedTemplate: null,
   selectedTheme: [],
+  isLoading: false,
+  loadingMessage: "",
 };
 
 SlideForm.propTypes = {
   slide: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  isSaving: PropTypes.bool.isRequired,
   headerText: PropTypes.string.isRequired,
   selectTheme: PropTypes.func.isRequired,
   selectedTheme: PropTypes.arrayOf(
