@@ -46,12 +46,14 @@ function SlidesList() {
   /** Deletes multiple slides. */
   useEffect(() => {
     if (slidesToDelete.length > 0) {
+      const localSlidesToDelete = [...slidesToDelete];
       setIsDeleting(true);
-      const slideToDelete = slidesToDelete.splice(0, 1).shift();
+      const slideToDelete = localSlidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
       DeleteV1Slides({ id: slideToDeleteId });
+      setSlidesToDelete(localSlidesToDelete);
     } else if (isDeleteSuccess) {
-      window.location.reload(false);
+      setIsDeleting(false);
     }
   }, [slidesToDelete, isDeleteSuccess]);
 
