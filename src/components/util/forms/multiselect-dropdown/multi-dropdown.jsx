@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import contentString from "../../helpers/content-string";
 
 /**
- * A searchablemultiselect component. Using a multiselect from
+ * A searchable multiselect component. Using a multiselect from
  * react-multi-select-component, and making some adjustments, replacing default
  * fuzzy search with string match and displaying the values selected using
  * contentstring-method.
@@ -55,7 +55,9 @@ function MultiSelectComponent({
         disabled: false,
       };
     });
+
     let localMappedSelected = [];
+
     if (selected.length > 0) {
       localMappedSelected = selected.map((item) => {
         return {
@@ -65,6 +67,7 @@ function MultiSelectComponent({
         };
       });
     }
+
     const optionsWithSelected = Object.values(
       [...localMappedOptions, ...localMappedSelected].reduce((a, c) => {
         const aCopy = { ...a };
@@ -73,6 +76,7 @@ function MultiSelectComponent({
       }, {})
     );
     setMappedOptions(optionsWithSelected);
+
     setMappedSelected(localMappedSelected);
   }, [selected, selected.length, options]);
 
@@ -87,12 +91,12 @@ function MultiSelectComponent({
     if (!filter) {
       return optionsToFilter;
     }
-    if (filter.length > 0) {
-      filterCallback(filter);
-    }
-    const re = new RegExp(filter, "i");
+
+    filterCallback(filter);
+
     return optionsToFilter.filter(
-      ({ label: shadowLabel }) => shadowLabel && shadowLabel.match(re)
+      ({ label: shadowLabel }) =>
+        shadowLabel && shadowLabel.match(new RegExp(filter, "i"))
     );
   }
   /**
@@ -102,8 +106,10 @@ function MultiSelectComponent({
    */
   function changeData(data) {
     let selectedOptions = [];
+
     if (data.length > 0) {
       const ids = data.map(({ value }) => value);
+
       selectedOptions = Object.values(
         [...selected, ...options]
           .filter((option) => ids.includes(option["@id"]))
@@ -118,6 +124,7 @@ function MultiSelectComponent({
         selectedOptions = [selectedOptions[selectedOptions.length - 1]];
       }
     }
+
     const target = { value: selectedOptions, id: name };
     handleSelection({ target });
   }
