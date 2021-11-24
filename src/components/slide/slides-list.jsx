@@ -55,11 +55,12 @@ function SlidesList() {
   /** Deletes multiple slides. */
   useEffect(() => {
     if (slidesToDelete.length > 0) {
+      const localSlidesToDelete = [...slidesToDelete];
       setIsDeleting(true);
-      setLoadingMessage(t("slides-list.loading-messages.deleting-slide"));
-      const slideToDelete = slidesToDelete.splice(0, 1).shift();
+      const slideToDelete = localSlidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
       DeleteV1Slides({ id: slideToDeleteId });
+      setSlidesToDelete(localSlidesToDelete);
     } else if (isDeleteSuccess) {
       // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
       localStorage.setItem(
