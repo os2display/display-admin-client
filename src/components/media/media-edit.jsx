@@ -50,7 +50,6 @@ function MediaEdit() {
           handleSubmit={handleSubmit}
           isLoading={isLoading}
           isSaveSuccess={false} // todo
-          isSaving={false} // todo
           errors={loadError || false}
         />
       )}

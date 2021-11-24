@@ -163,7 +163,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
             apiCall={useGetV1PlaylistsByIdSlidesQuery}
             onClose={onCloseInfoModal}
             dataStructureToDisplay={onPlaylists}
-            modalTitle={t("select-slides-table.info-modal.playlist-slides")}
+            modalTitle={t("select-slides-table.info-modal.slide-on-playlists")}
             dataKey="slide"
           />
         </>

@@ -10,6 +10,10 @@ import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
+import {
   useGetV1ScreenGroupsQuery,
   useDeleteV1ScreenGroupsByIdMutation,
 } from "../../redux/api/api.generated";
@@ -30,22 +34,76 @@ function GroupsList() {
   const [groupsToDelete, setGroupsToDelete] = useState([]);
   const [sortBy, setSortBy] = useState();
   const [searchText, setSearchText] = useState();
+  const [listData, setListData] = useState();
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("groups-list.loading-messages.loading-groups")
+  );
 
   // Delete call
-  const [DeleteV1ScreenGroups, { isSuccess: isDeleteSuccess }] =
-    useDeleteV1ScreenGroupsByIdMutation();
+  const [
+    DeleteV1ScreenGroups,
+    { isSuccess: isDeleteSuccess, error: isDeleteError },
+  ] = useDeleteV1ScreenGroupsByIdMutation();
 
   /** Deletes multiple groups. */
   useEffect(() => {
     if (groupsToDelete.length > 0) {
       setIsDeleting(true);
+      setLoadingMessage(t("groups-list.loading-messages.deleting-group"));
       const groupToDelete = groupsToDelete.splice(0, 1).shift();
       const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
       DeleteV1ScreenGroups({ id: groupToDeleteId });
     } else if (isDeleteSuccess) {
+      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("groups-list.success-messages.group-delete"),
+        ])
+      );
+
       window.location.reload(false);
     }
   }, [groupsToDelete, isDeleteSuccess]);
+
+  // Sets success messages in local storage, because the page is reloaded
+  useEffect(() => {
+    if (isDeleteSuccess && groupsToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("groups-list.success-messages.group-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
+
+  // Displays the success messages from successfully deleted slides, and removes them from local storage.
+  useEffect(() => {
+    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("groups-list.error-messages.group-delete-error", {
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [isDeleteError]);
 
   /**
    * Sets the selected row in state.
@@ -166,6 +224,25 @@ function GroupsList() {
     title: searchText,
   });
 
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  // Error with retrieving list of groups
+  useEffect(() => {
+    if (groupsGetError) {
+      displayError(
+        t("groups-list.error-messages.groups-load-error", {
+          error: groupsGetError.error
+            ? groupsGetError.error
+            : groupsGetError.data["hydra:description"],
+        })
+      );
+    }
+  }, [groupsGetError]);
+
   return (
     <>
       <ContentHeader
@@ -174,21 +251,21 @@ function GroupsList() {
         newBtnLink="/group/create"
       />
       <ContentBody>
-        {!(isLoading || isDeleting) && data && data["hydra:member"] && (
+        {listData && (
           <List
             columns={columns}
-            totalItems={data["hydra:totalItems"]}
+            totalItems={listData["hydra:totalItems"]}
             currentPage={page}
             handlePageChange={onChangePage}
             selectedRows={selectedRows}
-            data={data["hydra:member"]}
+            data={listData["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
-            error={groupsGetError || false}
-            isLoading={isLoading || isDeleting || false}
             deleteSuccess={isDeleteSuccess || false}
             handleSort={onChangeSort}
             handleSearch={onSearch}
+            isLoading={isLoading || isDeleting}
+            loadingMessage={loadingMessage}
           />
         )}
       </ContentBody>

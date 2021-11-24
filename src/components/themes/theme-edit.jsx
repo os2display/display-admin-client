@@ -3,6 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import ThemeForm from "./theme-form";
 import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
+import {
   usePutV1ThemesByIdMutation,
   useGetV1ThemesByIdQuery,
 } from "../../redux/api/api.generated";
@@ -16,6 +20,9 @@ function ThemeEdit() {
   const { t } = useTranslation("common");
   const headerText = t("theme-edit.edit-theme");
   const [formStateObject, setFormStateObject] = useState();
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("theme-edit.loading-messages.loading-theme")
+  );
   const { id } = useParams();
 
   const [
@@ -36,6 +43,41 @@ function ThemeEdit() {
     }
   }, [themeData]);
 
+  /** If the theme is not loaded, display the error message */
+  useEffect(() => {
+    if (loadError) {
+      displayError(
+        t("theme-edit.error-messages.load-theme-error", {
+          error: loadError.error
+            ? loadError.error
+            : loadError.data["hydra:description"],
+          id,
+        })
+      );
+    }
+  }, [loadError]);
+
+  /** If the theme is saved, display the success message */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("theme-edit.success-messages.saved-theme"));
+    }
+  }, [isSaveSuccess]);
+
+  /** If the theme is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("theme-edit.error-messages.save-theme-error", {
+          error: saveError.error
+            ? saveError.error
+            : saveError.data["hydra:description"],
+          id,
+        })
+      );
+    }
+  }, [saveError]);
+
   /**
    * Set state on change in input field
    *
@@ -50,6 +92,7 @@ function ThemeEdit() {
 
   /** Handles submit. */
   function handleSubmit() {
+    setLoadingMessage(t("theme-edit.loading-messages.saving-theme"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -68,10 +111,8 @@ function ThemeEdit() {
           headerText={`${headerText}: ${formStateObject?.title}`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoading}
-          isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
-          errors={saveError || loadError || false}
+          isLoading={isLoading || isSaving}
+          loadingMessage={loadingMessage}
         />
       )}
     </>

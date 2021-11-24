@@ -2,6 +2,10 @@ import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { usePostMediaCollectionMutation } from "../../redux/api/api.generated";
 import MediaForm from "./media-form";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 
 /**
  * The create media component.
@@ -12,12 +16,13 @@ function MediaCreate() {
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
   const [mediaToCreate, setMediaToCreate] = useState([]);
   const headerText = t("media-create.create-media");
 
   const [
     PostV1MediaCollection,
-    { isLoading, error: saveError, isSuccess: isSaveSuccess },
+    { isLoading: isSavingMedia, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostMediaCollectionMutation();
 
   /**
@@ -38,16 +43,43 @@ function MediaCreate() {
       setIsSaving(true);
       const media = mediaToCreate.splice(0, 1).shift();
       PostV1MediaCollection({ body: media });
-    } else if (isSaveSuccess) {
-      window.location.reload(false);
     }
   }, [mediaToCreate.length, isSaveSuccess]);
+
+  /** If the media is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("media-create.error-messages.save-media-error", {
+          error: saveError.data
+            ? saveError.data["hydra:description"]
+            : saveError.error,
+        })
+      );
+      setIsSaving(false);
+    }
+  }, [saveError]);
+
+  /** If the image is saved, display the success message, and remove image from ui */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("media-create.success-messages.saved-media"));
+      setIsSaving(false);
+      const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
+      localFormStateObject.images = [];
+      setFormStateObject(localFormStateObject);
+    }
+  }, [isSaveSuccess]);
 
   /** Handles submit. */
   function handleSubmit() {
     const localMediaToCreate = [];
-
     formStateObject.images.forEach((element) => {
+      setLoadingMessage(
+        t("media-create.loading-messages.saving-media", {
+          title: element.title || t("media-create.unamed"),
+        })
+      );
       const formData = new FormData();
       formData.append("file", element.file);
       formData.append("title", element.title);
@@ -67,9 +99,9 @@ function MediaCreate() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={isLoading}
+      isLoading={isSavingMedia || isSaving}
+      loadingMessage={loadingMessage}
       isSaveSuccess={isSaveSuccess}
-      isSaving={isLoading || isSaving || false}
       errors={saveError || false}
     />
   );

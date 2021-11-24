@@ -1,5 +1,5 @@
 import { React, useEffect } from "react";
-import { Button, Col, Row, Spinner, Toast } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,7 @@ import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import RadioButtons from "../forms/radio-buttons";
+import ListLoading from "../loading-component/list-loading";
 
 /**
  * @param {object} props - The props.
@@ -20,12 +21,9 @@ import RadioButtons from "../forms/radio-buttons";
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
  * @param {Function} props.handleDelete - For deleting elements in the list.
- * @param {boolean} props.deleteSuccess - If the calling component has deleted
  *   element with success.
- * @param {boolean} props.error - If the calling component has an error.
  * @param {Function} props.handleSort - Callback for sort.
  * @param {Function} props.handleSearch - Callback for seach.
- * @param {boolean} props.isLoading - If the calling component is loading data.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.handleIsPublished - Callback for published filter.
  * @returns {object} The List.
@@ -36,14 +34,11 @@ function List({
   displayPublished,
   selectedRows,
   clearSelectedRows,
-  deleteSuccess,
-  error,
   withChart,
   handlePageChange,
   handleSort,
   handleSearch,
   totalItems,
-  isLoading,
   handleDelete,
   handleIsPublished,
 }) {
@@ -181,8 +176,6 @@ function List({
 
   return (
     <>
-      <Toast show={deleteSuccess} text={t("list.get-error")} />
-      <Toast show={error} text={t("list.deleted")} />
       <Row className="my-2">
         <Col>
           <SearchBox value={searchParams || ""} onChange={onSearch} />
@@ -208,11 +201,6 @@ function List({
         </Col>
       </Row>
       <Row>
-        <Col className="d-flex justify-content-center">
-          {isLoading && <Spinner animation="border" className="m-5" />}
-        </Col>
-      </Row>
-      <Row>
         {displayPublished && publishedParams && (
           <RadioButtons
             label={t("list.published-label")}
@@ -231,17 +219,15 @@ function List({
           />
         )}
       </Row>
-      {!isLoading && (
-        <Table
-          onSort={updateUrlAndSort}
-          data={data}
-          sortOrder={orderParams}
-          sortPath={sortParams}
-          columns={columns}
-          selectedRows={selectedRows}
-          withChart={withChart}
-        />
-      )}
+      <Table
+        onSort={updateUrlAndSort}
+        data={data}
+        sortOrder={orderParams}
+        sortPath={sortParams}
+        columns={columns}
+        selectedRows={selectedRows}
+        withChart={withChart}
+      />
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}
@@ -269,13 +255,10 @@ List.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   withChart: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
-  deleteSuccess: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   handleSort: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   displayPublished: PropTypes.bool,
   handleIsPublished: PropTypes.func,
 };
 
-export default List;
+export default ListLoading(List);

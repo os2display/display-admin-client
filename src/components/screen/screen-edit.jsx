@@ -10,6 +10,10 @@ import {
   usePutPlaylistScreenRegionItemMutation,
 } from "../../redux/api/api.generated";
 import ScreenForm from "./screen-form";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 
 /**
  * The screen edit component.
@@ -21,14 +25,15 @@ function ScreenEdit() {
   const headerText = t("screen-edit.edit-screen-header");
   const [formStateObject, setFormStateObject] = useState();
   const [groupId, setGroupId] = useState();
-  const [isSaving, setIsSaving] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
+  const [savingScreen, setSavingScreen] = useState(false);
+  const [savingGroups, setSavingGroups] = useState(false);
+  const [savingPlaylists, setSavingPlaylists] = useState(false);
   const [groupsToAdd, setGroupsToAdd] = useState();
   const [playlistsToAdd, setPlaylistsToAdd] = useState();
   const { id } = useParams();
-  const [
-    PutV1Screens,
-    { isLoading: isSavingScreen, error: saveError, isSuccess: isSaveSuccess },
-  ] = usePutV1ScreensByIdMutation();
+  const [PutV1Screens, { error: saveError, isSuccess: isSaveSuccess }] =
+    usePutV1ScreensByIdMutation();
 
   const [
     putPlaylistScreenRegionItem,
@@ -37,11 +42,7 @@ function ScreenEdit() {
 
   const [
     PutV1ScreensByIdScreenGroups,
-    {
-      isLoading: isSavingGroups,
-      error: saveErrorGroups,
-      isSuccess: isSaveSuccessGroups,
-    },
+    { error: saveErrorGroups, isSuccess: isSaveSuccessGroups },
   ] = usePutV1ScreensByIdScreenGroupsMutation();
 
   const {
@@ -67,6 +68,8 @@ function ScreenEdit() {
   /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && groupsToAdd) {
+      setLoadingMessage(t("screen-edit.loading-messages.saving-groups"));
+      setSavingGroups(true);
       PutV1ScreensByIdScreenGroups({
         id,
         body: JSON.stringify(groupsToAdd),
@@ -74,20 +77,97 @@ function ScreenEdit() {
     }
   }, [isSaveSuccess]);
 
+  // Groups are saved, display success
+  useEffect(() => {
+    if (isSaveSuccessGroups) {
+      setSavingGroups(false);
+      displaySuccess(t("screen-edit.success-messages.saved-groups"));
+    }
+  }, [isSaveSuccessGroups]);
+
+  // Groups are not saved, display error
+  useEffect(() => {
+    if (saveErrorGroups) {
+      setSavingGroups(false);
+      displayError(
+        t("screen-edit.error-messages.save-groups-error", {
+          error: saveErrorGroups.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveErrorGroups]);
+
+  // Playlists are saved, display success
+
+  useEffect(() => {
+    if (isSavePlaylistSuccess) {
+      setSavingPlaylists(false);
+      displaySuccess(t("screen-edit.success-messages.saved-playlists"));
+    }
+  }, [isSavePlaylistSuccess]);
+
+  // Playlists are not saved, display error
+  useEffect(() => {
+    if (savePlaylistError) {
+      setSavingPlaylists(false);
+      displayError(
+        t("screen-edit.error-messages.save-playlists-error", {
+          error: savePlaylistError.error
+            ? savePlaylistError.error
+            : savePlaylistError.data["hydra:description"],
+        })
+      );
+    }
+  }, [savePlaylistError]);
+
+  /** If the screen is saved, display the success message */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("screen-edit.success-messages.saved-screen"));
+      setSavingScreen(false);
+    }
+  }, [isSaveSuccess]);
+
+  /** If the screen is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("screen-edit.error-messages.save-screen-error", {
+          error: saveError.error
+            ? saveError.error
+            : saveError.data["hydra:description"],
+        })
+      );
+      setSavingScreen(false);
+    }
+  }, [saveError]);
+
+  /** If the screen is not loaded, display the error message */
+  useEffect(() => {
+    if (loadError) {
+      displayError(
+        t("screen-edit.error-messages.load-screen-error", {
+          error: loadError.error
+            ? loadError.error
+            : loadError.data["hydra:description"],
+          id,
+        })
+      );
+    }
+  }, [loadError]);
+
   /** Adds playlists to regions. */
   useEffect(() => {
-    if (playlistsToAdd && playlistsToAdd.length > 0) {
-      setIsSaving(true);
+    if (isSaveSuccess && playlistsToAdd && playlistsToAdd.length > 0) {
+      setLoadingMessage(t("screen-edit.loading-messages.saving-playlists"));
       const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
       putPlaylistScreenRegionItem({
-        body: JSON.stringify(playlistToAdd.list),
+        body: JSON.stringify(playlistToAdd?.list),
         id: playlistToAdd.screenId,
         regionId: playlistToAdd.regionId,
       });
-    } else {
-      setIsSaving(false);
     }
-  }, [playlistsToAdd, isSavePlaylistSuccess, isSaveSuccess]);
+  }, [isSavePlaylistSuccess, isSaveSuccess]);
 
   /**
    * Set state on change in input field
@@ -102,8 +182,73 @@ function ScreenEdit() {
     setFormStateObject(localFormStateObject);
   }
 
+  /** Set playlists to save, if any */
+  function savePlaylists() {
+    const toSave = [];
+    const formStateObjectPlaylists = formStateObject.playlists?.map(
+      (playlist) => {
+        return {
+          id: idFromUrl(playlist["@id"]),
+          regionId: idFromUrl(playlist.region),
+        };
+      }
+    );
+    if (formStateObjectPlaylists) {
+      // Unique regions that will have a playlist connected.
+      const regions = [
+        ...new Set(
+          formStateObjectPlaylists.map((playlists) => playlists.regionId)
+        ),
+      ];
+
+      // Filter playlists by region
+      regions.forEach((element) => {
+        const filteredPlaylists = formStateObjectPlaylists
+          .map((localPlaylists, index) => {
+            if (element === localPlaylists.regionId) {
+              return { playlist: localPlaylists.id, weight: index };
+            }
+            return undefined;
+          })
+          .filter((anyValue) => typeof anyValue !== "undefined");
+        // Collect playlists with according ids for saving
+        toSave.push({
+          list: filteredPlaylists,
+          regionId: element,
+          screenId: id,
+        });
+      });
+
+      if (formStateObject.playlists.length === 0) {
+        formStateObject.regions.forEach((element) => {
+          toSave.push({
+            list: [],
+            regionId: idFromUrl(element),
+            screenId: id,
+          });
+        });
+      }
+
+      // Set playlists to save
+      setPlaylistsToAdd(toSave);
+    }
+  }
+
+  /** Set groups to save, if any */
+  function saveGroups() {
+    if (Array.isArray(formStateObject.inScreenGroups)) {
+      setGroupsToAdd(
+        formStateObject.inScreenGroups.map((group) => {
+          return idFromUrl(group);
+        })
+      );
+    }
+  }
+
   /** Handles submit. */
   function handleSubmit() {
+    setSavingScreen(true);
+    setLoadingMessage(t("screen-edit.loading-messages.saving-screen"));
     const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
     localFormStateObject.dimensions.width = parseInt(
       localFormStateObject.dimensions.width,
@@ -127,47 +272,8 @@ function ScreenEdit() {
       },
     };
     PutV1Screens({ id, screenScreenInput: JSON.stringify(saveData) });
-    setGroupsToAdd(
-      formStateObject.inScreenGroups.map((group) => {
-        return idFromUrl(group);
-      })
-    );
-    const toSave = [];
-    const formStateObjectPlaylists = formStateObject.playlists.map(
-      (playlist) => {
-        return {
-          id: idFromUrl(playlist["@id"]),
-          regionId: idFromUrl(playlist.region),
-        };
-      }
-    );
-
-    // Unique regions that will have a playlist connected.
-    const regions = [
-      ...new Set(
-        formStateObjectPlaylists.map((playlists) => playlists.regionId)
-      ),
-    ];
-
-    // Filter playlists by region
-    regions.forEach((element) => {
-      const filteredPlaylists = formStateObjectPlaylists
-        .map((localPlaylists, index) => {
-          if (element === localPlaylists.regionId) {
-            return { playlist: localPlaylists.id, weight: index };
-          }
-          return undefined;
-        })
-        .filter((anyValue) => typeof anyValue !== "undefined");
-      // Collect playlists with according ids for saving
-      toSave.push({
-        list: filteredPlaylists,
-        regionId: element,
-        screenId: id,
-      });
-    });
-    // Set playlists to save
-    setPlaylistsToAdd(toSave);
+    saveGroups();
+    savePlaylists();
   }
 
   return (
@@ -178,16 +284,10 @@ function ScreenEdit() {
           headerText={headerText}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoadingScreen}
-          isSaveSuccess={isSaveSuccess || isSaveSuccessGroups}
-          isSaving={isSavingScreen || isSavingGroups || isSaving || false}
-          errors={
-            saveError ||
-            loadError ||
-            saveErrorGroups ||
-            savePlaylistError ||
-            false
+          isLoading={
+            savingScreen || savingPlaylists || savingGroups || isLoadingScreen
           }
+          loadingMessage={loadingMessage}
           groupId={groupId}
         />
       )}

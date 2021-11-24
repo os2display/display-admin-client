@@ -22,10 +22,30 @@
     "name-placeholder": "Udfyld brugerens navn"
   },
   "theme-create": {
-    "create-new-theme": "Opret nyt tema"
+    "create-new-theme": "Opret nyt tema",
+    "loading-messages": {
+      "saving-theme": "Gemmer temaet"
+    },
+    "success-messages": {
+      "saved-theme": "Temaet er gemt"
+    },
+    "error-messages": {
+      "save-theme-error": "Der skete en fejl da temaet skulle gemmes: {{error}}"
+    }
   },
   "theme-edit": {
-    "edit-theme": "Rediger følgende tema"
+    "edit-theme": "Rediger følgende tema",
+    "loading-messages": {
+      "saving-theme": "Gemmer temaet",
+      "loading-theme": "Henter temaet"
+    },
+    "success-messages": {
+      "saved-theme": "Temaet er gemt"
+    },
+    "error-messages": {
+      "save-theme-error": "Der skete en fejl da temaet skulle gemmes: {{error}}",
+      "load-theme-error": "Der skete en fejl da temaet med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "slides-list": {
     "columns": {
@@ -33,11 +53,21 @@
       "name": "Navn",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "published": "Udgivet",
-      "preview": "Preview"
+      "published": "Udgivet"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
+    },
+    "loading-messages": {
+      "loading-slides": "Henter slides",
+      "deleting-slide": "Sletter slide(s)"
+    },
+    "error-messages": {
+      "slide-delete-error": "Der skete en fejl da {{title}} skulle slettes: {{error}}",
+      "slides-load-error": "Der skete en fejl da slides skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "slide-delete": "Slidet er blevet slettet"
     },
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
@@ -57,6 +87,17 @@
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     },
+    "loading-messages": {
+      "loading-screens": "Henter skærme",
+      "deleting-screen": "Sletter skærm(e)"
+    },
+    "error-messages": {
+      "screen-delete-error": "Der skete en fejl da skærmen skulle slettes: {{error}}",
+      "screens-load-error": "Der skete en fejl da skærmene skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "screen-delete": "Skærmen er blevet slettet"
+    },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
@@ -69,6 +110,17 @@
       "pick": "Vælg gruppe",
       "name": "Navn",
       "created-by": "Oprettet af"
+    },
+    "loading-messages": {
+      "loading-groups": "Henter grupper",
+      "deleting-group": "Sletter gruppe(r)"
+    },
+    "error-messages": {
+      "group-delete-error": "Der skete en fejl da gruppen skulle slettes: {{error}}",
+      "groups-load-error": "Der skete en fejl da grupperne skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "group-delete": "Gruppen er blevet slettet"
     },
     "header": "Grupper",
     "create-new-group": "Opret ny gruppe",
@@ -85,6 +137,17 @@
     "info-modal": {
       "playlist-slides": "Playlisten indeholder følgende slides"
     },
+    "loading-messages": {
+      "loading-playlists": "Henter spillelister",
+      "deleting-playlist": "Sletter spilleliste: {{title}}"
+    },
+    "error-messages": {
+      "playlist-delete-error": "Der skete en fejl da spillelisten skulle slettes: {{error}}",
+      "playlists-load-error": "Der skete en fejl da spillelisterne skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "playlist-delete": "Spillelisten er blevet slettet"
+    },
     "header": "Spillelister",
     "create-new-playlist": "Opret ny spilleliste",
     "delete-button": "Slet",
@@ -97,27 +160,52 @@
       "created-by": "Oprettet af",
       "number-of-slides": "Antal tilknyttede slides"
     },
+    "loading-messages": {
+      "loading-themes": "Henter temaer",
+      "deleting-theme": "Sletter tema(er)"
+    },
+    "error-messages": {
+      "theme-delete-error": "Der skete en fejl da temaet skulle slettes: {{error}}",
+      "themes-load-error": "Der skete en fejl da temaerne skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "theme-delete": "Temaet er blevet slettet"
+    },
     "header": "Temaer",
     "create-new-theme": "Opret nyt tema",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "toast": {
-    "title": "Obs",
-    "button-label": "Luk denne dialog"
-  },
   "media-list": {
-    "media-get-error": "Der skete en fejl da medierne skulle hentes",
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
     "upload-new-media": "Upload",
     "delete-button": "Slet",
     "edit-button": "Rediger",
-    "deleting": "Sletter elementer...",
-    "loading": "Henter elementer..."
+    "loading-messages": {
+      "loading-media": "Henter medier",
+      "deleting-media": "Sletter Medie(r)"
+    },
+    "error-messages": {
+      "media-delete-error": "Der skete en fejl da mediet skulle slettes: {{error}}",
+      "media-load-error": "Der skete en fejl da medier skulle hentes: {{error}}"
+    },
+    "success-messages": {
+      "media-delete": "Mediet er blevet slettet"
+    }
   },
   "media-create": {
-    "create-media": "Upload"
+    "create-media": "Upload",
+    "unamed": "unavngivet",
+    "loading-messages": {
+      "saving-media": "Gemmer {{title}}"
+    },
+    "success-messages": {
+      "saved-media": "Mediet er gemt"
+    },
+    "error-messages": {
+      "save-media-error": "Der skete en fejl da mediet skulle gemmes: {{error}}"
+    }
   },
   "media-edit": {
     "edit-media": "Rediger"
@@ -125,16 +213,25 @@
   "media-form": {
     "save-button": "Gem medie",
     "cancel-button": "Annuller",
-    "back-to-list": "Tilbage til listen",
-    "saving": "Gemmer...",
-    "saved": "Mediet blev uploaded",
-    "error": "Der skete en fejl"
+    "back-to-list": "Tilbage til listen"
   },
-  "slide-edit": {
-    "edit-slide-header": "Rediger slide"
-  },
-  "slide-create": {
-    "create-slide-header": "Opret nyt slide"
+  "slide-manager": {
+    "edit-slide-header": "Rediger slide",
+    "create-slide-header": "Opret nyt slide",
+    "loading-messages": {
+      "saving-slide": "Gemmer slide",
+      "saving-media": "Mediet bliver gemt",
+      "loading-slide": "Henter slide"
+    },
+    "success-messages": {
+      "saved-slide": "Slide er gemt, medier er tilknyttet",
+      "saved-media": "Mediet er gemt"
+    },
+    "error-messages": {
+      "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
+      "save-media-error": "Der skete en fejl da mediet skulle tilknyttes til slidet: {{error}}",
+      "load-slide-error": "Der skete en fejl da slidet med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "slide-media-modal": {
     "multiple-select-title": "Mediebibliotek",
@@ -142,17 +239,9 @@
     "cancel": "Annullér"
   },
   "slide-form": {
-    "error": "Der skete en fejl",
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
-    "loading": "Henter slide...",
-    "loading-templates": "Henter skabeloner...",
-    "loading-themes": "Henter temaer...",
-    "saving": "Gemmer...",
-    "saved": "Slide er gemt",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
-    "slide-content-label": "Slidets indhold",
-    "slide-content-header": "Slidets indhold",
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
@@ -163,22 +252,14 @@
     "slide-publish-title": "Udgivelse"
   },
   "theme-form": {
-    "loading": "Henter tema...",
-    "saving": "Gemmer...",
-    "error": "Der skete en fejl",
     "theme-name-label": "Temaets navn",
     "theme-description-label": "Temaets beskrivelse",
     "css-header": "Temaets CSS",
     "theme-css-label": "Temaets CSS",
-    "saved": "Temaet er gemt",
     "save-button": "Gem tema",
     "cancel-button": "Annuller"
   },
   "group-form": {
-    "loading": "Henter gruppen...",
-    "saving": "Gemmer...",
-    "saved": "Gruppen blev gemt",
-    "error": "Der skete en fejl",
     "save-button": "Gem gruppen",
     "cancel-button": "Annuller",
     "group-title-label": "Gruppens navn",
@@ -187,23 +268,67 @@
     "group-description-placeholder": "Udfyld gruppens beskrivelse"
   },
   "group-create": {
-    "create-new-group-header": "Opret ny gruppe"
+    "create-new-group-header": "Opret ny gruppe",
+    "loading-messages": {
+      "saving-group": "Gemmer gruppen"
+    },
+    "success-messages": {
+      "saved-group": "Gruppen er gemt"
+    },
+    "error-messages": {
+      "save-group-error": "Der skete en fejl da gruppen skulle gemmes: {{error}}"
+    }
   },
   "group-edit": {
-    "edit-group-header": "Rediger følgende gruppe"
+    "edit-group-header": "Rediger følgende gruppe",
+    "loading-messages": {
+      "saving-group": "Gemmer gruppen",
+      "loading-group": "Henter gruppen"
+    },
+    "success-messages": {
+      "saved-group": "Gruppen er gemt"
+    },
+    "error-messages": {
+      "save-group-error": "Der skete en fejl da gruppen skulle gemmes: {{error}}",
+      "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
-  "edit-playlist": {
-    "error": "Der skete en fejl",
-    "create-new-playlist": "Opret ny spilleliste",
+  "playlist-edit": {
     "edit-playlist": "Rediger følgende spilleliste",
+    "loading-messages": {
+      "saving-playlist": "Gemmer spillelisten",
+      "saving-slides": "Tilknytter slides til spillelisten"
+    },
+    "success-messages": {
+      "saved-playlist": "Spillelisten er gemt",
+      "saved-slides": "Slides er tilknyttet spillelisten"
+    },
+    "error-messages": {
+      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
+      "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}",
+      "load-playlist-error": "Der skete en fejl da spillelisten med følgende id: {{id}} skulle hentes: {{error}}"
+    }
+  },
+  "playlist-create": {
+    "create-new-playlist": "Opret ny spilleliste",
+    "loading-messages": {
+      "saving-playlist": "Gemmer spillelisten",
+      "saving-slides": "Tilknytter slides til spillelisten"
+    },
+    "success-messages": {
+      "saved-playlist": "Spillelisten er gemt",
+      "saved-slides": "Slides er tilknyttet spillelisten"
+    },
+    "error-messages": {
+      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
+      "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}"
+    }
+  },
+  "playlist-form": {
     "title-about": "Om spillelisten",
-    "title-screens": "Tilknyttede skærme",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
     "cancel-button": "Annuller",
-    "loading": "Henter spilleliste...",
-    "saving": "Gemmer...",
-    "saved": "Spillelisten er gemt",
     "playlist-name-label": "Spillelistens navn",
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
@@ -214,7 +339,6 @@
     "columns": {
       "name": "Navn"
     },
-    "search-to-se-possible-selections": "For at se mulige spillelister, skal du fremsøge dem pr navn.",
     "remove-from-list": "Fjern fra liste"
   },
   "select-slides-table": {
@@ -263,13 +387,13 @@
   },
   "playlists-dropdown": {
     "label": "Vælg en eller flere spillelister",
-    "nothing-selected": "Vælg en af spillelisterne"
+    "nothing-selected": "Vælg en af spillelisterne",
+    "search-to-se-possible-selections": "For at se mulige spillelister, skal du fremsøge dem pr navn."
   },
   "screens-dropdown": {
     "search-to-se-possible-selections": "For at se mulige skærmes, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere skærme",
-    "nothing-selected": "Vælg en af skærmene",
-    "no-screens-configured": "Der er ikke nogle skærme konfigureret"
+    "nothing-selected": "Vælg en af skærmene"
   },
   "slides-dropdown": {
     "search-to-se-possible-selections": "For at se mulige slides, skal du fremsøge dem pr navn.",
@@ -304,8 +428,6 @@
     "published-label": "Udgivetfilter",
     "delete-button": "Slet",
     "deselect-all": "Fravælg alle",
-    "get-error": "Der skete en fejl da elementerne skulle hentes",
-    "deleted": "Element er blevet slettet",
     "radio-labels": {
       "published": "Udgivet",
       "not-published": "Ikke udgivet",
@@ -328,20 +450,48 @@
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug espace til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
   "screen-edit": {
-    "edit-screen-header": "Rediger følgende skærm"
+    "edit-screen-header": "Rediger følgende skærm",
+    "loading-messages": {
+      "saving-screen": "Gemmer skærmen",
+      "saving-playlists": "Tilknytter spillelister til skærmens regioner",
+      "saving-groups": "Tilknytter grupper til skærmen"
+    },
+    "success-messages": {
+      "saved-screen": "Skærmen er gemt",
+      "saved-playlists": "Spillelister er tilknyttet til skærmens regioner",
+      "saved-groups": "Grupper er tilknyttet skærmen"
+    },
+    "error-messages": {
+      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes: {{error}}",
+      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner: {{error}}",
+      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen: {{error}}",
+      "load-screen-error": "Der skete en fejl da skærmen med følgende id: {{id}} skulle hentes: {{error}}"
+    }
   },
   "screen-create": {
-    "create-screen-header": "Opret ny skærm"
+    "create-screen-header": "Opret ny skærm",
+    "loading-messages": {
+      "saving-screen": "Gemmer skærmen",
+      "saving-playlists": "Tilknytter spillelister til skærmens regioner",
+      "saving-groups": "Tilknytter grupper til skærmen"
+    },
+    "success-messages": {
+      "saved-screen": "Skærmen er gemt",
+      "saved-playlists": "Spillelister er tilknyttet til skærmens regioner",
+      "saved-groups": "Grupper er tilknyttet skærmen"
+    },
+    "error-messages": {
+      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes: {{error}}",
+      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner: {{error}}",
+      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen: {{error}}"
+    }
   },
   "screen-form": {
     "nothing-selected": "Vælg en af skabelonerne",
     "search-to-se-possible-selections": "For at se mulige skærme, skal du fremsøge dem pr navn.",
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
-    "error": "Der skete en fejl",
     "screen-region-playlists": "Spillelister tilknyttet regionen",
-    "loading": "Henter skærm...",
-    "saved": "Skærmen er gemt",
     "save-button": "Gem skærm",
     "cancel-button": "Annuller",
     "screen-about": "Om skærmen",
@@ -374,7 +524,6 @@
     "configuration-users": "Brugere"
   },
   "topbar": {
-    "placeholder": "Indtast søgning her",
     "brand": "OS2Display",
     "add": "Ny",
     "add-slide": "Nyt slide",

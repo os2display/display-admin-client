@@ -4,6 +4,10 @@ import { useHistory } from "react-router-dom";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
 import GroupForm from "./group-form";
 import idFromUrl from "../util/helpers/id-from-url";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 
 /**
  * The group edit component.
@@ -23,12 +27,7 @@ function GroupCreate() {
 
   const [
     PostV1ScreenGroups,
-    {
-      data,
-      isLoading: isSavingGroup,
-      error: saveError,
-      isSuccess: isSaveSuccess,
-    },
+    { data, error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
   ] = usePostV1ScreenGroupsMutation();
 
   /**
@@ -37,9 +36,24 @@ function GroupCreate() {
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
+      displaySuccess(t("group-create.success-messages.saved-group"));
       history.push(`/group/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
+
+  /** If the group is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("group-create.error-messages.save-group-error", {
+          title: formStateObject.title || t("group-create.unamed-group"),
+          error: saveError.data
+            ? saveError.data["hydra:description"]
+            : saveError.error,
+        })
+      );
+    }
+  }, [saveError]);
 
   /**
    * Set state on change in input field
@@ -61,6 +75,7 @@ function GroupCreate() {
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
     };
+
     PostV1ScreenGroups({
       screenGroupScreenGroupInput: JSON.stringify(saveData),
     });
@@ -72,10 +87,8 @@ function GroupCreate() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSavingGroup}
-      errors={saveError || false}
+      isLoading={isSaving}
+      loadingMessage={t("group-create.loading-messages.saving-group")}
     />
   );
 }

@@ -43,3 +43,26 @@ body,
   bottom: 3%;
   background-color: white;
 }
+
+.spinner-overlay {
+  background-color: white;
+  color: black;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 5em;
+  z-index: 10;
+
+  .spinner-container {
+    display: flex;
+    position: fixed;
+
+    .loading-spinner {
+      margin-right: 1em;
+    }
+  }
+}

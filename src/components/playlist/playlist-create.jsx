@@ -1,12 +1,16 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import idFromUrl from "../util/helpers/id-from-url";
-import PlaylistForm from "./playlist-form";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 import {
   usePostV1PlaylistsMutation,
   usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
+import PlaylistForm from "./playlist-form";
 
 /**
  * The playlist edit component.
@@ -16,7 +20,7 @@ import {
 function PlaylistCreate() {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const headerText = t("edit-playlist.create-new-playlist");
+  const headerText = t("playlist-create.create-new-playlist");
   const [formStateObject, setFormStateObject] = useState({
     slides: [],
     title: "",
@@ -28,21 +32,63 @@ function PlaylistCreate() {
       to: null,
     },
   });
+  const [slideId, setSlideId] = useState();
+  const [loadingMessage, setLoadingMessage] = useState("");
+  const [savingSlides, setSavingSlides] = useState(false);
+  const [savingPlaylists, setSavingPlaylists] = useState(false);
   const [slidesToAdd, setSlidesToAdd] = useState([]);
 
-  const [
-    PostV1Playlist,
-    { data, isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
-  ] = usePostV1PlaylistsMutation();
+  const [PostV1Playlist, { data, error: saveError, isSuccess: isSaveSuccess }] =
+    usePostV1PlaylistsMutation();
 
   const [
     PutV1PlaylistsByIdSlides,
-    {
-      isLoading: isSavingSlides,
-      error: saveErrorSlides,
-      isSuccess: isSaveSuccessSlides,
-    },
+    { error: saveErrorSlides, isSuccess: isSaveSuccessSlides },
   ] = usePutV1PlaylistsByIdSlidesMutation();
+
+  // Slides are saved successfully, display a message
+  useEffect(() => {
+    if (isSaveSuccessSlides) {
+      setSavingSlides(false);
+      displaySuccess(t("playlist-create.success-messages.saved-slides"));
+    }
+  }, [isSaveSuccessSlides]);
+
+  // Slides are not saved successfully, display a message
+  useEffect(() => {
+    if (saveErrorSlides) {
+      setSavingSlides(false);
+      displayError(
+        t("playlist-create.error-messages.save-slides-error", {
+          error: saveErrorSlides.error
+            ? saveErrorSlides.error
+            : saveErrorSlides.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveErrorSlides]);
+
+  /** If the playlist is saved, display the success message */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("playlist-create.success-messages.saved-playlist"));
+      setSavingPlaylists(false);
+    }
+  }, [isSaveSuccess]);
+
+  /** If the playlist is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(
+        t("playlist-create.error-messages.save-playlist-error", {
+          error: saveError.error
+            ? saveError.error
+            : saveError.data["hydra:description"],
+        })
+      );
+      setSavingPlaylists(false);
+    }
+  }, [saveError]);
 
   /**
    * Set state on change in input field
@@ -66,9 +112,25 @@ function PlaylistCreate() {
     }
   }, [isSaveSuccessSlides]);
 
+  /** Set loaded data into form state. */
+  useEffect(() => {
+    if (data) {
+      setFormStateObject(data);
+    }
+  }, [data]);
+
+  /** Sets the id of slides for api call. */
+  useEffect(() => {
+    if (formStateObject && !slideId) {
+      setSlideId(idFromUrl(formStateObject.slides));
+    }
+  }, [formStateObject]);
+
   /** When the playlist is saved, the slide will be saved. */
   useEffect(() => {
-    if (isSaveSuccess && data) {
+    if (isSaveSuccess && slidesToAdd && data) {
+      setSavingSlides(true);
+      setLoadingMessage(t("playlist-create.loading-messages.saving-slides"));
       PutV1PlaylistsByIdSlides({
         id: idFromUrl(data["@id"]),
         body: JSON.stringify(slidesToAdd),
@@ -79,15 +141,19 @@ function PlaylistCreate() {
   /** Sets slides to save. */
   function handleSaveSlides() {
     const { slides } = formStateObject;
-    setSlidesToAdd(
-      slides.map((slide, index) => {
-        return { slide: idFromUrl(slide), weight: index };
-      })
-    );
+    if (Array.isArray(slides)) {
+      setSlidesToAdd(
+        slides.map((slide, index) => {
+          return { slide: idFromUrl(slide), weight: index };
+        })
+      );
+    }
   }
 
   /** Handles submit. */
   function handleSubmit() {
+    setSavingPlaylists(true);
+    setLoadingMessage(t("playlist-create.loading-messages.saving-playlist"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -99,8 +165,10 @@ function PlaylistCreate() {
         to: formStateObject.published.from,
       },
     };
-    PostV1Playlist({ playlistPlaylistInput: JSON.stringify(saveData) });
-    if (formStateObject.slides.length > 0) {
+    PostV1Playlist({
+      playlistPlaylistInput: JSON.stringify(saveData),
+    });
+    if (Array.isArray(formStateObject.slides)) {
       handleSaveSlides();
     }
   }
@@ -109,12 +177,11 @@ function PlaylistCreate() {
     <PlaylistForm
       playlist={formStateObject}
       headerText={headerText}
+      isLoading={savingPlaylists || savingSlides}
+      loadingMessage={loadingMessage}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
-      isSaveSuccess={isSaveSuccess || isSaveSuccessSlides}
-      isSaving={isSaving || isSavingSlides}
-      errors={saveError || saveErrorSlides || false}
+      slideId={slideId}
     />
   );
 }

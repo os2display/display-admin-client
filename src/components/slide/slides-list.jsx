@@ -14,6 +14,10 @@ import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import TemplateLabelInList from "../util/template-label-in-list";
 import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
+import {
   useGetV1SlidesQuery,
   useDeleteV1SlidesByIdMutation,
   useGetV1PlaylistsByIdQuery,
@@ -38,9 +42,14 @@ function SlidesList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
+  const [listData, setListData] = useState();
+  const [localStorageMessages, setLocalStorageMessages] = useState([]);
+  const [loadingMessage] = useState(
+    t("slides-list.loading-messages.loading-slides")
+  );
 
   // Delete call
-  const [DeleteV1Slides, { isSuccess: isDeleteSuccess }] =
+  const [DeleteV1Slides, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1SlidesByIdMutation();
 
   /** Deletes multiple slides. */
@@ -53,9 +62,55 @@ function SlidesList() {
       DeleteV1Slides({ id: slideToDeleteId });
       setSlidesToDelete(localSlidesToDelete);
     } else if (isDeleteSuccess) {
-      setIsDeleting(false);
+      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
+      localStorage.setItem(
+        "messages",
+        JSON.stringify([
+          ...localStorageMessages,
+          t("slides-list.success-messages.slide-delete"),
+        ])
+      );
+      // @TODO: refetch
+      window.location.reload(false);
     }
   }, [slidesToDelete, isDeleteSuccess]);
+
+  // Sets success-messages for local storage
+  useEffect(() => {
+    if (isDeleteSuccess && slidesToDelete.length > 0) {
+      const localStorageMessagesCopy = [...localStorageMessages];
+      localStorageMessagesCopy.push(
+        t("slides-list.success-messages.slide-delete")
+      );
+      setLocalStorageMessages(localStorageMessagesCopy);
+    }
+  }, [isDeleteSuccess]);
+
+  // Display success messages from successfully deleted slides.
+  useEffect(() => {
+    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
+    const messages = JSON.parse(localStorage.getItem("messages"));
+    if (messages) {
+      messages.forEach((element) => {
+        displaySuccess(element);
+      });
+      localStorage.removeItem("messages");
+    }
+  }, []);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(
+        t("slides-list.error-messages.slide-delete-error", {
+          error: isDeleteError.error
+            ? isDeleteError.error
+            : isDeleteError.data["hydra:description"],
+        })
+      );
+    }
+  }, [isDeleteError]);
 
   /**
    * Sets the selected row in state.
@@ -218,6 +273,25 @@ function SlidesList() {
     published: isPublished,
   });
 
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  // Error with retrieving list of slides
+  useEffect(() => {
+    if (slidesGetError) {
+      displayError(
+        t("slides-list.error-messages.slides-load-error", {
+          error: slidesGetError.error
+            ? slidesGetError.error
+            : slidesGetError.data["hydra:description"],
+        })
+      );
+    }
+  }, [slidesGetError]);
+
   return (
     <>
       <ContentHeader
@@ -225,24 +299,23 @@ function SlidesList() {
         newBtnTitle={t("slides-list.create-new-slide")}
         newBtnLink="/slide/create"
       />
-      {data && data["hydra:member"] && (
+      {listData && (
         <ContentBody>
           <List
             columns={columns}
-            totalItems={data["hydra:totalItems"]}
+            totalItems={listData["hydra:totalItems"]}
+            data={listData["hydra:member"]}
             currentPage={page}
             handlePageChange={onChangePage}
             selectedRows={selectedRows}
-            data={data["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
-            error={slidesGetError || false}
-            isLoading={isLoading || isDeleting || false}
-            deleteSuccess={isDeleteSuccess || false}
             handleSort={onChangeSort}
             handleSearch={onSearch}
             handleIsPublished={onIsPublished}
             displayPublished
+            isLoading={isLoading || isDeleting}
+            loadingMessage={loadingMessage}
           />
         </ContentBody>
       )}

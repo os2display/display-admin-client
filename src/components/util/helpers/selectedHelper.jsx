@@ -5,7 +5,7 @@
  */
 function selectedHelper(row, selectedData) {
   const id = row["@id"];
-  const alreadySelected = selectedData.find((x) => x.id === id);
+  const alreadySelected = selectedData.find((x) => x["@id"] === id);
   if (alreadySelected) {
     selectedData.splice(selectedData.indexOf(alreadySelected), 1);
   } else {
