@@ -481,7 +481,7 @@ function SlideManager({
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
           mediaData={mediaData}
-          isLoading={submittingMedia || submitting || isLoading}
+          isLoading={submitting || isLoading}
           loadingMessage={loadingMessage}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
