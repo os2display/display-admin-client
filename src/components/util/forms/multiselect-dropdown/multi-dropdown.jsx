@@ -38,6 +38,7 @@ function MultiSelectComponent({
   helpText,
   filterCallback,
   singleSelect,
+  isCreatable,
 }) {
   const { t } = useTranslation("common");
   const [error] = useState();
@@ -148,7 +149,7 @@ function MultiSelectComponent({
         <div className={`mb-3 ${error ? "invalid" : ""}`}>
           <Form.Label htmlFor={name}>{label}</Form.Label>
           <MultiSelect
-            isCreatable={false}
+            isCreatable={isCreatable}
             options={mappedOptions}
             value={mappedSelected}
             hasSelectAll={false}
@@ -177,6 +178,7 @@ MultiSelectComponent.defaultProps = {
   selected: [],
   options: [],
   singleSelect: false,
+  isCreatable: false,
   filterCallback: () => {},
 };
 
@@ -196,6 +198,7 @@ MultiSelectComponent.propTypes = {
       disabled: PropTypes.bool,
     })
   ),
+  isCreatable: PropTypes.bool,
   filterCallback: PropTypes.func,
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,

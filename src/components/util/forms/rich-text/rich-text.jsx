@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import PropTypes from "prop-types";
 import { FormGroup, FormLabel } from "react-bootstrap";
 import DOMPurify from "dompurify";
-import "../../../../node_modules/react-quill/dist/quill.snow.css";
+import "../../../../../node_modules/react-quill/dist/quill.snow.css";
 import "./rich-text.scss";
 
 /**

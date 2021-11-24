@@ -5,7 +5,8 @@ import MediaSelector from "./media-selector";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
-import RichText from "../../util/forms/rich-text";
+import RichText from "../../util/forms/rich-text/rich-text";
+import FormTable from "../../util/forms/form-table/form-table";
 
 /**
  * Render form elements for content form.
@@ -79,6 +80,20 @@ function ContentForm({
         }
         returnElement = (
           <RichText
+            name={formData.name}
+            type={formData.type}
+            errors={formData.required ? errors : null}
+            label={formData.label}
+            helpText={formData.helpText}
+            value={formStateObject[formData.name]}
+            onChange={onChange}
+            formGroupClasses={formData.formGroupClasses}
+          />
+        );
+        break;
+      case "table":
+        returnElement = (
+          <FormTable
             name={formData.name}
             type={formData.type}
             errors={formData.required ? errors : null}
