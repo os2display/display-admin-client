@@ -87,7 +87,7 @@ function ScreenForm({
         </div>
       )}
       <Form>
-        <h1>{headerText}</h1>
+        <h1 id="screenTitle">{headerText}</h1>
         <ContentBody>
           <h2 className="h4">{t("screen-form.screen-about")}</h2>
           <FormInput

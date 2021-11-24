@@ -210,7 +210,9 @@ function ThemesList() {
             disabled={selectedRows.length > 0 || d.onSlides.length > 0}
             onClick={() => openDeleteModal(d)}
           >
-            {t("themes-list.delete-button")}
+            {selectedRows.length > 0 || data.onSlides.length > 0
+              ? "disabled"
+              : t("themes-list.delete-button")}
           </Button>
         </>
       ),

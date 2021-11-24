@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import { ulid } from "ulid";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import {
@@ -37,6 +38,7 @@ function SlideManager({
   loadingError,
 }) {
   const { t } = useTranslation("common");
+  const history = useHistory();
   const dispatch = useDispatch();
   const headerText =
     saveMethod === "PUT"
@@ -61,8 +63,10 @@ function SlideManager({
     usePutV1SlidesByIdMutation();
 
   // Handler for creating slide.
-  const [PostV1Slides, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
-    usePostV1SlidesMutation();
+  const [
+    PostV1Slides,
+    { data: postData, error: saveErrorPost, isSuccess: isSaveSuccessPost },
+  ] = usePostV1SlidesMutation();
 
   // @TODO: Handle errors.
   const [
@@ -496,10 +500,13 @@ function SlideManager({
 
   /** Handle submitting is done. */
   useEffect(() => {
-    if (isSaveSuccessPut || isSaveSuccessPost) {
+    if (isSaveSuccessPost && postData) {
+      setSubmitting(false);
+      history.push(`/slide/edit/${idFromUrl(postData["@id"])}`);
+    } else if (isSaveSuccessPut) {
       setSubmitting(false);
     }
-  }, [isSaveSuccessPut, isSaveSuccessPost]);
+  }, [isSaveSuccessPut, isSaveSuccessPost, postData]);
 
   return (
     <>

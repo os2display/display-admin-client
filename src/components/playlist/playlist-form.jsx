@@ -41,7 +41,7 @@ function PlaylistForm({
     <>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
-        <h1>{headerText}</h1>
+        <h1 id="playlistTitle">{headerText}</h1>
         <ContentBody>
           <h2 className="h4">{t("playlist-form.title-about")}</h2>
           <FormInput

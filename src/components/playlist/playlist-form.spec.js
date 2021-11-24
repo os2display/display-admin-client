@@ -17,7 +17,7 @@ describe("Edit playlist page tests", () => {
     cy.get("#save_playlist").should("exist");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("exist");
-    cy.get("#playlistName").type("x");
+    cy.get("#playlistTitle").type("x");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("not.exist");
   });
@@ -51,11 +51,11 @@ describe("Edit playlist page tests", () => {
 
   it("It validates already existing playlist", () => {
     cy.visit("/playlist/32");
-    cy.get("#playlistName").clear();
+    cy.get("#playlistTitle").clear();
     cy.get("#save_playlist").should("exist");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("exist");
-    cy.get("#playlistName").type("x");
+    cy.get("#playlistTitle").type("x");
     cy.get("#save_playlist").click();
     cy.get("#save_playlist").should("not.exist");
   });
