@@ -21,7 +21,6 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
   const [searchText, setSearchText] = useState("");
   const { data: groups } = useGetV1ScreenGroupsQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
   });
 
   const { data } = useGetV1ScreensByIdScreenGroupsQuery({

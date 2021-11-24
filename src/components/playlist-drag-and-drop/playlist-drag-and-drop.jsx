@@ -32,7 +32,6 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     });
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
   });
 
   /** Set loaded data into form state. */

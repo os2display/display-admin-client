@@ -7,11 +7,11 @@ describe("Playlists list tests", () => {
 
   it("It opens info modal (playlist list)", () => {
     cy.intercept({
-      method: 'GET',
-      url: '**/slides*',
-    }).as('dataGetFirst');
+      method: "GET",
+      url: "**/slides*",
+    }).as("dataGetFirst");
     cy.visit("/playlist/list");
-    cy.wait('@dataGetFirst')
+    cy.wait("@dataGetFirst");
     cy.get("#info-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("#info-modal").should("exist");

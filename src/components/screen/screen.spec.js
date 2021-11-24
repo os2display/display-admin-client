@@ -1,34 +1,41 @@
-describe("Screen list tests", () => {
-
-  it("It loads screen list", () => {
-    cy.visit("http://display-admin-client.local.itkdev.dk/screen/list");
-    cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("exist");
+describe("Screen pages work", () => {
+  it("It loads create screen page", () => {
+    cy.visit("/screen/create");
+    cy.get("#save_screen").should("exist");
   });
 
-  it("It goes to edit (screen list)", () => {
-    cy.visit("http://display-admin-client.local.itkdev.dk/screen/list");
-    cy.get("#screenTitle").should("not.exist");
-    cy.get("tbody").find("tr td a").eq(0).click();
-    cy.get("#screenTitle").should("exist");
-  });
-  it("It opens delete modal (screen list)", () => {
-    cy.visit("http://display-admin-client.local.itkdev.dk/screen/list");
-    cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(1).click();
-    cy.get("#delete-modal").should("exist");
+  it("It loads create screen page", () => {
+    cy.visit("/screen/edit/00D4JHAPQV09JG1MG714YE19V5");
+    cy.get("#save_screen").should("exist");
   });
 
-  it("The correct amount of column headers loaded (screen list)", () => {
-    cy.visit("http://display-admin-client.local.itkdev.dk/screen/list");
-    cy.get("thead").find("th").should("have.length", 9);
+  it("It picks screen layout", () => {
+    cy.visit("/screen/create");
+    cy.get("#layout-section").find(".dropdown-container").type("{enter}");
+    cy.get("#layout-section").find('[type="checkbox"]').eq(2).check();
+    cy.get("#layout-section").find(".grid-item").should("have.length", 4);
+    cy.get("#layout-section").find(".nav-item").should("have.length", 4);
+    cy.get("#layout-section").find(".dropdown-heading-value").contains(
+      "Consequuntur cum eum modi."
+    );
   });
 
-  it("It removes all selected", () => {
-    cy.visit("http://display-admin-client.local.itkdev.dk/screen/list");
-    cy.get("tbody").find("tr td button").eq(0).click();
-    cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
-    cy.get("#clear-rows-button").click();
-    cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
+  it("It redirects on save", () => {
+    cy.visit("/screen/create");
+    cy.get("#layout-section").find(".dropdown-container").type("{enter}");
+    cy.get("#layout-section").find('[type="checkbox"]').eq(1).check();
+    cy.get("#layout-section").find(".dropdown-heading-value").contains(
+      "Consequuntur cum eum modi."
+    );
+    cy.get("#layout-section").find(".dropdown-container").type("{esc}");
+    cy.get("#save_screen").click();
+    cy.url().should("include", "screen/edit/");
+  });
+
+  it("It cancels create screen", () => {
+    cy.visit("/screen/create");
+    cy.get("#cancel_screen").should("exist");
+    cy.get("#cancel_screen").click();
+    cy.get("#cancel_screen").should("not.exist");
   });
 });

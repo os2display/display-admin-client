@@ -1,62 +1,62 @@
-describe("Edit playlist page tests", () => {
-  it("It loads a playlists", () => {
-    cy.visit("/playlist/new");
-    cy.get("h1").should("not.be.empty");
-    cy.get("h1")
-      .invoke("text")
-      .should("match", /^Opret ny spilleliste/);
-    cy.visit("/playlist/76");
-    cy.get("h1").should("not.be.empty");
-    cy.get("h1")
-      .invoke("text")
-      .should("match", /^Rediger følgende spilleliste: Sommerplaylist/);
-  });
-
-  it("It validates new playlist", () => {
-    cy.visit("/playlist/new");
+describe("Playlist pages work", () => {
+  it("It loads create playlist page", () => {
+    cy.visit("/playlist/create");
     cy.get("#save_playlist").should("exist");
-    cy.get("#save_playlist").click();
+  });
+
+  it("It loads create playlist page", () => {
+    cy.visit("/playlist/edit/00HHKRWEGN0BAG08840TJK1HB0");
+    cy.get("h1").contains("Rediger følgende spilleliste: Alias voluptate quisquam voluptas.")
     cy.get("#save_playlist").should("exist");
-    cy.get("#playlistTitle").type("x");
+  });
+
+  it("It drags and drops slide", () => {
+    cy.visit("/playlist/create");
+    cy.get(".dropdown-container").eq(0).type("{enter}");
+    cy.get('[type="checkbox"]').eq(1).check();
+    cy.get('[type="checkbox"]').eq(0).check();
+    cy.get(".dropdown-container").eq(0).click();
+    cy.get(".dropdown-heading-value").contains(
+      "Blanditiis voluptas ex voluptas officia voluptatem."
+    );
+    cy.get("tbody").find("tr td").should("have.length", 12);
+    cy.get("tbody").find("tr td").eq(1).contains(
+      "Blanditiis voluptas ex voluptas officia voluptatem."
+    );
+    cy.get("tbody").find("tr td").eq(7).contains(
+      "Facilis et inventore excepturi."
+    );
+    cy.get("tbody").find("tr").eq(0).type(" {downarrow} ", { force: true })
+    cy.wait(1000)
+    cy.get("tbody").find("tr td").eq(1).contains(
+      "Facilis et inventore excepturi."
+    );
+    cy.get("tbody").find("tr td").eq(7).contains(
+      "Blanditiis voluptas ex voluptas officia voluptatem."
+    );
+  });
+
+  it("It removes slide", () => {
+    cy.visit("/playlist/create");
+    cy.get(".dropdown-container").eq(0).type("{enter}");
+    cy.get('[type="checkbox"]').eq(1).check();
+    cy.get(".dropdown-container").eq(0).click();
+    cy.get("tbody").find("tr td").should("have.length", 6);
+    cy.get("tbody").find("tr td").eq(5).click()
+    cy.get("tbody").should("not.exist");
+
+  });
+
+  it("It redirects on save", () => {
+    cy.visit("/playlist/create");
     cy.get("#save_playlist").click();
-    cy.get("#save_playlist").should("not.exist");
+    cy.url().should("include", "playlist/edit/");
   });
 
-  it("It removes from screens list", () => {
-    cy.visit("/playlist/32");
-    cy.get("tbody").eq(0).find("tr td").should("have.length", 7);
-    cy.get("tbody").eq(0).find("tr td button").eq(1).click();
-    cy.get("tbody").should("have.length", 1);
-  });
-
-  it("It opens info modal in screens list", () => {
-    cy.visit("/playlist/32");
-    cy.get("#drag-and-drop-table").find("tr td button").eq(0).click();
-    cy.get("#info-modal").should("exist");
-  });
-
-  it("It removes from drag-drop table", () => {
-    cy.visit("/playlist/32");
-    cy.get("#drag-and-drop-table").find("tr td").should("have.length", 7);
-    cy.get("#drag-and-drop-table").find("tr td button").eq(1).click();
-    cy.get("#drag-and-drop-table").should("not.exist");
-  });
-
-  it("It opens info modal drag-drop table", () => {
-    cy.visit("/playlist/32");
-    cy.get("#info-modal").should("not.exist");
-    cy.get("#drag-and-drop-table").find("tr td button").eq(0).click();
-    cy.get("#info-modal").should("exist");
-  });
-
-  it("It validates already existing playlist", () => {
-    cy.visit("/playlist/32");
-    cy.get("#playlistTitle").clear();
-    cy.get("#save_playlist").should("exist");
-    cy.get("#save_playlist").click();
-    cy.get("#save_playlist").should("exist");
-    cy.get("#playlistTitle").type("x");
-    cy.get("#save_playlist").click();
-    cy.get("#save_playlist").should("not.exist");
+  it("It cancels create playlist", () => {
+    cy.visit("/playlist/create");
+    cy.get("#cancel_playlist").should("exist");
+    cy.get("#cancel_playlist").click();
+    cy.get("#cancel_playlist").should("not.exist");
   });
 });

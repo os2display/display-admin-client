@@ -1,24 +1,15 @@
-Cypress.on("uncaught:exception", () => {
-  // @TODO: fix when docker setup is fixed
-  // returning false here prevents Cypress from
-  // failing the test
-  return false;
-});
-
-describe("group pages work", () => {
+describe("Group pages work", () => {
   it("It loads create group page", () => {
     cy.visit("/group/create");
-    cy.get("#save_group")
-      .invoke("text")
-      .should("match", /^Gem group/);
+    cy.get("#save_group").should("exist");
   });
 
   it("It loads create group page", () => {
-    cy.visit("/group/create");
-    cy.get("#save_group")
-      .invoke("text")
-      .should("match", /^Gem gruppe/);
+    cy.visit("/group/edit/002PXW3YA40CVQ06BF098P03R1");
+    cy.get("#save_group").should("exist");
   });
+
+
 
   it("It redirects on save", () => {
     cy.visit("/group/create");

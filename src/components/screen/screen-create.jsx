@@ -64,13 +64,6 @@ function ScreenCreate() {
     }
   }, [formStateObject]);
 
-  /** Set loaded data into form state. */
-  useEffect(() => {
-    if (data) {
-      setFormStateObject(data);
-    }
-  }, [data]);
-
   /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && data && groupsToAdd) {
@@ -163,10 +156,10 @@ function ScreenCreate() {
 
   /** When the screen and group(s) are saved. it redirects to edit screen. */
   useEffect(() => {
-    if (isSaveSuccessGroups && data) {
+    if (data && !savePlaylistError && !saveError && !saveErrorGroups) {
       history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
     }
-  }, [isSaveSuccessGroups]);
+  }, [data]);
   /**
    * Set state on change in input field
    *

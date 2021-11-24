@@ -110,7 +110,7 @@ function PlaylistForm({
           <Button
             variant="secondary"
             type="button"
-            id="playlist_cancel"
+            id="cancel_playlist"
             onClick={() => history.push("/playlist/list/")}
             size="lg"
             className="me-3"

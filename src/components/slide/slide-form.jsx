@@ -70,13 +70,11 @@ function SlideForm({
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
-      itemsPerPage: 10,
     });
 
   // Load themes.
   const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
     title: searchTextTheme,
-    itemsPerPage: searchTextTheme ? 10 : 0,
   });
 
   /**
