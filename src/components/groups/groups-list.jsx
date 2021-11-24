@@ -81,6 +81,7 @@ function GroupsList() {
 
   // Displays the success messages from successfully deleted slides, and removes them from local storage.
   useEffect(() => {
+    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
     const messages = JSON.parse(localStorage.getItem("messages"));
     if (messages) {
       messages.forEach((element) => {

@@ -79,6 +79,7 @@ function ThemesList() {
 
   // Display success messages from successfully deleted slides.
   useEffect(() => {
+    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
     const messages = JSON.parse(localStorage.getItem("messages"));
     if (messages) {
       messages.forEach((element) => {
