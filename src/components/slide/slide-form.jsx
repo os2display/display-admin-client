@@ -83,7 +83,118 @@ function SlideForm({
       fetch(contentFormUrl)
         .then((response) => response.json())
         .then((data) => {
-          setContentFormElements(data);
+          // setContentFormElements(data);
+          setContentFormElements([
+            {
+              key: "table-form-1",
+              input: "header",
+              text: "Skabelon: Tabel",
+              name: "header1",
+              formGroupClasses: "h4 mb-3",
+            },
+            {
+              key: "table-form-2",
+              input: "header-h3",
+              text: "Indhold",
+              name: "header2",
+              formGroupClasses: "h5 mb-3",
+            },
+            {
+              key: "table-form-3",
+              input: "input",
+              name: "title",
+              label: "Overskrift på tabelslide",
+              helpText: "Her kan du skrive overskriften til tabelslide",
+              formGroupClasses: "",
+            },
+            {
+              key: "table-form-4",
+              input: "input",
+              name: "text",
+              label: "Et tekstfelt med ekstra tekst",
+              helpText: "Kan placeres ovenover eller nedenunder tabellen",
+              formGroupClasses: "",
+            },
+
+            {
+              key: "table-form-5",
+              input: "select",
+              required: true,
+              label: "Hvor skal teksten være placeret",
+              formGroupClasses: " mb-3",
+              options: [
+                {
+                  key: "placement1",
+                  title: "Over tabellen",
+                  value: "top",
+                },
+                {
+                  key: "placement2",
+                  title: "Under tabellen",
+                  value: "bottom",
+                },
+              ],
+              name: "text-align",
+            },
+            {
+              key: "table-form-7",
+              input: "select",
+              required: true,
+              label: "Tekststørrelse",
+              formGroupClasses: " mb-3",
+              options: [
+                {
+                  key: "fontsize1",
+                  title: "xs",
+                  value: "xs",
+                },
+                {
+                  key: "fontsize2",
+                  title: "s",
+                  value: "s",
+                },
+                {
+                  key: "fontsize3",
+                  title: "m",
+                  value: "m",
+                },
+                {
+                  key: "fontsize4",
+                  title: "l",
+                  value: "l",
+                },
+                {
+                  key: "fontsize5",
+                  title: "xl",
+                  value: "xl",
+                },
+              ],
+              name: "fontsize",
+            },
+            {
+              key: "table-form-6",
+              multipleImages: false,
+              input: "image",
+              name: "image",
+              label: "Baggrundsbillede",
+            },
+
+            {
+              key: "table-form-7",
+              input: "header-h3",
+              text: "Tabellen",
+              name: "header3",
+              formGroupClasses: "h5 mt-3 mb-3",
+            },
+
+            {
+              key: "table-form-9",
+              input: "table",
+              name: "table",
+              label: "Tabellen",
+              helpText: "Her kan du angive tabeldata",
+            },
+          ]);
         })
         .catch(() => {
           // @TODO: Handle error case. Display error for user.
