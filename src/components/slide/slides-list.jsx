@@ -44,7 +44,7 @@ function SlidesList() {
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [localStorageMessages, setLocalStorageMessages] = useState([]);
-  const [loadingMessage, setLoadingMessage] = useState(
+  const [loadingMessage] = useState(
     t("slides-list.loading-messages.loading-slides")
   );
 
