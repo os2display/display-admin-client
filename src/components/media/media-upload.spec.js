@@ -17,5 +17,4 @@ describe("Slide pages work", () => {
     cy.get("#back_to_list").click();
     cy.get("#media-list-title").should("exist");
   });
-
 });

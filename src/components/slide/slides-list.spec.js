@@ -22,7 +22,6 @@ describe("Slides list tests", () => {
   it("It opens delete modal (slides list)", () => {
     cy.visit("/slide/list");
     cy.get("#delete-modal").should("not.exist");
-    cy.wait(500);
     cy.get("tbody").find("tr td button").eq(2).click();
     cy.get("#delete-modal").should("exist");
   });

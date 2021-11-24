@@ -9,8 +9,6 @@ describe("Theme pages work", () => {
     cy.get("#save_theme").should("exist");
   });
 
-
-
   it("It redirects on save", () => {
     cy.visit("/themes/create");
     cy.get("#save_theme").click();

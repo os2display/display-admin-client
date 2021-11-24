@@ -4,12 +4,10 @@ describe("Group pages work", () => {
     cy.get("#save_group").should("exist");
   });
 
-  it("It loads create group page", () => {
+  it("It loads edit group page", () => {
     cy.visit("/group/edit/002PXW3YA40CVQ06BF098P03R1");
     cy.get("#save_group").should("exist");
   });
-
-
 
   it("It redirects on save", () => {
     cy.visit("/group/create");
