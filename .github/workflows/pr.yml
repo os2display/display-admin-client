@@ -59,7 +59,7 @@ jobs:
         browser: ["chrome", "firefox"]
     services:
       mariadb:
-        image: mariadb:10.4
+        image: itkdev/os2display-api-mariadb:alpha
         env:
           MYSQL_USER: db
           MYSQL_PASSWORD: db
@@ -68,6 +68,27 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      api:
+        image: itkdev/os2display-api-service:alpha
+        env:
+          PHP_MAX_EXECUTION_TIME: 30
+          PHP_MEMORY_LIMIT: 128M
+          PHP_UPLOAD_MAX_FILESIZE: 8M
+          APP_ENV: prod
+          APP_TRUSTED_PROXIES: 127.0.0.1,REMOTE_ADDR
+          APP_SECRET: MySuperSecret
+          APP_CORS_ALLOW_ORIGIN: '*'
+          APP_DATABASE_URL: mysql://db:db@127.0.0.1:3306/db?serverVersion=mariadb-10.4.21
+          APP_DEFAULT_DATE_FORMAT: Y-m-d\TH:i:s.v\Z
+        ports:
+          - 9000:9000
+      nginx-api:
+        image: itkdev/os2display-api-service-nginx:alpha
+        env:
+          PHP_FPM_SERVER: 127.0.0.1
+          NGINX_FPM_UPLOAD_MAX: 8M
+        ports:
+          - 80:80
 
     steps:
       - name: Checkout
@@ -83,12 +104,6 @@ jobs:
 
       - name: Run the application
         run: docker compose --file docker-compose.actions.yml up -d
-
-      - name: Setup database and fixtures
-        run: |
-          docker compose --file docker-compose.actions.yml exec -T api composer install -q --no-interaction --no-suggest --no-progress --prefer-dist
-          docker compose --file docker-compose.actions.yml exec -T api bin/console doctrine:migrations:migrate --no-interaction
-          docker compose --file docker-compose.actions.yml exec -T api bin/console hautelook:fixtures:load --env=dev --no-interaction
 
       - name: Cypress run
         run: docker compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
