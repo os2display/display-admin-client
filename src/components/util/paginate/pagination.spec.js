@@ -1,5 +1,4 @@
 describe("Pagination loads", () => {
-
   beforeEach(() => {
     cy.intercept({
       method: "GET",
@@ -14,7 +13,7 @@ describe("Pagination loads", () => {
     }).as("slidesData");
     cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
     cy.wait(["@slidesData", "@templatesData"]);
-  })
+  });
 
   it("It loads", () => {
     cy.get(".pagination").should("not.be.empty");
@@ -46,7 +45,8 @@ describe("Pagination loads", () => {
     cy.get("tbody").find("tr").should("have.length", 10);
     cy.get("tbody")
       .find("tr td")
-      .eq(1).invoke("text")
+      .eq(1)
+      .invoke("text")
       .should("match", /^Soluta in ea/);
   });
 
@@ -62,11 +62,13 @@ describe("Pagination loads", () => {
     cy.wait(["@slidesData"]);
     cy.get(".pagination")
       .find(".page-item")
-      .eq(5).should("have.class", "active");
+      .eq(5)
+      .should("have.class", "active");
     cy.get("tbody").find("tr").should("have.length", 10);
     cy.get("tbody")
       .find("tr td")
-      .eq(1).invoke("text")
+      .eq(1)
+      .invoke("text")
       .should("match", /^Molestiae hic autem cupiditate./);
   });
 });

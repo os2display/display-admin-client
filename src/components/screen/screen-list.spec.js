@@ -1,4 +1,3 @@
-
 describe("Screen list loads", () => {
   beforeEach(() => {
     cy.intercept({
@@ -28,7 +27,6 @@ describe("Screen list loads", () => {
   });
 
   it("It opens delete modal (screens list)", () => {
-
     cy.get("#delete-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(2).click();
     cy.get("#delete-modal").should("exist");
@@ -44,5 +42,4 @@ describe("Screen list loads", () => {
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
   });
-
 });

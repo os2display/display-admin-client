@@ -1,8 +1,5 @@
 describe("Groups list tests", () => {
-
-
   beforeEach(() => {
-
     cy.intercept({
       method: "GET",
       url: "**/screen-groups*",
@@ -12,7 +9,7 @@ describe("Groups list tests", () => {
     }).as("screenGroupsData");
     cy.visit("/group/list");
     cy.wait(["@screenGroupsData"]);
-  })
+  });
   it("It loads groups list", () => {
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("exist");

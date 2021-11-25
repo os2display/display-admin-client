@@ -1,7 +1,4 @@
-
-
 describe("Slides list tests", () => {
-
   beforeEach(() => {
     cy.intercept({
       method: "GET",
@@ -16,7 +13,7 @@ describe("Slides list tests", () => {
     }).as("slidesData");
     cy.visit("/slide/list?published=all&page=2&order=asc&sort=title");
     cy.wait(["@slidesData", "@templatesData"]);
-  })
+  });
 
   it("It loads slides list", () => {
     cy.get("table").find("tbody").should("not.be.empty");
@@ -52,4 +49,3 @@ describe("Slides list tests", () => {
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
   });
 });
-

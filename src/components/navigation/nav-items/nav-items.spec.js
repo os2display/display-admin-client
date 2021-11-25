@@ -65,8 +65,6 @@ describe("Nav items loads", () => {
       .should("match", /^Opret nyt slide/);
   });
 
-
-
   it("It navigates to create playlist", () => {
     cy.visit("http://display-admin-client.local.itkdev.dk");
     cy.get("#nav-add-new-playlist").click();
@@ -75,7 +73,6 @@ describe("Nav items loads", () => {
       .should("match", /^Opret ny spilleliste/);
   });
 
-
   it("It navigates to create slide", () => {
     cy.visit("http://display-admin-client.local.itkdev.dk");
     cy.get("#nav-add-new-screen").click();
@@ -83,5 +80,4 @@ describe("Nav items loads", () => {
       .invoke("text")
       .should("match", /^Opret ny skærm/);
   });
-
 });

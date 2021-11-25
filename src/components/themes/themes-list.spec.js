@@ -23,7 +23,6 @@ describe("themes list tests", () => {
     cy.get("#themeTitle").should("exist");
   });
   it("It opens delete modal (themes list)", () => {
-
     cy.get("#delete-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(1).should("be.disabled");
     cy.get("tbody")
@@ -41,7 +40,6 @@ describe("themes list tests", () => {
   });
 
   it("It removes all selected", () => {
-
     cy.get("tbody")
       .find("tr")
       .eq(0)

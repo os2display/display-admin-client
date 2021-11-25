@@ -67,7 +67,9 @@ describe("Table header loads", () => {
         page: "1",
       },
     }).as("slidesData");
-    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title&search=harum");
+    cy.visit(
+      "/slide/list?published=all&page=1&order=asc&sort=title&search=harum"
+    );
     cy.wait(["@slidesData"]);
     // sort
     cy.get("tbody")
@@ -94,7 +96,6 @@ describe("Table header loads", () => {
       .eq(1)
       .invoke("text")
       .should("match", /^Adipisci vero quia./);
-    cy.get(".pagination")
-      .find(".page-item").should("have.length", 5);
+    cy.get(".pagination").find(".page-item").should("have.length", 5);
   });
 });

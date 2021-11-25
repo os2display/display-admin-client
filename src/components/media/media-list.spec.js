@@ -1,6 +1,5 @@
 describe("media list tests", () => {
   beforeEach(() => {
-
     cy.intercept({
       method: "GET",
       url: "**/media*",
@@ -10,7 +9,7 @@ describe("media list tests", () => {
     }).as("mediaData");
     cy.visit("/media/list");
     cy.wait(["@mediaData"]);
-  })
+  });
 
   it("It loads media list", () => {
     cy.get(".media-list").should("not.be.empty");
