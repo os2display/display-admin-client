@@ -38,7 +38,10 @@ function SlideManager({
 }) {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const headerText = t("slide-edit.edit-slide-header");
+  const headerText =
+    saveMethod === "PUT"
+      ? t("slide-manager.edit-slide-header")
+      : t("slide-manager.create-slide-header");
   const [getTheme, setGetTheme] = useState(true);
   const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
@@ -301,18 +304,27 @@ function SlideManager({
       fieldValue.forEach((entry) => {
         // New file.
         if (entry.file && entry.file instanceof File) {
-          if (!Array.isArray(localFormStateObject.content[fieldId])) {
-            localFormStateObject.content[fieldId] = [];
+          // It is an already added temp file.
+          if (entry.tempId) {
+            newField.push(entry.tempId);
+            set(localMediaData, entry.tempId, entry);
           }
+          // It is a new temp file.
+          else {
+            if (!Array.isArray(localFormStateObject.content[fieldId])) {
+              localFormStateObject.content[fieldId] = [];
+            }
 
-          // Create a tempId for the media.
-          const tempId = entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
+            // Create a tempId for the media.
+            const tempId =
+              entry.tempId ?? `TEMP--${ulid(new Date().getTime())}`;
 
-          newField.push(tempId);
+            newField.push(tempId);
 
-          const newEntry = { ...entry };
-          newEntry.tempId = tempId;
-          set(localMediaData, tempId, newEntry);
+            const newEntry = { ...entry };
+            newEntry.tempId = tempId;
+            set(localMediaData, tempId, newEntry);
+          }
         }
         // Previously selected file.
         else if (typeof entry === "string") {
