@@ -41,7 +41,7 @@ function NavItems() {
           <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
           {t("nav-items.content-slides")}
         </NavLink>
-        <Link className="nav-add-new" to="/slide/create">
+        <Link className="nav-add-new" id="nav-add-new-slide" to="/slide/create">
           <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
@@ -63,7 +63,11 @@ function NavItems() {
           <FontAwesomeIcon className="me-2" icon={faStream} />
           {t("nav-items.playlists-playlists")}
         </NavLink>
-        <Link className="nav-add-new" to="/playlist/create">
+        <Link
+          className="nav-add-new"
+          id="nav-add-new-playlist"
+          to="/playlist/create"
+        >
           <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
@@ -76,7 +80,11 @@ function NavItems() {
           <FontAwesomeIcon className="me-2" icon={faDesktop} />
           {t("nav-items.screens-screens")}
         </NavLink>
-        <Link className="nav-add-new" to="/screen/create">
+        <Link
+          className="nav-add-new"
+          id="nav-add-new-screen"
+          to="/screen/create"
+        >
           <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>

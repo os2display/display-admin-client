@@ -1,4 +1,15 @@
 describe("themes list tests", () => {
+  beforeEach(() => {
+    cy.intercept({
+      method: "GET",
+      url: "**/themes*",
+      query: {
+        page: "1",
+      },
+    }).as("themesData");
+    cy.visit("/themes/list");
+    cy.wait("@themesData");
+  });
   it("It loads themes list", () => {
     cy.visit("/themes/list");
     cy.get("table").find("tbody").should("not.be.empty");
@@ -12,15 +23,7 @@ describe("themes list tests", () => {
     cy.get("#themeTitle").should("exist");
   });
   it("It opens delete modal (themes list)", () => {
-    cy.intercept({
-      method: "GET",
-      url: "**/themes*",
-      query: {
-        page: "1",
-      },
-    }).as("dataGetFirst");
-    cy.visit("/themes/list");
-    cy.wait("@dataGetFirst");
+
     cy.get("#delete-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(1).should("be.disabled");
     cy.get("tbody")
@@ -34,20 +37,11 @@ describe("themes list tests", () => {
   });
 
   it("The correct amount of column headers loaded (themes list)", () => {
-    cy.visit("/themes/list");
     cy.get("thead").find("th").should("have.length", 6);
   });
 
   it("It removes all selected", () => {
-    cy.intercept({
-      method: "GET",
-      url: "**/themes*",
-      query: {
-        page: "1",
-      },
-    }).as("dataGetFirst");
-    cy.visit("/themes/list");
-    cy.wait("@dataGetFirst");
+
     cy.get("tbody")
       .find("tr")
       .eq(0)

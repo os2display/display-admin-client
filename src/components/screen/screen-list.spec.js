@@ -1,45 +1,48 @@
-Cypress.on("uncaught:exception", () => {
-  // @TODO: fix when docker setup is fixed
-  // returning false here prevents Cypress from
-  // failing the test
-  return false;
-});
 
 describe("Screen list loads", () => {
+  beforeEach(() => {
+    cy.intercept({
+      method: "GET",
+      url: "**/screens*",
+      query: {
+        page: "1",
+      },
+    }).as("screensData");
+    cy.intercept({
+      method: "GET",
+      url: "**/screens/00KRZ99DZF03JS10PK0PQ9004A/*",
+    }).as("screenGroups");
+    cy.visit("/screen/list");
+    cy.wait(["@screensData", "@screenGroups"]);
+  });
+
   it("It loads screens list", () => {
-    cy.visit("/screens");
     cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("have.length", 63);
+    cy.get("tbody").find("tr td").should("have.length", 90);
   });
 
   it("It goes to edit (screens list)", () => {
-    cy.visit("/screens");
-    cy.get("#screenName").should("not.exist");
+    cy.get("#screenTitle").should("not.exist");
     cy.get("tbody").find("tr td a").eq(0).click();
-    cy.get("#screenName").should("exist");
+    cy.get("#screenTitle").should("exist");
   });
+
   it("It opens delete modal (screens list)", () => {
-    cy.visit("/screens");
+
     cy.get("#delete-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(2).click();
     cy.get("#delete-modal").should("exist");
   });
 
   it("The correct amount of column headers loaded (screens list)", () => {
-    cy.visit("/screens");
     cy.get("thead").find("th").should("have.length", 9);
   });
 
   it("It removes all selected", () => {
-    cy.visit("/screens");
     cy.get("tbody").find("tr td button").eq(0).click();
     cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
   });
 
-  it("It loads charts", () => {
-    cy.visit("/screens?view=calendar&sort=name&order=asc&page=1");
-    cy.get("#chart80").should("exist");
-  });
 });

@@ -5,7 +5,7 @@ describe("Slide pages work", () => {
   });
 
   it("It loads create slide page", () => {
-    cy.visit("/slide/edit/01FN920R0E9614JX3HTPC3YBKH");
+    cy.visit("/slide/edit/01FNB8JX2XPG0BA49XQMYETKZV");
     cy.get("#save_slide").should("exist");
   });
 

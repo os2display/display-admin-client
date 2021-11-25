@@ -1,11 +1,11 @@
 describe("Topbar loads", () => {
   it("It loads", () => {
-    cy.visit("/slides");
+    cy.visit("/");
     cy.get("#topbar").should("exist");
   });
 
   it("It navigates", () => {
-    cy.visit("/slides");
+    cy.visit("/");
     cy.get("h1")
       .invoke("text")
       .should("match", /^Slides/);
@@ -13,17 +13,17 @@ describe("Topbar loads", () => {
     cy.get("#nav-items_add_screen").click();
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Skærme/);
+      .should("match", /^Opret ny skærm/);
 
     cy.get("#nav-items_add_playlist").click();
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Spillelister/);
+      .should("match", /^Opret ny spilleliste/);
 
     cy.get("#nav-items_add_slide").click();
     cy.get("h1")
       .invoke("text")
-      .should("match", /^Slides/);
+      .should("match", /^Opret nyt slide/);
     // @TODO: Add a textcase for Faq
     // @TODO: Add a textcase for Signout
   });

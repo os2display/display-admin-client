@@ -17,7 +17,7 @@ describe("Screen pages work", () => {
     cy.get("#layout-section").find(".nav-item").should("have.length", 4);
     cy.get("#layout-section")
       .find(".dropdown-heading-value")
-      .contains("Consequuntur cum eum modi.");
+      .contains("Tempora distinctio atque et assumenda");
   });
 
   it("It redirects on save", () => {

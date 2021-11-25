@@ -76,7 +76,9 @@ function TableHeader({ columns, sortPath, sortOrder, onSort, draggable }) {
                 {column.label} {renderSortIcon(column)}
               </th>
             )}
-            {!column.sort && <th>{column.label}</th>}
+            {!column.sort && (
+              <th id={`table-header-${column.path}`}>{column.label}</th>
+            )}
           </Fragment>
         ))}
       </tr>
