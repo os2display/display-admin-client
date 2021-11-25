@@ -2,7 +2,7 @@ describe("Slides list tests", () => {
   beforeEach(() => {
     cy.intercept({
       method: "GET",
-      url: "**/templates/00XZXR5XDH0D1M16K10NYQ0A55",
+      url: "**/templates/*",
     }).as("templatesData");
     cy.intercept({
       method: "GET",
@@ -11,7 +11,9 @@ describe("Slides list tests", () => {
         page: "2",
       },
     }).as("slidesData");
-    cy.visit("/slide/list?published=all&page=2&order=asc&sort=title");
+    cy.visit(
+      "http://display-admin-client.local.itkdev.dk/slide/list?published=all&page=2&order=asc&sort=title"
+    );
     cy.wait(["@slidesData", "@templatesData"]);
   });
 
@@ -20,22 +22,10 @@ describe("Slides list tests", () => {
     cy.get("tbody").find("tr td").should("exist");
   });
 
-  it("It opens info modal (slides list)", () => {
-    cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(1).click();
-    cy.get("#info-modal").should("exist");
-  });
-
   it("It goes to edit (slides list)", () => {
     cy.get("#slidesTitle").should("not.exist");
     cy.get("tbody").find("tr td a").eq(0).click();
     cy.get("#slidesTitle").should("exist");
-  });
-
-  it("It opens delete modal (slides list)", () => {
-    cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(2).click();
-    cy.get("#delete-modal").should("exist");
   });
 
   it("The correct amount of column headers loaded (slides list)", () => {

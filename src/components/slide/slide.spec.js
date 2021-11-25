@@ -4,11 +4,6 @@ describe("Slide pages work", () => {
     cy.get("#save_slide").should("exist");
   });
 
-  it("It loads create slide page", () => {
-    cy.visit("/slide/edit/01FNB8JX2XPG0BA49XQMYETKZV");
-    cy.get("#save_slide").should("exist");
-  });
-
   it("It picks template", () => {
     cy.visit("/slide/create");
     cy.get(".dropdown-container").eq(0).type("{enter}");

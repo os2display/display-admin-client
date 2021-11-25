@@ -11,7 +11,9 @@ describe("Pagination loads", () => {
         page: "1",
       },
     }).as("slidesData");
-    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
+    cy.visit(
+      "http://display-admin-client.local.itkdev.dk/slide/list?published=all&page=1&order=asc&sort=title"
+    );
     cy.wait(["@slidesData", "@templatesData"]);
   });
 
@@ -58,7 +60,9 @@ describe("Pagination loads", () => {
         page: "6",
       },
     }).as("slidesData");
-    cy.visit("/slide/list?published=all&page=6&order=asc&sort=title");
+    cy.visit(
+      "http://display-admin-client.local.itkdev.dk/slide/list?published=all&page=6&order=asc&sort=title"
+    );
     cy.wait(["@slidesData"]);
     cy.get(".pagination")
       .find(".page-item")
