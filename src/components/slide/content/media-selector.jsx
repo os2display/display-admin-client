@@ -121,7 +121,9 @@ function MediaSelector({
               return (
                 <Image
                   inputImage={image}
-                  handleChange={onSelectedMedia}
+                  handleChange={() => {
+                    imageUploadingChange(imageList);
+                  }}
                   onImageUpdate={onImageUpdate}
                   onImageRemove={onImageRemove}
                   index={index}
