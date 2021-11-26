@@ -84,6 +84,7 @@ function SlideManager({
   // Slides are not saved successfully, display a message
   useEffect(() => {
     if (saveMediaError) {
+      setSubmitting(false);
       displayError(
         t("slide-manager.error-messages.save-media-error", {
           error: saveMediaError.error
