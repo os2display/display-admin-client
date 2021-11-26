@@ -27,6 +27,7 @@ function PlaylistCreate() {
     description: "",
     modifiedBy: "",
     createdBy: "",
+    schedules: [],
     published: {
       from: null,
       to: null,

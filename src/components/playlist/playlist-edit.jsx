@@ -28,6 +28,7 @@ function PlaylistEdit() {
   const [savingPlaylists, setSavingPlaylists] = useState(false);
   const [slidesToAdd, setSlidesToAdd] = useState([]);
   const { id } = useParams();
+
   const [PutV1Playlists, { error: saveError, isSuccess: isSaveSuccess }] =
     usePutV1PlaylistsByIdMutation();
 
@@ -131,6 +132,7 @@ function PlaylistEdit() {
     if (isSaveSuccess && slidesToAdd) {
       setSavingSlides(true);
       setLoadingMessage(t("playlist-edit.loading-messages.saving-slides"));
+
       PutV1PlaylistsByIdSlides({
         id,
         body: JSON.stringify(slidesToAdd),
@@ -159,7 +161,7 @@ function PlaylistEdit() {
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
-      schedule: formStateObject.schedule,
+      schedules: formStateObject.schedules,
       published: {
         from: formStateObject.published.from,
         to: formStateObject.published.from,

@@ -32,6 +32,7 @@ function FormInput({
   invalidText,
   formGroupClasses,
   disabled,
+  ...rest
 }) {
   const { t } = useTranslation("common");
   const [error, setError] = useState();
@@ -59,6 +60,7 @@ function FormInput({
           value={value}
           onChange={onChange}
           type={type}
+          {...rest}
         />
         {error && <div className="invalid-feedback">{invalidInputText}</div>}
       </InputGroup>
