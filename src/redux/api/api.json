@@ -895,11 +895,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "422": {
                         "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "summary": "Update a Playlist resource.",
@@ -1342,6 +1342,15 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -1365,15 +1374,6 @@
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
                     }
                 },
                 "summary": "Update the collection of slide on a playlist.",
@@ -1730,11 +1730,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "422": {
                         "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "summary": "Update a Screen group resource.",
@@ -2106,11 +2106,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "422": {
                         "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "summary": "Update a Screen resource.",
@@ -2384,17 +2384,17 @@
                     "200": {
                         "description": "Not used - remove the default 200 response"
                     },
-                    "201": {
-                        "description": "Created"
-                    },
                     "400": {
                         "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
                     },
                     "404": {
                         "description": "Not found"
                     },
-                    "422": {
-                        "description": "Unprocessable entity"
+                    "201": {
+                        "description": "Created"
                     }
                 },
                 "summary": "Add Playlist resource from screen region.",
@@ -2751,11 +2751,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "422": {
                         "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "summary": "Update the collection of ScreenGroups on a Screen.",
@@ -3153,11 +3153,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "422": {
                         "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "summary": "Update a Slide resource.",
@@ -3486,6 +3486,42 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "order[title]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[description]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "order[createdAt]",
                         "in": "query",
                         "description": "",
@@ -3658,11 +3694,11 @@
                     "400": {
                         "description": "Invalid input"
                     },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "422": {
                         "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "summary": "Update a Theme resource.",
@@ -3962,8 +3998,11 @@
                     "description": {
                         "type": "string"
                     },
-                    "schedule": {
-                        "type": "string"
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "created": {
                         "type": "string",
@@ -4043,8 +4082,11 @@
                     "description": {
                         "type": "string"
                     },
-                    "schedule": {
-                        "type": "string"
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "created": {
                         "type": "string",
@@ -4089,8 +4131,11 @@
                     "description": {
                         "type": "string"
                     },
-                    "schedule": {
-                        "type": "string"
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -4159,8 +4204,11 @@
                     "description": {
                         "type": "string"
                     },
-                    "schedule": {
-                        "type": "string"
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -5343,6 +5391,9 @@
                     "description": {
                         "type": "string"
                     },
+                    "onSlides": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
                     "created": {
                         "type": "string",
                         "format": "date-time"
@@ -5406,6 +5457,9 @@
                     },
                     "description": {
                         "type": "string"
+                    },
+                    "onSlides": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
                     },
                     "created": {
                         "type": "string",
