@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import FormInput from "../forms/form-input";
 import Select from "../forms/select";
 import { MultiSelect } from "react-multi-select-component";
-import { FormGroup } from "react-bootstrap";
+import { Button, FormGroup } from "react-bootstrap";
 import {
-  createNewSchedule,
+  createNewSchedule, createScheduleFromRRule,
   getByMonthOptions,
   getByWeekdayOptions,
   getFreqOptions,
@@ -25,7 +25,8 @@ function Schedule({ schedules, onChange }) {
   const [localSchedules, setLocalSchedules] = useState([]);
 
   useEffect(() => {
-    setLocalSchedules(schedules);
+    const newSchedules = schedules.map((schedule) => createScheduleFromRRule(schedule.id, schedule.duration, schedule.rruleString));
+    setLocalSchedules(newSchedules);
   }, [schedules]);
 
   const addSchedule = () => {
@@ -43,19 +44,28 @@ function Schedule({ schedules, onChange }) {
     switch (targetId) {
       case 'duration':
         const parsedValue = parseInt(targetValue, 10);
-
-        if (isNaN(parsedValue)) {
-          return;
-        }
-        value = parsedValue;
-        break;
+        value = !isNaN(parsedValue) ? parsedValue : 0;
     }
 
     const newLocalSchedules = [...localSchedules];
     const index = newLocalSchedules.findIndex((schedule) => schedule.id === scheduleId);
     newLocalSchedules[index][targetId] = value;
-    newLocalSchedules[index]['rrule'] = getRruleString(newLocalSchedules[index]);
+    newLocalSchedules[index]['rruleString'] = getRruleString(newLocalSchedules[index]);
     onChange(newLocalSchedules);
+  }
+
+  const removeSchedule = (scheduleId) => {
+    const newLocalSchedules = [...localSchedules].filter((schedule) => schedule.id !== scheduleId);
+    setLocalSchedules(newLocalSchedules);
+  }
+
+  const getByMonthValue = (value) => {
+    if (typeof value === "number") {
+      return [value];
+    } else if (Array.isArray(value)) {
+      return value.map((monthNumber) => byMonthOptions.find((month) => month.value === monthNumber));
+    }
+    return [];
   }
 
   const freqOptions = getFreqOptions(t);
@@ -67,7 +77,7 @@ function Schedule({ schedules, onChange }) {
       <a href="#" onClick={addSchedule}>{t('schedule.add-schedule-button-text')}</a>
       {localSchedules && localSchedules.map((schedule) => (
         <div key={schedule.id} className="Schedule-item">
-          <div>RRule string: {schedule.rrule}</div>
+          <Button variant="danger" onClick={() => removeSchedule(schedule.id)}>{t('schedule.remove')}</Button>
 
           <Select
             onChange={({target}) => changeSchedule(schedule.id, target.id, target.value)}
@@ -82,10 +92,12 @@ function Schedule({ schedules, onChange }) {
             <label htmlFor="byweekday">{t('schedule.byweekday')}</label>
             <MultiSelect
               options={byWeekdayOptions}
-              value={schedule.byweekday}
+              value={schedule.byweekday ? schedule.byweekday.map((weekdayNumber) => byWeekdayOptions.find((weekDay) => weekDay.value === weekdayNumber)) : []}
               name="byweekday"
               labelledBy="Select"
-              onChange={(value) => changeSchedule(schedule.id, 'byweekday', value)}
+              onChange={(value) => {
+                changeSchedule(schedule.id, 'byweekday', value.map((v) => v.value))
+              }}
             />
           </FormGroup>
 
@@ -93,16 +105,16 @@ function Schedule({ schedules, onChange }) {
             <label htmlFor="bymonth">{t('schedule.bymonth')}</label>
             <MultiSelect
               options={byMonthOptions}
-              value={schedule.bymonth}
+              value={getByMonthValue(schedule.bymonth)}
               name="bymonth"
               labelledBy="Select"
-              onChange={(value) => changeSchedule(schedule.id, 'bymonth', value)}
+              onChange={(values) => changeSchedule(schedule.id, 'bymonth', values.map((v) => v.value))}
             />
           </FormGroup>
 
           <FormInput
             label={t('schedule.byweekno')}
-            value={schedule.byweekno}
+            value={schedule.byweekno ?? ''}
             onChange={({target}) => changeSchedule(schedule.id, target.id, target.value)}
             name="byweekno"
             type="number"
@@ -118,6 +130,8 @@ function Schedule({ schedules, onChange }) {
             type="number"
             min="1"
           />
+
+          <div>RRule string: {schedule.rruleString}</div>
         </div>
       ))}
     </div>

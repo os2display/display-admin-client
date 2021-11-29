@@ -534,5 +534,13 @@
   },
   "sidebar": {
     "brand": "OS2Display"
+  },
+  "schedule": {
+    "add-schedule-button-text": "Tilføj planlægning",
+    "remove": "Fjern",
+    "duration": "Varighed (i sekunder)",
+    "byweekno": "Ugenummer",
+    "bymonth": "Valgte måneder",
+    "byweekday": "Valgte ugedage"
   }
 }

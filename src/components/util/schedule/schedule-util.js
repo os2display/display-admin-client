@@ -1,4 +1,4 @@
-import RRule from "rrule";
+import RRule, { Weekday } from "rrule";
 import { ulid } from "ulid";
 
 const getRruleString = (schedule) => {
@@ -7,27 +7,51 @@ const getRruleString = (schedule) => {
     freq: schedule.freq,
     dtstart: schedule.dtstart,
     until: schedule.until,
-    byweekday: schedule.byweekday.map((weekday) => weekday.value),
-    bymonth: schedule.bymonth.map((month) => month.value),
+    byweekday: schedule.byweekday,
+    bymonth: schedule.bymonth,
     byweekno: schedule.byweekno
   });
+
   return rrule.toString();
 }
 
 const createNewSchedule = () => {
   const newSchedule = {
     id: ulid(new Date().getTime()),
-      duration: 0,
+    duration: 60 * 60 * 24, // Default one day.
     freq: RRule.WEEKLY,
     dtstart: null,
     until: null,
-    wkst: RRule.MO,
+    wkst: 0,
     byweekday: [],
     bymonth: [],
-    byweekno: null
+    byweekno: ''
   };
-  newSchedule.rrule = getRruleString(newSchedule);
+  newSchedule.rruleString = getRruleString(newSchedule);
+
   return newSchedule;
+}
+
+const createScheduleFromRRule = (id, duration, rruleString) => {
+  const rrule = RRule.fromString(rruleString);
+  const options = {...rrule.origOptions};
+
+  // Transform Weekday entries to weekday numbers.
+  if (options.byweekday) {
+    options.byweekday = options.byweekday.map((weekday) => {
+      return weekday instanceof Weekday ? weekday.weekday : weekday
+    } );
+  }
+
+  if (Object.prototype.hasOwnProperty.call(options, 'bymonth') && !Array.isArray(options.bymonth)) {
+    options.bymonth = [options.bymonth];
+  }
+
+  options.id = id;
+  options.duration = duration;
+  options.rruleString = rruleString;
+
+  return options;
 }
 
 const getFreqOptions = (t) => {
@@ -43,13 +67,13 @@ const getFreqOptions = (t) => {
 
 const getByWeekdayOptions = (t) => {
   return [
-    { label: t('schedule.monday'), value: RRule.MO, key: 'rrule.mo' },
-    { label: t('schedule.tuesday'), value: RRule.TU, key: 'rrule.tu' },
-    { label: t('schedule.wednesday'), value: RRule.WE, key: 'rrule.we' },
-    { label: t('schedule.thursday'), value: RRule.TH, key: 'rrule.th' },
-    { label: t('schedule.friday'), value: RRule.FR, key: 'rrule.fr' },
-    { label: t('schedule.saturday'), value: RRule.SA, key: 'rrule.sa' },
-    { label: t('schedule.sunday'), value: RRule.SU, key: 'rrule.su' },
+    { label: t('schedule.monday'), value: 0, key: 'rrule.mo' },
+    { label: t('schedule.tuesday'), value: 1, key: 'rrule.tu' },
+    { label: t('schedule.wednesday'), value: 2, key: 'rrule.we' },
+    { label: t('schedule.thursday'), value: 3, key: 'rrule.th' },
+    { label: t('schedule.friday'), value: 4, key: 'rrule.fr' },
+    { label: t('schedule.saturday'), value: 5, key: 'rrule.sa' },
+    { label: t('schedule.sunday'), value: 6, key: 'rrule.su' },
   ];
 }
 
@@ -71,4 +95,4 @@ const getByMonthOptions = (t) => {
 }
 
 
-export {getFreqOptions, getByWeekdayOptions, getByMonthOptions, createNewSchedule, getRruleString};
+export {getFreqOptions, getByWeekdayOptions, getByMonthOptions, createNewSchedule, getRruleString, createScheduleFromRRule};
