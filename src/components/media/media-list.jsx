@@ -224,12 +224,7 @@ function MediaList({ fromModal, handleSelected }) {
       <ContentBody>
         <Row className="mt-2 mb-2">
           <Col sm={12} md={6}>
-            <SearchBox
-              showLabel
-              value={searchText}
-              onChange={handleSearch}
-              helpText={t("media-list.search-help-text")}
-            />
+            <SearchBox showLabel value={searchText} onChange={handleSearch} />
           </Col>
         </Row>
         <ImageList

@@ -74,7 +74,21 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "screen-list": {
+  "form-table": {
+    "button-add-column": "Tilføj kolonne",
+    "input-label-add-column": "Tilføj kolonne",
+    "input-helptext-add-column": "For at fjerne en kolonne igen, skal den fjernes fra listen under tabellen",
+    "remove-column-header": "Fjern kolonner",
+    "add-row-button": "Tilføj række",
+    "data-source-help-text": "Datakildens format skal være JSON",
+    "data-source-label": "Datakilde",
+    "data-source-tab-header": "Tabel fra datakilde",
+    "manuel-table-tab-header": "Indtast tabeldata"
+  },
+  "react-table": {
+    "remove-row": "Fjern række"
+  },
+  "screens-list": {
     "columns": {
       "pick": "Vælg skærm",
       "name": "Navn",

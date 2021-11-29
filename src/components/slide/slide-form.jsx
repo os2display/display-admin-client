@@ -137,7 +137,7 @@ function SlideForm({
               name: "text-align",
             },
             {
-              key: "table-form-7",
+              key: "table-form-6",
               input: "select",
               required: true,
               label: "Tekststørrelse",
@@ -172,7 +172,7 @@ function SlideForm({
               name: "fontsize",
             },
             {
-              key: "table-form-6",
+              key: "table-form-7",
               multipleImages: false,
               input: "image",
               name: "image",
@@ -180,7 +180,7 @@ function SlideForm({
             },
 
             {
-              key: "table-form-7",
+              key: "table-form-8",
               input: "header-h3",
               text: "Tabellen",
               name: "header3",

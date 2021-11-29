@@ -95,13 +95,9 @@ function ContentForm({
         returnElement = (
           <FormTable
             name={formData.name}
-            type={formData.type}
-            errors={formData.required ? errors : null}
-            label={formData.label}
-            helpText={formData.helpText}
             value={formStateObject[formData.name]}
             onChange={onChange}
-            formGroupClasses={formData.formGroupClasses}
+            tabsClasses={formData.formGroupClasses}
           />
         );
         break;
