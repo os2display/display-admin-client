@@ -23,7 +23,6 @@ function ReactTable({ data, columns, updateTableData }) {
       columns={[
         ...columns,
         {
-          Header: "Delete",
           id: "delete",
           accessor: () => "delete",
           // eslint-disable-next-line react/prop-types
