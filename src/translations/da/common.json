@@ -574,6 +574,6 @@
     "rrulestring": "RRule",
     "dtstart": "Start dato",
     "until": "Slut dato",
-    "next-occurrences": "Næste 5 gange"
+    "next-occurrences": "Næste 5 instancer"
   }
 }

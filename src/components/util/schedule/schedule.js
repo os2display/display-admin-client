@@ -6,10 +6,12 @@ import Select from "../forms/select";
 import { MultiSelect } from "react-multi-select-component";
 import { Button, FormGroup } from "react-bootstrap";
 import {
-  createNewSchedule, createScheduleFromRRule,
+  createNewSchedule,
+  createScheduleFromRRule,
   getByMonthOptions,
   getByWeekdayOptions,
-  getFreqOptions, getNextOccurrences,
+  getFreqOptions,
+  getNextOccurrences,
   getRruleString
 } from "./schedule-util";
 import Datetime from 'react-datetime';
@@ -27,7 +29,7 @@ function Schedule({ schedules, onChange }) {
   const [showRRuleDetails, setShowRRuleDetails] = useState(false);
 
   useEffect(() => {
-    const newSchedules = schedules.map((schedule) => createScheduleFromRRule(schedule.id, schedule.duration, schedule.rruleString));
+    const newSchedules = schedules.map((schedule) => createScheduleFromRRule(schedule.id, schedule.duration, schedule.rrule));
     setLocalSchedules(newSchedules);
   }, [schedules]);
 
@@ -52,7 +54,7 @@ function Schedule({ schedules, onChange }) {
     const newLocalSchedules = [...localSchedules];
     const index = newLocalSchedules.findIndex((schedule) => schedule.id === scheduleId);
     newLocalSchedules[index][targetId] = value;
-    newLocalSchedules[index]['rruleString'] = getRruleString(newLocalSchedules[index]);
+    newLocalSchedules[index]['rrule'] = getRruleString(newLocalSchedules[index]);
     onChange(newLocalSchedules);
   }
 
@@ -175,10 +177,10 @@ function Schedule({ schedules, onChange }) {
             </div>
             {showRRuleDetails && (
               <div className="row">
-                <strong>{t('schedule.rrulestring')}:</strong><span>{schedule.rruleString}</span>
-                <div>
-                  <strong>{t('schedule.next-occurrences')}</strong>
-                  {getNextOccurrences(schedule.rrule).map((occurrence) => (<div key={occurrence.key}>{occurrence.text}</div>))}
+                <strong>{t('schedule.rrulestring')}:</strong><span>{schedule.rrule}</span>
+                <div className="mt-2">
+                  <strong>{t('schedule.next-occurrences')}:</strong>
+                  {getNextOccurrences(schedule.rruleObject).map((occurrence) => (<div key={occurrence.key}>{occurrence.text}</div>))}
                 </div>
               </div>
             )}

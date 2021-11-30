@@ -28,13 +28,13 @@ const createNewSchedule = () => {
     bymonth: [],
     byweekno: ''
   };
-  newSchedule.rruleString = getRruleString(newSchedule);
+  newSchedule.rrule = getRruleString(newSchedule);
 
   return newSchedule;
 }
 
 const createScheduleFromRRule = (id, duration, rruleString) => {
-  const rrule = RRule.fromString(rruleString);
+  const rrule = RRule.fromString(rruleString.replace("\\n", " "));
   const options = {...rrule.origOptions};
 
   // Transform Weekday entries to weekday numbers.
@@ -50,8 +50,8 @@ const createScheduleFromRRule = (id, duration, rruleString) => {
 
   options.id = id;
   options.duration = duration;
-  options.rruleString = rruleString;
-  options.rrule = rrule;
+  options.rrule = rruleString;
+  options.rruleObject = rrule;
 
   return options;
 }

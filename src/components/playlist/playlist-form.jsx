@@ -36,12 +36,6 @@ function PlaylistForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
-  const [schedules, setSchedules] = useState([]);
-
-  const onScheduleChange = (data) => {
-    console.log('onScheduleChange', JSON.parse(JSON.stringify(data)));
-    setSchedules(data);
-  }
 
   return (
     <>
@@ -69,7 +63,7 @@ function PlaylistForm({
         </ContentBody>
         <ContentBody>
           <h2 className="h4">{t("playlist-form.schedule-header")}</h2>
-          <Schedule schedules={schedules} onChange={onScheduleChange} />
+          <Schedule schedules={playlist.schedules} onChange={(schedules) => handleInput({target: {id: 'schedules', value: schedules}})} />
         </ContentBody>
         <ContentBody>
           <h2 className="h4">{t("playlist-form.title-slides")}</h2>
