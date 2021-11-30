@@ -59,11 +59,11 @@ function Select({
         value={value}
         onChange={onChange}
       >
-        {allowNull &&
+        {allowNull && (
           <option disabled value="">
             {t("select.nothing-selected")}
           </option>
-        }
+        )}
         {options.map((option) => (
           <option
             value={option?.value || option["@id"]}
@@ -100,7 +100,7 @@ Select.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isRequired: PropTypes.bool,
   errorText: PropTypes.string,
   helpText: PropTypes.string,

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -63,7 +63,12 @@ function PlaylistForm({
         </ContentBody>
         <ContentBody>
           <h2 className="h4">{t("playlist-form.schedule-header")}</h2>
-          <Schedule schedules={playlist.schedules} onChange={(schedules) => handleInput({target: {id: 'schedules', value: schedules}})} />
+          <Schedule
+            schedules={playlist.schedules}
+            onChange={(schedules) =>
+              handleInput({ target: { id: "schedules", value: schedules } })
+            }
+          />
         </ContentBody>
         <ContentBody>
           <h2 className="h4">{t("playlist-form.title-slides")}</h2>

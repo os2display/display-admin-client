@@ -44,6 +44,7 @@ function FormInput({
     setError(errors && errors.includes(name));
   }, [errors]);
 
+  /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClasses}>
       <FormLabel htmlFor={name}>
@@ -67,6 +68,7 @@ function FormInput({
       {helpText && <small className="form-text">{helpText}</small>}
     </FormGroup>
   );
+  /* eslint-enable react/jsx-props-no-spreading */
 }
 
 FormInput.defaultProps = {
