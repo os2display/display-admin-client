@@ -574,6 +574,10 @@
     "rrulestring": "RRule",
     "dtstart": "Start dato",
     "until": "Slut dato",
-    "next-occurrences": "Næste 5 forekomster"
+    "next-occurrences": "Næste 5 forekomster",
+    "all-selected": "Alle er valgt",
+    "clear-selection": "Ryd valg",
+    "selected-all": "Vælg all",
+    "select-some-options": "Vælg..."
   }
 }

@@ -179,6 +179,13 @@ function Schedule({ schedules, onChange }) {
                           : []
                       }
                       name="byweekday"
+                      disableSearch
+                      overrideStrings={{
+                        allItemsAreSelected: t("schedule.all-selected"),
+                        clearSelected: t("schedule.clear-selection"),
+                        selectAll: t("schedule.selected-all"),
+                        selectSomeItems: t("schedule.select-some-options"),
+                      }}
                       labelledBy="Select"
                       onChange={(value) => {
                         changeSchedule(
@@ -230,7 +237,14 @@ function Schedule({ schedules, onChange }) {
                       options={byMonthOptions}
                       value={getByMonthValue(schedule.bymonth)}
                       name="bymonth"
+                      disableSearch
                       labelledBy="Select"
+                      overrideStrings={{
+                        allItemsAreSelected: t("schedule.all-selected"),
+                        clearSelected: t("schedule.clear-selection"),
+                        selectAll: t("schedule.selected-all"),
+                        selectSomeItems: t("schedule.select-some-options"),
+                      }}
                       onChange={(values) =>
                         changeSchedule(
                           schedule.id,
