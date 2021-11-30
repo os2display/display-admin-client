@@ -571,6 +571,9 @@
     "daily": "Dag",
     "hourly": "Time",
     "minutely": "Minut",
-    "rrulestring": "RRule"
+    "rrulestring": "RRule",
+    "dtstart": "Start dato",
+    "until": "Slut dato",
+    "next-occurrences": "Næste 5 gange"
   }
 }

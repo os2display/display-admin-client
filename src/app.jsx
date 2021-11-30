@@ -17,7 +17,6 @@ import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";
 import MediaList from "./components/media/media-list";
-// import MediaEdit from "./components/media/media-edit";
 import commonDa from "./translations/da/common.json";
 import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
@@ -31,6 +30,8 @@ import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
+import "react-datetime/css/react-datetime.css";
+import 'moment/locale/da';
 
 /**
  * App component.

@@ -1,5 +1,6 @@
 import RRule, { Weekday } from "rrule";
 import { ulid } from "ulid";
+import moment from "moment";
 
 const getRruleString = (schedule) => {
   const rrule = new RRule({
@@ -20,7 +21,7 @@ const createNewSchedule = () => {
     id: ulid(new Date().getTime()),
     duration: 60 * 60 * 24, // Default one day.
     freq: RRule.WEEKLY,
-    dtstart: null,
+    dtstart: new Date(),
     until: null,
     wkst: 0,
     byweekday: [],
@@ -50,8 +51,24 @@ const createScheduleFromRRule = (id, duration, rruleString) => {
   options.id = id;
   options.duration = duration;
   options.rruleString = rruleString;
+  options.rrule = rrule;
 
   return options;
+}
+
+const getNextOccurrences = (rrule, count = 5) => {
+  const occurrences = [];
+
+  const newRrule = new RRule(rrule.origOptions);
+  newRrule.options.count = count;
+  newRrule.all(d => {
+    occurrences.push({
+      key: "occurrence" + occurrences.length,
+      text: moment(d).format("LLLL")
+    });
+    return true;
+  });
+  return occurrences;
 }
 
 const getFreqOptions = (t) => {
@@ -95,4 +112,4 @@ const getByMonthOptions = (t) => {
 }
 
 
-export {getFreqOptions, getByWeekdayOptions, getByMonthOptions, createNewSchedule, getRruleString, createScheduleFromRRule};
+export {getFreqOptions, getByWeekdayOptions, getByMonthOptions, createNewSchedule, getRruleString, createScheduleFromRRule, getNextOccurrences};
