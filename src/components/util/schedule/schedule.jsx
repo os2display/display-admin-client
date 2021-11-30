@@ -258,7 +258,7 @@ function Schedule({ schedules, onChange }) {
               </div>
             </div>
 
-            <div className="card-footer container">
+            <div className="card-footer">
               <div className="row">
                 <div className="col d-flex justify-content-end">
                   <Button
