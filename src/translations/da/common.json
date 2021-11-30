@@ -539,7 +539,7 @@
     "plan": "Planlægning",
     "add-schedule-button-text": "Tilføj",
     "remove": "Fjern",
-    "duration": "Varighed (i sekunder)",
+    "duration": "Forekomsternes varighed (i sekunder)",
     "byweekno": "Ugenummer",
     "bymonth": "Valgte måneder",
     "byweekday": "Valgte ugedage",
@@ -574,6 +574,6 @@
     "rrulestring": "RRule",
     "dtstart": "Start dato",
     "until": "Slut dato",
-    "next-occurrences": "Næste 5 instancer"
+    "next-occurrences": "Næste 5 forekomster"
   }
 }
