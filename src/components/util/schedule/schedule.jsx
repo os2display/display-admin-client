@@ -123,7 +123,9 @@ function Schedule({ schedules, onChange }) {
             <div className="card-body container">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="dtstart">{t("schedule.dtstart")}</label>
+                  <label htmlFor="dtstart" className="mb-2">
+                    {t("schedule.dtstart")}
+                  </label>
                   <Datetime
                     name="dtstart"
                     dateFormat={dateFormat}
@@ -134,7 +136,9 @@ function Schedule({ schedules, onChange }) {
                   />
                 </div>
                 <div className="col">
-                  <label htmlFor="until">{t("schedule.until")}</label>
+                  <label htmlFor="until" className="mb-2">
+                    {t("schedule.until")}
+                  </label>
                   <Datetime
                     name="dtstart"
                     dateFormat={dateFormat}
@@ -219,7 +223,9 @@ function Schedule({ schedules, onChange }) {
               <div className="row mt-2">
                 <div className="col">
                   <FormGroup>
-                    <label htmlFor="bymonth">{t("schedule.bymonth")}</label>
+                    <label htmlFor="bymonth" className="mb-2">
+                      {t("schedule.bymonth")}
+                    </label>
                     <MultiSelect
                       options={byMonthOptions}
                       value={getByMonthValue(schedule.bymonth)}
