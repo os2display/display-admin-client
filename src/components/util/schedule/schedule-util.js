@@ -53,7 +53,7 @@ const createNewSchedule = () => {
  * @returns {object} - The schedule.
  */
 const createScheduleFromRRule = (id, duration, rruleString) => {
-  const rrule = RRule.fromString(rruleString.replace("\\n", " "));
+  const rrule = RRule.fromString(rruleString.replace("\\n", "\n"));
   const options = { ...rrule.origOptions };
 
   // Transform Weekday entries to weekday numbers.

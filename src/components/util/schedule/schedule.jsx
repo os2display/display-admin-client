@@ -86,7 +86,7 @@ function Schedule({ schedules, onChange }) {
     const newLocalSchedules = [...localSchedules].filter(
       (schedule) => schedule.id !== scheduleId
     );
-    setLocalSchedules(newLocalSchedules);
+    onChange(newLocalSchedules);
   };
 
   /**
