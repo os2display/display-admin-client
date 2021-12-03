@@ -35,7 +35,6 @@ function ContentForm({
   const { t } = useTranslation("common");
 
   const getInputImage = (formData) => {
-    console.log(formData.name);
     const field = formStateObject[formData.name];
     let inputImages = null;
 
@@ -112,7 +111,7 @@ function ContentForm({
             formData={formData}
             value={formStateObject[formData.name]}
             onChange={onChange}
-            contactsClasses={formData.contactsClasses}
+            formGroupClasses={formData.formGroupClasses}
           />
         );
         break;

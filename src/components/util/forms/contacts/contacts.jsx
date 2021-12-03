@@ -10,7 +10,7 @@ import ContactView from "./contact-view";
  * @param {string} props.name The name of the rich text field
  * @param {string} props.value The value of the rich text field
  * @param {Function} props.onChange The callback for changes in the rich text field
- * @param {string} props.contactsClasses Classes for the formgroup
+ * @param {string} props.formGroupClasses Classes for the formgroup
  * @param {Function} props.onMediaChange For keeping images updated
  * @param {object} props.formData FormData for retrieving images
  * @returns {object} A contacts component.
@@ -19,7 +19,7 @@ function Contacts({
   name,
   value,
   onChange,
-  contactsClasses,
+  formGroupClasses,
   getInputImage,
   onMediaChange,
   formData,
@@ -76,7 +76,7 @@ function Contacts({
   }
 
   return (
-    <div className={contactsClasses}>
+    <div className={formGroupClasses}>
       {contacts.length > 0 && (
         <div className="d-flex flex-wrap">
           {contacts.map((contact) => (
@@ -103,13 +103,13 @@ function Contacts({
   );
 }
 Contacts.defaultProps = {
-  contactsClasses: "",
+  formGroupClasses: "",
 };
 
 Contacts.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.objectOf(PropTypes.any).isRequired,
-  contactsClasses: PropTypes.string,
+  formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onMediaChange: PropTypes.func.isRequired,
   getInputImage: PropTypes.func.isRequired,
