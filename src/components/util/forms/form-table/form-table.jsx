@@ -14,10 +14,10 @@ import FormInput from "../form-input";
  * @param {string} props.name The name of the rich text field
  * @param {string} props.value The value of the rich text field
  * @param {Function} props.onChange The callback for changes in the rich text field
- * @param {string} props.tabsClasses Classes for the formgroup
+ * @param {string} props.formGroupClasses Classes for the formgroup
  * @returns {object} A table for forms.
  */
-function FormTable({ name, value, onChange, tabsClasses }) {
+function FormTable({ name, value, onChange, formGroupClasses }) {
   const { t } = useTranslation("common");
   // Controls the tabs
   const [key, setKey] = useState("manuel");
@@ -165,7 +165,7 @@ function FormTable({ name, value, onChange, tabsClasses }) {
       id="controlled-tab-example"
       activeKey={key}
       onSelect={(k) => setKey(k)}
-      className={`${tabsClasses} mb-3`}
+      className={`${formGroupClasses} mb-3`}
     >
       <Tab eventKey="manuel" title={t("form-table.manuel-table-tab-header")}>
         <>
@@ -240,13 +240,13 @@ function FormTable({ name, value, onChange, tabsClasses }) {
   );
 }
 FormTable.defaultProps = {
-  tabsClasses: "",
+  formGroupClasses: "",
 };
 
 FormTable.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.objectOf(PropTypes.any).isRequired,
-  tabsClasses: PropTypes.string,
+  formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 export default FormTable;

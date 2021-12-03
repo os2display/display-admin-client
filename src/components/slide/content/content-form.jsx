@@ -97,7 +97,7 @@ function ContentForm({
             name={formData.name}
             value={formStateObject[formData.name]}
             onChange={onChange}
-            tabsClasses={formData.formGroupClasses}
+            formGroupClasses={formData.formGroupClasses}
           />
         );
         break;
