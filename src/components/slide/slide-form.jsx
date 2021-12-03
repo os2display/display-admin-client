@@ -83,30 +83,7 @@ function SlideForm({
       fetch(contentFormUrl)
         .then((response) => response.json())
         .then((data) => {
-          // setContentFormElements(data);
-          setContentFormElements([
-            {
-              key: "contacts-form-1",
-              input: "header",
-              text: "Skabelon: Kontakter",
-              name: "header1",
-              formGroupClasses: "h4 mb-3",
-            },
-
-            {
-              key: "contacts-form-2",
-              input: "checkbox",
-              label: "Animeret streg under overskrift",
-              name: "separator",
-              formGroupClasses: "mb-3",
-            },
-            {
-              key: "contacts-form-3",
-              input: "contacts",
-              name: "contacts",
-              contactsClasses: "mb-3",
-            },
-          ]);
+          setContentFormElements(data);
         })
         .catch(() => {
           // @TODO: Handle error case. Display error for user.
