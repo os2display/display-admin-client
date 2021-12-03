@@ -5,6 +5,7 @@ import MediaSelector from "./media-selector";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
+import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 
@@ -34,6 +35,7 @@ function ContentForm({
   const { t } = useTranslation("common");
 
   const getInputImage = (formData) => {
+    console.log(formData.name);
     const field = formStateObject[formData.name];
     let inputImages = null;
 
@@ -97,7 +99,20 @@ function ContentForm({
             name={formData.name}
             value={formStateObject[formData.name]}
             onChange={onChange}
-            tabsClasses={formData.formGroupClasses}
+            tabsClasses={formData.tableClasses}
+          />
+        );
+        break;
+      case "contacts":
+        returnElement = (
+          <Contacts
+            onMediaChange={onMediaChange}
+            getInputImage={getInputImage}
+            name={formData.name}
+            formData={formData}
+            value={formStateObject[formData.name]}
+            onChange={onChange}
+            contactsClasses={formData.contactsClasses}
           />
         );
         break;
@@ -178,10 +193,6 @@ function ContentForm({
         );
         break;
       case "image":
-        if (data.required) {
-          requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
-        }
-
         returnElement = (
           <>
             {formData?.label && (
@@ -191,7 +202,6 @@ function ContentForm({
             )}
 
             <MediaSelector
-              errors={formData.required ? errors : null}
               multiple={data.multipleImages}
               selectedMedia={getInputImage(formData)}
               onSelectedMedia={onMediaChange}

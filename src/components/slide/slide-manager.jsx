@@ -297,7 +297,6 @@ function SlideManager({
 
     // Set field as a field to look into for new references.
     setMediaFields([...new Set([...mediaFields, fieldId])]);
-
     const newField = [];
 
     // Handle each entry in field.
