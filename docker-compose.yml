@@ -73,8 +73,10 @@ services:
   nginx-api:
     image: itkdev/os2display-api-service-nginx:alpha
     networks:
-      - app
-      - frontend
+      app:
+      frontend:
+        aliases:
+          - api-display-admin-client.local.itkdev.dk
     depends_on:
       - api
     ports:
@@ -88,9 +90,10 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_api.rule=Host(`${COMPOSE_API_DOMAIN}`)"
 
   cypress:
-    image: cypress/included:7.7.0
+    image: cypress/included:9.1.1
     networks:
       - app
+      - frontend
     depends_on:
       - nginx
       - nginx-api
