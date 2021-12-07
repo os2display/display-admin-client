@@ -43,7 +43,6 @@ function SlidesList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage] = useState(
     t("slides-list.loading-messages.loading-slides")
   );
@@ -61,42 +60,19 @@ function SlidesList() {
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
       DeleteV1Slides({ id: slideToDeleteId });
       setSlidesToDelete(localSlidesToDelete);
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("slides-list.success-messages.slide-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
+    } else if (isDeleteSuccess && slidesToDelete.length > 0) {
+      displaySuccess(t("slides-list.success-messages.slide-delete"))
     }
   }, [slidesToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && slidesToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("slides-list.success-messages.slide-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && slidesToDelete.length === 0) {
+      displaySuccess(t("slides-list.success-messages.slide-delete"))
+      refetch()
+      setIsDeleting(false)
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -265,6 +241,7 @@ function SlidesList() {
     data,
     error: slidesGetError,
     isLoading,
+    refetch
   } = useGetV1SlidesQuery({
     page,
     orderBy: sortBy?.path,

@@ -42,7 +42,6 @@ function PlaylistList() {
   const [searchText, setSearchText] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("playlists-list.loading-messages.loading-playlists")
   );
@@ -62,42 +61,19 @@ function PlaylistList() {
       const toDelete = playlistsToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Playlists({ id: toDeleteId });
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("playlists-list.success-messages.playlist-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
+    } else if (isDeleteSuccess && playlistsToDelete.length > 0) {
+      displaySuccess(t("playlists-list.success-messages.playlist-delete"))
     }
   }, [playlistsToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && playlistsToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("playlists-list.success-messages.playlist-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && playlistsToDelete.length === 0) {
+      displaySuccess(t("playlists-list.success-messages.playlist-delete"))
+      refetch()
+      setIsDeleting(false)
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -264,6 +240,7 @@ function PlaylistList() {
     data,
     error: playlistsGetError,
     isLoading,
+    refetch
   } = useGetV1PlaylistsQuery({
     page,
     orderBy: sortBy?.path,
