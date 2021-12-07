@@ -61,7 +61,7 @@ function ScreenList() {
     { isSuccess: isDeleteSuccess, error: isDeleteError },
   ] = useDeleteV1ScreensByIdMutation();
 
-  // Get data
+  // Get method
   const {
     data,
     error: screensGetError,
