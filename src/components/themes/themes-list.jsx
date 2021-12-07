@@ -43,6 +43,24 @@ function ThemesList() {
   const [DeleteV1Themes, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1ThemesByIdMutation();
 
+  const {
+    data,
+    error: themesGetError,
+    isLoading,
+    refetch,
+  } = useGetV1ThemesQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
   /** Deletes multiple themes. */
   useEffect(() => {
     if (themesToDelete.length > 0) {
@@ -85,10 +103,10 @@ function ThemesList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -153,12 +171,12 @@ function ThemesList() {
     {
       key: "pick",
       label: t("themes-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
           // eslint-disable-next-line react/destructuring-assignment
-          disabled={data.onSlides.length > 0}
+          disabled={d.onSlides.length > 0}
         />
       ),
     },
@@ -179,18 +197,18 @@ function ThemesList() {
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "themes/edit", t("themes-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "themes/edit", t("themes-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <>
           <Button
             variant="danger"
             // eslint-disable-next-line react/destructuring-assignment
-            disabled={selectedRows.length > 0 || data.onSlides.length > 0}
-            onClick={() => openDeleteModal(data)}
+            disabled={selectedRows.length > 0 || d.onSlides.length > 0}
+            onClick={() => openDeleteModal(d)}
           >
             {t("themes-list.delete-button")}
           </Button>
@@ -198,24 +216,6 @@ function ThemesList() {
       ),
     },
   ];
-
-  const {
-    data,
-    error: themesGetError,
-    isLoading,
-    refetch
-  } = useGetV1ThemesQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of themes
   useEffect(() => {

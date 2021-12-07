@@ -66,7 +66,7 @@ function MediaList({ fromModal, handleSelected }) {
     data: mediaData,
     error: mediaLoadError,
     isLoading,
-    refetch
+    refetch,
   } = useGetV1MediaQuery({ page, title: searchText });
 
   /** Set loaded data into form state. */
@@ -122,7 +122,7 @@ function MediaList({ fromModal, handleSelected }) {
   /** Deletes multiple pieces of media. */
   useEffect(() => {
     if (mediaToDelete.length > 0) {
-            // As we are deleting multiple pieces of media, the ui will jump if the "is deleting" value from the hook is used.
+      // As we are deleting multiple pieces of media, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       if (isDeleteSuccess) {
         displaySuccess(t("media-list.success-messages.media-delete"));

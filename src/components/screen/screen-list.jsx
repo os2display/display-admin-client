@@ -61,6 +61,25 @@ function ScreenList() {
     { isSuccess: isDeleteSuccess, error: isDeleteError },
   ] = useDeleteV1ScreensByIdMutation();
 
+  // Get data
+  const {
+    data,
+    error: screensGetError,
+    isLoading,
+    refetch,
+  } = useGetV1ScreensQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
   /** Set the view in url. */
   useEffect(() => {
     const params = new URLSearchParams(search);
@@ -110,10 +129,10 @@ function ScreenList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -190,17 +209,17 @@ function ScreenList() {
     {
       key: "pick",
       label: t("screens-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
         />
       ),
     },
     {
       path: "live",
       label: t("screens-list.columns.live"),
-      content: (data) => LiveIcon(data),
+      content: (d) => LiveIcon(d),
     },
     {
       path: "title",
@@ -232,21 +251,21 @@ function ScreenList() {
       key: "campaign",
       // @TODO: implement overridden by campaing
       label: t("screens-list.columns.campaign"),
-      content: (data) => CampaignIcon(data),
+      content: (d) => CampaignIcon(d),
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "screen/edit", t("screens-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "screen/edit", t("screens-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <>
           <Button
             variant="danger"
             disabled={selectedRows.length > 0}
-            onClick={() => openDeleteModal(data)}
+            onClick={() => openDeleteModal(d)}
           >
             {t("screens-list.delete-button")}
           </Button>
@@ -254,24 +273,6 @@ function ScreenList() {
       ),
     },
   ];
-
-  const {
-    data,
-    error: screensGetError,
-    isLoading,
-    refetch
-  } = useGetV1ScreensQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of screen
   useEffect(() => {

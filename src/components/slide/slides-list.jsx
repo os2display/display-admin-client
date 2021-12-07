@@ -51,6 +51,26 @@ function SlidesList() {
   const [DeleteV1Slides, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1SlidesByIdMutation();
 
+  // Get method
+  const {
+    data,
+    error: slidesGetError,
+    isLoading,
+    refetch,
+  } = useGetV1SlidesQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+    published: isPublished,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
   /** Deletes multiple slides. */
   useEffect(() => {
     if (slidesToDelete.length > 0) {
@@ -59,7 +79,7 @@ function SlidesList() {
       if (isDeleteSuccess) {
         displaySuccess(t("slides-list.success-messages.slide-delete"));
       }
-      setLoadingMessage(t("slides-list.loading-messages.deleting-slide"))
+      setLoadingMessage(t("slides-list.loading-messages.deleting-slide"));
       const localSlidesToDelete = [...slidesToDelete];
       const slideToDelete = localSlidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
@@ -94,10 +114,10 @@ function SlidesList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -187,10 +207,10 @@ function SlidesList() {
     {
       key: "pick",
       label: t("slides-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
         />
       ),
     },
@@ -223,41 +243,22 @@ function SlidesList() {
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "slide/edit", t("slides-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "slide/edit", t("slides-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <Button
           variant="danger"
           disabled={selectedRows.length > 0}
-          onClick={() => openDeleteModal(data)}
+          onClick={() => openDeleteModal(d)}
         >
           {t("slides-list.delete-button")}
         </Button>
       ),
     },
   ];
-
-  const {
-    data,
-    error: slidesGetError,
-    isLoading,
-    refetch,
-  } = useGetV1SlidesQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-    published: isPublished,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of slides
   useEffect(() => {

@@ -45,6 +45,25 @@ function GroupsList() {
     { isSuccess: isDeleteSuccess, error: isDeleteError },
   ] = useDeleteV1ScreenGroupsByIdMutation();
 
+  // Get method
+  const {
+    data,
+    error: groupsGetError,
+    isLoading,
+    refetch,
+  } = useGetV1ScreenGroupsQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
   /** Deletes multiple groups. */
   useEffect(() => {
     if (groupsToDelete.length > 0) {
@@ -69,7 +88,6 @@ function GroupsList() {
     }
   }, [isDeleteSuccess]);
 
-
   // Display error on unsuccessful deletion
   useEffect(() => {
     if (isDeleteError) {
@@ -87,10 +105,10 @@ function GroupsList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -155,10 +173,10 @@ function GroupsList() {
     {
       key: "pick",
       label: t("groups-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
         />
       ),
     },
@@ -173,17 +191,17 @@ function GroupsList() {
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "group/edit", t("groups-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "group/edit", t("groups-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <>
           <Button
             variant="danger"
             disabled={selectedRows.length > 0}
-            onClick={() => openDeleteModal(data)}
+            onClick={() => openDeleteModal(d)}
           >
             {t("groups-list.delete-button")}
           </Button>
@@ -191,24 +209,6 @@ function GroupsList() {
       ),
     },
   ];
-
-  const {
-    data,
-    error: groupsGetError,
-    isLoading,
-    refetch
-  } = useGetV1ScreenGroupsQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of groups
   useEffect(() => {
