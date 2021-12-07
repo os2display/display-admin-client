@@ -30,8 +30,6 @@ import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
-import "react-datetime/css/react-datetime.css";
-import "moment/locale/da";
 
 /**
  * App component.

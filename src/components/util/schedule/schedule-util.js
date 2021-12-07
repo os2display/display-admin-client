@@ -1,6 +1,10 @@
 import RRule, { Weekday } from "rrule";
 import { ulid } from "ulid";
-import moment from "moment";
+import dayjs from "dayjs";
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import 'dayjs/locale/da';
+
+dayjs.extend(localizedFormat);
 
 /**
  * Get rrule string from schedule.
@@ -93,7 +97,7 @@ const getNextOccurrences = (rrule, count = 5) => {
   newRrule.all((d) => {
     occurrences.push({
       key: `occurrence${occurrences.length}`,
-      text: moment(d).format("LLLL"),
+      text: dayjs(d).locale('da').format('LLLL')
     });
     return true;
   });

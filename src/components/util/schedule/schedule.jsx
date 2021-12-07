@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { MultiSelect } from "react-multi-select-component";
 import { Button, FormGroup } from "react-bootstrap";
-import Datetime from "react-datetime";
 import FormInput from "../forms/form-input";
 import Select from "../forms/select";
 import {
@@ -15,6 +14,7 @@ import {
   getNextOccurrences,
   getRruleString,
 } from "./schedule-util";
+import dayjs from "dayjs";
 
 /**
  * Schedule component.
@@ -123,30 +123,20 @@ function Schedule({ schedules, onChange }) {
             <div className="card-body container">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="dtstart" className="mb-2">
-                    {t("schedule.dtstart")}
-                  </label>
-                  <Datetime
+                  <FormInput
+                    label={t("schedule.dtstart")}
+                    value={schedule.dtstart ? dayjs(schedule.dtstart).format('YYYY-MM-DDTHH:mm') : ''}
                     name="dtstart"
-                    dateFormat={dateFormat}
-                    value={schedule.dtstart}
-                    onChange={(date) =>
-                      changeSchedule(schedule.id, "dtstart", date.toDate())
-                    }
-                  />
+                    onChange={({target}) => changeSchedule(schedule.id,  target.id, dayjs(target.value).toDate())}
+                    type="datetime-local" />
                 </div>
                 <div className="col">
-                  <label htmlFor="until" className="mb-2">
-                    {t("schedule.until")}
-                  </label>
-                  <Datetime
-                    name="dtstart"
-                    dateFormat={dateFormat}
-                    value={schedule.until}
-                    onChange={(date) =>
-                      changeSchedule(schedule.id, "until", date.toDate())
-                    }
-                  />
+                  <FormInput
+                    label={t("schedule.until")}
+                    value={schedule.until ? dayjs(schedule.until).format('YYYY-MM-DDTHH:mm') : ''}
+                    name="until"
+                    onChange={({target}) => changeSchedule(schedule.id,  target.id, dayjs(target.value).toDate())}
+                    type="datetime-local" />
                 </div>
               </div>
 
