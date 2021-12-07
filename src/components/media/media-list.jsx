@@ -53,7 +53,6 @@ function MediaList({ fromModal, handleSelected }) {
   const [searchText, setSearchText] = useState(
     searchParams === null ? "" : searchParams
   );
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("media-list.loading-messages.loading-media")
   );
@@ -67,6 +66,7 @@ function MediaList({ fromModal, handleSelected }) {
     data: mediaData,
     error: mediaLoadError,
     isLoading,
+    refetch
   } = useGetV1MediaQuery({ page, title: searchText });
 
   /** Set loaded data into form state. */
@@ -122,45 +122,24 @@ function MediaList({ fromModal, handleSelected }) {
   /** Deletes multiple pieces of media. */
   useEffect(() => {
     if (mediaToDelete.length > 0) {
+            // As we are deleting multiple pieces of media, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
-      const toDelete = mediaToDelete.splice(0, 1).shift();
+      if (isDeleteSuccess) {
+        displaySuccess(t("media-list.success-messages.media-delete"));
+      }
       setLoadingMessage(t("media-list.loading-messages.deleting-media"));
+      const toDelete = mediaToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Media({ id: toDeleteId });
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("media-list.success-messages.media-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
     }
   }, [mediaToDelete, isDeleteSuccess]);
 
-  // Display success messages from successfully deleted slides.
+  // Display success messages
   useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
-
-  // Sets success-messages for local storage
-  useEffect(() => {
-    if (isDeleteSuccess && mediaToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("media-list.success-messages.media-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && mediaToDelete.length === 0) {
+      displaySuccess(t("media-list.success-messages.media-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
 

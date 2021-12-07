@@ -43,7 +43,7 @@ function SlidesList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
-  const [loadingMessage] = useState(
+  const [loadingMessage, setLoadingMessage] = useState(
     t("slides-list.loading-messages.loading-slides")
   );
 
@@ -54,23 +54,26 @@ function SlidesList() {
   /** Deletes multiple slides. */
   useEffect(() => {
     if (slidesToDelete.length > 0) {
-      const localSlidesToDelete = [...slidesToDelete];
+      // As we are deleting multiple slides, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
+      if (isDeleteSuccess) {
+        displaySuccess(t("slides-list.success-messages.slide-delete"));
+      }
+      setLoadingMessage(t("slides-list.loading-messages.deleting-slide"))
+      const localSlidesToDelete = [...slidesToDelete];
       const slideToDelete = localSlidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
       DeleteV1Slides({ id: slideToDeleteId });
       setSlidesToDelete(localSlidesToDelete);
-    } else if (isDeleteSuccess && slidesToDelete.length > 0) {
-      displaySuccess(t("slides-list.success-messages.slide-delete"))
     }
   }, [slidesToDelete, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && slidesToDelete.length === 0) {
-      displaySuccess(t("slides-list.success-messages.slide-delete"))
-      refetch()
-      setIsDeleting(false)
+      displaySuccess(t("slides-list.success-messages.slide-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
 
@@ -241,7 +244,7 @@ function SlidesList() {
     data,
     error: slidesGetError,
     isLoading,
-    refetch
+    refetch,
   } = useGetV1SlidesQuery({
     page,
     orderBy: sortBy?.path,

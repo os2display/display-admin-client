@@ -51,7 +51,6 @@ function ScreenList() {
   const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("screens-list.loading-messages.loading-screens")
   );
@@ -73,47 +72,26 @@ function ScreenList() {
   /** Deletes multiple screens. */
   useEffect(() => {
     if (screensToDelete.length > 0) {
+      // As we are deleting multiple screens, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
+      if (isDeleteSuccess) {
+        displaySuccess(t("screens-list.success-messages.screen-delete"));
+      }
       setLoadingMessage(t("screens-list.loading-messages.deleting-screen"));
       const screenToDelete = screensToDelete.splice(0, 1).shift();
       const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
       DeleteV1Screens({ id: screenToDeleteId });
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("screens-list.success-messages.screen-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
     }
   }, [screensToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && screensToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("screens-list.success-messages.screen-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && screensToDelete.length === 0) {
+      displaySuccess(t("screens-list.success-messages.screen-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -281,6 +259,7 @@ function ScreenList() {
     data,
     error: screensGetError,
     isLoading,
+    refetch
   } = useGetV1ScreensQuery({
     page,
     orderBy: sortBy?.path,

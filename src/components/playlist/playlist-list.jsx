@@ -55,6 +55,9 @@ function PlaylistList() {
   /** Deletes multiple playlists. */
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
+      if (isDeleteSuccess) {
+        displaySuccess(t("playlists-list.success-messages.playlist-delete"));
+      }
       // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       setLoadingMessage(t("playlists-list.loading-messages.deleting-playlist"));

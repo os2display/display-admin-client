@@ -35,7 +35,6 @@ function ThemesList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("themes-list.loading-messages.loading-themes")
   );
@@ -47,47 +46,27 @@ function ThemesList() {
   /** Deletes multiple themes. */
   useEffect(() => {
     if (themesToDelete.length > 0) {
-      setLoadingMessage(t("themes-list.loading-messages.deleting-themes"));
+      // As we are deleting multiple themes, the ui will jump if the "is deleting" value from the hook is used.
+
       setIsDeleting(true);
+      if (isDeleteSuccess) {
+        displaySuccess(t("themes-list.success-messages.theme-delete"));
+      }
+      setLoadingMessage(t("themes-list.loading-messages.deleting-themes"));
       const themeToDelete = themesToDelete.splice(0, 1).shift();
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
       DeleteV1Themes({ id: themeToDeleteId });
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("themes-list.success-messages.theme-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
     }
   }, [themesToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && themesToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("themes-list.success-messages.theme-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && themesToDelete.length === 0) {
+      displaySuccess(t("themes-list.success-messages.theme-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -224,6 +203,7 @@ function ThemesList() {
     data,
     error: themesGetError,
     isLoading,
+    refetch
   } = useGetV1ThemesQuery({
     page,
     orderBy: sortBy?.path,
