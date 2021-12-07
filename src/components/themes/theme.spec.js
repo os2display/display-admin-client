@@ -5,9 +5,7 @@ describe("Theme pages work", () => {
   });
 
   it("It loads create theme page", () => {
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/themes/edit/01FN64HM5FZ31XY7BSRPR62GHG"
-    );
+    cy.visit("/themes/edit/01FN64HM5FZ31XY7BSRPR62GHG");
     cy.get("#save_theme").should("exist");
   });
 

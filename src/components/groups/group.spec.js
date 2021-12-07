@@ -5,9 +5,7 @@ describe("Group pages work", () => {
   });
 
   it("It loads edit group page", () => {
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/group/edit/002PXW3YA40CVQ06BF098P03R1"
-    );
+    cy.visit("/group/edit/002PXW3YA40CVQ06BF098P03R1");
     cy.get("#save_group").should("exist");
   });
 

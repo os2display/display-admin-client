@@ -5,9 +5,7 @@ describe("Screen pages work", () => {
   });
 
   it("It loads create screen page", () => {
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/screen/edit/00D4JHAPQV09JG1MG714YE19V5"
-    );
+    cy.visit("screen/edit/00D4JHAPQV09JG1MG714YE19V5");
     cy.get("#save_screen").should("exist");
   });
 

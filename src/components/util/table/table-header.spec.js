@@ -50,9 +50,7 @@ describe("Table header loads", () => {
         page: "1",
       },
     }).as("slidesData");
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/slide/list?published=all&page=1&order=desc&sort=title"
-    );
+    cy.visit("/slide/list?published=all&page=1&order=desc&sort=title");
     cy.wait(["@slidesData"]);
     cy.get("tbody")
       .find("tr td")
@@ -69,9 +67,7 @@ describe("Table header loads", () => {
         page: "1",
       },
     }).as("slidesData");
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/slide/list?published=all&page=1&order=asc&sort=title&search=harum"
-    );
+    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title&search=harum");
     cy.wait(["@slidesData"]);
     // sort
     cy.get("tbody")
@@ -90,9 +86,7 @@ describe("Table header loads", () => {
         page: "1",
       },
     }).as("slidesData");
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/slide/list?page=1&order=asc&sort=title&published=not-published"
-    );
+    cy.visit("/slide/list?page=1&order=asc&sort=title&published=not-published");
     cy.wait(["@slidesData"]);
     cy.get("tbody")
       .find("tr td")

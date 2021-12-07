@@ -107,9 +107,6 @@ jobs:
       - name: Run the application
         run: docker compose --file docker-compose.actions.yml up -d
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Cypress run
         run: docker compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
 

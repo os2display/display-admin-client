@@ -5,9 +5,7 @@ describe("Playlist pages work", () => {
   });
 
   it("It loads create playlist page", () => {
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/playlist/edit/00HHKRWEGN0BAG08840TJK1HB0"
-    );
+    cy.visit("/playlist/edit/00HHKRWEGN0BAG08840TJK1HB0");
     cy.get("h1").contains(
       "Rediger følgende spilleliste: Alias voluptate quisquam voluptas."
     );

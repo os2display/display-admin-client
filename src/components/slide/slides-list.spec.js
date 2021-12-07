@@ -11,9 +11,7 @@ describe("Slides list tests", () => {
         page: "2",
       },
     }).as("slidesData");
-    cy.visit(
-      "http://display-admin-client.local.itkdev.dk/slide/list?published=all&page=2&order=asc&sort=title"
-    );
+    cy.visit("/slide/list?published=all&page=2&order=asc&sort=title");
     cy.wait(["@slidesData", "@templatesData"]);
   });
 
