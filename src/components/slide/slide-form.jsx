@@ -185,6 +185,20 @@ function SlideForm({
             </ContentBody>
           </>
         )}
+        {themesOptions && (
+          <ContentBody>
+            <MultiSelectComponent
+              isLoading={loadingThemes}
+              label={t("slide-form.slide-theme-label")}
+              handleSelection={selectTheme}
+              options={themesOptions}
+              selected={selectedTheme}
+              name="theme"
+              filterCallback={onFilterTheme}
+              singleSelect
+            />
+          </ContentBody>
+        )}
         <ContentBody>
           <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
           <Row className="g-2">
@@ -208,20 +222,6 @@ function SlideForm({
             </Col>
           </Row>
         </ContentBody>
-        {themesOptions && (
-          <ContentBody>
-            <MultiSelectComponent
-              isLoading={loadingThemes}
-              label={t("slide-form.slide-theme-label")}
-              handleSelection={selectTheme}
-              options={themesOptions}
-              selected={selectedTheme}
-              name="theme"
-              filterCallback={onFilterTheme}
-              singleSelect
-            />
-          </ContentBody>
-        )}
         <ContentFooter>
           <Button
             variant="secondary"
