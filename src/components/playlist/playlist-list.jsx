@@ -42,7 +42,6 @@ function PlaylistList() {
   const [searchText, setSearchText] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("playlists-list.loading-messages.loading-playlists")
   );
@@ -53,51 +52,51 @@ function PlaylistList() {
     { isSuccess: isDeleteSuccess, error: isDeleteError },
   ] = useDeleteV1PlaylistsByIdMutation();
 
+  // Get method
+  const {
+    data,
+    error: playlistsGetError,
+    isLoading,
+    refetch,
+  } = useGetV1PlaylistsQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+    published: isPublished,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
   /** Deletes multiple playlists. */
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
+      if (isDeleteSuccess) {
+        displaySuccess(t("playlists-list.success-messages.playlist-delete"));
+      }
       // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       setLoadingMessage(t("playlists-list.loading-messages.deleting-playlist"));
       const toDelete = playlistsToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Playlists({ id: toDeleteId });
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("playlists-list.success-messages.playlist-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
+    } else if (isDeleteSuccess && playlistsToDelete.length > 0) {
+      displaySuccess(t("playlists-list.success-messages.playlist-delete"));
     }
   }, [playlistsToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && playlistsToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("playlists-list.success-messages.playlist-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && playlistsToDelete.length === 0) {
+      displaySuccess(t("playlists-list.success-messages.playlist-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -116,10 +115,10 @@ function PlaylistList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -207,10 +206,10 @@ function PlaylistList() {
     {
       key: "pick",
       label: t("playlists-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
         />
       ),
     },
@@ -239,44 +238,22 @@ function PlaylistList() {
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(
-          data["@id"],
-          "playlist/edit",
-          t("playlists-list.edit-button")
-        ),
+      content: (d) =>
+        LinkForList(d["@id"], "playlist/edit", t("playlists-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <Button
           variant="danger"
           disabled={selectedRows.length > 0}
-          onClick={() => openDeleteModal(data)}
+          onClick={() => openDeleteModal(d)}
         >
           {t("playlists-list.delete-button")}
         </Button>
       ),
     },
   ];
-
-  const {
-    data,
-    error: playlistsGetError,
-    isLoading,
-  } = useGetV1PlaylistsQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-    published: isPublished,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of playlists
   useEffect(() => {

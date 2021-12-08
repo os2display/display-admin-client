@@ -51,7 +51,6 @@ function ScreenList() {
   const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("screens-list.loading-messages.loading-screens")
   );
@@ -61,6 +60,25 @@ function ScreenList() {
     DeleteV1Screens,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
   ] = useDeleteV1ScreensByIdMutation();
+
+  // Get method
+  const {
+    data,
+    error: screensGetError,
+    isLoading,
+    refetch,
+  } = useGetV1ScreensQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
 
   /** Set the view in url. */
   useEffect(() => {
@@ -73,47 +91,26 @@ function ScreenList() {
   /** Deletes multiple screens. */
   useEffect(() => {
     if (screensToDelete.length > 0) {
+      // As we are deleting multiple screens, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
+      if (isDeleteSuccess) {
+        displaySuccess(t("screens-list.success-messages.screen-delete"));
+      }
       setLoadingMessage(t("screens-list.loading-messages.deleting-screen"));
       const screenToDelete = screensToDelete.splice(0, 1).shift();
       const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
       DeleteV1Screens({ id: screenToDeleteId });
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("screens-list.success-messages.screen-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
     }
   }, [screensToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && screensToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("screens-list.success-messages.screen-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && screensToDelete.length === 0) {
+      displaySuccess(t("screens-list.success-messages.screen-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -132,10 +129,10 @@ function ScreenList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -212,17 +209,17 @@ function ScreenList() {
     {
       key: "pick",
       label: t("screens-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
         />
       ),
     },
     {
       path: "live",
       label: t("screens-list.columns.live"),
-      content: (data) => LiveIcon(data),
+      content: (d) => LiveIcon(d),
     },
     {
       path: "title",
@@ -254,21 +251,21 @@ function ScreenList() {
       key: "campaign",
       // @TODO: implement overridden by campaing
       label: t("screens-list.columns.campaign"),
-      content: (data) => CampaignIcon(data),
+      content: (d) => CampaignIcon(d),
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "screen/edit", t("screens-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "screen/edit", t("screens-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <>
           <Button
             variant="danger"
             disabled={selectedRows.length > 0}
-            onClick={() => openDeleteModal(data)}
+            onClick={() => openDeleteModal(d)}
           >
             {t("screens-list.delete-button")}
           </Button>
@@ -276,23 +273,6 @@ function ScreenList() {
       ),
     },
   ];
-
-  const {
-    data,
-    error: screensGetError,
-    isLoading,
-  } = useGetV1ScreensQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of screen
   useEffect(() => {

@@ -43,8 +43,7 @@ function SlidesList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
-  const [loadingMessage] = useState(
+  const [loadingMessage, setLoadingMessage] = useState(
     t("slides-list.loading-messages.loading-slides")
   );
 
@@ -52,51 +51,51 @@ function SlidesList() {
   const [DeleteV1Slides, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1SlidesByIdMutation();
 
+  // Get method
+  const {
+    data,
+    error: slidesGetError,
+    isLoading,
+    refetch,
+  } = useGetV1SlidesQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+    published: isPublished,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
   /** Deletes multiple slides. */
   useEffect(() => {
     if (slidesToDelete.length > 0) {
-      const localSlidesToDelete = [...slidesToDelete];
+      // As we are deleting multiple slides, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
+      if (isDeleteSuccess) {
+        displaySuccess(t("slides-list.success-messages.slide-delete"));
+      }
+      setLoadingMessage(t("slides-list.loading-messages.deleting-slide"));
+      const localSlidesToDelete = [...slidesToDelete];
       const slideToDelete = localSlidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
       DeleteV1Slides({ id: slideToDeleteId });
       setSlidesToDelete(localSlidesToDelete);
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("slides-list.success-messages.slide-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
     }
   }, [slidesToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && slidesToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("slides-list.success-messages.slide-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && slidesToDelete.length === 0) {
+      displaySuccess(t("slides-list.success-messages.slide-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -115,10 +114,10 @@ function SlidesList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -208,10 +207,10 @@ function SlidesList() {
     {
       key: "pick",
       label: t("slides-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
         />
       ),
     },
@@ -244,40 +243,22 @@ function SlidesList() {
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "slide/edit", t("slides-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "slide/edit", t("slides-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <Button
           variant="danger"
           disabled={selectedRows.length > 0}
-          onClick={() => openDeleteModal(data)}
+          onClick={() => openDeleteModal(d)}
         >
           {t("slides-list.delete-button")}
         </Button>
       ),
     },
   ];
-
-  const {
-    data,
-    error: slidesGetError,
-    isLoading,
-  } = useGetV1SlidesQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-    published: isPublished,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of slides
   useEffect(() => {

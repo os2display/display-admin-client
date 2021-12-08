@@ -35,7 +35,6 @@ function ThemesList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
-  const [localStorageMessages, setLocalStorageMessages] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("themes-list.loading-messages.loading-themes")
   );
@@ -44,50 +43,48 @@ function ThemesList() {
   const [DeleteV1Themes, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1ThemesByIdMutation();
 
+  const {
+    data,
+    error: themesGetError,
+    isLoading,
+    refetch,
+  } = useGetV1ThemesQuery({
+    page,
+    orderBy: sortBy?.path,
+    order: sortBy?.order,
+    title: searchText,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
   /** Deletes multiple themes. */
   useEffect(() => {
     if (themesToDelete.length > 0) {
-      setLoadingMessage(t("themes-list.loading-messages.deleting-themes"));
+      // As we are deleting multiple themes, the ui will jump if the "is deleting" value from the hook is used.
+
       setIsDeleting(true);
+      if (isDeleteSuccess) {
+        displaySuccess(t("themes-list.success-messages.theme-delete"));
+      }
+      setLoadingMessage(t("themes-list.loading-messages.deleting-themes"));
       const themeToDelete = themesToDelete.splice(0, 1).shift();
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
       DeleteV1Themes({ id: themeToDeleteId });
-    } else if (isDeleteSuccess) {
-      // If delete is a success, the list is reloaded, and a success message is saved in local storage for later use.
-      localStorage.setItem(
-        "messages",
-        JSON.stringify([
-          ...localStorageMessages,
-          t("themes-list.success-messages.theme-delete"),
-        ])
-      );
-      // @TODO: refetch
-      window.location.reload(false);
     }
   }, [themesToDelete, isDeleteSuccess]);
 
-  // Sets success-messages for local storage
+  // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && themesToDelete.length > 0) {
-      const localStorageMessagesCopy = [...localStorageMessages];
-      localStorageMessagesCopy.push(
-        t("themes-list.success-messages.theme-delete")
-      );
-      setLocalStorageMessages(localStorageMessagesCopy);
+    if (isDeleteSuccess && themesToDelete.length === 0) {
+      displaySuccess(t("themes-list.success-messages.theme-delete"));
+      refetch();
+      setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
-
-  // Display success messages from successfully deleted slides.
-  useEffect(() => {
-    // TODO: Refactor this when Redux Toolkit cache refresh is set up.
-    const messages = JSON.parse(localStorage.getItem("messages"));
-    if (messages) {
-      messages.forEach((element) => {
-        displaySuccess(element);
-      });
-      localStorage.removeItem("messages");
-    }
-  }, []);
 
   // Display error on unsuccessful deletion
   useEffect(() => {
@@ -106,10 +103,10 @@ function ThemesList() {
   /**
    * Sets the selected row in state.
    *
-   * @param {object} data The selected row.
+   * @param {object} row The selected row.
    */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
+  function handleSelected(row) {
+    setSelectedRows(selectedHelper(row, [...selectedRows]));
   }
 
   /** Clears the selected rows. */
@@ -174,12 +171,12 @@ function ThemesList() {
     {
       key: "pick",
       label: t("themes-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
+          onSelected={() => handleSelected(d)}
+          selected={selectedRows.indexOf(d) > -1}
           // eslint-disable-next-line react/destructuring-assignment
-          disabled={data.onSlides.length > 0}
+          disabled={d.onSlides.length > 0}
         />
       ),
     },
@@ -200,18 +197,18 @@ function ThemesList() {
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "themes/edit", t("themes-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "themes/edit", t("themes-list.edit-button")),
     },
     {
       key: "delete",
-      content: (data) => (
+      content: (d) => (
         <>
           <Button
             variant="danger"
             // eslint-disable-next-line react/destructuring-assignment
-            disabled={selectedRows.length > 0 || data.onSlides.length > 0}
-            onClick={() => openDeleteModal(data)}
+            disabled={selectedRows.length > 0 || d.onSlides.length > 0}
+            onClick={() => openDeleteModal(d)}
           >
             {t("themes-list.delete-button")}
           </Button>
@@ -219,23 +216,6 @@ function ThemesList() {
       ),
     },
   ];
-
-  const {
-    data,
-    error: themesGetError,
-    isLoading,
-  } = useGetV1ThemesQuery({
-    page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setListData(data);
-    }
-  }, [data]);
 
   // Error with retrieving list of themes
   useEffect(() => {
