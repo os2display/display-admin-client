@@ -238,11 +238,6 @@ function ScreenList() {
       label: t("screen-list.columns.location"),
     },
     {
-      key: "dimensions",
-      content: ({ dimensions }) => Dimensions(dimensions),
-      label: t("screen-list.columns.dimensions"),
-    },
-    {
       key: "campaign",
       // @TODO: implement overridden by campaing
       label: t("screen-list.columns.campaign"),
