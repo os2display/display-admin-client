@@ -21,7 +21,13 @@ describe("Slides list tests", () => {
   });
 
   it("It goes to edit (slides list)", () => {
+    cy.intercept({
+      method: "GET",
+      url: "**/templates/01FGC8EXSE1KCC1PTR0NHB0H3R",
+    }).as("templatesData");
+    cy.wait(["@templatesData"]);
     cy.get("#slidesTitle").should("not.exist");
+    cy.get("tbody").find("tr td a").should("exist");
     cy.get("tbody").find("tr td a").eq(0).click();
     cy.get("#slidesTitle").should("exist");
   });

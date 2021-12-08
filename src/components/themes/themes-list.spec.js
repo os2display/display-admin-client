@@ -22,15 +22,10 @@ describe("themes list tests", () => {
     cy.get("tbody").find("tr td a").eq(0).click();
     cy.get("#themeTitle").should("exist");
   });
+
   it("It opens delete modal (themes list)", () => {
     cy.get("#delete-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(1).should("be.disabled");
-    cy.get("tbody")
-      .find("tr")
-      .eq(3)
-      .find("td button")
-      .eq(1)
-      .should("not.be.disabled");
     cy.get("tbody").find("tr").eq(3).find("td button").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });

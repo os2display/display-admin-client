@@ -64,8 +64,12 @@ describe("Pagination loads", () => {
         page: "6",
       },
     }).as("slidesData");
+    cy.intercept({
+      method: "GET",
+      url: "**/templates/00HH42EEHC05QT14VQ041R1KEY",
+    }).as("templatesData");
     cy.visit("/slide/list?published=all&page=6&order=asc&sort=title");
-    cy.wait(["@slidesData"]);
+    cy.wait(["@slidesData", "@templatesData"]);
     cy.get(".pagination")
       .find(".page-item")
       .eq(5)
