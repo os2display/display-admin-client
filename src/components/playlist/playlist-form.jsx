@@ -62,20 +62,20 @@ function PlaylistForm({
           />
         </ContentBody>
         <ContentBody>
+          <h2 className="h4">{t("playlist-form.title-slides")}</h2>
+          <SelectSlidesTable
+            handleChange={handleInput}
+            name="slides"
+            slideId={slideId}
+          />
+        </ContentBody>
+        <ContentBody>
           <h2 className="h4">{t("playlist-form.schedule-header")}</h2>
           <Schedule
             schedules={playlist.schedules}
             onChange={(schedules) =>
               handleInput({ target: { id: "schedules", value: schedules } })
             }
-          />
-        </ContentBody>
-        <ContentBody>
-          <h2 className="h4">{t("playlist-form.title-slides")}</h2>
-          <SelectSlidesTable
-            handleChange={handleInput}
-            name="slides"
-            slideId={slideId}
           />
         </ContentBody>
         <ContentFooter>
