@@ -35,12 +35,18 @@ describe("Pagination loads", () => {
     // Wait for data
     cy.intercept({
       method: "GET",
+      url: "**/templates/001R8FR6VC10G51B200TK60QP3",
+    }).as("templatesData");
+
+    cy.intercept({
+      method: "GET",
       url: "**/slides*",
       query: {
         page: "10",
       },
     }).as("slidesData");
-    cy.wait(["@slidesData"]);
+
+    cy.wait(["@slidesData", "@templatesData"]);
 
     cy.get("tbody").find("tr").should("have.length", 10);
     cy.get("tbody")
