@@ -15,6 +15,7 @@ import {
   getNextOccurrences,
   getRruleString,
 } from "./schedule-util";
+import Duration from "./duration";
 
 /**
  * Schedule component.
@@ -61,7 +62,7 @@ function Schedule({ schedules, onChange }) {
     let value = targetValue;
     let parsedValue;
 
-    // Make sure duration field is an integer.
+    // Make sure number fields are an integer.
     if (targetId === "duration") {
       parsedValue = parseInt(targetValue, 10);
       value = !Number.isNaN(parsedValue) ? parsedValue : 0;
@@ -106,6 +107,73 @@ function Schedule({ schedules, onChange }) {
     return [];
   };
 
+  /**
+   * Set date value.
+   *
+   * @param {string} scheduleId - Schedule id.
+   * @param {object} target - Input target.
+   */
+  const setDateValue = (scheduleId, target) => {
+    const timestamp = new Date(target.value).getTime();
+
+    changeSchedule(scheduleId, target.id, new Date(timestamp));
+  };
+
+  /**
+   * Get date value for datetime-local input.
+   *
+   * @param {Date} date - The date.
+   * @returns {string} - The date formatted for datetime-local.
+   */
+  const getDateValue = (date) => {
+    return date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : "";
+  };
+
+  /**
+   * Converts UTC time values to local time.
+   *
+   * @param {number | null} hour - The UTC hour.
+   * @param {number | null} minute - The UTC minute.
+   * @returns {string} - Time values as a string of format HH:mm.
+   */
+  const getTimeValue = (hour, minute) => {
+    if (hour === undefined || minute === undefined) return "";
+
+    const newDate = new Date();
+    const date = new Date(
+      Date.UTC(
+        newDate.getUTCFullYear(),
+        newDate.getUTCMonth(),
+        newDate.getUTCDate(),
+        hour,
+        minute
+      )
+    );
+
+    return `${date.getHours().toString().padStart(2, "0")}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  /**
+   * Set time value for schedule with id.
+   *
+   * @param {string} scheduleId - Schedule id.
+   * @param {object} target - Input target.
+   */
+  const setTimeValue = (scheduleId, target) => {
+    const { value } = target;
+    const split = value.split(":");
+
+    const date = new Date();
+    date.setHours(parseInt(split[0], 10));
+    date.setMinutes(parseInt(split[1], 10));
+
+    changeSchedule(scheduleId, "byhour", date.getUTCHours());
+    changeSchedule(scheduleId, "byminute", date.getUTCMinutes());
+  };
+
   return (
     <div className="Schedule">
       <Button variant="primary" className="mb-2 mt-2" onClick={addSchedule}>
@@ -124,43 +192,42 @@ function Schedule({ schedules, onChange }) {
                 <div className="col">
                   <FormInput
                     label={t("schedule.dtstart")}
-                    value={
-                      schedule.dtstart
-                        ? dayjs(schedule.dtstart).format("YYYY-MM-DDTHH:mm")
-                        : ""
-                    }
+                    value={getDateValue(schedule.dtstart)}
                     name="dtstart"
-                    onChange={({ target }) =>
-                      changeSchedule(
-                        schedule.id,
-                        target.id,
-                        dayjs(target.value).toDate()
-                      )
-                    }
+                    onChange={({ target }) => setDateValue(schedule.id, target)}
                     type="datetime-local"
                   />
                 </div>
                 <div className="col">
                   <FormInput
                     label={t("schedule.until")}
-                    value={
-                      schedule.until
-                        ? dayjs(schedule.until).format("YYYY-MM-DDTHH:mm")
-                        : ""
-                    }
+                    value={getDateValue(schedule.until)}
                     name="until"
-                    onChange={({ target }) =>
-                      changeSchedule(
-                        schedule.id,
-                        target.id,
-                        dayjs(target.value).toDate()
-                      )
-                    }
+                    onChange={({ target }) => setDateValue(schedule.id, target)}
                     type="datetime-local"
                   />
                 </div>
               </div>
-
+              <div className="row mt-2">
+                <div className="col">
+                  <Duration
+                    duration={schedule.duration}
+                    onChange={(newValue) => {
+                      changeSchedule(schedule.id, "duration", newValue);
+                    }}
+                    label={t("schedule.duration")}
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    onChange={({ target }) => setTimeValue(schedule.id, target)}
+                    value={getTimeValue(schedule.byhour, schedule.byminute)}
+                    label={t("schedule.bytime")}
+                    type="time"
+                    name="bytime"
+                  />
+                </div>
+              </div>
               <div className="row mt-2">
                 <div className="col">
                   <Select
@@ -212,34 +279,6 @@ function Schedule({ schedules, onChange }) {
 
               <div className="row mt-2">
                 <div className="col">
-                  <FormInput
-                    label={t("schedule.duration")}
-                    value={schedule.duration}
-                    onChange={({ target }) =>
-                      changeSchedule(schedule.id, target.id, target.value)
-                    }
-                    name="duration"
-                    type="number"
-                    min="1"
-                  />
-                </div>
-                <div className="col">
-                  <FormInput
-                    label={t("schedule.byweekno")}
-                    value={schedule.byweekno ?? ""}
-                    onChange={({ target }) =>
-                      changeSchedule(schedule.id, target.id, target.value)
-                    }
-                    name="byweekno"
-                    type="number"
-                    min="0"
-                    max="52"
-                  />
-                </div>
-              </div>
-
-              <div className="row mt-2">
-                <div className="col">
                   <FormGroup>
                     <label htmlFor="bymonth" className="mb-2">
                       {t("schedule.bymonth")}
@@ -265,6 +304,19 @@ function Schedule({ schedules, onChange }) {
                       }
                     />
                   </FormGroup>
+                </div>
+                <div className="col">
+                  <FormInput
+                    label={t("schedule.byweekno")}
+                    value={schedule.byweekno ?? ""}
+                    onChange={({ target }) =>
+                      changeSchedule(schedule.id, target.id, target.value)
+                    }
+                    name="byweekno"
+                    type="number"
+                    min="0"
+                    max="52"
+                  />
                 </div>
               </div>
             </div>
