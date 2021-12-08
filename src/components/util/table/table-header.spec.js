@@ -30,11 +30,14 @@ describe("Table header loads", () => {
       method: "GET",
       url: "**/slides*",
       query: {
-        sort: "title",
-        order: "desc",
+        page: "1"
       },
     }).as("slidesData");
-    cy.wait(["@slidesData"]);
+    cy.intercept({
+      method: "GET",
+      url: "**/templates/00EZZGVW6P0KSH0PV90G6Y0HFY",
+    }).as("templatesData");
+    cy.wait(["@slidesData", "@templatesData"]);
     cy.get("tbody")
       .find("tr td")
       .eq(1)
@@ -50,8 +53,12 @@ describe("Table header loads", () => {
         page: "1",
       },
     }).as("slidesData");
+    cy.intercept({
+      method: "GET",
+      url: "**/templates/00EZZGVW6P0KSH0PV90G6Y0HFY",
+    }).as("templatesData");
     cy.visit("/slide/list?published=all&page=1&order=desc&sort=title");
-    cy.wait(["@slidesData"]);
+    cy.wait(["@slidesData", "@templatesData"]);
     cy.get("tbody")
       .find("tr td")
       .eq(1)
@@ -64,12 +71,15 @@ describe("Table header loads", () => {
       method: "GET",
       url: "**/slides*",
       query: {
-        page: "1",
+        page: "1"
       },
     }).as("slidesData");
+    cy.intercept({
+      method: "GET",
+      url: "**/templates/00MWCNKC4P0X5C0AT70E741E2V",
+    }).as("templatesData");
     cy.visit("/slide/list?published=all&page=1&order=asc&sort=title&search=harum");
-    cy.wait(["@slidesData"]);
-    // sort
+    cy.wait(["@slidesData", "@templatesData"]);
     cy.get("tbody")
       .find("tr td")
       .eq(1)
@@ -86,8 +96,12 @@ describe("Table header loads", () => {
         page: "1",
       },
     }).as("slidesData");
+      cy.intercept({
+      method: "GET",
+      url: "**/templates/000BGWFMBS15N807E60HP91JCX",
+    }).as("templatesData");
     cy.visit("/slide/list?page=1&order=asc&sort=title&published=not-published");
-    cy.wait(["@slidesData"]);
+    cy.wait(["@slidesData", "@templatesData"]);
     cy.get("tbody")
       .find("tr td")
       .eq(1)
