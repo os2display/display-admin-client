@@ -112,7 +112,7 @@ function Schedule({ schedules, onChange }) {
    * @param {string} scheduleId - Schedule id.
    * @param {object} target - Input target.
    */
-  const onDateChange = (scheduleId, target) => {
+  const setDateValue = (scheduleId, target) => {
     const timestamp = new Date(target.value).getTime();
 
     changeSchedule(
@@ -186,7 +186,7 @@ function Schedule({ schedules, onChange }) {
                   label={t("schedule.dtstart")}
                   value={getDateValue(schedule.dtstart)}
                   name="dtstart"
-                  onChange={({ target }) => onDateChange(schedule.id, target)}
+                  onChange={({ target }) => setDateValue(schedule.id, target)}
                   type="datetime-local"
                 />
               </div>
@@ -195,7 +195,7 @@ function Schedule({ schedules, onChange }) {
                   label={t("schedule.until")}
                   value={getDateValue(schedule.until)}
                   name="until"
-                  onChange={({ target }) => onDateChange(schedule.id, target)}
+                  onChange={({ target }) => setDateValue(schedule.id, target)}
                   type="datetime-local"
                 />
               </div>
