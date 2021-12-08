@@ -19,15 +19,17 @@ function Duration({ label, duration, onChange }) {
   const [hours, setHours] = useState();
 
   const onValueChange = ({ target }) => {
+    const targetValue = parseInt(target.value, 10);
+
     if (target.id === "duration_hour") {
-      onChange(minutes * 60 + parseInt(target.value, 10) * 3600);
+      onChange(minutes * 60 + targetValue * 3600);
     } else if (target.id === "duration_minute") {
-      onChange(parseInt(target.value, 10) * 60 + hours * 3600);
+      onChange(targetValue * 60 + hours * 3600);
     }
   };
 
   useEffect(() => {
-    if (duration) {
+    if (duration !== undefined) {
       const seconds = duration % 60;
       const durationWithoutSeconds = duration - seconds;
       const newMinutes = durationWithoutSeconds / 60;
@@ -51,6 +53,7 @@ function Duration({ label, duration, onChange }) {
           onChange={onValueChange}
           name="duration_hour"
           type="number"
+          min="0"
           aria-label={t("duration.hours")}
           aria-describedby="duration-hours"
           inputGroupExtra={
@@ -67,6 +70,7 @@ function Duration({ label, duration, onChange }) {
           onChange={onValueChange}
           name="duration_minute"
           type="number"
+          min="0"
           aria-label={t("duration.minutes")}
           aria-describedby="duration-minutes"
           inputGroupExtra={
