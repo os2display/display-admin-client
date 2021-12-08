@@ -539,7 +539,7 @@
     "plan": "Planlægning",
     "add-schedule-button-text": "Tilføj",
     "remove": "Fjern",
-    "duration": "Forekomsternes varighed (i sekunder)",
+    "duration": "Forekomsternes varighed",
     "byweekno": "Ugenummer",
     "bymonth": "Valgte måneder",
     "byweekday": "Valgte ugedage",
@@ -548,7 +548,7 @@
     "hide-details": "Skjul detaljer",
     "jan": "Januar",
     "feb": "Februar",
-    "mar": "March",
+    "mar": "Marts",
     "apr": "April",
     "may": "Maj",
     "jun": "Juni",
@@ -580,5 +580,9 @@
     "selected-all": "Vælg alle",
     "select-some-options": "Vælg...",
     "bytime": "Tidspunkt på dagen"
+  },
+  "duration": {
+    "hours": "t.",
+    "minutes": "min."
   }
 }

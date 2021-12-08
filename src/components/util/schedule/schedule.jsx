@@ -15,6 +15,7 @@ import {
   getNextOccurrences,
   getRruleString
 } from "./schedule-util";
+import Duration from "./duration";
 
 /**
  * Schedule component.
@@ -202,16 +203,12 @@ function Schedule({ schedules, onChange }) {
             </div>
             <div className="row mt-2">
               <div className="col">
-                <FormInput
-                  label={t("schedule.duration")}
-                  value={schedule.duration}
-                  onChange={({ target }) =>
-                    changeSchedule(schedule.id, target.id, target.value)
-                  }
-                  name="duration"
-                  type="number"
-                  min="1"
-                />
+                <Duration
+                  duration={schedule.duration}
+                  onChange={(newValue) => {
+                    changeSchedule(schedule.id, 'duration', newValue)
+                  }}
+                  label={t('schedule.duration')}/>
               </div>
               <div className="col">
                 <FormInput
