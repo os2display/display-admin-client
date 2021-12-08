@@ -10,10 +10,8 @@ import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
-import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import Dimensions from "./dimension";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1ScreensQuery,
@@ -52,7 +50,7 @@ function ScreenList() {
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("screens-list.loading-messages.loading-screens")
+    t("screen-list.loading-messages.loading-screens")
   );
 
   // Delete call
@@ -94,9 +92,9 @@ function ScreenList() {
       // As we are deleting multiple screens, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       if (isDeleteSuccess) {
-        displaySuccess(t("screens-list.success-messages.screen-delete"));
+        displaySuccess(t("screen-list.success-messages.screen-delete"));
       }
-      setLoadingMessage(t("screens-list.loading-messages.deleting-screen"));
+      setLoadingMessage(t("screen-list.loading-messages.deleting-screen"));
       const screenToDelete = screensToDelete.splice(0, 1).shift();
       const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
       DeleteV1Screens({ id: screenToDeleteId });
@@ -106,7 +104,7 @@ function ScreenList() {
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && screensToDelete.length === 0) {
-      displaySuccess(t("screens-list.success-messages.screen-delete"));
+      displaySuccess(t("screen-list.success-messages.screen-delete"));
       refetch();
       setIsDeleting(false);
     }
@@ -117,7 +115,7 @@ function ScreenList() {
     if (isDeleteError) {
       setIsDeleting(false);
       displayError(
-        t("screens-list.error-messages.screen-delete-error", {
+        t("screen-list.error-messages.screen-delete-error", {
           error: isDeleteError.error
             ? isDeleteError.error
             : isDeleteError.data["hydra:description"],
@@ -208,7 +206,7 @@ function ScreenList() {
   const columns = [
     {
       key: "pick",
-      label: t("screens-list.columns.pick"),
+      label: t("screen-list.columns.pick"),
       content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
@@ -217,14 +215,9 @@ function ScreenList() {
       ),
     },
     {
-      path: "live",
-      label: t("screens-list.columns.live"),
-      content: (d) => LiveIcon(d),
-    },
-    {
       path: "title",
       sort: true,
-      label: t("screens-list.columns.name"),
+      label: t("screen-list.columns.name"),
     },
     {
       // eslint-disable-next-line react/prop-types
@@ -236,27 +229,22 @@ function ScreenList() {
         />
       ),
       key: "groups",
-      label: t("screens-list.columns.on-groups"),
+      label: t("screen-list.columns.on-groups"),
     },
     {
-      path: "size",
-      label: t("screens-list.columns.size"),
-    },
-    {
-      key: "dimensions",
-      content: ({ dimensions }) => Dimensions(dimensions),
-      label: t("screens-list.columns.dimensions"),
+      path: "location",
+      label: t("screen-list.columns.location"),
     },
     {
       key: "campaign",
       // @TODO: implement overridden by campaing
-      label: t("screens-list.columns.campaign"),
+      label: t("screen-list.columns.campaign"),
       content: (d) => CampaignIcon(d),
     },
     {
       key: "edit",
       content: (d) =>
-        LinkForList(d["@id"], "screen/edit", t("screens-list.edit-button")),
+        LinkForList(d["@id"], "screen/edit", t("screen-list.edit-button")),
     },
     {
       key: "delete",
@@ -267,7 +255,7 @@ function ScreenList() {
             disabled={selectedRows.length > 0}
             onClick={() => openDeleteModal(d)}
           >
-            {t("screens-list.delete-button")}
+            {t("screen-list.delete-button")}
           </Button>
         </>
       ),
@@ -278,7 +266,7 @@ function ScreenList() {
   useEffect(() => {
     if (screensGetError) {
       displayError(
-        t("screens-list.error-messages.screens-load-error", {
+        t("screen-list.error-messages.screens-load-error", {
           error: screensGetError.error
             ? screensGetError.error
             : screensGetError.data["hydra:description"],
@@ -290,19 +278,19 @@ function ScreenList() {
   return (
     <>
       <ContentHeader
-        title={t("screens-list.header")}
-        newBtnTitle={t("screens-list.create-new-screen")}
+        title={t("screen-list.header")}
+        newBtnTitle={t("screen-list.create-new-screen")}
         newBtnLink="/screen/create"
       />
       <Col md="auto">
         {view === "list" && (
           <Button onClick={() => setView("calendar")}>
-            {t("screens-list.change-view-calendar")}
+            {t("screen-list.change-view-calendar")}
           </Button>
         )}
         {view === "calendar" && (
           <Button onClick={() => setView("list")}>
-            {t("screens-list.change-view-list")}
+            {t("screen-list.change-view-list")}
           </Button>
         )}
       </Col>
@@ -338,7 +326,7 @@ function ScreenList() {
         apiCall={useGetV1ScreensByIdScreenGroupsQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={inGroups}
-        modalTitle={t("screens-list.info-modal.screen-in-groups")}
+        modalTitle={t("screen-list.info-modal.screen-in-groups")}
       />
     </>
   );
