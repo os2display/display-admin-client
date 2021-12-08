@@ -13,7 +13,7 @@ import {
   getByWeekdayOptions,
   getFreqOptions,
   getNextOccurrences,
-  getRruleString
+  getRruleString,
 } from "./schedule-util";
 import Duration from "./duration";
 
@@ -116,18 +116,14 @@ function Schedule({ schedules, onChange }) {
   const setDateValue = (scheduleId, target) => {
     const timestamp = new Date(target.value).getTime();
 
-    changeSchedule(
-      scheduleId,
-      target.id,
-      new Date(timestamp),
-    );
+    changeSchedule(scheduleId, target.id, new Date(timestamp));
   };
 
   /**
    * Get date value for datetime-local input.
    *
    * @param {Date} date - The date.
-   * @return {string} - The date formatted for datetime-local.
+   * @returns {string} - The date formatted for datetime-local.
    */
   const getDateValue = (date) => {
     return date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : "";
@@ -136,18 +132,29 @@ function Schedule({ schedules, onChange }) {
   /**
    * Converts UTC time values to local time.
    *
-   * @param {number|null} hour - The UTC hour.
-   * @param {number|null} minute - The UTC minute.
-   * @return {string}
+   * @param {number | null} hour - The UTC hour.
+   * @param {number | null} minute - The UTC minute.
+   * @returns {string} - Time values as a string of format HH:mm.
    */
   const getTimeValue = (hour, minute) => {
-    if (hour === undefined || minute === undefined) return '';
+    if (hour === undefined || minute === undefined) return "";
 
     const newDate = new Date();
-    const date = new Date(Date.UTC(newDate.getUTCFullYear(),newDate.getUTCMonth(),newDate.getUTCDate(), hour, minute));
+    const date = new Date(
+      Date.UTC(
+        newDate.getUTCFullYear(),
+        newDate.getUTCMonth(),
+        newDate.getUTCDate(),
+        hour,
+        minute
+      )
+    );
 
-    return `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
-  }
+    return `${date.getHours().toString().padStart(2, "0")}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   /**
    * Set time value for schedule with id.
@@ -156,16 +163,16 @@ function Schedule({ schedules, onChange }) {
    * @param {object} target - Input target.
    */
   const setTimeValue = (scheduleId, target) => {
-    const value = target.value;
+    const { value } = target;
     const split = value.split(":");
 
     const date = new Date();
-    date.setHours(parseInt(split[0]));
-    date.setMinutes(parseInt(split[1]));
+    date.setHours(parseInt(split[0], 10));
+    date.setMinutes(parseInt(split[1], 10));
 
     changeSchedule(scheduleId, "byhour", date.getUTCHours());
     changeSchedule(scheduleId, "byminute", date.getUTCMinutes());
-  }
+  };
 
   return (
     <div className="Schedule">
@@ -174,182 +181,184 @@ function Schedule({ schedules, onChange }) {
       </Button>
 
       {localSchedules &&
-      localSchedules.map((schedule, index) => (
-        <div key={schedule.id} className="Schedule-item card mt-2 mb-2">
-          <div className="card-header">
-            {t("schedule.plan")} #{index + 1}
-          </div>
-
-          <div className="card-body container">
-            <div className="row">
-              <div className="col">
-                <FormInput
-                  label={t("schedule.dtstart")}
-                  value={getDateValue(schedule.dtstart)}
-                  name="dtstart"
-                  onChange={({ target }) => setDateValue(schedule.id, target)}
-                  type="datetime-local"
-                />
-              </div>
-              <div className="col">
-                <FormInput
-                  label={t("schedule.until")}
-                  value={getDateValue(schedule.until)}
-                  name="until"
-                  onChange={({ target }) => setDateValue(schedule.id, target)}
-                  type="datetime-local"
-                />
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col">
-                <Duration
-                  duration={schedule.duration}
-                  onChange={(newValue) => {
-                    changeSchedule(schedule.id, 'duration', newValue)
-                  }}
-                  label={t('schedule.duration')}/>
-              </div>
-              <div className="col">
-                <FormInput
-                  onChange={({ target }) => setTimeValue(schedule.id, target)}
-                  value={getTimeValue(schedule.byhour, schedule.byminute)}
-                  label={t("schedule.bytime")}
-                  type="time"
-                  name="bytime" />
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col">
-                <Select
-                  onChange={({ target }) =>
-                    changeSchedule(schedule.id, target.id, target.value)
-                  }
-                  value={schedule.freq}
-                  label={t("schedule.freq")}
-                  name="freq"
-                  options={freqOptions}
-                  allowNull={false}
-                />
-              </div>
-              <div className="col">
-                <FormGroup>
-                  <label htmlFor="byweekday">{t("schedule.byweekday")}</label>
-                  <MultiSelect
-                    className="mt-2"
-                    options={byWeekdayOptions}
-                    value={
-                      schedule.byweekday
-                        ? schedule.byweekday.map((weekdayNumber) =>
-                          byWeekdayOptions.find(
-                            (weekDay) => weekDay.value === weekdayNumber
-                          )
-                        )
-                        : []
-                    }
-                    name="byweekday"
-                    disableSearch
-                    overrideStrings={{
-                      allItemsAreSelected: t("schedule.all-selected"),
-                      clearSelected: t("schedule.clear-selection"),
-                      selectAll: t("schedule.selected-all"),
-                      selectSomeItems: t("schedule.select-some-options")
-                    }}
-                    labelledBy="Select"
-                    onChange={(value) => {
-                      changeSchedule(
-                        schedule.id,
-                        "byweekday",
-                        value.map((v) => v.value)
-                      );
-                    }}
-                  />
-                </FormGroup>
-              </div>
+        localSchedules.map((schedule, index) => (
+          <div key={schedule.id} className="Schedule-item card mt-2 mb-2">
+            <div className="card-header">
+              {t("schedule.plan")} #{index + 1}
             </div>
 
-            <div className="row mt-2">
-              <div className="col">
-                <FormGroup>
-                  <label htmlFor="bymonth" className="mb-2">
-                    {t("schedule.bymonth")}
-                  </label>
-                  <MultiSelect
-                    options={byMonthOptions}
-                    value={getByMonthValue(schedule.bymonth)}
-                    name="bymonth"
-                    disableSearch
-                    labelledBy="Select"
-                    overrideStrings={{
-                      allItemsAreSelected: t("schedule.all-selected"),
-                      clearSelected: t("schedule.clear-selection"),
-                      selectAll: t("schedule.selected-all"),
-                      selectSomeItems: t("schedule.select-some-options")
-                    }}
-                    onChange={(values) =>
-                      changeSchedule(
-                        schedule.id,
-                        "bymonth",
-                        values.map((v) => v.value)
-                      )
-                    }
-                  />
-                </FormGroup>
-              </div>
-              <div className="col">
-                <FormInput
-                  label={t("schedule.byweekno")}
-                  value={schedule.byweekno ?? ""}
-                  onChange={({ target }) =>
-                    changeSchedule(schedule.id, target.id, target.value)
-                  }
-                  name="byweekno"
-                  type="number"
-                  min="0"
-                  max="52"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="card-footer">
-            <div className="row">
-              <div className="col d-flex justify-content-end">
-                <Button
-                  className="mt-2 mb-2 me-2"
-                  variant="secondary"
-                  onClick={() => setShowRRuleDetails(!showRRuleDetails)}
-                >
-                  {showRRuleDetails
-                    ? t("schedule.hide-details")
-                    : t("schedule.show-details")}
-                </Button>
-                <Button
-                  className="mt-2 mb-2"
-                  variant="danger"
-                  onClick={() => removeSchedule(schedule.id)}
-                >
-                  {t("schedule.remove")}
-                </Button>
-              </div>
-            </div>
-            {showRRuleDetails && (
+            <div className="card-body container">
               <div className="row">
-                <strong>{t("schedule.rrulestring")}:</strong>
-                <span>{schedule.rrule}</span>
-                <div className="mt-2">
-                  <strong>{t("schedule.next-occurrences")}:</strong>
-                  {getNextOccurrences(schedule.rruleObject).map(
-                    (occurrence) => (
-                      <div key={occurrence.key}>{occurrence.text}</div>
-                    )
-                  )}
+                <div className="col">
+                  <FormInput
+                    label={t("schedule.dtstart")}
+                    value={getDateValue(schedule.dtstart)}
+                    name="dtstart"
+                    onChange={({ target }) => setDateValue(schedule.id, target)}
+                    type="datetime-local"
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    label={t("schedule.until")}
+                    value={getDateValue(schedule.until)}
+                    name="until"
+                    onChange={({ target }) => setDateValue(schedule.id, target)}
+                    type="datetime-local"
+                  />
                 </div>
               </div>
-            )}
+              <div className="row mt-2">
+                <div className="col">
+                  <Duration
+                    duration={schedule.duration}
+                    onChange={(newValue) => {
+                      changeSchedule(schedule.id, "duration", newValue);
+                    }}
+                    label={t("schedule.duration")}
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    onChange={({ target }) => setTimeValue(schedule.id, target)}
+                    value={getTimeValue(schedule.byhour, schedule.byminute)}
+                    label={t("schedule.bytime")}
+                    type="time"
+                    name="bytime"
+                  />
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="col">
+                  <Select
+                    onChange={({ target }) =>
+                      changeSchedule(schedule.id, target.id, target.value)
+                    }
+                    value={schedule.freq}
+                    label={t("schedule.freq")}
+                    name="freq"
+                    options={freqOptions}
+                    allowNull={false}
+                  />
+                </div>
+                <div className="col">
+                  <FormGroup>
+                    <label htmlFor="byweekday">{t("schedule.byweekday")}</label>
+                    <MultiSelect
+                      className="mt-2"
+                      options={byWeekdayOptions}
+                      value={
+                        schedule.byweekday
+                          ? schedule.byweekday.map((weekdayNumber) =>
+                              byWeekdayOptions.find(
+                                (weekDay) => weekDay.value === weekdayNumber
+                              )
+                            )
+                          : []
+                      }
+                      name="byweekday"
+                      disableSearch
+                      overrideStrings={{
+                        allItemsAreSelected: t("schedule.all-selected"),
+                        clearSelected: t("schedule.clear-selection"),
+                        selectAll: t("schedule.selected-all"),
+                        selectSomeItems: t("schedule.select-some-options"),
+                      }}
+                      labelledBy="Select"
+                      onChange={(value) => {
+                        changeSchedule(
+                          schedule.id,
+                          "byweekday",
+                          value.map((v) => v.value)
+                        );
+                      }}
+                    />
+                  </FormGroup>
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col">
+                  <FormGroup>
+                    <label htmlFor="bymonth" className="mb-2">
+                      {t("schedule.bymonth")}
+                    </label>
+                    <MultiSelect
+                      options={byMonthOptions}
+                      value={getByMonthValue(schedule.bymonth)}
+                      name="bymonth"
+                      disableSearch
+                      labelledBy="Select"
+                      overrideStrings={{
+                        allItemsAreSelected: t("schedule.all-selected"),
+                        clearSelected: t("schedule.clear-selection"),
+                        selectAll: t("schedule.selected-all"),
+                        selectSomeItems: t("schedule.select-some-options"),
+                      }}
+                      onChange={(values) =>
+                        changeSchedule(
+                          schedule.id,
+                          "bymonth",
+                          values.map((v) => v.value)
+                        )
+                      }
+                    />
+                  </FormGroup>
+                </div>
+                <div className="col">
+                  <FormInput
+                    label={t("schedule.byweekno")}
+                    value={schedule.byweekno ?? ""}
+                    onChange={({ target }) =>
+                      changeSchedule(schedule.id, target.id, target.value)
+                    }
+                    name="byweekno"
+                    type="number"
+                    min="0"
+                    max="52"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="card-footer">
+              <div className="row">
+                <div className="col d-flex justify-content-end">
+                  <Button
+                    className="mt-2 mb-2 me-2"
+                    variant="secondary"
+                    onClick={() => setShowRRuleDetails(!showRRuleDetails)}
+                  >
+                    {showRRuleDetails
+                      ? t("schedule.hide-details")
+                      : t("schedule.show-details")}
+                  </Button>
+                  <Button
+                    className="mt-2 mb-2"
+                    variant="danger"
+                    onClick={() => removeSchedule(schedule.id)}
+                  >
+                    {t("schedule.remove")}
+                  </Button>
+                </div>
+              </div>
+              {showRRuleDetails && (
+                <div className="row">
+                  <strong>{t("schedule.rrulestring")}:</strong>
+                  <span>{schedule.rrule}</span>
+                  <div className="mt-2">
+                    <strong>{t("schedule.next-occurrences")}:</strong>
+                    {getNextOccurrences(schedule.rruleObject).map(
+                      (occurrence) => (
+                        <div key={occurrence.key}>{occurrence.text}</div>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 }
@@ -359,10 +368,10 @@ Schedule.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       rrule: PropTypes.string.isRequired,
-      duration: PropTypes.number.isRequired
+      duration: PropTypes.number.isRequired,
     })
   ).isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Schedule;

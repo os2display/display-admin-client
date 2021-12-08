@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
  * @param {string} props.invalidText The text if the input is invalid
  * @param {string} props.formGroupClasses Classes for the formgroup
  * @param {string} props.disabled If the input is disabled
- * @param {object|null} props.inputGroupExtra Extra elements for input group.
+ * @param {object | null} props.inputGroupExtra Extra elements for input group.
  * @returns {object} An input.
  */
 function FormInput({
@@ -49,12 +49,12 @@ function FormInput({
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClasses}>
-      {label &&
+      {label && (
         <FormLabel htmlFor={name}>
           {label}
           {required && " *"}
         </FormLabel>
-      }
+      )}
       <InputGroup hasValidation>
         <FormControl
           name={name}

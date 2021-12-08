@@ -13,6 +13,12 @@ dayjs.extend(localizedFormat);
  * @returns {string} - RRule string.
  */
 const getRruleString = (schedule) => {
+  // If bysecond is set, use that. Otherwise, if byhour or minute is set default to 0.
+  let bysecond = schedule.bysecond ?? null;
+  if (!bysecond) {
+    bysecond = schedule.byhour || schedule.byminute ? 0 : null;
+  }
+
   const rrule = new RRule({
     wkst: schedule.wkst,
     freq: schedule.freq,
@@ -20,8 +26,7 @@ const getRruleString = (schedule) => {
     until: schedule.until,
     byhour: schedule.byhour,
     byminute: schedule.byminute,
-    // If bysecond is set, use that. Otherwise, if byhour or minute is set default to 0.
-    bysecond: schedule.bysecond ? schedule.bysecond : (schedule.byhour || schedule.byminute ? 0 : null),
+    bysecond,
     byweekday: schedule.byweekday,
     bymonth: schedule.bymonth,
     byweekno: schedule.byweekno,
