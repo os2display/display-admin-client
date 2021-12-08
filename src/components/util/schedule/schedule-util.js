@@ -17,7 +17,6 @@ const getRruleString = (schedule) => {
     wkst: schedule.wkst,
     freq: schedule.freq,
     dtstart: schedule.dtstart,
-    tzid: schedule.tzid,
     until: schedule.until,
     byhour: schedule.byhour,
     byminute: schedule.byminute,
@@ -37,13 +36,13 @@ const getRruleString = (schedule) => {
  * @returns {object} - The new schedule.
  */
 const createNewSchedule = () => {
+  const nowTimestamp = new Date().getTime();
+
   const newSchedule = {
-    id: ulid(new Date().getTime()),
+    id: ulid(nowTimestamp),
     duration: 60 * 60 * 24, // Default one day.
     freq: RRule.WEEKLY,
-    dtstart: new Date(),
-    // TODO: Make configurable.
-    tzid: "Europe/Brussels",
+    dtstart: new Date(nowTimestamp),
     until: null,
     wkst: 0,
     byhour: null,
