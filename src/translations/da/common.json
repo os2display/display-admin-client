@@ -572,12 +572,13 @@
     "hourly": "Time",
     "minutely": "Minut",
     "rrulestring": "RRule",
-    "dtstart": "Start dato",
-    "until": "Slut dato",
+    "dtstart": "Startdato",
+    "until": "Slutdato",
     "next-occurrences": "Næste 5 forekomster",
     "all-selected": "Alle er valgt",
     "clear-selection": "Ryd valg",
-    "selected-all": "Vælg all",
-    "select-some-options": "Vælg..."
+    "selected-all": "Vælg alle",
+    "select-some-options": "Vælg...",
+    "bytime": "Tidspunkt på dagen"
   }
 }

@@ -17,7 +17,12 @@ const getRruleString = (schedule) => {
     wkst: schedule.wkst,
     freq: schedule.freq,
     dtstart: schedule.dtstart,
+    tzid: schedule.tzid,
     until: schedule.until,
+    byhour: schedule.byhour,
+    byminute: schedule.byminute,
+    // If bysecond is set, use that. Otherwise, if byhour or minute is set default to 0.
+    bysecond: schedule.bysecond ? schedule.bysecond : (schedule.byhour || schedule.byminute ? 0 : null),
     byweekday: schedule.byweekday,
     bymonth: schedule.bymonth,
     byweekno: schedule.byweekno,
@@ -37,8 +42,12 @@ const createNewSchedule = () => {
     duration: 60 * 60 * 24, // Default one day.
     freq: RRule.WEEKLY,
     dtstart: new Date(),
+    // TODO: Make configurable.
+    tzid: "Europe/Brussels",
     until: null,
     wkst: 0,
+    byhour: null,
+    byminute: null,
     byweekday: [],
     bymonth: [],
     byweekno: "",

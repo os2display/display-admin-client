@@ -61,8 +61,8 @@ function Schedule({ schedules, onChange }) {
     let value = targetValue;
     let parsedValue;
 
-    // Make sure duration field is an integer.
-    if (targetId === "duration") {
+    // Make sure number fields are an integer.
+    if (targetId === 'duration') {
       parsedValue = parseInt(targetValue, 10);
       value = !Number.isNaN(parsedValue) ? parsedValue : 0;
     }
@@ -160,7 +160,34 @@ function Schedule({ schedules, onChange }) {
                   />
                 </div>
               </div>
-
+              <div className="row mt-2">
+                <div className="col">
+                  <FormInput
+                    label={t("schedule.duration")}
+                    value={schedule.duration}
+                    onChange={({ target }) =>
+                      changeSchedule(schedule.id, target.id, target.value)
+                    }
+                    name="duration"
+                    type="number"
+                    min="1"
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    onChange={({ target }) => {
+                        const value = target.value;
+                        const split = value.split(':');
+                        changeSchedule(schedule.id, 'byhour', parseInt(split[0]));
+                        changeSchedule(schedule.id, 'byminute', parseInt(split[1]));
+                      }
+                    }
+                    value={schedule.byhour && schedule.byminute ? `${schedule.byhour.toString().padStart(2, '0')}:${schedule.byminute.toString().padStart(2, '0')}` : ''}
+                    label={t("schedule.bytime")}
+                    type="time"
+                    name="bytime" />
+                </div>
+              </div>
               <div className="row mt-2">
                 <div className="col">
                   <Select
@@ -212,34 +239,6 @@ function Schedule({ schedules, onChange }) {
 
               <div className="row mt-2">
                 <div className="col">
-                  <FormInput
-                    label={t("schedule.duration")}
-                    value={schedule.duration}
-                    onChange={({ target }) =>
-                      changeSchedule(schedule.id, target.id, target.value)
-                    }
-                    name="duration"
-                    type="number"
-                    min="1"
-                  />
-                </div>
-                <div className="col">
-                  <FormInput
-                    label={t("schedule.byweekno")}
-                    value={schedule.byweekno ?? ""}
-                    onChange={({ target }) =>
-                      changeSchedule(schedule.id, target.id, target.value)
-                    }
-                    name="byweekno"
-                    type="number"
-                    min="0"
-                    max="52"
-                  />
-                </div>
-              </div>
-
-              <div className="row mt-2">
-                <div className="col">
                   <FormGroup>
                     <label htmlFor="bymonth" className="mb-2">
                       {t("schedule.bymonth")}
@@ -265,6 +264,19 @@ function Schedule({ schedules, onChange }) {
                       }
                     />
                   </FormGroup>
+                </div>
+                <div className="col">
+                  <FormInput
+                    label={t("schedule.byweekno")}
+                    value={schedule.byweekno ?? ""}
+                    onChange={({ target }) =>
+                      changeSchedule(schedule.id, target.id, target.value)
+                    }
+                    name="byweekno"
+                    type="number"
+                    min="0"
+                    max="52"
+                  />
                 </div>
               </div>
             </div>
