@@ -74,15 +74,13 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "screens-list": {
+  "screen-list": {
     "columns": {
       "pick": "Vælg skærm",
       "name": "Navn",
-      "size": "Størrelse",
-      "dimensions": "Opløsning",
       "campaign": "Kampagne",
       "on-groups": "Tilknyttede grupper",
-      "live": "Live"
+      "location": "Lokation"
     },
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
