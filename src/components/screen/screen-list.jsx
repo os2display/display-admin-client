@@ -10,10 +10,8 @@ import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ListButton from "../util/list/list-button";
-import LiveIcon from "../screen-list/live-icon";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import Dimensions from "./dimension";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   useGetV1ScreensQuery,
@@ -209,7 +207,7 @@ function ScreenList() {
     {
       key: "pick",
       label: t("screen-list.columns.pick"),
-      content: (data) => (
+      content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
           selected={selectedRows.indexOf(d) > -1}
@@ -241,12 +239,12 @@ function ScreenList() {
       key: "campaign",
       // @TODO: implement overridden by campaing
       label: t("screen-list.columns.campaign"),
-      content: (data) => CampaignIcon(data),
+      content: (d) => CampaignIcon(d),
     },
     {
       key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "screen/edit", t("screen-list.edit-button")),
+      content: (d) =>
+        LinkForList(d["@id"], "screen/edit", t("screen-list.edit-button")),
     },
     {
       key: "delete",
