@@ -4,6 +4,7 @@ import { Tabs, Tab, Button, InputGroup, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackspace } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
+import { ulid } from "ulid";
 import ReactTable from "./react-table";
 import FormInput from "../form-input";
 
@@ -11,7 +12,7 @@ import FormInput from "../form-input";
  * A table for forms.
  *
  * @param {string} props The props.
- * @param {string} props.name The name of the rich text field
+ * @param {string} props.name The name of the table
  * @param {string} props.value The value of the rich text field
  * @param {Function} props.onChange The callback for changes in the rich text field
  * @param {string} props.formGroupClasses Classes for the formgroup
@@ -104,7 +105,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
     columnsCopy.push({
       Header: columnToAddName,
       key: columnToAddName,
-      accessor: `${columnToAddName}${parseInt(timeStamp, 10)}`,
+      accessor: `accessor-${ulid(new Date().getTime())}`,
     });
     setColumns(columnsCopy);
     setColumnToAddName("");
@@ -117,9 +118,8 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
    */
   function removeColumn(removeId) {
     // remove column
-    let columnsCopy = [...columns];
-    columnsCopy = columnsCopy.filter(
-      (column) => !(column.accessor === removeId)
+    [...columns].filter(
+      (column) => column.accessor !== removeId
     );
     setColumns(columnsCopy);
 

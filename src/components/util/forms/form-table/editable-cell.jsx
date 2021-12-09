@@ -2,8 +2,7 @@ import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 /**
- * Create an editable cell renderer This file is highly inspired, if not copy
- * pastet, from
+ * This file is built on
  * https://github.com/tannerlinsley/react-table/tree/master/examples/editable-data
  *
  * @param {object} props The props.
