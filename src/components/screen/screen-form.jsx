@@ -44,18 +44,8 @@ function ScreenForm({
   const [layoutOptions, setLayoutOptions] = useState();
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
+    itemsPerPage: 20,
   });
-
-  /**
-   * Fetches data for the multi component // @TODO: when api makes it possible
-   * to search in layouts
-   *
-   * @param {string} filter - The filter.
-   */
-  function onFilter(filter) {
-    // eslint-disable-next-line
-    console.log(filter);
-  }
 
   useEffect(() => {
     if (layouts) {
@@ -189,7 +179,6 @@ function ScreenForm({
                   helpText={t("screen-form.search-to-se-possible-selections")}
                   selected={selectedLayout ? [selectedLayout] : []}
                   name="layout"
-                  filterCallback={onFilter}
                   singleSelect
                 />
               </div>

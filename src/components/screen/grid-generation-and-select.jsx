@@ -114,31 +114,35 @@ function GridGenerationAndSelect({
             </div>
           </div>
           <div className="col-md-12">
-            <h3 className="h5">{t("screen-form.screen-region-playlists")}</h3>
             {regions.length > 0 && (
-              <Tabs
-                defaultActiveKey={regions[0]["@id"]}
-                id="tabs"
-                onSelect={handleSelect}
-                className="mb-3"
-              >
-                {regions &&
-                  regions.map((data) => (
-                    <Tab
-                      eventKey={data["@id"]}
-                      key={data["@id"]}
-                      title={data.title}
-                    >
-                      <PlaylistDragAndDrop
-                        id="playlist_drag_and_drop"
-                        handleChange={handleChange}
-                        name={data["@id"]}
-                        screenId={screenId}
-                        regionId={idFromUrl(data["@id"])}
-                      />
-                    </Tab>
-                  ))}
-              </Tabs>
+              <>
+                <h3 className="h5">
+                  {t("screen-form.screen-region-playlists")}
+                </h3>
+                <Tabs
+                  defaultActiveKey={regions[0]["@id"]}
+                  id="tabs"
+                  onSelect={handleSelect}
+                  className="mb-3"
+                >
+                  {regions &&
+                    regions.map((data) => (
+                      <Tab
+                        eventKey={data["@id"]}
+                        key={data["@id"]}
+                        title={data.title}
+                      >
+                        <PlaylistDragAndDrop
+                          id="playlist_drag_and_drop"
+                          handleChange={handleChange}
+                          name={data["@id"]}
+                          screenId={screenId}
+                          regionId={idFromUrl(data["@id"])}
+                        />
+                      </Tab>
+                    ))}
+                </Tabs>
+              </>
             )}
           </div>
         </>

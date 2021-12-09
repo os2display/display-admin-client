@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import { useTranslation } from "react-i18next";
 import contentString from "../../helpers/content-string";
+import "./multi-dropdown.scss";
 
 /**
  * A searchable multiselect component. Using a multiselect from
@@ -144,7 +145,11 @@ function MultiSelectComponent({
   return (
     <>
       {mappedOptions && mappedSelected && (
-        <div className={`mb-3 ${error ? "invalid" : ""}`}>
+        <div
+          className={`mb-3 ${error ? "invalid" : ""} ${
+            singleSelect ? "single-select" : ""
+          }`}
+        >
           <Form.Label htmlFor={name}>{label}</Form.Label>
           <MultiSelect
             isCreatable={false}
@@ -174,6 +179,7 @@ MultiSelectComponent.defaultProps = {
   selected: [],
   options: [],
   singleSelect: false,
+  filterCallback: () => {},
 };
 
 MultiSelectComponent.propTypes = {
@@ -192,7 +198,7 @@ MultiSelectComponent.propTypes = {
       disabled: PropTypes.bool,
     })
   ),
-  filterCallback: PropTypes.func.isRequired,
+  filterCallback: PropTypes.func,
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
