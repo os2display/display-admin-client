@@ -7,13 +7,20 @@ import SlideManager from "./slide-manager";
  * @returns {object} The slide create page.
  */
 function SlideCreate() {
+  // If a theme is previously used, chances are they want the same theme.
+  let themeInfo = null;
+  if (localStorage.getItem("prev-used-theme-id")) {
+    themeInfo = localStorage.getItem("prev-used-theme-id");
+  }
+
   // Initialize to empty slide object.
   const data = {
     title: "",
     description: "",
     templateInfo: [],
-    duration: null,
-    content: {},
+    theme: themeInfo,
+    // Duration defaults to 15s
+    content: { duration: 15 },
     media: [],
     published: { from: null, to: null },
   };

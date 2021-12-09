@@ -413,6 +413,11 @@ function SlideManager({
           ? new Date(formStateObject.published.to).toISOString()
           : null;
 
+        // Sets theme in localstorage, to load it on create new slide
+        if (formStateObject.theme) {
+          localStorage.setItem("prev-used-theme-id", formStateObject.theme);
+        }
+
         // Construct data for submitting.
         const saveData = {
           slideSlideInput: JSON.stringify({
@@ -421,7 +426,7 @@ function SlideManager({
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
-              ? parseInt(formStateObject.content.duration, 10)
+              ? parseInt(formStateObject.content.duration, 10) * 1000
               : null,
             content: formStateObject.content,
             media: formStateObject.media,
