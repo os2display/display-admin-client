@@ -45,6 +45,16 @@ function Select({
     }
   }, [errors]);
 
+  const getValue = (option) => {
+    if (option?.value !== undefined) {
+      return option.value;
+    }
+    if (option["@id"] !== undefined) {
+      return option["@id"];
+    }
+    return null;
+  };
+
   return (
     <FormGroup className={formGroupClasses}>
       <label htmlFor={name} className="form-label">
@@ -65,10 +75,7 @@ function Select({
           </option>
         )}
         {options.map((option) => (
-          <option
-            value={option?.value || option["@id"]}
-            key={option.key || option["@id"]}
-          >
+          <option value={getValue(option)} key={option.key || option["@id"]}>
             {option.title}
           </option>
         ))}
