@@ -415,10 +415,7 @@ function SlideManager({
 
         // Sets theme in localstorage, to load it on create new slide
         if (formStateObject.theme) {
-          localStorage.setItem(
-            "prev-used-theme-id",
-            formStateObject.theme
-          );
+          localStorage.setItem("prev-used-theme-id", formStateObject.theme);
         }
 
         // Construct data for submitting.
