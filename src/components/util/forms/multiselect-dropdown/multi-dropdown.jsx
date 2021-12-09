@@ -145,11 +145,7 @@ function MultiSelectComponent({
   return (
     <>
       {mappedOptions && mappedSelected && (
-        <div
-          className={`mb-3 ${error ? "invalid" : ""} ${
-            singleSelect ? "single-select" : ""
-          }`}
-        >
+        <div className={`mb-3 ${error ? "invalid" : ""}`}>
           <Form.Label htmlFor={name}>{label}</Form.Label>
           <MultiSelect
             isCreatable={false}
@@ -159,7 +155,9 @@ function MultiSelectComponent({
             filterOptions={filterOptions}
             onChange={changeData}
             id={name}
-            className={error ? "invalid" : ""}
+            className={`${error ? "invalid" : ""} ${
+              singleSelect ? "single-select" : ""
+            }`}
             isLoading={isLoading}
             valueRenderer={customValueRenderer}
           />

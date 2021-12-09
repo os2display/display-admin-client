@@ -1,5 +1,7 @@
-.single-select {
-  input {
-    display: none;
+.rmsc {
+  &.single-select {
+    input {
+      display: none;
+    }
   }
 }
