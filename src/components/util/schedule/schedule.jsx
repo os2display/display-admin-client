@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { MultiSelect } from "react-multi-select-component";
 import { Button, FormGroup } from "react-bootstrap";
 import dayjs from "dayjs";
+import RRule from "rrule";
 import FormInput from "../forms/form-input";
 import Select from "../forms/select";
 import {
@@ -307,6 +308,7 @@ function Schedule({ schedules, onChange }) {
                 </div>
                 <div className="col">
                   <FormInput
+                    disabled={schedule.freq !== RRule.YEARLY}
                     label={t("schedule.byweekno")}
                     value={schedule.byweekno ?? ""}
                     onChange={({ target }) =>

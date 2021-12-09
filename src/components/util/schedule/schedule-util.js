@@ -19,8 +19,14 @@ const getRruleString = (schedule) => {
     bysecond = schedule.byhour || schedule.byminute ? 0 : null;
   }
 
+  // Make sure weekno is only set if freq is yearly.
+  let byweekno = null;
+  if (schedule.freq === RRule.YEARLY) {
+    byweekno = schedule.byweekno;
+  }
+
   const rrule = new RRule({
-    wkst: schedule.wkst,
+    wkst: schedule.wkst ?? RRule.MO,
     freq: schedule.freq,
     dtstart: schedule.dtstart,
     until: schedule.until,
@@ -29,7 +35,7 @@ const getRruleString = (schedule) => {
     bysecond,
     byweekday: schedule.byweekday,
     bymonth: schedule.bymonth,
-    byweekno: schedule.byweekno,
+    byweekno,
   });
 
   return rrule.toString();
@@ -49,7 +55,7 @@ const createNewSchedule = () => {
     freq: RRule.WEEKLY,
     dtstart: new Date(nowTimestamp),
     until: null,
-    wkst: 0,
+    wkst: RRule.MO,
     byhour: null,
     byminute: null,
     byweekday: [],
