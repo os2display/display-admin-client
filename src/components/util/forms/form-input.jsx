@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
  * @param {string} props.invalidText The text if the input is invalid
  * @param {string} props.formGroupClasses Classes for the formgroup
  * @param {string} props.disabled If the input is disabled
+ * @param {object | null} props.inputGroupExtra Extra elements for input group.
  * @returns {object} An input.
  */
 function FormInput({
@@ -31,7 +32,9 @@ function FormInput({
   errors,
   invalidText,
   formGroupClasses,
+  inputGroupExtra,
   disabled,
+  ...rest
 }) {
   const { t } = useTranslation("common");
   const [error, setError] = useState();
@@ -43,12 +46,15 @@ function FormInput({
     setError(errors && errors.includes(name));
   }, [errors]);
 
+  /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClasses}>
-      <FormLabel htmlFor={name}>
-        {label}
-        {required && " *"}
-      </FormLabel>
+      {label && (
+        <FormLabel htmlFor={name}>
+          {label}
+          {required && " *"}
+        </FormLabel>
+      )}
       <InputGroup hasValidation>
         <FormControl
           name={name}
@@ -59,12 +65,15 @@ function FormInput({
           value={value}
           onChange={onChange}
           type={type}
+          {...rest}
         />
         {error && <div className="invalid-feedback">{invalidInputText}</div>}
+        {inputGroupExtra}
       </InputGroup>
       {helpText && <small className="form-text">{helpText}</small>}
     </FormGroup>
   );
+  /* eslint-enable react/jsx-props-no-spreading */
 }
 
 FormInput.defaultProps = {
@@ -76,6 +85,8 @@ FormInput.defaultProps = {
   errors: null,
   invalidText: null,
   disabled: false,
+  label: null,
+  inputGroupExtra: null,
 };
 
 FormInput.propTypes = {
@@ -83,13 +94,14 @@ FormInput.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   helpText: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   invalidText: PropTypes.string,
   formGroupClasses: PropTypes.string,
   disabled: PropTypes.bool,
+  inputGroupExtra: PropTypes.node,
 };
 
 export default FormInput;

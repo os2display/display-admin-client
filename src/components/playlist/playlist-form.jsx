@@ -3,7 +3,6 @@ import { Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import RRule from "../rrule/rrule";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
@@ -11,6 +10,7 @@ import FormInputArea from "../util/forms/form-input-area";
 import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 import "./playlist-form.scss";
 import LoadingComponent from "../util/loading-component/loading-component";
+import Schedule from "../util/schedule/schedule";
 
 /**
  * The playlist form component.
@@ -62,19 +62,20 @@ function PlaylistForm({
           />
         </ContentBody>
         <ContentBody>
-          <h2 className="h4">{t("playlist-form.schedule-header")}</h2>
-          <RRule
-            value={playlist.schedule}
-            name="schedule"
-            handleChange={handleInput}
-          />
-        </ContentBody>
-        <ContentBody>
           <h2 className="h4">{t("playlist-form.title-slides")}</h2>
           <SelectSlidesTable
             handleChange={handleInput}
             name="slides"
             slideId={slideId}
+          />
+        </ContentBody>
+        <ContentBody>
+          <h2 className="h4">{t("playlist-form.schedule-header")}</h2>
+          <Schedule
+            schedules={playlist.schedules}
+            onChange={(schedules) =>
+              handleInput({ target: { id: "schedules", value: schedules } })
+            }
           />
         </ContentBody>
         <ContentFooter>

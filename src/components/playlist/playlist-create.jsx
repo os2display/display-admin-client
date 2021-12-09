@@ -27,6 +27,7 @@ function PlaylistCreate() {
     description: "",
     modifiedBy: "",
     createdBy: "",
+    schedules: [],
     published: {
       from: null,
       to: null,
@@ -159,7 +160,12 @@ function PlaylistCreate() {
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
-      schedule: formStateObject.schedule,
+      schedules: formStateObject.schedules.map((schedule) => {
+        return {
+          rrule: schedule.rrule,
+          duration: schedule.duration,
+        };
+      }),
       published: {
         from: formStateObject.published.from,
         to: formStateObject.published.from,

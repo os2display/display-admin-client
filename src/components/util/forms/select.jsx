@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
  * @param {string} props.helpText The helptext.
  * @param {string} props.formGroupClasses The classes for the form-group element.
  * @param {boolean} props.isRequired If the select is required.
+ * @param {boolean} props.allowNull Add null option.
  * @returns {object} The select component.
  */
 function Select({
@@ -28,6 +29,7 @@ function Select({
   helpText,
   formGroupClasses,
   isRequired,
+  allowNull,
 }) {
   const { t } = useTranslation("common");
   const textOnError = errorText || t("select.validation-text");
@@ -57,9 +59,11 @@ function Select({
         value={value}
         onChange={onChange}
       >
-        <option disabled value="">
-          {t("select.nothing-selected")}
-        </option>
+        {allowNull && (
+          <option disabled value="">
+            {t("select.nothing-selected")}
+          </option>
+        )}
         {options.map((option) => (
           <option
             value={option?.value || option["@id"]}
@@ -82,6 +86,7 @@ Select.defaultProps = {
   value: "",
   formGroupClasses: "",
   isRequired: false,
+  allowNull: true,
 };
 
 Select.propTypes = {
@@ -95,11 +100,12 @@ Select.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isRequired: PropTypes.bool,
   errorText: PropTypes.string,
   helpText: PropTypes.string,
   formGroupClasses: PropTypes.string,
+  allowNull: PropTypes.bool,
 };
 
 export default Select;

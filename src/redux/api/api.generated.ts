@@ -723,6 +723,8 @@ export type GetV1ThemesApiArg = {
   title?: string;
   description?: string;
   order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
     updatedAt?: "asc" | "desc";
   };
@@ -749,7 +751,7 @@ export type DeleteV1ThemesByIdApiArg = {
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
-  schedule?: string;
+  schedules?: string[];
   modifiedBy?: string;
   createdBy?: string;
   published?: string[];
