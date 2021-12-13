@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import idFromUrl from "../util/helpers/id-from-url";
+import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
 import {
   displayError,
   displaySuccess,
@@ -201,4 +202,4 @@ function PlaylistEdit() {
   );
 }
 
-export default PlaylistEdit;
+export default SideAndTopbarHOC(PlaylistEdit);

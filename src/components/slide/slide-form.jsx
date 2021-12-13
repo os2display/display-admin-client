@@ -3,7 +3,6 @@ import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory, Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
 import Form from "react-bootstrap/Form";
 import FormCheckbox from "../util/forms/form-checkbox";
 import ContentBody from "../util/content-body/content-body";
@@ -19,6 +18,7 @@ import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 import RadioButtons from "../util/forms/radio-buttons";
 import idFromUrl from "../util/helpers/id-from-url";
+import "./slide-form.scss";
 
 /**
  * The slide form component.
@@ -201,42 +201,57 @@ function SlideForm({
             )}
             {selectedTemplate && contentFormElements && (
               <>
-                <ContentBody>
-                  <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
-                  <FormCheckbox
-                    label={t("slide-form.show-preview-label")}
-                    onChange={changeShowPreview}
-                    value={showPreview}
-                  />
-                  <RadioButtons
-                    label={t("slide-form.horizontal-or-vertical-label")}
-                    selected={previewLayout}
-                    radioGroupName="vertical_horizontal"
-                    disabled={!showPreview}
-                    options={[
-                      {
-                        id: "horizontal",
-                        label: t("slide-form.horizontal-label"),
-                      },
-                      { id: "vertical", label: t("slide-form.vertical-label") },
-                    ]}
-                    handleChange={onChangePreviewLayout}
-                  />
-                  {slide["@id"] && (
-                    <Link
-                      className="btn btn-success"
-                      target="_blank"
-                      to={`/slide/preview/${idFromUrl(
-                        slide["@id"]
-                      )}/${idFromUrl(slide.templateInfo["@id"])}`}
-                    >
-                      {t("slide-form.preview-in-new-tab")}
-                    </Link>
-                  )}
-                  <small className="form-text text-muted">
-                    {t("slide-form.preview-in-new-tab-help-text")}
-                  </small>
-                </ContentBody>
+                <div className="toggle-preview">
+                  <ContentBody>
+                    <h2 className="h4">
+                      {t("slide-form.preview-slide-title")}
+                    </h2>
+                    <div className="mt-2">
+                      <FormCheckbox
+                        label={t("slide-form.show-preview-label")}
+                        onChange={changeShowPreview}
+                        value={showPreview}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <RadioButtons
+                        label={t("slide-form.horizontal-or-vertical-label")}
+                        selected={previewLayout}
+                        radioGroupName="vertical_horizontal"
+                        disabled={!showPreview}
+                        options={[
+                          {
+                            id: "horizontal",
+                            label: t("slide-form.horizontal-label"),
+                          },
+                          {
+                            id: "vertical",
+                            label: t("slide-form.vertical-label"),
+                          },
+                        ]}
+                        handleChange={onChangePreviewLayout}
+                      />
+                    </div>
+                    {slide["@id"] && (
+                      <>
+                        <Link
+                          className="btn btn-success"
+                          target="_blank"
+                          to={`/slide/preview/${idFromUrl(
+                            slide["@id"]
+                          )}/${idFromUrl(slide.templateInfo["@id"])}`}
+                        >
+                          {t("slide-form.preview-in-new-tab")}
+                        </Link>{" "}
+                        <div className="mt-2">
+                          <small className="form-text text-muted">
+                            {t("slide-form.preview-in-new-tab-help-text")}
+                          </small>{" "}
+                        </div>
+                      </>
+                    )}
+                  </ContentBody>
+                </div>
                 <ContentBody>
                   {contentFormElements.map((formElement) => (
                     <ContentForm
@@ -315,7 +330,7 @@ function SlideForm({
             </ContentFooter>
           </Col>
           {showPreview && (
-            <Col md>
+            <Col md className="responsive-side">
               <RemoteComponentWrapper
                 url={selectedTemplate?.resources?.component}
                 slide={slide}
@@ -326,6 +341,36 @@ function SlideForm({
             </Col>
           )}
         </Row>
+        <div className="preview-button-container">
+          <button
+            type="button"
+            className="preview-button bg-light"
+            onClick={() =>
+              changeShowPreview({ target: { value: !showPreview } })
+            }
+          >
+            Preview
+          </button>
+          {showPreview && (
+            <RadioButtons
+              label={t("slide-form.horizontal-or-vertical-label")}
+              selected={previewLayout}
+              radioGroupName="vertical_horizontal"
+              disabled={!showPreview}
+              options={[
+                {
+                  id: "horizontal",
+                  label: t("slide-form.horizontal-label"),
+                },
+                {
+                  id: "vertical",
+                  label: t("slide-form.vertical-label"),
+                },
+              ]}
+              handleChange={onChangePreviewLayout}
+            />
+          )}
+        </div>
       </Form>
     </>
   );

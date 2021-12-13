@@ -1,4 +1,5 @@
 import { React } from "react";
+import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
 import SlideManager from "./slide-manager";
 
 /**
@@ -28,4 +29,4 @@ function SlideCreate() {
   return <SlideManager saveMethod="POST" initialState={data} />;
 }
 
-export default SlideCreate;
+export default SideAndTopbarHOC(SlideCreate);

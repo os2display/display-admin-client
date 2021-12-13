@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   usePostV1ScreensMutation,
@@ -285,4 +286,4 @@ function ScreenCreate() {
   );
 }
 
-export default ScreenCreate;
+export default SideAndTopbarHOC(ScreenCreate);

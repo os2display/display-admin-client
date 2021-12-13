@@ -16,7 +16,7 @@ function SideBar() {
   const [active, setActive] = useState();
   return (
     <Col
-      className="sidebar hide-on-preview bg-dark border-end d-none d-lg-block"
+      className="sidebar bg-dark border-end d-none d-lg-block"
       lg={3}
       xl={2}
     >

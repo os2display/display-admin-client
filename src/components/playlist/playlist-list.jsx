@@ -6,6 +6,7 @@ import ListButton from "../util/list/list-button";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
+import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import LinkForList from "../util/list/link-for-list";
 import idFromUrl from "../util/helpers/id-from-url";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -313,4 +314,4 @@ function PlaylistList() {
   );
 }
 
-export default PlaylistList;
+export default SideAndTopbarHOC(PlaylistList);

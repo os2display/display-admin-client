@@ -1,0 +1,40 @@
+@import "~bootstrap/scss/bootstrap/";
+
+.toggle-preview {
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
+
+.responsive-side {
+  background: white;
+  overflow: hidden;
+
+  @media (max-width: 800px) {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+.preview-button-container {
+  display: none;
+  position: fixed;
+  border: 3px solid #f8f9fa;
+  background: white;
+  right: 0;
+  top: 50%;
+  flex-direction: column;
+
+  @media (max-width: 800px) {
+    display: flex;
+    z-index: 2;
+  }
+  .preview-button {
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+  }
+}

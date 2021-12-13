@@ -11,7 +11,6 @@ import {
 import { displayError } from "../../util/list/toast-component/display-toast";
 import RemoteComponentWrapper from "./remote-component-wrapper";
 import LoadingComponent from "../../util/loading-component/loading-component";
-import "./slide-preview.scss";
 
 /**
  * Slide preview
@@ -103,6 +102,7 @@ function SlidePreview() {
       />
       {content && resources && mediaData && (
         <RemoteComponentWrapper
+          style={{height: "100vh"}}
           url={resources?.component}
           slide={content}
           showPreview

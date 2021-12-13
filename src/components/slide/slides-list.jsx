@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
+import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
 import idFromUrl from "../util/helpers/id-from-url";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -317,4 +318,4 @@ function SlidesList() {
   );
 }
 
-export default SlidesList;
+export default SideAndTopbarHOC(SlidesList);

@@ -16,10 +16,16 @@
     &.vertical {
       aspect-ratio: 9 / 16;
       max-height: 35%;
+      @media (max-width: 800px) {
+        max-height: 80%;
+      }
     }
     &.horizontal {
       aspect-ratio: 16 / 9;
-      max-height: 35%;
+      max-height: 20%;
+      @media (max-width: 800px) {
+        max-height: 40%;
+      }
     }
   }
 }

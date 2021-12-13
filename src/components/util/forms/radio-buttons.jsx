@@ -30,7 +30,7 @@ function RadioButtons({
   }
 
   return (
-    <div className="d-flex">
+    <div className="d-flex flex-column">
       <label
         className={labelScreenReaderOnly ? "mr-2 sr-only" : "mr-2"}
         htmlFor={`radios-${label}`}
@@ -39,7 +39,7 @@ function RadioButtons({
       </label>
       <div id={`radios-${label}`} className="d-flex">
         {options.map(({ id, label: radioLabel }) => (
-          <div className="form-check mr-2" key={id}>
+          <div className="form-check m-2" key={id}>
             <input
               className="form-check-input"
               type="radio"

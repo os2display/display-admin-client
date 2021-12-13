@@ -28,6 +28,7 @@ function RemoteComponentWrapper({
   showPreview,
   orientation,
   displayHeader,
+  style
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
@@ -55,7 +56,7 @@ function RemoteComponentWrapper({
               {t("remote-component-wrapper.header-preview")}
             </h2>
           )}
-          <div className="remote-component-wrapper">
+          <div className="remote-component-wrapper" style={style}>
             <div className={`remote-component-content ${orientation}`}>
               <ErrorBoundary errorText="remote-component.error-boundary-text">
                 <RemoteComponent
@@ -77,6 +78,7 @@ function RemoteComponentWrapper({
 RemoteComponentWrapper.defaultProps = {
   displayHeader: true,
   orientation: "",
+  style: {}
 };
 
 RemoteComponentWrapper.propTypes = {
@@ -87,6 +89,7 @@ RemoteComponentWrapper.propTypes = {
   displayHeader: PropTypes.bool,
   showPreview: PropTypes.bool.isRequired,
   orientation: PropTypes.string,
+  style: PropTypes.objectOf(PropTypes.any),
 };
 
 export default RemoteComponentWrapper;
