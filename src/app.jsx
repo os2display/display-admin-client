@@ -17,6 +17,8 @@ import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";
 import MediaList from "./components/media/media-list";
+import SlidePreview from './components/slide/preview/slide-preview';
+// import MediaEdit from "./components/media/media-edit";
 import commonDa from "./translations/da/common.json";
 import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
@@ -53,7 +55,7 @@ function App() {
         <Container fluid className="h-100 px-0 bg-light">
           <Row className="row-full-height g-0">
             <SideBar />
-            <Col lg={9} xl={10}>
+            <Col lg={9} xl={10} className="main-col">
               <TopBar />
               <ToastContainer
                 autoClose="10000"
@@ -64,7 +66,7 @@ function App() {
                 draggable
                 progress={undefined}
               />
-              <main className="col p-3">
+              <main className="col p-3 no-padding-on-preview">
                 <Switch>
                   <Route path="/playlist/create" component={PlaylistCreate} />
                   <Route path="/playlist/edit/:id" component={PlaylistEdit} />
@@ -78,6 +80,7 @@ function App() {
                   <Route path="/slide/list" component={SlidesList} />
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
+                  <Route path="/slide/preview/:id/:templateId" component={SlidePreview} />
                   <Route path="/media/list" component={MediaList} />
                   {/* <Route path="/media/edit/:id" component={MediaEdit} /> @TODO: readd when the api supports putting media */}
                   <Route path="/media/create" component={MediaCreate} />

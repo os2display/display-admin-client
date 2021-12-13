@@ -16,6 +16,7 @@ function RadioButtons({
   options,
   handleChange,
   labelScreenReaderOnly,
+  disabled
 }) {
   /**
    * Transforms the target to something the form-components understand.
@@ -44,6 +45,7 @@ function RadioButtons({
               type="radio"
               name={radioGroupName}
               id={id}
+              disabled={disabled}
               checked={selected === id}
               onChange={onCheckedRadio}
             />

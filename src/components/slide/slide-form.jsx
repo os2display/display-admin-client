@@ -3,7 +3,9 @@ import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import FormCheckbox from "../util/forms/form-checkbox";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -15,6 +17,8 @@ import FormInput from "../util/forms/form-input";
 import ContentForm from "./content/content-form";
 import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
+import RadioButtons from "../util/forms/radio-buttons";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The slide form component.
@@ -52,13 +56,15 @@ function SlideForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewLayout, setPreviewLayout] = useState("horizontal");
   const [templateOptions, setTemplateOptions] = useState([]);
   const [contentFormElements, setContentFormElements] = useState([]);
   const [searchTextTemplate, setSearchTextTemplate] = useState("");
   const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
-
+  console.log(slide);
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
@@ -109,6 +115,29 @@ function SlideForm({
     }
   }, [themes]);
 
+  /** Get show from local storage */
+  useEffect(() => {
+    const localStorageShow = localStorage.getItem("preview-slide");
+    setShowPreview(localStorageShow === "true");
+    const localStorageLayout = localStorage.getItem("preview-slide-layout");
+    if (localStorageLayout) {
+      setPreviewLayout(localStorageLayout);
+    }
+  }, []);
+
+  /**
+   * Changes the show value, and saves to localstorage
+   *
+   * @param {object} props Props.
+   * @param {boolean} props.target The returned value from the checkbox.
+   */
+  function changeShowPreview({ target }) {
+    const { value } = target;
+    localStorage.setItem("preview-slide", value);
+
+    setShowPreview(value);
+  }
+
   /**
    * Fetches data for the multi component
    *
@@ -127,122 +156,174 @@ function SlideForm({
     setSearchTextTheme(filter);
   }
 
+  /**
+   * Change preview layout.
+   *
+   * @param {object} props The props.
+   * @param {object} props.target Event target
+   */
+  function onChangePreviewLayout({ target }) {
+    setPreviewLayout(target.value);
+    localStorage.setItem("preview-slide-layout", target.value);
+  }
+
   return (
     <>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
-        <h1>{headerText}</h1>
-        <ContentBody>
-          <FormInput
-            name="title"
-            type="text"
-            label={t("slide-form.slide-name-label")}
-            helpText={t("slide-form.slide-name-placeholder")}
-            value={slide.title || ""}
-            onChange={handleInput}
-          />
-        </ContentBody>
-        {templateOptions && (
-          <ContentBody>
-            <MultiSelectComponent
-              isLoading={loadingTemplates}
-              label={t("slide-form.slide-template-label")}
-              helpText={t("slide-form.slide-template-help-text")}
-              handleSelection={selectTemplate}
-              options={templateOptions}
-              selected={selectedTemplates}
-              name="templateInfo"
-              filterCallback={onFilterTemplate}
-              singleSelect
-            />
-          </ContentBody>
-        )}
-        {selectedTemplate && contentFormElements && (
-          <>
+        <Row>
+          <Col md>
+            <h1>{headerText}</h1>
             <ContentBody>
-              <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
+              <FormInput
+                name="title"
+                type="text"
+                label={t("slide-form.slide-name-label")}
+                helpText={t("slide-form.slide-name-placeholder")}
+                value={slide.title || ""}
+                onChange={handleInput}
+              />
+            </ContentBody>
+            {templateOptions && (
+              <ContentBody>
+                <MultiSelectComponent
+                  isLoading={loadingTemplates}
+                  label={t("slide-form.slide-template-label")}
+                  helpText={t("slide-form.slide-template-help-text")}
+                  handleSelection={selectTemplate}
+                  options={templateOptions}
+                  selected={selectedTemplates}
+                  name="templateInfo"
+                  filterCallback={onFilterTemplate}
+                  singleSelect
+                />
+              </ContentBody>
+            )}
+            {selectedTemplate && contentFormElements && (
+              <>
+                <ContentBody>
+                  <h2 className="h4">{t("slide-form.preview-slide-title")}</h2>
+                  <FormCheckbox
+                    label={t("slide-form.show-preview-label")}
+                    onChange={changeShowPreview}
+                    value={showPreview}
+                  />
+                  <RadioButtons
+                    label={t("slide-form.horizontal-or-vertical-label")}
+                    selected={previewLayout}
+                    radioGroupName="vertical_horizontal"
+                    disabled={!showPreview}
+                    options={[
+                      {
+                        id: "horizontal",
+                        label: t("slide-form.horizontal-label"),
+                      },
+                      { id: "vertical", label: t("slide-form.vertical-label") },
+                    ]}
+                    handleChange={onChangePreviewLayout}
+                  />
+                  {slide["@id"] && (
+                    <Link
+                      className="btn btn-success"
+                      // target="_blank"
+                      to={`/slide/preview/${idFromUrl(slide["@id"])}/${idFromUrl(slide.templateInfo["@id"])}`}
+                    >
+                      {t("slide-form.preview-in-new-tab")}
+                    </Link>
+                  )}
+                  <small className="form-text text-muted">
+                    {t("slide-form.preview-in-new-tab-help-text")}
+                  </small>
+                </ContentBody>
+                <ContentBody>
+                  {contentFormElements.map((formElement) => (
+                    <ContentForm
+                      key={formElement.key}
+                      data={formElement}
+                      onChange={handleContent}
+                      onMediaChange={handleMedia}
+                      name={formElement.name}
+                      mediaData={mediaData}
+                      formStateObject={slide.content}
+                      requiredFieldCallback={() => {
+                        return false;
+                      }}
+                    />
+                  ))}
+                </ContentBody>
+              </>
+            )}
+            <ContentBody>
+              <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
+              <Row className="g-2">
+                <Col md>
+                  <FormInput
+                    name="published.from"
+                    type="datetime-local"
+                    label={t("slide-form.slide-from-label")}
+                    value={slide.published.from ?? ""}
+                    onChange={handleInput}
+                  />
+                </Col>
+                <Col md>
+                  <FormInput
+                    name="published.to"
+                    type="datetime-local"
+                    label={t("slide-form.slide-to-label")}
+                    value={slide.published.to ?? ""}
+                    onChange={handleInput}
+                  />
+                </Col>
+              </Row>
+            </ContentBody>
+            {themesOptions && (
+              <ContentBody>
+                <MultiSelectComponent
+                  isLoading={loadingThemes}
+                  label={t("slide-form.slide-theme-label")}
+                  handleSelection={selectTheme}
+                  options={themesOptions}
+                  selected={selectedTheme}
+                  name="theme"
+                  filterCallback={onFilterTheme}
+                  singleSelect
+                />
+              </ContentBody>
+            )}
+            <ContentFooter>
+              <Button
+                variant="secondary"
+                type="button"
+                id="cancel_slide"
+                onClick={() => history.push("/slide/list/")}
+                size="lg"
+                className="me-3"
+              >
+                {t("slide-form.cancel-button")}
+              </Button>
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleSubmit}
+                id="save_slide"
+                size="lg"
+              >
+                {t("slide-form.save-button")}
+              </Button>
+            </ContentFooter>
+          </Col>
+          {showPreview && (
+            <Col md>
               <RemoteComponentWrapper
                 url={selectedTemplate?.resources?.component}
                 slide={slide}
                 mediaData={mediaData}
-              />
-            </ContentBody>
-            <ContentBody>
-              {contentFormElements.map((formElement) => (
-                <ContentForm
-                  key={formElement.key}
-                  data={formElement}
-                  onChange={handleContent}
-                  onMediaChange={handleMedia}
-                  name={formElement.name}
-                  mediaData={mediaData}
-                  formStateObject={slide.content}
-                  requiredFieldCallback={() => {
-                    return false;
-                  }}
-                />
-              ))}
-            </ContentBody>
-          </>
-        )}
-        {themesOptions && (
-          <ContentBody>
-            <MultiSelectComponent
-              isLoading={loadingThemes}
-              label={t("slide-form.slide-theme-label")}
-              handleSelection={selectTheme}
-              options={themesOptions}
-              selected={selectedTheme}
-              name="theme"
-              filterCallback={onFilterTheme}
-              singleSelect
-            />
-          </ContentBody>
-        )}
-        <ContentBody>
-          <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
-          <Row className="g-2">
-            <Col md>
-              <FormInput
-                name="published.from"
-                type="datetime-local"
-                label={t("slide-form.slide-from-label")}
-                value={slide.published.from ?? ""}
-                onChange={handleInput}
+                showPreview={showPreview}
+                orientations={previewLayout}
               />
             </Col>
-            <Col md>
-              <FormInput
-                name="published.to"
-                type="datetime-local"
-                label={t("slide-form.slide-to-label")}
-                value={slide.published.to ?? ""}
-                onChange={handleInput}
-              />
-            </Col>
-          </Row>
-        </ContentBody>
-        <ContentFooter>
-          <Button
-            variant="secondary"
-            type="button"
-            id="cancel_slide"
-            onClick={() => history.push("/slide/list/")}
-            size="lg"
-            className="me-3"
-          >
-            {t("slide-form.cancel-button")}
-          </Button>
-          <Button
-            variant="primary"
-            type="button"
-            onClick={handleSubmit}
-            id="save_slide"
-            size="lg"
-          >
-            {t("slide-form.save-button")}
-          </Button>
-        </ContentFooter>
+          )}
+        </Row>
       </Form>
     </>
   );

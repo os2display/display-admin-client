@@ -1,0 +1,22 @@
+.sidebar {
+  &.hide-on-preview {
+    display: none !important;
+  }
+}
+
+.navbar {
+  &.hide-on-preview {
+    display: none !important;
+  }
+}
+
+.main-col {
+  width: 100% !important;
+}
+
+main {
+  height: 100%;
+  &.no-padding-on-preview {
+    padding: 0 !important;
+  }
+}
