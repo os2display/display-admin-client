@@ -225,7 +225,7 @@ function SlideForm({
                   {slide["@id"] && (
                     <Link
                       className="btn btn-success"
-                      // target="_blank"
+                      target="_blank"
                       to={`/slide/preview/${idFromUrl(slide["@id"])}/${idFromUrl(slide.templateInfo["@id"])}`}
                     >
                       {t("slide-form.preview-in-new-tab")}
