@@ -177,7 +177,6 @@ MultiSelectComponent.defaultProps = {
   selected: [],
   options: [],
   singleSelect: false,
-  filterCallback: () => {},
 };
 
 MultiSelectComponent.propTypes = {
@@ -196,7 +195,7 @@ MultiSelectComponent.propTypes = {
       disabled: PropTypes.bool,
     })
   ),
-  filterCallback: PropTypes.func,
+  filterCallback: PropTypes.func.isRequired,
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
