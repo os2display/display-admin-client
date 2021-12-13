@@ -35,11 +35,11 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
 
   // Sets table/source data from content
   useEffect(() => {
-    if (value.table) {
+    if (value?.table) {
       setColumns(value.table[0].columns);
       setData(value.table[1]);
     }
-    if (value.dataSource) {
+    if (value?.dataSource) {
       setDataSource(value.dataSource);
     }
   }, []);
