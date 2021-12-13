@@ -4,7 +4,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
-import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
+import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
 import ContentBody from "../util/content-body/content-body";

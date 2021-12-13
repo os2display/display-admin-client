@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import idFromUrl from "../util/helpers/id-from-url";
-import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
+import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import {
   useGetV1ScreensByIdQuery,
   usePutV1ScreensByIdMutation,

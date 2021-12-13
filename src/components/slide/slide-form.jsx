@@ -349,7 +349,7 @@ function SlideForm({
               changeShowPreview({ target: { value: !showPreview } })
             }
           >
-            Preview
+            {t("slide-form.show-preview-label")}
           </button>
           {showPreview && (
             <RadioButtons

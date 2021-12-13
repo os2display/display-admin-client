@@ -19,6 +19,7 @@ import "./remote-component-wrapper.scss";
  * @param {string} props.orientation Display orientation or horizontal.
  * @param {boolean} props.displayHeader Whether to display the header.
  * @param {boolean} props.showPreview Whether to display the prevoew.
+ * @param {object} props.style A style object
  * @returns {object} The component.
  */
 function RemoteComponentWrapper({
@@ -28,7 +29,7 @@ function RemoteComponentWrapper({
   showPreview,
   orientation,
   displayHeader,
-  style
+  style,
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
@@ -78,7 +79,7 @@ function RemoteComponentWrapper({
 RemoteComponentWrapper.defaultProps = {
   displayHeader: true,
   orientation: "",
-  style: {}
+  style: {},
 };
 
 RemoteComponentWrapper.propTypes = {

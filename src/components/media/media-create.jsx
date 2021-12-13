@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { usePostMediaCollectionMutation } from "../../redux/api/api.generated";
-import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
+import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import MediaForm from "./media-form";
 import {
   displayError,

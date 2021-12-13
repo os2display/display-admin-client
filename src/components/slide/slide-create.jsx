@@ -1,5 +1,5 @@
 import { React } from "react";
-import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
+import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import SlideManager from "./slide-manager";
 
 /**

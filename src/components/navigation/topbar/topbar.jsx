@@ -28,7 +28,7 @@ function TopBar() {
       variant="light"
       bg="white"
       expand="lg"
-      className="navbar border-bottom shadow-sm"
+      className="border-bottom shadow-sm"
     >
       <Navbar.Brand href="/" className="col-lg-2 d-lg-none ms-3">
         {t("topbar.brand")}

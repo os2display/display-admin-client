@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
+import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
 import GroupForm from "./group-form";
 import idFromUrl from "../util/helpers/id-from-url";

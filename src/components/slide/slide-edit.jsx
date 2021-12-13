@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useParams } from "react-router";
-import SideAndTopbarHOC from '../side-and-topbar-hoc/side-and-topbar-hoc';
+import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import { useGetV1SlidesByIdQuery } from "../../redux/api/api.generated";
 import SlideManager from "./slide-manager";
 

@@ -102,7 +102,7 @@ function SlidePreview() {
       />
       {content && resources && mediaData && (
         <RemoteComponentWrapper
-          style={{height: "100vh"}}
+          style={{ height: "100vh" }}
           url={resources?.component}
           slide={content}
           showPreview
