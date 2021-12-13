@@ -20,7 +20,7 @@ function ContactView({ contact, editContact, getInputImage, removeContact }) {
 
   // Get image url, different depending on if it is going to be saved or if it is saved
   if (Array.isArray(image) && image.length > 0) {
-    imageUrl = image.url ? image.url : image.assets?.uri;
+    imageUrl = image[0].url ? image[0].url : image[0].assets?.uri;
   }
 
   return (

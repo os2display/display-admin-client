@@ -596,5 +596,17 @@
   "duration": {
     "hours": "t.",
     "minutes": "min."
+  },
+  "add-contact":{
+    "title": "Titel",
+    "name": "Navn",
+    "phone": "Telefonnummer",
+    "email": "E-mail",
+    "add-contact": "Tilføj kontakt",
+    "update-contact": "Opdater kontakt"
+  },
+  "contact-view":{
+    "edit-contact": "Rediger kontakt",
+    "remove-contact": "Fjern kontakt"
   }
 }

@@ -29,7 +29,9 @@ function Contacts({
 
   // Initial state, if editing a slide with saved contacts
   useEffect(() => {
-    setContacts(value.contacts);
+    if (value?.contacts) {
+      setContacts(value.contacts);
+    }
   }, []);
 
   /**
