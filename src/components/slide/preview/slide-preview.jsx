@@ -1,9 +1,8 @@
 import { React, useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import idFromUrl from '../../util/helpers/id-from-url';
 import { useDispatch } from "react-redux";
+import idFromUrl from "../../util/helpers/id-from-url";
 import {
   api,
   useGetV1SlidesByIdQuery,
@@ -12,8 +11,13 @@ import {
 import { displayError } from "../../util/list/toast-component/display-toast";
 import RemoteComponentWrapper from "./remote-component-wrapper";
 import LoadingComponent from "../../util/loading-component/loading-component";
-import "./slide-preview.scss"
+import "./slide-preview.scss";
 
+/**
+ * Slide preview
+ *
+ * @returns {object} The slide preview
+ */
 function SlidePreview() {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
@@ -101,7 +105,7 @@ function SlidePreview() {
         <RemoteComponentWrapper
           url={resources?.component}
           slide={content}
-          showPreview={true}
+          showPreview
           mediaData={mediaData}
           displayHeader={false}
         />

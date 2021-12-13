@@ -17,7 +17,7 @@ import PlaylistList from "./components/playlist/playlist-list";
 import PlaylistEdit from "./components/playlist/playlist-edit";
 import PlaylistCreate from "./components/playlist/playlist-create";
 import MediaList from "./components/media/media-list";
-import SlidePreview from './components/slide/preview/slide-preview';
+import SlidePreview from "./components/slide/preview/slide-preview";
 // import MediaEdit from "./components/media/media-edit";
 import commonDa from "./translations/da/common.json";
 import EditUser from "./components/edit-user/edit-user";
@@ -80,7 +80,10 @@ function App() {
                   <Route path="/slide/list" component={SlidesList} />
                   <Route path="/slide/create" component={SlideCreate} />
                   <Route path="/slide/edit/:id" component={SlideEdit} />
-                  <Route path="/slide/preview/:id/:templateId" component={SlidePreview} />
+                  <Route
+                    path="/slide/preview/:id/:templateId"
+                    component={SlidePreview}
+                  />
                   <Route path="/media/list" component={MediaList} />
                   {/* <Route path="/media/edit/:id" component={MediaEdit} /> @TODO: readd when the api supports putting media */}
                   <Route path="/media/create" component={MediaCreate} />

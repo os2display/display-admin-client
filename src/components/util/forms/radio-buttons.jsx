@@ -16,7 +16,7 @@ function RadioButtons({
   options,
   handleChange,
   labelScreenReaderOnly,
-  disabled
+  disabled,
 }) {
   /**
    * Transforms the target to something the form-components understand.
@@ -59,6 +59,10 @@ function RadioButtons({
   );
 }
 
+RadioButtons.defaultProps = {
+  disabled: false,
+};
+
 RadioButtons.propTypes = {
   radioGroupName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -69,6 +73,7 @@ RadioButtons.propTypes = {
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
+  disabled: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
   labelScreenReaderOnly: PropTypes.bool.isRequired,
 };

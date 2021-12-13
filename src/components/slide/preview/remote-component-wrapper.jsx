@@ -16,8 +16,9 @@ import "./remote-component-wrapper.scss";
  * @param {object} props.slide The slide.
  * @param {boolean} props.url The url for the remote component.
  * @param {object} props.mediaData Object of loaded media.
- * @param {string} props.orientation display orientation or horizontal.
+ * @param {string} props.orientation Display orientation or horizontal.
  * @param {boolean} props.displayHeader Whether to display the header.
+ * @param {boolean} props.showPreview Whether to display the prevoew.
  * @returns {object} The component.
  */
 function RemoteComponentWrapper({
@@ -55,9 +56,7 @@ function RemoteComponentWrapper({
             </h2>
           )}
           <div className="remote-component-wrapper">
-            <div
-              className={`remote-component-content ${orientation}`}
-            >
+            <div className={`remote-component-content ${orientation}`}>
               <ErrorBoundary errorText="remote-component.error-boundary-text">
                 <RemoteComponent
                   url={url}
@@ -77,7 +76,7 @@ function RemoteComponentWrapper({
 
 RemoteComponentWrapper.defaultProps = {
   displayHeader: true,
-  orientation: ""
+  orientation: "",
 };
 
 RemoteComponentWrapper.propTypes = {
@@ -86,6 +85,8 @@ RemoteComponentWrapper.propTypes = {
   url: PropTypes.string.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
   displayHeader: PropTypes.bool,
+  showPreview: PropTypes.bool.isRequired,
+  orientation: PropTypes.string,
 };
 
 export default RemoteComponentWrapper;

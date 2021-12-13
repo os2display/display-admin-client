@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+
 import Form from "react-bootstrap/Form";
 import FormCheckbox from "../util/forms/form-checkbox";
 import ContentBody from "../util/content-body/content-body";
@@ -64,7 +64,7 @@ function SlideForm({
   const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
-  console.log(slide);
+
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
@@ -226,7 +226,9 @@ function SlideForm({
                     <Link
                       className="btn btn-success"
                       target="_blank"
-                      to={`/slide/preview/${idFromUrl(slide["@id"])}/${idFromUrl(slide.templateInfo["@id"])}`}
+                      to={`/slide/preview/${idFromUrl(
+                        slide["@id"]
+                      )}/${idFromUrl(slide.templateInfo["@id"])}`}
                     >
                       {t("slide-form.preview-in-new-tab")}
                     </Link>
@@ -319,7 +321,7 @@ function SlideForm({
                 slide={slide}
                 mediaData={mediaData}
                 showPreview={showPreview}
-                orientations={previewLayout}
+                orientation={previewLayout}
               />
             </Col>
           )}
