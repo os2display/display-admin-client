@@ -77,30 +77,20 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
     setColumnToAddName(target.value);
   }
 
-  /**
-   * Adds a row, adds data entry for each column.
-   *
-   * @param {object} props The props.
-   * @param {object} props.timeStamp The timestamp, used for creating a data key.
-   */
-  function addRow({ timeStamp }) {
+  /** Adds a row, adds data entry for each column. */
+  function addRow() {
     const newDataObject = {};
     const dataCopy = [...data];
     columns.forEach((column) => {
       newDataObject[column.accessor] = "";
-      newDataObject.key = parseInt(timeStamp, 10);
+      newDataObject.key = `key-${ulid(new Date().getTime())}`;
     });
     dataCopy.push(newDataObject);
     setData(dataCopy);
   }
 
-  /**
-   * Adds a column, adds data entry for each column.
-   *
-   * @param {object} props The props.
-   * @param {object} props.timeStamp The timestamp, used for creating a data key.
-   */
-  function addColumn({ timeStamp }) {
+  /** Adds a column, adds data entry for each column. */
+  function addColumn() {
     const columnsCopy = [...columns];
     columnsCopy.push({
       Header: columnToAddName,
@@ -118,7 +108,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
    */
   function removeColumn(removeId) {
     // remove column
-    [...columns].filter(
+    const columnsCopy = [...columns].filter(
       (column) => column.accessor !== removeId
     );
     setColumns(columnsCopy);

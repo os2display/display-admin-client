@@ -6,7 +6,8 @@ import TableComponent from "./table-component";
 import "./react-table.scss";
 
 /**
- * This file is built on https://github.com/tannerlinsley/react-table/tree/master/examples/editable-data
+ * This file is built on
+ * https://github.com/tannerlinsley/react-table/tree/master/examples/editable-data
  *
  * @param {object} props The props.
  * @param {object} props.data The table data
