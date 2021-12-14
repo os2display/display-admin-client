@@ -597,7 +597,7 @@
     "hours": "t.",
     "minutes": "min."
   },
-  "add-contact":{
+  "add-edit-contact":{
     "title": "Titel",
     "name": "Navn",
     "phone": "Telefonnummer",

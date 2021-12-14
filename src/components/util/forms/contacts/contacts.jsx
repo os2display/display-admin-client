@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import AddContact from "./add-contact";
+import AddEditContact from "./add-edit-contact";
 import ContactView from "./contact-view";
 
 /**
@@ -92,7 +92,7 @@ function Contacts({
         </div>
       )}
       {(contacts.length < 6 || contactToEdit) && (
-        <AddContact
+        <AddEditContact
           formData={formData}
           contact={contactToEdit}
           addContact={addContact}

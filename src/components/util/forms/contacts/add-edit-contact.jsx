@@ -74,7 +74,7 @@ function AddEditContact({
           <FormInput
             name="title"
             type="text"
-            label={t("add-contact.title")}
+            label={t("add-edit-contact.title")}
             value={contact.title}
             onChange={onInput}
           />
@@ -83,7 +83,7 @@ function AddEditContact({
           <FormInput
             name="name"
             type="text"
-            label={t("add-contact.name")}
+            label={t("add-edit-contact.name")}
             value={contact.name}
             onChange={onInput}
           />
@@ -94,7 +94,7 @@ function AddEditContact({
           <FormInput
             name="phone"
             type="number"
-            label={t("add-contact.phone")}
+            label={t("add-edit-contact.phone")}
             value={contact.phone}
             onChange={onInput}
           />
@@ -103,7 +103,7 @@ function AddEditContact({
           <FormInput
             name="email"
             type="email"
-            label={t("add-contact.email")}
+            label={t("add-edit-contact.email")}
             value={contact.email}
             onChange={onInput}
           />
@@ -123,12 +123,12 @@ function AddEditContact({
       />
       {!edit && (
         <Button variant="primary" type="button" onClick={() => onAdd()}>
-          {t("add-contact.add-contact")}
+          {t("add-edit-contact.add-contact")}
         </Button>
       )}
       {edit && (
         <Button variant="primary" type="button" onClick={() => onAdd()}>
-          {t("add-contact.update-contact")}
+          {t("add-edit-contact.update-contact")}
         </Button>
       )}
     </>
