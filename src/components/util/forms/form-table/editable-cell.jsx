@@ -28,6 +28,7 @@ const EditableCell = ({
 
   return (
     <input
+      style={{ minHeight: "36px" }}
       value={value}
       onChange={({ target }) => setValue(target.value)}
       onBlur={() => updateTableData(index, id, value)}

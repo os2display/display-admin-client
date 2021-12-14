@@ -5,6 +5,7 @@ import MediaSelector from "./media-selector";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
+import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 
@@ -97,6 +98,19 @@ function ContentForm({
             name={formData.name}
             value={formStateObject[formData.name]}
             onChange={onChange}
+            tabsClasses={formData.tableClasses}
+          />
+        );
+        break;
+      case "contacts":
+        returnElement = (
+          <Contacts
+            onMediaChange={onMediaChange}
+            getInputImage={getInputImage}
+            name={formData.name}
+            formData={formData}
+            value={formStateObject[formData.name]}
+            onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
           />
         );
@@ -178,10 +192,6 @@ function ContentForm({
         );
         break;
       case "image":
-        if (data.required) {
-          requiredFieldCallback([data.name, "mediaDescription", "mediaName"]);
-        }
-
         returnElement = (
           <>
             {formData?.label && (
@@ -191,7 +201,6 @@ function ContentForm({
             )}
 
             <MediaSelector
-              errors={formData.required ? errors : null}
               multiple={data.multipleImages}
               selectedMedia={getInputImage(formData)}
               onSelectedMedia={onMediaChange}
