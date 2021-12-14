@@ -32,6 +32,7 @@ function MediaSelector({
 }) {
   const { t } = useTranslation("common");
   const [showMediaModal, setShowMediaModal] = useState(false);
+
   /** Close the modal */
   function closeModal() {
     setShowMediaModal(false);
