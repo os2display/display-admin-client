@@ -8,16 +8,16 @@ import MediaSelector from "../../../slide/content/media-selector";
 import FormInput from "../form-input";
 
 /**
- * An input for adding contacts.
+ * An input for adding/editing contacts.
  *
  * @param {string} props The props.
  * @param {Function} props.onMediaChange For keeping images updated
  * @param {Function} props.addContact For adding contact
  * @param {Function} props.contact The contact currently being edited
  * @param {Function} props.getInputImage For getting contact image
- * @returns {object} Add contact component.
+ * @returns {object} Add/edit contact component.
  */
-function AddContact({
+function AddEditContact({
   addContact,
   contact: inputContact,
   onMediaChange,
@@ -135,7 +135,7 @@ function AddContact({
   );
 }
 
-AddContact.propTypes = {
+AddEditContact.propTypes = {
   addContact: PropTypes.func.isRequired,
   contact: PropTypes.objectOf({
     name: PropTypes.string,
@@ -147,4 +147,4 @@ AddContact.propTypes = {
   getInputImage: PropTypes.func.isRequired,
 };
 
-export default AddContact;
+export default AddEditContact;
