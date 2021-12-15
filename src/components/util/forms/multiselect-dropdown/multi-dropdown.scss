@@ -1,6 +1,6 @@
 .rmsc {
   &.single-select {
-    input {
+    input[type='checkbox'] {
       display: none;
     }
   }
