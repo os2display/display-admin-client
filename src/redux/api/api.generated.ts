@@ -4,6 +4,77 @@ export const api = createApi({
   baseQuery: extendedBaseQuery,
   tagTypes: [],
   endpoints: (build) => ({
+    getV1FeedSources: build.query<
+      GetV1FeedSourcesApiResponse,
+      GetV1FeedSourcesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/feed-sources`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1FeedSourcesById: build.query<
+      GetV1FeedSourcesByIdApiResponse,
+      GetV1FeedSourcesByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feed-sources/${queryArg.id}` }),
+    }),
+    getV1Feeds: build.query<GetV1FeedsApiResponse, GetV1FeedsApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/feeds`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    postV1Feeds: build.mutation<PostV1FeedsApiResponse, PostV1FeedsApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/feeds`,
+        method: "POST",
+        body: queryArg.feedFeedInput,
+      }),
+    }),
+    getV1FeedsById: build.query<
+      GetV1FeedsByIdApiResponse,
+      GetV1FeedsByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}` }),
+    }),
+    putV1FeedsById: build.mutation<
+      PutV1FeedsByIdApiResponse,
+      PutV1FeedsByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/feeds/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.feedFeedInput,
+      }),
+    }),
+    deleteV1FeedsById: build.mutation<
+      DeleteV1FeedsByIdApiResponse,
+      DeleteV1FeedsByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/feeds/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getV1FeedsByIdData: build.query<
+      GetV1FeedsByIdDataApiResponse,
+      GetV1FeedsByIdDataApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}/data` }),
+    }),
     getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({
       query: (queryArg) => ({
         url: `/v1/layouts`,
@@ -432,6 +503,61 @@ export const api = createApi({
     }),
   }),
 });
+export type GetV1FeedSourcesApiResponse = unknown;
+export type GetV1FeedSourcesApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
+};
+export type GetV1FeedSourcesByIdApiResponse = unknown;
+export type GetV1FeedSourcesByIdApiArg = {
+  id: string;
+};
+export type GetV1FeedsApiResponse = unknown;
+export type GetV1FeedsApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
+};
+export type PostV1FeedsApiResponse = unknown;
+export type PostV1FeedsApiArg = {
+  /** The new Feed resource */
+  feedFeedInput: FeedFeedInput;
+};
+export type GetV1FeedsByIdApiResponse = unknown;
+export type GetV1FeedsByIdApiArg = {
+  id: string;
+};
+export type PutV1FeedsByIdApiResponse = unknown;
+export type PutV1FeedsByIdApiArg = {
+  id: string;
+  /** The updated Feed resource */
+  feedFeedInput: FeedFeedInput;
+};
+export type DeleteV1FeedsByIdApiResponse = unknown;
+export type DeleteV1FeedsByIdApiArg = {
+  id: string;
+};
+export type GetV1FeedsByIdDataApiResponse = unknown;
+export type GetV1FeedsByIdDataApiArg = {
+  id: string;
+};
 export type GetV1LayoutsApiResponse = unknown;
 export type GetV1LayoutsApiArg = {
   page?: number;
@@ -748,6 +874,13 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
+export type FeedFeedInput = {
+  title?: string;
+  description?: string;
+  configuration?: string[] | null;
+  slide?: string;
+  feedSource?: string;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
@@ -792,6 +925,14 @@ export type ThemeThemeInput = {
   css?: string;
 };
 export const {
+  useGetV1FeedSourcesQuery,
+  useGetV1FeedSourcesByIdQuery,
+  useGetV1FeedsQuery,
+  usePostV1FeedsMutation,
+  useGetV1FeedsByIdQuery,
+  usePutV1FeedsByIdMutation,
+  useDeleteV1FeedsByIdMutation,
+  useGetV1FeedsByIdDataQuery,
   useGetV1LayoutsQuery,
   useGetV1LayoutsByIdQuery,
   useGetV1MediaQuery,
