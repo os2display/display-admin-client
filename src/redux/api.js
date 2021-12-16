@@ -13,6 +13,30 @@ const api = generatedApi.enhanceEndpoints({
     "ScreenGroup",
   ],
   endpoints: {
+    getV1FeedSources: {
+      providesTags: ["FeedSource"],
+    },
+    getV1FeedSourcesById: {
+      providesTags: ["FeedSource"],
+    },
+    getV1Feeds: {
+      providesTags: ["Feed"],
+    },
+    postV1Feeds: {
+      providesTags: ["Feed"],
+    },
+    getV1FeedsById: {
+      providesTags: ["Feed"],
+    },
+    putV1FeedsById: {
+      providesTags: ["Feed"],
+    },
+    deleteV1FeedsById: {
+      providesTags: ["Feed"],
+    },
+    getV1FeedsByIdData: {
+      providesTags: ["Feed"],
+    },
     getV1Layouts: {
       providesTags: ["Layout"],
     },
