@@ -37,7 +37,6 @@ function ContentForm({
   const getInputImage = (formData) => {
     const field = formStateObject[formData.name];
     let inputImages = null;
-
     if (Array.isArray(field)) {
       inputImages = [];
       field.forEach((mediaId) => {
@@ -45,8 +44,13 @@ function ContentForm({
           inputImages.push(mediaData[mediaId]);
         }
       });
+    } else if (
+      typeof formData === "object" &&
+      Object.prototype.hasOwnProperty.call(mediaData, formData.name)
+    ) {
+      inputImages = [];
+      inputImages.push(mediaData[formData.name]);
     }
-
     return inputImages;
   };
 
@@ -103,6 +107,7 @@ function ContentForm({
         );
         break;
       case "contacts":
+        console.log(formStateObject[formData.name]);
         returnElement = (
           <Contacts
             onMediaChange={onMediaChange}

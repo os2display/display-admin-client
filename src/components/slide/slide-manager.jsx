@@ -45,6 +45,7 @@ function SlideManager({
   const [getTheme, setGetTheme] = useState(true);
   const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
+  const [arrayName, setArrayName] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [mediaData, setMediaData] = useState({});
@@ -292,6 +293,11 @@ function SlideManager({
   function handleMedia({ target }) {
     const fieldValue = target.value;
     const fieldId = target.id;
+
+    if (target.arrayName) {
+      setArrayName(target.arrayName);
+    }
+
     const localFormStateObject = { ...formStateObject };
     const localMediaData = { ...mediaData };
 
@@ -463,10 +469,27 @@ function SlideManager({
         newFormStateObject.media.push(savedMediaData["@id"]);
 
         // Replace TEMP-- id with real id.
-        newFormStateObject.content[submittedMedia.fieldName] =
-          newFormStateObject.content[submittedMedia.fieldName].map((mediaId) =>
-            mediaId === submittedMedia.tempId ? savedMediaData["@id"] : mediaId
+        if (arrayName) {
+          const saveArray = formStateObject.content[arrayName].map(
+            (element) => {
+              return {
+                ...element,
+                media: { image: [savedMediaData["@id"]] },
+                mediaId: savedMediaData["@id"],
+              };
+            }
           );
+          newFormStateObject.content[arrayName] = saveArray;
+        }
+        if (!arrayName) {
+          newFormStateObject.content[submittedMedia.fieldName] =
+            newFormStateObject.content[submittedMedia.fieldName].map(
+              (mediaId) =>
+                mediaId === submittedMedia.tempId
+                  ? savedMediaData["@id"]
+                  : mediaId
+            );
+        }
         setFormStateObject(newFormStateObject);
 
         const newMediaData = { ...mediaData };
