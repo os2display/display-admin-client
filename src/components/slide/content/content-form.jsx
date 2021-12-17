@@ -8,6 +8,7 @@ import Select from "../../util/forms/select";
 import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
+import FeedSelector from "./feed-selector";
 
 /**
  * Render form elements for content form.
@@ -58,10 +59,21 @@ function ContentForm({
     let returnElement;
 
     switch (formData.input) {
+      case "feed":
+        if (data.required){
+          requiredFieldCallback(data.name);
+        }
+
+        returnElement = (
+          <FeedSelector name={data.name} value={formStateObject[formData.name]} />
+        );
+
+        break;
       case "input":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <FormInput
             name={formData.name}
@@ -74,11 +86,13 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "rich-text-input":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <RichText
             name={formData.name}
@@ -91,6 +105,7 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "table":
         returnElement = (
@@ -101,6 +116,7 @@ function ContentForm({
             tabsClasses={formData.tableClasses}
           />
         );
+
         break;
       case "contacts":
         returnElement = (
@@ -114,11 +130,13 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "checkbox":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <FormCheckbox
             label={formData.label}
@@ -129,28 +147,34 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "header":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <h2 className={formData.formGroupClasses}>{formData.text}</h2>
         );
+
         break;
       // @TODO: This (header-h3) should be possible to create in a more efficient way, in combination with the above.
       case "header-h3":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <h3 className={formData.formGroupClasses}>{formData.text}</h3>
         );
+
         break;
       case "textarea":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <>
             {formData?.label && (
@@ -173,11 +197,13 @@ function ContentForm({
             )}
           </>
         );
+
         break;
       case "select":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <Select
             helpText={formData.helpText}
@@ -190,6 +216,7 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "image":
         returnElement = (
@@ -220,6 +247,7 @@ function ContentForm({
             )}
           </>
         );
+
         break;
       default:
         returnElement = <></>;
