@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -17,7 +17,6 @@ import ContentForm from "./content/content-form";
 import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 import RadioButtons from "../util/forms/radio-buttons";
-import idFromUrl from "../util/helpers/id-from-url";
 import "./slide-form.scss";
 
 /**
@@ -58,6 +57,7 @@ function SlideForm({
   const history = useHistory();
   const [showPreview, setShowPreview] = useState(false);
   const [previewLayout, setPreviewLayout] = useState("horizontal");
+  const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
   const [templateOptions, setTemplateOptions] = useState([]);
   const [contentFormElements, setContentFormElements] = useState([]);
   const [searchTextTemplate, setSearchTextTemplate] = useState("");
@@ -77,6 +77,27 @@ function SlideForm({
     title: searchTextTheme,
     itemsPerPage: searchTextTheme ? 10 : 0,
   });
+
+  /**
+   * For closing overlay on escape key.
+   *
+   * @param {object} props - The props.
+   * @param {string} props.key - The key input.
+   */
+  function downHandler({ key }) {
+    if (key === "Escape") {
+      setPreviewOverlayVisible(false);
+    }
+  }
+
+  // Add event listeners for keypress
+  useEffect(() => {
+    window.addEventListener("keydown", downHandler);
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+    };
+  }, []);
 
   /** Load content form elements for template */
   useEffect(() => {
@@ -232,23 +253,34 @@ function SlideForm({
                         handleChange={onChangePreviewLayout}
                       />
                     </div>
-                    {slide["@id"] && (
-                      <>
-                        <Link
-                          className="btn btn-success"
-                          target="_blank"
-                          to={`/slide/preview/${idFromUrl(
-                            slide["@id"]
-                          )}/${idFromUrl(slide.templateInfo["@id"])}`}
-                        >
-                          {t("slide-form.preview-in-new-tab")}
-                        </Link>{" "}
-                        <div className="mt-2">
-                          <small className="form-text text-muted">
-                            {t("slide-form.preview-in-new-tab-help-text")}
-                          </small>{" "}
-                        </div>
-                      </>
+                    <Button
+                      variant="secondary"
+                      type="button"
+                      id="cancel_slide"
+                      onClick={() =>
+                        setPreviewOverlayVisible(!previewOverlayVisible)
+                      }
+                      size="lg"
+                      className="me-3"
+                    >
+                      {t("slide-form.preview-in-full-screen")}
+                    </Button>
+                    {previewOverlayVisible && (
+                      <div
+                        onClick={() =>
+                          setPreviewOverlayVisible(!previewOverlayVisible)
+                        }
+                        role="presentation"
+                        className="preview-overlay"
+                      >
+                        <RemoteComponentWrapper
+                          url={selectedTemplate?.resources?.component}
+                          slide={slide}
+                          mediaData={mediaData}
+                          showPreview={showPreview}
+                          orientation=""
+                        />
+                      </div>
                     )}
                   </ContentBody>
                 </div>

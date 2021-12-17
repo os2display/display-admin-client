@@ -260,8 +260,7 @@
     }
   },
   "slide-form": {
-    "preview-in-new-tab": "Åben preview i ny tab",
-    "preview-in-new-tab-help-text": "Åbnes preview i ny tab skal denne lukkes og genåbnes for at eventuelle ændringer kan slå igennem",
+    "preview-in-full-screen": "Åben preview i fuld skærm",
     "horizontal-or-vertical-label": "Vælg preview-format",
     "horizontal-label": "16:9",
     "vertical-label": "9:16",
