@@ -221,6 +221,9 @@ function SlideForm({
               />
             </Col>
           </Row>
+          <Row>
+            <small className="form-text">{t("slide-form.publish-helptext")}</small>
+          </Row>
         </ContentBody>
         <ContentFooter>
           <Button

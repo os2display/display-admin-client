@@ -12,6 +12,8 @@ import {
   usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
 import PlaylistForm from "./playlist-form";
+import set from "lodash.set";
+import dayjs from "dayjs";
 
 /**
  * The playlist edit component.
@@ -109,14 +111,26 @@ function PlaylistEdit() {
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
-    localFormStateObject[target.id] = target.value;
+    set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
 
   /** Set loaded data into form state. */
   useEffect(() => {
     if (data) {
-      setFormStateObject(data);
+      const localFormStateObject = { ...data };
+
+      // Set published to format accepted by bootstrap date component
+      localFormStateObject.published = {
+        from: localFormStateObject.published.from ? dayjs(
+          localFormStateObject.published.from
+        ).format("YYYY-MM-DDTHH:mm") : null,
+        to: localFormStateObject.published.to ? dayjs(
+          localFormStateObject.published.to
+        ).format("YYYY-MM-DDTHH:mm") : null
+      };
+
+      setFormStateObject(localFormStateObject);
     }
   }, [data]);
 
@@ -157,6 +171,14 @@ function PlaylistEdit() {
     setSavingPlaylists(true);
     setLoadingMessage(t("playlist-edit.loading-messages.saving-playlist"));
 
+    // Set published.
+    const from = formStateObject.published.from
+      ? new Date(formStateObject.published.from).toISOString()
+      : null;
+    const to = formStateObject.published.to
+      ? new Date(formStateObject.published.to).toISOString()
+      : null;
+
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -169,14 +191,16 @@ function PlaylistEdit() {
         };
       }),
       published: {
-        from: formStateObject.published.from,
-        to: formStateObject.published.from,
+        from: from,
+        to: to,
       },
     };
+
     PutV1Playlists({
       id,
       playlistPlaylistInput: JSON.stringify(saveData),
     });
+
     if (Array.isArray(formStateObject.slides)) {
       handleSaveSlides();
     }

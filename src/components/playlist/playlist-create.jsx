@@ -11,6 +11,7 @@ import {
   usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
 import PlaylistForm from "./playlist-form";
+import set from "lodash.set";
 
 /**
  * The playlist edit component.
@@ -99,7 +100,7 @@ function PlaylistCreate() {
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
-    localFormStateObject[target.id] = target.value;
+    set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
 

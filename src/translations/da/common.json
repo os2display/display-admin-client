@@ -261,7 +261,8 @@
     "slide-from-label": "Udgivet fra",
     "slide-to-label": "Udgivet til",
     "slide-theme-label": "Slidets tema",
-    "slide-publish-title": "Udgivelse"
+    "slide-publish-title": "Udgivelse",
+    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i."
   },
   "theme-form": {
     "theme-name-label": "Temaets navn",
@@ -345,7 +346,11 @@
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
     "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten",
-    "schedule-header": "Planlægning"
+    "schedule-header": "Planlægning",
+    "publish-from-label": "Udgivet fra",
+    "publish-to-label": "Udgivet til",
+    "publish-title": "Udgivelse",
+    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er spillelisten udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet spillelisten vises i."
   },
   "playlist-drag-and-drop": {
     "columns": {
