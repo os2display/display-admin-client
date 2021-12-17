@@ -64,7 +64,7 @@ function App() {
                 draggable
                 progress={undefined}
               />
-              <main className="col p-3">
+              <main className="main-container col p-3">
                 <Switch>
                   <Route path="/playlist/create" component={PlaylistCreate} />
                   <Route path="/playlist/edit/:id" component={PlaylistEdit} />
