@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
  */
 function ContactView({ contact, editContact, getInputImage, removeContact }) {
   const { t } = useTranslation("common");
-  const image = getInputImage({ name: `contacts-image-${contact.tempId}` });
+  const image = getInputImage({ name: contact.mediaId });
   let imageUrl = "";
 
   // Get image url, different depending on if it is going to be saved or if it is saved

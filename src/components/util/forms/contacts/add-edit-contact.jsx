@@ -30,8 +30,8 @@ function AddEditContact({
     phone: "",
     title: "",
     email: "",
-    image: "",
-    tempId: ulid(new Date().getTime()),
+    url: "",
+    mediaId: `contacts-image-${ulid(new Date().getTime())}`,
   });
 
   useEffect(() => {
@@ -52,6 +52,18 @@ function AddEditContact({
     setContact(localContact);
   }
 
+  /**
+   * Adds arrayname to callback
+   *
+   * @param {object} props The props.
+   * @param {object} props.target Event target
+   */
+  function onMediaChangeAddEditContact({ target }) {
+    /* eslint-disable no-param-reassign */
+    target.arrayName = "contacts";
+    onMediaChange({ target });
+  }
+
   /** Adding contact callback */
   function onAdd() {
     addContact(contact);
@@ -61,8 +73,8 @@ function AddEditContact({
       phone: "",
       title: "",
       email: "",
-      image: "",
-      tempId: ulid(new Date().getTime()),
+      url: "",
+      mediaId: `contacts-image-${ulid(new Date().getTime())}`,
     });
     setEdit(false);
   }
@@ -112,14 +124,14 @@ function AddEditContact({
       <MediaSelector
         multiple={false}
         selectedMedia={
-          contact.tempId
+          contact.mediaId
             ? getInputImage({
-                name: `contacts-image-${contact.tempId}`,
+                name: `${contact.mediaId}`,
               })
             : []
         }
-        onSelectedMedia={onMediaChange}
-        name={`contacts-image-${contact.tempId}`}
+        onSelectedMedia={onMediaChangeAddEditContact}
+        name={`${contact.mediaId}`}
       />
       {!edit && (
         <Button variant="primary" type="button" onClick={() => onAdd()}>

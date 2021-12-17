@@ -29,8 +29,8 @@ function Contacts({
 
   // Initial state, if editing a slide with saved contacts
   useEffect(() => {
-    if (value?.contacts) {
-      setContacts(value.contacts);
+    if (value) {
+      setContacts(value);
     }
   }, []);
 
@@ -40,12 +40,17 @@ function Contacts({
    * @param {object} contact The contact to add
    */
   function addContact(contact) {
+    const localContact = { ...contact };
+    const image = getInputImage({ name: localContact.mediaId });
+    if (Array.isArray(image) && image.length > 0) {
+      localContact.media = { image: [image[0].tempId] };
+    }
     const contactsCopy = [...contacts];
     // If the contact is being edited, it has an index.
-    if (Number.isInteger(contact.index)) {
-      contactsCopy[contact.index] = contact;
+    if (Number.isInteger(localContact.index)) {
+      contactsCopy[localContact.index] = localContact;
     } else {
-      contactsCopy.push({ ...contact, index: contactsCopy.length });
+      contactsCopy.push({ ...localContact, index: contactsCopy.length });
     }
     setContactToEdit();
     setContacts(contactsCopy);
@@ -54,12 +59,12 @@ function Contacts({
   // If contacts change, return the value to slide manager.
   useEffect(() => {
     const returnTarget = {
-      value: { contacts },
+      value: contacts,
       id: name,
     };
 
     onChange({ target: returnTarget });
-  }, [contacts.length, contacts]);
+  }, [contacts]);
 
   /**
    * Set state on change in input field
@@ -73,13 +78,13 @@ function Contacts({
   /** @param {object} contact The contact to remove */
   function removeContact(contact) {
     setContacts(
-      [...contacts].filter(({ tempId }) => !(tempId === contact.tempId))
+      [...contacts].filter(({ mediaId }) => !(mediaId === contact.mediaId))
     );
   }
 
   return (
     <div className={formGroupClasses}>
-      {contacts.length > 0 && (
+      {contacts?.length > 0 && (
         <div className="d-flex flex-wrap">
           {contacts.map((contact) => (
             <ContactView
@@ -91,7 +96,7 @@ function Contacts({
           ))}
         </div>
       )}
-      {(contacts.length < 6 || contactToEdit) && (
+      {(contacts?.length < 6 || contactToEdit) && (
         <AddEditContact
           formData={formData}
           contact={contactToEdit}
