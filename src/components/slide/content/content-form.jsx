@@ -107,7 +107,6 @@ function ContentForm({
         );
         break;
       case "contacts":
-        console.log(formStateObject[formData.name]);
         returnElement = (
           <Contacts
             onMediaChange={onMediaChange}
