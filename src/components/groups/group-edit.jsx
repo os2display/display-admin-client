@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
-import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import {
   useGetV1ScreenGroupsByIdQuery,
   usePutV1ScreenGroupsByIdMutation,
@@ -125,4 +124,4 @@ function GroupEdit() {
   );
 }
 
-export default SideAndTopbarHOC(GroupEdit);
+export default GroupEdit;

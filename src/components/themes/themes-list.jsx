@@ -7,7 +7,6 @@ import idFromUrl from "../util/helpers/id-from-url";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import LinkForList from "../util/list/link-for-list";
-import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import {
@@ -268,4 +267,4 @@ function ThemesList() {
   );
 }
 
-export default SideAndTopbarHOC(ThemesList);
+export default ThemesList;

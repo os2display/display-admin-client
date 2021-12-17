@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import ThemeForm from "./theme-form";
-import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import {
   displaySuccess,
   displayError,
@@ -120,4 +119,4 @@ function ThemeEdit() {
   );
 }
 
-export default SideAndTopbarHOC(ThemeEdit);
+export default ThemeEdit;

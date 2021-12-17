@@ -9,7 +9,6 @@ import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
-import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import {
   displaySuccess,
   displayError,
@@ -260,4 +259,4 @@ function GroupsList() {
   );
 }
 
-export default SideAndTopbarHOC(GroupsList);
+export default GroupsList;

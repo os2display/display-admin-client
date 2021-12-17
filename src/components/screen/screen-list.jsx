@@ -3,7 +3,6 @@ import { Button, Col } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CampaignIcon from "../screen-list/campaign-icon";
-import SideAndTopbarHOC from "../side-and-topbar-hoc/side-and-topbar-hoc";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import selectedHelper from "../util/helpers/selectedHelper";
 import LinkForList from "../util/list/link-for-list";
@@ -333,4 +332,4 @@ function ScreenList() {
   );
 }
 
-export default SideAndTopbarHOC(ScreenList);
+export default ScreenList;
