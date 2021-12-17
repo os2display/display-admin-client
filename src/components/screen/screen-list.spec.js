@@ -9,7 +9,7 @@ describe("Screen list loads", () => {
     }).as("screensData");
     cy.intercept({
       method: "GET",
-      url: "**/screens/00KRZ99DZF03JS10PK0PQ9004A/*",
+      url: "**/screens/00644R6YAZ0RMT06KW0HD214CH/*",
     }).as("screenGroups");
     cy.visit("/screen/list");
     cy.wait(["@screensData", "@screenGroups"]);
@@ -17,12 +17,12 @@ describe("Screen list loads", () => {
 
   it("It loads screens list", () => {
     cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("have.length", 90);
+    cy.get("tbody").find("tr td").should("have.length", 70);
   });
 
   it("It goes to edit (screens list)", () => {
     cy.get("#screenTitle").should("not.exist");
-    cy.get("tbody").find("tr td a").eq(0).click();
+    cy.get("tbody").find(".edit-button").eq(0).click();
     cy.get("#screenTitle").should("exist");
   });
 
@@ -33,7 +33,7 @@ describe("Screen list loads", () => {
   });
 
   it("The correct amount of column headers loaded (screens list)", () => {
-    cy.get("thead").find("th").should("have.length", 9);
+    cy.get("thead").find("th").should("have.length", 7);
   });
 
   it("It removes all selected", () => {
