@@ -12,7 +12,8 @@ describe("Screen list loads", () => {
       url: "**/screens/00644R6YAZ0RMT06KW0HD214CH/*",
     }).as("screenGroups");
     cy.visit("/screen/list");
-    cy.wait(["@screensData", "@screenGroups"]);
+    cy.wait(["@screensData"]);
+    cy.wait(5000);
   });
 
   it("It loads screens list", () => {
