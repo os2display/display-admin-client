@@ -27,8 +27,8 @@ describe("Slides list tests", () => {
     }).as("templatesData");
     cy.wait(["@templatesData"]);
     cy.get("#slidesTitle").should("not.exist");
-    cy.get("tbody").find("tr td a").should("exist");
-    cy.get("tbody").find("tr td a").eq(0).click();
+    cy.get("tbody").find(".edit-button").should("exist");
+    cy.get("tbody").find(".edit-button").eq(0).click();
     cy.get("#slidesTitle").should("exist");
   });
 
