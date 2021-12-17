@@ -30,7 +30,7 @@ describe("Table header loads", () => {
       method: "GET",
       url: "**/slides*",
       query: {
-        page: "1"
+        page: "1",
       },
     }).as("slidesData");
     cy.intercept({
@@ -71,14 +71,16 @@ describe("Table header loads", () => {
       method: "GET",
       url: "**/slides*",
       query: {
-        page: "1"
+        page: "1",
       },
     }).as("slidesData");
     cy.intercept({
       method: "GET",
       url: "**/templates/00MWCNKC4P0X5C0AT70E741E2V",
     }).as("templatesData");
-    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title&search=harum");
+    cy.visit(
+      "/slide/list?published=all&page=1&order=asc&sort=title&search=harum"
+    );
     cy.wait(["@slidesData", "@templatesData"]);
     cy.get("tbody")
       .find("tr td")
@@ -96,7 +98,7 @@ describe("Table header loads", () => {
         page: "1",
       },
     }).as("slidesData");
-      cy.intercept({
+    cy.intercept({
       method: "GET",
       url: "**/templates/000BGWFMBS15N807E60HP91JCX",
     }).as("templatesData");

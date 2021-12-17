@@ -13,8 +13,11 @@ import idFromUrl from "../helpers/id-from-url";
 function LinkForList(id, param, label) {
   const newId = idFromUrl(id);
   return (
-    <Link className="btn btn-primary edit-button
-    " to={`/${param}/${newId}`}>
+    <Link
+      className="btn btn-primary edit-button
+    "
+      to={`/${param}/${newId}`}
+    >
       {label}
     </Link>
   );
