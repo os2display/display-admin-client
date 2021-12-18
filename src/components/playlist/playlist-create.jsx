@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import set from "lodash.set";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   displayError,
@@ -99,7 +100,7 @@ function PlaylistCreate() {
    */
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
-    localFormStateObject[target.id] = target.value;
+    set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
 

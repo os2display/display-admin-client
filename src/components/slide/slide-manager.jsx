@@ -129,6 +129,7 @@ function SlideManager({
       );
     }
   }, [loadingError]);
+
   /**
    * Set state on change in input field
    *
