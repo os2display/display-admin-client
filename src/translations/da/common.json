@@ -11,7 +11,7 @@
     "edit-button": "Rediger"
   },
   "remote-component-wrapper": {
-    "show-preview-label": "Vis preview af slide"
+    "header-preview": "Preview"
   },
   "edit-user": {
     "create-new-user": "Opret ny bruger",
@@ -250,7 +250,21 @@
     "accept": "Ok",
     "cancel": "Annullér"
   },
+  "slide-preview":{
+    "error-messages": {
+      "loading-template-error": "Der skete en fejl da slidets skabelon skulle hentes: {{error}}",
+      "loading-content-error": "Der skete en fejl da slidets indhold skulle hentes: {{error}}"
+    },
+    "loading-messages":{
+      "loading": "Henter template og indhold til slide"
+    }
+  },
   "slide-form": {
+    "preview-in-full-screen": "Åben preview i fuld skærm",
+    "horizontal-or-vertical-label": "Vælg preview-format",
+    "horizontal-label": "16:9",
+    "vertical-label": "9:16",
+    "show-preview-label": "Vis preview af slide",
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",

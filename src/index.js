@@ -13,7 +13,6 @@ ReactDOM.render(
         <App />
       </Router>
     </React.StrictMode>
-    ,
   </Provider>,
   document.getElementById("root")
 );
