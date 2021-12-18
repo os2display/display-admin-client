@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import set from "lodash.set";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   displayError,
@@ -11,7 +12,6 @@ import {
   usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
 import PlaylistForm from "./playlist-form";
-import set from "lodash.set";
 
 /**
  * The playlist edit component.

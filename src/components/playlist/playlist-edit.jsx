@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
+import set from "lodash.set";
+import dayjs from "dayjs";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   displayError,
@@ -12,8 +14,6 @@ import {
   usePutV1PlaylistsByIdSlidesMutation,
 } from "../../redux/api/api.generated";
 import PlaylistForm from "./playlist-form";
-import set from "lodash.set";
-import dayjs from "dayjs";
 
 /**
  * The playlist edit component.
@@ -122,12 +122,14 @@ function PlaylistEdit() {
 
       // Set published to format accepted by bootstrap date component
       localFormStateObject.published = {
-        from: localFormStateObject.published.from ? dayjs(
-          localFormStateObject.published.from
-        ).format("YYYY-MM-DDTHH:mm") : null,
-        to: localFormStateObject.published.to ? dayjs(
-          localFormStateObject.published.to
-        ).format("YYYY-MM-DDTHH:mm") : null
+        from: localFormStateObject.published.from
+          ? dayjs(localFormStateObject.published.from).format(
+              "YYYY-MM-DDTHH:mm"
+            )
+          : null,
+        to: localFormStateObject.published.to
+          ? dayjs(localFormStateObject.published.to).format("YYYY-MM-DDTHH:mm")
+          : null,
       };
 
       setFormStateObject(localFormStateObject);
@@ -191,8 +193,8 @@ function PlaylistEdit() {
         };
       }),
       published: {
-        from: from,
-        to: to,
+        from,
+        to,
       },
     };
 
