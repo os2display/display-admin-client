@@ -89,7 +89,7 @@
   "react-table": {
     "remove-row": "Fjern række"
   },
-  "screens-list": {
+  "screen-list": {
     "columns": {
       "pick": "Vælg skærm",
       "name": "Navn",
