@@ -269,70 +269,6 @@
                         "allowReserved": false
                     },
                     {
-                        "name": "title",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "description",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[title]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[description]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
                         "name": "order[createdAt]",
                         "in": "query",
                         "description": "",
@@ -371,66 +307,6 @@
                 ],
                 "deprecated": false
             },
-            "post": {
-                "operationId": "create-v1-feeds",
-                "tags": [
-                    "Feeds"
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Feed resource created",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feed.Feed.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feed.Feed"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feed.Feed"
-                                }
-                            }
-                        },
-                        "links": {}
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    }
-                },
-                "summary": "Creates a Feed resource.",
-                "description": "Creates a Feed resource.",
-                "parameters": [],
-                "requestBody": {
-                    "description": "The new Feed resource",
-                    "content": {
-                        "application/ld+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Feed.FeedInput.jsonld"
-                            }
-                        },
-                        "text/html": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Feed.FeedInput"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Feed.FeedInput"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "deprecated": false
-            },
             "parameters": []
         },
         "/v1/feeds/{id}": {
@@ -455,121 +331,6 @@
                 },
                 "summary": "Retrieve a Feed resource.",
                 "description": "Retrieves a Feed resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "put": {
-                "operationId": "put-v1-feed-id",
-                "tags": [
-                    "Feeds"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Feed resource updated",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feed.Feed.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feed.Feed"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feed.Feed"
-                                }
-                            }
-                        },
-                        "links": {}
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                },
-                "summary": "Update a Feed resource.",
-                "description": "Update a Feed resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "requestBody": {
-                    "description": "The updated Feed resource",
-                    "content": {
-                        "application/ld+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Feed.FeedInput.jsonld"
-                            }
-                        },
-                        "text/html": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Feed.FeedInput"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Feed.FeedInput"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "deprecated": false
-            },
-            "delete": {
-                "operationId": "delete-v1-feed-id",
-                "tags": [
-                    "Feeds"
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Feed resource deleted"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                },
-                "summary": "Delete a Feed resource.",
-                "description": "Delete a Feed resource.",
                 "parameters": [
                     {
                         "name": "id",
@@ -4520,12 +4281,6 @@
                 "type": "object",
                 "description": "",
                 "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
                     "created": {
                         "type": "string",
                         "format": "date-time"
@@ -4544,16 +4299,20 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "nullable": true
                     },
                     "slide": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "feedSource": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "feedUrl": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },
@@ -4561,6 +4320,14 @@
                 "type": "object",
                 "description": "",
                 "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
                     "@context": {
                         "readOnly": true,
                         "oneOf": [
@@ -4587,20 +4354,6 @@
                                 "additionalProperties": true
                             }
                         ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
                     },
                     "created": {
                         "type": "string",
@@ -4620,101 +4373,20 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "nullable": true
                     },
                     "slide": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "feedSource": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "feedUrl": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Feed.FeedInput": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "configuration": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
+                        "type": "string",
                         "nullable": true
-                    },
-                    "slide": {
-                        "type": "string"
-                    },
-                    "feedSource": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Feed.FeedInput.jsonld": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "configuration": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
-                    },
-                    "slide": {
-                        "type": "string"
-                    },
-                    "feedSource": {
-                        "type": "string"
                     }
                 }
             },
@@ -6142,6 +5814,13 @@
                             "type": "string"
                         }
                     },
+                    "feed": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
                     "media": {
                         "type": "array",
                         "items": {
@@ -6251,6 +5930,13 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "feed": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
                     },
                     "media": {
                         "type": "array",

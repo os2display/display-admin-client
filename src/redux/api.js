@@ -11,6 +11,8 @@ const api = generatedApi.enhanceEndpoints({
     "Media",
     "Layout",
     "ScreenGroup",
+    "FeedSource",
+    "Feed"
   ],
   endpoints: {
     getV1FeedSources: {
@@ -22,16 +24,7 @@ const api = generatedApi.enhanceEndpoints({
     getV1Feeds: {
       providesTags: ["Feed"],
     },
-    postV1Feeds: {
-      providesTags: ["Feed"],
-    },
     getV1FeedsById: {
-      providesTags: ["Feed"],
-    },
-    putV1FeedsById: {
-      providesTags: ["Feed"],
-    },
-    deleteV1FeedsById: {
       providesTags: ["Feed"],
     },
     getV1FeedsByIdData: {

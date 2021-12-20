@@ -31,17 +31,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
-          title: queryArg.title,
-          description: queryArg.description,
           order: queryArg.order,
         },
-      }),
-    }),
-    postV1Feeds: build.mutation<PostV1FeedsApiResponse, PostV1FeedsApiArg>({
-      query: (queryArg) => ({
-        url: `/v1/feeds`,
-        method: "POST",
-        body: queryArg.feedFeedInput,
       }),
     }),
     getV1FeedsById: build.query<
@@ -49,25 +40,6 @@ export const api = createApi({
       GetV1FeedsByIdApiArg
     >({
       query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}` }),
-    }),
-    putV1FeedsById: build.mutation<
-      PutV1FeedsByIdApiResponse,
-      PutV1FeedsByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/feeds/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.feedFeedInput,
-      }),
-    }),
-    deleteV1FeedsById: build.mutation<
-      DeleteV1FeedsByIdApiResponse,
-      DeleteV1FeedsByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/feeds/${queryArg.id}`,
-        method: "DELETE",
-      }),
     }),
     getV1FeedsByIdData: build.query<
       GetV1FeedsByIdDataApiResponse,
@@ -526,32 +498,13 @@ export type GetV1FeedsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  title?: string;
-  description?: string;
   order?: {
-    title?: "asc" | "desc";
-    description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
     updatedAt?: "asc" | "desc";
   };
 };
-export type PostV1FeedsApiResponse = unknown;
-export type PostV1FeedsApiArg = {
-  /** The new Feed resource */
-  feedFeedInput: FeedFeedInput;
-};
 export type GetV1FeedsByIdApiResponse = unknown;
 export type GetV1FeedsByIdApiArg = {
-  id: string;
-};
-export type PutV1FeedsByIdApiResponse = unknown;
-export type PutV1FeedsByIdApiArg = {
-  id: string;
-  /** The updated Feed resource */
-  feedFeedInput: FeedFeedInput;
-};
-export type DeleteV1FeedsByIdApiResponse = unknown;
-export type DeleteV1FeedsByIdApiArg = {
   id: string;
 };
 export type GetV1FeedsByIdDataApiResponse = unknown;
@@ -874,13 +827,6 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
-export type FeedFeedInput = {
-  title?: string;
-  description?: string;
-  configuration?: string[] | null;
-  slide?: string;
-  feedSource?: string;
-};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
@@ -914,6 +860,7 @@ export type SlideSlideInput = {
   theme?: string;
   duration?: number | null;
   published?: string[];
+  feed?: string[] | null;
   media?: string[];
   content?: string[];
 };
@@ -928,10 +875,7 @@ export const {
   useGetV1FeedSourcesQuery,
   useGetV1FeedSourcesByIdQuery,
   useGetV1FeedsQuery,
-  usePostV1FeedsMutation,
   useGetV1FeedsByIdQuery,
-  usePutV1FeedsByIdMutation,
-  useDeleteV1FeedsByIdMutation,
   useGetV1FeedsByIdDataQuery,
   useGetV1LayoutsQuery,
   useGetV1LayoutsByIdQuery,
