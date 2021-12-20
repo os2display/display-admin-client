@@ -232,6 +232,7 @@ function SlideForm({
                         label={t("slide-form.show-preview-label")}
                         onChange={changeShowPreview}
                         value={showPreview}
+                        name="show-preview"
                       />
                     </div>
                     <div className="mt-2">
@@ -279,6 +280,8 @@ function SlideForm({
                           mediaData={mediaData}
                           showPreview={showPreview}
                           orientation=""
+                          closeButton
+                          closeCallback={() => setPreviewOverlayVisible(false)}
                         />
                       </div>
                     )}

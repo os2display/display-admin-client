@@ -3,6 +3,7 @@ import {
   createRemoteComponent,
   createRequires,
 } from "@paciolan/remote-component";
+import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { resolve } from "../../../remote-component.config";
@@ -20,6 +21,8 @@ import "./remote-component-wrapper.scss";
  * @param {boolean} props.displayHeader Whether to display the header.
  * @param {boolean} props.showPreview Whether to display the prevoew.
  * @param {object} props.style A style object
+ * @param {boolean} props.closeButton Display close button on preview
+ * @param {Function} props.closeCallback Close button callback on preview
  * @returns {object} The component.
  */
 function RemoteComponentWrapper({
@@ -30,6 +33,8 @@ function RemoteComponentWrapper({
   orientation,
   displayHeader,
   style,
+  closeButton,
+  closeCallback,
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
@@ -50,13 +55,20 @@ function RemoteComponentWrapper({
 
   return (
     <>
-      {remoteComponentSlide && (
+      {remoteComponentSlide && url && (
         <>
-          {displayHeader && (
-            <h2 className="h1">
-              {t("remote-component-wrapper.header-preview")}
-            </h2>
-          )}
+          <div className="d-flex justify-content-between">
+            {displayHeader && (
+              <h2 className="h1">
+                {t("remote-component-wrapper.header-preview")}
+              </h2>
+            )}
+            {closeButton && (
+              <Button variant="primary" type="button" onClick={closeCallback}>
+                {t("remote-component-wrapper.close-preview")}
+              </Button>
+            )}
+          </div>
           <div className="remote-component-wrapper" style={style}>
             <div className={`remote-component-content ${orientation}`}>
               <ErrorBoundary errorText="remote-component.error-boundary-text">
@@ -80,15 +92,20 @@ RemoteComponentWrapper.defaultProps = {
   displayHeader: true,
   orientation: "",
   style: {},
+  url: "",
+  closeButton: false,
+  closeCallback: () => {},
 };
 
 RemoteComponentWrapper.propTypes = {
   slide: PropTypes.shape({ content: PropTypes.shape({}).isRequired })
     .isRequired,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
   displayHeader: PropTypes.bool,
+  closeCallback: PropTypes.func,
   showPreview: PropTypes.bool.isRequired,
+  closeButton: PropTypes.bool,
   orientation: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.any),
 };
