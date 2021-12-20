@@ -46,8 +46,8 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
 
   // Callback to slide manager on changes.
   useEffect(() => {
-
     let returnTarget;
+
     if (key === "manuel") {
       const first = [{ type: "header", columns }];
       returnTarget = {
@@ -60,6 +60,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
         id: name,
       };
     }
+
     onChange({ target: returnTarget });
   }, [data, columns, dataSource]);
 
