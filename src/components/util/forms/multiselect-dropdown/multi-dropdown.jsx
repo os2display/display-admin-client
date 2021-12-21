@@ -49,24 +49,21 @@ function MultiSelectComponent({
 
   /** Map data to fit component. */
   useEffect(() => {
-    let localMappedOptions = [];
-
-    if (options) {
-      localMappedOptions = options.map((item) => {
+    const localMappedOptions =
+      options?.map((item) => {
         return {
-          label: item?.title,
-          value: item ? (item["@id"] || item.id) : "",
+          label: item.title,
+          value: item["@id"] || item.id,
           disabled: false,
         };
-      });
-    }
+      }) ?? [];
     let localMappedSelected = [];
 
     if (selected.length > 0) {
       localMappedSelected = selected.map((item) => {
         return {
-          label: item?.title,
-          value: item ? (item["@id"] || item.id) : "",
+          label: item.title,
+          value: item["@id"] || item.id,
           disabled: false,
         };
       });
