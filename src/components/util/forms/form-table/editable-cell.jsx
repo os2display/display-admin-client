@@ -37,9 +37,9 @@ const EditableCell = ({
 };
 
 EditableCell.propTypes = {
-  value: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
-  row: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
-  column: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  row: PropTypes.objectOf(PropTypes.any).isRequired,
+  column: PropTypes.objectOf(PropTypes.any).isRequired,
   updateTableData: PropTypes.func.isRequired,
 };
 

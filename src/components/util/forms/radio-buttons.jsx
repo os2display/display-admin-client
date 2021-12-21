@@ -61,6 +61,7 @@ function RadioButtons({
 
 RadioButtons.defaultProps = {
   disabled: false,
+  labelScreenReaderOnly: false,
 };
 
 RadioButtons.propTypes = {
@@ -75,7 +76,7 @@ RadioButtons.propTypes = {
   ).isRequired,
   disabled: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
-  labelScreenReaderOnly: PropTypes.bool.isRequired,
+  labelScreenReaderOnly: PropTypes.bool,
 };
 
 export default RadioButtons;

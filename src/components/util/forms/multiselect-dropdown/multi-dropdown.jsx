@@ -49,21 +49,21 @@ function MultiSelectComponent({
 
   /** Map data to fit component. */
   useEffect(() => {
-    const localMappedOptions = options.map((item) => {
-      return {
-        label: item.title,
-        value: item["@id"],
-        disabled: false,
-      };
-    });
-
+    const localMappedOptions =
+      options?.map((item) => {
+        return {
+          label: item.title,
+          value: item["@id"] || item.id,
+          disabled: false,
+        };
+      }) ?? [];
     let localMappedSelected = [];
 
     if (selected.length > 0) {
       localMappedSelected = selected.map((item) => {
         return {
           label: item.title,
-          value: item["@id"],
+          value: item["@id"] || item.id,
           disabled: false,
         };
       });

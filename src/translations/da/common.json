@@ -11,7 +11,8 @@
     "edit-button": "Rediger"
   },
   "remote-component-wrapper": {
-    "header-preview": "Preview"
+    "header-preview": "Preview",
+    "close-preview": "Luk preview"
   },
   "edit-user": {
     "create-new-user": "Opret ny bruger",
