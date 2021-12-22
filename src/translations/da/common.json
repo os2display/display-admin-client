@@ -608,5 +608,12 @@
   "contact-view":{
     "edit-contact": "Rediger kontakt",
     "remove-contact": "Fjern kontakt"
+  },
+  "feed-selector": {
+    "select-feed-source": "Vælg datakilde",
+    "all-selected": "Alle er valgt",
+    "clear-selection": "Ryd valg",
+    "selected-all": "Vælg alle",
+    "select-some-options": "Vælg..."
   }
 }

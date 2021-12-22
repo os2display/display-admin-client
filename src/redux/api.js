@@ -12,7 +12,7 @@ const api = generatedApi.enhanceEndpoints({
     "Layout",
     "ScreenGroup",
     "FeedSource",
-    "Feed"
+    "Feed",
   ],
   endpoints: {
     getV1FeedSources: {

@@ -8,19 +8,19 @@ import Select from "../../util/forms/select";
 import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
-import FeedSelector from "./feed-selector";
-import set from "lodash.set";
 
 /**
  * Render form elements for content form.
  *
  * @param {object} props - The props.
  * @param {Array} props.data - The data to render in the form element.
+ * @param {object} props.slide - The slide that is being modified.
  * @param {Function} props.requiredFieldCallback - If the form is required, a
  *   callback to add to validation.
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
- * @param {Function} props.onSlideChange - Callback, if the value of a slide field changes.
+ * @param {Function} props.onSlideChange - Callback, if the value of a slide
+ *   field changes.
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onMediaChange - When media have changed call this function.
  * @param {Array} props.mediaData - Array of loaded media entities.
@@ -64,26 +64,20 @@ function ContentForm({
 
     switch (formData.input) {
       case "duration":
-        if (data.required){
+        if (data.required) {
           requiredFieldCallback(data.name);
         }
 
         returnElement = (
-          <FormInput name="duration" value={slide?.duration ? Math.floor(slide.duration / 1000) : 0} onChange={(value) => {
-            onSlideChange({target: {id: 'duration', value: value * 1000 }})
-          } }/>
-        );
-
-        break;
-      case "feed":
-        if (data.required){
-          requiredFieldCallback(data.name);
-        }
-
-        returnElement = (
-          <FeedSelector name={data.name} value={slide?.feed} onChange={(value) => {
-            onSlideChange({target: {id: 'feed', value }})
-          } }/>
+          <FormInput
+            name="duration"
+            value={slide?.duration ? Math.floor(slide.duration / 1000) : 0}
+            onChange={(value) => {
+              onSlideChange({
+                target: { id: "duration", value: value * 1000 },
+              });
+            }}
+          />
         );
 
         break;
@@ -284,6 +278,7 @@ ContentForm.defaultProps = {
   onChange: null,
   onSlideChange: null,
   onMediaChange: null,
+  mediaData: {},
 };
 
 ContentForm.propTypes = {
@@ -296,7 +291,9 @@ ContentForm.propTypes = {
     required: PropTypes.bool,
     multipleImages: PropTypes.bool,
   }).isRequired,
-  slide: PropTypes.shape({}),
+  slide: PropTypes.shape({
+    duration: PropTypes.number,
+  }),
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({}).isRequired,
   requiredFieldCallback: PropTypes.func,

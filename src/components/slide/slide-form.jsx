@@ -15,6 +15,7 @@ import FormInput from "../util/forms/form-input";
 import ContentForm from "./content/content-form";
 import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
+import FeedSelector from "./content/feed-selector";
 
 /**
  * The slide form component.
@@ -169,20 +170,33 @@ function SlideForm({
             </ContentBody>
             <ContentBody>
               {contentFormElements.map((formElement) => (
-                <ContentForm
-                  key={formElement.key}
-                  data={formElement}
-                  onChange={handleContent}
-                  onSlideChange={handleInput}
-                  onMediaChange={handleMedia}
-                  name={formElement.name}
-                  mediaData={mediaData}
-                  slide={slide}
-                  formStateObject={slide.content}
-                  requiredFieldCallback={() => {
-                    return false;
-                  }}
-                />
+                <>
+                  {formElement.input === "feed" && (
+                    <FeedSelector
+                      name={formElement.name}
+                      value={slide?.feed}
+                      onChange={(value) => {
+                        handleInput({ target: { id: "feed", value } });
+                      }}
+                    />
+                  )}
+                  {formElement.input !== "feed" && (
+                    <ContentForm
+                      key={formElement.key}
+                      data={formElement}
+                      onChange={handleContent}
+                      onSlideChange={handleInput}
+                      onMediaChange={handleMedia}
+                      name={formElement.name}
+                      mediaData={mediaData}
+                      slide={slide}
+                      formStateObject={slide.content}
+                      requiredFieldCallback={() => {
+                        return false;
+                      }}
+                    />
+                  )}
+                </>
               ))}
             </ContentBody>
           </>
