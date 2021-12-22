@@ -129,6 +129,7 @@ function SlideManager({
       );
     }
   }, [loadingError]);
+
   /**
    * Set state on change in input field
    *
@@ -422,7 +423,7 @@ function SlideManager({
         const saveData = {
           slideSlideInput: JSON.stringify({
             title: formStateObject.title,
-            theme: formStateObject.theme,
+            theme: formStateObject.theme ?? "",
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
@@ -430,6 +431,7 @@ function SlideManager({
               : null,
             content: formStateObject.content,
             media: formStateObject.media,
+            feed: formStateObject.feed,
             published: {
               from,
               to,

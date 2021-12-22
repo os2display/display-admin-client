@@ -173,9 +173,11 @@ function SlideForm({
                   key={formElement.key}
                   data={formElement}
                   onChange={handleContent}
+                  onSlideChange={handleInput}
                   onMediaChange={handleMedia}
                   name={formElement.name}
                   mediaData={mediaData}
+                  slide={slide}
                   formStateObject={slide.content}
                   requiredFieldCallback={() => {
                     return false;

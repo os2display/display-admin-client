@@ -9,6 +9,7 @@ import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 import FeedSelector from "./feed-selector";
+import set from "lodash.set";
 
 /**
  * Render form elements for content form.
@@ -19,6 +20,7 @@ import FeedSelector from "./feed-selector";
  *   callback to add to validation.
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
+ * @param {Function} props.onSlideChange - Callback, if the value of a slide field changes.
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onMediaChange - When media have changed call this function.
  * @param {Array} props.mediaData - Array of loaded media entities.
@@ -26,9 +28,11 @@ import FeedSelector from "./feed-selector";
  */
 function ContentForm({
   data,
+  slide,
   requiredFieldCallback,
   errors,
   onChange,
+  onSlideChange,
   onMediaChange,
   formStateObject,
   mediaData,
@@ -59,13 +63,27 @@ function ContentForm({
     let returnElement;
 
     switch (formData.input) {
+      case "duration":
+        if (data.required){
+          requiredFieldCallback(data.name);
+        }
+
+        returnElement = (
+          <FormInput name="duration" value={slide?.duration ? Math.floor(slide.duration / 1000) : 0} onChange={(value) => {
+            onSlideChange({target: {id: 'duration', value: value * 1000 }})
+          } }/>
+        );
+
+        break;
       case "feed":
         if (data.required){
           requiredFieldCallback(data.name);
         }
 
         returnElement = (
-          <FeedSelector name={data.name} value={formStateObject[formData.name]} />
+          <FeedSelector name={data.name} value={slide?.feed} onChange={(value) => {
+            onSlideChange({target: {id: 'feed', value }})
+          } }/>
         );
 
         break;
@@ -261,6 +279,11 @@ function ContentForm({
 
 ContentForm.defaultProps = {
   errors: [],
+  slide: null,
+  requiredFieldCallback: null,
+  onChange: null,
+  onSlideChange: null,
+  onMediaChange: null,
 };
 
 ContentForm.propTypes = {
@@ -273,12 +296,14 @@ ContentForm.propTypes = {
     required: PropTypes.bool,
     multipleImages: PropTypes.bool,
   }).isRequired,
+  slide: PropTypes.shape({}),
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({}).isRequired,
-  requiredFieldCallback: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onMediaChange: PropTypes.func.isRequired,
-  mediaData: PropTypes.objectOf(PropTypes.object).isRequired,
+  requiredFieldCallback: PropTypes.func,
+  onChange: PropTypes.func,
+  onSlideChange: PropTypes.func,
+  onMediaChange: PropTypes.func,
+  mediaData: PropTypes.objectOf(PropTypes.object),
 };
 
 export default ContentForm;
