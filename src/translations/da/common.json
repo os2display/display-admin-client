@@ -11,7 +11,8 @@
     "edit-button": "Rediger"
   },
   "remote-component-wrapper": {
-    "show-preview-label": "Vis preview af slide"
+    "header-preview": "Preview",
+    "close-preview": "Luk preview"
   },
   "edit-user": {
     "create-new-user": "Opret ny bruger",
@@ -250,7 +251,21 @@
     "accept": "Ok",
     "cancel": "Annullér"
   },
+  "slide-preview":{
+    "error-messages": {
+      "loading-template-error": "Der skete en fejl da slidets skabelon skulle hentes: {{error}}",
+      "loading-content-error": "Der skete en fejl da slidets indhold skulle hentes: {{error}}"
+    },
+    "loading-messages":{
+      "loading": "Henter template og indhold til slide"
+    }
+  },
   "slide-form": {
+    "preview-in-full-screen": "Åben preview i fuld skærm",
+    "horizontal-or-vertical-label": "Vælg preview-format",
+    "horizontal-label": "16:9",
+    "vertical-label": "9:16",
+    "show-preview-label": "Vis preview af slide",
     "preview-slide-title": "Preview af slide du er ved at konfigurere",
     "save-button": "Gem slide",
     "cancel-button": "Annuller",
@@ -261,7 +276,8 @@
     "slide-from-label": "Udgivet fra",
     "slide-to-label": "Udgivet til",
     "slide-theme-label": "Slidets tema",
-    "slide-publish-title": "Udgivelse"
+    "slide-publish-title": "Udgivelse",
+    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i."
   },
   "theme-form": {
     "theme-name-label": "Temaets navn",
@@ -345,7 +361,11 @@
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
     "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten",
-    "schedule-header": "Planlægning"
+    "schedule-header": "Planlægning",
+    "publish-from-label": "Udgivet fra",
+    "publish-to-label": "Udgivet til",
+    "publish-title": "Udgivelse",
+    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er spillelisten udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet spillelisten vises i."
   },
   "playlist-drag-and-drop": {
     "columns": {

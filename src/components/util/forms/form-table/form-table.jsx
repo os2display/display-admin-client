@@ -46,14 +46,21 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
 
   // Callback to slide manager on changes.
   useEffect(() => {
-    let table;
+    let returnTarget;
+
     if (key === "manuel") {
-      table = [{ type: "header", columns }, { ...data }];
+      const first = [{ type: "header", columns }];
+      returnTarget = {
+        value: first.concat(data),
+        id: name,
+      };
+    } else {
+      returnTarget = {
+        value: { dataSource },
+        id: name,
+      };
     }
-    const returnTarget = {
-      value: { table, dataSource },
-      id: name,
-    };
+
     onChange({ target: returnTarget });
   }, [data, columns, dataSource]);
 
@@ -192,7 +199,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
               {columns
                 .filter(({ Header }) => Header) // Remove select column
                 .map(({ Header, accessor }) => (
-                  <li className="list-group-item">
+                  <li key={accessor} className="list-group-item">
                     <div className="d-flex justify-content-between">
                       {Header}
                       <FontAwesomeIcon
@@ -231,11 +238,12 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
 }
 FormTable.defaultProps = {
   formGroupClasses: "",
+  value: [],
 };
 
 FormTable.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.objectOf(PropTypes.any).isRequired,
+  value: PropTypes.objectOf(PropTypes.any),
   formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };

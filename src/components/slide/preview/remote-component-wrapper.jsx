@@ -3,12 +3,12 @@ import {
   createRemoteComponent,
   createRequires,
 } from "@paciolan/remote-component";
+import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import FormCheckbox from "../../util/forms/form-checkbox";
 import { resolve } from "../../../remote-component.config";
-import "./remote-component-wrapper.scss";
 import ErrorBoundary from "../../../error-boundary";
+import "./remote-component-wrapper.scss";
 
 /**
  * A remote component wrapper
@@ -17,12 +17,26 @@ import ErrorBoundary from "../../../error-boundary";
  * @param {object} props.slide The slide.
  * @param {boolean} props.url The url for the remote component.
  * @param {object} props.mediaData Object of loaded media.
+ * @param {string} props.orientation Display orientation or horizontal.
+ * @param {boolean} props.displayHeader Whether to display the header.
+ * @param {boolean} props.showPreview Whether to display the prevoew.
+ * @param {object} props.style A style object
+ * @param {boolean} props.closeButton Display close button on preview
+ * @param {Function} props.closeCallback Close button callback on preview
  * @returns {object} The component.
  */
-function RemoteComponentWrapper({ slide, url, mediaData }) {
+function RemoteComponentWrapper({
+  slide,
+  url,
+  mediaData,
+  showPreview,
+  orientation,
+  displayHeader,
+  style,
+  closeButton,
+  closeCallback,
+}) {
   const { t } = useTranslation("common");
-
-  const [show, setShow] = useState(false);
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
 
   // Remote component configuration
@@ -39,56 +53,61 @@ function RemoteComponentWrapper({ slide, url, mediaData }) {
     }
   }, [slide, mediaData]);
 
-  /** Get show from local storage */
-  useEffect(() => {
-    const localStorageShow = localStorage.getItem("preview-slide");
-    setShow(localStorageShow === "true");
-  }, []);
-
-  /**
-   * Changes the show value, and saves to localstorage
-   *
-   * @param {object} props Props.
-   * @param {boolean} props.target The returned value from the checkbox.
-   */
-  function onChange({ target }) {
-    const { value } = target;
-    localStorage.setItem("preview-slide", value);
-    setShow(value);
-  }
-
   return (
     <>
-      <FormCheckbox
-        label={t("remote-component-wrapper.show-preview-label")}
-        onChange={onChange}
-        name="show-preview"
-        value={show}
-      />
-      {show && remoteComponentSlide && (
-        <div className="remote-component-wrapper">
-          <div className="remote-component-content">
-            <ErrorBoundary errorText="remote-component.error-boundary-text">
-              <RemoteComponent
-                url={url}
-                slide={remoteComponentSlide}
-                content={remoteComponentSlide.content}
-                run={show}
-                slideDone={() => {}}
-              />
-            </ErrorBoundary>
+      {remoteComponentSlide && url && (
+        <>
+          <div className="d-flex justify-content-between">
+            {displayHeader && (
+              <h2 className="h1">
+                {t("remote-component-wrapper.header-preview")}
+              </h2>
+            )}
+            {closeButton && (
+              <Button variant="primary" type="button" onClick={closeCallback}>
+                {t("remote-component-wrapper.close-preview")}
+              </Button>
+            )}
           </div>
-        </div>
+          <div className="remote-component-wrapper" style={style}>
+            <div className={`remote-component-content ${orientation}`}>
+              <ErrorBoundary errorText="remote-component.error-boundary-text">
+                <RemoteComponent
+                  url={url}
+                  slide={remoteComponentSlide}
+                  content={remoteComponentSlide.content}
+                  run={showPreview}
+                  slideDone={() => {}}
+                />
+              </ErrorBoundary>
+            </div>
+          </div>
+        </>
       )}
     </>
   );
 }
 
+RemoteComponentWrapper.defaultProps = {
+  displayHeader: true,
+  orientation: "",
+  style: {},
+  url: "",
+  closeButton: false,
+  closeCallback: () => {},
+};
+
 RemoteComponentWrapper.propTypes = {
   slide: PropTypes.shape({ content: PropTypes.shape({}).isRequired })
     .isRequired,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
+  displayHeader: PropTypes.bool,
+  closeCallback: PropTypes.func,
+  showPreview: PropTypes.bool.isRequired,
+  closeButton: PropTypes.bool,
+  orientation: PropTypes.string,
+  style: PropTypes.objectOf(PropTypes.any),
 };
 
 export default RemoteComponentWrapper;
