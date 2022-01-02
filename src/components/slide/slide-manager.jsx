@@ -243,7 +243,7 @@ function SlideManager({
     if (initialState) {
       const localFormStateObject = JSON.parse(JSON.stringify(initialState));
 
-      if (initialState?.feed["@id"]) {
+      if (initialState?.feed && initialState?.feed["@id"]) {
         dispatch(
           api.endpoints.getV1FeedsByIdData.initiate({
             id: idFromUrl(initialState.feed["@id"]),
