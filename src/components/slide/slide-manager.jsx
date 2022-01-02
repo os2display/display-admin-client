@@ -243,12 +243,17 @@ function SlideManager({
     if (initialState) {
       const localFormStateObject = JSON.parse(JSON.stringify(initialState));
 
-      if (initialState?.feed['@id']) {
+      if (initialState?.feed["@id"]) {
         dispatch(
-          api.endpoints.getV1FeedsByIdData.initiate({ id: idFromUrl(initialState.feed['@id']) })
+          api.endpoints.getV1FeedsByIdData.initiate({
+            id: idFromUrl(initialState.feed["@id"]),
+          })
         ).then((response) => {
-          setFormStateObject({...localFormStateObject, feedData: response.data});
-        })
+          setFormStateObject({
+            ...localFormStateObject,
+            feedData: response.data,
+          });
+        });
       }
 
       // Make sure content is an object.
@@ -527,7 +532,11 @@ SlideManager.defaultProps = {
 };
 
 SlideManager.propTypes = {
-  initialState: PropTypes.shape({}),
+  initialState: PropTypes.shape({
+    feed: PropTypes.shape({
+      "@id": PropTypes.string,
+    }),
+  }),
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
