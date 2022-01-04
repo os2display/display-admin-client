@@ -102,6 +102,7 @@ function MultiSelectComponent({
         shadowLabel && shadowLabel.match(new RegExp(filter, "i"))
     );
   }
+
   /**
    * A callback on changed data.
    *

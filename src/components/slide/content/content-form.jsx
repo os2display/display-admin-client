@@ -24,7 +24,6 @@ import FormTable from "../../util/forms/form-table/form-table";
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onMediaChange - When media have changed call this function.
  * @param {Array} props.mediaData - Array of loaded media entities.
- * @returns {object} - A form element.
  */
 function ContentForm({
   data,

@@ -223,6 +223,37 @@ function SlideForm({
             )}
             {selectedTemplate && contentFormElements && (
               <>
+                <ContentBody>
+                  {contentFormElements.map((formElement) => (
+                    <>
+                      {formElement.input === "feed" && (
+                        <FeedSelector
+                          name={formElement.name}
+                          value={slide?.feed}
+                          onChange={(value) => {
+                            handleInput({ target: { id: "feed", value } });
+                          }}
+                        />
+                      )}
+                      {formElement.input !== "feed" && (
+                        <ContentForm
+                          key={formElement.key}
+                          data={formElement}
+                          onChange={handleContent}
+                          onSlideChange={handleInput}
+                          onMediaChange={handleMedia}
+                          name={formElement.name}
+                          mediaData={mediaData}
+                          slide={slide}
+                          formStateObject={slide.content}
+                          requiredFieldCallback={() => {
+                            return false;
+                          }}
+                        />
+                      )}
+                    </>
+                  ))}
+                </ContentBody>
                 <div className="toggle-preview">
                   <ContentBody>
                     <h2 className="h4">
@@ -288,37 +319,6 @@ function SlideForm({
                     )}
                   </ContentBody>
                 </div>
-                <ContentBody>
-                  {contentFormElements.map((formElement) => (
-                    <>
-                      {formElement.input === "feed" && (
-                        <FeedSelector
-                          name={formElement.name}
-                          value={slide?.feed}
-                          onChange={(value) => {
-                            handleInput({ target: { id: "feed", value } });
-                          }}
-                        />
-                      )}
-                      {formElement.input !== "feed" && (
-                        <ContentForm
-                          key={formElement.key}
-                          data={formElement}
-                          onChange={handleContent}
-                          onSlideChange={handleInput}
-                          onMediaChange={handleMedia}
-                          name={formElement.name}
-                          mediaData={mediaData}
-                          slide={slide}
-                          formStateObject={slide.content}
-                          requiredFieldCallback={() => {
-                            return false;
-                          }}
-                        />
-                      )}
-                    </>
-                  ))}
-                </ContentBody>
               </>
             )}
             <ContentBody>
