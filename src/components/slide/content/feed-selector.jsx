@@ -83,32 +83,38 @@ function FeedSelector({ value, onChange }) {
   };
 
   const getValueFromConfiguration = (name) => {
-    if (value?.configuration && Object.prototype.hasOwnProperty.call(value.configuration, name)) {
+    if (
+      value?.configuration &&
+      Object.prototype.hasOwnProperty.call(value.configuration, name)
+    ) {
       return value.configuration[name];
     }
     return null;
-  }
+  };
 
   const getFormElement = (element) => {
-    if (element?.input === 'multiselect-from-endpoint') {
-      return <MultiselectFromEndpoint
-        key={element.key}
-        name={element.name}
-        onChange={(target) => configurationChange(target)}
-        value={getValueFromConfiguration(element.name)}
-        label={element.label}
-        optionsEndpoint={element.endpoint}
-      />
-    } else {
-      return <ContentForm
+    if (element?.input === "multiselect-from-endpoint") {
+      return (
+        <MultiselectFromEndpoint
+          key={element.key}
+          name={element.name}
+          onChange={(target) => configurationChange(target)}
+          value={getValueFromConfiguration(element.name)}
+          label={element.label}
+          optionsEndpoint={element.endpoint}
+        />
+      );
+    }
+    return (
+      <ContentForm
         key={element.key}
         data={element}
         onChange={configurationChange}
         name={element.name}
         formStateObject={value?.configuration ?? {}}
-      />;
-    }
-  }
+      />
+    );
+  };
 
   return (
     <>
@@ -134,7 +140,8 @@ function FeedSelector({ value, onChange }) {
         />
       )}
 
-      {feedSourceData?.admin && feedSourceData.admin.map((element) => getFormElement(element))}
+      {feedSourceData?.admin &&
+        feedSourceData.admin.map((element) => getFormElement(element))}
     </>
   );
 }
