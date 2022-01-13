@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, Fragment } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -225,7 +225,7 @@ function SlideForm({
               <>
                 <ContentBody>
                   {contentFormElements.map((formElement) => (
-                    <>
+                    <Fragment key={formElement.key}>
                       {formElement.input === "feed" && (
                         <FeedSelector
                           name={formElement.name}
@@ -237,11 +237,10 @@ function SlideForm({
                       )}
                       {formElement.input !== "feed" && (
                         <ContentForm
-                          key={formElement.key}
                           data={formElement}
                           onChange={handleContent}
                           onSlideChange={handleInput}
-                          onMediaChange={handleMedia}
+                          onFileChange={handleMedia}
                           name={formElement.name}
                           mediaData={mediaData}
                           slide={slide}
@@ -251,7 +250,7 @@ function SlideForm({
                           }}
                         />
                       )}
-                    </>
+                    </Fragment>
                   ))}
                 </ContentBody>
                 <div className="toggle-preview">

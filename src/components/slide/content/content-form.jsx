@@ -8,6 +8,8 @@ import Select from "../../util/forms/select";
 import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
+import FileDropzone from "./file-dropzone";
+import FileSelector from "./file-selector";
 
 /**
  * Render form elements for content form.
@@ -33,26 +35,25 @@ function ContentForm({
   errors,
   onChange,
   onSlideChange,
-  onMediaChange,
+  onFileChange,
   formStateObject,
   mediaData,
 }) {
   const { t } = useTranslation("common");
 
-  const getInputImage = (formData) => {
+  const getInputFiles = (formData) => {
     const field = formStateObject[formData.name];
-    let inputImages = null;
+    let inputFiles = [];
 
     if (Array.isArray(field)) {
-      inputImages = [];
       field.forEach((mediaId) => {
         if (Object.prototype.hasOwnProperty.call(mediaData, mediaId)) {
-          inputImages.push(mediaData[mediaId]);
+          inputFiles.push(mediaData[mediaId]);
         }
       });
     }
 
-    return inputImages;
+    return inputFiles;
   };
 
   /**
@@ -63,6 +64,25 @@ function ContentForm({
     let returnElement;
 
     switch (formData.input) {
+      case "file":
+        returnElement = (
+          <div key={formData.key}>
+            {formData?.label && (
+              <label htmlFor={formData.name} className="form-label">
+                {formData.label}
+              </label>
+            )}
+
+            <FileSelector files={getInputFiles(formData)} onFileChange={onFileChange} name={formData.name} />
+
+            {formData.helpText && (
+              <small className="form-text text-muted">
+                {formData.helpText}
+              </small>
+            )}
+          </div>
+        );
+        break;
       case "duration":
         if (data.required) {
           requiredFieldCallback(data.name);
@@ -134,7 +154,7 @@ function ContentForm({
         returnElement = (
           <Contacts
             onMediaChange={onMediaChange}
-            getInputImage={getInputImage}
+            getInputImage={getInputFiles}
             name={formData.name}
             formData={formData}
             value={formStateObject[formData.name]}
@@ -241,8 +261,8 @@ function ContentForm({
 
             <MediaSelector
               multiple={data.multipleImages}
-              selectedMedia={getInputImage(formData)}
-              onSelectedMedia={onMediaChange}
+              selectedMedia={getInputFiles(formData)}
+              onSelectedMedia={onFileChange}
               name={formData.name}
               invalidText={
                 data.multipleImages
@@ -299,7 +319,7 @@ ContentForm.propTypes = {
   requiredFieldCallback: PropTypes.func,
   onChange: PropTypes.func,
   onSlideChange: PropTypes.func,
-  onMediaChange: PropTypes.func,
+  onFileChange: PropTypes.func,
   mediaData: PropTypes.objectOf(PropTypes.object),
 };
 
