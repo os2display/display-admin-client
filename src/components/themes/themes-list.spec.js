@@ -26,7 +26,7 @@ describe("themes list tests", () => {
   it("It opens delete modal (themes list)", () => {
     cy.get("#delete-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(2).should("be.disabled");
-    cy.get("tbody").find("tr").eq(0).find("td button").eq(0).click();
+    cy.get("tbody").find("tr").eq(0).find("td button").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });
 

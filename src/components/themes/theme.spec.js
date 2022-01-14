@@ -4,11 +4,6 @@ describe("Theme pages work", () => {
     cy.get("#save_theme").should("exist");
   });
 
-  it("It loads create theme page", () => {
-    cy.visit("/themes/edit/01FN64HM5FZ31XY7BSRPR62GHG");
-    cy.get("#save_theme").should("exist");
-  });
-
   it("It redirects on save", () => {
     cy.visit("/themes/create");
     cy.get("#save_theme").click();
