@@ -10,6 +10,7 @@ describe("themes list tests", () => {
     cy.visit("/themes/list");
     cy.wait("@themesData");
   });
+
   it("It loads themes list", () => {
     cy.visit("/themes/list");
     cy.get("table").find("tbody").should("not.be.empty");
@@ -17,7 +18,6 @@ describe("themes list tests", () => {
   });
 
   it("It goes to edit (themes list)", () => {
-    cy.visit("/themes/list");
     cy.get("#themeTitle").should("not.exist");
     cy.get("tbody").find("tr td a").eq(0).click();
     cy.get("#themeTitle").should("exist");
@@ -26,7 +26,7 @@ describe("themes list tests", () => {
   it("It opens delete modal (themes list)", () => {
     cy.get("#delete-modal").should("not.exist");
     cy.get("tbody").find("tr td button").eq(1).should("be.disabled");
-    cy.get("tbody").find("tr").eq(3).find("td button").eq(1).click();
+    cy.get("tbody").find("tr").eq(7).find("td button").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });
 
@@ -41,9 +41,9 @@ describe("themes list tests", () => {
       .find("td button")
       .eq(0)
       .should("be.disabled");
-    cy.get("tbody").find("tr").eq(3).find("td button").eq(0).click();
-    cy.get("tbody").find("tr").eq(3).should("have.class", "bg-light");
+    cy.get("tbody").find("tr").eq(7).find("td button").eq(0).click();
+    cy.get("tbody").find("tr").eq(7).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
-    cy.get("tbody").find("tr").eq(3).should("have.not.class", "bg-light");
+    cy.get("tbody").find("tr").eq(7).should("have.not.class", "bg-light");
   });
 });
