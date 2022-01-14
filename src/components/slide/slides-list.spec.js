@@ -13,7 +13,6 @@ describe("Slides list tests", () => {
     }).as("slidesData");
     cy.visit("/slide/list?published=all&page=2&order=asc&sort=title");
     cy.wait(["@slidesData", "@templatesData"]);
-    cy.wait(5000);
   });
 
   it("It loads slides list", () => {
