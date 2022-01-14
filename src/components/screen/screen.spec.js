@@ -7,7 +7,7 @@ describe("Screen pages work", () => {
   it("It picks layout and redirects on save", () => {
     cy.visit("/screen/create");
     cy.get("#layout-section").find(".dropdown-container").type("{enter}");
-    cy.get("#layout-section").find('[type="checkbox"]').eq(2).check();
+    cy.get("#layout-section").find('[type="checkbox"]').eq(1).check();
     cy.get("#layout-section").find(".grid-item").should("have.length", 2);
     cy.get("#layout-section").find(".nav-item").should("have.length", 2);
     cy.get("#layout-section")
