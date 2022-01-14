@@ -2,19 +2,22 @@ describe("Screen list loads", () => {
   beforeEach(() => {
     cy.intercept({
       method: "GET",
-      url: "**/screens*",
-      query: {
-        page: "1",
-      },
-    }).as("screensData");
-    cy.intercept({
-      method: "GET",
-      url: "**/screens/00644R6YAZ0RMT06KW0HD214CH/*",
-    }).as("screenGroups");
+      url: "**/screen-groups*",
+    }).as("screenGroupData");
     cy.visit("/screen/list");
-    cy.wait(["@screensData"]);
+    cy.wait([
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+      "@screenGroupData",
+    ]);
   });
-
   it("It loads screens list", () => {
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("have.length", 70);
@@ -22,7 +25,7 @@ describe("Screen list loads", () => {
 
   it("It goes to edit (screens list)", () => {
     cy.get("#screenTitle").should("not.exist");
-    cy.get("tbody").find(".edit-button").eq(0).click();
+    cy.get(".btn.btn-primary.edit-button").first().click();
     cy.get("#screenTitle").should("exist");
   });
 

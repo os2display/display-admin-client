@@ -48,7 +48,7 @@ function ScreenList() {
   const [screensToDelete, setScreensToDelete] = useState([]);
   const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
-  const [listData, setListData] = useState();
+  const [listData, setListData] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("screen-list.loading-messages.loading-screens")
   );
@@ -73,8 +73,8 @@ function ScreenList() {
   });
 
   useEffect(() => {
-    if (data) {
-      setListData(data);
+    if (data && page) {
+      setListData(data["hydra:member"]);
     }
   }, [data]);
 
@@ -300,7 +300,7 @@ function ScreenList() {
             <List
               columns={columns}
               totalItems={listData["hydra:totalItems"]}
-              data={listData["hydra:member"]}
+              data={listData}
               currentPage={page}
               handlePageChange={onChangePage}
               selectedRows={selectedRows}
