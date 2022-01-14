@@ -4,21 +4,14 @@ describe("Slide pages work", () => {
     cy.get("#save_slide").should("exist");
   });
 
-  it("It picks template", () => {
+  it("It picks layout and redirects on save", () => {
     cy.visit("/slide/create");
-    cy.get(".dropdown-container").eq(0).type("{enter}");
-    cy.get('[type="checkbox"]').eq(1).check();
-    cy.get(".dropdown-container").eq(0).click();
-    cy.get(".dropdown-heading-value").contains(
+    cy.get("#template-section").find(".dropdown-container").eq(0).type("{enter}");
+    cy.get("#template-section").find('[type="checkbox"]').eq(1).check();
+    cy.get("#template-section").find(".dropdown-container").eq(0).click();
+    cy.get("#template-section").find(".dropdown-heading-value").contains(
       "Perferendis dolores nemo nesciunt"
     );
-  });
-
-  it("It redirects on save", () => {
-    cy.visit("/slide/create");
-    cy.get(".dropdown-container").eq(0).type("{enter}");
-    cy.get('[type="checkbox"]').eq(1).check();
-    cy.get(".dropdown-container").eq(0).click();
     cy.get("#save_slide").click();
     cy.url().should("include", "slide/edit/");
   });

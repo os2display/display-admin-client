@@ -42,7 +42,7 @@ function SlidesList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
-  const [listData, setListData] = useState();
+  const [listData, setListData] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState(
     t("slides-list.loading-messages.loading-slides")
   );
@@ -66,8 +66,8 @@ function SlidesList() {
   });
 
   useEffect(() => {
-    if (data) {
-      setListData(data);
+    if (data && page) {
+      setListData(data["hydra:member"]);
     }
   }, [data]);
 
@@ -285,7 +285,7 @@ function SlidesList() {
           <List
             columns={columns}
             totalItems={listData["hydra:totalItems"]}
-            data={listData["hydra:member"]}
+            data={listData}
             currentPage={page}
             handlePageChange={onChangePage}
             selectedRows={selectedRows}

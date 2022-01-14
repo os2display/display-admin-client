@@ -205,7 +205,7 @@ function SlideForm({
               />
             </ContentBody>
             {templateOptions && (
-              <ContentBody>
+              <ContentBody id="template-section">
                 <MultiSelectComponent
                   isLoading={loadingTemplates}
                   label={t("slide-form.slide-template-label")}

@@ -117,6 +117,7 @@ function SlideManager({
             : saveError.data["hydra:description"],
         })
       );
+      setSubmitting(false);
     }
   }, [saveErrorPut, saveErrorPost]);
 
