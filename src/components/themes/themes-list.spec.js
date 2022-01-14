@@ -41,7 +41,8 @@ describe("themes list tests", () => {
       .find("td button")
       .eq(0)
       .should("be.disabled");
-    cy.get("tbody").find("tr").eq(0).find("td button").eq(1).click();
+      cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
+    cy.get("tbody").find("tr").eq(0).find("td button").eq(0).click();
     cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
