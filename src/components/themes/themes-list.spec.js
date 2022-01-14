@@ -2,10 +2,7 @@ describe("themes list tests", () => {
   beforeEach(() => {
     cy.intercept({
       method: "GET",
-      url: "**/theme*",
-      query: {
-        page: "1",
-      },
+      url: "**/theme*"
     }).as("themesData");
     cy.visit("/themes/list");
     cy.wait(["@themesData", "@themesData"]);
