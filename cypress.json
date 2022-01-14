@@ -5,7 +5,25 @@
   "viewportHeight": 1500,
   "viewportWidth": 2000,
   "testFiles": [
+    "**/App.spec.js",
+    "**/media-list.spec.js",
+    "**/slides-list.spec.js",
     "**/theme.spec.js",
-    "**/themes-list.spec.js"
+    "**/groups-list.spec.js",
+    "**/screen-list.spec.js",
+    "**/themes-list.spec.js",
+    "**/playlist-list.spec.js",
+    "**/table.spec.js",
+    "**/table-body.spec.js",
+    "**/table-header.spec.js",
+    "**/content-string.spec.js",
+    "**/topbar.spec.js",
+    "**/nav-items.spec.js",
+    "**/pagination.spec.js",
+    "**/slide.spec.js",
+    "**/group.spec.js",
+    "**/media.spec.js",
+    "**/screen.spec.js",
+    "**/playlist.spec.js"
   ]
 }
