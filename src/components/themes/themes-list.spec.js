@@ -8,7 +8,7 @@ describe("themes list tests", () => {
       },
     }).as("themesData");
     cy.visit("/themes/list");
-    cy.wait("@themesData");
+    cy.wait(["@themesData", "@themesData"]);
   });
 
   it("It loads themes list", () => {
