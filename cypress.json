@@ -5,6 +5,7 @@
   "viewportHeight": 1500,
   "viewportWidth": 2000,
   "testFiles": [
+    "**/theme.spec.js",
     "**/themes-list.spec.js"
   ]
 }

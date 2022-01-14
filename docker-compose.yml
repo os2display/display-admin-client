@@ -98,7 +98,7 @@ services:
       - nginx
       - nginx-api
     environment:
-      - CYPRESS_VIDEO=false
+      - CYPRESS_VIDEO=true
       - CYPRESS_baseUrl=http://nginx
       #- DISPLAY=host.docker.internal:0
     volumes:
