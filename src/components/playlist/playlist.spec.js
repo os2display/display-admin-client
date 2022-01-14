@@ -14,21 +14,14 @@ describe("Playlist pages work", () => {
       "Aperiam maxime autem. og Odio quidem ab dolores dolores."
     );
     cy.get("tbody").find("tr td").should("have.length", 12);
-    cy.get("tbody")
-      .find("tr td")
-      .contains("Aperiam maxime autem");
+    cy.get("tbody").find("tr td").contains("Aperiam maxime autem");
     cy.get("tbody")
       .find("tr td")
       .eq(7)
       .contains("Odio quidem ab dolores dolores.");
     cy.get("tbody").find("tr").eq(0).type(" {downarrow} ", { force: true });
-    cy.get("tbody")
-      .find("tr td")
-      .contains("Odio quidem ab dolores dolores.");
-    cy.get("tbody")
-      .find("tr td")
-      .eq(7)
-      .contains("Aperiam maxime autem.");
+    cy.get("tbody").find("tr td").contains("Odio quidem ab dolores dolores.");
+    cy.get("tbody").find("tr td").eq(7).contains("Aperiam maxime autem.");
   });
 
   it("It removes slide", () => {
@@ -36,7 +29,10 @@ describe("Playlist pages work", () => {
     cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
     cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
     cy.get("#slides-section").find(".dropdown-container").eq(0).click();
-    cy.get("#slides-section").find("tbody").find("tr td").should("have.length", 6);
+    cy.get("#slides-section")
+      .find("tbody")
+      .find("tr td")
+      .should("have.length", 6);
     cy.get("#slides-section").find("tbody").find("tr td button").eq(1).click();
     cy.get("#slides-section").find("tbody").should("not.exist");
   });
