@@ -8,10 +8,11 @@ describe("Screen pages work", () => {
     cy.visit("/screen/create");
     cy.get("#layout-section").find(".dropdown-container").type("{enter}");
     cy.get("#layout-section").find('[type="checkbox"]').eq(0).check();
-    cy.get("#layout-section").find(".grid-item").should("have.length", 2);
-    cy.get("#layout-section").find(".nav-item").should("have.length", 2);
-    cy.get("#layout-section")
-      .find(".dropdown-heading-value")
+    cy.get("#layout-section").find(".grid-item").should("have.length", 1);
+    cy.get("#layout-section").find(".nav-item").should("have.length", 1);
+    cy.get("#layout-section").invoke("text")
+    .should("match", /^Opret nyt slide/);
+      // .find(".dropdown-heading-value")
     cy.get("#layout-section").find(".dropdown-container").type("{esc}");
     cy.get("#save_screen").click();
     cy.url().should("include", "screen/edit/");
