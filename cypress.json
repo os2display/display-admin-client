@@ -2,10 +2,10 @@
   "integrationFolder": "./src",
   "pluginsFile": false,
   "supportFile": false,
-  "viewportHeight": 1200,
+  "viewportHeight": 3000,
   "viewportWidth": 2000,
   "testFiles": [
-    "**/theme.spec.js",
-    "**/themes-list.spec.js"
+    "**/screen-list.spec.js",
+    "**/screen.spec.js"
   ]
 }

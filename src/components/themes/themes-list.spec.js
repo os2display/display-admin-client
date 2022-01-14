@@ -7,8 +7,17 @@ describe("themes list tests", () => {
         page: "1",
       },
     }).as("themesData");
+    cy.intercept(
+      {
+        method: "GET",
+        url: "**/themes*",
+        query: {
+          page: "1",
+        },
+      },
+      { fixture: "users.json" }
+    );
     cy.visit("/themes/list");
-    cy.wait("@themesData");
   });
 
   it("It loads themes list", () => {
@@ -41,7 +50,7 @@ describe("themes list tests", () => {
       .find("td button")
       .eq(0)
       .should("be.disabled");
-      cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
+    cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
     cy.get("tbody").find("tr").eq(0).find("td button").eq(0).click();
     cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
