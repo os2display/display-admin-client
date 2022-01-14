@@ -61,7 +61,7 @@ function PlaylistForm({
             onChange={handleInput}
           />
         </ContentBody>
-        <ContentBody>
+        <ContentBody id="slides-section">
           <h2 className="h4">{t("playlist-form.title-slides")}</h2>
           <SelectSlidesTable
             handleChange={handleInput}

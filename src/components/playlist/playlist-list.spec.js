@@ -9,10 +9,22 @@ describe("Playlists list tests", () => {
     }).as("playlistsData");
     cy.intercept({
       method: "GET",
-      url: "**/playlists/00HSA7DGZ41EA818JH0S501BHQ/*",
-    }).as("slides");
+      url: "**/slides*",
+    }).as("slidesData");
     cy.visit("/playlist/list");
-    cy.wait(["@playlistsData", "@slides"]);
+    cy.wait([
+      "@playlistsData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+      "@slidesData",
+    ]);
   });
   it("It loads playlist list", () => {
     cy.visit("/playlist/list");
