@@ -8,7 +8,6 @@ import Select from "../../util/forms/select";
 import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
-import FileDropzone from "./file-dropzone";
 import FileSelector from "./file-selector";
 
 /**
@@ -24,7 +23,7 @@ import FileSelector from "./file-selector";
  * @param {Function} props.onSlideChange - Callback, if the value of a slide
  *   field changes.
  * @param {object} props.formStateObject - The form state.
- * @param {Function} props.onMediaChange - When media have changed call this function.
+ * @param {Function} props.onFileChange - When file has changed call this function.
  * @param {Array} props.mediaData - Array of loaded media entities.
  * @returns {object} Content form element.
  */
@@ -73,7 +72,12 @@ function ContentForm({
               </label>
             )}
 
-            <FileSelector files={getInputFiles(formData)} onFileChange={onFileChange} name={formData.name} />
+            <FileSelector
+              files={getInputFiles(formData)}
+              onFilesChange={onFileChange}
+              name={formData.name}
+              acceptedMimetypes={formData.acceptedMimetypes}
+            />
 
             {formData.helpText && (
               <small className="form-text text-muted">

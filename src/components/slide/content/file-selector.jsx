@@ -10,24 +10,27 @@ import Image from "../../util/image-uploader/image";
 import MediaSelectorModal from "./media-selector-modal";
 import FileFormElement from "./file-form-element";
 import FileDropzone from "./file-dropzone";
+import { ulid } from "ulid";
 
 /**
  * File selector.
  *
  * @param {object} props - The props.
  * @param {object} props.files - The selected files.
- * @param {Function} props.onFileChange - Callback when selected file has changed.
+ * @param {Function} props.onFilesChange - Callback when files have changed.
  * @param {boolean} props.multiple - Select more than one media?
  * @param {boolean} props.enableMediaLibrary - Whether to allow selecting media from the library.
- * @param {string} props.name Field name.
- * @returns {object} The FileSelector component.
+ * @param {string} props.name - Field name.
+ * @param {array|null} props.acceptedMimetypes - Accepted mimetypes. Set as null to allow all.
+ * @returns {object} - The FileSelector component.
  */
 function FileSelector({
   files,
-  multiple = false,
-  onFileChange,
+  multiple = true,
+  onFilesChange,
   enableMediaLibrary = true,
   name,
+  acceptedMimetypes = null,
 }) {
   const { t } = useTranslation("common");
   const [showMediaModal, setShowMediaModal] = useState(false);
@@ -36,31 +39,45 @@ function FileSelector({
     setShowMediaModal(false);
   }
 
-  const filesChange = (files) => {
-    console.log("filesChange", files);
-    onFileChange({ target: { id: name, value: files } });
+  const filesAdded = (addedFiles) => {
+    const newFileEntries = [...addedFiles].map((file) => {
+      return {
+        "@id": "TEMP"+ulid(new Date().getTime()),
+        preview: URL.createObjectURL(file),
+        title: '',
+        description: '',
+        license: '',
+        file: file,
+        editable: true,
+      }
+    });
+    const newFiles = multiple ? [...files, ...newFileEntries] : newFileEntries;
+    onFilesChange({ target: { id: name, value: newFiles } });
   };
 
-  const fileDataChange = (file) => {
-    const newFiles = [...files, file];
-    onFileChange(newFiles);
+  const fileDataChange = () => {
+    onFilesChange({ target: { id: name, value: files } });
   }
 
-  const renderFileFormElements = (files) => files.map(file => (
-    <div key={file.path} className="bg-light border p-3 pb-0 rounded my-3">
-      <FileFormElement onChange={(data) => {fileDataChange(data)}} input={file} onRemove={() => {console.log('onRemove - TODO')}} disableInput={false} />
+  const removeFile = (fileEntry) => {
+    const newFiles = files.filter((f) => f.id !== fileEntry.id);
+    onFilesChange({ target: { id: name, value: newFiles } })
+  }
+
+  const renderFileFormElements = (fileEntries) => fileEntries.map(fileEntry => (
+    <div key={fileEntry['@id']} className="bg-light border p-3 pb-0 rounded my-3">
+      <FileFormElement onChange={fileDataChange} input={fileEntry} onRemove={() => removeFile(fileEntry)} disableInput={!fileEntry.editable} />
     </div>
   ));
 
   return (
     <>
-      <FileDropzone onChange={filesChange} files={files} />
+      <FileDropzone onFilesAdded={filesAdded} acceptedMimetypes={acceptedMimetypes} />
 
       <div>{renderFileFormElements(files)}</div>
 
-      {enableMediaLibrary && (
+      {false && enableMediaLibrary && (
         <>
-          {/*
         <MediaSelectorModal
           selectedMedia={files}
           multiple={multiple}
@@ -69,7 +86,6 @@ function FileSelector({
           show={showMediaModal}
           fieldName={name}
         />
-        */}
         </>
       )}
     </>
@@ -80,10 +96,11 @@ FileSelector.propTypes = {
   files: PropTypes.arrayOf(
     PropTypes.shape({})
   ).isRequired,
-  onFileChange: PropTypes.func.isRequired,
+  onFilesChange: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
   enableMediaLibrary: PropTypes.bool,
   name: PropTypes.string.isRequired,
+  acceptedMimetypes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default FileSelector;
