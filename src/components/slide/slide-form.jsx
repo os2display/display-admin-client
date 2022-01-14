@@ -193,7 +193,7 @@ function SlideForm({
       <Form>
         <Row>
           <Col md>
-          <h1 id="slidesTitle">{headerText}</h1>
+            <h1 id="slidesTitle">{headerText}</h1>
             <ContentBody>
               <FormInput
                 name="title"
