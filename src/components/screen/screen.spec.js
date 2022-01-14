@@ -11,7 +11,8 @@ describe("Screen pages work", () => {
     cy.get("#layout-section").find(".grid-item").should("have.length", 1);
     cy.get("#layout-section").find(".nav-item").should("have.length", 1);
     cy.get("#layout-section")
-      .find(".dropdown-heading-value").contains("Odio rem voluptatum")
+      .find(".dropdown-heading-value")
+      .contains("Odio rem voluptatum");
     cy.get("#layout-section").find(".dropdown-container").type("{esc}");
     cy.get("#save_screen").click();
     cy.url().should("include", "screen/edit/");

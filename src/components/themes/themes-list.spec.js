@@ -2,26 +2,16 @@ describe("themes list tests", () => {
   beforeEach(() => {
     cy.intercept({
       method: "GET",
-      url: "**/themes*",
+      url: "**/theme*",
       query: {
         page: "1",
       },
     }).as("themesData");
-    cy.intercept(
-      {
-        method: "GET",
-        url: "**/themes*",
-        query: {
-          page: "1",
-        },
-      },
-      { fixture: "users.json" }
-    );
     cy.visit("/themes/list");
+    cy.wait("@themesData");
   });
 
   it("It loads themes list", () => {
-    cy.visit("/themes/list");
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("exist");
   });
@@ -44,14 +34,7 @@ describe("themes list tests", () => {
   });
 
   it("It removes all selected", () => {
-    cy.get("tbody")
-      .find("tr")
-      .eq(1)
-      .find("td button")
-      .eq(0)
-      .should("be.disabled");
-    cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
-    cy.get("tbody").find("tr").eq(0).find("td button").eq(0).click();
+    cy.get("tbody").find("tr td button").eq(0).click();
     cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");

@@ -6,12 +6,15 @@ describe("Slide pages work", () => {
 
   it("It picks layout and redirects on save", () => {
     cy.visit("/slide/create");
-    cy.get("#template-section").find(".dropdown-container").eq(0).type("{enter}");
+    cy.get("#template-section")
+      .find(".dropdown-container")
+      .eq(0)
+      .type("{enter}");
     cy.get("#template-section").find('[type="checkbox"]').eq(1).check();
     cy.get("#template-section").find(".dropdown-container").eq(0).click();
-    cy.get("#template-section").find(".dropdown-heading-value").contains(
-      "Perferendis dolores nemo nesciunt"
-    );
+    cy.get("#template-section")
+      .find(".dropdown-heading-value")
+      .contains("Perferendis dolores nemo nesciunt");
     cy.get("#save_slide").click();
     cy.url().should("include", "slide/edit/");
   });
