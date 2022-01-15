@@ -9,7 +9,7 @@ describe("themes list tests", () => {
     }).as("themesData");
     cy.visit("/themes/list");
     cy.wait(["@themesData"]);
-    cy.wait(1000)
+    cy.wait(1000);
   });
 
   it("It loads themes list", () => {

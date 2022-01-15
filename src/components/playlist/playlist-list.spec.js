@@ -25,7 +25,7 @@ describe("Playlists list tests", () => {
       "@slidesData",
       "@slidesData",
     ]);
-    cy.wait(1000)
+    cy.wait(1000);
   });
   it("It loads playlist list", () => {
     cy.visit("/playlist/list");
