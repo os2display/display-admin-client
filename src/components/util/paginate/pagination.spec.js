@@ -2,17 +2,19 @@ describe("Pagination loads", () => {
   beforeEach(() => {
     cy.intercept({
       method: "GET",
-      url: "**/templates/00XZXR5XDH0D1M16K10NYQ0A55",
+      url: "**/templates/*",
     }).as("templatesData");
-    cy.intercept({
-      method: "GET",
-      url: "**/slides*",
-      query: {
-        page: "1",
-      },
-    }).as("slidesData");
     cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
-    cy.wait(["@slidesData", "@templatesData"]);
+    cy.wait([
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+    ]);
   });
 
   it("It loads", () => {
@@ -35,18 +37,18 @@ describe("Pagination loads", () => {
     // Wait for data
     cy.intercept({
       method: "GET",
-      url: "**/templates/001R8FR6VC10G51B200TK60QP3",
+      url: "**/templates/*",
     }).as("templatesData");
-
-    cy.intercept({
-      method: "GET",
-      url: "**/slides*",
-      query: {
-        page: "10",
-      },
-    }).as("slidesData");
-
-    cy.wait(["@slidesData", "@templatesData"]);
+    cy.wait([
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+    ]);
 
     cy.get("tbody").find("tr").should("have.length", 10);
     cy.get("tbody")

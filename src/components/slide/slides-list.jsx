@@ -37,6 +37,7 @@ function SlidesList() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [page, setPage] = useState();
+  const [totalItems, setTotalItems] = useState(0);
   const [isPublished, setIsPublished] = useState();
   const [slidesToDelete, setSlidesToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -68,6 +69,7 @@ function SlidesList() {
   useEffect(() => {
     if (data && page) {
       setListData(data["hydra:member"]);
+      setTotalItems(data["hydra:totalItems"]);
     }
   }, [data]);
 
@@ -284,7 +286,7 @@ function SlidesList() {
         <ContentBody>
           <List
             columns={columns}
-            totalItems={listData["hydra:totalItems"]}
+            totalItems={totalItems}
             data={listData}
             currentPage={page}
             handlePageChange={onChangePage}
