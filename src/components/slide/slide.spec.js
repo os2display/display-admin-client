@@ -13,8 +13,8 @@ describe("Slide pages work", () => {
     cy.get("#template-section").find('[type="checkbox"]').eq(3).check();
     cy.get("#template-section").find(".dropdown-container").eq(0).click();
     cy.get("#template-section")
-      .find(".dropdown-heading-value")      .invoke("text")
-      .should("match", /^Slides/);
+      .find(".dropdown-heading-value")
+      .contains("Aliquid libero quis.");
     cy.get("#save_slide").click();
     cy.url().should("include", "slide/edit/");
   });
