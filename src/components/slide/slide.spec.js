@@ -4,7 +4,7 @@ describe("Slide pages work", () => {
     cy.get("#save_slide").should("exist");
   });
 
-  it("It picks layout and redirects on save", () => {
+  it("It picks template and redirects on save", () => {
     cy.visit("/slide/create");
     cy.get("#template-section")
       .find(".dropdown-container")
@@ -16,6 +16,7 @@ describe("Slide pages work", () => {
       .find(".dropdown-heading-value")
       .contains("Perferendis dolores nemo nesciunt");
     cy.get("#save_slide").click();
+    cy.wait(1000)
     cy.url().should("include", "slide/edit/");
   });
 
