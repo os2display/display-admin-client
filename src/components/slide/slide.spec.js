@@ -13,10 +13,9 @@ describe("Slide pages work", () => {
     cy.get("#template-section").find('[type="checkbox"]').eq(1).check();
     cy.get("#template-section").find(".dropdown-container").eq(0).click();
     cy.get("#template-section")
-      .find(".dropdown-heading-value")
-      .contains("Perferendis dolores nemo nesciunt");
+      .find(".dropdown-heading-value").invoke("text")
+      .should("match", /^Slides/);
     cy.get("#save_slide").click();
-    cy.wait(1000)
     cy.url().should("include", "slide/edit/");
   });
 
