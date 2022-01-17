@@ -7,6 +7,7 @@ import ContentBody from "../../util/content-body/content-body";
 import { useGetV1MediaQuery } from "../../../redux/api/api.generated";
 import "../../media/media-list.scss";
 import Pagination from "../../util/paginate/pagination";
+import FilePreview from "./file-preview";
 
 /**
  * The media list component.
@@ -100,11 +101,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
                       className="media-item-button"
                       onClick={() => onItemClick(data)}
                     >
-                      <img
-                        src={data.assets.uri}
-                        className="card-img-top"
-                        alt={data.description}
-                      />
+                      <FilePreview fileEntry={data} />
                     </button>
 
                     {multiple && (

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import FormInput from "../../util/forms/form-input";
+import FilePreview from "./file-preview";
 
 /**
  * @param {object} props The props.
@@ -52,7 +53,7 @@ function FileFormElement({ input, onRemove, onChange, disableInput, displayPrevi
     <Row className="mb-3">
       {displayPreview &&
         <Col md="3" className="mb-3 mb-md-0">
-          {renderPreview(input)}
+          {FilePreview(input)}
         </Col>
       }
       <Col md={md}>

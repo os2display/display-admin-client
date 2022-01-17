@@ -76,16 +76,22 @@ function FileSelector({
 
       <div>{renderFileFormElements(files)}</div>
 
-      {false && enableMediaLibrary && (
+      {enableMediaLibrary && (
         <>
-        <MediaSelectorModal
-          selectedMedia={files}
-          multiple={multiple}
-          onClose={closeModal}
-          selectMedia={onSelectedMedia}
-          show={showMediaModal}
-          fieldName={name}
-        />
+          <Button
+            variant="success"
+            onClick={() => setShowMediaModal(true)}
+          >
+            {t("file-selector.open-media-library")}
+          </Button>
+          <MediaSelectorModal
+            selectedMedia={files}
+            multiple={multiple}
+            onClose={closeModal}
+            selectMedia={onFilesChange}
+            show={showMediaModal}
+            fieldName={name}
+          />
         </>
       )}
     </>
