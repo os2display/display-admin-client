@@ -44,7 +44,6 @@ function FileSelector({
   const filesAdded = (addedFiles) => {
     const newFileEntries = [...addedFiles].map((file) => {
       return {
-        "@id": `TEMP${ulid(new Date().getTime())}`,
         title: "",
         description: "",
         license: "",
@@ -65,7 +64,7 @@ function FileSelector({
   };
 
   const removeFile = (fileEntry) => {
-    const newFiles = files.filter((f) => f['@id'] !== fileEntry['@id']);
+    const newFiles = files.filter((f) => f['@id'] !== fileEntry['@id'] && f.tempId !== fileEntry.tempId);
     onFilesChange({ target: { id: name, value: newFiles } });
   };
 

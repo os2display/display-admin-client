@@ -384,7 +384,7 @@ function SlideManager({
           fieldData.forEach((mediaId) => {
             const entry = mediaData[mediaId];
 
-            if (entry.file && entry.file instanceof File) {
+            if (entry?.file && entry.file instanceof File) {
               newSubmittingMedia.push({ fieldName, entry, tempId: mediaId });
             }
           });

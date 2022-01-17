@@ -73,13 +73,16 @@ function MediaSelectorModal({
   };
 
   const getSelectedIds = () => {
-    return selected.map((entry) => {
-      if (typeof entry === "string") {
-        return entry;
-      }
+    return selected.reduce((prev, entry) => {
+      const next = [...prev];
 
-      return entry["@id"];
-    });
+      if (typeof entry === "string") {
+        next.push(entry);
+      } else if (Object.prototype.hasOwnProperty.call(entry, '@id')) {
+        next.push(entry["@id"])
+      }
+      return next;
+    }, []);
   };
 
   if (!show) {
