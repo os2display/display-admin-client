@@ -641,15 +641,15 @@
   },
   "file-form-element": {
     "remove": "Fjern fil",
-    "title-label": "Titel på filen",
+    "title-label": "Titel",
     "title-placeholder": "f.eks. Solnedgang",
-    "title-help-text": "Her kan du skrive et godt beskrivende navn for filen.",
-    "description-label": "Beskrivelse af filen",
+    "title-help-text": "Vælg et godt beskrivende navn for filen.",
+    "description-label": "Beskrivelse",
     "description-placeholder": "f.eks. Billede af solnedgangen",
-    "description-help-text": "Her kan du skrive en beskrivelse af filen.",
-    "license-label": "Filens licens",
+    "description-help-text": "Tilføj en beskrivelse af filen.",
+    "license-label": "Licens",
     "license-placeholder": "f.eks. CC (Creative Commons)",
-    "license-help-text": "Her kan du skrive hvilken licens filen er destribueret under."
+    "license-help-text": "Hvilken licens filen er destribueret under?"
   },
   "file-preview": {
     "not-supported": "Preview ikke understøttet"

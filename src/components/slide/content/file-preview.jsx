@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param root0
- * @param root0.fileEntry
+ * @param props - The props.
+ * @param props.fileEntry - The file to preview.
+ * @param props.enableVideoControls - Enable the video controls for the preview of video files?
  */
-function FilePreview({ fileEntry }) {
+function FilePreview({ fileEntry, enableVideoControls = false }) {
   const { t } = useTranslation("common");
   const [preview, setPreview] = useState('');
 
@@ -25,7 +26,7 @@ function FilePreview({ fileEntry }) {
           <img src={assets.uri} alt={t("file.image-preview")} width="100%" />
         );
       } else if (assets.type?.indexOf("video/") === 0) {
-        return <video width="100%" height="100%" controls src={assets.uri} />;
+        return <video width="100%" height="100%" controls={enableVideoControls} src={assets.uri} />;
       }
     }
     else if (preview !== '') {
@@ -41,7 +42,7 @@ function FilePreview({ fileEntry }) {
         );
       } else if (file.type?.indexOf("video/") === 0) {
         return (
-          <video width="100%" height="100%" controls src={preview} />
+          <video width="100%" height="100%" controls={enableVideoControls} src={preview} />
         );
       }
     }
@@ -57,6 +58,7 @@ FilePreview.propTypes = {
     assets: PropTypes.shape({}),
     file: PropTypes.shape({}),
   }),
+  enableVideoControls: PropTypes.bool,
 };
 
 export default FilePreview;
