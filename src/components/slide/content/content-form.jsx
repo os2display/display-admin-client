@@ -63,7 +63,16 @@ function ContentForm({
     let returnElement;
 
     switch (formData.input) {
+      case "image":
+      case "video":
       case "file":
+        let defaultMimetypes = null;
+        if (formData.input === 'image') {
+          defaultMimetypes = ["image/*"];
+        } else if (formData.input === 'video') {
+          defaultMimetypes = ["video/*"];
+        }
+
         returnElement = (
           <div key={formData.key}>
             {formData?.label && (
@@ -76,7 +85,7 @@ function ContentForm({
               files={getInputFiles(formData)}
               onFilesChange={onFileChange}
               name={formData.name}
-              acceptedMimetypes={formData.acceptedMimetypes}
+              acceptedMimetypes={formData.acceptedMimetypes ?? defaultMimetypes}
             />
 
             {formData.helpText && (
@@ -251,37 +260,6 @@ function ContentForm({
             errors={formData.required ? errors : null}
             formGroupClasses={formData.formGroupClasses}
           />
-        );
-
-        break;
-      case "image":
-        returnElement = (
-          <>
-            {formData?.label && (
-              <label htmlFor={formData.name} className="form-label">
-                {formData.label}
-              </label>
-            )}
-
-            <MediaSelector
-              multiple={data.multipleImages}
-              selectedMedia={getInputFiles(formData)}
-              onSelectedMedia={onFileChange}
-              name={formData.name}
-              invalidText={
-                data.multipleImages
-                  ? t("render-form-element.images-invalid")
-                  : t("render-form-element.image-invalid")
-              }
-              formGroupClasses={formData.formGroupClasses}
-            />
-
-            {formData.helpText && (
-              <small className="form-text text-muted">
-                {formData.helpText}
-              </small>
-            )}
-          </>
         );
 
         break;
