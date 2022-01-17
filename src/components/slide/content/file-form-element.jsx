@@ -15,7 +15,14 @@ import FilePreview from "./file-preview";
  * @param {boolean} props.displayFileInfo Display file info.
  * @returns {object} The file form element component.
  */
-function FileFormElement({ input, onRemove, onChange, disableInput, displayPreview, displayFileInfo }) {
+function FileFormElement({
+  input,
+  onRemove,
+  onChange,
+  disableInput,
+  displayPreview,
+  displayFileInfo,
+}) {
   const { t } = useTranslation("common");
   const md = displayPreview ? "9" : "12";
 
@@ -23,39 +30,50 @@ function FileFormElement({ input, onRemove, onChange, disableInput, displayPrevi
     const localFile = input;
     localFile[target.id] = target.value;
     onChange(localFile);
-  }
+  };
 
   const renderPreview = (fileEntry) => {
     if (fileEntry?.assets) {
-      const assets = fileEntry.assets;
+      const { assets } = fileEntry;
 
-      if (assets.type?.indexOf('image/') === 0) {
-        return <img src={assets.uri} alt={t("file.image-preview")} width="100%" />;
-      } else if (assets.type?.indexOf('video/') === 0) {
+      if (assets.type?.indexOf("image/") === 0) {
+        return (
+          <img src={assets.uri} alt={t("file.image-preview")} width="100%" />
+        );
+      }
+      if (assets.type?.indexOf("video/") === 0) {
         return <video width="100%" height="100%" controls src={assets.uri} />;
-      } else {
-        return t('file.preview-not-supported');
       }
-    } else if (fileEntry?.file) {
-      const file = fileEntry.file;
-
-      if (file.type?.indexOf('image/') === 0) {
-        return <img src={fileEntry?.preview} alt={t("file.image-preview")} width="100%" />;
-      } else if (file.type?.indexOf('video/') === 0) {
-        return <video width="100%" height="100%" controls src={fileEntry?.preview} />;
-      } else {
-        return t('file.preview-not-supported');
-      }
+      return t("file.preview-not-supported");
     }
-  }
+    if (fileEntry?.file) {
+      const { file } = fileEntry;
+
+      if (file.type?.indexOf("image/") === 0) {
+        return (
+          <img
+            src={fileEntry?.preview}
+            alt={t("file.image-preview")}
+            width="100%"
+          />
+        );
+      }
+      if (file.type?.indexOf("video/") === 0) {
+        return (
+          <video width="100%" height="100%" controls src={fileEntry?.preview} />
+        );
+      }
+      return t("file.preview-not-supported");
+    }
+  };
 
   return (
     <Row className="mb-3">
-      {displayPreview &&
+      {displayPreview && (
         <Col md="3" className="mb-3 mb-md-0">
           {FilePreview(input)}
         </Col>
-      }
+      )}
       <Col md={md}>
         <FormInput
           name="title"
@@ -88,16 +106,12 @@ function FileFormElement({ input, onRemove, onChange, disableInput, displayPrevi
           formGroupClasses="mb-3"
           disabled={disableInput}
         />
-        {displayFileInfo && input?.file?.path && input?.file?.size &&
+        {displayFileInfo && input?.file?.path && input?.file?.size && (
           <div>
             {input.file.path} - {input.file.size} bytes
           </div>
-        }
-        <Button
-          className="mt-3"
-          variant="danger"
-          onClick={onRemove}
-        >
+        )}
+        <Button className="mt-3" variant="danger" onClick={onRemove}>
           {t("file.remove")}
         </Button>
       </Col>
@@ -109,7 +123,7 @@ FileFormElement.defaultProps = {
   disableInput: false,
   displayPreview: true,
   displayFileInfo: true,
-}
+};
 
 FileFormElement.propTypes = {
   input: PropTypes.shape({

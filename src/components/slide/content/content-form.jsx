@@ -1,7 +1,6 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import MediaSelector from "./media-selector";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
@@ -42,7 +41,7 @@ function ContentForm({
 
   const getInputFiles = (formData) => {
     const field = formStateObject[formData.name];
-    let inputFiles = [];
+    const inputFiles = [];
 
     if (Array.isArray(field)) {
       field.forEach((mediaId) => {
@@ -67,9 +66,9 @@ function ContentForm({
       case "video":
       case "file":
         let defaultMimetypes = null;
-        if (formData.input === 'image') {
+        if (formData.input === "image") {
           defaultMimetypes = ["image/*"];
-        } else if (formData.input === 'video') {
+        } else if (formData.input === "video") {
           defaultMimetypes = ["video/*"];
         }
 
