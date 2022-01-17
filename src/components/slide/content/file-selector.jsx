@@ -45,7 +45,6 @@ function FileSelector({
     const newFileEntries = [...addedFiles].map((file) => {
       return {
         "@id": `TEMP${ulid(new Date().getTime())}`,
-        preview: URL.createObjectURL(file),
         title: "",
         description: "",
         license: "",
@@ -57,12 +56,16 @@ function FileSelector({
     onFilesChange({ target: { id: name, value: newFiles } });
   };
 
+  const filesAddedFromLibrary = ({target}) => {
+    onFilesChange({ target: { id: name, value: [...files, ...target.value] } });
+  }
+
   const fileDataChange = () => {
     onFilesChange({ target: { id: name, value: files } });
   };
 
   const removeFile = (fileEntry) => {
-    const newFiles = files.filter((f) => f.id !== fileEntry.id);
+    const newFiles = files.filter((f) => f['@id'] !== fileEntry['@id']);
     onFilesChange({ target: { id: name, value: newFiles } });
   };
 
@@ -74,7 +77,7 @@ function FileSelector({
       >
         <FileFormElement
           onChange={fileDataChange}
-          input={fileEntry}
+          inputFile={fileEntry}
           onRemove={() => removeFile(fileEntry)}
           disableInput={!fileEntry.editable}
         />
@@ -88,8 +91,6 @@ function FileSelector({
         acceptedMimetypes={acceptedMimetypes}
       />
 
-      <div>{renderFileFormElements(files)}</div>
-
       {enableMediaLibrary && (
         <>
           <Button variant="success" onClick={() => setShowMediaModal(true)}>
@@ -99,12 +100,14 @@ function FileSelector({
             selectedMedia={files}
             multiple={multiple}
             onClose={closeModal}
-            selectMedia={onFilesChange}
+            selectMedia={filesAddedFromLibrary}
             show={showMediaModal}
             fieldName={name}
           />
         </>
       )}
+
+      <div>{renderFileFormElements(files)}</div>
     </>
   );
 }

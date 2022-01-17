@@ -635,5 +635,26 @@
     "clear-selection": "Ryd valg",
     "selected-all": "Vælg alle",
     "select-some-options": "Vælg..."
+  },
+  "file-dropzone": {
+    "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten"
+  },
+  "file-form-element": {
+    "remove": "Fjern fil",
+    "title-label": "Titel på filen",
+    "title-placeholder": "f.eks. Solnedgang",
+    "title-help-text": "Her kan du skrive et godt beskrivende navn for filen.",
+    "description-label": "Beskrivelse af filen",
+    "description-placeholder": "f.eks. Billede af solnedgangen",
+    "description-help-text": "Her kan du skrive en beskrivelse af filen.",
+    "license-label": "Filens licens",
+    "license-placeholder": "f.eks. CC (Creative Commons)",
+    "license-help-text": "Her kan du skrive hvilken licens filen er destribueret under."
+  },
+  "file-preview": {
+    "not-supported": "Preview ikke understøttet"
+  },
+  "file-selector": {
+    "open-media-library": "Vælg fra mediearkiv"
   }
 }
