@@ -24,7 +24,7 @@ function FileFormElement({
   displayFileInfo,
 }) {
   const { t } = useTranslation("common");
-  const md = displayPreview ? "9" : "12";
+  const md = displayPreview ? "4" : "6";
 
   const onChangeFile = ({ target }) => {
     const localFile = inputFile;
@@ -35,7 +35,7 @@ function FileFormElement({
   return (
     <Row className="mb-3">
       {displayPreview && (
-        <Col md="3" className="mb-3 mb-md-0">
+        <Col md="4" className="mb-3 mb-md-0">
           <FilePreview fileEntry={inputFile} />
         </Col>
       )}
@@ -62,6 +62,8 @@ function FileFormElement({
           formGroupClasses="mb-3"
           disabled={disableInput}
         />
+      </Col>
+      <Col md={md}>
         <FormInput
           name="license"
           type="text"
