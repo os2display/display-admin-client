@@ -24,6 +24,7 @@ import "./multi-dropdown.scss";
  * @param {string} props.helpText - Help text for the dropdown.
  * @param {Function} props.filterCallback - The callback on search filter.
  * @param {boolean} props.singleSelect - If the dropdown is single select.
+ * @param {boolean} props.disableSearch - Disable search option.
  * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({
@@ -38,6 +39,7 @@ function MultiSelectComponent({
   helpText,
   filterCallback,
   singleSelect,
+  disableSearch,
 }) {
   const { t } = useTranslation("common");
   const [error] = useState();
@@ -152,6 +154,7 @@ function MultiSelectComponent({
             options={mappedOptions}
             value={mappedSelected}
             hasSelectAll={false}
+            disableSearch={disableSearch}
             filterOptions={filterOptions}
             onChange={changeData}
             id={name}
@@ -160,6 +163,7 @@ function MultiSelectComponent({
             }`}
             isLoading={isLoading}
             valueRenderer={customValueRenderer}
+            labelledBy={name}
           />
           {error && <div className="invalid-feedback-multi">{textOnError}</div>}
           {helpText && <small className="form-text">{helpText}</small>}
@@ -177,12 +181,13 @@ MultiSelectComponent.defaultProps = {
   selected: [],
   options: [],
   singleSelect: false,
+  disableSearch: false,
 };
 
 MultiSelectComponent.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.number,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       label: PropTypes.string,
       disabled: PropTypes.bool,
     })
@@ -190,7 +195,7 @@ MultiSelectComponent.propTypes = {
   handleSelection: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.number,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       label: PropTypes.string,
       disabled: PropTypes.bool,
     })
@@ -203,6 +208,7 @@ MultiSelectComponent.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   singleSelect: PropTypes.bool,
+  disableSearch: PropTypes.bool,
 };
 
 export default MultiSelectComponent;

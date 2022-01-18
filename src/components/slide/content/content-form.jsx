@@ -14,10 +14,13 @@ import FormTable from "../../util/forms/form-table/form-table";
  *
  * @param {object} props - The props.
  * @param {Array} props.data - The data to render in the form element.
+ * @param {object} props.slide - The slide that is being modified.
  * @param {Function} props.requiredFieldCallback - If the form is required, a
  *   callback to add to validation.
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
+ * @param {Function} props.onSlideChange - Callback, if the value of a slide
+ *   field changes.
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onMediaChange - When media have changed call this function.
  * @param {Array} props.mediaData - Array of loaded media entities.
@@ -25,9 +28,11 @@ import FormTable from "../../util/forms/form-table/form-table";
  */
 function ContentForm({
   data,
+  slide,
   requiredFieldCallback,
   errors,
   onChange,
+  onSlideChange,
   onMediaChange,
   formStateObject,
   mediaData,
@@ -58,10 +63,29 @@ function ContentForm({
     let returnElement;
 
     switch (formData.input) {
+      case "duration":
+        if (data.required) {
+          requiredFieldCallback(data.name);
+        }
+
+        returnElement = (
+          <FormInput
+            name="duration"
+            value={slide?.duration ? Math.floor(slide.duration / 1000) : 0}
+            onChange={(value) => {
+              onSlideChange({
+                target: { id: "duration", value: value * 1000 },
+              });
+            }}
+          />
+        );
+
+        break;
       case "input":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <FormInput
             name={formData.name}
@@ -74,11 +98,13 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "rich-text-input":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <RichText
             name={formData.name}
@@ -91,6 +117,7 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "table":
         returnElement = (
@@ -101,6 +128,7 @@ function ContentForm({
             tabsClasses={formData.tableClasses}
           />
         );
+
         break;
       case "contacts":
         returnElement = (
@@ -114,11 +142,13 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "checkbox":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <FormCheckbox
             label={formData.label}
@@ -129,28 +159,34 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "header":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <h2 className={formData.formGroupClasses}>{formData.text}</h2>
         );
+
         break;
       // @TODO: This (header-h3) should be possible to create in a more efficient way, in combination with the above.
       case "header-h3":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <h3 className={formData.formGroupClasses}>{formData.text}</h3>
         );
+
         break;
       case "textarea":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <>
             {formData?.label && (
@@ -173,11 +209,13 @@ function ContentForm({
             )}
           </>
         );
+
         break;
       case "select":
         if (data.required) {
           requiredFieldCallback(data.name);
         }
+
         returnElement = (
           <Select
             helpText={formData.helpText}
@@ -190,6 +228,7 @@ function ContentForm({
             formGroupClasses={formData.formGroupClasses}
           />
         );
+
         break;
       case "image":
         returnElement = (
@@ -220,6 +259,7 @@ function ContentForm({
             )}
           </>
         );
+
         break;
       default:
         returnElement = <></>;
@@ -233,6 +273,12 @@ function ContentForm({
 
 ContentForm.defaultProps = {
   errors: [],
+  slide: null,
+  requiredFieldCallback: null,
+  onChange: null,
+  onSlideChange: null,
+  onMediaChange: null,
+  mediaData: {},
 };
 
 ContentForm.propTypes = {
@@ -245,12 +291,16 @@ ContentForm.propTypes = {
     required: PropTypes.bool,
     multipleImages: PropTypes.bool,
   }).isRequired,
+  slide: PropTypes.shape({
+    duration: PropTypes.number,
+  }),
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({}).isRequired,
-  requiredFieldCallback: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onMediaChange: PropTypes.func.isRequired,
-  mediaData: PropTypes.objectOf(PropTypes.object).isRequired,
+  requiredFieldCallback: PropTypes.func,
+  onChange: PropTypes.func,
+  onSlideChange: PropTypes.func,
+  onMediaChange: PropTypes.func,
+  mediaData: PropTypes.objectOf(PropTypes.object),
 };
 
 export default ContentForm;

@@ -243,6 +243,19 @@ function SlideManager({
     if (initialState) {
       const localFormStateObject = JSON.parse(JSON.stringify(initialState));
 
+      if (initialState?.feed && initialState?.feed["@id"]) {
+        dispatch(
+          api.endpoints.getV1FeedsByIdData.initiate({
+            id: idFromUrl(initialState.feed["@id"]),
+          })
+        ).then((response) => {
+          setFormStateObject({
+            ...localFormStateObject,
+            feedData: response.data,
+          });
+        });
+      }
+
       // Make sure content is an object.
       if (localFormStateObject.content instanceof Array) {
         localFormStateObject.content = {};
@@ -423,7 +436,7 @@ function SlideManager({
         const saveData = {
           slideSlideInput: JSON.stringify({
             title: formStateObject.title,
-            theme: formStateObject.theme,
+            theme: formStateObject.theme ?? "",
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
             duration: formStateObject?.content?.duration
@@ -431,6 +444,7 @@ function SlideManager({
               : null,
             content: formStateObject.content,
             media: formStateObject.media,
+            feed: formStateObject.feed,
             published: {
               from,
               to,
@@ -518,7 +532,11 @@ SlideManager.defaultProps = {
 };
 
 SlideManager.propTypes = {
-  initialState: PropTypes.shape({}),
+  initialState: PropTypes.shape({
+    feed: PropTypes.shape({
+      "@id": PropTypes.string,
+    }),
+  }),
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
