@@ -28,6 +28,14 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
     newArgs.headers.accept = "application/ld+json";
   }
 
+  // Attach api token.
+  const apiToken = localStorage.getItem('api-token');
+  if (!apiToken) {
+    console.log('TODO: redirect to frontpage')
+  } else {
+    newArgs.headers.authorization = `Bearer ${apiToken}`;
+  }
+
   const baseResult = await fetchBaseQuery({ baseUrl })(
     newArgs,
     api,

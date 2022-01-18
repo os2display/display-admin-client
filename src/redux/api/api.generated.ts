@@ -4,48 +4,15 @@ export const api = createApi({
   baseQuery: extendedBaseQuery,
   tagTypes: [],
   endpoints: (build) => ({
-    getV1FeedSources: build.query<
-      GetV1FeedSourcesApiResponse,
-      GetV1FeedSourcesApiArg
+    postCredentialsItem: build.mutation<
+      PostCredentialsItemApiResponse,
+      PostCredentialsItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/feed-sources`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          title: queryArg.title,
-          description: queryArg.description,
-          order: queryArg.order,
-        },
+        url: `/v1/authentication_token`,
+        method: "POST",
+        body: queryArg.credentials,
       }),
-    }),
-    getV1FeedSourcesById: build.query<
-      GetV1FeedSourcesByIdApiResponse,
-      GetV1FeedSourcesByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/v1/feed-sources/${queryArg.id}` }),
-    }),
-    getV1Feeds: build.query<GetV1FeedsApiResponse, GetV1FeedsApiArg>({
-      query: (queryArg) => ({
-        url: `/v1/feeds`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          order: queryArg.order,
-        },
-      }),
-    }),
-    getV1FeedsById: build.query<
-      GetV1FeedsByIdApiResponse,
-      GetV1FeedsByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}` }),
-    }),
-    getV1FeedsByIdData: build.query<
-      GetV1FeedsByIdDataApiResponse,
-      GetV1FeedsByIdDataApiArg
-    >({
-      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}/data` }),
     }),
     getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({
       query: (queryArg) => ({
@@ -475,41 +442,11 @@ export const api = createApi({
     }),
   }),
 });
-export type GetV1FeedSourcesApiResponse = unknown;
-export type GetV1FeedSourcesApiArg = {
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
-  title?: string;
-  description?: string;
-  order?: {
-    title?: "asc" | "desc";
-    description?: "asc" | "desc";
-    createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
-  };
-};
-export type GetV1FeedSourcesByIdApiResponse = unknown;
-export type GetV1FeedSourcesByIdApiArg = {
-  id: string;
-};
-export type GetV1FeedsApiResponse = unknown;
-export type GetV1FeedsApiArg = {
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
-  order?: {
-    createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
-  };
-};
-export type GetV1FeedsByIdApiResponse = unknown;
-export type GetV1FeedsByIdApiArg = {
-  id: string;
-};
-export type GetV1FeedsByIdDataApiResponse = unknown;
-export type GetV1FeedsByIdDataApiArg = {
-  id: string;
+export type PostCredentialsItemApiResponse =
+  /** status 200 Get JWT token */ Token;
+export type PostCredentialsItemApiArg = {
+  /** Generate new JWT Token */
+  credentials: Credentials;
 };
 export type GetV1LayoutsApiResponse = unknown;
 export type GetV1LayoutsApiArg = {
@@ -827,6 +764,13 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
+export type Token = {
+  token?: string;
+};
+export type Credentials = {
+  email?: string;
+  password?: string;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
@@ -860,7 +804,6 @@ export type SlideSlideInput = {
   theme?: string;
   duration?: number | null;
   published?: string[];
-  feed?: string[] | null;
   media?: string[];
   content?: string[];
 };
@@ -872,11 +815,7 @@ export type ThemeThemeInput = {
   css?: string;
 };
 export const {
-  useGetV1FeedSourcesQuery,
-  useGetV1FeedSourcesByIdQuery,
-  useGetV1FeedsQuery,
-  useGetV1FeedsByIdQuery,
-  useGetV1FeedsByIdDataQuery,
+  usePostCredentialsItemMutation,
   useGetV1LayoutsQuery,
   useGetV1LayoutsByIdQuery,
   useGetV1MediaQuery,
