@@ -64,7 +64,12 @@ function RemoteComponentWrapper({
               </h2>
             )}
             {closeButton && (
-              <Button variant="primary" type="button" onClick={closeCallback}>
+              <Button
+                variant="primary"
+                id="close_preview_button"
+                type="button"
+                onClick={closeCallback}
+              >
                 {t("remote-component-wrapper.close-preview")}
               </Button>
             )}

@@ -177,7 +177,12 @@ function Schedule({ schedules, onChange }) {
 
   return (
     <div className="Schedule">
-      <Button variant="primary" className="mb-2 mt-2" onClick={addSchedule}>
+      <Button
+        variant="primary"
+        id="add_schedule"
+        className="mb-2 mt-2"
+        onClick={addSchedule}
+      >
         {t("schedule.add-schedule-button-text")}
       </Button>
 
@@ -329,6 +334,7 @@ function Schedule({ schedules, onChange }) {
                   <Button
                     className="mt-2 mb-2 me-2"
                     variant="secondary"
+                    id="schedule_details_button"
                     onClick={() => setShowRRuleDetails(!showRRuleDetails)}
                   >
                     {showRRuleDetails
@@ -345,7 +351,7 @@ function Schedule({ schedules, onChange }) {
                 </div>
               </div>
               {showRRuleDetails && (
-                <div className="row">
+                <div className="row" id="schedule_details">
                   <strong>{t("schedule.rrulestring")}:</strong>
                   <span>{schedule.rrule}</span>
                   <div className="mt-2">

@@ -256,7 +256,7 @@ function SlideForm({
                     <Button
                       variant="secondary"
                       type="button"
-                      id="cancel_slide"
+                      id="preview_slide"
                       onClick={() =>
                         setPreviewOverlayVisible(!previewOverlayVisible)
                       }
@@ -348,7 +348,7 @@ function SlideForm({
               </Row>
             </ContentBody>
             {themesOptions && (
-              <ContentBody>
+              <ContentBody id="theme-section">
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-form.slide-theme-label")}

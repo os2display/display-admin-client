@@ -91,7 +91,7 @@ function SlideManager({
       setSubmitting(false);
       displayError(
         t("slide-manager.error-messages.save-media-error", {
-          error: saveMediaError.error
+          error: saveMediaError.data["hydra:description"]
             ? saveMediaError.error
             : saveMediaError.data["hydra:description"],
         })

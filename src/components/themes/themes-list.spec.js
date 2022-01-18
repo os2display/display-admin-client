@@ -1,12 +1,8 @@
 describe("themes list tests", () => {
   beforeEach(() => {
-    cy.intercept({
-      method: "GET",
-      url: "**/theme*",
-      query: {
-        page: "1",
-      },
-    }).as("themesData");
+    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
+      "themesData"
+    );
     cy.visit("/themes/list");
     cy.wait(["@themesData"]);
     cy.wait(1000);

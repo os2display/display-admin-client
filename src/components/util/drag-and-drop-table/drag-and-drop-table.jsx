@@ -109,6 +109,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
                     >
                       {(providedDraggable, providedSnapshot) => (
                         <tr
+                          id={item["@id"]}
                           ref={providedDraggable.innerRef}
                           {...providedDraggable.draggableProps}
                           {...providedDraggable.dragHandleProps}

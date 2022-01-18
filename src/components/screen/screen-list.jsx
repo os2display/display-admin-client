@@ -46,6 +46,7 @@ function ScreenList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [screensToDelete, setScreensToDelete] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
   const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState([]);
@@ -75,6 +76,7 @@ function ScreenList() {
   useEffect(() => {
     if (data && page) {
       setListData(data["hydra:member"]);
+      setTotalItems(data["hydra:totalItems"]);
     }
   }, [data]);
 
@@ -299,7 +301,7 @@ function ScreenList() {
           {listData && (
             <List
               columns={columns}
-              totalItems={listData["hydra:totalItems"]}
+              totalItems={totalItems}
               data={listData}
               currentPage={page}
               handlePageChange={onChangePage}

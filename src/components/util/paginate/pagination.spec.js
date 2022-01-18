@@ -30,32 +30,33 @@ describe("Pagination loads", () => {
     cy.get("tbody")
       .find("tr td")
       .eq(1)
-      .contains("Adipisci quaerat voluptatum sed.");
-    cy.get("tbody").find("tr").should("have.length", 10);
-    cy.get(".pagination").find(".page-link").eq(9).click();
-
-    // Wait for data
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/*",
-    }).as("templatesData");
-    cy.wait([
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-    ]);
-
-    cy.get("tbody").find("tr").should("have.length", 10);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
       .invoke("text")
-      .should("match", /^Soluta in ea/);
+      .then((titleCellText) => {
+        cy.get("tbody").find("tr").should("have.length", 10);
+
+        // Wait for data
+        cy.intercept({
+          method: "GET",
+          url: "**/templates/*",
+        }).as("templatesData");
+
+        cy.get(".pagination").find(".page-link").eq(9).click();
+        cy.wait([
+          "@templatesData",
+          "@templatesData",
+          "@templatesData",
+          "@templatesData",
+          "@templatesData",
+          "@templatesData",
+          "@templatesData",
+          "@templatesData",
+        ]);
+        cy.get("tbody").find("tr").should("have.length", 10);
+        cy.get("tbody")
+          .find("tr td")
+          .eq(1)
+          .should("not.have.text", titleCellText);
+      });
   });
 
   it("It works on slides with url input", () => {
@@ -66,21 +67,27 @@ describe("Pagination loads", () => {
         page: "6",
       },
     }).as("slidesData");
+    // Wait for data
     cy.intercept({
       method: "GET",
-      url: "**/templates/00HH42EEHC05QT14VQ041R1KEY",
+      url: "**/templates/*",
     }).as("templatesData");
     cy.visit("/slide/list?published=all&page=6&order=asc&sort=title");
-    cy.wait(["@slidesData", "@templatesData"]);
+    cy.wait([
+      "@slidesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+      "@templatesData",
+    ]);
     cy.get(".pagination")
       .find(".page-item")
       .eq(5)
       .should("have.class", "active");
     cy.get("tbody").find("tr").should("have.length", 10);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Molestiae hic autem cupiditate./);
   });
 });

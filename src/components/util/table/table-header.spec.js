@@ -1,93 +1,54 @@
 describe("Table header loads", () => {
+  beforeEach(() => {
+    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
+      "themesData"
+    );
+    cy.visit("/themes/list");
+    cy.wait(["@themesData", "@themesData"]);
+    cy.wait(1000);
+  });
+
   it("It loads", () => {
-    cy.visit("/slide/list");
+    cy.visit("/themes/list");
     cy.get("table").find("thead").should("not.be.empty");
   });
 
   it("It sorts by title", () => {
     cy.intercept({
       method: "GET",
-      url: "**/templates/00XZXR5XDH0D1M16K10NYQ0A55",
-    }).as("templatesData");
-    cy.intercept({
-      method: "GET",
-      url: "**/slides*",
+      url: "**/themes*",
       query: {
         page: "1",
+        order: "desc",
       },
-    }).as("slidesData");
-    cy.visit("/slide/list");
-    cy.wait(["@slidesData", "@templatesData"]);
-    cy.get("#table-header-title").should("not.be.empty");
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Adipisci quaerat voluptatum sed./);
+    }).as("secondQuery");
     cy.get("#table-header-title").click();
-
-    cy.intercept({
-      method: "GET",
-      url: "**/slides*",
-      query: {
-        page: "1",
-      },
-    }).as("slidesData");
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/00EZZGVW6P0KSH0PV90G6Y0HFY",
-    }).as("templatesData");
-    cy.wait(["@slidesData", "@templatesData"]);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Voluptatem amet non./);
+    cy.wait("@secondQuery").then((interception) => {
+      assert.isNotNull(interception.response.body, "The api is called again");
+    });
   });
 
   it("Loads parametres sort url", () => {
     cy.intercept({
       method: "GET",
-      url: "**/slides*",
+      url: "**/themes*",
       query: {
         page: "1",
+        order: "desc",
+        sort: "title",
       },
-    }).as("slidesData");
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/00EZZGVW6P0KSH0PV90G6Y0HFY",
-    }).as("templatesData");
-    cy.visit("/slide/list?published=all&page=1&order=desc&sort=title");
-    cy.wait(["@slidesData", "@templatesData"]);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Voluptatem amet non./);
+    }).as("themesData");
+    cy.visit("/themes/list?page=1&order=desc&sort=title");
+    cy.wait("@themesData").then((interception) => {
+      assert.isNotNull(interception.response.body, "The api is called");
+    });
   });
 
   it("Loads parametres search url", () => {
-    cy.intercept({
-      method: "GET",
-      url: "**/slides*",
-      query: {
-        page: "1",
-      },
-    }).as("slidesData");
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/00MWCNKC4P0X5C0AT70E741E2V",
-    }).as("templatesData");
-    cy.visit(
-      "/slide/list?published=all&page=1&order=asc&sort=title&search=harum"
-    );
-    cy.wait(["@slidesData", "@templatesData"]);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Harum cumque aperiam voluptatem necessitatibus./);
-    cy.get("tbody").find("tr td").should("have.length", 14);
+    cy.visit("/themes/list?page=1&order=asc&sort=title&search=harum");
+    cy.get("#search-field")
+      .invoke("val")
+      .should("match", /^harum/);
   });
 
   it("Loads parametres published url", () => {
@@ -96,19 +57,12 @@ describe("Table header loads", () => {
       url: "**/slides*",
       query: {
         page: "1",
+        published: "false",
       },
     }).as("slidesData");
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/000BGWFMBS15N807E60HP91JCX",
-    }).as("templatesData");
     cy.visit("/slide/list?page=1&order=asc&sort=title&published=not-published");
-    cy.wait(["@slidesData", "@templatesData"]);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^Adipisci vero quia./);
-    cy.get(".pagination").find(".page-item").should("have.length", 5);
+    cy.wait("@slidesData").then((interception) => {
+      assert.isNotNull(interception.response.body, "Not all published");
+    });
   });
 });
