@@ -1,13 +1,8 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
-import ImageUploading from "react-images-uploading";
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "../../util/image-uploader/image-uploader.scss";
 import { useTranslation } from "react-i18next";
-import { ulid } from "ulid";
-import Image from "../../util/image-uploader/image";
 import MediaSelectorModal from "./media-selector-modal";
 import FileFormElement from "./file-form-element";
 import FileDropzone from "./file-dropzone";
@@ -55,16 +50,18 @@ function FileSelector({
     onFilesChange({ target: { id: name, value: newFiles } });
   };
 
-  const filesAddedFromLibrary = ({target}) => {
+  const filesAddedFromLibrary = ({ target }) => {
     onFilesChange({ target: { id: name, value: [...files, ...target.value] } });
-  }
+  };
 
   const fileDataChange = () => {
     onFilesChange({ target: { id: name, value: files } });
   };
 
   const removeFile = (fileEntry) => {
-    const newFiles = files.filter((f) => f['@id'] !== fileEntry['@id'] && f.tempId !== fileEntry.tempId);
+    const newFiles = files.filter(
+      (f) => f["@id"] !== fileEntry["@id"] && f.tempId !== fileEntry.tempId
+    );
     onFilesChange({ target: { id: name, value: newFiles } });
   };
 
@@ -110,6 +107,12 @@ function FileSelector({
     </>
   );
 }
+
+FileSelector.defaultProps = {
+  multiple: true,
+  enableMediaLibrary: true,
+  acceptedMimetypes: null,
+};
 
 FileSelector.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

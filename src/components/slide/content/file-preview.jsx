@@ -3,13 +3,15 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param props - The props.
- * @param props.fileEntry - The file to preview.
- * @param props.enableVideoControls - Enable the video controls for the preview of video files?
+ * @param {object} props - The props.
+ * @param {object} props.fileEntry - The file to preview.
+ * @param {boolean} props.enableVideoControls - Enable the video controls for
+ *   the preview of video files?
+ * @returns {object} FilePreview component.
  */
 function FilePreview({ fileEntry, enableVideoControls = false }) {
   const { t } = useTranslation("common");
-  const [preview, setPreview] = useState('');
+  const [preview, setPreview] = useState("");
 
   useEffect(() => {
     if (fileEntry?.file) {
@@ -17,37 +19,46 @@ function FilePreview({ fileEntry, enableVideoControls = false }) {
     }
   }, [fileEntry]);
 
-  const renderPreview = (fileEntry) => {
-    if (fileEntry?.assets) {
-      const { assets } = fileEntry;
+  const renderPreview = (fileEntryToRender) => {
+    /* eslint-disable jsx-a11y/media-has-caption */
+    if (fileEntryToRender?.assets) {
+      const { assets } = fileEntryToRender;
 
       if (assets.type?.indexOf("image/") === 0) {
         return (
           <img src={assets.uri} alt={t("file.image-preview")} width="100%" />
         );
-      } else if (assets.type?.indexOf("video/") === 0) {
-        return <video width="100%" height="100%" controls={enableVideoControls} src={assets.uri} />;
       }
-    }
-    else if (preview !== '') {
-      const { file } = fileEntry;
-
-      if (file.type?.indexOf("image/") === 0) {
+      if (assets.type?.indexOf("video/") === 0) {
         return (
-          <img
-            src={preview}
-            alt={t("file.image-preview")}
+          <video
             width="100%"
+            height="100%"
+            controls={enableVideoControls}
+            src={assets.uri}
           />
         );
-      } else if (file.type?.indexOf("video/") === 0) {
+      }
+    } else if (preview !== "") {
+      const { file } = fileEntryToRender;
+
+      if (file.type?.indexOf("image/") === 0) {
+        return <img src={preview} alt={t("file.image-preview")} width="100%" />;
+      }
+      if (file.type?.indexOf("video/") === 0) {
         return (
-          <video width="100%" height="100%" controls={enableVideoControls} src={preview} />
+          <video
+            width="100%"
+            height="100%"
+            controls={enableVideoControls}
+            src={preview}
+          />
         );
       }
     }
 
     return t("file-preview.not-supported");
+    /* eslint-enable jsx-a11y/media-has-caption */
   };
 
   return renderPreview(fileEntry);

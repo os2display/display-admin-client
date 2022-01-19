@@ -36,7 +36,7 @@ function FileFormElement({
     <Row className="mb-3">
       {displayPreview && (
         <Col md="4" className="mb-3 mb-md-0">
-          <FilePreview fileEntry={inputFile} enableVideoControls={true} />
+          <FilePreview fileEntry={inputFile} enableVideoControls />
         </Col>
       )}
       <Col md={md}>
@@ -44,7 +44,9 @@ function FileFormElement({
           name="title"
           type="text"
           label={t("file-form-element.title-label")}
-          placeholder={!disableInput && t("file-form-element.title-placeholder")}
+          placeholder={
+            !disableInput && t("file-form-element.title-placeholder")
+          }
           helpText={!disableInput && t("file-form-element.title-help-text")}
           value={inputFile.title}
           onChange={onChangeFile}
@@ -55,8 +57,12 @@ function FileFormElement({
           name="description"
           type="text"
           label={t("file-form-element.description-label")}
-          placeholder={!disableInput && t("file-form-element.description-placeholder")}
-          helpText={!disableInput && t("file-form-element.description-help-text")}
+          placeholder={
+            !disableInput && t("file-form-element.description-placeholder")
+          }
+          helpText={
+            !disableInput && t("file-form-element.description-help-text")
+          }
           value={inputFile.description}
           onChange={onChangeFile}
           formGroupClasses="mb-3"
@@ -68,7 +74,9 @@ function FileFormElement({
           name="license"
           type="text"
           label={t("file-form-element.license-label")}
-          placeholder={!disableInput && t("file-form-element.license-placeholder")}
+          placeholder={
+            !disableInput && t("file-form-element.license-placeholder")
+          }
           helpText={!disableInput && t("file-form-element.license-help-text")}
           value={inputFile.license}
           onChange={onChangeFile}
@@ -97,7 +105,10 @@ FileFormElement.defaultProps = {
 FileFormElement.propTypes = {
   inputFile: PropTypes.shape({
     url: PropTypes.string,
-    file: PropTypes.shape({}),
+    file: PropTypes.shape({
+      path: PropTypes.string,
+      size: PropTypes.number,
+    }),
     title: PropTypes.string,
     description: PropTypes.string,
     license: PropTypes.string,

@@ -1,6 +1,5 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
@@ -37,8 +36,6 @@ function ContentForm({
   formStateObject,
   mediaData,
 }) {
-  const { t } = useTranslation("common");
-
   const getInputFiles = (formData) => {
     const field = formStateObject[formData.name];
     const inputFiles = [];
@@ -60,12 +57,12 @@ function ContentForm({
    */
   function renderElement(formData) {
     let returnElement;
+    let defaultMimetypes = null;
 
     switch (formData.input) {
       case "image":
       case "video":
       case "file":
-        let defaultMimetypes = null;
         if (formData.input === "image") {
           defaultMimetypes = ["image/*"];
         } else if (formData.input === "video") {
@@ -163,9 +160,10 @@ function ContentForm({
 
         break;
       case "contacts":
+        // TODO: onMediaChange.
         returnElement = (
           <Contacts
-            onMediaChange={onMediaChange}
+            onMediaChange={() => {}}
             getInputImage={getInputFiles}
             name={formData.name}
             formData={formData}
@@ -278,7 +276,6 @@ ContentForm.defaultProps = {
   requiredFieldCallback: null,
   onChange: null,
   onSlideChange: null,
-  onMediaChange: null,
   mediaData: {},
 };
 
@@ -300,7 +297,7 @@ ContentForm.propTypes = {
   requiredFieldCallback: PropTypes.func,
   onChange: PropTypes.func,
   onSlideChange: PropTypes.func,
-  onFileChange: PropTypes.func,
+  onFileChange: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.object),
 };
 

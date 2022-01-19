@@ -78,8 +78,8 @@ function MediaSelectorModal({
 
       if (typeof entry === "string") {
         next.push(entry);
-      } else if (Object.prototype.hasOwnProperty.call(entry, '@id')) {
-        next.push(entry["@id"])
+      } else if (Object.prototype.hasOwnProperty.call(entry, "@id")) {
+        next.push(entry["@id"]);
       }
       return next;
     }, []);

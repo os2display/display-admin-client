@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 /**
- * @param root0
- * @param root0.onFilesAdded
- * @param root0.acceptedMimetypes
+ * @param {object} props - The props.
+ * @param {Function} props.onFilesAdded - Callback when files are added.
+ * @param {Array | null} props.acceptedMimetypes - Mimetypes to accept.
+ * @returns {object} Dropzone component.
  */
 function FileDropzone({ onFilesAdded, acceptedMimetypes = null }) {
   const { t } = useTranslation("common");
@@ -21,6 +22,7 @@ function FileDropzone({ onFilesAdded, acceptedMimetypes = null }) {
   return (
     <>
       {/* TODO: Fix styling for dropzone: https://react-dropzone.js.org/#section-styling-dropzone */}
+      {/* eslint-disable react/jsx-props-no-spreading */}
       <div
         {...getRootProps({ className: "dropzone drag-drop-area" })}
         style={{ height: "100px", fontSize: "2em" }}
@@ -28,9 +30,14 @@ function FileDropzone({ onFilesAdded, acceptedMimetypes = null }) {
         <input {...getInputProps()} />
         <div>{t("file-dropzone.drag-and-drop-text")}</div>
       </div>
+      {/* eslint-enable react/jsx-props-no-spreading */}
     </>
   );
 }
+
+FileDropzone.defaultProps = {
+  acceptedMimetypes: null,
+};
 
 FileDropzone.propTypes = {
   onFilesAdded: PropTypes.func.isRequired,
