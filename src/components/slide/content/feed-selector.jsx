@@ -11,6 +11,7 @@ import {
 import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../../util/helpers/id-from-url";
 import ContentForm from "./content-form";
+import MultiselectFromEndpoint from "./multiselect-from-endpoint";
 
 /**
  * Feed selector.
@@ -66,7 +67,7 @@ function FeedSelector({ value, onChange }) {
           // @TODO: handle error
         });
     }
-  }, [value.feedSource]);
+  }, [value?.feedSource]);
 
   const feedSourceChange = ({ target }) => {
     const feedSource = target.value[0].value ?? null;
@@ -79,6 +80,40 @@ function FeedSelector({ value, onChange }) {
     set(configuration, target.id, target.value);
     const newValue = { ...value, configuration };
     onChange(newValue);
+  };
+
+  const getValueFromConfiguration = (name) => {
+    if (
+      value?.configuration &&
+      Object.prototype.hasOwnProperty.call(value.configuration, name)
+    ) {
+      return value.configuration[name];
+    }
+    return null;
+  };
+
+  const getFormElement = (element) => {
+    if (element?.input === "multiselect-from-endpoint") {
+      return (
+        <MultiselectFromEndpoint
+          key={element.key}
+          name={element.name}
+          onChange={(target) => configurationChange(target)}
+          value={getValueFromConfiguration(element.name)}
+          label={element.label}
+          optionsEndpoint={element.endpoint}
+        />
+      );
+    }
+    return (
+      <ContentForm
+        key={element.key}
+        data={element}
+        onChange={configurationChange}
+        name={element.name}
+        formStateObject={value?.configuration ?? {}}
+      />
+    );
   };
 
   return (
@@ -106,15 +141,7 @@ function FeedSelector({ value, onChange }) {
       )}
 
       {feedSourceData?.admin &&
-        feedSourceData.admin.map((element) => (
-          <ContentForm
-            key={element.key}
-            data={element}
-            onChange={configurationChange}
-            name={element.name}
-            formStateObject={value?.configuration ?? {}}
-          />
-        ))}
+        feedSourceData.admin.map((element) => getFormElement(element))}
     </>
   );
 }
