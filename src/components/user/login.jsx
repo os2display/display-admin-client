@@ -12,6 +12,7 @@ function Login() {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   const onChange = ({target}) => {
     if (target?.id === 'email') {
@@ -24,7 +25,6 @@ function Login() {
   const onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log("onSubmit ");
 
     dispatch(
       api.endpoints.postCredentialsItem.initiate({
@@ -38,11 +38,8 @@ function Login() {
         localStorage.setItem("api-token", response.data.token);
         history.push('/');
       }
-      else {
-        console.log(response);
-      }
     }).catch((err) => {
-      console.log("TODO: handle error", err);
+      setError(JSON.stringify(err));
     });
   }
 
@@ -53,6 +50,9 @@ function Login() {
         <FormInput onChange={onChange} value={email} name="email" label={t('login.email')} required />
         <FormInput onChange={onChange} value={password} name="password" label={t('login.password')} type="password" required />
         <Button type="submit" className="mt-3">{t('login.submit')}</Button>
+        {error &&
+          <div>Fejl: {error}</div>
+        }
       </Form>
     </Card>
   );
