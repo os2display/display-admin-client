@@ -1,0 +1,7 @@
+{
+  "@context": "/contexts/Error",
+    "statusCode": 500,
+  "@type": "hydra:Error",
+  "hydra:title": "An error occurred",
+  "hydra:description": "Errorerrorerror"
+}

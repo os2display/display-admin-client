@@ -1,0 +1,29 @@
+{
+  "@context": {
+    "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "Playlist/title",
+    "description": "Playlist/description",
+    "schedules": "Playlist/schedules",
+    "created": "Playlist/created",
+    "modified": "Playlist/modified",
+    "modifiedBy": "Playlist/modifiedBy",
+    "createdBy": "Playlist/createdBy",
+    "slides": "Playlist/slides",
+    "published": "Playlist/published"
+  },
+  "@type": "Playlist",
+  "@id": "/v1/playlists/01FSMP20DN0VT3AMNKEH7F084R",
+  "title": "Voluptatibus id minima.",
+  "description": "Ex est quo consequatur vel perspiciatis aut et sed. Iusto autem aliquid id aspernatur. Voluptas voluptatem quisquam tempora enim nesciunt ut. Sed enim molestias error delectus.",
+  "schedules": [],
+  "created": "2022-01-17T19:51:12.000Z",
+  "modified": "2022-01-17T19:51:12.000Z",
+  "modifiedBy": "",
+  "createdBy": "",
+  "slides": "/v1/playlists/01FSMP20DN0VT3AMNKEH7F084R/slides",
+  "published": {
+    "from": "2021-09-08T14:02:51.000Z",
+    "to": "2021-12-20T21:05:39.000Z"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "Slide/title",
+    "description": "Slide/description",
+    "created": "Slide/created",
+    "modified": "Slide/modified",
+    "modifiedBy": "Slide/modifiedBy",
+    "createdBy": "Slide/createdBy",
+    "templateInfo": "Slide/templateInfo",
+    "theme": "Slide/theme",
+    "onPlaylists": "Slide/onPlaylists",
+    "duration": "Slide/duration",
+    "published": "Slide/published",
+    "media": "Slide/media",
+    "content": "Slide/content"
+  },
+  "@type": "Slide",
+  "@id": "/v1/slides/01FSKP3929GFTYBWBM7XH4S7Y0",
+  "title": "title",
+  "description": "description",
+  "created": "2022-01-17T10:32:39.000Z",
+  "modified": "2022-01-17T10:32:39.000Z",
+  "modifiedBy": "string",
+  "createdBy": "string",
+  "templateInfo": {
+    "@id": "/v1/templates/000YR9PMQC0GMC1TP90V9N07WX",
+    "options": []
+  },
+  "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+  "onPlaylists": [],
+  "duration": 10,
+  "published": {
+    "from": null,
+    "to": null
+  },
+  "media": [
+    "/v1/media/00042YZWK214MP01NA1GF517Q2",
+    "/v1/media/00TET3FF6K1Q011N5S12621E4H",
+    "/v1/media/01DCA32QJY1BH600BV1H140JDK"
+  ],
+  "content": []
+}

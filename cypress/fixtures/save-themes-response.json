@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "Theme/title",
+    "description": "Theme/description",
+    "onSlides": "Theme/onSlides",
+    "created": "Theme/created",
+    "modified": "Theme/modified",
+    "modifiedBy": "Theme/modifiedBy",
+    "createdBy": "Theme/createdBy",
+    "css": "Theme/css"
+  },
+  "@type": "Theme",
+  "@id": "/v1/themes/01FSMP6T4SDS7YF3B3FK3PPY7M",
+  "title": "title",
+  "description": "description",
+  "onSlides": [],
+  "created": "2022-01-17T19:53:49+01:00",
+  "modified": "2022-01-17T19:53:49+01:00",
+  "modifiedBy": "string",
+  "createdBy": "string",
+  "css": "string"
+}

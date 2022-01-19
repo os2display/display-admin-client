@@ -1,0 +1,38 @@
+{
+  "@context": {
+    "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "Screen/title",
+    "description": "Screen/description",
+    "size": "Screen/size",
+    "created": "Screen/created",
+    "modified": "Screen/modified",
+    "modifiedBy": "Screen/modifiedBy",
+    "createdBy": "Screen/createdBy",
+    "layout": "Screen/layout",
+    "location": "Screen/location",
+    "regions": "Screen/regions",
+    "inScreenGroups": "Screen/inScreenGroups",
+    "dimensions": "Screen/dimensions"
+  },
+  "@type": "Screen",
+  "@id": "/v1/screens/01FSKKQ4PATWQN78QRJWCVRT9W",
+  "title": "Commodi nihil perferendis earum iusto.",
+  "description": "Perferendis explicabo ipsa non. Consectetur nisi reiciendis cum facere rerum voluptate.",
+  "size": "65",
+  "created": "2022-01-17T09:51:04+01:00",
+  "modified": "2022-01-17T09:51:04+01:00",
+  "modifiedBy": "",
+  "createdBy": "",
+  "layout": "/v1/layouts/004GSSRSQM0FX404991FPW0AXC",
+  "location": "Voluptatem accusamus ab reprehenderit non voluptas quis explicabo. Sint in ut pariatur ipsam quod quis. Harum voluptatem qui inventore a aut sed.",
+  "regions": [
+    "/v1/screens/01FSKKQ4PATWQN78QRJWCVRT9W/regions/000VV01PKC1JYY0RE8178K1C7A/playlists",
+    "/v1/screens/01FSKKQ4PATWQN78QRJWCVRT9W/regions/004QDMAQC106SR10NR1KAB1HX6/playlists"
+  ],
+  "inScreenGroups": "/v1/screens/01FSKKQ4PATWQN78QRJWCVRT9W/groups",
+  "dimensions": {
+    "width": 1920,
+    "height": 1200
+  }
+}

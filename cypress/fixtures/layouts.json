@@ -1,0 +1,122 @@
+{
+  "@context": "/contexts/ScreenLayout",
+  "@id": "/v1/layouts",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@type": "ScreenLayout",
+      "@id": "/v1/layouts/000JEYTBF401G61A390ENH0ZB3",
+      "title": "Voluptatum dolorem et qui eaque voluptates.",
+      "grid": {
+        "rows": 7,
+        "columns": 6
+      },
+      "regions": [
+        {
+          "@id": "/v1/layouts/regions/00DY4WAP7N1B7B0W2C1JDC07ME",
+          "@type": "ScreenLayoutRegions",
+          "title": "Itaque nihil velit earum.",
+          "gridArea": [
+            "b"
+          ]
+        },
+        {
+          "@id": "/v1/layouts/regions/00EX7J294Q01B602NA14GQ0PY7",
+          "@type": "ScreenLayoutRegions",
+          "title": "Ea fuga et sapiente.",
+          "gridArea": [
+            "b"
+          ]
+        },
+        {
+          "@id": "/v1/layouts/regions/010FJG4WRF15XF0K8C052P0GWJ",
+          "@type": "ScreenLayoutRegions",
+          "title": "Modi distinctio magnam recusandae blanditiis.",
+          "gridArea": [
+            "e"
+          ]
+        },
+        {
+          "@id": "/v1/layouts/regions/016BNG6BWB0WF91JD01G3F06WB",
+          "@type": "ScreenLayoutRegions",
+          "title": "Nulla ad repudiandae.",
+          "gridArea": [
+            "d"
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "ScreenLayout",
+      "@id": "/v1/layouts/004GSSRSQM0FX404991FPW0AXC",
+      "title": "Et cumque a doloremque.",
+      "grid": {
+        "rows": 11,
+        "columns": 12
+      },
+      "regions": [
+        {
+          "@id": "/v1/layouts/regions/000VV01PKC1JYY0RE8178K1C7A",
+          "@type": "ScreenLayoutRegions",
+          "title": "Explicabo molestiae assumenda quos ut et.",
+          "gridArea": [
+            "b"
+          ]
+        },
+        {
+          "@id": "/v1/layouts/regions/004QDMAQC106SR10NR1KAB1HX6",
+          "@type": "ScreenLayoutRegions",
+          "title": "Quaerat harum est aperiam et ut.",
+          "gridArea": [
+            "b"
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "ScreenLayout",
+      "@id": "/v1/layouts/006CC3QSKW0BGA1BV202V70CN7",
+      "title": "Dolor perferendis est.",
+      "grid": {
+        "rows": 6,
+        "columns": 2
+      },
+      "regions": [
+        {
+          "@id": "/v1/layouts/regions/0063QVGPEE0M250TF61C6X0R46",
+          "@type": "ScreenLayoutRegions",
+          "title": "Consequuntur omnis ullam vel eaque.",
+          "gridArea": [
+            "b"
+          ]
+        },
+        {
+          "@id": "/v1/layouts/regions/00FN91SEBE1QE5055K0Y7M0DDP",
+          "@type": "ScreenLayoutRegions",
+          "title": "Qui consequatur voluptatem quas quia.",
+          "gridArea": [
+            "e"
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "ScreenLayout",
+      "@id": "/v1/layouts/009S1H8VER00GK086N0M1J16K9",
+      "title": "Omnis necessitatibus quis et itaque at.",
+      "grid": {
+        "rows": 11,
+        "columns": 6
+      },
+      "regions": []
+    }
+  ],
+  "hydra:totalItems": 4,
+  "hydra:view": {
+    "@id": "/v1/layouts?itemsPerPage=4&page=1",
+    "@type": "hydra:PartialCollectionView",
+    "hydra:first": "/v1/layouts?itemsPerPage=4&page=1",
+    "hydra:last": "/v1/layouts?itemsPerPage=4&page=3",
+    "hydra:next": "/v1/layouts?itemsPerPage=4&page=2"
+  }
+}

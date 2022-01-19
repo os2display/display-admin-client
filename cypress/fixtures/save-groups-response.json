@@ -1,0 +1,20 @@
+{
+  "@context": {
+    "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "ScreenGroup/title",
+    "description": "ScreenGroup/description",
+    "created": "ScreenGroup/created",
+    "modified": "ScreenGroup/modified",
+    "modifiedBy": "ScreenGroup/modifiedBy",
+    "createdBy": "ScreenGroup/createdBy"
+  },
+  "@type": "ScreenGroup",
+  "@id": "/v1/screen-groups/01FSKQVG0VCFXKQDZ920F3T1VQ",
+  "title": "title",
+  "description": "description",
+  "created": "2022-01-17T11:03:21+01:00",
+  "modified": "2022-01-17T11:03:21+01:00",
+  "modifiedBy": "string",
+  "createdBy": "string"
+}
