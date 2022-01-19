@@ -51,7 +51,7 @@ describe("Playlist pages work", () => {
       .should("have.length", 6);
 
     // Remove slide
-    cy.get("#slides-section").find("tbody").find(".remove-from-list").eq(1).click();
+    cy.get("#slides-section").find("tbody").find(".remove-from-list").click();
     cy.get("#slides-section").find("tbody").should("not.exist");
   });
 
@@ -73,6 +73,11 @@ describe("Playlist pages work", () => {
     // Mock successful response on get
     cy.intercept("GET", "**/playlists/*", {
       fixture: "save-playlists-response.json",
+    });
+
+    // Mock successful response on get
+    cy.intercept("GET", "**/slides*", {
+      fixture: "save-slides-response.json",
     });
 
     // Displays success toast and redirects
