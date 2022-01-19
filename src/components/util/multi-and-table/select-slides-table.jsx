@@ -162,14 +162,6 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
             dataStructureToDisplay={onPlaylists}
             modalTitle={t("select-slides-table.info-modal.slide-on-playlists")}
           />
-          {/* <InfoModal
-            show={showInfoModal}
-            apiCall={useGetV1PlaylistsByIdQuery}
-            onClose={onCloseInfoModal}
-            dataStructureToDisplay={onPlaylists}
-            modalTitle={t("select-slides-table.info-modal.slide-on-playlists")}
-            dataKey="slide"
-          /> */}
         </>
       )}
     </>
