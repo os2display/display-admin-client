@@ -1,0 +1,837 @@
+{
+  "@context": "/contexts/Theme",
+  "@id": "/v1/themes",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+      "title": "Title",
+      "description": "Occaecati debitis et saepe eum sint dolorem. Enim ipsum inventore sed libero et velit qui suscipit. Deserunt laudantium quibusdam enim nostrum soluta qui ipsam non.",
+      "onSlides": [],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y9",
+      "title": "Sit vitae voluptas sint non.",
+      "description": "Optio quos qui illo error. Laborum vero a officia id corporis. Saepe provident esse hic eligendi. Culpa ut ab voluptas sed a.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00FTMVQRPS18QD0MBY0RQ30FP0",
+          "title": "Title",
+          "description": "Repudiandae sapiente voluptatibus dolores voluptatem. Recusandae quia iste voluptates tempora fuga aliquam aut hic.",
+          "created": "1987-03-29T10:52:22+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/01F8MJT0AV14D602FN131008YY",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y9",
+          "onPlaylists": [],
+          "duration": 32646,
+          "published": {
+            "from": "2021-09-04T10:08:04+02:00",
+            "to": "2021-10-27T01:46:23+02:00"
+          },
+          "media": [
+            "/v1/media/000NDA6BBM1A071RNN0SP40XNJ",
+            "/v1/media/003M4E1AQG052J0HPM1X670P4F",
+            "/v1/media/009RF9AGF80QP60ECM0CY01A1Y",
+            "/v1/media/00QWNXTD5X0VSF1EWQ1H7H0YS2"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00R69EWWWE03611X9909VP096K",
+          "title": "In non consequuntur.",
+          "description": "Suscipit omnis quam nisi dolor. Vel aut qui distinctio animi distinctio. Fugit excepturi quia quidem reprehenderit voluptatem amet.",
+          "created": "1996-05-06T14:43:08+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/000YR9PMQC0GMC1TP90V9N07WX",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y9",
+          "onPlaylists": [],
+          "duration": 94688,
+          "published": {
+            "from": "2021-12-19T00:03:13+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/00007SBZ470CJ60C7J06H508R8",
+            "/v1/media/002RQJFCHR1GNE0VWC1BJE1NRK",
+            "/v1/media/00BQJ5TMNA14ZH13ZP0KW3151N",
+            "/v1/media/01343V0G5B1VW70PND097Y05XE",
+            "/v1/media/01457GA8SH18MT1NT912A01TXA"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00Z9QVHG5P13TG17T81WJ90NCJ",
+          "title": "Perferendis qui aut sint.",
+          "description": "Unde temporibus ex esse. Nesciunt dignissimos in similique in facilis temporibus.",
+          "created": "2004-02-01T06:16:42+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/011763DN4P0FRS1T6B09180KCW",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y9",
+          "onPlaylists": [],
+          "duration": 31534,
+          "published": {
+            "from": "2021-09-22T04:29:26+02:00",
+            "to": "2021-12-10T08:34:53+01:00"
+          },
+          "media": [
+            "/v1/media/00CGESC8E10CZA11EV1AYR1KWC"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YA",
+      "title": "Enim ex eveniet facere.",
+      "description": "Delectus aut nam et eum. Fugit repellendus illo veritatis. Ex esse veritatis voluptate vel possimus. Aut incidunt sunt cumque asperiores incidunt iure sequi.",
+      "onSlides": [],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YB",
+      "title": "Quibusdam et ab quo.",
+      "description": "Ipsum voluptatibus est accusantium eveniet. Atque possimus aut dolores quis totam incidunt ducimus aperiam. Est quia assumenda minima sunt.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/0039BTMNG61RJ606WT1QYN1X2K",
+          "title": "Iusto aut et dicta neque.",
+          "description": "Nihil esse quisquam aut aliquid velit vitae. Dignissimos sit eos voluptatem corporis qui. Maxime qui eaque magni dolor et. Dolorem est velit qui ratione iure provident architecto.",
+          "created": "1973-08-02T11:45:30+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/016MHSNKCH1PQW1VY615JC19Y3",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YB",
+          "onPlaylists": [],
+          "duration": 79809,
+          "published": {
+            "from": "2021-08-10T06:26:30+02:00",
+            "to": "2021-08-12T15:26:21+02:00"
+          },
+          "media": [
+            "/v1/media/011ZBTXPF8123R1BA31CQR18HA"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00BEFT32281WT51SNJ0JXA11AV",
+          "title": "Alias et id consequatur.",
+          "description": "Beatae reiciendis provident eos est totam repudiandae molestiae. Qui itaque officiis quibusdam. A nisi minus dolorum excepturi. Atque molestiae non velit ipsum consequatur nisi.",
+          "created": "1982-06-21T15:09:47+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/00PXXK8ND01SRF18YH1WN004VA",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YB",
+          "onPlaylists": [],
+          "duration": 40787,
+          "published": {
+            "from": "2021-03-12T18:12:47+01:00",
+            "to": "2021-05-20T08:42:21+02:00"
+          },
+          "media": [
+            "/v1/media/0010X8D6JJ03G50T1J1FCW1XH6",
+            "/v1/media/0043AB9VWE08071MNB08Q20JSG",
+            "/v1/media/009RGQK5AD19K21CZE11HC1DPX",
+            "/v1/media/00HM3QQ61107C41D7M0W2B1CEK",
+            "/v1/media/01BTDHQH3Z06N40M9V0TJ41YA8"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/0118GD1EXJ1CSM1BHW0P7K1KQG",
+          "title": "Aut odio illum et.",
+          "description": "Voluptatibus dicta dolor suscipit eos. Voluptate atque quia quo blanditiis sint est odio. Voluptatum expedita ipsa ut et placeat laborum. Modi molestias quibusdam sunt ratione nulla sit.",
+          "created": "2006-03-22T07:17:31+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/000AT4BWMM1GJZ17WE1M9M0RFB",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YB",
+          "onPlaylists": [],
+          "duration": 104864,
+          "published": {
+            "from": "2021-03-27T10:02:38+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/002B3H5Z2K10M211AK1ERC02PM",
+            "/v1/media/00XA10EH8H0YYY1H4B1CC40SSA"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YC",
+      "title": "Aperiam natus ut doloribus magni.",
+      "description": "Aperiam ea similique ad sed architecto quod nulla. Voluptas quibusdam inventore esse harum accusantium rerum nulla.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/012PME7C3F03P10PQR1X9J0K0R",
+          "title": "Rerum aut ipsam magnam sit officia.",
+          "description": "Aut veritatis nesciunt est qui minus necessitatibus aut. Quasi molestiae earum commodi placeat qui. Pariatur et neque officia quidem non excepturi et. Et ea est nulla harum.",
+          "created": "2007-10-16T12:57:15+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/0044JYNRTJ1KD0128318R80B3Q",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YC",
+          "onPlaylists": [
+            "/v1/playlists/01D7HA0NMD1FJF02FZ1PZM0TAH"
+          ],
+          "duration": 58788,
+          "published": {
+            "from": "2021-02-27T02:45:19+01:00",
+            "to": "2021-12-10T21:40:02+01:00"
+          },
+          "media": [
+            "/v1/media/003M4E1AQG052J0HPM1X670P4F",
+            "/v1/media/004MDCEC451GPJ1DW80D1Z026F",
+            "/v1/media/01B21QA30M0K2S0ZFG0KPJ0DM8"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YD",
+      "title": "Corrupti omnis temporibus maxime sint.",
+      "description": "Quod magni non voluptas fuga non. Non non explicabo et neque itaque. Quaerat ut aut at consequatur non.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/005189GPBQ0NB71VVV1V031HD8",
+          "title": "Tempore repellat quam autem.",
+          "description": "Fugit modi et beatae aut culpa et. Eaque dolorem praesentium inventore. Tenetur distinctio voluptatem fuga sunt quidem. Iure fugit cupiditate optio rerum. Veniam cum qui eaque aliquam.",
+          "created": "1975-06-28T01:27:33+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/017BG9P0E0103F0TFS17FM016M",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YD",
+          "onPlaylists": [],
+          "duration": 61454,
+          "published": {
+            "from": "2021-08-24T19:36:08+02:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/01A428NN87157T0AQF1R9C1H73"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00EJTBF62519A81RDR1DEK00Q5",
+          "title": "Dolor facere fugit.",
+          "description": "Incidunt ducimus consequatur magni iste et. Recusandae beatae cumque voluptatem et et quasi magnam. Repellendus fugit quis ut sint rerum.",
+          "created": "1985-11-19T11:35:37+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/00MWCNKC4P0X5C0AT70E741E2V",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YD",
+          "onPlaylists": [
+            "/v1/playlists/00Q0P2T40K19ER0EVB0KAP0YW8"
+          ],
+          "duration": 91720,
+          "published": {
+            "from": null,
+            "to": null
+          },
+          "media": [
+            "/v1/media/003MP2F54V1QVY16KF17E204WD",
+            "/v1/media/00DVFHBRKT11Z00D5713N91RW1",
+            "/v1/media/00FSWJWDVJ0J7Z00V90D7511GV",
+            "/v1/media/00VSZP6Y891BBK1RY7129B1XRJ"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00S7CSA8WA0H8R0SA01JQQ0CRD",
+          "title": "Magni itaque architecto.",
+          "description": "Voluptas repellendus aut praesentium ut. Est provident voluptas quod dolore. Porro sit omnis quis autem minima suscipit sunt.",
+          "created": "1997-06-22T00:20:56+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/000YR9PMQC0GMC1TP90V9N07WX",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YD",
+          "onPlaylists": [],
+          "duration": 20350,
+          "published": {
+            "from": "2022-01-05T15:51:59+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/01B21QA30M0K2S0ZFG0KPJ0DM8"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/01B8DKT9PH1XN20FES1N671X7H",
+          "title": "Veritatis hic voluptatem quo.",
+          "description": "Maxime natus autem odit cum sit quia iure. Aut atque et alias accusantium. Quam ex ut mollitia rem tempore ducimus natus. Id sunt provident asperiores est suscipit. Quia quis sint natus placeat.",
+          "created": "2017-02-08T01:01:16+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/002BAP34VD1EHG0E4J0D2Y00JW",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YD",
+          "onPlaylists": [],
+          "duration": 29725,
+          "published": {
+            "from": "2021-09-25T22:55:15+02:00",
+            "to": "2021-11-09T10:34:25+01:00"
+          },
+          "media": [
+            "/v1/media/000AWPGF8V1Q1711P702M71009"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YE",
+      "title": "Beatae reprehenderit exercitationem corrupti.",
+      "description": "Ut ducimus omnis molestiae consequatur sint. Est qui doloremque aperiam qui rerum. Beatae dolores enim et doloribus voluptatibus perspiciatis quae.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00AZY2VMXX0Z7T15YP1WBX12W7",
+          "title": "Quia voluptatem labore maiores sapiente.",
+          "description": "Rerum vero voluptas totam veritatis. Alias voluptatibus nisi ullam hic nulla. Culpa itaque est voluptas quam esse beatae.",
+          "created": "1981-12-22T18:16:56+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/017BG9P0E0103F0TFS17FM016M",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YE",
+          "onPlaylists": [],
+          "duration": 106392,
+          "published": {
+            "from": "2021-07-13T15:38:10+02:00",
+            "to": "2021-08-09T10:11:12+02:00"
+          },
+          "media": [
+            "/v1/media/009RF9AGF80QP60ECM0CY01A1Y",
+            "/v1/media/00ZS5GAYKN01040NG70A3K0S5T",
+            "/v1/media/01ENQN7X2F0ANK1BNA0J3513JX"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00S2JF69BS0A1E1SD306NE0K77",
+          "title": "Tempore aut ipsa magni eveniet iure.",
+          "description": "Voluptatibus aut ut odio blanditiis in. Autem modi quia voluptatum ut. Voluptates vero corporis a qui iusto tempore facere. Quasi qui voluptas iste porro mollitia provident esse.",
+          "created": "1997-04-23T02:00:57+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/002BAP34VD1EHG0E4J0D2Y00JW",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YE",
+          "onPlaylists": [],
+          "duration": 88467,
+          "published": {
+            "from": null,
+            "to": null
+          },
+          "media": [
+            "/v1/media/001867JEN817KY0BK20CZ1128P",
+            "/v1/media/00QGPVDDRD130707AW1SV006ZV"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00YF1TQMW51PSX0BC816SF08AY",
+          "title": "Culpa cupiditate quis nisi vero.",
+          "description": "Officia quasi eos quia nihil qui. Sit sit est exercitationem delectus dolores. Vel numquam qui consequatur reiciendis sint dolorem. Architecto officia esse corporis facere.",
+          "created": "2003-03-06T14:11:10+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/000BGWFMBS15N807E60HP91JCX",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YE",
+          "onPlaylists": [],
+          "duration": 24365,
+          "published": {
+            "from": "2021-06-30T05:29:41+02:00",
+            "to": "2021-12-26T14:20:29+01:00"
+          },
+          "media": [
+            "/v1/media/00W2E6VC0V12QK1WYH0CMP151C",
+            "/v1/media/00ZS5GAYKN01040NG70A3K0S5T",
+            "/v1/media/011XQMTYZ1027102NK0V081XBE",
+            "/v1/media/01B21QA30M0K2S0ZFG0KPJ0DM8"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YF",
+      "title": "Velit eius similique.",
+      "description": "Et ipsam omnis saepe dolor in perspiciatis sit. Temporibus voluptate laborum hic hic. Culpa rerum soluta in dicta molestiae asperiores consequuntur sit.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/01AQQPTCC50FQB1GSA099D1CTW",
+          "title": "Eveniet minima ea rerum laudantium.",
+          "description": "Cupiditate aliquid veritatis quibusdam neque. Voluptates fugit eius deleniti occaecati voluptatum accusantium ea qui.",
+          "created": "2016-07-15T16:39:18+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/018A0WH44D0X1N176Z16CC0HJP",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YF",
+          "onPlaylists": [],
+          "duration": 73174,
+          "published": {
+            "from": null,
+            "to": "1976-08-12T01:20:26+01:00"
+          },
+          "media": [
+            "/v1/media/0001H32Q1Z1R0N0KR11QVA0T92",
+            "/v1/media/001XPDKZ2T008209GM0G0H1BRM",
+            "/v1/media/004MDCEC451GPJ1DW80D1Z026F",
+            "/v1/media/004MTTZN4P1T0G1W7E05EY1BTT"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/01CTDESX161EEZ1W6M06390Q5E",
+          "title": "Non a est possimus.",
+          "description": "Fugit velit et animi natus. Explicabo quam doloremque omnis iure voluptatem. Doloremque dolore velit odio. Aliquam voluptas eligendi est sequi.",
+          "created": "2018-10-22T08:38:32+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/00EPSCBVJS0TB0118C1JPM1VPM",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YF",
+          "onPlaylists": [],
+          "duration": 103433,
+          "published": {
+            "from": "2021-03-16T05:13:21+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/00007SBZ470CJ60C7J06H508R8",
+            "/v1/media/0010X8D6JJ03G50T1J1FCW1XH6",
+            "/v1/media/009H64MSPN1HEH0DTV1DEV085B",
+            "/v1/media/01ASNBDJBH101A0B5B003P1524",
+            "/v1/media/01BBCV60M903YC07RP09VN1JBZ"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YG",
+      "title": "In laudantium voluptatem officiis vel dignissimos.",
+      "description": "Doloremque quam quia voluptatem quibusdam. In maiores nisi eius quibusdam. Quia recusandae aut numquam laboriosam sint enim reiciendis quod.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00CDNQ8CN11TY41NF915PZ0R8B",
+          "title": "Libero et ducimus nam sapiente.",
+          "description": "Amet ut omnis vero cupiditate. Voluptatum culpa sed facilis consequuntur voluptatum earum voluptatem. Voluptatem non illo officia quas quaerat alias labore.",
+          "created": "1983-07-14T04:22:19+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/002BAP34VD1EHG0E4J0D2Y00JW",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YG",
+          "onPlaylists": [],
+          "duration": 36777,
+          "published": {
+            "from": "2022-02-07T11:51:17+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/00BYZXV7100368014609891N8F"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00EHG36CJJ09590FVX0JHV02TP",
+          "title": "Culpa dolores et.",
+          "description": "Facilis ipsa soluta est ullam quia minima quia in. In perspiciatis dolor veritatis voluptas possimus. Non ut suscipit vel id accusamus voluptas ea.",
+          "created": "1985-11-03T01:42:54+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/00HH42EEHC05QT14VQ041R1KEY",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YG",
+          "onPlaylists": [],
+          "duration": 117357,
+          "published": {
+            "from": "2022-02-03T22:14:46+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/00DVFHBRKT11Z00D5713N91RW1",
+            "/v1/media/00Q89HDKAN1WG11GSS0C6F142N",
+            "/v1/media/01DTSF63261A0Y0WEE10CT0GKK",
+            "/v1/media/01FFNQ5HBE0CA507T605FA0HH5"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00X3EGC8Z002SP0RN60SMQ0VV2",
+          "title": "Consequatur quibusdam eos animi nostrum.",
+          "description": "Doloremque modi delectus odio sint qui. Ullam et nihil corrupti sed perspiciatis. Quam in consequatur explicabo a asperiores. Iste expedita iusto eius quia et.",
+          "created": "2001-09-10T16:49:39+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/000YR9PMQC0GMC1TP90V9N07WX",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YG",
+          "onPlaylists": [],
+          "duration": 5579,
+          "published": {
+            "from": "2021-03-22T21:20:01+01:00",
+            "to": "2022-01-21T13:16:43+01:00"
+          },
+          "media": [
+            "/v1/media/00042YZWK214MP01NA1GF517Q2",
+            "/v1/media/009H64MSPN1HEH0DTV1DEV085B",
+            "/v1/media/009RF9AGF80QP60ECM0CY01A1Y",
+            "/v1/media/00F1M5J6BY1GS517RP1T1B1306",
+            "/v1/media/01BBCV60M903YC07RP09VN1JBZ"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/01FGD32DRZ1H050FD61TN81CC5",
+          "title": "Officiis quod expedita id inventore.",
+          "description": "Ut dolores sint dolores repellendus quos velit. Possimus id minima enim dolorum tempore suscipit deserunt. Quas esse error dolor corporis.",
+          "created": "2021-09-24T23:43:25+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/000AT4BWMM1GJZ17WE1M9M0RFB",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YG",
+          "onPlaylists": [],
+          "duration": 113706,
+          "published": {
+            "from": "2021-01-28T05:44:52+01:00",
+            "to": "2021-04-04T23:53:47+02:00"
+          },
+          "media": [
+            "/v1/media/00DVFHBRKT11Z00D5713N91RW1",
+            "/v1/media/00FSWJWDVJ0J7Z00V90D7511GV",
+            "/v1/media/011ZBTXPF8123R1BA31CQR18HA"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    },
+    {
+      "@type": "Theme",
+      "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YH",
+      "title": "Quae sit veniam vel eos officiis.",
+      "description": "Nisi iusto amet neque deleniti totam aut. Non omnis voluptatem velit nesciunt eligendi. Sint ut voluptates quo incidunt. Aut enim nihil repellat ut culpa dolore. Est est alias neque autem nihil.",
+      "onSlides": [
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00AE5SNR7417DC1P540RRM1HAK",
+          "title": "Dolorem voluptas rerum ad deleniti consequuntur.",
+          "description": "Est non amet et et eius dolorem eos ratione. Vitae aut eum et aut. Blanditiis nihil aperiam quisquam quis nesciunt voluptas doloremque. Consequatur accusantium sed aliquid perferendis qui.",
+          "created": "1981-05-16T01:27:48+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/017BG9P0E0103F0TFS17FM016M",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YH",
+          "onPlaylists": [],
+          "duration": 4302,
+          "published": {
+            "from": "2021-03-06T01:14:16+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/01BW0QW2TP0KWT0D7N1MJR00PF"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00CGJH0N5V0J6G1RY11KRF145Q",
+          "title": "Velit ex quis.",
+          "description": "Voluptatum facilis consequatur voluptatem. Nihil consequatur et dolores non. Laboriosam est eos eum numquam distinctio ad. Fugiat sequi fuga nulla ab quas nisi.",
+          "created": "1983-08-19T05:22:36+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/000YR9PMQC0GMC1TP90V9N07WX",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YH",
+          "onPlaylists": [
+            "/v1/playlists/00S7ZQK8Y90R351YES1DJN0RKR"
+          ],
+          "duration": 102079,
+          "published": {
+            "from": null,
+            "to": "1974-01-26T17:36:09+01:00"
+          },
+          "media": [
+            "/v1/media/00216SK3PX03E91DTP023718M1",
+            "/v1/media/006FNDVHM00NRH0ZJG07JQ06H7"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00QQSAXNQ205RK1VK00W8P1N0D",
+          "title": "Quia ut tempora beatae aliquam dolores.",
+          "description": "Quod voluptates excepturi rerum expedita. Impedit ea praesentium omnis corrupti beatae perspiciatis dicta.",
+          "created": "1995-11-08T08:46:03+01:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/00MWCNKC4P0X5C0AT70E741E2V",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YH",
+          "onPlaylists": [],
+          "duration": 39663,
+          "published": {
+            "from": "2021-02-11T17:36:23+01:00",
+            "to": null
+          },
+          "media": [
+            "/v1/media/000MH9B89Y03ZK0GJY1MB911DR",
+            "/v1/media/004MTTZN4P1T0G1W7E05EY1BTT",
+            "/v1/media/00Q89HDKAN1WG11GSS0C6F142N",
+            "/v1/media/01BTDHQH3Z06N40M9V0TJ41YA8"
+          ],
+          "content": []
+        },
+        {
+          "@type": "Slide",
+          "@id": "/v1/slides/00RCJ2YCFC1TYV0AJQ088K1NKK",
+          "title": "Rerum nihil tempore animi.",
+          "description": "Et dicta sed architecto quo mollitia reiciendis. Nemo aut tempore aut iure. Et corrupti sit eos architecto. Harum est eum velit quasi.",
+          "created": "1996-07-23T12:41:35+02:00",
+          "modified": "2021-12-09T12:01:33+01:00",
+          "modifiedBy": "",
+          "createdBy": "",
+          "templateInfo": {
+            "@id": "/v1/templates/018A0WH44D0X1N176Z16CC0HJP",
+            "options": []
+          },
+          "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0YH",
+          "onPlaylists": [],
+          "duration": 71971,
+          "published": {
+            "from": "2020-12-10T06:44:50+01:00",
+            "to": "2022-01-18T09:40:06+01:00"
+          },
+          "media": [
+            "/v1/media/0027FWF7Y014RG0KW9053S1AX6",
+            "/v1/media/01BTDHQH3Z06N40M9V0TJ41YA8",
+            "/v1/media/01ENQN7X2F0ANK1BNA0J3513JX"
+          ],
+          "content": []
+        }
+      ],
+      "created": "2021-12-09T12:01:33+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "css": ""
+    }
+  ],
+  "hydra:totalItems": 100,
+  "hydra:view": {
+    "@id": "/v1/themes?itemsPerPage=10&page=1",
+    "@type": "hydra:PartialCollectionView",
+    "hydra:first": "/v1/themes?itemsPerPage=10&page=1",
+    "hydra:last": "/v1/themes?itemsPerPage=10&page=3",
+    "hydra:next": "/v1/themes?itemsPerPage=10&page=2"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/v1/themes{?title,description,order[title],order[description],order[createdAt],order[updatedAt]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "title",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "description",
+        "property": "description",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[title]",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[description]",
+        "property": "description",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[createdAt]",
+        "property": "createdAt",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[updatedAt]",
+        "property": "updatedAt",
+        "required": false
+      }
+    ]
+  }
+}
