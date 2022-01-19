@@ -177,7 +177,6 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
             >
               {t("form-table.button-add-column")}
             </Button>
-
             <FormControl
               name="column"
               type="text"
