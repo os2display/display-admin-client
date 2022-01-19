@@ -1,6 +1,6 @@
 describe("Pagination loads", () => {
   beforeEach(() => {
-    cy.intercept("GET", "**/themes*", { fixture: "themesjson" }).as(
+    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
       "themesData"
     );
     cy.visit("/themes/list?page=1&order=asc&sort=title");
@@ -11,7 +11,7 @@ describe("Pagination loads", () => {
     cy.get(".pagination").should("not.be.empty");
   });
 
-  it("It works on slides", () => {
+  it("It works on themes", () => {
     cy.get(".pagination")
       .find("button")
       .first()

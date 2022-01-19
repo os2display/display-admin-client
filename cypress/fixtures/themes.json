@@ -783,7 +783,7 @@
       "css": ""
     }
   ],
-  "hydra:totalItems": 23,
+  "hydra:totalItems": 100,
   "hydra:view": {
     "@id": "/v1/themes?itemsPerPage=10&page=1",
     "@type": "hydra:PartialCollectionView",
