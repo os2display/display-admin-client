@@ -9,6 +9,7 @@ describe("Groups list tests", () => {
     }).as("screenGroupsData");
     cy.visit("/group/list");
     cy.wait(["@screenGroupsData"]);
+    cy.wait(1000);
   });
   it("It loads groups list", () => {
     cy.get("table").find("tbody").should("not.be.empty");

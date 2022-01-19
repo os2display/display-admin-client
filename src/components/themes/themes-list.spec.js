@@ -15,6 +15,10 @@ describe("themes list tests", () => {
 
   it("It goes to edit (themes list)", () => {
     cy.get("#themeTitle").should("not.exist");
+    // Mock successful response on get
+    cy.intercept("GET", "**/themes/*", {
+      fixture: "save-themes-response.json",
+    });
     cy.get("tbody").find("tr td a").eq(0).click();
     cy.get("#themeTitle").should("exist");
   });

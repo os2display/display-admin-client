@@ -70,7 +70,6 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       api:
         image: itkdev/os2display-api-service:alpha
-        options: "--add-host host.docker.internal:host-gateway"
         env:
           PHP_MAX_EXECUTION_TIME: 30
           PHP_MEMORY_LIMIT: 128M
@@ -79,15 +78,14 @@ jobs:
           APP_TRUSTED_PROXIES: 127.0.0.1,REMOTE_ADDR
           APP_SECRET: MySuperSecret
           APP_CORS_ALLOW_ORIGIN: '*'
-          APP_DATABASE_URL: mysql://db:db@host.docker.internal:3306/db?serverVersion=mariadb-10.4.21
+          APP_DATABASE_URL: mysql://db:db@127.0.0.1:3306/db?serverVersion=mariadb-10.4.21
           APP_DEFAULT_DATE_FORMAT: Y-m-d\TH:i:s.v\Z
         ports:
           - 9000:9000
       nginx-api:
         image: itkdev/os2display-api-service-nginx:alpha
-        options: "--add-host host.docker.internal:host-gateway"
         env:
-          PHP_FPM_SERVER: host.docker.internal
+          PHP_FPM_SERVER: 127.0.0.1
           NGINX_FPM_UPLOAD_MAX: 8M
         ports:
           - 80:80
