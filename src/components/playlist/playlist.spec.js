@@ -51,7 +51,7 @@ describe("Playlist pages work", () => {
       .should("have.length", 6);
 
     // Remove slide
-    cy.get("#slides-section").find("tbody").find("tr td button").eq(1).click();
+    cy.get("#slides-section").find("tbody").find(".remove-from-list").eq(1).click();
     cy.get("#slides-section").find("tbody").should("not.exist");
   });
 
