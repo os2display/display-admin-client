@@ -1,20 +1,10 @@
 describe("Pagination loads", () => {
   beforeEach(() => {
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/*",
-    }).as("templatesData");
-    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
-    cy.wait([
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-    ]);
+    cy.intercept("GET", "**/themes*", { fixture: "themesjson" }).as(
+      "themesData"
+    );
+    cy.visit("/themes/list?page=1&order=asc&sort=title");
+    cy.wait(["@themesData"]);
   });
 
   it("It loads", () => {
@@ -34,23 +24,12 @@ describe("Pagination loads", () => {
       .then((titleCellText) => {
         cy.get("tbody").find("tr").should("have.length", 10);
 
-        // Wait for data
-        cy.intercept({
-          method: "GET",
-          url: "**/templates/*",
-        }).as("templatesData");
+        cy.intercept("GET", "**/themes*", {
+          fixture: "themes-second-page.json",
+        }).as("themesData");
 
         cy.get(".pagination").find(".page-link").eq(9).click();
-        cy.wait([
-          "@templatesData",
-          "@templatesData",
-          "@templatesData",
-          "@templatesData",
-          "@templatesData",
-          "@templatesData",
-          "@templatesData",
-          "@templatesData",
-        ]);
+        cy.wait(["@themesData"]);
         cy.get("tbody").find("tr").should("have.length", 10);
         cy.get("tbody")
           .find("tr td")
@@ -59,35 +38,16 @@ describe("Pagination loads", () => {
       });
   });
 
-  it("It works on slides with url input", () => {
-    cy.intercept({
-      method: "GET",
-      url: "**/slides*",
-      query: {
-        page: "6",
-      },
-    }).as("slidesData");
-    // Wait for data
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/*",
-    }).as("templatesData");
-    cy.visit("/slide/list?published=all&page=6&order=asc&sort=title");
-    cy.wait([
-      "@slidesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-    ]);
+  it("It works on themes with url input", () => {
+    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
+      "themesData"
+    );
+    cy.visit("/themes/list?page=6&order=asc&sort=title");
+    cy.wait(["@themesData"]);
+
     cy.get(".pagination")
       .find(".page-item")
       .eq(5)
       .should("have.class", "active");
-    cy.get("tbody").find("tr").should("have.length", 10);
   });
 });
