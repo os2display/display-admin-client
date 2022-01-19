@@ -635,5 +635,13 @@
     "clear-selection": "Ryd valg",
     "selected-all": "Vælg alle",
     "select-some-options": "Vælg..."
+  },
+  "login": {
+    "please-authenticate": "Log ind",
+    "email": "Email",
+    "password": "Kodeord",
+    "error": "Log ind fejlede",
+    "invalid-credentials": "Log ind blev ikke genkendt",
+    "submit": "Log ind"
   }
 }

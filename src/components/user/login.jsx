@@ -34,6 +34,15 @@ function Login() {
         }),
       })
     ).then((response) => {
+      if (response?.error) {
+        if (response?.error?.data?.message === 'Invalid credentials.') {
+          setError(t('login.invalid-credentials'));
+        }
+        else {
+          setError(response.error.data.message ?? t('login.error'));
+        }
+      }
+
       if (response?.data?.token) {
         localStorage.setItem("api-token", response.data.token);
         history.push('/');
@@ -44,15 +53,15 @@ function Login() {
   }
 
   return (
-    <Card className="m-3">
+    <Card className="m-3 bg-light">
       <h3 className="m-3">{t('login.please-authenticate')}</h3>
       <Form onSubmit={onSubmit} className="m-3">
         <FormInput onChange={onChange} value={email} name="email" label={t('login.email')} required />
         <FormInput onChange={onChange} value={password} name="password" label={t('login.password')} type="password" required />
-        <Button type="submit" className="mt-3">{t('login.submit')}</Button>
         {error &&
-          <div>Fejl: {error}</div>
+          <div className="alert-danger mt-3 mb-3 p-3">{error}</div>
         }
+        <Button type="submit" className="mt-3">{t('login.submit')}</Button>
       </Form>
     </Card>
   );
