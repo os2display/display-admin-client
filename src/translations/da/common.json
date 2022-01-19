@@ -78,7 +78,7 @@
   "form-table": {
     "button-add-column": "Tilføj kolonne",
     "input-label-add-column": "Tilføj kolonne",
-    "input-helptext-add-column": "For at fjerne en kolonne igen, skal den fjernes fra listen under tabellen",
+    "input-helptext-add-column": "For at tilføje en kolonne, skal du navngive den i ovenstående inputfelt. For at fjerne en kolonne igen, skal den fjernes fra listen under tabellen",
     "remove-column-header": "Fjern kolonner",
     "add-row-button": "Tilføj række",
     "data-source-help-text": "Datakildens format skal være JSON",
