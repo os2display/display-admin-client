@@ -1,13 +1,12 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
-import MediaSelector from "./media-selector";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
 import Contacts from "../../util/forms/contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
+import FileSelector from "./file-selector";
 
 /**
  * Render form elements for content form.
@@ -22,7 +21,7 @@ import FormTable from "../../util/forms/form-table/form-table";
  * @param {Function} props.onSlideChange - Callback, if the value of a slide
  *   field changes.
  * @param {object} props.formStateObject - The form state.
- * @param {Function} props.onMediaChange - When media have changed call this function.
+ * @param {Function} props.onFileChange - When file has changed call this function.
  * @param {Array} props.mediaData - Array of loaded media entities.
  * @returns {object} Content form element.
  */
@@ -33,26 +32,23 @@ function ContentForm({
   errors,
   onChange,
   onSlideChange,
-  onMediaChange,
+  onFileChange,
   formStateObject,
   mediaData,
 }) {
-  const { t } = useTranslation("common");
-
-  const getInputImage = (formData) => {
+  const getInputFiles = (formData) => {
     const field = formStateObject[formData.name];
-    let inputImages = null;
+    const inputFiles = [];
 
     if (Array.isArray(field)) {
-      inputImages = [];
       field.forEach((mediaId) => {
         if (Object.prototype.hasOwnProperty.call(mediaData, mediaId)) {
-          inputImages.push(mediaData[mediaId]);
+          inputFiles.push(mediaData[mediaId]);
         }
       });
     }
 
-    return inputImages;
+    return inputFiles;
   };
 
   /**
@@ -61,8 +57,41 @@ function ContentForm({
    */
   function renderElement(formData) {
     let returnElement;
+    let defaultMimetypes = null;
 
     switch (formData.input) {
+      case "image":
+      case "video":
+      case "file":
+        if (formData.input === "image") {
+          defaultMimetypes = ["image/*"];
+        } else if (formData.input === "video") {
+          defaultMimetypes = ["video/*"];
+        }
+
+        returnElement = (
+          <div key={formData.key}>
+            {formData?.label && (
+              <label htmlFor={formData.name} className="form-label">
+                {formData.label}
+              </label>
+            )}
+
+            <FileSelector
+              files={getInputFiles(formData)}
+              onFilesChange={onFileChange}
+              name={formData.name}
+              acceptedMimetypes={formData.acceptedMimetypes ?? defaultMimetypes}
+            />
+
+            {formData.helpText && (
+              <small className="form-text text-muted">
+                {formData.helpText}
+              </small>
+            )}
+          </div>
+        );
+        break;
       case "duration":
         if (data.required) {
           requiredFieldCallback(data.name);
@@ -131,10 +160,11 @@ function ContentForm({
 
         break;
       case "contacts":
+        // TODO: onMediaChange.
         returnElement = (
           <Contacts
-            onMediaChange={onMediaChange}
-            getInputImage={getInputImage}
+            onMediaChange={() => {}}
+            getInputImage={getInputFiles}
             name={formData.name}
             formData={formData}
             value={formStateObject[formData.name]}
@@ -230,37 +260,6 @@ function ContentForm({
         );
 
         break;
-      case "image":
-        returnElement = (
-          <>
-            {formData?.label && (
-              <label htmlFor={formData.name} className="form-label">
-                {formData.label}
-              </label>
-            )}
-
-            <MediaSelector
-              multiple={data.multipleImages}
-              selectedMedia={getInputImage(formData)}
-              onSelectedMedia={onMediaChange}
-              name={formData.name}
-              invalidText={
-                data.multipleImages
-                  ? t("render-form-element.images-invalid")
-                  : t("render-form-element.image-invalid")
-              }
-              formGroupClasses={formData.formGroupClasses}
-            />
-
-            {formData.helpText && (
-              <small className="form-text text-muted">
-                {formData.helpText}
-              </small>
-            )}
-          </>
-        );
-
-        break;
       default:
         returnElement = <></>;
     }
@@ -277,7 +276,6 @@ ContentForm.defaultProps = {
   requiredFieldCallback: null,
   onChange: null,
   onSlideChange: null,
-  onMediaChange: null,
   mediaData: {},
 };
 
@@ -299,7 +297,7 @@ ContentForm.propTypes = {
   requiredFieldCallback: PropTypes.func,
   onChange: PropTypes.func,
   onSlideChange: PropTypes.func,
-  onMediaChange: PropTypes.func,
+  onFileChange: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.object),
 };
 
