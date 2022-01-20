@@ -182,10 +182,10 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
               type="text"
               label={t("form-table.input-label-add-column")}
               value={columnToAddName}
-              helpText={t("form-table.input-helptext-add-column")}
               onChange={columnNameChanged}
             />
           </InputGroup>
+          <small>{t("form-table.input-helptext-add-column")}</small>
         </>
         <ReactTable
           data={data}

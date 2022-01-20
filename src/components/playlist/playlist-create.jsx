@@ -156,6 +156,15 @@ function PlaylistCreate() {
   function handleSubmit() {
     setSavingPlaylists(true);
     setLoadingMessage(t("playlist-create.loading-messages.saving-playlist"));
+
+    // Set published.
+    const from = formStateObject.published.from
+      ? new Date(formStateObject.published.from).toISOString()
+      : null;
+    const to = formStateObject.published.to
+      ? new Date(formStateObject.published.to).toISOString()
+      : null;
+
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -168,8 +177,8 @@ function PlaylistCreate() {
         };
       }),
       published: {
-        from: formStateObject.published.from,
-        to: formStateObject.published.from,
+        from,
+        to,
       },
     };
     PostV1Playlist({

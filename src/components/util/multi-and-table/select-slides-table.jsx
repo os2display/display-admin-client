@@ -11,6 +11,7 @@ import InfoModal from "../../info-modal/info-modal";
 import {
   useGetV1SlidesQuery,
   useGetV1PlaylistsByIdSlidesQuery,
+  useGetV1PlaylistsByIdQuery,
 } from "../../../redux/api/api.generated";
 
 /**
@@ -116,11 +117,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
       key: "playlists",
       // eslint-disable-next-line react/prop-types
       content: ({ onPlaylists: localOnPlaylists }) => (
-        <ListButton
-          callback={openInfoModal}
-          inputData={localOnPlaylists[0] || []}
-          apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        />
+        <ListButton callback={openInfoModal} inputData={localOnPlaylists} />
       ),
       label: t("slides-list.columns.slide-on-playlists"),
     },
@@ -160,11 +157,10 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
           )}
           <InfoModal
             show={showInfoModal}
-            apiCall={useGetV1PlaylistsByIdSlidesQuery}
+            apiCall={useGetV1PlaylistsByIdQuery}
             onClose={onCloseInfoModal}
             dataStructureToDisplay={onPlaylists}
             modalTitle={t("select-slides-table.info-modal.slide-on-playlists")}
-            dataKey="slide"
           />
         </>
       )}

@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, Fragment } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -223,6 +223,36 @@ function SlideForm({
             )}
             {selectedTemplate && contentFormElements && (
               <>
+                <ContentBody>
+                  {contentFormElements.map((formElement) => (
+                    <Fragment key={formElement.key}>
+                      {formElement.input === "feed" && (
+                        <FeedSelector
+                          name={formElement.name}
+                          value={slide?.feed}
+                          onChange={(value) => {
+                            handleInput({ target: { id: "feed", value } });
+                          }}
+                        />
+                      )}
+                      {formElement.input !== "feed" && (
+                        <ContentForm
+                          data={formElement}
+                          onChange={handleContent}
+                          onSlideChange={handleInput}
+                          onFileChange={handleMedia}
+                          name={formElement.name}
+                          mediaData={mediaData}
+                          slide={slide}
+                          formStateObject={slide.content}
+                          requiredFieldCallback={() => {
+                            return false;
+                          }}
+                        />
+                      )}
+                    </Fragment>
+                  ))}
+                </ContentBody>
                 <div className="toggle-preview">
                   <ContentBody>
                     <h2 className="h4">
@@ -288,37 +318,6 @@ function SlideForm({
                     )}
                   </ContentBody>
                 </div>
-                <ContentBody>
-                  {contentFormElements.map((formElement) => (
-                    <>
-                      {formElement.input === "feed" && (
-                        <FeedSelector
-                          name={formElement.name}
-                          value={slide?.feed}
-                          onChange={(value) => {
-                            handleInput({ target: { id: "feed", value } });
-                          }}
-                        />
-                      )}
-                      {formElement.input !== "feed" && (
-                        <ContentForm
-                          key={formElement.key}
-                          data={formElement}
-                          onChange={handleContent}
-                          onSlideChange={handleInput}
-                          onMediaChange={handleMedia}
-                          name={formElement.name}
-                          mediaData={mediaData}
-                          slide={slide}
-                          formStateObject={slide.content}
-                          requiredFieldCallback={() => {
-                            return false;
-                          }}
-                        />
-                      )}
-                    </>
-                  ))}
-                </ContentBody>
               </>
             )}
             <ContentBody>
