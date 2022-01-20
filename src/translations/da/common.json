@@ -89,7 +89,7 @@
   "react-table": {
     "remove-row": "Fjern række"
   },
-  "screens-list": {
+  "screen-list": {
     "columns": {
       "pick": "Vælg skærm",
       "name": "Navn",
@@ -390,7 +390,8 @@
     "title": "Er du sikker på du vil slette følgende"
   },
   "info-modal": {
-    "decline-text": "Luk dialog"
+    "decline-text": "Luk dialog",
+    "show-more-elements": "Vis flere elementer"
   },
   "published": {
     "yes": "Ja",
