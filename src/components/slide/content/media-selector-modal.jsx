@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../../util/modal/modal-dialog";
-import SlideMediaList from "./media-selector-list";
+import MediaSelectorList from "./media-selector-list";
 
 /**
  * Slide media modal component.
@@ -73,13 +73,16 @@ function MediaSelectorModal({
   };
 
   const getSelectedIds = () => {
-    return selected.map((entry) => {
-      if (typeof entry === "string") {
-        return entry;
-      }
+    return selected.reduce((prev, entry) => {
+      const next = [...prev];
 
-      return entry["@id"];
-    });
+      if (typeof entry === "string") {
+        next.push(entry);
+      } else if (Object.prototype.hasOwnProperty.call(entry, "@id")) {
+        next.push(entry["@id"]);
+      }
+      return next;
+    }, []);
   };
 
   if (!show) {
@@ -99,7 +102,7 @@ function MediaSelectorModal({
         acceptText={t("slide-media-modal.accept")}
         declineText={t("slide-media-modal.cancel")}
       >
-        <SlideMediaList
+        <MediaSelectorList
           onItemClick={handleClick}
           selectedMediaIds={getSelectedIds()}
           multiple={multiple}

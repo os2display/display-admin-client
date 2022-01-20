@@ -4,7 +4,7 @@ import set from "lodash.set";
 import { Button, Col, Row } from "react-bootstrap";
 import { ulid } from "ulid";
 import { useTranslation } from "react-i18next";
-import MediaSelector from "../../../slide/content/media-selector";
+import FileSelector from "../../../slide/content/file-selector";
 import FormInput from "../form-input";
 
 /**
@@ -109,16 +109,17 @@ function AddEditContact({
           />
         </Col>
       </Row>
-      <MediaSelector
-        multiple={false}
-        selectedMedia={
+      <FileSelector
+        files={
           contact.tempId
             ? getInputImage({
                 name: `contacts-image-${contact.tempId}`,
               })
             : []
         }
-        onSelectedMedia={onMediaChange}
+        onFilesChange={onMediaChange}
+        acceptedMimetypes={["image/*"]}
+        multiple={false}
         name={`contacts-image-${contact.tempId}`}
       />
       {!edit && (

@@ -78,7 +78,7 @@
   "form-table": {
     "button-add-column": "Tilføj kolonne",
     "input-label-add-column": "Tilføj kolonne",
-    "input-helptext-add-column": "For at fjerne en kolonne igen, skal den fjernes fra listen under tabellen",
+    "input-helptext-add-column": "For at tilføje en kolonne, skal du navngive den i ovenstående inputfelt. For at fjerne en kolonne igen, skal den fjernes fra listen under tabellen",
     "remove-column-header": "Fjern kolonner",
     "add-row-button": "Tilføj række",
     "data-source-help-text": "Datakildens format skal være JSON",
@@ -89,7 +89,7 @@
   "react-table": {
     "remove-row": "Fjern række"
   },
-  "screens-list": {
+  "screen-list": {
     "columns": {
       "pick": "Vælg skærm",
       "name": "Navn",
@@ -390,7 +390,8 @@
     "title": "Er du sikker på du vil slette følgende"
   },
   "info-modal": {
-    "decline-text": "Luk dialog"
+    "decline-text": "Luk dialog",
+    "show-more-elements": "Vis flere elementer"
   },
   "published": {
     "yes": "Ja",
@@ -643,5 +644,26 @@
     "error": "Log ind fejlede",
     "invalid-credentials": "Log ind blev ikke genkendt",
     "submit": "Log ind"
+  },
+  "file-dropzone": {
+    "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten"
+  },
+  "file-form-element": {
+    "remove": "Fjern fil",
+    "title-label": "Titel",
+    "title-placeholder": "f.eks. Solnedgang",
+    "title-help-text": "Vælg et godt beskrivende navn for filen.",
+    "description-label": "Beskrivelse",
+    "description-placeholder": "f.eks. Billede af solnedgangen",
+    "description-help-text": "Tilføj en beskrivelse af filen.",
+    "license-label": "Licens",
+    "license-placeholder": "f.eks. CC (Creative Commons)",
+    "license-help-text": "Hvilken licens filen er destribueret under?"
+  },
+  "file-preview": {
+    "not-supported": "Preview ikke understøttet"
+  },
+  "file-selector": {
+    "open-media-library": "Vælg fra mediearkiv"
   }
 }

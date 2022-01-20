@@ -163,10 +163,11 @@ function ScreenCreate() {
 
   /** When the screen and group(s) are saved. it redirects to edit screen. */
   useEffect(() => {
-    if (isSaveSuccessGroups && data) {
+    if (data && data["@id"]) {
       history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
     }
-  }, [isSaveSuccessGroups]);
+  }, [data]);
+
   /**
    * Set state on change in input field
    *
