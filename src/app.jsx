@@ -42,11 +42,11 @@ function App() {
 
   // Check that authentication token exists.
   useEffect(() => {
-    const token = localStorage.getItem('api-token');
+    const token = localStorage.getItem("api-token");
     if (token !== null) {
       setAuthenticated(true);
     }
-  }, [])
+  }, []);
 
   i18next.init({
     interpolation: { escapeValue: false }, // React already does escaping
@@ -61,7 +61,7 @@ function App() {
   return (
     <>
       <I18nextProvider i18n={i18next}>
-        {authenticated &&
+        {authenticated && (
           <Container fluid className="h-100 px-0 bg-light">
             <Row className="row-full-height g-0">
               <SideBar />
@@ -103,7 +103,7 @@ function App() {
               </Col>
             </Row>
           </Container>
-        }
+        )}
         {!authenticated && (
           <>
             <Login />

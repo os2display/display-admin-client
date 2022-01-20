@@ -29,9 +29,9 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   }
 
   // Attach api token.
-  const apiToken = localStorage.getItem('api-token');
+  const apiToken = localStorage.getItem("api-token");
   if (!apiToken) {
-    console.log('TODO: redirect to frontpage')
+    // TODO: Redirect to frontpage.
   } else {
     newArgs.headers.authorization = `Bearer ${apiToken}`;
   }
