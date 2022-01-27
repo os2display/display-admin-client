@@ -4,6 +4,7 @@ import ConfigLoader from "../config-loader";
 const extendedBaseQuery = async (args, api, extraOptions) => {
   const config = await ConfigLoader.loadConfig();
   const baseUrl = config.api;
+  const apiTokenLocalStorageKey = "api-token";
 
   const newArgs = { ...args };
 
@@ -29,18 +30,22 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   }
 
   // Attach api token.
-  const apiToken = localStorage.getItem("api-token");
-  if (!apiToken) {
-    // TODO: Redirect to frontpage.
-  } else {
-    newArgs.headers.authorization = `Bearer ${apiToken}`;
-  }
+  const apiToken = localStorage.getItem(apiTokenLocalStorageKey);
+  newArgs.headers.authorization = `Bearer ${apiToken ?? ''}`;
 
   const baseResult = await fetchBaseQuery({ baseUrl })(
     newArgs,
     api,
     extraOptions
   );
+
+  // Handle authentication errors. Emit that the user should reauthenticate.
+  if (baseResult?.error?.data?.code === 401) {
+    localStorage.removeItem(apiTokenLocalStorageKey);
+
+    const event = new Event('reauthenticate');
+    document.dispatchEvent(event);
+  }
 
   return {
     ...baseResult,
