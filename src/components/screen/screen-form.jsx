@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
@@ -15,7 +16,6 @@ import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropd
 import idFromUrl from "../util/helpers/id-from-url";
 import { api, useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import "./screen-form.scss";
-import { useDispatch } from "react-redux";
 import { displayError } from "../util/list/toast-component/display-toast";
 
 /**
@@ -88,12 +88,11 @@ function ScreenForm({
         api.endpoints.postScreenBindKey.initiate({
           id: idFromUrl(screen["@id"]),
           screenBindObject: JSON.stringify({
-            bindKey
+            bindKey,
           }),
         })
       ).then((response) => {
         if (response.error) {
-          console.log(response.error);
           const err = response.error;
           displayError(
             t("screen.error-messages.error-binding", {
@@ -103,11 +102,11 @@ function ScreenForm({
           );
         } else {
           // Set screenUser to true, to indicate it has been set.
-          handleInput({target: { id: 'screenUser', value: true }});
+          handleInput({ target: { id: "screenUser", value: true } });
         }
       });
     }
-  }
+  };
 
   const handleUnbindScreen = () => {
     if (screen?.screenUser) {
@@ -128,11 +127,11 @@ function ScreenForm({
           );
         } else {
           // Set screenUser to null, to indicate it has been removed.
-          handleInput({target: { id: 'screenUser', value: null }});
+          handleInput({ target: { id: "screenUser", value: null } });
         }
       });
     }
-  }
+  };
 
   return (
     <>
@@ -164,20 +163,32 @@ function ScreenForm({
             onChange={handleInput}
           />
         </ContentBody>
-        {screen.hasOwnProperty('@id') && (
+        {Object.prototype.hasOwnProperty.call(screen, "@id") && (
           <ContentBody>
-            <h2 className="h4 mb-3">{t('screen.bind-header')}</h2>
+            <h2 className="h4 mb-3">{t("screen.bind-header")}</h2>
             {screen?.screenUser && (
               <>
-                <div className="text-success mb-3">{t('screen.already-bound')}</div>
-                <Button onClick={handleUnbindScreen}>{t('screen.unbind')}</Button>
+                <div className="text-success mb-3">
+                  {t("screen.already-bound")}
+                </div>
+                <Button onClick={handleUnbindScreen}>
+                  {t("screen.unbind")}
+                </Button>
               </>
             )}
             {!screen?.screenUser && (
               <>
-                <div className="text-danger mb-3">{t('screen.not-bound')}</div>
-                <FormInput onChange={({ target }) => {setBindKey(target?.value)}} name="bindKey" value={bindKey} label={t('screen.bindkey-label')} className="mb-3" />
-                <Button onClick={handleBindScreen}>{t('screen.bind')}</Button>
+                <div className="text-danger mb-3">{t("screen.not-bound")}</div>
+                <FormInput
+                  onChange={({ target }) => {
+                    setBindKey(target?.value);
+                  }}
+                  name="bindKey"
+                  value={bindKey}
+                  label={t("screen.bindkey-label")}
+                  className="mb-3"
+                />
+                <Button onClick={handleBindScreen}>{t("screen.bind")}</Button>
               </>
             )}
           </ContentBody>

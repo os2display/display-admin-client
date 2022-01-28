@@ -2,7 +2,6 @@ import { Button, Card, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { React, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
 import { api } from "../../redux/api/api.generated";
 import FormInput from "../util/forms/form-input";
 
@@ -14,7 +13,6 @@ import FormInput from "../util/forms/form-input";
 function Login() {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -27,9 +25,9 @@ function Login() {
     }
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const onSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
     dispatch(
       api.endpoints.postCredentialsItem.initiate({
@@ -51,7 +49,7 @@ function Login() {
         if (response?.data?.token) {
           localStorage.setItem("api-token", response.data.token);
 
-          const event = new Event('authenticated');
+          const event = new Event("authenticated");
           document.dispatchEvent(event);
         }
       })

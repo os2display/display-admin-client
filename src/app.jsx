@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { Spinner } from "react-bootstrap";
 import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
@@ -31,7 +32,6 @@ import ThemeEdit from "./components/themes/theme-edit";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 import Login from "./components/user/login";
-import { Spinner } from "react-bootstrap";
 
 /**
  * App component.
@@ -47,7 +47,7 @@ function App() {
 
   const handleAuthenticated = () => {
     setAuthenticated(true);
-  }
+  };
 
   // Check that authentication token exists.
   useEffect(() => {
@@ -59,13 +59,13 @@ function App() {
       setAuthenticated(false);
     }
 
-    document.addEventListener('reauthenticate', handleReauthenticate);
-    document.addEventListener('authenticated', handleAuthenticated);
+    document.addEventListener("reauthenticate", handleReauthenticate);
+    document.addEventListener("authenticated", handleAuthenticated);
 
     return () => {
-      document.removeEventListener('reauthenticate', handleReauthenticate);
-      document.removeEventListener('authenticated', handleAuthenticated);
-    }
+      document.removeEventListener("reauthenticate", handleReauthenticate);
+      document.removeEventListener("authenticated", handleAuthenticated);
+    };
   }, []);
 
   i18next.init({
@@ -81,12 +81,8 @@ function App() {
   return (
     <>
       <I18nextProvider i18n={i18next}>
-        {authenticated === false && (
-          <Login />
-        )}
-        {authenticated === null && (
-          <Spinner animation={"border"} />
-        )}
+        {authenticated === false && <Login />}
+        {authenticated === null && <Spinner animation="border" />}
         {authenticated && (
           <Container fluid className="h-100 px-0 bg-light">
             <Row className="row-full-height g-0">

@@ -31,7 +31,7 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
 
   // Attach api token.
   const apiToken = localStorage.getItem(apiTokenLocalStorageKey);
-  newArgs.headers.authorization = `Bearer ${apiToken ?? ''}`;
+  newArgs.headers.authorization = `Bearer ${apiToken ?? ""}`;
 
   const baseResult = await fetchBaseQuery({ baseUrl })(
     newArgs,
@@ -43,7 +43,7 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   if (baseResult?.error?.data?.code === 401) {
     localStorage.removeItem(apiTokenLocalStorageKey);
 
-    const event = new Event('reauthenticate');
+    const event = new Event("reauthenticate");
     document.dispatchEvent(event);
   }
 
