@@ -50,7 +50,9 @@ function Login() {
 
         if (response?.data?.token) {
           localStorage.setItem("api-token", response.data.token);
-          history.push("/");
+
+          const event = new Event('authenticated');
+          document.dispatchEvent(event);
         }
       })
       .catch((err) => {

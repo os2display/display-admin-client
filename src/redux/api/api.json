@@ -3436,6 +3436,43 @@
             },
             "parameters": []
         },
+        "/v1/screens/{id}/unbind": {
+            "ref": "JWT Token",
+            "post": {
+                "operationId": "postScreenUnbind",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Unbind screen from machine"
+                    }
+                },
+                "summary": "Unbind screen from machine",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": [],
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "Unbind from machine",
+                    "content": {},
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/slides": {
             "get": {
                 "operationId": "get-v1-slides",
@@ -5270,6 +5307,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "screenUser": {
+                        "type": "string"
                     }
                 }
             },
@@ -5365,6 +5405,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "screenUser": {
+                        "type": "string"
                     }
                 }
             },

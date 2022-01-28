@@ -401,6 +401,16 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    postScreenUnbind: build.mutation<
+      PostScreenUnbindApiResponse,
+      PostScreenUnbindApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/unbind`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
     getV1Slides: build.query<GetV1SlidesApiResponse, GetV1SlidesApiArg>({
       query: (queryArg) => ({
         url: `/v1/slides`,
@@ -804,6 +814,12 @@ export type DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiArg = {
   id: string;
   screenGroupId: string;
 };
+export type PostScreenUnbindApiResponse = unknown;
+export type PostScreenUnbindApiArg = {
+  id?: any;
+  /** Unbind from machine */
+  body: string;
+};
 export type GetV1SlidesApiResponse = unknown;
 export type GetV1SlidesApiArg = {
   page?: number;
@@ -990,6 +1006,7 @@ export const {
   useGetV1ScreensByIdScreenGroupsQuery,
   usePutV1ScreensByIdScreenGroupsMutation,
   useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation,
+  usePostScreenUnbindMutation,
   useGetV1SlidesQuery,
   usePostV1SlidesMutation,
   useGetV1SlidesByIdQuery,

@@ -13,8 +13,10 @@ import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../util/helpers/id-from-url";
-import { useGetV1LayoutsQuery } from "../../redux/api/api.generated";
+import { api, useGetV1LayoutsQuery } from "../../redux/api/api.generated";
 import "./screen-form.scss";
+import { useDispatch } from "react-redux";
+import { displayError } from "../util/list/toast-component/display-toast";
 
 /**
  * The screen form component.
@@ -40,8 +42,10 @@ function ScreenForm({
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
+  const dispatch = useDispatch();
   const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
+  const [bindKey, setBindKey] = useState("");
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
     itemsPerPage: 20,
@@ -78,6 +82,58 @@ function ScreenForm({
     });
   }
 
+  const handleBindScreen = () => {
+    if (bindKey) {
+      dispatch(
+        api.endpoints.postScreenBindKey.initiate({
+          id: idFromUrl(screen["@id"]),
+          screenBindObject: JSON.stringify({
+            bindKey
+          }),
+        })
+      ).then((response) => {
+        if (response.error) {
+          console.log(response.error);
+          const err = response.error;
+          displayError(
+            t("screen.error-messages.error-binding", {
+              error: err.data,
+              status: err.status,
+            })
+          );
+        } else {
+          // Set screenUser to true, to indicate it has been set.
+          handleInput({target: { id: 'screenUser', value: true }});
+        }
+      });
+    }
+  }
+
+  const handleUnbindScreen = () => {
+    if (screen?.screenUser) {
+      setBindKey("");
+
+      dispatch(
+        api.endpoints.postScreenUnbind.initiate({
+          id: idFromUrl(screen["@id"]),
+        })
+      ).then((response) => {
+        if (response.error) {
+          const err = response.error;
+          displayError(
+            t("screen.error-messages.error-unbinding", {
+              error: err.data,
+              status: err.status,
+            })
+          );
+        } else {
+          // Set screenUser to null, to indicate it has been removed.
+          handleInput({target: { id: 'screenUser', value: null }});
+        }
+      });
+    }
+  }
+
   return (
     <>
       {isLoading && (
@@ -108,6 +164,24 @@ function ScreenForm({
             onChange={handleInput}
           />
         </ContentBody>
+        {screen.hasOwnProperty('@id') && (
+          <ContentBody>
+            <h2 className="h4 mb-3">{t('screen.bind-header')}</h2>
+            {screen?.screenUser && (
+              <>
+                <div className="text-success mb-3">{t('screen.already-bound')}</div>
+                <Button onClick={handleUnbindScreen}>{t('screen.unbind')}</Button>
+              </>
+            )}
+            {!screen?.screenUser && (
+              <>
+                <div className="text-danger mb-3">{t('screen.not-bound')}</div>
+                <FormInput onChange={({ target }) => {setBindKey(target?.value)}} name="bindKey" value={bindKey} label={t('screen.bindkey-label')} className="mb-3" />
+                <Button onClick={handleBindScreen}>{t('screen.bind')}</Button>
+              </>
+            )}
+          </ContentBody>
+        )}
         <ContentBody>
           <h2 className="h4">{t("screen-form.screen-groups")}</h2>
           <SelectGroupsTable

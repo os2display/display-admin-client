@@ -31,6 +31,7 @@ import ThemeEdit from "./components/themes/theme-edit";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 import Login from "./components/user/login";
+import { Spinner } from "react-bootstrap";
 
 /**
  * App component.
@@ -38,13 +39,32 @@ import Login from "./components/user/login";
  * @returns {object} The component.
  */
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(null);
+
+  const handleReauthenticate = () => {
+    setAuthenticated(false);
+  };
+
+  const handleAuthenticated = () => {
+    setAuthenticated(true);
+  }
 
   // Check that authentication token exists.
   useEffect(() => {
     const token = localStorage.getItem("api-token");
+
     if (token !== null) {
       setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+
+    document.addEventListener('reauthenticate', handleReauthenticate);
+    document.addEventListener('authenticated', handleAuthenticated);
+
+    return () => {
+      document.removeEventListener('reauthenticate', handleReauthenticate);
+      document.removeEventListener('authenticated', handleAuthenticated);
     }
   }, []);
 
@@ -61,6 +81,12 @@ function App() {
   return (
     <>
       <I18nextProvider i18n={i18next}>
+        {authenticated === false && (
+          <Login />
+        )}
+        {authenticated === null && (
+          <Spinner animation={"border"} />
+        )}
         {authenticated && (
           <Container fluid className="h-100 px-0 bg-light">
             <Row className="row-full-height g-0">
@@ -103,11 +129,6 @@ function App() {
               </Col>
             </Row>
           </Container>
-        )}
-        {!authenticated && (
-          <>
-            <Login />
-          </>
         )}
       </I18nextProvider>
     </>
