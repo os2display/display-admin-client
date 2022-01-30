@@ -1,43 +1,7 @@
 describe("Table body loads", () => {
   it("It loads", () => {
-    cy.visit("/tags");
+    cy.visit("/slide/list");
     cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("have.length", 60);
-  });
-
-  it("If checked, the buttons are disabled", () => {
-    cy.visit("/tags");
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .eq(1)
-      .should("have.length", 1);
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .eq(1)
-      .should("be.not.disabled");
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .last()
-      .should("have.length", 1);
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .last()
-      .should("be.not.disabled");
-    cy.get('[type="checkbox"]').check();
-    cy.get("tbody").find("tr").eq(0).find("button").eq(1).should("be.disabled");
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .last()
-      .should("be.disabled");
+    cy.get("tbody").find("tr td").should("have.length", 70);
   });
 });
