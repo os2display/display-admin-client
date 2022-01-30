@@ -1,95 +1,68 @@
 describe("Table header loads", () => {
+  beforeEach(() => {
+    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
+      "themesData"
+    );
+    cy.visit("/themes/list");
+    cy.wait(["@themesData", "@themesData"]);
+    cy.wait(1000);
+  });
+
   it("It loads", () => {
-    cy.visit("/tags");
+    cy.visit("/themes/list");
     cy.get("table").find("thead").should("not.be.empty");
   });
 
-  it("It sorts by name", () => {
-    cy.visit("/tags");
-    cy.get("#table-header-name").should("not.be.empty");
-    cy.get("tbody").find("tr td").eq(1).should("have.length", 1);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^3rd generation/);
-    cy.get("#table-header-name").click();
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^workforce/);
+  it("It sorts by title", () => {
+    cy.intercept({
+      method: "GET",
+      url: "**/themes*",
+      query: {
+        page: "1",
+        order: "desc",
+      },
+    }).as("secondQuery");
+    cy.get("#table-header-title").click();
+    cy.wait("@secondQuery").then((interception) => {
+      assert.isNotNull(interception.response.body, "The api is called again");
+    });
   });
 
-  it("It sorts by created by", () => {
-    cy.visit("/tags");
-    cy.get("#table-header-createdBy").should("not.be.empty");
-    cy.get("tbody").find("tr td").eq(2).should("have.length", 1);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Brandi/);
-    cy.get("#table-header-createdBy").click();
-    cy.get("tbody")
-      .find("tr td")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Aleta/);
-    cy.get("#table-header-createdBy").click();
-    cy.get("tbody")
-      .find("tr td")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Zelda/);
+  it("Loads parametres sort url", () => {
+    cy.intercept({
+      method: "GET",
+      url: "**/themes*",
+      query: {
+        page: "1",
+        order: "desc",
+        sort: "title",
+      },
+    }).as("themesData");
+    cy.visit("/themes/list?page=1&order=desc&sort=title");
+    cy.wait("@themesData").then((interception) => {
+      assert.isNotNull(interception.response.body, "The api is called");
+    });
   });
 
-  it("It sorts by number of slides", () => {
-    cy.visit("/tags");
-    cy.get("#table-header-slides").should("not.be.empty");
-    cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^76/);
-    cy.get("#table-header-slides").click();
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^1/);
-    cy.get("#table-header-slides").click();
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^93/);
+  it("Loads parametres search url", () => {
+    cy.visit("/themes/list?page=1&order=asc&sort=title&search=harum");
+    cy.get("#search-field")
+      .invoke("val")
+      .should("match", /^harum/);
   });
 
-  it("It sorts by number of playlists", () => {
-    cy.visit("/categories");
-    cy.get("#table-header-onFollowingPlaylists").should("not.be.empty");
-    cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^5/);
-    cy.get("#table-header-onFollowingPlaylists").click();
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^0/);
-    cy.get("#table-header-onFollowingPlaylists").click();
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^7/);
-  });
-  it("Loads parametres from url", () => {
-    cy.visit("/tags?sort=createdBy&order=asc&page=1");
-    cy.get("#table-header-slides").should("not.be.empty");
-    cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Aleta/);
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^10/);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^coherent/);
-
-    cy.visit("/tags?sort=name&order=desc&page=1");
-    cy.get("#table-header-slides").should("not.be.empty");
-    cy.get("tbody").find("tr td").eq(3).should("have.length", 1);
-    cy.get("tbody").find("tr td").eq(2).invoke("text").should("match", /^Bee/);
-    cy.get("tbody").find("tr td").eq(3).invoke("text").should("match", /^90/);
-    cy.get("tbody")
-      .find("tr td")
-      .eq(1)
-      .invoke("text")
-      .should("match", /^workforce/);
+  it("Loads parametres published url", () => {
+    cy.intercept({
+      method: "GET",
+      url: "**/slides*",
+      query: {
+        page: "1",
+        published: "false",
+      },
+    }).as("slidesData");
+    cy.visit("/slide/list?page=1&order=asc&sort=title&published=not-published");
+    cy.wait("@slidesData").then((interception) => {
+      assert.isNotNull(interception.response.body, "Not all published");
+    });
   });
 });
