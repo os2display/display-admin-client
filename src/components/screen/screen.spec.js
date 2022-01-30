@@ -1,54 +1,75 @@
-Cypress.on("uncaught:exception", () => {
-  // @TODO: fix when docker setup is fixed
-  // returning false here prevents Cypress from
-  // failing the test
-  return false;
-});
+import { copyProperties } from "@amcharts/amcharts4/.internal/core/utils/Object";
 
-describe("screen pages work", () => {
+describe("Screen pages work", () => {
   it("It loads create screen page", () => {
     cy.visit("/screen/create");
-    cy.get("#save_screen")
-      .invoke("text")
-      .should("match", /^Gem screen/);
+    cy.get("#save_screen").should("exist");
   });
 
-  it("It can select playlist", () => {
+  it("It picks layout and redirects on save", () => {
+    // Mock successful response on get layouts
+    cy.intercept("GET", "**/layouts*", { fixture: "layouts.json" });
     cy.visit("/screen/create");
-    cy.get("tbody").should("not.exist");
-    cy.get(".dropdown-heading").eq(0).click();
-    cy.get('[type="checkbox"]').eq(1).check();
-    cy.get(".dropdown-heading").eq(0).click();
-    cy.get("tbody").find("tr td").should("have.length", 2);
-    cy.get("tbody").find("tr td button").eq(0).click();
-    cy.get("tbody").should("not.exist");
-  });
 
-  it("It loads create screen page", () => {
-    cy.visit("/screen/create");
-    cy.get("#save_screen")
+    // Pick layout
+    cy.get("#layout-section").find(".dropdown-container").type("{enter}");
+    cy.get("#layout-section")
+      .find(".item-renderer")
+      .find("span")
+      .eq(0)
       .invoke("text")
-      .should("match", /^Gem screen/);
-  });
+      .then((selectedLayoutTitle) => {
+        // Check if selected layout preview is showed
+        cy.get("#layout-section").find('[type="checkbox"]').eq(0).check();
+        cy.get("#layout-section").find(".grid-item").should("have.length", 4);
+        cy.get("#layout-section").find(".nav-item").should("have.length", 4);
+        cy.get("#layout-section")
+          .find(".dropdown-heading-value")
+          .contains(selectedLayoutTitle);
+      });
 
-  it("It loads template data", () => {
-    cy.visit("/screen/create");
-    cy.get("section")
-      .eq(2)
-      .invoke("text")
-      .should("not.match", /^Todo template data section/);
-    cy.get("select").select("Quote");
-    cy.get("section")
-      .eq(2)
-      .invoke("text")
-      .should("match", /^Todo template data section/);
-  });
+    // Close dropdown
+    cy.get("#layout-section").find(".dropdown-container").type("{esc}");
 
-  it("It redirects on save", () => {
-    cy.visit("/screen/create");
-    cy.get("select").select("Quote");
+    // Mock error response on post
+    cy.intercept("POST", "**/screens", {
+      statusCode: 201,
+      fixture: "save-screen-response.json",
+    });
+
+    // Mock successful response on get
+    cy.intercept("GET", "**/screens/*", {
+      fixture: "save-screen-response.json",
+    });
+
+    // Displays success toast and redirects
+    cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_screen").click();
+    cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
     cy.url().should("include", "screen/edit/");
+
+    cy.get("#title")
+      .invoke("val")
+      .should("match", /^Commodi nihil perferendis earum iusto./);
+  });
+
+  it("It display error toast on save error", () => {
+    cy.visit("/screen/create");
+
+    // Mock error response on post
+    cy.intercept("POST", "**/screens", {
+      statusCode: 500,
+      fixture: "error.json",
+    });
+
+    // Displays error toast and stays on page
+    cy.get(".Toastify").find(".Toastify__toast--error").should("not.exist");
+    cy.get("#save_screen").click();
+    cy.get(".Toastify").find(".Toastify__toast--error").should("exist");
+    cy.get(".Toastify")
+      .find(".Toastify__toast--error")
+      .contains("Errorerrorerror");
+    cy.url().should("include", "screen/create");
   });
 
   it("It cancels create screen", () => {
