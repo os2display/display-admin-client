@@ -1,6 +1,6 @@
 describe("themes list tests", () => {
   beforeEach(() => {
-    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
+    cy.intercept("GET", "**/themes*", { fixture: "themes/themes-first-page.json" }).as(
       "themesData"
     );
     cy.visit("/themes/list");
@@ -15,10 +15,12 @@ describe("themes list tests", () => {
 
   it("It goes to edit (themes list)", () => {
     cy.get("#themeTitle").should("not.exist");
+
     // Mock successful response on get
     cy.intercept("GET", "**/themes/*", {
-      fixture: "save-themes-response.json",
+      fixture: "themes/theme-successful.json",
     });
+
     cy.get("tbody").find("tr td a").eq(0).click();
     cy.get("#themeTitle").should("exist");
   });

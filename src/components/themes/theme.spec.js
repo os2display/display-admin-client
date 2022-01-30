@@ -10,12 +10,12 @@ describe("Theme pages work", () => {
     // Mock error response on post
     cy.intercept("POST", "**/themes", {
       statusCode: 201,
-      fixture: "save-themes-response.json",
+      fixture: "themes/theme-successful.json",
     });
 
     // Mock successful response on get
     cy.intercept("GET", "**/themes/*", {
-      fixture: "save-themes-response.json",
+      fixture: "themes/theme-successful.json",
     });
 
     // Displays success toast and redirects
@@ -26,7 +26,7 @@ describe("Theme pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^title/);
+      .should("match", /^Hic minus et omnis porro./);
   });
 
   it("It display error toast on save error", () => {
@@ -44,7 +44,7 @@ describe("Theme pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--error").should("exist");
     cy.get(".Toastify")
       .find(".Toastify__toast--error")
-      .contains("Errorerrorerror");
+      .contains("An error occurred");
     cy.url().should("include", "themes/create");
   });
 

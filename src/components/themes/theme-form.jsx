@@ -1,3 +1,4 @@
+
 import { React } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
@@ -40,7 +41,7 @@ function ThemeForm({
           isLoading={isLoading}
           loadingMessage={loadingMessage}
         />
-        <h1>{headerText}</h1>
+        <h1 id="themeTitle">{headerText}</h1>
         <ContentBody>
           <FormInput
             name="title"
