@@ -9,8 +9,19 @@ describe("Playlists list tests", () => {
     }).as("slides");
 
     cy.visit("/playlist/list");
-    cy.wait(["@playlists", "@slides"]);
-    cy.wait(500);
+    cy.wait([
+      "@playlists",
+      "@slides",
+      "@slides",
+      "@slides",
+      "@slides",
+      "@slides",
+      "@slides",
+      "@slides",
+      "@slides",
+      "@slides",
+      "@slides",
+    ]);
   });
   it("It loads playlist list", () => {
     cy.visit("/playlist/list");
