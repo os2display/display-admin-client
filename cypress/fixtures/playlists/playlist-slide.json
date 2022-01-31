@@ -1,0 +1,60 @@
+{
+  "@context": "/contexts/Slide",
+  "@id": "/v1/slides",
+  "@type": "hydra:Collection",
+  "hydra:member": [],
+  "hydra:totalItems": 100,
+  "hydra:view": {
+    "@id": "/v1/slides?itemsPerPage=0\u0026title=",
+    "@type": "hydra:PartialCollectionView"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/v1/slides{?title,description,published,order[title],order[description],order[createdAt],order[updatedAt]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "title",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "description",
+        "property": "description",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "published",
+        "property": "published",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[title]",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[description]",
+        "property": "description",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[createdAt]",
+        "property": "createdAt",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[updatedAt]",
+        "property": "updatedAt",
+        "required": false
+      }
+    ]
+  }
+}

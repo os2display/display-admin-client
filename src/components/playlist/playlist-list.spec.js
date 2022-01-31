@@ -1,31 +1,16 @@
 describe("Playlists list tests", () => {
   beforeEach(() => {
-    cy.intercept({
-      method: "GET",
-      url: "**/playlists*",
-      query: {
-        page: "1",
-      },
-    }).as("playlistsData");
-    cy.intercept({
-      method: "GET",
-      url: "**/slides*",
-    }).as("slidesData");
+    cy.intercept("GET", "**/playlists*", {
+      fixture: "playlists/playlists.json",
+    }).as("playlists");
+
+    cy.intercept("GET", "**/slides*", {
+      fixture: "playlists/playlist-slide.json",
+    }).as("slides");
+
     cy.visit("/playlist/list");
-    cy.wait([
-      "@playlistsData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-      "@slidesData",
-    ]);
-    cy.wait(1000);
+    cy.wait(["@playlists", "@slides"]);
+    cy.wait(500);
   });
   it("It loads playlist list", () => {
     cy.visit("/playlist/list");
@@ -40,8 +25,14 @@ describe("Playlists list tests", () => {
   });
 
   it("It goes to edit (playlist list)", () => {
+    // Mock successful response on get
+    cy.intercept("GET", "**/playlists/*", {
+      fixture: "playlists/playlist-successful.json",
+    });
+
     cy.get("#playlistTitle").should("not.exist");
     cy.get("tbody").find("tr td a").eq(0).click();
+
     cy.get("#playlistTitle").should("exist");
   });
 

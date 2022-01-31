@@ -142,7 +142,11 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     {
       key: "delete",
       content: (slideData) => (
-        <Button variant="danger" onClick={() => removeFromList(slideData)}>
+        <Button
+          variant="danger"
+          className="remove-from-list"
+          onClick={() => removeFromList(slideData)}
+        >
           {t("select-slides-table.remove-from-list")}
         </Button>
       ),

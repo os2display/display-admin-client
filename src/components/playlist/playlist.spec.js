@@ -1,14 +1,24 @@
 describe("Playlist pages work", () => {
-  it("It loads create playlist page", () => {
+  beforeEach(() => {
+    cy.intercept("GET", "**/slides*", {
+      fixture: "playlists/playlist-slide.json",
+    }).as("slides");
     cy.visit("/playlist/create");
+    cy.wait(["@slides"]);
+  });
+  it("It loads create playlist page", () => {
     cy.get("#save_playlist").should("exist");
   });
 
   it("It drags and drops slide", () => {
-    cy.visit("/playlist/create");
+    // Intercept slides in dropdown
+    cy.intercept("GET", "**/slides?itemsPerPage=10&title=d", {
+      fixture: "playlists/slides.json",
+    }).as("slides");
 
     // Select the top two slides
     cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
+    cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
     cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
     cy.get("#slides-section").find('[type="checkbox"]').eq(0).check();
     cy.get("#slides-section").find(".dropdown-container").eq(0).click();
@@ -39,10 +49,14 @@ describe("Playlist pages work", () => {
   });
 
   it("It removes slide", () => {
-    cy.visit("/playlist/create");
+    // Intercept slides in dropdown
+    cy.intercept("GET", "**/slides?itemsPerPage=10&title=d", {
+      fixture: "playlists/slides.json",
+    }).as("slides");
 
     // Pick slide
     cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
+    cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
     cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
     cy.get("#slides-section").find(".dropdown-container").eq(0).click();
     cy.get("#slides-section")
@@ -56,28 +70,21 @@ describe("Playlist pages work", () => {
   });
 
   it("It redirects on save", () => {
-    cy.visit("/playlist/create");
-
     // Mock successful response on post
     cy.intercept("POST", "**/playlists", {
       statusCode: 201,
-      fixture: "save-playlists-response.json",
+      fixture: "playlists/playlist-successful.json",
     });
 
     // Mock successful response on slides put
     cy.intercept("PUT", "**/slides", {
       statusCode: 201,
-      fixture: "save-slides-response.json",
+      fixture: "playlists/playlist-slide.json",
     });
 
     // Mock successful response on get
     cy.intercept("GET", "**/playlists/*", {
-      fixture: "save-playlists-response.json",
-    });
-
-    // Mock successful response on get
-    cy.intercept("GET", "**/slides*", {
-      fixture: "save-slides-response.json",
+      fixture: "playlists/playlist-successful.json",
     });
 
     // Displays success toast and redirects
@@ -88,12 +95,10 @@ describe("Playlist pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^Voluptatibus id minima./);
+      .should("match", /^Et consequatur voluptatibus dolore ut ut./);
   });
 
   it("It display error toast on save error", () => {
-    cy.visit("/playlist/create");
-
     // Mock error response on post
     cy.intercept("POST", "**/playlists", {
       statusCode: 500,
@@ -106,19 +111,17 @@ describe("Playlist pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--error").should("exist");
     cy.get(".Toastify")
       .find(".Toastify__toast--error")
-      .contains("Errorerrorerror");
+      .contains("An error occurred");
     cy.url().should("include", "playlist/create");
   });
 
   it("It cancels create playlist", () => {
-    cy.visit("/playlist/create");
     cy.get("#cancel_playlist").should("exist");
     cy.get("#cancel_playlist").click();
     cy.get("#cancel_playlist").should("not.exist");
   });
 
   it("Add scheduling to playlist", () => {
-    cy.visit("/playlist/create");
     cy.get(".Schedule-item").should("not.exist");
     cy.get("#add_schedule").click();
     cy.get(".Schedule-item").should("exist");

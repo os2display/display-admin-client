@@ -118,7 +118,11 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     {
       key: "delete",
       content: (playlistData) => (
-        <Button variant="danger" onClick={() => removeFromList(playlistData)}>
+        <Button
+          className="remove-from-list"
+          variant="danger"
+          onClick={() => removeFromList(playlistData)}
+        >
           {t("playlist-drag-and-drop.remove-from-list")}
         </Button>
       ),
