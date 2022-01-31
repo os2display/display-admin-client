@@ -14,7 +14,7 @@ describe("Playlist pages work", () => {
     // Intercept slides in dropdown
     cy.intercept("GET", "**/slides?itemsPerPage=10&title=d", {
       fixture: "playlists/slides.json",
-    }).as("slides");
+    });
 
     // Select the top two slides
     cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");

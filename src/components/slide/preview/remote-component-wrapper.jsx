@@ -66,7 +66,7 @@ function RemoteComponentWrapper({
         <>
           <div className="d-flex justify-content-between">
             {closeButton && (
-              <Button variant="primary" type="button" onClick={closeCallback}>
+              <Button id="close_preview_button" variant="primary" type="button" onClick={closeCallback}>
                 {t("remote-component-wrapper.close-preview")}
               </Button>
             )}

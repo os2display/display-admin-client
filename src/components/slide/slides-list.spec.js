@@ -1,19 +1,17 @@
 describe("Slides list tests", () => {
   beforeEach(() => {
-    cy.intercept({
-      method: "GET",
-      url: "**/templates/*",
-    }).as("templatesData");
-    cy.visit("/slide/list?published=all&page=2&order=asc&sort=title");
+    cy.intercept("GET", "**/slides*", {
+      fixture: "slides/slides.json",
+    }).as("slides");
+    cy.intercept("GET", "**/templates/*", {
+      fixture: "slides/templates.json",
+    }).as("templates");
+
+    cy.visit("/slide/list");
     cy.wait([
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
-      "@templatesData",
+      "@slides",
+      "@templates",
+      "@templates",
     ]);
   });
 
@@ -23,8 +21,12 @@ describe("Slides list tests", () => {
   });
 
   it("It goes to edit (slides list)", () => {
+    cy.intercept("GET", "**/slides/*", {
+      fixture: "slides/slide-successful.json",
+    });
+
     cy.get("#slidesTitle").should("not.exist");
-    cy.get("tbody").find(".edit-button").eq(0).click();
+    cy.get("tbody").find("#edit_button").eq(0).click();
     cy.get("#slidesTitle").should("exist");
   });
 

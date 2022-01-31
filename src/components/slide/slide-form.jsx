@@ -204,7 +204,7 @@ function SlideForm({
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <Row>
-          <h1>{headerText}</h1>
+          <h1 id="slidesTitle">{headerText}</h1>
           <Col md>
             <ContentBody>
               <FormInput
@@ -217,7 +217,7 @@ function SlideForm({
               />
             </ContentBody>
             {templateOptions && (
-              <ContentBody>
+              <ContentBody id="template-section">
                 <MultiSelectComponent
                   isLoading={loadingTemplates}
                   label={t("slide-form.slide-template-label")}
@@ -299,7 +299,7 @@ function SlideForm({
                     <Button
                       variant="secondary"
                       type="button"
-                      id="cancel_slide"
+                      id="preview_slide"
                       onClick={() =>
                         setPreviewOverlayVisible(!previewOverlayVisible)
                       }
@@ -367,7 +367,7 @@ function SlideForm({
               </Row>
             </ContentBody>
             {themesOptions && (
-              <ContentBody>
+              <ContentBody id="theme-section">
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-form.slide-theme-label")}
