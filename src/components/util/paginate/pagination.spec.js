@@ -1,9 +1,9 @@
 describe("Pagination loads", () => {
   beforeEach(() => {
-    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
-      "themesData"
-    );
-    cy.visit("/themes/list?page=1&order=asc&sort=title");
+    cy.intercept("GET", "**/themes*", {
+      fixture: "themes/themes-first-page.json",
+    }).as("themesData");
+    cy.visit("/themes/list");
     cy.wait(["@themesData"]);
   });
 
@@ -25,11 +25,11 @@ describe("Pagination loads", () => {
         cy.get("tbody").find("tr").should("have.length", 10);
 
         cy.intercept("GET", "**/themes*", {
-          fixture: "themes-second-page.json",
+          fixture: "themes/themes-second-page.json",
         }).as("themesData");
-
-        cy.get(".pagination").find(".page-link").eq(9).click();
+        cy.get(".pagination").find(".page-link").eq(1).click();
         cy.wait(["@themesData"]);
+        cy.wait(300)
         cy.get("tbody").find("tr").should("have.length", 10);
         cy.get("tbody")
           .find("tr td")
@@ -39,15 +39,15 @@ describe("Pagination loads", () => {
   });
 
   it("It works on themes with url input", () => {
-    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
-      "themesData"
-    );
-    cy.visit("/themes/list?page=6&order=asc&sort=title");
+    cy.intercept("GET", "**/themes*", {
+      fixture: "themes/themes-second-page.json",
+    }).as("themesData");
+    cy.visit("/themes/list?page=2&order=asc&sort=title");
     cy.wait(["@themesData"]);
 
     cy.get(".pagination")
       .find(".page-item")
-      .eq(5)
+      .eq(1)
       .should("have.class", "active");
   });
 });

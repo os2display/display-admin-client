@@ -1,11 +1,17 @@
 describe("Topbar loads", () => {
+  beforeEach(() => {
+    cy.intercept("GET", "**/slides*", {
+      fixture: "slides/slides.json",
+    }).as("slides");
+    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
+    cy.wait([
+      "@slides"]);
+  });
   it("It loads", () => {
-    cy.visit("/");
     cy.get("#topbar").should("exist");
   });
 
   it("It navigates", () => {
-    cy.visit("/");
     cy.get("h1")
       .invoke("text")
       .should("match", /^Slides/);

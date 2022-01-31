@@ -4,7 +4,7 @@ describe("themes list tests", () => {
       fixture: "themes/themes-first-page.json",
     }).as("themesData");
     cy.visit("/themes/list");
-    cy.wait(["@themesData"]);
+    cy.wait(["@themesData","@themesData"]);
   });
 
   it("It loads themes list", () => {

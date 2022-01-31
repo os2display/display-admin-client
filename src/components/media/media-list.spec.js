@@ -1,14 +1,12 @@
 describe("media list tests", () => {
   beforeEach(() => {
-    cy.intercept({
-      method: "GET",
-      url: "**/media*",
-      query: {
-        page: "1",
-      },
-    }).as("mediaData");
+    cy.intercept("GET", "**/media*", {
+      fixture: "media/media.json",
+    }).as("media");
     cy.visit("/media/list");
-    cy.wait(["@mediaData"]);
+    cy.wait([
+      "@media",
+    ]);
   });
 
   it("It loads media list", () => {

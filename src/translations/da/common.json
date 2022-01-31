@@ -13,14 +13,6 @@
   "remote-component-wrapper": {
     "close-preview": "Luk preview"
   },
-  "edit-user": {
-    "create-new-user": "Opret ny bruger",
-    "edit-user": "Rediger følgende bruger",
-    "save-button": "Gem bruger",
-    "cancel-button": "Annuller",
-    "name-label": "Brugerens navn",
-    "name-placeholder": "Udfyld brugerens navn"
-  },
   "theme-create": {
     "create-new-theme": "Opret nyt tema",
     "loading-messages": {

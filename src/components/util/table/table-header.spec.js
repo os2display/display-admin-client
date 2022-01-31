@@ -1,15 +1,13 @@
 describe("Table header loads", () => {
   beforeEach(() => {
-    cy.intercept("GET", "**/themes*", { fixture: "themes.json" }).as(
-      "themesData"
-    );
+    cy.intercept("GET", "**/themes*", {
+      fixture: "themes/themes-first-page.json",
+    }).as("themesData");
     cy.visit("/themes/list");
-    cy.wait(["@themesData", "@themesData"]);
-    cy.wait(1000);
+    cy.wait(["@themesData"]);
   });
 
   it("It loads", () => {
-    cy.visit("/themes/list");
     cy.get("table").find("thead").should("not.be.empty");
   });
 
@@ -52,6 +50,9 @@ describe("Table header loads", () => {
   });
 
   it("Loads parametres published url", () => {
+    cy.intercept("GET", "**/slides*", {
+      fixture: "slides/slides.json",
+    })
     cy.intercept({
       method: "GET",
       url: "**/slides*",
@@ -60,6 +61,7 @@ describe("Table header loads", () => {
         published: "false",
       },
     }).as("slidesData");
+    cy.visit("/slide/list");
     cy.visit("/slide/list?page=1&order=asc&sort=title&published=not-published");
     cy.wait("@slidesData").then((interception) => {
       assert.isNotNull(interception.response.body, "Not all published");

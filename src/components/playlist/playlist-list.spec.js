@@ -11,6 +11,7 @@ describe("Playlists list tests", () => {
     cy.visit("/playlist/list");
     cy.wait([
       "@playlists",
+      "@playlists",
       "@slides",
       "@slides",
       "@slides",

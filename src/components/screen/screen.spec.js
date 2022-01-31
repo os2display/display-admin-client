@@ -1,16 +1,15 @@
-import { copyProperties } from "@amcharts/amcharts4/.internal/core/utils/Object";
-
 describe("Screen pages work", () => {
-  it("It loads create screen page", () => {
+  beforeEach(() => {
+        // Mock successful response on get layouts
+    cy.intercept("GET", "**/layouts*", { fixture: "screens/layouts.json" }).as("layouts");
     cy.visit("/screen/create");
+    cy.wait(["@layouts"])
+  });
+  it("It loads create screen page", () => {
     cy.get("#save_screen").should("exist");
   });
 
   it("It picks layout and redirects on save", () => {
-    // Mock successful response on get layouts
-    cy.intercept("GET", "**/layouts*", { fixture: "layouts.json" });
-    cy.visit("/screen/create");
-
     // Pick layout
     cy.get("#layout-section").find(".dropdown-container").type("{enter}");
     cy.get("#layout-section")
@@ -34,12 +33,12 @@ describe("Screen pages work", () => {
     // Mock error response on post
     cy.intercept("POST", "**/screens", {
       statusCode: 201,
-      fixture: "save-screen-response.json",
+      fixture: "screens/screen-successful.json",
     });
 
     // Mock successful response on get
     cy.intercept("GET", "**/screens/*", {
-      fixture: "save-screen-response.json",
+      fixture: "screens/screen-successful.json",
     });
 
     // Displays success toast and redirects
@@ -50,12 +49,10 @@ describe("Screen pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^Commodi nihil perferendis earum iusto./);
+      .should("match", /^Ab eos dolorum minima inventore./);
   });
 
   it("It display error toast on save error", () => {
-    cy.visit("/screen/create");
-
     // Mock error response on post
     cy.intercept("POST", "**/screens", {
       statusCode: 500,
@@ -73,7 +70,6 @@ describe("Screen pages work", () => {
   });
 
   it("It cancels create screen", () => {
-    cy.visit("/screen/create");
     cy.get("#cancel_screen").should("exist");
     cy.get("#cancel_screen").click();
     cy.get("#cancel_screen").should("not.exist");

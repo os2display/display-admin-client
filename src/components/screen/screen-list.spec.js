@@ -1,31 +1,32 @@
 describe("Screen list loads", () => {
   beforeEach(() => {
-    cy.intercept({
-      method: "GET",
-      url: "**/screen-groups*",
-    }).as("screenGroupData");
+    cy.intercept("GET", "**/screen-groups*", {
+      fixture: "screens/groups.json",
+    }).as("groups");
+    cy.intercept("GET", "**/screens*", {
+      fixture: "screens/screens.json",
+    }).as("screens");
     cy.visit("/screen/list");
     cy.wait([
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
-      "@screenGroupData",
+      "@screens",
+      "@screens",
+      "@groups",
+      "@groups",
     ]);
   });
+
   it("It loads screens list", () => {
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("have.length", 70);
   });
 
   it("It goes to edit (screens list)", () => {
+        // Mock successful response on get
+        cy.intercept("GET", "**/screens/*", {
+          fixture: "screens/screen-successful.json",
+        });
     cy.get("#screenTitle").should("not.exist");
-    cy.get(".btn.btn-primary.edit-button").first().click();
+    cy.get("tbody").find("#edit_button").eq(0).click();
     cy.get("#screenTitle").should("exist");
   });
 
