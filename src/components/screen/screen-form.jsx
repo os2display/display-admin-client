@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Col, Row, Spinner } from "react-bootstrap";
+import { Button, Form, Col, Row, Spinner, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -168,8 +168,10 @@ function ScreenForm({
             <h2 className="h4 mb-3">{t("screen.bind-header")}</h2>
             {screen?.screenUser && (
               <>
-                <div className="text-success mb-3">
-                  {t("screen.already-bound")}
+                <div className="mb-3">
+                  <Alert key="screen-bound" variant="success">
+                    {t("screen.already-bound")}
+                  </Alert>
                 </div>
                 <Button onClick={handleUnbindScreen}>
                   {t("screen.unbind")}
@@ -178,7 +180,11 @@ function ScreenForm({
             )}
             {!screen?.screenUser && (
               <>
-                <div className="text-danger mb-3">{t("screen.not-bound")}</div>
+                <div className="mb-3">
+                  <Alert key="screen-not-bound" variant="danger">
+                    {t("screen.not-bound")}
+                  </Alert>
+                </div>
                 <FormInput
                   onChange={({ target }) => {
                     setBindKey(target?.value);
