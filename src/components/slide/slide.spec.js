@@ -3,9 +3,9 @@ describe("Slide pages work", () => {
     // Intercept themes in dropdown
     cy.intercept("GET", "**/themes*", {
       fixture: "slides/themes.json",
-    }).as("themes")
+    }).as("themes");
     cy.visit("/slide/create");
-    cy.wait(["@themes"])
+    cy.wait(["@themes"]);
   });
 
   it("It loads create slide page", () => {
@@ -60,7 +60,6 @@ describe("Slide pages work", () => {
   });
 
   it("It display error toast on save error", () => {
-
     // Mock error response on post
     cy.intercept("POST", "**/slides", {
       statusCode: 500,
@@ -158,7 +157,10 @@ describe("Slide pages work", () => {
       .invoke("text")
       .then((selectedTheme) => {
         cy.get("#theme-section").find(".dropdown-container").eq(0).click();
-        cy.get("#theme-section").find(".dropdown-container").eq(0).type("{esc}");
+        cy.get("#theme-section")
+          .find(".dropdown-container")
+          .eq(0)
+          .type("{esc}");
         // The theme is saved in local storage on save slide
         cy.get("#save_slide").click();
         cy.get("#theme-section")

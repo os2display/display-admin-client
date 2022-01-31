@@ -4,12 +4,8 @@ describe("Groups list tests", () => {
       fixture: "groups/groups.json",
     }).as("groups");
 
-
     cy.visit("/group/list");
-    cy.wait([
-      "@groups",
-      "@groups"
-    ]);
+    cy.wait(["@groups", "@groups"]);
   });
 
   it("It loads groups list", () => {

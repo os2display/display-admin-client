@@ -4,9 +4,7 @@ describe("media list tests", () => {
       fixture: "media/media.json",
     }).as("media");
     cy.visit("/media/list");
-    cy.wait([
-      "@media",
-    ]);
+    cy.wait(["@media"]);
   });
 
   it("It loads media list", () => {

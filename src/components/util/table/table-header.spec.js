@@ -52,7 +52,7 @@ describe("Table header loads", () => {
   it("Loads parametres published url", () => {
     cy.intercept("GET", "**/slides*", {
       fixture: "slides/slides.json",
-    })
+    });
     cy.intercept({
       method: "GET",
       url: "**/slides*",

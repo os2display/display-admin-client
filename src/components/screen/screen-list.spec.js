@@ -7,12 +7,7 @@ describe("Screen list loads", () => {
       fixture: "screens/screens.json",
     }).as("screens");
     cy.visit("/screen/list");
-    cy.wait([
-      "@screens",
-      "@screens",
-      "@groups",
-      "@groups",
-    ]);
+    cy.wait(["@screens", "@screens", "@groups", "@groups"]);
   });
 
   it("It loads screens list", () => {
@@ -21,10 +16,10 @@ describe("Screen list loads", () => {
   });
 
   it("It goes to edit (screens list)", () => {
-        // Mock successful response on get
-        cy.intercept("GET", "**/screens/*", {
-          fixture: "screens/screen-successful.json",
-        });
+    // Mock successful response on get
+    cy.intercept("GET", "**/screens/*", {
+      fixture: "screens/screen-successful.json",
+    });
     cy.get("#screenTitle").should("not.exist");
     cy.get("tbody").find("#edit_button").eq(0).click();
     cy.get("#screenTitle").should("exist");

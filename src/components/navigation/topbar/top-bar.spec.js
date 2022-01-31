@@ -4,8 +4,7 @@ describe("Topbar loads", () => {
       fixture: "slides/slides.json",
     }).as("slides");
     cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
-    cy.wait([
-      "@slides"]);
+    cy.wait(["@slides"]);
   });
   it("It loads", () => {
     cy.get("#topbar").should("exist");

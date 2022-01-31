@@ -1,9 +1,11 @@
 describe("Screen pages work", () => {
   beforeEach(() => {
-        // Mock successful response on get layouts
-    cy.intercept("GET", "**/layouts*", { fixture: "screens/layouts.json" }).as("layouts");
+    // Mock successful response on get layouts
+    cy.intercept("GET", "**/layouts*", { fixture: "screens/layouts.json" }).as(
+      "layouts"
+    );
     cy.visit("/screen/create");
-    cy.wait(["@layouts"])
+    cy.wait(["@layouts"]);
   });
   it("It loads create screen page", () => {
     cy.get("#save_screen").should("exist");

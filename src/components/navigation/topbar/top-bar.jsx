@@ -51,7 +51,7 @@ function TopBar() {
 
   return (
     <Navbar
-    id="topbar"
+      id="topbar"
       variant="light"
       bg="white"
       expand="lg"

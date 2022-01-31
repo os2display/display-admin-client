@@ -29,7 +29,7 @@ describe("Pagination loads", () => {
         }).as("themesData");
         cy.get(".pagination").find(".page-link").eq(1).click();
         cy.wait(["@themesData"]);
-        cy.wait(300)
+        cy.wait(300);
         cy.get("tbody").find("tr").should("have.length", 10);
         cy.get("tbody")
           .find("tr td")

@@ -8,11 +8,7 @@ describe("Slides list tests", () => {
     }).as("templates");
 
     cy.visit("/slide/list");
-    cy.wait([
-      "@slides",
-      "@templates",
-      "@templates",
-    ]);
+    cy.wait(["@slides", "@templates", "@templates"]);
   });
 
   it("It loads slides list", () => {
