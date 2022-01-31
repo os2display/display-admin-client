@@ -68,7 +68,7 @@ describe("Screen pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--error").should("exist");
     cy.get(".Toastify")
       .find(".Toastify__toast--error")
-      .contains("Errorerrorerror");
+      .contains("An error occurred");
     cy.url().should("include", "screen/create");
   });
 

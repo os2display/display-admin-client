@@ -36,7 +36,7 @@ function GroupForm({
     <>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
-        <h1>{headerText}</h1>
+        <h1 id="groupTitle">{headerText}</h1>
         <ContentBody>
           <FormInput
             name="title"

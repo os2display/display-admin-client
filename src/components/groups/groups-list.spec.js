@@ -1,22 +1,26 @@
 describe("Groups list tests", () => {
   beforeEach(() => {
-    cy.intercept({
-      method: "GET",
-      url: "**/screen-groups*",
-      query: {
-        page: "1",
-      },
-    }).as("screenGroupsData");
+    cy.intercept("GET", "**/screen-groups*", {
+      fixture: "groups/groups.json",
+    }).as("groups");
+
+
     cy.visit("/group/list");
-    cy.wait(["@screenGroupsData"]);
-    cy.wait(1000);
+    cy.wait([
+      "@groups",
+      "@groups"
+    ]);
   });
+
   it("It loads groups list", () => {
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("exist");
   });
 
   it("It goes to edit (groups list)", () => {
+    cy.intercept("GET", "**/screen-groups/*", {
+      fixture: "groups/group-successful.json",
+    });
     cy.get("#groupTitle").should("not.exist");
     cy.get("tbody").find("tr td a").eq(0).click();
     cy.get("#groupTitle").should("exist");

@@ -1,0 +1,20 @@
+{
+  "@context": {
+    "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "ScreenGroup/title",
+    "description": "ScreenGroup/description",
+    "created": "ScreenGroup/created",
+    "modified": "ScreenGroup/modified",
+    "modifiedBy": "ScreenGroup/modifiedBy",
+    "createdBy": "ScreenGroup/createdBy"
+  },
+  "@type": "ScreenGroup",
+  "@id": "/v1/screen-groups/00KXGYAJ4A1D5P0EA11SKF0BG8",
+  "title": "A laudantium aspernatur qui.",
+  "description": "Non fugiat nobis occaecati. Sed ut velit beatae amet ea esse. Quo dolorem commodi magni at. Illum voluptatem neque nobis et ut. Ad rerum tempore vel commodi suscipit corrupti.",
+  "created": "1991-09-10T22:36:56+02:00",
+  "modified": "2021-12-09T12:01:33+01:00",
+  "modifiedBy": "",
+  "createdBy": ""
+}

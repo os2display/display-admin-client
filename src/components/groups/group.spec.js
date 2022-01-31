@@ -1,21 +1,21 @@
 describe("Group pages work", () => {
-  it("It loads create group page", () => {
+  beforeEach(() => {
     cy.visit("/group/create");
+  });
+  it("It loads create group page", () => {
     cy.get("#save_group").should("exist");
   });
 
   it("It redirects on save", () => {
-    cy.visit("/group/create");
-
     // Mock error response on post
     cy.intercept("POST", "**/screen-groups", {
       statusCode: 201,
-      fixture: "save-groups-response.json",
+      fixture: "groups/group-successful.json",
     });
 
     // Mock successful response on get
     cy.intercept("GET", "**/screen-groups/*", {
-      fixture: "save-groups-response.json",
+      fixture: "groups/group-successful.json",
     });
 
     // Displays success toast and redirects
@@ -26,19 +26,16 @@ describe("Group pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^title/);
+      .should("match", /^A laudantium aspernatur qui./);
   });
 
   it("It cancels create group", () => {
-    cy.visit("/group/create");
     cy.get("#cancel_group").should("exist");
     cy.get("#cancel_group").click();
     cy.get("#cancel_group").should("not.exist");
   });
 
   it("It display error toast on save error", () => {
-    cy.visit("/group/create");
-
     // Mock error response on post
     cy.intercept("POST", "**/screen-groups", {
       statusCode: 500,
@@ -50,7 +47,7 @@ describe("Group pages work", () => {
     cy.get("#save_group").click();
     cy.get(".Toastify")
       .find(".Toastify__toast--error")
-      .contains("Errorerrorerror");
+      .contains("An error occurred");
     cy.url().should("include", "group/create");
   });
 });

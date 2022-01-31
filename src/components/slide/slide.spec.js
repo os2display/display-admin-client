@@ -1,5 +1,4 @@
 describe("Slide pages work", () => {
-
   beforeEach(() => {
     // Intercept themes in dropdown
     cy.intercept("GET", "**/themes*", {
