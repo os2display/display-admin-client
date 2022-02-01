@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
@@ -30,6 +30,7 @@ import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
+import Login from "./components/user/login";
 
 /**
  * App component.
@@ -37,6 +38,16 @@ import "./app.scss";
  * @returns {object} The component.
  */
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  // Check that authentication token exists.
+  useEffect(() => {
+    const token = localStorage.getItem("api-token");
+    if (token !== null) {
+      setAuthenticated(true);
+    }
+  }, []);
+
   i18next.init({
     interpolation: { escapeValue: false }, // React already does escaping
     lng: "da", // language to use
@@ -50,47 +61,54 @@ function App() {
   return (
     <>
       <I18nextProvider i18n={i18next}>
-        <Container fluid className="h-100 px-0 bg-light">
-          <Row className="row-full-height g-0">
-            <SideBar />
-            <Col lg={9} xl={10}>
-              <TopBar />
-              <ToastContainer
-                autoClose="10000"
-                position="bottom-right"
-                hideProgressBar={false}
-                closeOnClick
-                pauseOnHover
-                draggable
-                progress={undefined}
-              />
-              <main className="col p-3">
-                <Switch>
-                  <Route path="/playlist/create" component={PlaylistCreate} />
-                  <Route path="/playlist/edit/:id" component={PlaylistEdit} />
-                  <Route path="/playlist/list" component={PlaylistList} />
-                  <Route path="/screen/list" component={ScreenList} />
-                  <Route path="/screen/create" component={ScreenCreate} />
-                  <Route path="/screen/edit/:id" component={ScreenEdit} />
-                  <Route path="/group/list" component={GroupsList} />
-                  <Route path="/group/edit/:id" component={GroupEdit} />
-                  <Route path="/group/create" component={GroupCreate} />
-                  <Route path="/slide/list" component={SlidesList} />
-                  <Route path="/slide/create" component={SlideCreate} />
-                  <Route path="/slide/edit/:id" component={SlideEdit} />
-                  <Route path="/media/list" component={MediaList} />
-                  <Route path="/media/create" component={MediaCreate} />
-                  <Route path="/themes/list" component={ThemesList} />
-                  <Route path="/themes/edit/:id" component={ThemeEdit} />
-                  <Route path="/themes/create" component={ThemeCreate} />
-                  <Route path="/users/" component={UserList} />
-                  <Route path="/user/:id" component={EditUser} />
-                  <Redirect from="/" to="/slide/list" exact />
-                </Switch>
-              </main>
-            </Col>
-          </Row>
-        </Container>
+        {authenticated && (
+          <Container fluid className="h-100 px-0 bg-light">
+            <Row className="row-full-height g-0">
+              <SideBar />
+              <Col lg={9} xl={10}>
+                <TopBar />
+                <ToastContainer
+                  autoClose="10000"
+                  position="bottom-right"
+                  hideProgressBar={false}
+                  closeOnClick
+                  pauseOnHover
+                  draggable
+                  progress={undefined}
+                />
+                <main className="col p-3">
+                  <Switch>
+                    <Route path="/playlist/create" component={PlaylistCreate} />
+                    <Route path="/playlist/edit/:id" component={PlaylistEdit} />
+                    <Route path="/playlist/list" component={PlaylistList} />
+                    <Route path="/screen/list" component={ScreenList} />
+                    <Route path="/screen/create" component={ScreenCreate} />
+                    <Route path="/screen/edit/:id" component={ScreenEdit} />
+                    <Route path="/group/list" component={GroupsList} />
+                    <Route path="/group/edit/:id" component={GroupEdit} />
+                    <Route path="/group/create" component={GroupCreate} />
+                    <Route path="/slide/list" component={SlidesList} />
+                    <Route path="/slide/create" component={SlideCreate} />
+                    <Route path="/slide/edit/:id" component={SlideEdit} />
+                    <Route path="/media/list" component={MediaList} />
+                    <Route path="/media/create" component={MediaCreate} />
+                    <Route path="/themes/list" component={ThemesList} />
+                    <Route path="/themes/edit/:id" component={ThemeEdit} />
+                    <Route path="/themes/create" component={ThemeCreate} />
+                    <Route path="/users/" component={UserList} />
+                    <Route path="/user/:id" component={EditUser} />
+                    <Redirect from="/" to="/slide/list" exact />
+                  </Switch>
+                </main>
+              </Col>
+            </Row>
+          </Container>
+        )}
+        {!authenticated && (
+          <>
+            <Login />
+          </>
+        )}
       </I18nextProvider>
     </>
   );

@@ -15,402 +15,39 @@
         }
     ],
     "paths": {
-        "/v1/feed-sources": {
-            "get": {
-                "operationId": "get-v1-feed-sources",
+        "/v1/authentication_token": {
+            "ref": "JWT Token",
+            "post": {
+                "operationId": "postCredentialsItem",
                 "tags": [
-                    "FeedSources"
+                    "Auth Token"
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Get JWT token",
                         "content": {
-                            "application/ld+json": {
-                                "examples": null
-                            }
-                        },
-                        "headers": {}
-                    }
-                },
-                "summary": "Retrieves a collection of FeedSource resources.",
-                "description": "Retrieves a collection of FeedSource resources.",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "format": "int32",
-                            "default": 1
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "itemsPerPage",
-                        "in": "query",
-                        "description": "The number of items per page",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "default": "10"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "title",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "description",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[title]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[description]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[createdAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[updatedAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
-        "/v1/feed-sources/{id}": {
-            "get": {
-                "operationId": "get-feed-source-id",
-                "tags": [
-                    "FeedSources"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/ld+json": {
-                                "examples": null
-                            }
-                        },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                },
-                "summary": "Retrieve a Feed Source resource.",
-                "description": "Retrieves a Feed Source resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
-        "/v1/feeds": {
-            "get": {
-                "operationId": "get-v1-feeds",
-                "tags": [
-                    "Feeds"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/ld+json": {
-                                "examples": null
-                            }
-                        },
-                        "headers": {}
-                    }
-                },
-                "summary": "Retrieves a collection of Feed resources.",
-                "description": "Retrieves a collection of Feed resources.",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "format": "int32",
-                            "default": 1
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "itemsPerPage",
-                        "in": "query",
-                        "description": "The number of items per page",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "default": "10"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[createdAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[updatedAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
-        "/v1/feeds/{id}": {
-            "get": {
-                "operationId": "get-feeds-id",
-                "tags": [
-                    "Feeds"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/ld+json": {
-                                "examples": null
-                            }
-                        },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                },
-                "summary": "Retrieve a Feed resource.",
-                "description": "Retrieves a Feed resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
-        "/v1/feeds/{id}/data": {
-            "get": {
-                "operationId": "get-v1-feed-id-data",
-                "tags": [
-                    "Feeds"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "content": {
-                            "application/ld+json": {
-                                "examples": {
-                                    "example1": {
-                                        "value": [
-                                            {
-                                                "key1": "value1",
-                                                "key2": "value2"
-                                            },
-                                            {
-                                                "key1": "value3",
-                                                "key2": "value4"
-                                            }
-                                        ]
-                                    },
-                                    "example2": {
-                                        "value": {
-                                            "key1": "value1"
-                                        }
-                                    }
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
                                 }
                             }
-                        },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        }
                     }
                 },
-                "summary": "Get data from a feed.",
-                "description": "Get data from a feed.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
+                "summary": "Get JWT token to login.",
+                "description": "",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Generate new JWT Token",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Credentials"
+                            }
+                        }
+                    },
+                    "required": false
+                },
                 "deprecated": false
             },
             "parameters": []
@@ -4277,251 +3914,16 @@
                     }
                 }
             },
-            "Feed.Feed": {
+            "Credentials": {
                 "type": "object",
-                "description": "",
                 "properties": {
-                    "created": {
+                    "email": {
                         "type": "string",
-                        "format": "date-time"
+                        "example": "johndoe@example.com"
                     },
-                    "modified": {
+                    "password": {
                         "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "configuration": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
-                    },
-                    "slide": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "feedSource": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "feedUrl": {
-                        "type": "string",
-                        "nullable": true
-                    }
-                }
-            },
-            "Feed.Feed.jsonld": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "configuration": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
-                    },
-                    "slide": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "feedSource": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "feedUrl": {
-                        "type": "string",
-                        "nullable": true
-                    }
-                }
-            },
-            "FeedSource.FeedSource": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "outputType": {
-                        "type": "string"
-                    },
-                    "feedType": {
-                        "type": "string"
-                    },
-                    "secrets": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "configuration": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "feeds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-            "FeedSource.FeedSource.jsonld": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "outputType": {
-                        "type": "string"
-                    },
-                    "feedType": {
-                        "type": "string"
-                    },
-                    "secrets": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "configuration": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "feeds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "example": "apassword"
                     }
                 }
             },
@@ -5634,13 +5036,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "feed": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
                     }
                 }
             },
@@ -5749,13 +5144,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "feed": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
                     }
                 }
             },
@@ -5813,13 +5201,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "feed": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
                     },
                     "media": {
                         "type": "array",
@@ -5930,13 +5311,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "feed": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
                     },
                     "media": {
                         "type": "array",
@@ -6232,6 +5606,15 @@
                         "type": "string"
                     }
                 }
+            },
+            "Token": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                }
             }
         },
         "responses": {},
@@ -6239,8 +5622,19 @@
         "examples": {},
         "requestBodies": {},
         "headers": {},
-        "securitySchemes": {}
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "description": "Value for the Authorization header parameter.",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
     },
-    "security": [],
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
     "tags": []
 }

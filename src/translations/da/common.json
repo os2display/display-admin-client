@@ -637,6 +637,14 @@
     "selected-all": "Vælg alle",
     "select-some-options": "Vælg..."
   },
+  "login": {
+    "please-authenticate": "Log ind",
+    "email": "Email",
+    "password": "Kodeord",
+    "error": "Log ind fejlede",
+    "invalid-credentials": "Log ind blev ikke genkendt",
+    "submit": "Log ind"
+  },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten"
   },
