@@ -178,7 +178,7 @@ function List({
     <>
       <Row className="my-2">
         <Col>
-          <SearchBox value={searchParams || ""} onChange={onSearch} />
+          <SearchBox value={searchParams} onChange={onSearch} />
         </Col>
         <Col className="d-flex justify-content-end">
           <Button
