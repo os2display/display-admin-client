@@ -665,5 +665,17 @@
   },
   "file-selector": {
     "open-media-library": "Vælg fra mediearkiv"
+  },
+  "screen": {
+    "bind-header": "Tilkobling",
+    "bind": "Tilkobl skærm",
+    "unbind": "Afkobl skærm",
+    "not-bound": "Skærmen er ikke tilkoblet",
+    "already-bound": "Skærmen er tilkoblet",
+    "bindkey-label": "Tilkoblingskode",
+    "error-messages": {
+      "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles: \"{{error}}\"",
+      "error-unbinding": "Der skete en fejl ({{status}}) da skærmen skulle afkobles: \"{{error}}\""
+    }
   }
 }

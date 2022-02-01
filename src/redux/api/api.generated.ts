@@ -4,6 +4,16 @@ export const api = createApi({
   baseQuery: extendedBaseQuery,
   tagTypes: [],
   endpoints: (build) => ({
+    postLoginInfoScreen: build.mutation<
+      PostLoginInfoScreenApiResponse,
+      PostLoginInfoScreenApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/screen`,
+        method: "POST",
+        body: queryArg.screenLoginInput,
+      }),
+    }),
     postCredentialsItem: build.mutation<
       PostCredentialsItemApiResponse,
       PostCredentialsItemApiArg
@@ -13,6 +23,57 @@ export const api = createApi({
         method: "POST",
         body: queryArg.credentials,
       }),
+    }),
+    getV1FeedSources: build.query<
+      GetV1FeedSourcesApiResponse,
+      GetV1FeedSourcesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/feed-sources`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1FeedSourcesById: build.query<
+      GetV1FeedSourcesByIdApiResponse,
+      GetV1FeedSourcesByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feed-sources/${queryArg.id}` }),
+    }),
+    getV1FeedSourcesByIdConfigAndName: build.query<
+      GetV1FeedSourcesByIdConfigAndNameApiResponse,
+      GetV1FeedSourcesByIdConfigAndNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/feed_sources/${queryArg.id}/config/${queryArg.name}`,
+      }),
+    }),
+    getV1Feeds: build.query<GetV1FeedsApiResponse, GetV1FeedsApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/feeds`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1FeedsById: build.query<
+      GetV1FeedsByIdApiResponse,
+      GetV1FeedsByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}` }),
+    }),
+    getV1FeedsByIdData: build.query<
+      GetV1FeedsByIdDataApiResponse,
+      GetV1FeedsByIdDataApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}/data` }),
     }),
     getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({
       query: (queryArg) => ({
@@ -270,6 +331,16 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    postScreenBindKey: build.mutation<
+      PostScreenBindKeyApiResponse,
+      PostScreenBindKeyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/bind`,
+        method: "POST",
+        body: queryArg.screenBindObject,
+      }),
+    }),
     getV1ScreensByIdRegionsAndRegionIdPlaylists: build.query<
       GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiResponse,
       GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg
@@ -328,6 +399,16 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/screens/${queryArg.id}/screen-groups/${queryArg.screenGroupId}`,
         method: "DELETE",
+      }),
+    }),
+    postScreenUnbind: build.mutation<
+      PostScreenUnbindApiResponse,
+      PostScreenUnbindApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/unbind`,
+        method: "POST",
+        body: queryArg.body,
       }),
     }),
     getV1Slides: build.query<GetV1SlidesApiResponse, GetV1SlidesApiArg>({
@@ -442,11 +523,58 @@ export const api = createApi({
     }),
   }),
 });
+export type PostLoginInfoScreenApiResponse =
+  /** status 200 Login with bindKey to get JWT token for screen */ ScreenLoginOutput;
+export type PostLoginInfoScreenApiArg = {
+  /** Get login info with JWT token for given nonce */
+  screenLoginInput: ScreenLoginInput;
+};
 export type PostCredentialsItemApiResponse =
   /** status 200 Get JWT token */ Token;
 export type PostCredentialsItemApiArg = {
   /** Generate new JWT Token */
   credentials: Credentials;
+};
+export type GetV1FeedSourcesApiResponse = unknown;
+export type GetV1FeedSourcesApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
+};
+export type GetV1FeedSourcesByIdApiResponse = unknown;
+export type GetV1FeedSourcesByIdApiArg = {
+  id: string;
+};
+export type GetV1FeedSourcesByIdConfigAndNameApiResponse = unknown;
+export type GetV1FeedSourcesByIdConfigAndNameApiArg = {
+  id: string;
+  name: string;
+};
+export type GetV1FeedsApiResponse = unknown;
+export type GetV1FeedsApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  order?: {
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
+};
+export type GetV1FeedsByIdApiResponse = unknown;
+export type GetV1FeedsByIdApiArg = {
+  id: string;
+};
+export type GetV1FeedsByIdDataApiResponse = unknown;
+export type GetV1FeedsByIdDataApiArg = {
+  id: string;
 };
 export type GetV1LayoutsApiResponse = unknown;
 export type GetV1LayoutsApiArg = {
@@ -638,6 +766,12 @@ export type DeleteV1ScreensByIdApiResponse = unknown;
 export type DeleteV1ScreensByIdApiArg = {
   id: string;
 };
+export type PostScreenBindKeyApiResponse = unknown;
+export type PostScreenBindKeyApiArg = {
+  id?: any;
+  /** Get login info with JWT token for given nonce */
+  screenBindObject: ScreenBindObject;
+};
 export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiResponse = unknown;
 export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg = {
   id: string;
@@ -679,6 +813,12 @@ export type DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiResponse =
 export type DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiArg = {
   id: string;
   screenGroupId: string;
+};
+export type PostScreenUnbindApiResponse = unknown;
+export type PostScreenUnbindApiArg = {
+  id?: any;
+  /** Unbind from machine */
+  body: string;
 };
 export type GetV1SlidesApiResponse = unknown;
 export type GetV1SlidesApiArg = {
@@ -764,6 +904,12 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
+export type ScreenLoginOutput = {
+  bindKey?: string;
+  token?: string;
+  screenId?: string;
+};
+export type ScreenLoginInput = object;
 export type Token = {
   token?: string;
 };
@@ -795,6 +941,9 @@ export type ScreenScreenInput = {
   location?: string;
   dimensions?: string[];
 };
+export type ScreenBindObject = {
+  bindKey?: string;
+};
 export type SlideSlideInput = {
   title?: string;
   description?: string;
@@ -804,6 +953,7 @@ export type SlideSlideInput = {
   theme?: string;
   duration?: number | null;
   published?: string[];
+  feed?: string[] | null;
   media?: string[];
   content?: string[];
 };
@@ -815,7 +965,14 @@ export type ThemeThemeInput = {
   css?: string;
 };
 export const {
+  usePostLoginInfoScreenMutation,
   usePostCredentialsItemMutation,
+  useGetV1FeedSourcesQuery,
+  useGetV1FeedSourcesByIdQuery,
+  useGetV1FeedSourcesByIdConfigAndNameQuery,
+  useGetV1FeedsQuery,
+  useGetV1FeedsByIdQuery,
+  useGetV1FeedsByIdDataQuery,
   useGetV1LayoutsQuery,
   useGetV1LayoutsByIdQuery,
   useGetV1MediaQuery,
@@ -842,12 +999,14 @@ export const {
   useGetV1ScreensByIdQuery,
   usePutV1ScreensByIdMutation,
   useDeleteV1ScreensByIdMutation,
+  usePostScreenBindKeyMutation,
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
   usePutPlaylistScreenRegionItemMutation,
   useDeletePlaylistScreenRegionItemMutation,
   useGetV1ScreensByIdScreenGroupsQuery,
   usePutV1ScreensByIdScreenGroupsMutation,
   useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation,
+  usePostScreenUnbindMutation,
   useGetV1SlidesQuery,
   usePostV1SlidesMutation,
   useGetV1SlidesByIdQuery,
