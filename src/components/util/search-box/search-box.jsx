@@ -26,6 +26,7 @@ function SearchBox({ value, onChange, showLabel }) {
           <FontAwesomeIcon icon={faSearch} />
         </InputGroup.Text>
         <FormControl
+          autoFocus
           placeholder={t("search-box.placeholder")}
           id="search-field"
           role="search"
