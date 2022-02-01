@@ -30,7 +30,6 @@ services:
     working_dir: /e2e
     entrypoint: cypress
     environment:
-      - DEBUG=cypress:*
       - CYPRESS_VIDEO=false
       - CYPRESS_baseUrl=http://node:3000
       #- DISPLAY=host.docker.internal:0
