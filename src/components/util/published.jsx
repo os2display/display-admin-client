@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import isBetween from "dayjs/plugin/isBetween";
 import dayjs from "dayjs";
 
 /**
@@ -12,31 +11,42 @@ import dayjs from "dayjs";
 function Published({ published }) {
   const { t } = useTranslation("common");
   const [isPublished, setIsPublished] = useState(false);
-  const { from, to } = published;
-  // extend isbetween
-  useEffect(() => {
-    dayjs.extend(isBetween);
-    if (from && to) {
-      setIsPublished(
-        dayjs(new Date()).isBetween(dayjs(from), dayjs(to), "minute")
-      );
-    } else if (!from && to) {
-      const today = new Date();
-      setIsPublished(
-        dayjs(today).isBetween(
-          dayjs(today.getMinutes() - 1),
-          dayjs(to),
-          "minute"
-        )
-      );
+
+  /**
+   * Check published state.
+   *
+   * @param {object} publishedState - The published state.
+   * @returns {boolean} - Published true/false.
+   */
+  function calculateIsPublished(publishedState) {
+    const now = dayjs(new Date());
+    const from = publishedState?.from ? dayjs(publishedState.from) : null;
+    const to = publishedState?.to ? dayjs(publishedState.to) : null;
+
+    if (from !== null && to !== null) {
+      return now.isAfter(from) && now.isBefore(to);
     }
-  }, []);
+    if (from !== null && to === null) {
+      return now.isAfter(from);
+    }
+    if (from === null && to !== null) {
+      return now.isBefore(to);
+    }
+    return true;
+  }
+
+  useEffect(() => {
+    setIsPublished(calculateIsPublished(published));
+  }, [published]);
 
   return <div>{isPublished ? t("published.yes") : t("published.no")}</div>;
 }
 
 Published.propTypes = {
-  published: PropTypes.objectOf(PropTypes.any).isRequired,
+  published: PropTypes.shape({
+    from: PropTypes.number,
+    to: PropTypes.number,
+  }).isRequired,
 };
 
 export default Published;
