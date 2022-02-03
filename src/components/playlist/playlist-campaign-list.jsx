@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router";
 import selectedHelper from "../util/helpers/selectedHelper";
+import ContentHeader from "../util/content-header/content-header";
 import ListButton from "../util/list/list-button";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -9,7 +11,6 @@ import InfoModal from "../info-modal/info-modal";
 import LinkForList from "../util/list/link-for-list";
 import idFromUrl from "../util/helpers/id-from-url";
 import CheckboxForList from "../util/list/checkbox-for-list";
-import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import Published from "../util/published";
 import {
@@ -17,18 +18,19 @@ import {
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
 import {
-  useGetV1PlaylistsQuery,
   useDeleteV1PlaylistsByIdMutation,
   useGetV1PlaylistsByIdSlidesQuery,
+  useGetV1PlaylistsQuery,
 } from "../../redux/api/api.generated";
 
 /**
- * The playlists list component.
+ * The shared list component.
  *
- * @returns {object} The playlists list.
+ * @returns {object} The shared list, shared by playlists and campaigns.
  */
-function PlaylistList() {
+function PlaylistCampaignList() {
   const { t } = useTranslation("common");
+  const { location } = useParams();
 
   // Local state
   const [selectedRows, setSelectedRows] = useState([]);
@@ -43,7 +45,7 @@ function PlaylistList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("playlists-list.loading-messages.loading-playlists")
+    t(`shared-list.${location}.loading-messages.loading`)
   );
 
   // Delete call
@@ -64,6 +66,7 @@ function PlaylistList() {
     order: sortBy?.order,
     title: searchText,
     published: isPublished,
+    isCampaign: location === "campaign",
   });
 
   useEffect(() => {
@@ -76,23 +79,23 @@ function PlaylistList() {
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
       if (isDeleteSuccess) {
-        displaySuccess(t("playlists-list.success-messages.playlist-delete"));
+        displaySuccess(t(`shared-list.${location}.success-messages.delete`));
       }
       // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
-      setLoadingMessage(t("playlists-list.loading-messages.deleting-playlist"));
+      setLoadingMessage(t(`shared-list.${location}.loading-messages.deleting`));
       const toDelete = playlistsToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Playlists({ id: toDeleteId });
     } else if (isDeleteSuccess && playlistsToDelete.length > 0) {
-      displaySuccess(t("playlists-list.success-messages.playlist-delete"));
+      displaySuccess(t(`shared-list.${location}.success-messages.delete`));
     }
   }, [playlistsToDelete, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && playlistsToDelete.length === 0) {
-      displaySuccess(t("playlists-list.success-messages.playlist-delete"));
+      displaySuccess(t(`shared-list.${location}.success-messages.delete`));
       refetch();
       setIsDeleting(false);
     }
@@ -103,7 +106,7 @@ function PlaylistList() {
     if (isDeleteError) {
       setIsDeleting(false);
       displayError(
-        t("playlists-list.error-messages.playlist-delete-error", {
+        t(`shared-list.${location}.error-messages.delete-error`, {
           error: isDeleteError.error
             ? isDeleteError.error
             : isDeleteError.data["hydra:description"],
@@ -206,7 +209,7 @@ function PlaylistList() {
   const columns = [
     {
       key: "pick",
-      label: t("playlists-list.columns.pick"),
+      label: t(`shared-list.${location}.columns.pick`),
       content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
@@ -217,17 +220,17 @@ function PlaylistList() {
     {
       path: "title",
       sort: true,
-      label: t("playlists-list.columns.name"),
+      label: t("shared-list.columns.name"),
     },
     {
       path: "published",
-      label: t("playlists-list.columns.published"),
+      label: t("shared-list.columns.published"),
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
     },
     {
       key: "slides",
-      label: t("playlists-list.columns.number-of-slides"),
+      label: t("shared-list.columns.number-of-slides"),
       // eslint-disable-next-line react/prop-types
       content: ({ slides }) => (
         <ListButton
@@ -240,7 +243,7 @@ function PlaylistList() {
     {
       key: "edit",
       content: (d) =>
-        LinkForList(d["@id"], "playlist/edit", t("playlists-list.edit-button")),
+        LinkForList(d["@id"], `${location}/edit`, t("shared-list.edit-button")),
     },
     {
       key: "delete",
@@ -250,7 +253,7 @@ function PlaylistList() {
           disabled={selectedRows.length > 0}
           onClick={() => openDeleteModal(d)}
         >
-          {t("playlists-list.delete-button")}
+          {t("shared-list.delete-button")}
         </Button>
       ),
     },
@@ -260,7 +263,7 @@ function PlaylistList() {
   useEffect(() => {
     if (playlistsGetError) {
       displayError(
-        t("playlists-list.error-messages.playlists-load-error", {
+        t(`shared-list.${location}.error-messages.load-error`, {
           error: playlistsGetError.error
             ? playlistsGetError.error
             : playlistsGetError.data["hydra:description"],
@@ -272,9 +275,9 @@ function PlaylistList() {
   return (
     <>
       <ContentHeader
-        title={t("playlists-list.header")}
-        newBtnTitle={t("playlists-list.create-new-playlist")}
-        newBtnLink="/playlist/create"
+        title={t(`shared-list.${location}.header`)}
+        newBtnTitle={t(`shared-list.${location}.create-new`)}
+        newBtnLink={`/${location}/create`}
       />
       {listData && (
         <ContentBody>
@@ -307,10 +310,10 @@ function PlaylistList() {
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}
         dataKey="slide"
-        modalTitle={t("playlists-list.info-modal.playlist-slides")}
+        modalTitle={t(`shared-list.${location}.info-modal.slides`)}
       />
     </>
   );
 }
 
-export default PlaylistList;
+export default PlaylistCampaignList;

@@ -42,6 +42,22 @@ export const api = createApi({
         body: queryArg.credentials,
       }),
     }),
+<<<<<<< HEAD
+=======
+    getV1CampaignsByIdScreenGroups: build.query<
+      GetV1CampaignsByIdScreenGroupsApiResponse,
+      GetV1CampaignsByIdScreenGroupsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/campaigns/${queryArg.id}/screen-groups`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
+      }),
+    }),
+>>>>>>> 40ff127 (AR-722: campaign in admin)
     getV1CampaignsByIdScreens: build.query<
       GetV1CampaignsByIdScreensApiResponse,
       GetV1CampaignsByIdScreensApiArg
@@ -640,6 +656,22 @@ export type PostCredentialsItemApiArg = {
   /** Generate new JWT Token */
   credentials: Credentials;
 };
+<<<<<<< HEAD
+=======
+export type GetV1CampaignsByIdScreenGroupsApiResponse = unknown;
+export type GetV1CampaignsByIdScreenGroupsApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
+};
+>>>>>>> 40ff127 (AR-722: campaign in admin)
 export type GetV1CampaignsByIdScreensApiResponse = unknown;
 export type GetV1CampaignsByIdScreensApiArg = {
   id: string;
@@ -1126,6 +1158,10 @@ export const {
   useGetOidcAuthUrlsItemQuery,
   usePostLoginInfoScreenMutation,
   usePostCredentialsItemMutation,
+<<<<<<< HEAD
+=======
+  useGetV1CampaignsByIdScreenGroupsQuery,
+>>>>>>> 40ff127 (AR-722: campaign in admin)
   useGetV1CampaignsByIdScreensQuery,
   useGetV1FeedSourcesQuery,
   useGetV1FeedSourcesByIdQuery,

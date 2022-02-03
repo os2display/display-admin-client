@@ -14,9 +14,13 @@ import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
 import GridGenerationAndSelect from "./grid-generation-and-select";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../util/helpers/id-from-url";
-import { api, useGetV1LayoutsQuery } from "../../redux/api/api.generated";
-import "./screen-form.scss";
+import {
+  api,
+  useGetV1LayoutsQuery,
+  useGetV1ScreensByIdScreenGroupsQuery,
+} from "../../redux/api/api.generated";
 import { displayError } from "../util/list/toast-component/display-toast";
+import "./screen-form.scss";
 
 /**
  * The screen form component.
@@ -204,7 +208,8 @@ function ScreenForm({
           <SelectGroupsTable
             handleChange={handleInput}
             name="inScreenGroups"
-            groupId={groupId}
+            id={groupId}
+            getSelectedMethod={useGetV1ScreensByIdScreenGroupsQuery}
           />
         </ContentBody>
         <ContentBody>
