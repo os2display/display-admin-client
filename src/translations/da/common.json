@@ -346,7 +346,7 @@
       "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes: {{error}}"
     }
   },
-  "shared-manager": {
+  "playlist-campaign-manager": {
     "campaign": {
       "edit-header": "Rediger følgende kampagne",
       "create-header": "Opret ny kampagne",
