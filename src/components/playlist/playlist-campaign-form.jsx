@@ -71,6 +71,7 @@ function PlaylistCampaignForm({
             slideId={slideId}
           />
         </ContentBody>
+        {/* Playlist or campaign form */}
         {children}
         <ContentBody>
           <h3 className="h4">{t("playlist-campaign-form.publish-title")}</h3>
