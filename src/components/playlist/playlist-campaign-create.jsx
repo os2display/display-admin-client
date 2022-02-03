@@ -1,5 +1,5 @@
 import { React } from "react";
-import SharedManager from "./shared-manager";
+import SharedManager from "./playlist-campaign-manager";
 
 /**
  * The playlist/campaign create component.

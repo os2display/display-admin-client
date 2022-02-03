@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import SharedManager from "./shared-manager";
+import SharedManager from "./playlist-campaign-manager";
 import idFromUrl from "../util/helpers/id-from-url";
 import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
 

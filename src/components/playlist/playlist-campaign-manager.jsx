@@ -17,7 +17,7 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import idFromUrl from "../util/helpers/id-from-url";
-import SharedForm from "./shared-form";
+import SharedForm from "./playlist-campaign-form";
 import PlaylistForm from "./playlist-form";
 import CampaignForm from "./campaign-form";
 
@@ -33,7 +33,7 @@ import CampaignForm from "./campaign-form";
  * @param {string} props.slideId Slide id
  * @returns {object} The shared manager, shared by campaign and playlists.
  */
-function SharedManager({
+function PlaylistCampaignManager({
   initialState,
   saveMethod,
   id,
@@ -436,7 +436,7 @@ function SharedManager({
   );
 }
 
-SharedManager.defaultProps = {
+PlaylistCampaignManager.defaultProps = {
   id: null,
   isLoading: false,
   loadingError: null,
@@ -444,7 +444,7 @@ SharedManager.defaultProps = {
   slideId: "",
 };
 
-SharedManager.propTypes = {
+PlaylistCampaignManager.propTypes = {
   initialState: PropTypes.shape({
     feed: PropTypes.shape({
       "@id": PropTypes.string,
@@ -457,4 +457,4 @@ SharedManager.propTypes = {
   slideId: PropTypes.string,
 };
 
-export default SharedManager;
+export default PlaylistCampaignManager;

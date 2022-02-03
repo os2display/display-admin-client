@@ -24,7 +24,7 @@ import LoadingComponent from "../util/loading-component/loading-component";
  * @param {Array} props.children The children being passed from parent
  * @returns {object} The form shared by campaigns and playlists.
  */
-function SharedForm({
+function PlaylistCampaignForm({
   playlist,
   handleInput,
   handleSubmit,
@@ -124,13 +124,13 @@ function SharedForm({
   );
 }
 
-SharedForm.defaultProps = {
+PlaylistCampaignForm.defaultProps = {
   slideId: "",
   isLoading: false,
   loadingMessage: "",
 };
 
-SharedForm.propTypes = {
+PlaylistCampaignForm.propTypes = {
   playlist: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
@@ -141,4 +141,4 @@ SharedForm.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default SharedForm;
+export default PlaylistCampaignForm;
