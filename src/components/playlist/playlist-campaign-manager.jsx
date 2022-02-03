@@ -1,10 +1,18 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import set from "lodash.set";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
+import set from "lodash.set";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
-import { useHistory } from "react-router-dom";
+import idFromUrl from "../util/helpers/id-from-url";
+import SharedForm from "./playlist-campaign-form";
+import PlaylistForm from "./playlist-form";
+import CampaignForm from "./campaign-form";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import {
   usePutV1PlaylistsByIdMutation,
   usePutV1ScreensByIdCampaignsMutation,
@@ -12,14 +20,6 @@ import {
   usePutV1ScreenGroupsByIdCampaignsMutation,
   usePostV1PlaylistsMutation,
 } from "../../redux/api/api.generated";
-import {
-  displaySuccess,
-  displayError,
-} from "../util/list/toast-component/display-toast";
-import idFromUrl from "../util/helpers/id-from-url";
-import SharedForm from "./playlist-campaign-form";
-import PlaylistForm from "./playlist-form";
-import CampaignForm from "./campaign-form";
 
 /**
  * The shared manager component.
@@ -42,8 +42,8 @@ function PlaylistCampaignManager({
   slideId,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
   const { location } = useParams();
+  const history = useHistory();
   const headerText =
     saveMethod === "PUT"
       ? t(`shared-manager.${location}.edit-header`)
@@ -95,6 +95,26 @@ function PlaylistCampaignManager({
     },
   ] = usePutV1PlaylistsByIdSlidesMutation();
 
+  /** Set loaded data into form state. */
+  useEffect(() => {
+    if (initialState) {
+      const localFormStateObject = JSON.parse(JSON.stringify(initialState));
+      // Set published to format accepted by bootstrap date component
+      if (localFormStateObject.published.from) {
+        localFormStateObject.published.from = dayjs(
+          localFormStateObject.published.from
+        ).format("YYYY-MM-DDTHH:mm");
+      }
+      if (localFormStateObject.published.to) {
+        localFormStateObject.published.to = dayjs(
+          localFormStateObject.published.to
+        ).format("YYYY-MM-DDTHH:mm");
+      }
+
+      setFormStateObject(localFormStateObject);
+    }
+  }, [initialState]);
+
   // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessSlides) {
@@ -113,7 +133,7 @@ function PlaylistCampaignManager({
     }
   }, [isSaveSuccessScreens]);
 
-  // Screens are saved successfully, display a message
+  // Groups are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessGroups) {
       displaySuccess(
@@ -124,55 +144,42 @@ function PlaylistCampaignManager({
 
   /** When the screen is saved, the slide will be saved. */
   useEffect(() => {
-    if (isSaveSuccessPut && screensToAdd) {
+    if ((isSaveSuccessPost || isSaveSuccessPut) && screensToAdd) {
       setLoadingMessage(
         t(`shared-manager.${location}.loading-messages.saving-screens`)
       );
       PutV1ScreensByIdCampaigns({
-        id,
+        id: id || idFromUrl(data["@id"]),
         body: JSON.stringify(screensToAdd),
       });
     }
-  }, [isSaveSuccessPut]);
-
-  /** When the screen is saved, the slide will be saved. */
-  useEffect(() => {
-    if (isSaveSuccessPost && screensToAdd && data) {
-      setLoadingMessage(
-        t(`shared-manager.${location}.loading-messages.saving-screens`)
-      );
-      PutV1ScreensByIdCampaigns({
-        id: idFromUrl(data["@id"]),
-        body: JSON.stringify(screensToAdd),
-      });
-    }
-  }, [isSaveSuccessPost]);
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
 
   /** When the group is saved, the slide will be saved. */
   useEffect(() => {
-    if (isSaveSuccessPut && groupsToAdd) {
+    if ((isSaveSuccessPost || isSaveSuccessPut) && groupsToAdd) {
       setLoadingMessage(
         t(`shared-manager.${location}.loading-messages.saving-groups`)
       );
       PutV1ScreenGroupsByIdCampaigns({
-        id,
+        id: id || idFromUrl(data["@id"]),
         body: JSON.stringify(groupsToAdd),
       });
     }
-  }, [isSaveSuccessPut]);
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
 
-  /** When the group is saved, the slide will be saved. */
+  /** When the playlist is saved, the slide will be saved. */
   useEffect(() => {
-    if (isSaveSuccessPost && groupsToAdd && data) {
+    if ((isSaveSuccessPost || isSaveSuccessPut) && slidesToAdd) {
       setLoadingMessage(
-        t(`shared-manager.${location}.loading-messages.saving-groups`)
+        t(`shared-manager.${location}.loading-messages.saving-slides`)
       );
-      PutV1ScreenGroupsByIdCampaigns({
-        id: idFromUrl(data["@id"]),
-        body: JSON.stringify(groupsToAdd),
+      PutV1PlaylistsByIdSlides({
+        id: id || idFromUrl(data["@id"]),
+        body: JSON.stringify(slidesToAdd),
       });
     }
-  }, [isSaveSuccessPost]);
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
 
   // Slides are not saved successfully, display a message
   useEffect(() => {
@@ -213,6 +220,7 @@ function PlaylistCampaignManager({
     }
   }, [saveErrorGroups]);
 
+  /** Slides are not saved successfully, display a message */
   useEffect(() => {
     if (loadingError) {
       displayError(
@@ -231,7 +239,7 @@ function PlaylistCampaignManager({
     if (isSaveSuccessPost || isSaveSuccessPut) {
       displaySuccess(t(`shared-manager.${location}.success-messages.saved`));
     }
-  }, [isSaveSuccessPost || isSaveSuccessPut]);
+  }, [isSaveSuccessPost, isSaveSuccessPut]);
 
   /** If the slide is saved with error, display the error message */
   useEffect(() => {
@@ -265,62 +273,15 @@ function PlaylistCampaignManager({
     setFormStateObject(localFormStateObject);
   }
 
-  /** Set loaded data into form state. */
-  useEffect(() => {
-    if (initialState) {
-      const localFormStateObject = JSON.parse(JSON.stringify(initialState));
-      // Set published to format accepted by bootstrap date component
-      if (localFormStateObject.published.from) {
-        localFormStateObject.published.from = dayjs(
-          localFormStateObject.published.from
-        ).format("YYYY-MM-DDTHH:mm");
-      }
-      if (localFormStateObject.published.to) {
-        localFormStateObject.published.to = dayjs(
-          localFormStateObject.published.to
-        ).format("YYYY-MM-DDTHH:mm");
-      }
-
-      setFormStateObject(localFormStateObject);
-    }
-  }, [initialState]);
-
-  /** When the playlist is saved, the slide will be saved. */
-  useEffect(() => {
-    if (isSaveSuccessPut && slidesToAdd) {
-      setLoadingMessage(
-        t(`shared-manager.${location}.loading-messages.saving-slides`)
-      );
-      PutV1PlaylistsByIdSlides({
-        id,
-        body: JSON.stringify(slidesToAdd),
-      });
-    }
-  }, [isSaveSuccessPut]);
-
-  /** When the playlist is saved, the slide will be saved. */
-  useEffect(() => {
-    if (isSaveSuccessPost && slidesToAdd && data) {
-      setLoadingMessage(
-        t(`shared-manager.${location}.loading-messages.saving-slides`)
-      );
-      PutV1PlaylistsByIdSlides({
-        id: idFromUrl(data["@id"]),
-        body: JSON.stringify(slidesToAdd),
-      });
-    }
-  }, [isSaveSuccessPost]);
-
   /** Sets slides to save. */
   function handleSaveSlides() {
     const { slides } = formStateObject;
-    if (Array.isArray(slides)) {
-      setSlidesToAdd(
-        slides.map((slide, index) => {
-          return { slide: idFromUrl(slide), weight: index };
-        })
-      );
-    }
+
+    setSlidesToAdd(
+      slides.map((slide, index) => {
+        return { slide: idFromUrl(slide), weight: index };
+      })
+    );
   }
 
   /** Sets screens to save. */
@@ -337,6 +298,7 @@ function PlaylistCampaignManager({
   /** Sets groups to save. */
   function handleSaveGroups() {
     const { groups } = formStateObject;
+
     setGroupsToAdd(
       groups.map((group) => {
         return { screengroup: idFromUrl(group) };

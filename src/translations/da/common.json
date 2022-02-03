@@ -140,7 +140,7 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "shared-list": {
+  "playlist-campaign-list": {
     "playlist": {
       "header": "Spillelister",
       "create-new": "Opret ny spilleliste",
@@ -400,7 +400,7 @@
   "playlist-form": {
     "schedule-header": "Planlægning"
   },
-  "shared-form": {
+  "playlist-campaign-form": {
     "title-about": "Om spillelisten",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",

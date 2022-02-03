@@ -12,6 +12,7 @@ import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
 function PlaylistCampaignEdit() {
   const { id } = useParams();
   const [slideId, setSlideId] = useState();
+
   const {
     data,
     error: loadingError,

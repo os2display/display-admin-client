@@ -45,7 +45,7 @@ function PlaylistCampaignList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t(`shared-list.${location}.loading-messages.loading`)
+    t(`playlist-campaign-list.${location}.loading-messages.loading`)
   );
 
   // Delete call
@@ -79,23 +79,31 @@ function PlaylistCampaignList() {
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
       if (isDeleteSuccess) {
-        displaySuccess(t(`shared-list.${location}.success-messages.delete`));
+        displaySuccess(
+          t(`playlist-campaign-list.${location}.success-messages.delete`)
+        );
       }
       // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
-      setLoadingMessage(t(`shared-list.${location}.loading-messages.deleting`));
+      setLoadingMessage(
+        t(`playlist-campaign-list.${location}.loading-messages.deleting`)
+      );
       const toDelete = playlistsToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Playlists({ id: toDeleteId });
     } else if (isDeleteSuccess && playlistsToDelete.length > 0) {
-      displaySuccess(t(`shared-list.${location}.success-messages.delete`));
+      displaySuccess(
+        t(`playlist-campaign-list.${location}.success-messages.delete`)
+      );
     }
   }, [playlistsToDelete, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && playlistsToDelete.length === 0) {
-      displaySuccess(t(`shared-list.${location}.success-messages.delete`));
+      displaySuccess(
+        t(`playlist-campaign-list.${location}.success-messages.delete`)
+      );
       refetch();
       setIsDeleting(false);
     }
@@ -106,7 +114,7 @@ function PlaylistCampaignList() {
     if (isDeleteError) {
       setIsDeleting(false);
       displayError(
-        t(`shared-list.${location}.error-messages.delete-error`, {
+        t(`playlist-campaign-list.${location}.error-messages.delete-error`, {
           error: isDeleteError.error
             ? isDeleteError.error
             : isDeleteError.data["hydra:description"],
@@ -209,7 +217,7 @@ function PlaylistCampaignList() {
   const columns = [
     {
       key: "pick",
-      label: t(`shared-list.${location}.columns.pick`),
+      label: t(`playlist-campaign-list.${location}.columns.pick`),
       content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
@@ -220,17 +228,17 @@ function PlaylistCampaignList() {
     {
       path: "title",
       sort: true,
-      label: t("shared-list.columns.name"),
+      label: t("playlist-campaign-list.columns.name"),
     },
     {
       path: "published",
-      label: t("shared-list.columns.published"),
+      label: t("playlist-campaign-list.columns.published"),
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
     },
     {
       key: "slides",
-      label: t("shared-list.columns.number-of-slides"),
+      label: t("playlist-campaign-list.columns.number-of-slides"),
       // eslint-disable-next-line react/prop-types
       content: ({ slides }) => (
         <ListButton
@@ -243,7 +251,11 @@ function PlaylistCampaignList() {
     {
       key: "edit",
       content: (d) =>
-        LinkForList(d["@id"], `${location}/edit`, t("shared-list.edit-button")),
+        LinkForList(
+          d["@id"],
+          `${location}/edit`,
+          t("playlist-campaign-list.edit-button")
+        ),
     },
     {
       key: "delete",
@@ -253,7 +265,7 @@ function PlaylistCampaignList() {
           disabled={selectedRows.length > 0}
           onClick={() => openDeleteModal(d)}
         >
-          {t("shared-list.delete-button")}
+          {t("playlist-campaign-list.delete-button")}
         </Button>
       ),
     },
@@ -263,7 +275,7 @@ function PlaylistCampaignList() {
   useEffect(() => {
     if (playlistsGetError) {
       displayError(
-        t(`shared-list.${location}.error-messages.load-error`, {
+        t(`playlist-campaign-list.${location}.error-messages.load-error`, {
           error: playlistsGetError.error
             ? playlistsGetError.error
             : playlistsGetError.data["hydra:description"],
@@ -275,8 +287,8 @@ function PlaylistCampaignList() {
   return (
     <>
       <ContentHeader
-        title={t(`shared-list.${location}.header`)}
-        newBtnTitle={t(`shared-list.${location}.create-new`)}
+        title={t(`playlist-campaign-list.${location}.header`)}
+        newBtnTitle={t(`playlist-campaign-list.${location}.create-new`)}
         newBtnLink={`/${location}/create`}
       />
       {listData && (
@@ -310,7 +322,7 @@ function PlaylistCampaignList() {
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}
         dataKey="slide"
-        modalTitle={t(`shared-list.${location}.info-modal.slides`)}
+        modalTitle={t(`playlist-campaign-list.${location}.info-modal.slides`)}
       />
     </>
   );

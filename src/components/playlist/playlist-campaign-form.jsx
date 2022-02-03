@@ -43,26 +43,28 @@ function PlaylistCampaignForm({
       <Form>
         <h1>{headerText}</h1>
         <ContentBody>
-          <h2 className="h4">{t("shared-form.title-about")}</h2>
+          <h2 className="h4">{t("playlist-campaign-form.title-about")}</h2>
           <FormInput
             name="title"
             type="text"
-            label={t("shared-form.playlist-name-label")}
-            placeholder={t("shared-form.playlist-name-placeholder")}
+            label={t("playlist-campaign-form.playlist-name-label")}
+            placeholder={t("playlist-campaign-form.playlist-name-placeholder")}
             value={playlist.title}
             onChange={handleInput}
           />
           <FormInputArea
             name="description"
             type="text"
-            label={t("shared-form.playlist-description-label")}
-            placeholder={t("shared-form.playlist-description-placeholder")}
+            label={t("playlist-campaign-form.playlist-description-label")}
+            placeholder={t(
+              "playlist-campaign-form.playlist-description-placeholder"
+            )}
             value={playlist.description}
             onChange={handleInput}
           />
         </ContentBody>
         <ContentBody>
-          <h2 className="h4">{t("shared-form.title-slides")}</h2>
+          <h2 className="h4">{t("playlist-campaign-form.title-slides")}</h2>
           <SelectSlidesTable
             handleChange={handleInput}
             name="slides"
@@ -71,13 +73,13 @@ function PlaylistCampaignForm({
         </ContentBody>
         {children}
         <ContentBody>
-          <h3 className="h4">{t("shared-form.publish-title")}</h3>
+          <h3 className="h4">{t("playlist-campaign-form.publish-title")}</h3>
           <Row className="g-2">
             <Col md>
               <FormInput
                 name="published.from"
                 type="datetime-local"
-                label={t("shared-form.publish-from-label")}
+                label={t("playlist-campaign-form.publish-from-label")}
                 value={playlist.published.from ?? ""}
                 onChange={handleInput}
               />
@@ -86,7 +88,7 @@ function PlaylistCampaignForm({
               <FormInput
                 name="published.to"
                 type="datetime-local"
-                label={t("shared-form.publish-to-label")}
+                label={t("playlist-campaign-form.publish-to-label")}
                 value={playlist.published.to ?? ""}
                 onChange={handleInput}
               />
@@ -94,7 +96,7 @@ function PlaylistCampaignForm({
           </Row>
           <Row>
             <small className="form-text">
-              {t("shared-form.publish-helptext")}
+              {t("playlist-campaign-form.publish-helptext")}
             </small>
           </Row>
         </ContentBody>
@@ -107,7 +109,7 @@ function PlaylistCampaignForm({
             size="lg"
             className="me-3"
           >
-            {t("shared-form.cancel-button")}
+            {t("playlist-campaign-form.cancel-button")}
           </Button>
           <Button
             variant="primary"
@@ -116,7 +118,7 @@ function PlaylistCampaignForm({
             id="save_playlist"
             size="lg"
           >
-            {t("shared-form.save-button")}
+            {t("playlist-campaign-form.save-button")}
           </Button>
         </ContentFooter>
       </Form>
