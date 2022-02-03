@@ -2994,6 +2994,255 @@
             },
             "parameters": []
         },
+        "/v1/screen-groups/{id}/campaigns": {
+            "get": {
+                "operationId": "get-v1-screen-groups-campaign-id",
+                "tags": [
+                    "ScreenGroups"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieves collection of campaign resources.",
+                "description": "Retrieves collection of campaign resources.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "published",
+                        "in": "query",
+                        "description": "If true only published content will be shown",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "put-v1-screen-groups-campaign-id",
+                "tags": [
+                    "ScreenGroups"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ScreenGroupCampaign resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetScreenGroupCampaignItem": {
+                                "operationId": "getScreenGroupCampaignItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/screen-groups-campaigns/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "playlist": {
+                                                "type": "string"
+                                            },
+                                            "screen-group": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Update the collection of campaigns on a screen group.",
+                "description": "Update the collection of campaigns on a screen group.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "playlist": {
+                                            "type": "string",
+                                            "format": "ulid",
+                                            "pattern": "^[A-Za-z0-9]{26}$",
+                                            "description": "Playlist ULID"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screen-groups/{id}/campaigns/{campaignId}": {
+            "delete": {
+                "operationId": "delete-v1-screen-groups-campaign-id",
+                "tags": [
+                    "ScreenGroups"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ScreenGroupCampaign resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete a campaign from a screen group.",
+                "description": "Delete a campaign from a screen group.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "campaignId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/screens": {
             "get": {
                 "operationId": "get-v1-screens",
@@ -3564,6 +3813,263 @@
                         }
                     }
                 },
+                "summary": "Update the collection of campaigns on a screen.",
+                "description": "Update the collection of campaigns on a screen.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "playlist": {
+                                            "type": "string",
+                                            "format": "ulid",
+                                            "pattern": "^[A-Za-z0-9]{26}$",
+                                            "description": "Playlist ULID"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screens/{id}/campaigns/{campaignId}": {
+            "delete": {
+                "operationId": "delete-v1-screen-campaign-id",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ScreenCampaign resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete a campaign from a screen.",
+                "description": "Delete a campaign from a screen.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+<<<<<<< HEAD
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": [],
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "Get login info with JWT token for given nonce",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ScreenBindObject"
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screens/{id}/campaigns": {
+            "get": {
+                "operationId": "get-v1-screen-campaign-id",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieves collection of campaign resources.",
+                "description": "Retrieves collection of campaign resources.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "published",
+                        "in": "query",
+                        "description": "If true only published content will be shown",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "put-v1-screen-campaign-id",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ScreenCampaign resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetScreenCampaignItem": {
+                                "operationId": "getScreenCampaignItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/screen-campaigns/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "playlist": {
+                                                "type": "string"
+                                            },
+                                            "screen": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "summary": "Update the collection of screens on a playlist.",
                 "description": "Update the collection of screens on a playlist.",
                 "parameters": [
@@ -3642,6 +4148,8 @@
                         "allowReserved": false
                     },
                     {
+=======
+>>>>>>> 40ff127 (AR-722: campaign in admin)
                         "name": "campaignId",
                         "in": "path",
                         "description": "",
@@ -6427,6 +6935,61 @@
                         "items": {
                             "type": "string"
                         }
+                    }
+                }
+            },
+            "ScreenCampaign.ScreenCampaign": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "campaign": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                }
+            },
+            "ScreenCampaign.ScreenCampaign.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "campaign": {
+                        "type": "string",
+                        "format": "iri-reference"
                     }
                 }
             },
