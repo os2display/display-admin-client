@@ -21,7 +21,7 @@ function MultiselectFromEndpoint({
   value,
   onChange,
   optionsEndpoint,
-  singleSelect
+  singleSelect,
 }) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState(null);
@@ -33,7 +33,7 @@ function MultiselectFromEndpoint({
       fetch(optionsEndpoint, {
         headers: {
           authorization: `Bearer ${apiToken ?? ""}`,
-        }
+        },
       })
         .then((response) => response.json())
         .then((data) => {

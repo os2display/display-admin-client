@@ -152,7 +152,7 @@ FeedSelector.defaultProps = {
   value: {
     feedSource: "",
   },
-  formElement: {}
+  formElement: {},
 };
 
 FeedSelector.propTypes = {
@@ -161,7 +161,9 @@ FeedSelector.propTypes = {
     configuration: PropTypes.shape({}),
   }),
   onChange: PropTypes.func.isRequired,
-  formElement: PropTypes.shape({}),
+  formElement: PropTypes.shape({
+    singleSelect: PropTypes.bool,
+  }),
 };
 
 export default FeedSelector;
