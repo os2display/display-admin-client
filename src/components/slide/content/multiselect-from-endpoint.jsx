@@ -12,6 +12,7 @@ import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dr
  * @param {object} props.value - The value.
  * @param {Function} props.onChange - On change callback.
  * @param {string} props.optionsEndpoint - Endpoint from which to fetch the options.
+ * @param {boolean} props.singleSelect - Allow only to select one option.
  * @returns {object} - The FeedSelector component.
  */
 function MultiselectFromEndpoint({
@@ -20,13 +21,20 @@ function MultiselectFromEndpoint({
   value,
   onChange,
   optionsEndpoint,
+  singleSelect,
 }) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState(null);
 
   useEffect(() => {
     if (optionsEndpoint) {
-      fetch(optionsEndpoint)
+      // @TODO: Handle this in service.
+      const apiToken = localStorage.getItem("api-token");
+      fetch(optionsEndpoint, {
+        headers: {
+          authorization: `Bearer ${apiToken ?? ""}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           setOptions(
@@ -61,6 +69,7 @@ function MultiselectFromEndpoint({
           selected={getSelected(value)}
           name={name}
           disableSearch
+          singleSelect={singleSelect}
           labelledBy="Select"
           overrideStrings={{
             allItemsAreSelected: t("multiselect.all-selected"),
@@ -83,6 +92,7 @@ function MultiselectFromEndpoint({
 MultiselectFromEndpoint.defaultProps = {
   label: null,
   value: [],
+  singleSelect: false,
 };
 
 MultiselectFromEndpoint.propTypes = {
@@ -91,6 +101,7 @@ MultiselectFromEndpoint.propTypes = {
   value: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   optionsEndpoint: PropTypes.string.isRequired,
+  singleSelect: PropTypes.bool,
 };
 
 export default MultiselectFromEndpoint;

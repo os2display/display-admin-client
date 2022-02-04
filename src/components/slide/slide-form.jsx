@@ -230,6 +230,7 @@ function SlideForm({
                         <FeedSelector
                           name={formElement.name}
                           value={slide?.feed}
+                          formElement={formElement}
                           onChange={(value) => {
                             handleInput({ target: { id: "feed", value } });
                           }}

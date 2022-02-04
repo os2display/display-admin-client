@@ -19,9 +19,10 @@ import MultiselectFromEndpoint from "./multiselect-from-endpoint";
  * @param {object} props - The props.
  * @param {object} props.value - The feed value.
  * @param {Function} props.onChange - On change callback.
+ * @param {object} props.formElement - The form element data.
  * @returns {object} - The FeedSelector component.
  */
-function FeedSelector({ value, onChange }) {
+function FeedSelector({ value, onChange, formElement }) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   const [feedSourceOptions, setFeedSourceOptions] = useState([]);
@@ -102,6 +103,7 @@ function FeedSelector({ value, onChange }) {
           value={getValueFromConfiguration(element.name)}
           label={element.label}
           optionsEndpoint={element.endpoint}
+          singleSelect={formElement.singleSelect ?? false}
         />
       );
     }
@@ -127,7 +129,7 @@ function FeedSelector({ value, onChange }) {
           selected={getSelected(value?.feedSource)}
           name="feedSource"
           labelledBy="Select"
-          singleSelect
+          singleSelect={formElement.singleSelect ?? false}
           overrideStrings={{
             allItemsAreSelected: t("feed-selector.all-selected"),
             clearSelected: t("feed-selector.clear-selection"),
@@ -150,6 +152,7 @@ FeedSelector.defaultProps = {
   value: {
     feedSource: "",
   },
+  formElement: {},
 };
 
 FeedSelector.propTypes = {
@@ -158,6 +161,9 @@ FeedSelector.propTypes = {
     configuration: PropTypes.shape({}),
   }),
   onChange: PropTypes.func.isRequired,
+  formElement: PropTypes.shape({
+    singleSelect: PropTypes.bool,
+  }),
 };
 
 export default FeedSelector;
