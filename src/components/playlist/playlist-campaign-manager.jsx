@@ -128,7 +128,9 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (isSaveSuccessScreens) {
       displaySuccess(
-        t(`playlist-campaign-manager.${location}.success-messages.saved-screens`)
+        t(
+          `playlist-campaign-manager.${location}.success-messages.saved-screens`
+        )
       );
     }
   }, [isSaveSuccessScreens]);
@@ -144,10 +146,17 @@ function PlaylistCampaignManager({
 
   /** When the screen is saved, the slide will be saved. */
   useEffect(() => {
-    if ((isSaveSuccessPost || isSaveSuccessPut) && screensToAdd) {
+    if (
+      (isSaveSuccessPost || isSaveSuccessPut) &&
+      screensToAdd &&
+      formStateObject.screens
+    ) {
       setLoadingMessage(
-        t(`playlist-campaign-manager.${location}.loading-messages.saving-screens`)
+        t(
+          `playlist-campaign-manager.${location}.loading-messages.saving-screens`
+        )
       );
+
       PutV1ScreensByIdCampaigns({
         id: id || idFromUrl(data["@id"]),
         body: JSON.stringify(screensToAdd),
@@ -157,9 +166,15 @@ function PlaylistCampaignManager({
 
   /** When the group is saved, the slide will be saved. */
   useEffect(() => {
-    if ((isSaveSuccessPost || isSaveSuccessPut) && groupsToAdd) {
+    if (
+      (isSaveSuccessPost || isSaveSuccessPut) &&
+      groupsToAdd &&
+      formStateObject.groups
+    ) {
       setLoadingMessage(
-        t(`playlist-campaign-manager.${location}.loading-messages.saving-groups`)
+        t(
+          `playlist-campaign-manager.${location}.loading-messages.saving-groups`
+        )
       );
       PutV1ScreenGroupsByIdCampaigns({
         id: id || idFromUrl(data["@id"]),
@@ -170,9 +185,15 @@ function PlaylistCampaignManager({
 
   /** When the playlist is saved, the slide will be saved. */
   useEffect(() => {
-    if ((isSaveSuccessPost || isSaveSuccessPut) && slidesToAdd) {
+    if (
+      (isSaveSuccessPost || isSaveSuccessPut) &&
+      slidesToAdd &&
+      Array.isArray(formStateObject.slides)
+    ) {
       setLoadingMessage(
-        t(`playlist-campaign-manager.${location}.loading-messages.saving-slides`)
+        t(
+          `playlist-campaign-manager.${location}.loading-messages.saving-slides`
+        )
       );
       PutV1PlaylistsByIdSlides({
         id: id || idFromUrl(data["@id"]),
@@ -185,11 +206,14 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (saveErrorSlides) {
       displayError(
-        t(`playlist-campaign-manager.${location}.error-messages.save-slides-error`, {
-          error: saveErrorSlides.error
-            ? saveErrorSlides.error
-            : saveErrorSlides.data["hydra:description"],
-        })
+        t(
+          `playlist-campaign-manager.${location}.error-messages.save-slides-error`,
+          {
+            error: saveErrorSlides.error
+              ? saveErrorSlides.error
+              : saveErrorSlides.data["hydra:description"],
+          }
+        )
       );
     }
   }, [saveErrorSlides]);
@@ -198,11 +222,14 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (saveErrorScreens) {
       displayError(
-        t(`playlist-campaign-manager.${location}.error-messages.save-screens-error`, {
-          error: saveErrorScreens.error
-            ? saveErrorScreens.error
-            : saveErrorScreens.data["hydra:description"],
-        })
+        t(
+          `playlist-campaign-manager.${location}.error-messages.save-screens-error`,
+          {
+            error: saveErrorScreens.error
+              ? saveErrorScreens.error
+              : saveErrorScreens.data["hydra:description"],
+          }
+        )
       );
     }
   }, [saveErrorScreens]);
@@ -211,11 +238,14 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (saveErrorGroups) {
       displayError(
-        t(`playlist-campaign-manager.${location}.error-messages.save-group-error`, {
-          error: saveErrorGroups.error
-            ? saveErrorGroups.error
-            : saveErrorGroups.data["hydra:description"],
-        })
+        t(
+          `playlist-campaign-manager.${location}.error-messages.save-group-error`,
+          {
+            error: saveErrorGroups.error
+              ? saveErrorGroups.error
+              : saveErrorGroups.data["hydra:description"],
+          }
+        )
       );
     }
   }, [saveErrorGroups]);
@@ -224,7 +254,7 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (loadingError) {
       displayError(
-        t(`playlist-campaign-manager.${location}.error-messages.load-slide-error`, {
+        t(`playlist-campaign-manager.${location}.error-messages.load-error`, {
           error: loadingError.error
             ? loadingError.error
             : loadingError.data["hydra:description"],
@@ -237,7 +267,9 @@ function PlaylistCampaignManager({
   /** If the slide is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccessPost || isSaveSuccessPut) {
-      displaySuccess(t(`playlist-campaign-manager.${location}.success-messages.saved`));
+      displaySuccess(
+        t(`playlist-campaign-manager.${location}.success-messages.saved`)
+      );
     }
   }, [isSaveSuccessPost, isSaveSuccessPut]);
 
@@ -309,7 +341,9 @@ function PlaylistCampaignManager({
   /** Handles submit. */
   function handleSubmit() {
     setLoadingMessage(
-      t(`playlist-campaign-manager.${location}.loading-messages.saving-playlist`)
+      t(
+        `playlist-campaign-manager.${location}.loading-messages.saving-playlist`
+      )
     );
 
     // Set published.
@@ -322,6 +356,7 @@ function PlaylistCampaignManager({
 
     const saveData = {
       title: formStateObject.title,
+      isCampaign: location === "campaign",
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
@@ -337,7 +372,9 @@ function PlaylistCampaignManager({
       },
     };
 
-    setLoadingMessage(t(`playlist-campaign-manager.${location}.loading-messages.saving`));
+    setLoadingMessage(
+      t(`playlist-campaign-manager.${location}.loading-messages.saving`)
+    );
     if (saveMethod === "POST") {
       PostV1Playlist({
         playlistPlaylistInput: JSON.stringify(saveData),
@@ -352,9 +389,11 @@ function PlaylistCampaignManager({
     if (Array.isArray(formStateObject.slides)) {
       handleSaveSlides();
     }
+
     if (Array.isArray(formStateObject.screens)) {
       handleSaveScreens();
     }
+
     if (Array.isArray(formStateObject.groups)) {
       handleSaveGroups();
     }
