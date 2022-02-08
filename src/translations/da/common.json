@@ -643,7 +643,11 @@
     "password": "Kodeord",
     "error": "Log ind fejlede",
     "invalid-credentials": "Log ind blev ikke genkendt",
-    "submit": "Log ind"
+    "submit": "Log ind",
+    "error-oidc-login": "Log ind med AD fejlede",
+    "error-fetching-oidc-urls": "Opsætning af AD login fejlede",
+    "login-with-oidc": "Log ind med AD",
+    "login-with-username-password": "Log ind med email og kodeord"
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten"

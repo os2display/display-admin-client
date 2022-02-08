@@ -15,6 +15,84 @@
         }
     ],
     "paths": {
+        "/v1/authentication/oidc/token": {
+            "ref": "Open ID connect token",
+            "get": {
+                "operationId": "getOidcAuthTokenItem",
+                "tags": [
+                    "Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get JWT token from OIDC token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Get JWT token to login from OIDC token",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "state",
+                        "description": "OIDC state",
+                        "in": "query",
+                        "required": false,
+                        "style": "simple",
+                        "example": ""
+                    },
+                    {
+                        "name": "id_token",
+                        "description": "OIDC id token",
+                        "in": "query",
+                        "required": false,
+                        "style": "simple",
+                        "example": ""
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/authentication/oidc/urls": {
+            "ref": "Open ID connect URLs",
+            "get": {
+                "operationId": "getOidcAuthUrlsItem",
+                "tags": [
+                    "Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get authentication and end session endpoints",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OidcEndpoints"
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Get OpenID connect URLs",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "providerKey",
+                        "description": "The key for the provider to use. Leave out to use the default provider",
+                        "in": "query",
+                        "required": false,
+                        "style": "simple",
+                        "example": ""
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/authentication/screen": {
             "ref": "JWT Token",
             "post": {
@@ -52,12 +130,12 @@
             },
             "parameters": []
         },
-        "/v1/authentication_token": {
+        "/v1/authentication/token": {
             "ref": "JWT Token",
             "post": {
                 "operationId": "postCredentialsItem",
                 "tags": [
-                    "Auth Token"
+                    "Authentication"
                 ],
                 "responses": {
                     "200": {
@@ -71,7 +149,7 @@
                         }
                     }
                 },
-                "summary": "Get JWT token to login.",
+                "summary": "Get JWT token to login from local user.",
                 "description": "",
                 "parameters": [],
                 "requestBody": {
@@ -85,6 +163,246 @@
                     },
                     "required": false
                 },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/campaigns/{id}/screens": {
+            "get": {
+                "operationId": "get-v1-campaign-id-screen",
+                "tags": [
+                    "Playlists"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Screen collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Screen.Screen.jsonld"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Screen.Screen"
+                                    }
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Screen.Screen"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Get Screen resources on campaign.",
+                "description": "Get Screen resources on campaign.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[title]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[description]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[createdAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[updatedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
                 "deprecated": false
             },
             "parameters": []
@@ -348,7 +666,7 @@
                         "allowEmptyValue": false,
                         "schema": {
                             "type": "string",
-                            "pattern": "^[A-Za-z0-9]{26}$"
+                            "pattern": "^[A-Za-z0-9]*$"
                         },
                         "style": "simple",
                         "explode": false,
@@ -1230,6 +1548,20 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "isCampaign",
+                        "in": "query",
+                        "description": "If true only campaigns will be shown",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "order[title]",
                         "in": "query",
                         "description": "",
@@ -1517,246 +1849,6 @@
                             "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
-        "/v1/playlists/{id}/screens": {
-            "get": {
-                "operationId": "get-v1-playlist-id-screen",
-                "tags": [
-                    "Playlists"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Screen collection",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "hydra:member": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Screen.Screen.jsonld"
-                                            }
-                                        },
-                                        "hydra:totalItems": {
-                                            "type": "integer",
-                                            "minimum": 0
-                                        },
-                                        "hydra:view": {
-                                            "type": "object",
-                                            "properties": {
-                                                "@id": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "@type": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:first": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:last": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:previous": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:next": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                }
-                                            }
-                                        },
-                                        "hydra:search": {
-                                            "type": "object",
-                                            "properties": {
-                                                "@type": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:template": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:variableRepresentation": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:mapping": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "@type": {
-                                                                "type": "string"
-                                                            },
-                                                            "variable": {
-                                                                "type": "string"
-                                                            },
-                                                            "property": {
-                                                                "type": "string",
-                                                                "nullable": true
-                                                            },
-                                                            "required": {
-                                                                "type": "boolean"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "required": [
-                                        "hydra:member"
-                                    ]
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Screen.Screen"
-                                    }
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Screen.Screen"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "summary": "Get Screen resources on playlist.",
-                "description": "Get Screen resources on playlist.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "format": "int32",
-                            "default": 1
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "itemsPerPage",
-                        "in": "query",
-                        "description": "The number of items per page",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "default": "10"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[title]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[description]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[createdAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[updatedAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
                         "explode": false,
                         "allowReserved": false
                     }
@@ -2201,6 +2293,59 @@
             },
             "parameters": []
         },
+        "/v1/screen-groups-campaigns/{id}": {
+            "get": {
+                "operationId": "getScreenGroupCampaignItem",
+                "tags": [
+                    "ScreenGroupCampaign"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ScreenGroupCampaign resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a ScreenGroupCampaign resource.",
+                "description": "Retrieves a ScreenGroupCampaign resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/screen-groups/{id}": {
             "get": {
                 "operationId": "get-v1-screen-groups-id",
@@ -2341,6 +2486,255 @@
                 "parameters": [
                     {
                         "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screen-groups/{id}/campaigns": {
+            "get": {
+                "operationId": "get-v1-screen-groups-campaign-id",
+                "tags": [
+                    "ScreenGroups"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieves collection of campaign resources.",
+                "description": "Retrieves collection of campaign resources.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "published",
+                        "in": "query",
+                        "description": "If true only published content will be shown",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "put-v1-screen-groups-campaign-id",
+                "tags": [
+                    "ScreenGroups"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ScreenGroupCampaign resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetScreenGroupCampaignItem": {
+                                "operationId": "getScreenGroupCampaignItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/screen-groups-campaigns/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "playlist": {
+                                                "type": "string"
+                                            },
+                                            "screen-group": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Update the collection of campaigns on a screen group.",
+                "description": "Update the collection of campaigns on a screen group.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "playlist": {
+                                            "type": "string",
+                                            "format": "ulid",
+                                            "pattern": "^[A-Za-z0-9]{26}$",
+                                            "description": "Playlist ULID"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screen-groups/{id}/campaigns/{campaignId}": {
+            "delete": {
+                "operationId": "delete-v1-screen-groups-campaign-id",
+                "tags": [
+                    "ScreenGroups"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ScreenGroupCampaign resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete a campaign from a screen group.",
+                "description": "Delete a campaign from a screen group.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "campaignId",
                         "in": "path",
                         "description": "",
                         "required": true,
@@ -2775,6 +3169,255 @@
                     },
                     "required": false
                 },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screens/{id}/campaigns": {
+            "get": {
+                "operationId": "get-v1-screen-campaign-id",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieves collection of campaign resources.",
+                "description": "Retrieves collection of campaign resources.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "published",
+                        "in": "query",
+                        "description": "If true only published content will be shown",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "put-v1-screen-campaign-id",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ScreenCampaign resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetScreenCampaignItem": {
+                                "operationId": "getScreenCampaignItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/screen-campaigns/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "playlist": {
+                                                "type": "string"
+                                            },
+                                            "screen": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Update the collection of campaigns on a screen.",
+                "description": "Update the collection of campaigns on a screen.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "playlist": {
+                                            "type": "string",
+                                            "format": "ulid",
+                                            "pattern": "^[A-Za-z0-9]{26}$",
+                                            "description": "Playlist ULID"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/screens/{id}/campaigns/{campaignId}": {
+            "delete": {
+                "operationId": "delete-v1-screen-campaign-id",
+                "tags": [
+                    "Screens"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ScreenCampaign resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete a campaign from a screen.",
+                "description": "Delete a campaign from a screen.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "campaignId",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
                 "deprecated": false
             },
             "parameters": []
@@ -4500,19 +5143,6 @@
                     }
                 }
             },
-            "Credentials": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "example": "johndoe@example.com"
-                    },
-                    "password": {
-                        "type": "string",
-                        "example": "apassword"
-                    }
-                }
-            },
             "Feed.Feed": {
                 "type": "object",
                 "description": "",
@@ -4917,6 +5547,15 @@
                     "slides": {
                         "type": "string"
                     },
+                    "campaignScreens": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "campaignScreenGroups": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "isCampaign": {
+                        "type": "boolean"
+                    },
                     "published": {
                         "default": {
                             "from": "",
@@ -5001,6 +5640,15 @@
                     "slides": {
                         "type": "string"
                     },
+                    "campaignScreens": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
+                    "campaignScreenGroups": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
+                    "isCampaign": {
+                        "type": "boolean"
+                    },
                     "published": {
                         "default": {
                             "from": "",
@@ -5032,6 +5680,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "isCampaign": {
+                        "type": "boolean"
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -5105,6 +5756,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "isCampaign": {
+                        "type": "boolean"
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -5277,6 +5931,9 @@
                     "createdBy": {
                         "type": "string"
                     },
+                    "campaigns": {
+                        "type": "string"
+                    },
                     "layout": {
                         "type": "string"
                     },
@@ -5309,7 +5966,8 @@
                         }
                     },
                     "screenUser": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },
@@ -5375,6 +6033,9 @@
                     "createdBy": {
                         "type": "string"
                     },
+                    "campaigns": {
+                        "type": "string"
+                    },
                     "layout": {
                         "type": "string"
                     },
@@ -5407,7 +6068,8 @@
                         }
                     },
                     "screenUser": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },
@@ -5528,11 +6190,58 @@
                     }
                 }
             },
-            "ScreenBindObject": {
+            "ScreenCampaign.ScreenCampaign": {
                 "type": "object",
+                "description": "",
                 "properties": {
-                    "bindKey": {
+                    "campaign": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                }
+            },
+            "ScreenCampaign.ScreenCampaign.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
                         "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "campaign": {
+                        "type": "string",
+                        "format": "iri-reference"
                     }
                 }
             },
@@ -5558,6 +6267,9 @@
                         "type": "string"
                     },
                     "createdBy": {
+                        "type": "string"
+                    },
+                    "campaigns": {
                         "type": "string"
                     }
                 }
@@ -5619,6 +6331,9 @@
                         "type": "string"
                     },
                     "createdBy": {
+                        "type": "string"
+                    },
+                    "campaigns": {
                         "type": "string"
                     }
                 }
@@ -5691,6 +6406,61 @@
                     },
                     "createdBy": {
                         "type": "string"
+                    }
+                }
+            },
+            "ScreenGroupCampaign.ScreenGroupCampaign": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "campaign": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                }
+            },
+            "ScreenGroupCampaign.ScreenGroupCampaign.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "campaign": {
+                        "type": "string",
+                        "format": "iri-reference"
                     }
                 }
             },
@@ -5823,30 +6593,6 @@
                                 "additionalProperties": true
                             }
                         ]
-                    }
-                }
-            },
-            "ScreenLoginInput": {
-                "type": "object",
-                "uniqueLoginId": {
-                    "type": "string",
-                    "required": true
-                }
-            },
-            "ScreenLoginOutput": {
-                "type": "object",
-                "properties": {
-                    "bindKey": {
-                        "type": "string",
-                        "readOnly": true
-                    },
-                    "token": {
-                        "type": "string",
-                        "readOnly": true
-                    },
-                    "screenId": {
-                        "type": "string",
-                        "readOnly": true
                     }
                 }
             },
@@ -6525,6 +7271,64 @@
                     "token": {
                         "type": "string",
                         "readOnly": true
+                    }
+                }
+            },
+            "Credentials": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "johndoe@example.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "apassword"
+                    }
+                }
+            },
+            "OidcEndpoints": {
+                "type": "object",
+                "properties": {
+                    "authorizationUrl": {
+                        "type": "string",
+                        "example": "https://azure_b2c_test.b2clogin.com/azure_b2c_test.onmicrosoft.com/oauth2/v2.0/authorize?p=test-policy&state=5fd84892c27dbb5cad2c3cdc517b71f1&nonce=a9700e5677f3e610a5727429d9628308&scope=openid&response_type=id_token&response_mode=query&approval_prompt=auto&redirect_uri=ADMIN_APP_REDIRECT_URI&client_id=a9997a98-40be-4b49-bd1a-69cbf4a910d5"
+                    },
+                    "endSessionUrl": {
+                        "type": "string",
+                        "example": "https://azure_b2c_test.b2clogin.com/azure_b2c_test.onmicrosoft.com/oauth2/v2.0/logout?p=test-policy"
+                    }
+                }
+            },
+            "ScreenLoginOutput": {
+                "type": "object",
+                "properties": {
+                    "bindKey": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "token": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "screenId": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                }
+            },
+            "ScreenLoginInput": {
+                "type": "object",
+                "uniqueLoginId": {
+                    "type": "string",
+                    "required": true
+                }
+            },
+            "ScreenBindObject": {
+                "type": "object",
+                "properties": {
+                    "bindKey": {
+                        "type": "string"
                     }
                 }
             }

@@ -32,6 +32,7 @@ import ThemeEdit from "./components/themes/theme-edit";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 import Login from "./components/user/login";
+import Logout from "./components/user/logout";
 
 /**
  * App component.
@@ -119,6 +120,7 @@ function App() {
                     <Route path="/themes/create" component={ThemeCreate} />
                     <Route path="/users/" component={UserList} />
                     <Route path="/user/:id" component={EditUser} />
+                    <Route path="/logout" component={Logout} />
                     <Redirect from="/" to="/slide/list" exact />
                   </Switch>
                 </main>

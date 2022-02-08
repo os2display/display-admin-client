@@ -88,7 +88,7 @@ function TopBar() {
               {t("topbar.user")}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Link id="topbar_signout" className="dropdown-item" to="/signout">
+              <Link id="topbar_signout" className="dropdown-item" to="/logout">
                 <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
                 {t("topbar.signout")}
               </Link>
