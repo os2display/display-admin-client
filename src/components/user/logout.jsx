@@ -17,8 +17,8 @@ function Logout() {
 
   return (
     <>
-      <Spinner animation={"border"}/>
-      <Redirect to={'/'} />
+      <Spinner animation="border" />
+      <Redirect to="/" />
     </>
   );
 }
