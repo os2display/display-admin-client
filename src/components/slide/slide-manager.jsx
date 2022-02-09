@@ -64,7 +64,15 @@ function SlideManager({
   const [PutV1Slides, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
     usePutV1SlidesByIdMutation();
 
-  const [PutV1SlidesByIdPlaylists, {}] = usePutV1SlidesByIdPlaylistsMutation();
+    // Todo use the below
+  const [
+    PutV1SlidesByIdPlaylists,
+    {
+      isLoading: savingPlaylists,
+      error: saveErrorPlaylists,
+      isSuccess: isSaveSuccessPlaylists,
+    },
+  ] = usePutV1SlidesByIdPlaylistsMutation();
 
   // Handler for creating slide.
   const [
@@ -413,9 +421,8 @@ function SlideManager({
       playlistsToAdd &&
       formStateObject.playlists
     ) {
-      debugger;
       PutV1SlidesByIdPlaylists({
-        id: id || idFromUrl(data["@id"]),
+        id: id || idFromUrl(postData["@id"]),
         body: JSON.stringify(playlistsToAdd),
       });
     }
