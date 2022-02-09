@@ -140,11 +140,7 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-<<<<<<< HEAD
   "playlist-campaign-list": {
-=======
-  "shared-list": {
->>>>>>> 40ff127 (AR-722: campaign in admin)
     "playlist": {
       "header": "Spillelister",
       "create-new": "Opret ny spilleliste",
@@ -363,11 +359,7 @@
       "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes: {{error}}"
     }
   },
-<<<<<<< HEAD
   "playlist-campaign-manager": {
-=======
-  "shared-manager": {
->>>>>>> 40ff127 (AR-722: campaign in admin)
     "campaign": {
       "edit-header": "Rediger følgende kampagne",
       "create-header": "Opret ny kampagne",
@@ -421,11 +413,7 @@
   "playlist-form": {
     "schedule-header": "Planlægning"
   },
-<<<<<<< HEAD
   "playlist-campaign-form": {
-=======
-  "shared-form": {
->>>>>>> 40ff127 (AR-722: campaign in admin)
     "title-about": "Om spillelisten",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",

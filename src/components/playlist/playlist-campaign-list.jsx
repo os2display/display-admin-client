@@ -45,11 +45,7 @@ function PlaylistCampaignList() {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
     t(`playlist-campaign-list.${location}.loading-messages.loading`)
-=======
-    t(`shared-list.${location}.loading-messages.loading`)
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
   );
 
   // Delete call
@@ -83,7 +79,6 @@ function PlaylistCampaignList() {
   useEffect(() => {
     if (playlistsToDelete.length > 0) {
       if (isDeleteSuccess) {
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
         displaySuccess(
           t(`playlist-campaign-list.${location}.success-messages.delete`)
         );
@@ -93,37 +88,22 @@ function PlaylistCampaignList() {
       setLoadingMessage(
         t(`playlist-campaign-list.${location}.loading-messages.deleting`)
       );
-=======
-        displaySuccess(t(`shared-list.${location}.success-messages.delete`));
-      }
-      // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
-      setIsDeleting(true);
-      setLoadingMessage(t(`shared-list.${location}.loading-messages.deleting`));
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
       const toDelete = playlistsToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Playlists({ id: toDeleteId });
     } else if (isDeleteSuccess && playlistsToDelete.length > 0) {
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
       displaySuccess(
         t(`playlist-campaign-list.${location}.success-messages.delete`)
       );
-=======
-      displaySuccess(t(`shared-list.${location}.success-messages.delete`));
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
     }
   }, [playlistsToDelete, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && playlistsToDelete.length === 0) {
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
       displaySuccess(
         t(`playlist-campaign-list.${location}.success-messages.delete`)
       );
-=======
-      displaySuccess(t(`shared-list.${location}.success-messages.delete`));
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
       refetch();
       setIsDeleting(false);
     }
@@ -134,11 +114,7 @@ function PlaylistCampaignList() {
     if (isDeleteError) {
       setIsDeleting(false);
       displayError(
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
         t(`playlist-campaign-list.${location}.error-messages.delete-error`, {
-=======
-        t(`shared-list.${location}.error-messages.delete-error`, {
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
           error: isDeleteError.error
             ? isDeleteError.error
             : isDeleteError.data["hydra:description"],
@@ -241,11 +217,7 @@ function PlaylistCampaignList() {
   const columns = [
     {
       key: "pick",
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
       label: t(`playlist-campaign-list.${location}.columns.pick`),
-=======
-      label: t(`shared-list.${location}.columns.pick`),
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
       content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
@@ -256,29 +228,17 @@ function PlaylistCampaignList() {
     {
       path: "title",
       sort: true,
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
       label: t("playlist-campaign-list.columns.name"),
     },
     {
       path: "published",
       label: t("playlist-campaign-list.columns.published"),
-=======
-      label: t("shared-list.columns.name"),
-    },
-    {
-      path: "published",
-      label: t("shared-list.columns.published"),
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
     },
     {
       key: "slides",
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
       label: t("playlist-campaign-list.columns.number-of-slides"),
-=======
-      label: t("shared-list.columns.number-of-slides"),
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
       // eslint-disable-next-line react/prop-types
       content: ({ slides }) => (
         <ListButton
@@ -291,15 +251,11 @@ function PlaylistCampaignList() {
     {
       key: "edit",
       content: (d) =>
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
         LinkForList(
           d["@id"],
           `${location}/edit`,
           t("playlist-campaign-list.edit-button")
         ),
-=======
-        LinkForList(d["@id"], `${location}/edit`, t("shared-list.edit-button")),
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
     },
     {
       key: "delete",
@@ -309,11 +265,7 @@ function PlaylistCampaignList() {
           disabled={selectedRows.length > 0}
           onClick={() => openDeleteModal(d)}
         >
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
           {t("playlist-campaign-list.delete-button")}
-=======
-          {t("shared-list.delete-button")}
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
         </Button>
       ),
     },
@@ -323,11 +275,7 @@ function PlaylistCampaignList() {
   useEffect(() => {
     if (playlistsGetError) {
       displayError(
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
         t(`playlist-campaign-list.${location}.error-messages.load-error`, {
-=======
-        t(`shared-list.${location}.error-messages.load-error`, {
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
           error: playlistsGetError.error
             ? playlistsGetError.error
             : playlistsGetError.data["hydra:description"],
@@ -339,13 +287,8 @@ function PlaylistCampaignList() {
   return (
     <>
       <ContentHeader
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
         title={t(`playlist-campaign-list.${location}.header`)}
         newBtnTitle={t(`playlist-campaign-list.${location}.create-new`)}
-=======
-        title={t(`shared-list.${location}.header`)}
-        newBtnTitle={t(`shared-list.${location}.create-new`)}
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
         newBtnLink={`/${location}/create`}
       />
       {listData && (
@@ -379,11 +322,7 @@ function PlaylistCampaignList() {
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}
         dataKey="slide"
-<<<<<<< HEAD:src/components/playlist/playlist-campaign-list.jsx
         modalTitle={t(`playlist-campaign-list.${location}.info-modal.slides`)}
-=======
-        modalTitle={t(`shared-list.${location}.info-modal.slides`)}
->>>>>>> 40ff127 (AR-722: campaign in admin):src/components/playlist/playlist-list.jsx
       />
     </>
   );

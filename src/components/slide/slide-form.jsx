@@ -19,8 +19,8 @@ import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 import FeedSelector from "./content/feed-selector";
 import RadioButtons from "../util/forms/radio-buttons";
-import "./slide-form.scss";
 import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
+import "./slide-form.scss";
 
 /**
  * The slide form component.

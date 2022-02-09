@@ -31,6 +31,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
     itemsPerPage: searchText ? 10 : 0,
+    isCampaign: false,
   });
   const { data } = useGetV1SlidesByIdPlaylistsQuery({ id });
 
@@ -133,9 +134,10 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
       ),
     },
   ];
+
   return (
     <>
-      {playlists && playlists["hydra:member"] && (
+      {playlists && (
         <>
           <PlaylistsDropdown
             name={name}
