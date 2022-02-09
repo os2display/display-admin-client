@@ -560,6 +560,29 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV1SlidesByIdPlaylists: build.query<
+      GetV1SlidesByIdPlaylistsApiResponse,
+      GetV1SlidesByIdPlaylistsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/slides/${queryArg.id}/playlists`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          published: queryArg.published,
+        },
+      }),
+    }),
+    putV1SlidesByIdPlaylists: build.mutation<
+      PutV1SlidesByIdPlaylistsApiResponse,
+      PutV1SlidesByIdPlaylistsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/slides/${queryArg.id}/playlists`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
     getV1Templates: build.query<
       GetV1TemplatesApiResponse,
       GetV1TemplatesApiArg
@@ -1033,6 +1056,20 @@ export type DeleteV1SlidesByIdApiResponse = unknown;
 export type DeleteV1SlidesByIdApiArg = {
   id: string;
 };
+export type GetV1SlidesByIdPlaylistsApiResponse = unknown;
+export type GetV1SlidesByIdPlaylistsApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
+};
+export type PutV1SlidesByIdPlaylistsApiResponse = unknown;
+export type PutV1SlidesByIdPlaylistsApiArg = {
+  id: string;
+  body: Blob;
+};
 export type GetV1TemplatesApiResponse = unknown;
 export type GetV1TemplatesApiArg = {
   page?: number;
@@ -1205,6 +1242,8 @@ export const {
   useGetV1SlidesByIdQuery,
   usePutV1SlidesByIdMutation,
   useDeleteV1SlidesByIdMutation,
+  useGetV1SlidesByIdPlaylistsQuery,
+  usePutV1SlidesByIdPlaylistsMutation,
   useGetV1TemplatesQuery,
   useGetV1TemplatesByIdQuery,
   useGetV1ThemesQuery,

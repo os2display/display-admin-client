@@ -10,6 +10,7 @@ import {
   api,
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
+  usePutV1SlidesByIdPlaylistsMutation,
   usePutV1SlidesByIdMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
@@ -48,6 +49,7 @@ function SlideManager({
   const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
+  const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -61,6 +63,8 @@ function SlideManager({
 
   const [PutV1Slides, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
     usePutV1SlidesByIdMutation();
+
+  const [PutV1SlidesByIdPlaylists, {}] = usePutV1SlidesByIdPlaylistsMutation();
 
   // Handler for creating slide.
   const [
@@ -402,6 +406,32 @@ function SlideManager({
     setLoadingMessage(t("slide-manager.loading-messages.saving-media"));
   }
 
+  /** When the group is saved, the slide will be saved. */
+  useEffect(() => {
+    if (
+      (isSaveSuccessPost || isSaveSuccessPut) &&
+      playlistsToAdd &&
+      formStateObject.playlists
+    ) {
+      debugger;
+      PutV1SlidesByIdPlaylists({
+        id: id || idFromUrl(data["@id"]),
+        body: JSON.stringify(playlistsToAdd),
+      });
+    }
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
+
+  /** Sets groups to playlists. */
+  function handleSavePlaylists() {
+    const { playlists } = formStateObject;
+
+    setPlaylistsToAdd(
+      playlists.map((playlist) => {
+        return { playlist: idFromUrl(playlist) };
+      })
+    );
+  }
+
   /** Handle submitting. */
   useEffect(() => {
     if (submitting) {
@@ -466,6 +496,10 @@ function SlideManager({
           PutV1Slides(putData);
         } else {
           throw new Error("Unsupported save method");
+        }
+
+        if (Array.isArray(formStateObject.playlists)) {
+          handleSavePlaylists();
         }
       }
     }

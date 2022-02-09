@@ -56,21 +56,16 @@ function InfoModal({
   /** Set loaded data into form state. */
   useEffect(() => {
     if (data?.data) {
-      let mappedData = fetchedData || [];
-      if (dataKey) {
-        mappedData = [
-          ...mappedData,
-          ...data.data["hydra:member"].map((item) => {
-            return item[dataKey];
-          }),
-        ];
-      } else {
-        mappedData = [...mappedData, ...data.data["hydra:member"]];
-      }
+      const mappedData = [
+        ...(fetchedData || []),
+        ...data.data["hydra:member"].map((item) => {
+          return dataKey ? item[dataKey] : item;
+        }),
+      ];
       setFetchedData(mappedData);
       setTotalItems(data.data["hydra:totalItems"]);
     }
-  }, [data?.data]);
+  }, [data]);
 
   /** Displays more list entries. */
   function displayMore() {

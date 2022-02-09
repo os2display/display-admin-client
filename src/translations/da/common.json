@@ -289,7 +289,20 @@
       "loading": "Henter template og indhold til slide"
     }
   },
+  "select-playlists-table": {
+    "columns": {
+      "published": "Udgivet",
+      "name": "Navn",
+      "number-of-slides": "Slides tilknyttede",
+      "remove-from-list": "Fjern fra liste"
+    },
+    "info-modal": {
+      "slides": "Spillelisten indeholder følgende slides"
+    }
+  },
   "slide-form": {
+    "add-slide-to-playlists": "Tilføj slide til spillelister",
+    "add-playlists-help-text": "For at se mulige spillelister, skal du fremsøge dem pr navn. Dette slide vil blive placeret i slutningen af spillelisten.",
     "preview-in-full-screen": "Åben preview i fuld skærm",
     "horizontal-or-vertical-label": "Vælg preview-format",
     "horizontal-label": "16:9",
