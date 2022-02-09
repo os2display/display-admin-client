@@ -4,6 +4,24 @@ export const api = createApi({
   baseQuery: extendedBaseQuery,
   tagTypes: [],
   endpoints: (build) => ({
+    getOidcAuthTokenItem: build.query<
+      GetOidcAuthTokenItemApiResponse,
+      GetOidcAuthTokenItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/oidc/token`,
+        params: { state: queryArg.state, id_token: queryArg.idToken },
+      }),
+    }),
+    getOidcAuthUrlsItem: build.query<
+      GetOidcAuthUrlsItemApiResponse,
+      GetOidcAuthUrlsItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/oidc/urls`,
+        params: { providerKey: queryArg.providerKey },
+      }),
+    }),
     postLoginInfoScreen: build.mutation<
       PostLoginInfoScreenApiResponse,
       PostLoginInfoScreenApiArg
@@ -19,9 +37,22 @@ export const api = createApi({
       PostCredentialsItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/authentication_token`,
+        url: `/v1/authentication/token`,
         method: "POST",
         body: queryArg.credentials,
+      }),
+    }),
+    getV1CampaignsByIdScreens: build.query<
+      GetV1CampaignsByIdScreensApiResponse,
+      GetV1CampaignsByIdScreensApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/campaigns/${queryArg.id}/screens`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
       }),
     }),
     getV1FeedSources: build.query<
@@ -150,6 +181,7 @@ export const api = createApi({
           title: queryArg.title,
           description: queryArg.description,
           published: queryArg.published,
+          isCampaign: queryArg.isCampaign,
           order: queryArg.order,
         },
       }),
@@ -187,19 +219,6 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/playlists/${queryArg.id}`,
         method: "DELETE",
-      }),
-    }),
-    getV1PlaylistsByIdScreens: build.query<
-      GetV1PlaylistsByIdScreensApiResponse,
-      GetV1PlaylistsByIdScreensApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/playlists/${queryArg.id}/screens`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          order: queryArg.order,
-        },
       }),
     }),
     getV1PlaylistsByIdSlides: build.query<
@@ -259,6 +278,14 @@ export const api = createApi({
         body: queryArg.screenGroupScreenGroupInput,
       }),
     }),
+    getScreenGroupCampaignItem: build.query<
+      GetScreenGroupCampaignItemApiResponse,
+      GetScreenGroupCampaignItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups-campaigns/${queryArg.id}`,
+      }),
+    }),
     getV1ScreenGroupsById: build.query<
       GetV1ScreenGroupsByIdApiResponse,
       GetV1ScreenGroupsByIdApiArg
@@ -281,6 +308,38 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/screen-groups/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getV1ScreenGroupsByIdCampaigns: build.query<
+      GetV1ScreenGroupsByIdCampaignsApiResponse,
+      GetV1ScreenGroupsByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/campaigns`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          published: queryArg.published,
+        },
+      }),
+    }),
+    putV1ScreenGroupsByIdCampaigns: build.mutation<
+      PutV1ScreenGroupsByIdCampaignsApiResponse,
+      PutV1ScreenGroupsByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/campaigns`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
+    deleteV1ScreenGroupsByIdCampaignsAndCampaignId: build.mutation<
+      DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiResponse,
+      DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/campaigns/${queryArg.campaignId}`,
         method: "DELETE",
       }),
     }),
@@ -339,6 +398,38 @@ export const api = createApi({
         url: `/v1/screens/${queryArg.id}/bind`,
         method: "POST",
         body: queryArg.screenBindObject,
+      }),
+    }),
+    getV1ScreensByIdCampaigns: build.query<
+      GetV1ScreensByIdCampaignsApiResponse,
+      GetV1ScreensByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/campaigns`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          published: queryArg.published,
+        },
+      }),
+    }),
+    putV1ScreensByIdCampaigns: build.mutation<
+      PutV1ScreensByIdCampaignsApiResponse,
+      PutV1ScreensByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/campaigns`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
+    deleteV1ScreensByIdCampaignsAndCampaignId: build.mutation<
+      DeleteV1ScreensByIdCampaignsAndCampaignIdApiResponse,
+      DeleteV1ScreensByIdCampaignsAndCampaignIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/campaigns/${queryArg.campaignId}`,
+        method: "DELETE",
       }),
     }),
     getV1ScreensByIdRegionsAndRegionIdPlaylists: build.query<
@@ -523,6 +614,20 @@ export const api = createApi({
     }),
   }),
 });
+export type GetOidcAuthTokenItemApiResponse =
+  /** status 200 Get JWT token from OIDC token */ Token;
+export type GetOidcAuthTokenItemApiArg = {
+  /** OIDC state */
+  state?: any;
+  /** OIDC id token */
+  idToken?: any;
+};
+export type GetOidcAuthUrlsItemApiResponse =
+  /** status 200 Get authentication and end session endpoints */ OidcEndpoints;
+export type GetOidcAuthUrlsItemApiArg = {
+  /** The key for the provider to use. Leave out to use the default provider */
+  providerKey?: any;
+};
 export type PostLoginInfoScreenApiResponse =
   /** status 200 Login with bindKey to get JWT token for screen */ ScreenLoginOutput;
 export type PostLoginInfoScreenApiArg = {
@@ -534,6 +639,19 @@ export type PostCredentialsItemApiResponse =
 export type PostCredentialsItemApiArg = {
   /** Generate new JWT Token */
   credentials: Credentials;
+};
+export type GetV1CampaignsByIdScreensApiResponse = unknown;
+export type GetV1CampaignsByIdScreensApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
 };
 export type GetV1FeedSourcesApiResponse = unknown;
 export type GetV1FeedSourcesApiArg = {
@@ -643,6 +761,8 @@ export type GetV1PlaylistsApiArg = {
   description?: string;
   /** If true only published content will be shown */
   published?: boolean;
+  /** If true only campaigns will be shown */
+  isCampaign?: boolean;
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -668,19 +788,6 @@ export type PutV1PlaylistsByIdApiArg = {
 export type DeleteV1PlaylistsByIdApiResponse = unknown;
 export type DeleteV1PlaylistsByIdApiArg = {
   id: string;
-};
-export type GetV1PlaylistsByIdScreensApiResponse = unknown;
-export type GetV1PlaylistsByIdScreensApiArg = {
-  id: string;
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
-  order?: {
-    title?: "asc" | "desc";
-    description?: "asc" | "desc";
-    createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
-  };
 };
 export type GetV1PlaylistsByIdSlidesApiResponse = unknown;
 export type GetV1PlaylistsByIdSlidesApiArg = {
@@ -719,6 +826,11 @@ export type PostV1ScreenGroupsApiArg = {
   /** The new ScreenGroup resource */
   screenGroupScreenGroupInput: ScreenGroupScreenGroupInput;
 };
+export type GetScreenGroupCampaignItemApiResponse = unknown;
+export type GetScreenGroupCampaignItemApiArg = {
+  /** Resource identifier */
+  id: string;
+};
 export type GetV1ScreenGroupsByIdApiResponse = unknown;
 export type GetV1ScreenGroupsByIdApiArg = {
   id: string;
@@ -732,6 +844,26 @@ export type PutV1ScreenGroupsByIdApiArg = {
 export type DeleteV1ScreenGroupsByIdApiResponse = unknown;
 export type DeleteV1ScreenGroupsByIdApiArg = {
   id: string;
+};
+export type GetV1ScreenGroupsByIdCampaignsApiResponse = unknown;
+export type GetV1ScreenGroupsByIdCampaignsApiArg = {
+  id: string;
+  page: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
+};
+export type PutV1ScreenGroupsByIdCampaignsApiResponse = unknown;
+export type PutV1ScreenGroupsByIdCampaignsApiArg = {
+  /** Resource identifier */
+  id: string;
+  body: Blob;
+};
+export type DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiResponse = unknown;
+export type DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiArg = {
+  id: string;
+  campaignId: string;
 };
 export type GetV1ScreensApiResponse = unknown;
 export type GetV1ScreensApiArg = {
@@ -771,6 +903,26 @@ export type PostScreenBindKeyApiArg = {
   id?: any;
   /** Get login info with JWT token for given nonce */
   screenBindObject: ScreenBindObject;
+};
+export type GetV1ScreensByIdCampaignsApiResponse = unknown;
+export type GetV1ScreensByIdCampaignsApiArg = {
+  id: string;
+  page: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
+};
+export type PutV1ScreensByIdCampaignsApiResponse = unknown;
+export type PutV1ScreensByIdCampaignsApiArg = {
+  /** Resource identifier */
+  id: string;
+  body: Blob;
+};
+export type DeleteV1ScreensByIdCampaignsAndCampaignIdApiResponse = unknown;
+export type DeleteV1ScreensByIdCampaignsAndCampaignIdApiArg = {
+  id: string;
+  campaignId: string;
 };
 export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiResponse = unknown;
 export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg = {
@@ -904,15 +1056,19 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
+export type Token = {
+  token?: string;
+};
+export type OidcEndpoints = {
+  authorizationUrl?: string;
+  endSessionUrl?: string;
+};
 export type ScreenLoginOutput = {
   bindKey?: string;
   token?: string;
   screenId?: string;
 };
 export type ScreenLoginInput = object;
-export type Token = {
-  token?: string;
-};
 export type Credentials = {
   email?: string;
   password?: string;
@@ -921,6 +1077,7 @@ export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
   schedules?: string[];
+  isCampaign?: boolean;
   modifiedBy?: string;
   createdBy?: string;
   published?: string[];
@@ -965,8 +1122,11 @@ export type ThemeThemeInput = {
   css?: string;
 };
 export const {
+  useGetOidcAuthTokenItemQuery,
+  useGetOidcAuthUrlsItemQuery,
   usePostLoginInfoScreenMutation,
   usePostCredentialsItemMutation,
+  useGetV1CampaignsByIdScreensQuery,
   useGetV1FeedSourcesQuery,
   useGetV1FeedSourcesByIdQuery,
   useGetV1FeedSourcesByIdConfigAndNameQuery,
@@ -985,21 +1145,27 @@ export const {
   useGetV1PlaylistsByIdQuery,
   usePutV1PlaylistsByIdMutation,
   useDeleteV1PlaylistsByIdMutation,
-  useGetV1PlaylistsByIdScreensQuery,
   useGetV1PlaylistsByIdSlidesQuery,
   usePutV1PlaylistsByIdSlidesMutation,
   useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation,
   useGetV1ScreenGroupsQuery,
   usePostV1ScreenGroupsMutation,
+  useGetScreenGroupCampaignItemQuery,
   useGetV1ScreenGroupsByIdQuery,
   usePutV1ScreenGroupsByIdMutation,
   useDeleteV1ScreenGroupsByIdMutation,
+  useGetV1ScreenGroupsByIdCampaignsQuery,
+  usePutV1ScreenGroupsByIdCampaignsMutation,
+  useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation,
   useGetV1ScreensQuery,
   usePostV1ScreensMutation,
   useGetV1ScreensByIdQuery,
   usePutV1ScreensByIdMutation,
   useDeleteV1ScreensByIdMutation,
   usePostScreenBindKeyMutation,
+  useGetV1ScreensByIdCampaignsQuery,
+  usePutV1ScreensByIdCampaignsMutation,
+  useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation,
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
   usePutPlaylistScreenRegionItemMutation,
   useDeletePlaylistScreenRegionItemMutation,
