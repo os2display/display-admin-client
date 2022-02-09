@@ -59,7 +59,7 @@ ScreensDropdown.propTypes = {
     })
   ),
   filterCallback: PropTypes.func.isRequired,
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
 };

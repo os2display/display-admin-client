@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import dayjs from "dayjs";
+import calculateIsPublished from "./helpers/calculate-is-published";
 
 /**
  * @param {object} props The props.
@@ -11,29 +11,6 @@ import dayjs from "dayjs";
 function Published({ published }) {
   const { t } = useTranslation("common");
   const [isPublished, setIsPublished] = useState(false);
-
-  /**
-   * Check published state.
-   *
-   * @param {object} publishedState - The published state.
-   * @returns {boolean} - Published true/false.
-   */
-  function calculateIsPublished(publishedState) {
-    const now = dayjs(new Date());
-    const from = publishedState?.from ? dayjs(publishedState.from) : null;
-    const to = publishedState?.to ? dayjs(publishedState.to) : null;
-
-    if (from !== null && to !== null) {
-      return now.isAfter(from) && now.isBefore(to);
-    }
-    if (from !== null && to === null) {
-      return now.isAfter(from);
-    }
-    if (from === null && to !== null) {
-      return now.isBefore(to);
-    }
-    return true;
-  }
 
   useEffect(() => {
     setIsPublished(calculateIsPublished(published));

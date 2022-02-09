@@ -67,6 +67,15 @@ function NavItems() {
           <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
         </Link>
       </Nav.Item>
+      <Nav.Item className="nav-second-level">
+        <NavLink
+          id="nav-items_content_media"
+          className="nav-link"
+          to="/campaign/list"
+        >
+          {t("nav-items.playlists-campaigns")}
+        </NavLink>
+      </Nav.Item>
       <Nav.Item>
         <NavLink
           id="nav-items_screens_screens"

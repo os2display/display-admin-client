@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Spinner } from "react-bootstrap";
+import Login from "./components/user/login";
 import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
@@ -14,9 +15,9 @@ import SlidesList from "./components/slide/slides-list";
 import GroupsList from "./components/groups/groups-list";
 import GroupCreate from "./components/groups/group-create";
 import GroupEdit from "./components/groups/group-edit";
-import PlaylistList from "./components/playlist/playlist-list";
-import PlaylistEdit from "./components/playlist/playlist-edit";
-import PlaylistCreate from "./components/playlist/playlist-create";
+import PlaylistCampaignList from "./components/playlist/playlist-campaign-list";
+import PlaylistCampaignEdit from "./components/playlist/playlist-campaign-edit";
+import PlaylistCampaignCreate from "./components/playlist/playlist-campaign-create";
 import MediaList from "./components/media/media-list";
 import commonDa from "./translations/da/common.json";
 import EditUser from "./components/edit-user/edit-user";
@@ -31,7 +32,6 @@ import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
-import Login from "./components/user/login";
 
 /**
  * App component.
@@ -100,9 +100,18 @@ function App() {
                 />
                 <main className="col p-3">
                   <Switch>
-                    <Route path="/playlist/create" component={PlaylistCreate} />
-                    <Route path="/playlist/edit/:id" component={PlaylistEdit} />
-                    <Route path="/playlist/list" component={PlaylistList} />
+                    <Route
+                      path="/:location(campaign|playlist)/create"
+                      component={PlaylistCampaignCreate}
+                    />
+                    <Route
+                      path="/:location(campaign|playlist)/edit/:id"
+                      component={PlaylistCampaignEdit}
+                    />
+                    <Route
+                      path="/:location(campaign|playlist)/list"
+                      component={PlaylistCampaignList}
+                    />
                     <Route path="/screen/list" component={ScreenList} />
                     <Route path="/screen/create" component={ScreenCreate} />
                     <Route path="/screen/edit/:id" component={ScreenEdit} />

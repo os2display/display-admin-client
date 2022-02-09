@@ -42,6 +42,19 @@ export const api = createApi({
         body: queryArg.credentials,
       }),
     }),
+    getV1CampaignsByIdScreenGroups: build.query<
+      GetV1CampaignsByIdScreenGroupsApiResponse,
+      GetV1CampaignsByIdScreenGroupsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/campaigns/${queryArg.id}/screen-groups`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
+      }),
+    }),
     getV1CampaignsByIdScreens: build.query<
       GetV1CampaignsByIdScreensApiResponse,
       GetV1CampaignsByIdScreensApiArg
@@ -640,6 +653,19 @@ export type PostCredentialsItemApiArg = {
   /** Generate new JWT Token */
   credentials: Credentials;
 };
+export type GetV1CampaignsByIdScreenGroupsApiResponse = unknown;
+export type GetV1CampaignsByIdScreenGroupsApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    updatedAt?: "asc" | "desc";
+  };
+};
 export type GetV1CampaignsByIdScreensApiResponse = unknown;
 export type GetV1CampaignsByIdScreensApiArg = {
   id: string;
@@ -1126,6 +1152,7 @@ export const {
   useGetOidcAuthUrlsItemQuery,
   usePostLoginInfoScreenMutation,
   usePostCredentialsItemMutation,
+  useGetV1CampaignsByIdScreenGroupsQuery,
   useGetV1CampaignsByIdScreensQuery,
   useGetV1FeedSourcesQuery,
   useGetV1FeedSourcesByIdQuery,

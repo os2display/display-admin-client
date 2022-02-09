@@ -66,3 +66,11 @@ body,
     }
   }
 }
+
+.table {
+  td:last-child {
+    button {
+      float: right;
+    }
+  }
+}
