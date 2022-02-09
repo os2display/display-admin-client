@@ -4,13 +4,12 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import idFromUrl from "../util/helpers/id-from-url";
-
+import calculateIsPublished from '../util/helpers/calculate-is-published';
 import {
   api,
   useGetV1ScreensByIdCampaignsQuery,
   useGetV1ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated";
-import IsPublished from "../util/helpers/is-published";
 
 /**
  * @param {object} props The props.
@@ -57,7 +56,7 @@ function CampaignIcon(id) {
   useEffect(() => {
     if (allCampaigns.length > 0 && !isOverriddenByCampaign) {
       allCampaigns.forEach(({ published }) => {
-        if (IsPublished(published)) {
+        if (calculateIsPublished(published)) {
           setIsOverriddenByCampaign(true);
         }
       });
