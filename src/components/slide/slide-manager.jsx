@@ -64,16 +64,6 @@ function SlideManager({
   const [PutV1Slides, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
     usePutV1SlidesByIdMutation();
 
-  // Todo use the below
-  const [
-    PutV1SlidesByIdPlaylists,
-    {
-      isLoading: savingPlaylists,
-      error: saveErrorPlaylists,
-      isSuccess: isSaveSuccessPlaylists,
-    },
-  ] = usePutV1SlidesByIdPlaylistsMutation();
-
   // Handler for creating slide.
   const [
     PostV1Slides,
@@ -90,12 +80,28 @@ function SlideManager({
     },
   ] = usePostMediaCollectionMutation();
 
+  const [
+    PutV1SlidesByIdPlaylists,
+    {
+      isLoading: savingPlaylists,
+      error: saveErrorPlaylists,
+      isSuccess: isSaveSuccessPlaylists,
+    },
+  ] = usePutV1SlidesByIdPlaylistsMutation();
+
   // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveMediaSuccess) {
       displaySuccess(t("slide-manager.success-messages.saved-media"));
     }
   }, [isSaveMediaSuccess]);
+
+  // Groups are saved successfully, display a message
+  useEffect(() => {
+    if (isSaveSuccessPlaylists) {
+      displaySuccess(t(`slide-manager.success-messages.saved-playlist`));
+    }
+  }, [isSaveSuccessPlaylists]);
 
   // Slides are not saved successfully, display a message
   useEffect(() => {
@@ -110,6 +116,19 @@ function SlideManager({
       );
     }
   }, [saveMediaError]);
+
+  // Playlists are not saved successfully, display a message
+  useEffect(() => {
+    if (saveErrorPlaylists) {
+      displayError(
+        t(`slide-manager.error-messages.save-playlist-error`, {
+          error: saveErrorPlaylists.error
+            ? saveErrorPlaylists.error
+            : saveErrorPlaylists.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveErrorPlaylists]);
 
   /** If the slide is saved, display the success message */
   useEffect(() => {
@@ -421,6 +440,7 @@ function SlideManager({
       playlistsToAdd &&
       formStateObject.playlists
     ) {
+      setLoadingMessage(t("slide-manager.loading-messages.saving-playlists"));
       PutV1SlidesByIdPlaylists({
         id: id || idFromUrl(postData["@id"]),
         body: JSON.stringify(playlistsToAdd),
@@ -562,7 +582,7 @@ function SlideManager({
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
           mediaData={mediaData}
-          isLoading={submitting || isLoading}
+          isLoading={submitting || isLoading || savingPlaylists}
           loadingMessage={loadingMessage}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
