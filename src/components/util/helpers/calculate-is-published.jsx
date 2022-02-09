@@ -2,9 +2,9 @@ import dayjs from "dayjs";
 
 /**
  * @param {object} props Props.
- * @param {object} props.published Published object.
- * @param props.from
- * @param props.to
+ * @param {string} props.from From string
+ * @param {string} props.to To string
+ * @returns {object} If the entity is published.
  */
 function calculateIsPublished({ from: fromInput, to: toInput }) {
   const now = dayjs(new Date());

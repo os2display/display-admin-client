@@ -29,7 +29,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
       regionId,
-      page: 1
+      page: 1,
     });
 
   const { data: playlists } = useGetV1PlaylistsQuery({
@@ -39,14 +39,12 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    if (
-      selectedPlaylistsByRegion
-    ) {
-      setSelectedData(selectedPlaylistsByRegion["hydra:member"].map(
-        ({ playlist }) => {
+    if (selectedPlaylistsByRegion) {
+      setSelectedData(
+        selectedPlaylistsByRegion["hydra:member"].map(({ playlist }) => {
           return playlist;
-        }
-      ));
+        })
+      );
     }
   }, [selectedPlaylistsByRegion]);
 

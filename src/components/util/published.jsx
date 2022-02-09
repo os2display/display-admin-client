@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import calculateIsPublished from './helpers/calculate-is-published';
 import { useTranslation } from "react-i18next";
+import calculateIsPublished from "./helpers/calculate-is-published";
 
 /**
  * @param {object} props The props.
@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 function Published({ published }) {
   const { t } = useTranslation("common");
   const [isPublished, setIsPublished] = useState(false);
-
 
   useEffect(() => {
     setIsPublished(calculateIsPublished(published));

@@ -238,7 +238,7 @@ function ScreenList() {
     {
       key: "campaign",
       label: t("screen-list.columns.campaign"),
-      content: (d) => CampaignIcon(idFromUrl(d['@id'])),
+      content: (d) => CampaignIcon(idFromUrl(d["@id"])),
     },
     {
       key: "edit",

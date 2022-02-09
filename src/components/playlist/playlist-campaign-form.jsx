@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -21,6 +21,7 @@ import LoadingComponent from "../util/loading-component/loading-component";
  * @param {string} props.slideId - The id of the slide.
  * @param {boolean} props.isLoading Indicator of whether the form is loading
  * @param {string} props.loadingMessage The loading message for the spinner
+ * @param {boolean} props.isCampaign If it is a campaign form.
  * @param {Array} props.children The children being passed from parent
  * @returns {object} The form shared by campaigns and playlists.
  */
@@ -32,10 +33,32 @@ function PlaylistCampaignForm({
   slideId,
   isLoading,
   loadingMessage,
+  isCampaign,
   children,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
+  const [publishedFromError, setPublishedFromError] = useState(false);
+  const [publishedToError, setPublishedToError] = useState(false);
+
+  /** Check if published is set */
+  function checkInputsHandleSubmit() {
+    setPublishedToError(false);
+    setPublishedFromError(false);
+    let submit = true;
+    if (isCampaign && !playlist.published.to) {
+      setPublishedToError(true);
+      submit = false;
+    }
+    if (isCampaign && !playlist.published.from) {
+      setPublishedFromError(true);
+      submit = false;
+    }
+
+    if (submit) {
+      handleSubmit();
+    }
+  }
 
   return (
     <>
@@ -78,17 +101,21 @@ function PlaylistCampaignForm({
           <Row className="g-2">
             <Col md>
               <FormInput
+                required={isCampaign}
                 name="published.from"
                 type="datetime-local"
                 label={t("playlist-campaign-form.publish-from-label")}
                 value={playlist.published.from ?? ""}
+                error={publishedFromError}
                 onChange={handleInput}
               />
             </Col>
             <Col md>
               <FormInput
+                required={isCampaign}
                 name="published.to"
                 type="datetime-local"
+                error={publishedToError}
                 label={t("playlist-campaign-form.publish-to-label")}
                 value={playlist.published.to ?? ""}
                 onChange={handleInput}
@@ -115,7 +142,7 @@ function PlaylistCampaignForm({
           <Button
             variant="primary"
             type="button"
-            onClick={handleSubmit}
+            onClick={checkInputsHandleSubmit}
             id="save_playlist"
             size="lg"
           >
@@ -131,6 +158,7 @@ PlaylistCampaignForm.defaultProps = {
   slideId: "",
   isLoading: false,
   loadingMessage: "",
+  isCampaign: false,
 };
 
 PlaylistCampaignForm.propTypes = {
@@ -141,6 +169,7 @@ PlaylistCampaignForm.propTypes = {
   slideId: PropTypes.string,
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,
+  isCampaign: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 

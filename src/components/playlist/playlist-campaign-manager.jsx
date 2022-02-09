@@ -6,7 +6,7 @@ import set from "lodash.set";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import idFromUrl from "../util/helpers/id-from-url";
-import SharedForm from "./playlist-campaign-form";
+import PlaylistCampaignForm from "./playlist-campaign-form";
 import PlaylistForm from "./playlist-form";
 import CampaignForm from "./campaign-form";
 import {
@@ -402,7 +402,7 @@ function PlaylistCampaignManager({
   return (
     <>
       {formStateObject && (
-        <SharedForm
+        <PlaylistCampaignForm
           playlist={formStateObject}
           headerText={`${headerText}: ${
             formStateObject && formStateObject.title
@@ -418,6 +418,7 @@ function PlaylistCampaignManager({
           handleInput={handleInput}
           handleSubmit={handleSubmit}
           slideId={slideId}
+          isCampaign={location === "campaign"}
         >
           {location === "campaign" && (
             <CampaignForm
@@ -431,7 +432,7 @@ function PlaylistCampaignManager({
               playlist={formStateObject}
             />
           )}
-        </SharedForm>
+        </PlaylistCampaignForm>
       )}
     </>
   );

@@ -1,10 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import idFromUrl from "../util/helpers/id-from-url";
-import calculateIsPublished from '../util/helpers/calculate-is-published';
+import calculateIsPublished from "../util/helpers/calculate-is-published";
 import {
   api,
   useGetV1ScreensByIdCampaignsQuery,
@@ -12,11 +11,10 @@ import {
 } from "../../redux/api/api.generated";
 
 /**
- * @param {object} props The props.
- * @param {boolean} props.screen Whether it is overridden by
- *   campaign or not.
- * @param screen
- * @returns {object} The published yes/no component.
+ * An icon to show if the screen has an active campaign.
+ *
+ * @param {string} id The id of the screen.
+ * @returns {object} The campaign icon.
  */
 function CampaignIcon(id) {
   const dispatch = useDispatch();
@@ -30,8 +28,8 @@ function CampaignIcon(id) {
     if (campaigns) {
       setAllCampaigns(
         campaigns["hydra:member"].map(({ campaign }) => campaign)
-        );
-        setScreenCampaignsChecked(true);
+      );
+      setScreenCampaignsChecked(true);
     }
   }, [campaigns]);
 
@@ -70,9 +68,5 @@ function CampaignIcon(id) {
     />
   );
 }
-
-CampaignIcon.propTypes = {
-  overriddenByCampaign: PropTypes.bool.isRequired,
-};
 
 export default CampaignIcon;
