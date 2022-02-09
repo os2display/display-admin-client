@@ -24,12 +24,14 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
+
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
       regionId,
-      page: 1,
+      page: 1
     });
+
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
     itemsPerPage: searchText ? 10 : 0,
@@ -38,16 +40,13 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   /** Set loaded data into form state. */
   useEffect(() => {
     if (
-      selectedPlaylistsByRegion &&
-      selectedPlaylistsByRegion["hydra:member"].length > 0
+      selectedPlaylistsByRegion
     ) {
-      const listOfPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
+      setSelectedData(selectedPlaylistsByRegion["hydra:member"].map(
         ({ playlist }) => {
           return playlist;
         }
-      );
-
-      setSelectedData(listOfPlaylists);
+      ));
     }
   }, [selectedPlaylistsByRegion]);
 

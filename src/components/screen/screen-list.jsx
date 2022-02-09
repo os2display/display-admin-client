@@ -237,9 +237,8 @@ function ScreenList() {
     },
     {
       key: "campaign",
-      // @TODO: implement overridden by campaing
       label: t("screen-list.columns.campaign"),
-      content: (d) => CampaignIcon(d),
+      content: (d) => CampaignIcon(idFromUrl(d['@id'])),
     },
     {
       key: "edit",
