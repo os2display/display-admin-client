@@ -1,5 +1,5 @@
 import { React } from "react";
-import SharedManager from "./playlist-campaign-manager";
+import PlaylistCampaignManager from "./playlist-campaign-manager";
 
 /**
  * The playlist/campaign create component.
@@ -21,7 +21,7 @@ function PlaylistCampaignCreate() {
     },
   };
 
-  return <SharedManager saveMethod="POST" initialState={data} />;
+  return <PlaylistCampaignManager saveMethod="POST" initialState={data} />;
 }
 
 export default PlaylistCampaignCreate;

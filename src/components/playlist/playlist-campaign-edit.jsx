@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import SharedManager from "./playlist-campaign-manager";
+import PlaylistCampaignManager from "./playlist-campaign-manager";
 import idFromUrl from "../util/helpers/id-from-url";
 import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
 
@@ -28,7 +28,7 @@ function PlaylistCampaignEdit() {
   return (
     <>
       {slideId && (
-        <SharedManager
+        <PlaylistCampaignManager
           saveMethod="PUT"
           initialState={data}
           id={id}
