@@ -7,6 +7,7 @@ import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
+import ConfigLoader from "../../config-loader";
 
 /**
  * Login component
@@ -41,8 +42,8 @@ function Login() {
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
           email,
-          password,
-        }),
+          password
+        })
       })
     )
       .then((response) => {
@@ -77,61 +78,63 @@ function Login() {
       state = query.state;
     }
 
-    if (state && idToken) {
-      fetch(
-        `https://displayapiservice2.local.itkdev.dk/v1/authentication/oidc/token?state=${state}&id_token=${idToken}`,
-        {
-          mode: "cors",
-          credentials: "include",
-        }
-      )
-        .then((resp) => resp.json())
-        .then((data) => {
-          if (isMounted) {
-            if (data?.token) {
-              localStorage.setItem("api-token", data.token);
-
-              const event = new Event("authenticated");
-              document.dispatchEvent(event);
-            }
+    ConfigLoader.loadConfig().then((config) => {
+      if (state && idToken) {
+        fetch(
+          `${config.api}v1/authentication/oidc/token?state=${state}&id_token=${idToken}`,
+          {
+            mode: "cors",
+            credentials: "include"
           }
-        })
-        .catch(() => {
-          if (isMounted) {
-            setOidcAuthLoadingError(t("login.error-oidc-login"));
-          }
-        })
-        .finally(() => {
-          if (isMounted) {
-            setReady(true);
-          }
-        });
-    } else {
-      fetch(
-        `https://displayapiservice2.local.itkdev.dk/v1/authentication/oidc/urls?providerKey=oidc`,
-        {
-          mode: "cors",
-          credentials: "include",
-        }
-      )
-        .then((resp) => {
-          resp.json().then((data) => {
+        )
+          .then((resp) => resp.json())
+          .then((data) => {
             if (isMounted) {
-              setOidcAuthUrls(data);
+              if (data?.token) {
+                localStorage.setItem("api-token", data.token);
+
+                const event = new Event("authenticated");
+                document.dispatchEvent(event);
+              }
+            }
+          })
+          .catch(() => {
+            if (isMounted) {
+              setOidcAuthLoadingError(t("login.error-oidc-login"));
+            }
+          })
+          .finally(() => {
+            if (isMounted) {
+              setReady(true);
             }
           });
-        })
-        .catch(() => {
-          if (isMounted) {
-            setOidcAuthLoadingError(t("login.error-fetching-oidc-urls"));
+      } else {
+        fetch(
+          `${config.api}v1/authentication/oidc/urls?providerKey=oidc`,
+          {
+            mode: "cors",
+            credentials: "include"
           }
-        })
-        .finally(() => {
-          if (isMounted) {
-            setReady(true);
-          }
-        });
-    }
+        )
+          .then((resp) => {
+            resp.json().then((data) => {
+              if (isMounted) {
+                setOidcAuthUrls(data);
+              }
+            });
+          })
+          .catch(() => {
+            if (isMounted) {
+              setOidcAuthLoadingError(t("login.error-fetching-oidc-urls"));
+            }
+          })
+          .finally(() => {
+            if (isMounted) {
+              setReady(true);
+            }
+          });
+      }
+    });
 
     return () => {
       isMounted = false;
