@@ -42,8 +42,8 @@ function Login() {
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
           email,
-          password
-        })
+          password,
+        }),
       })
     )
       .then((response) => {
@@ -84,7 +84,7 @@ function Login() {
           `${config.api}v1/authentication/oidc/token?state=${state}&id_token=${idToken}`,
           {
             mode: "cors",
-            credentials: "include"
+            credentials: "include",
           }
         )
           .then((resp) => resp.json())
@@ -109,13 +109,10 @@ function Login() {
             }
           });
       } else {
-        fetch(
-          `${config.api}v1/authentication/oidc/urls?providerKey=oidc`,
-          {
-            mode: "cors",
-            credentials: "include"
-          }
-        )
+        fetch(`${config.api}v1/authentication/oidc/urls?providerKey=oidc`, {
+          mode: "cors",
+          credentials: "include",
+        })
           .then((resp) => {
             resp.json().then((data) => {
               if (isMounted) {
