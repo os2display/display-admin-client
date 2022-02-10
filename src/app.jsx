@@ -68,9 +68,9 @@ function App() {
       lng: "da", // language to use
       resources: {
         da: {
-          common: commonDa
-        }
-      }
+          common: commonDa,
+        },
+      },
     });
 
     return () => {
