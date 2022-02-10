@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Spinner } from "react-bootstrap";
 import Login from "./components/user/login";
+import Logout from "./components/user/logout";
 import TopBar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
@@ -62,79 +63,82 @@ function App() {
     document.addEventListener("reauthenticate", handleReauthenticate);
     document.addEventListener("authenticated", handleAuthenticated);
 
+    i18next.init({
+      interpolation: { escapeValue: false }, // React already does escaping
+      lng: "da", // language to use
+      resources: {
+        da: {
+          common: commonDa,
+        },
+      },
+    });
+
     return () => {
       document.removeEventListener("reauthenticate", handleReauthenticate);
       document.removeEventListener("authenticated", handleAuthenticated);
     };
   }, []);
 
-  i18next.init({
-    interpolation: { escapeValue: false }, // React already does escaping
-    lng: "da", // language to use
-    resources: {
-      da: {
-        common: commonDa,
-      },
-    },
-  });
-
   return (
     <>
       <I18nextProvider i18n={i18next}>
-        {authenticated === false && <Login />}
-        {authenticated === null && <Spinner animation="border" />}
-        {authenticated && (
-          <Container fluid className="h-100 px-0 bg-light">
-            <Row className="row-full-height g-0">
-              <SideBar />
-              <Col lg={9} xl={10}>
-                <TopBar />
-                <ToastContainer
-                  autoClose="10000"
-                  position="bottom-right"
-                  hideProgressBar={false}
-                  closeOnClick
-                  pauseOnHover
-                  draggable
-                  progress={undefined}
-                />
-                <main className="col p-3">
-                  <Switch>
-                    <Route
-                      path="/:location(campaign|playlist)/create"
-                      component={PlaylistCampaignCreate}
-                    />
-                    <Route
-                      path="/:location(campaign|playlist)/edit/:id"
-                      component={PlaylistCampaignEdit}
-                    />
-                    <Route
-                      path="/:location(campaign|playlist)/list"
-                      component={PlaylistCampaignList}
-                    />
-                    <Route path="/screen/list" component={ScreenList} />
-                    <Route path="/screen/create" component={ScreenCreate} />
-                    <Route path="/screen/edit/:id" component={ScreenEdit} />
-                    <Route path="/group/list" component={GroupsList} />
-                    <Route path="/group/edit/:id" component={GroupEdit} />
-                    <Route path="/group/create" component={GroupCreate} />
-                    <Route path="/slide/list" component={SlidesList} />
-                    <Route path="/slide/create" component={SlideCreate} />
-                    <Route path="/slide/edit/:id" component={SlideEdit} />
-                    <Route path="/media/list" component={MediaList} />
-                    <Route path="/media/create" component={MediaCreate} />
-                    <Route path="/themes/list" component={ThemesList} />
-                    <Route path="/themes/edit/:id" component={ThemeEdit} />
-                    <Route path="/themes/create" component={ThemeCreate} />
-                    <Route path="/users/" component={UserList} />
-                    <Route path="/user/:id" component={EditUser} />
-                    <Redirect from="/" to="/slide/list" exact />
-                  </Switch>
-                </main>
-              </Col>
-            </Row>
-          </Container>
-        )}
+        <>
+          {authenticated === false && <Login />}
+          {authenticated === null && <Spinner animation="border" />}
+          {authenticated === true && (
+            <Container fluid className="h-100 px-0 bg-light">
+              <Row className="row-full-height g-0">
+                <SideBar />
+                <Col lg={9} xl={10}>
+                  <TopBar />
+                  <ToastContainer
+                    autoClose="10000"
+                    position="bottom-right"
+                    hideProgressBar={false}
+                    closeOnClick
+                    pauseOnHover
+                    draggable
+                    progress={undefined}
+                  />
+                  <main className="col p-3">
+                    <Switch>
+                      <Route
+                        path="/:location(campaign|playlist)/create"
+                        component={PlaylistCampaignCreate}
+                      />
+                      <Route
+                        path="/:location(campaign|playlist)/edit/:id"
+                        component={PlaylistCampaignEdit}
+                      />
+                      <Route
+                        path="/:location(campaign|playlist)/list"
+                        component={PlaylistCampaignList}
+                      />
+                      <Route path="/screen/list" component={ScreenList} />
+                      <Route path="/screen/create" component={ScreenCreate} />
+                      <Route path="/screen/edit/:id" component={ScreenEdit} />
+                      <Route path="/group/list" component={GroupsList} />
+                      <Route path="/group/edit/:id" component={GroupEdit} />
+                      <Route path="/group/create" component={GroupCreate} />
+                      <Route path="/slide/list" component={SlidesList} />
+                      <Route path="/slide/create" component={SlideCreate} />
+                      <Route path="/slide/edit/:id" component={SlideEdit} />
+                      <Route path="/media/list" component={MediaList} />
+                      <Route path="/media/create" component={MediaCreate} />
+                      <Route path="/themes/list" component={ThemesList} />
+                      <Route path="/themes/edit/:id" component={ThemeEdit} />
+                      <Route path="/themes/create" component={ThemeCreate} />
+                      <Route path="/users/" component={UserList} />
+                      <Route path="/user/:id" component={EditUser} />
+                      <Route path="/logout" component={Logout} />
+                      <Redirect from="/" to="/slide/list" exact />
+                    </Switch>
+                  </main>
+                </Col>
+              </Row>
+            </Container>
+          )}
+        </>
       </I18nextProvider>
     </>
   );
