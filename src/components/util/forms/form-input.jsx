@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import PropTypes from "prop-types";
 import { FormControl, FormGroup, FormLabel, InputGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
@@ -14,10 +14,11 @@ import { useTranslation } from "react-i18next";
  * @param {string} props.placeholder The placeholder for the input.
  * @param {string} props.value The value of the input
  * @param {Function} props.onChange The callback for changes in the input.
- * @param {string} props.errors The errors for the input.
+ * @param {string} props.error If the input has errors.
  * @param {string} props.invalidText The text if the input is invalid
  * @param {string} props.formGroupClasses Classes for the formgroup
  * @param {string} props.disabled If the input is disabled
+ * @param {string} props.required If the input is required
  * @param {object | null} props.inputGroupExtra Extra elements for input group.
  * @returns {object} An input.
  */
@@ -29,23 +30,16 @@ function FormInput({
   placeholder,
   value,
   onChange,
-  errors,
+  error,
   invalidText,
   formGroupClasses,
   inputGroupExtra,
   disabled,
+  required,
   ...rest
 }) {
   const { t } = useTranslation("common");
-  const [error, setError] = useState();
-  const required = !!errors;
   const invalidInputText = invalidText || t("form-input.validation-text");
-
-  /** Handle errors. */
-  useEffect(() => {
-    setError(errors && errors.includes(name));
-  }, [errors]);
-
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClasses}>
@@ -82,15 +76,16 @@ FormInput.defaultProps = {
   placeholder: "",
   type: "text",
   value: "",
-  errors: null,
+  error: false,
   invalidText: null,
   disabled: false,
   label: null,
   inputGroupExtra: null,
+  required: false,
 };
 
 FormInput.propTypes = {
-  errors: PropTypes.arrayOf(PropTypes.string),
+  error: PropTypes.bool,
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -101,6 +96,7 @@ FormInput.propTypes = {
   invalidText: PropTypes.string,
   formGroupClasses: PropTypes.string,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
   inputGroupExtra: PropTypes.node,
 };
 

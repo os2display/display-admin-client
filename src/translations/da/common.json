@@ -140,29 +140,54 @@
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
-  "playlists-list": {
+  "playlist-campaign-list": {
+    "playlist": {
+      "header": "Spillelister",
+      "create-new": "Opret ny spilleliste",
+      "columns": {
+        "pick": "Vælg spilleliste"
+      },
+      "info-modal": {
+        "slides": "Spillelisten indeholder følgende slides"
+      },
+      "loading-messages": {
+        "loading": "Henter spillelister",
+        "deleting": "Sletter spilleliste: {{title}}"
+      },
+      "error-messages": {
+        "delete-error": "Der skete en fejl da spillelisten skulle slettes: {{error}}",
+        "load-error": "Der skete en fejl da spillelisterne skulle hentes: {{error}}"
+      },
+      "success-messages": {
+        "delete": "Spillelisten er blevet slettet"
+      }
+    },
+    "campaign": {
+      "header": "Kampagner",
+      "create-new": "Opret ny kampagne",
+      "columns": {
+        "pick": "Vælg kampagne"
+      },
+      "info-modal": {
+        "slides": "Kampagnen indeholder følgende slides"
+      },
+      "loading-messages": {
+        "loading": "Henter kampagner",
+        "deleting": "Sletter kampagnen: {{title}}"
+      },
+      "error-messages": {
+        "delete-error": "Der skete en fejl da kampagnen skulle slettes: {{error}}",
+        "load-error": "Der skete en fejl da kampagnerne skulle hentes: {{error}}"
+      },
+      "success-messages": {
+        "delete": "Kampagnen er blevet slettet"
+      }
+    },
     "columns": {
       "published": "Udgivet",
-      "pick": "Vælg spilleliste",
       "name": "Navn",
       "number-of-slides": "Slides tilknyttede"
     },
-    "info-modal": {
-      "playlist-slides": "Playlisten indeholder følgende slides"
-    },
-    "loading-messages": {
-      "loading-playlists": "Henter spillelister",
-      "deleting-playlist": "Sletter spilleliste: {{title}}"
-    },
-    "error-messages": {
-      "playlist-delete-error": "Der skete en fejl da spillelisten skulle slettes: {{error}}",
-      "playlists-load-error": "Der skete en fejl da spillelisterne skulle hentes: {{error}}"
-    },
-    "success-messages": {
-      "playlist-delete": "Spillelisten er blevet slettet"
-    },
-    "header": "Spillelister",
-    "create-new-playlist": "Opret ny spilleliste",
     "delete-button": "Slet",
     "edit-button": "Rediger"
   },
@@ -251,12 +276,12 @@
     "accept": "Ok",
     "cancel": "Annullér"
   },
-  "slide-preview":{
+  "slide-preview": {
     "error-messages": {
       "loading-template-error": "Der skete en fejl da slidets skabelon skulle hentes: {{error}}",
       "loading-content-error": "Der skete en fejl da slidets indhold skulle hentes: {{error}}"
     },
-    "loading-messages":{
+    "loading-messages": {
       "loading": "Henter template og indhold til slide"
     }
   },
@@ -321,38 +346,61 @@
       "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes: {{error}}"
     }
   },
-  "playlist-edit": {
-    "edit-playlist": "Rediger følgende spilleliste",
-    "loading-messages": {
-      "saving-playlist": "Gemmer spillelisten",
-      "saving-slides": "Tilknytter slides til spillelisten"
+  "playlist-campaign-manager": {
+    "campaign": {
+      "edit-header": "Rediger følgende kampagne",
+      "create-header": "Opret ny kampagne",
+      "loading-messages": {
+        "saving-groups": "Tilknytter grupperne til kampagnen",
+        "saving-screens": "Tilknytter skærmene til kampagnen",
+        "saving": "Gemmer kampagnen",
+        "saving-slides": "Tilknytter slides til kampagnen"
+      },
+      "success-messages": {
+        "saved": "Kampagnen er gemt",
+        "saved-slides": "Slides er tilknyttet kampagnen",
+        "saved-screens": "Skærme er tilknyttet kampagnen",
+        "saved-groups": "Grupper er tilknyttet kampagnen"
+      },
+      "error-messages": {
+        "save-group-error": "Der skete en fejl da gruppen/grupperne skulle tilknyttes til kampagnen: {{error}}",
+        "save-error": "Der skete en fejl da kampagnen skulle gemmes: {{error}}",
+        "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til kampagnen: {{error}}",
+        "save-screens-error": "Der skete en fejl da skærmen/skærmene skulle tilknyttes til kampagnen: {{error}}",
+        "load-error": "Der skete en fejl da kampagnen med følgende id: {{id}} skulle hentes: {{error}}"
+      }
     },
-    "success-messages": {
-      "saved-playlist": "Spillelisten er gemt",
-      "saved-slides": "Slides er tilknyttet spillelisten"
-    },
-    "error-messages": {
-      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
-      "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}",
-      "load-playlist-error": "Der skete en fejl da spillelisten med følgende id: {{id}} skulle hentes: {{error}}"
+    "playlist": {
+      "edit-header": "Rediger følgende spilleliste",
+      "create-header": "Opret ny spilleliste",
+      "loading-messages": {
+        "saving-groups": "Tilknytter grupperne til spillelisten",
+        "saving-screens": "Tilknytter skærmene til spillelisten",
+        "saving": "Gemmer spillelisten",
+        "saving-slides": "Tilknytter slides til spillelisten"
+      },
+      "success-messages": {
+        "saved": "Spillelisten er gemt",
+        "saved-slides": "Slides er tilknyttet spillelisten",
+        "saved-screens": "Skærme er tilknyttet spillelisten",
+        "saved-groups": "Grupper er tilknyttet spillelisten"
+      },
+      "error-messages": {
+        "save-screens-error": "Der skete en fejl da skærmen/skærmene skulle tilknyttes til spillelisten: {{error}}",
+        "save-group-error": "Der skete en fejl da gruppen/grupperne skulle tilknyttes til spillelisten: {{error}}",
+        "save-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
+        "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}",
+        "load-error": "Der skete en fejl da spillelisten med følgende id: {{id}} skulle hentes: {{error}}"
+      }
     }
   },
-  "playlist-create": {
-    "create-new-playlist": "Opret ny spilleliste",
-    "loading-messages": {
-      "saving-playlist": "Gemmer spillelisten",
-      "saving-slides": "Tilknytter slides til spillelisten"
-    },
-    "success-messages": {
-      "saved-playlist": "Spillelisten er gemt",
-      "saved-slides": "Slides er tilknyttet spillelisten"
-    },
-    "error-messages": {
-      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
-      "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}"
-    }
+  "campaign-form": {
+    "title-campaign": "Skærme og skærmgrupper"
   },
   "playlist-form": {
+    "schedule-header": "Planlægning"
+  },
+  "playlist-campaign-form": {
     "title-about": "Om spillelisten",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
@@ -361,7 +409,6 @@
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
     "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten",
-    "schedule-header": "Planlægning",
     "publish-from-label": "Udgivet fra",
     "publish-to-label": "Udgivet til",
     "publish-title": "Udgivelse",
@@ -378,6 +425,12 @@
       "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
     "remove-from-list": "Fjern fra liste"
+  },
+  "select-screens-table": {
+    "remove-from-list": "Fjern fra liste",
+    "info-modal": {
+      "screen-in-groups": "Skærmen er i følgende grupper"
+    }
   },
   "pagination": {
     "aria-label": "Paginering"
@@ -551,6 +604,7 @@
     "content-slides": "Slides",
     "screens-screens": "Skærme",
     "screens-groups": "Grupper",
+    "playlists-campaigns": "Kampagner",
     "playlists-playlists": "Spillelister",
     "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
@@ -618,7 +672,7 @@
     "hours": "t.",
     "minutes": "min."
   },
-  "add-edit-contact":{
+  "add-edit-contact": {
     "title": "Titel",
     "name": "Navn",
     "phone": "Telefonnummer",
@@ -626,7 +680,7 @@
     "add-contact": "Tilføj kontakt",
     "update-contact": "Opdater kontakt"
   },
-  "contact-view":{
+  "contact-view": {
     "edit-contact": "Rediger kontakt",
     "remove-contact": "Fjern kontakt"
   },

@@ -24,23 +24,17 @@ function GroupsDropdown({
   const { t } = useTranslation("common");
 
   return (
-    <>
-      {data && (
-        <>
-          <MultiSelectComponent
-            errors={errors}
-            handleSelection={handleGroupsSelection}
-            options={data}
-            label={t("groups-dropdown.label")}
-            selected={selected}
-            name={name}
-            helpText={t("groups-dropdown.search-to-se-possible-selections")}
-            filterCallback={filterCallback}
-            noSelectedString={t("groups-dropdown.nothing-selected")}
-          />
-        </>
-      )}
-    </>
+    <MultiSelectComponent
+      errors={errors}
+      handleSelection={handleGroupsSelection}
+      options={data}
+      label={t("groups-dropdown.label")}
+      selected={selected}
+      name={name}
+      helpText={t("groups-dropdown.search-to-se-possible-selections")}
+      filterCallback={filterCallback}
+      noSelectedString={t("groups-dropdown.nothing-selected")}
+    />
   );
 }
 

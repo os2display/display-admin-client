@@ -3,41 +3,34 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
-import {
-  useGetV1ScreenGroupsQuery,
-  useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../../redux/api/api.generated";
+import { useGetV1ScreenGroupsQuery } from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
+
 /**
  * A multiselect and table for groups.
  *
  * @param {string} props The props.
  * @param {string} props.name The name for the input
- * @returns {object} An input.
+ * @param {string} props.id The id used for the get.
+ * @param {string} props.getSelectedMethod Method that gets selected for dropdown
+ * @returns {object} Select groups table.
  */
-function SelectGroupsTable({ handleChange, name, groupId }) {
+function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
   const { t } = useTranslation("common");
-  const [selectedData, setSelectedData] = useState();
+  const [selectedData, setSelectedData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const { data: groups } = useGetV1ScreenGroupsQuery({
     title: searchText,
     itemsPerPage: searchText ? 10 : 0,
   });
-
-  const { data } = useGetV1ScreensByIdScreenGroupsQuery({
-    id: groupId,
+  const { data } = getSelectedMethod({
+    id,
   });
 
   /** Map loaded data. */
   useEffect(() => {
     if (data) {
       setSelectedData(data["hydra:member"]);
-      handleChange({
-        target: {
-          id: name,
-          value: data["hydra:member"].map((item) => item["@id"]),
-        },
-      });
     }
   }, [data]);
 
@@ -48,10 +41,10 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
    * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
-    const { value, id } = target;
+    const { value, id: localId } = target;
     setSelectedData(value);
     handleChange({
-      target: { id, value: value.map((item) => item["@id"]) },
+      target: { id: localId, value: value.map((item) => item["@id"]) },
     });
   }
 
@@ -112,7 +105,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
             selected={selectedData}
             filterCallback={onFilter}
           />
-          {selectedData?.length > 0 && (
+          {selectedData.length > 0 && (
             <Table columns={columns} data={selectedData} />
           )}
         </>
@@ -122,13 +115,14 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
 }
 
 SelectGroupsTable.defaultProps = {
-  groupId: "",
+  id: "",
 };
 
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  groupId: PropTypes.string,
+  id: PropTypes.string,
+  getSelectedMethod: PropTypes.func.isRequired,
 };
 
 export default SelectGroupsTable;
