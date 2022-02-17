@@ -32,7 +32,7 @@ docker-compose up -d
 ### Install npm packages
 
 ```bash
-docker-compose run node yarn install
+docker-compose run node yarn
 ```
 
 ## Testing with cypress

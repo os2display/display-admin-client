@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
 import GroupForm from "./group-form";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -16,7 +16,7 @@ import {
  */
 function GroupCreate() {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const headerText = t("group-create.create-new-group-header");
   const [formStateObject, setFormStateObject] = useState({
     title: "",
@@ -37,7 +37,7 @@ function GroupCreate() {
   useEffect(() => {
     if (isSaveSuccess && data) {
       displaySuccess(t("group-create.success-messages.saved-group"));
-      history.push(`/group/edit/${idFromUrl(data["@id"])}`);
+      navigate(`/group/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
 

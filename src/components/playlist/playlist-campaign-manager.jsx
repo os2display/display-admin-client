@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
-import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import set from "lodash.set";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
@@ -31,6 +30,7 @@ import {
  * @param {boolean} props.isLoading Is the slide state loading?
  * @param {object} props.loadingError Loading error.
  * @param {string} props.slideId Slide id
+ * @param {string} props.location Either playlist or campaign.
  * @returns {object} The shared manager, shared by campaign and playlists.
  */
 function PlaylistCampaignManager({
@@ -40,10 +40,10 @@ function PlaylistCampaignManager({
   isLoading,
   loadingError,
   slideId,
+  location,
 }) {
   const { t } = useTranslation("common");
-  const { location } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const headerText =
     saveMethod === "PUT"
       ? t(`playlist-campaign-manager.${location}.edit-header`)
@@ -289,7 +289,7 @@ function PlaylistCampaignManager({
 
   useEffect(() => {
     if (isSaveSuccessPost && data) {
-      history.push(`/${location}/edit/${idFromUrl(data["@id"])}`);
+      navigate(`/${location}/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccessPost]);
 
@@ -457,6 +457,7 @@ PlaylistCampaignManager.propTypes = {
   isLoading: PropTypes.bool,
   loadingError: PropTypes.shape(PropTypes.any),
   slideId: PropTypes.string,
+  location: PropTypes.string.isRequired,
 };
 
 export default PlaylistCampaignManager;

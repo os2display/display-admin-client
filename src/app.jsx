@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import { ToastContainer } from "react-toastify";
@@ -21,7 +21,6 @@ import PlaylistCampaignEdit from "./components/playlist/playlist-campaign-edit";
 import PlaylistCampaignCreate from "./components/playlist/playlist-campaign-create";
 import MediaList from "./components/media/media-list";
 import commonDa from "./translations/da/common.json";
-import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
@@ -41,6 +40,7 @@ import "./app.scss";
  */
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
+  const [ready, setReady] = useState(false);
 
   const handleReauthenticate = () => {
     setAuthenticated(false);
@@ -79,13 +79,26 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    i18next.init({
+      interpolation: { escapeValue: false }, // React already does escaping
+      lng: "da", // language to use
+      resources: {
+        da: {
+          common: commonDa,
+        },
+      },
+    });
+    setReady(true);
+  }, []);
+
   return (
     <>
-      <I18nextProvider i18n={i18next}>
-        <>
+      {ready && (
+        <I18nextProvider i18n={i18next}>
           {authenticated === false && <Login />}
           {authenticated === null && <Spinner animation="border" />}
-          {authenticated === true && (
+          {authenticated && (
             <Container fluid className="h-100 px-0 bg-light">
               <Row className="row-full-height g-0">
                 <SideBar />
@@ -101,45 +114,74 @@ function App() {
                     progress={undefined}
                   />
                   <main className="col p-3">
-                    <Switch>
-                      <Route
-                        path="/:location(campaign|playlist)/create"
-                        component={PlaylistCampaignCreate}
-                      />
-                      <Route
-                        path="/:location(campaign|playlist)/edit/:id"
-                        component={PlaylistCampaignEdit}
-                      />
-                      <Route
-                        path="/:location(campaign|playlist)/list"
-                        component={PlaylistCampaignList}
-                      />
-                      <Route path="/screen/list" component={ScreenList} />
-                      <Route path="/screen/create" component={ScreenCreate} />
-                      <Route path="/screen/edit/:id" component={ScreenEdit} />
-                      <Route path="/group/list" component={GroupsList} />
-                      <Route path="/group/edit/:id" component={GroupEdit} />
-                      <Route path="/group/create" component={GroupCreate} />
-                      <Route path="/slide/list" component={SlidesList} />
-                      <Route path="/slide/create" component={SlideCreate} />
-                      <Route path="/slide/edit/:id" component={SlideEdit} />
-                      <Route path="/media/list" component={MediaList} />
-                      <Route path="/media/create" component={MediaCreate} />
-                      <Route path="/themes/list" component={ThemesList} />
-                      <Route path="/themes/edit/:id" component={ThemeEdit} />
-                      <Route path="/themes/create" component={ThemeCreate} />
-                      <Route path="/users/" component={UserList} />
-                      <Route path="/user/:id" component={EditUser} />
-                      <Route path="/logout" component={Logout} />
-                      <Redirect from="/" to="/slide/list" exact />
-                    </Switch>
+                    <Routes>
+                      <Route path="campaign">
+                        <Route
+                          path="create"
+                          element={
+                            <PlaylistCampaignCreate location="campaign" />
+                          }
+                        />
+                        <Route
+                          path="edit/:id"
+                          element={<PlaylistCampaignEdit location="campaign" />}
+                        />
+                        <Route
+                          path="list"
+                          element={<PlaylistCampaignList location="campaign" />}
+                        />
+                      </Route>
+                      <Route path="playlist">
+                        <Route
+                          path="create"
+                          element={
+                            <PlaylistCampaignCreate location="playlist" />
+                          }
+                        />
+                        <Route
+                          path="edit/:id"
+                          element={<PlaylistCampaignEdit location="playlist" />}
+                        />
+                        <Route
+                          path="list"
+                          element={<PlaylistCampaignList location="playlist" />}
+                        />
+                      </Route>
+
+                      <Route path="screen">
+                        <Route path="list" element={<ScreenList />} />
+                        <Route path="create" element={<ScreenCreate />} />
+                        <Route path="edit/:id" element={<ScreenEdit />} />
+                      </Route>
+                      <Route path="group">
+                        <Route path="list" element={<GroupsList />} />
+                        <Route path="edit/:id" element={<GroupEdit />} />
+                        <Route path="create" element={<GroupCreate />} />
+                      </Route>
+                      <Route path="slide">
+                        <Route path="list" element={<SlidesList />} />
+                        <Route path="create" element={<SlideCreate />} />
+                        <Route path="edit/:id" element={<SlideEdit />} />
+                      </Route>
+                      <Route path="media">
+                        <Route path="list" element={<MediaList />} />
+                        <Route path="create" element={<MediaCreate />} />
+                      </Route>
+                      <Route path="themes">
+                        <Route path="list" element={<ThemesList />} />
+                        <Route path="edit/:id" element={<ThemeEdit />} />
+                        <Route path="create" element={<ThemeCreate />} />
+                      </Route>
+                      <Route path="users" element={<UserList />} />
+                      <Route path="*" element={<Navigate to="/slide/list" />} />
+                    </Routes>
                   </main>
                 </Col>
               </Row>
             </Container>
           )}
-        </>
-      </I18nextProvider>
+        </I18nextProvider>
+      )}
     </>
   );
 }

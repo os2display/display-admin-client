@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
@@ -30,7 +30,7 @@ function GroupForm({
   loadingMessage,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -60,7 +60,7 @@ function GroupForm({
             variant="secondary"
             type="button"
             id="cancel_group"
-            onClick={() => history.push("/group/list/")}
+            onClick={() => navigate("/group/list/")}
             className="me-md-3 col"
             size="lg"
           >

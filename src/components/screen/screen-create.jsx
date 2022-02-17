@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -21,7 +21,7 @@ import {
  */
 function ScreenCreate() {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const headerText = t("screen-create.create-screen-header");
   const [groupId, setGroupId] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
@@ -164,7 +164,7 @@ function ScreenCreate() {
   /** When the screen and group(s) are saved. it redirects to edit screen. */
   useEffect(() => {
     if (data && data["@id"]) {
-      history.push(`/screen/edit/${idFromUrl(data["@id"])}`);
+      navigate(`/screen/edit/${idFromUrl(data["@id"])}`);
     }
   }, [data]);
 

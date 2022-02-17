@@ -4,6 +4,8 @@ import { useParams } from "react-router";
 import { Button, Col } from "react-bootstrap";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import ContentHeader from "../util/content-header/content-header";
 import ListButton from "../util/list/list-button";
@@ -29,11 +31,12 @@ import {
 /**
  * The shared list component.
  *
+ * @param {object} props Props.
+ * @param {string} props.location Either playlist or campaign.
  * @returns {object} The shared list, shared by playlists and campaigns.
  */
-function PlaylistCampaignList() {
+function PlaylistCampaignList({ location }) {
   const { t } = useTranslation("common");
-  const { location } = useParams();
 
   // Local state
   const [selectedRows, setSelectedRows] = useState([]);
@@ -354,5 +357,9 @@ function PlaylistCampaignList() {
     </>
   );
 }
+
+PlaylistCampaignList.propTypes = {
+  location: PropTypes.string.isRequired,
+};
 
 export default PlaylistCampaignList;

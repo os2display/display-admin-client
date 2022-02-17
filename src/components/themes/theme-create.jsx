@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ThemeForm from "./theme-form";
 import {
   displaySuccess,
@@ -16,7 +16,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  */
 function ThemeCreate() {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const headerText = t("theme-create.create-new-theme");
   const [loadingMessage] = useState(
     t("theme-create.loading-messages.saving-theme")
@@ -49,7 +49,7 @@ function ThemeCreate() {
   /** When the theme is saved, it redirects to edit theme. */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      history.push(`/themes/edit/${idFromUrl(data["@id"])}`);
+      navigate(`/themes/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
 

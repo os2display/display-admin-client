@@ -1,7 +1,7 @@
 import { React } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import LoadingComponent from "../util/loading-component/loading-component";
@@ -31,7 +31,7 @@ function ThemeForm({
   loadingMessage,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -73,7 +73,7 @@ function ThemeForm({
             variant="secondary"
             type="button"
             id="cancel_theme"
-            onClick={() => history.push("/themes/list/")}
+            onClick={() => navigate(-1)}
             size="lg"
             className="me-3"
           >

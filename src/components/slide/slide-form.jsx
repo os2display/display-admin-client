@@ -1,7 +1,7 @@
 import { React, useEffect, useState, Fragment } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -57,7 +57,7 @@ function SlideForm({
   loadingMessage,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const [showPreview, setShowPreview] = useState(false);
   const [previewLayout, setPreviewLayout] = useState("horizontal");
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);

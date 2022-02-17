@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Button, Col } from "react-bootstrap";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,6 +34,12 @@ import "./screen-list.scss";
  */
 function ScreenList() {
   const { t } = useTranslation("common");
+  const navigate = useNavigate();
+
+  // Params
+  const { search } = useLocation();
+  const viewParams = new URLSearchParams(search).get("view");
+  const [view, setView] = useState(viewParams ?? "list");
 
   // Local state
   const [view, setView] = useState("list");
@@ -74,6 +81,14 @@ function ScreenList() {
       setListData(data);
     }
   }, [data]);
+
+  /** Set the view in url. */
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    params.delete("view");
+    params.append("view", view);
+    navigate({ search: params.toString() });
+  }, [view]);
 
   /** Deletes multiple screens. */
   useEffect(() => {

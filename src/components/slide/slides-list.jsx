@@ -267,7 +267,8 @@ function SlidesList() {
         t("slides-list.error-messages.slides-load-error", {
           error: slidesGetError.error
             ? slidesGetError.error
-            : slidesGetError.data["hydra:description"],
+            : slidesGetError.data["hydra:description"] ||
+              slidesGetError.data.message,
         })
       );
     }

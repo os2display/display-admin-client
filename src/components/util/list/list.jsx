@@ -1,6 +1,6 @@
 import { React, useEffect } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
@@ -46,7 +46,7 @@ function List({
   children,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Page params
   const { search } = useLocation();
@@ -102,7 +102,9 @@ function List({
       localStorage.removeItem("search");
     }
 
-    history.push({ search: params.toString() });
+    navigate({
+      search: params.toString(),
+    });
   }, []);
 
   /**
@@ -113,7 +115,9 @@ function List({
     const params = new URLSearchParams(search);
     params.delete(dataKey);
     params.append(dataKey, value);
-    history.push({ search: params.toString() });
+    navigate({
+      search: params.toString(),
+    });
   }
 
   /** @param {string} newSearchText Updates the search text state and url. */
@@ -146,7 +150,9 @@ function List({
     params.append("order", sortByInput.order);
     localStorage.setItem("order", sortByInput.order);
     localStorage.setItem("sort", sortByInput.path);
-    history.replace({ search: params.toString() });
+    navigate({
+      search: params.toString(),
+    });
   }
 
   /** Sets page from url using callback */

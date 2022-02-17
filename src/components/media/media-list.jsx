@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Col, Row } from "react-bootstrap";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
@@ -39,7 +39,7 @@ function MediaList({ fromModal, handleSelected }) {
   const searchParams = new URLSearchParams(search).get("search");
 
   // Misc
-  const history = useHistory();
+  const navigate = useNavigate();
   const pageSize = 10;
 
   // State
@@ -93,7 +93,7 @@ function MediaList({ fromModal, handleSelected }) {
     const params = new URLSearchParams(search);
     params.delete("page");
     params.append("page", nextPage);
-    history.replace({ search: params.toString() });
+    navigate({ search: params.toString() });
     setPage(nextPage);
   }
 
@@ -105,7 +105,7 @@ function MediaList({ fromModal, handleSelected }) {
       params.append("search", searchText);
       params.delete("page");
       params.append("page", page);
-      history.replace({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
   }, [searchText]);
 
