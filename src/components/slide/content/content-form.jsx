@@ -68,6 +68,7 @@ function ContentForm({
         } else if (formData.input === "video") {
           defaultMimetypes = ["video/*"];
         }
+
         returnElement = (
           <div key={formData.key}>
             {formData?.label && (

@@ -38,7 +38,7 @@ function RemoteComponentWrapper({
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
-  const [remoteComponentMediaData, setRemoteComponentMediaData] =
+
     useState(null);
   // Remote component configuration
   const requires = createRequires(resolve);
@@ -67,7 +67,6 @@ function RemoteComponentWrapper({
       });
 
       newSlide.mediaData = mediaDataCopy;
-      setRemoteComponentMediaData(mediaDataCopy);
       setRemoteComponentSlide(newSlide);
     }
   }, [slide, mediaData]);
