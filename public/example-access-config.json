@@ -1,0 +1,14 @@
+{
+  "campaign": {
+    "roles": ["admin"]
+  },
+  "screen": {
+    "roles": ["admin"]
+  },
+  "settings": {
+    "roles": ["admin"]
+  },
+  "groups": {
+    "roles": ["admin"]
+  }
+}

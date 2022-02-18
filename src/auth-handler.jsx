@@ -1,6 +1,5 @@
 import { React, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { Spinner } from "react-bootstrap";
 import Login from "./components/user/login";
 import UserContext from "./context/user-context";
 import LoadingComponent from "./components/util/loading-component/loading-component";

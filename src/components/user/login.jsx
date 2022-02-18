@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
-import UserContext from '../../context/user-context';
+import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
 import ConfigLoader from "../../config-loader";
@@ -61,8 +61,9 @@ function Login() {
           localStorage.setItem("api-token", response.data.token);
 
           context.authenticated.set(true);
+          context.authenticated.set(true);
           // todo fix this when roles recieved
-                    context.userRole.set("editor");
+          context.userRole.set("admin");
         }
       })
       .catch((err) => {
@@ -98,7 +99,7 @@ function Login() {
 
                 context.authenticated.set(true);
                 // todo fix this when roles recieved
-                          context.userRole.set("editor");
+                context.userRole.set("admin");
               }
             }
           })

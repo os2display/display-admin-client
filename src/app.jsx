@@ -30,7 +30,7 @@ import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import UserContext from "./context/user-context";
 import AuthHandler from "./auth-handler";
-import LoadingComponent from './components/util/loading-component/loading-component';
+import LoadingComponent from "./components/util/loading-component/loading-component";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
@@ -104,7 +104,7 @@ function App() {
   return (
     <>
       <UserContext.Provider value={userStore}>
-        <Suspense fallback={<LoadingComponent></LoadingComponent>}>
+        <Suspense fallback={<LoadingComponent />}>
           <I18nextProvider i18n={i18next}>
             <AuthHandler>
               <Container fluid className="h-100 px-0 bg-light">
