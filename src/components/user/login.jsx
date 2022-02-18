@@ -1,9 +1,11 @@
-import { React, useState, useContext } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { React, useEffect, useState, useContext } from "react";
+import { Alert, Button, Card, Form, Row, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import UserContext from "../../context/user-context";
-import { api } from "../../redux/api/api.generated";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
+import Col from "react-bootstrap/Col";
+import UserContext from '../../context/user-context';
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
 import ConfigLoader from "../../config-loader";
@@ -18,6 +20,7 @@ function Login() {
   const { search } = useLocation();
   const dispatch = useDispatch();
   const context = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -56,8 +59,10 @@ function Login() {
 
         if (response?.data?.token) {
           localStorage.setItem("api-token", response.data.token);
+
           context.authenticated.set(true);
-          context.userRole.set("editor");
+          // todo fix this when roles recieved
+                    context.userRole.set("editor");
         }
       })
       .catch((err) => {
@@ -91,8 +96,9 @@ function Login() {
               if (data?.token) {
                 localStorage.setItem("api-token", data.token);
 
-                const event = new Event("authenticated");
-                document.dispatchEvent(event);
+                context.authenticated.set(true);
+                // todo fix this when roles recieved
+                          context.userRole.set("editor");
               }
             }
           })
