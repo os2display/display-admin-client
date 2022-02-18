@@ -822,5 +822,12 @@
     "filter-organizer-helptext": "Begynd at skrive arrangøren du ønsker begivenheder fra, og vælg det på listen som kommer frem.",
     "filters-tag": "Tags",
     "filter-tag-helptext": "Begynd at skrive det tag du ønsker begivenheder fra, og vælg det på listen som kommer frem."
+  },
+  "no-acccess":{
+    "you-dont-have-access": "Du har ikke adgang til denne side",
+    "go-back": "Gå tilbage"
+  },
+  "auth-handler":{
+    "please-wait": "Vent venligst..."
   }
 }

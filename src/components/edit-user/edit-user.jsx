@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Redirect, useParams, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-
 import { useTranslation } from "react-i18next";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
