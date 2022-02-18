@@ -23,10 +23,7 @@ function FileDropzone({ onFilesAdded, acceptedMimetypes = null }) {
     <>
       {/* TODO: Fix styling for dropzone: https://react-dropzone.js.org/#section-styling-dropzone */}
       {/* eslint-disable react/jsx-props-no-spreading */}
-      <div
-        {...getRootProps({ className: "dropzone drag-drop-area" })}
-        style={{ height: "100px", fontSize: "2em" }}
-      >
+      <div {...getRootProps({ className: "dropzone drag-drop-area" })}>
         <input {...getInputProps()} />
         <div>{t("file-dropzone.drag-and-drop-text")}</div>
       </div>
