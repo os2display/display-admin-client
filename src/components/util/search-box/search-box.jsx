@@ -16,13 +16,14 @@ import { useTranslation } from "react-i18next";
  */
 function SearchBox({ value, onChange, showLabel }) {
   const { t } = useTranslation("common");
+
   return (
     <Form>
       {showLabel && (
         <Form.Label htmlFor="search-field">{t("search-box.label")}</Form.Label>
       )}
       <InputGroup>
-        <InputGroup.Text id="basic-addon3">
+        <InputGroup.Text id="basic-addon1">
           <FontAwesomeIcon icon={faSearch} />
         </InputGroup.Text>
         <FormControl
@@ -35,6 +36,15 @@ function SearchBox({ value, onChange, showLabel }) {
           className="form-control"
           onChange={(e) => onChange(e.currentTarget.value)}
         />
+        <div className="input-group-append">
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={() => onChange("")}
+          >
+            {t("search-box.delete-search")}
+          </button>
+        </div>
       </InputGroup>
     </Form>
   );

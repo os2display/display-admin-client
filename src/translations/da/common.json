@@ -453,7 +453,8 @@
   },
   "search-box": {
     "label": "Søg",
-    "placeholder": "Indtast søgning her"
+    "placeholder": "Indtast søgning her",
+    "delete-search": "Slet søgning"
   },
   "delete-modal": {
     "title": "Er du sikker på du vil slette følgende"
