@@ -125,6 +125,7 @@ function ContentForm({
             value={formStateObject[formData.name]}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
+            min={formData.min ? formData.min : undefined}
           />
         );
 
