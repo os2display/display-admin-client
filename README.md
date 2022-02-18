@@ -28,7 +28,7 @@ And modify the entries to suit your setup.
 This file contains the access config.
 
 ```bash
-cp public/example_access_config.json public/access-config.json
+cp public/example-access-config.json public/access-config.json
 ```
 
 ### Up the containers
