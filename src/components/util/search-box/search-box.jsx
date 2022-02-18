@@ -6,7 +6,6 @@ import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Button } from 'react-bootstrap';
 
 /**
  * @param {object} props The props.
@@ -37,9 +36,15 @@ function SearchBox({ value, onChange, showLabel }) {
           className="form-control"
           onChange={(e) => onChange(e.currentTarget.value)}
         />
-    <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" onClick={(e) => onChange("")}>{t("search-box.delete-search")}</button>
-  </div>
+        <div className="input-group-append">
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={() => onChange("")}
+          >
+            {t("search-box.delete-search")}
+          </button>
+        </div>
       </InputGroup>
     </Form>
   );
