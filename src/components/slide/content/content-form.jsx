@@ -234,7 +234,7 @@ function ContentForm({
               defaultValue={formStateObject[formData.name]}
             />
             {formData?.helpText && (
-              <small className="form-text text-muted">
+              <small className="form-text text-muted d-flex">
                 {formData.helpText}
               </small>
             )}
