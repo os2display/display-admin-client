@@ -12,12 +12,14 @@ import {
   useGetV1TemplatesQuery,
   useGetV1ThemesQuery,
 } from "../../redux/api/api.generated";
+import idFromUrl from "../util/helpers/id-from-url";
 import FormInput from "../util/forms/form-input";
 import ContentForm from "./content/content-form";
 import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 import FeedSelector from "./content/feed-selector";
 import RadioButtons from "../util/forms/radio-buttons";
+import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
 import "./slide-form.scss";
 
 /**
@@ -321,6 +323,15 @@ function SlideForm({
                 </div>
               </>
             )}
+            <ContentBody>
+              <h2 className="h4">{t("slide-form.add-slide-to-playlists")}</h2>
+              <SelectPlaylistsTable
+                helpText={t("slide-form.add-playlists-help-text")}
+                handleChange={handleInput}
+                name="playlists"
+                id={idFromUrl(slide["@id"])}
+              />
+            </ContentBody>
             <ContentBody>
               <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
               <Row className="g-2">

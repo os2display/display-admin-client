@@ -9,6 +9,7 @@ import MultiSelectComponent from "../multi-dropdown";
  *   is selected
  * @param {Array} props.selected - The selected options
  * @param {string} props.name - The id of the form element
+ * @param {string} props.helpText - Helptext for dropdown
  * @param {Array} props.errors - A list of errors, or null.
  * @param {Array} props.data - The data for options.
  * @param {Function} props.filterCallback - The callback on search filter.
@@ -21,6 +22,7 @@ function PlaylistsDropdown({
   errors,
   data,
   filterCallback,
+  helpText,
 }) {
   const { t } = useTranslation("common");
 
@@ -31,7 +33,9 @@ function PlaylistsDropdown({
       handleSelection={handlePlaylistSelection}
       options={data}
       selected={selected}
-      helpText={t("playlists-dropdown.search-to-se-possible-selections")}
+      helpText={
+        helpText || t("playlists-dropdown.search-to-se-possible-selections")
+      }
       name={name}
       errors={errors}
       filterCallback={filterCallback}
@@ -41,6 +45,7 @@ function PlaylistsDropdown({
 
 PlaylistsDropdown.defaultProps = {
   errors: null,
+  helpText: "",
 };
 
 PlaylistsDropdown.propTypes = {
@@ -52,6 +57,7 @@ PlaylistsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
+  helpText: PropTypes.func,
   filterCallback: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
   name: PropTypes.string.isRequired,

@@ -257,15 +257,18 @@
     "edit-slide-header": "Rediger slide",
     "create-slide-header": "Opret nyt slide",
     "loading-messages": {
+      "saving-playlists": "Gemmer spilleliste(r)",
       "saving-slide": "Gemmer slide",
       "saving-media": "Mediet bliver gemt",
       "loading-slide": "Henter slide"
     },
     "success-messages": {
       "saved-slide": "Slide er gemt, medier er tilknyttet",
-      "saved-media": "Mediet er gemt"
+      "saved-media": "Mediet er gemt",
+      "saved-playlist": "Spillelisten er gemt"
     },
     "error-messages": {
+      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
       "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
       "save-media-error": "Der skete en fejl da mediet skulle tilknyttes til slidet: {{error}}",
       "load-slide-error": "Der skete en fejl da slidet med følgende id: {{id}} skulle hentes: {{error}}"
@@ -285,7 +288,20 @@
       "loading": "Henter template og indhold til slide"
     }
   },
+  "select-playlists-table": {
+    "columns": {
+      "published": "Udgivet",
+      "name": "Navn",
+      "number-of-slides": "Slides tilknyttede",
+      "remove-from-list": "Fjern fra liste"
+    },
+    "info-modal": {
+      "slides": "Spillelisten indeholder følgende slides"
+    }
+  },
   "slide-form": {
+    "add-slide-to-playlists": "Tilføj slide til spillelister",
+    "add-playlists-help-text": "For at se mulige spillelister, skal du fremsøge dem pr navn. Dette slide vil blive placeret i slutningen af spillelisten.",
     "preview-in-full-screen": "Åben preview i fuld skærm",
     "horizontal-or-vertical-label": "Vælg preview-format",
     "horizontal-label": "16:9",

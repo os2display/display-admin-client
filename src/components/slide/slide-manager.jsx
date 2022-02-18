@@ -10,6 +10,7 @@ import {
   api,
   usePostMediaCollectionMutation,
   usePostV1SlidesMutation,
+  usePutV1SlidesByIdPlaylistsMutation,
   usePutV1SlidesByIdMutation,
 } from "../../redux/api/api.generated";
 import SlideForm from "./slide-form";
@@ -48,6 +49,7 @@ function SlideManager({
   const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
   const [submitting, setSubmitting] = useState(false);
+  const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
   const [submittingMedia, setSubmittingMedia] = useState([]);
   const [mediaData, setMediaData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -78,12 +80,28 @@ function SlideManager({
     },
   ] = usePostMediaCollectionMutation();
 
+  const [
+    PutV1SlidesByIdPlaylists,
+    {
+      isLoading: savingPlaylists,
+      error: saveErrorPlaylists,
+      isSuccess: isSaveSuccessPlaylists,
+    },
+  ] = usePutV1SlidesByIdPlaylistsMutation();
+
   // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveMediaSuccess) {
       displaySuccess(t("slide-manager.success-messages.saved-media"));
     }
   }, [isSaveMediaSuccess]);
+
+  // Groups are saved successfully, display a message
+  useEffect(() => {
+    if (isSaveSuccessPlaylists) {
+      displaySuccess(t(`slide-manager.success-messages.saved-playlist`));
+    }
+  }, [isSaveSuccessPlaylists]);
 
   // Slides are not saved successfully, display a message
   useEffect(() => {
@@ -98,6 +116,19 @@ function SlideManager({
       );
     }
   }, [saveMediaError]);
+
+  // Playlists are not saved successfully, display a message
+  useEffect(() => {
+    if (saveErrorPlaylists) {
+      displayError(
+        t(`slide-manager.error-messages.save-playlist-error`, {
+          error: saveErrorPlaylists.error
+            ? saveErrorPlaylists.error
+            : saveErrorPlaylists.data["hydra:description"],
+        })
+      );
+    }
+  }, [saveErrorPlaylists]);
 
   /** If the slide is saved, display the success message */
   useEffect(() => {
@@ -402,6 +433,32 @@ function SlideManager({
     setLoadingMessage(t("slide-manager.loading-messages.saving-media"));
   }
 
+  /** When the group is saved, the slide will be saved. */
+  useEffect(() => {
+    if (
+      (isSaveSuccessPost || isSaveSuccessPut) &&
+      playlistsToAdd &&
+      formStateObject.playlists
+    ) {
+      setLoadingMessage(t("slide-manager.loading-messages.saving-playlists"));
+      PutV1SlidesByIdPlaylists({
+        id: id || idFromUrl(postData["@id"]),
+        body: JSON.stringify(playlistsToAdd),
+      });
+    }
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
+
+  /** Sets groups to playlists. */
+  function handleSavePlaylists() {
+    const { playlists } = formStateObject;
+
+    setPlaylistsToAdd(
+      playlists.map((playlist) => {
+        return { playlist: idFromUrl(playlist) };
+      })
+    );
+  }
+
   /** Handle submitting. */
   useEffect(() => {
     if (submitting) {
@@ -467,6 +524,10 @@ function SlideManager({
         } else {
           throw new Error("Unsupported save method");
         }
+
+        if (Array.isArray(formStateObject.playlists)) {
+          handleSavePlaylists();
+        }
       }
     }
   }, [submittingMedia.length, submitting]);
@@ -521,7 +582,7 @@ function SlideManager({
           selectTemplate={selectTemplate}
           selectedTemplate={selectedTemplate}
           mediaData={mediaData}
-          isLoading={submitting || isLoading}
+          isLoading={submitting || isLoading || savingPlaylists}
           loadingMessage={loadingMessage}
           selectTheme={selectTheme}
           selectedTheme={selectedTheme}
