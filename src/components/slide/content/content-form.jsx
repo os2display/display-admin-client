@@ -68,7 +68,6 @@ function ContentForm({
         } else if (formData.input === "video") {
           defaultMimetypes = ["video/*"];
         }
-
         returnElement = (
           <div key={formData.key}>
             {formData?.label && (
@@ -79,6 +78,7 @@ function ContentForm({
 
             <FileSelector
               files={getInputFiles(formData)}
+              multiple={formData.multipleImages}
               onFilesChange={onFileChange}
               name={formData.name}
               acceptedMimetypes={formData.acceptedMimetypes ?? defaultMimetypes}
@@ -125,7 +125,6 @@ function ContentForm({
             value={formStateObject[formData.name]}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
-            min={formData.min ? formData.min : undefined}
           />
         );
 
