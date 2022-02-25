@@ -752,5 +752,16 @@
       "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles: \"{{error}}\"",
       "error-unbinding": "Der skete en fejl ({{status}}) da skærmen skulle afkobles: \"{{error}}\""
     }
+  },
+  "poster-selector": {
+    "single-search-type": "Søgekriterium",
+    "single-search-text": "Søgetekst",
+    "single-search-select": "Søgetekst",
+    "single-search-button": "Søg",
+    "single-search-type-title": "Titel",
+    "single-search-type-url": "Url",
+    "single-search-type-place": "Sted",
+    "single-search-type-organizer": "Arrangør",
+    "single-search-type-tag": "Tag"
   }
 }
