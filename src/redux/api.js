@@ -145,18 +145,18 @@ const api = generatedApi.enhanceEndpoints({
     },
     postV1Slides: {
       providesTags: ["Slide"],
-      invalidatesTags: ["Slide"],
+      invalidatesTags: ["Slide", "Feed"],
     },
     getV1SlidesById: {
       providesTags: ["Slide"],
     },
     putV1SlidesById: {
       providesTags: ["Slide"],
-      invalidatesTags: ["Slide"],
+      invalidatesTags: ["Slide", "Feed"],
     },
     deleteV1SlidesById: {
       providesTags: ["Slide"],
-      invalidatesTags: ["Slide"],
+      invalidatesTags: ["Slide", "Feed"],
     },
     getV1Templates: {
       providesTags: ["Template"],
