@@ -202,7 +202,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
             <h5>{t('poster-selector.selected-type-single')}</h5>
             {(singleSelectedEvent || singleSelectedOccurrence) && (
               <>
-                <Row>
+                <Row className="mb-3">
                   <Col>
                     <>
                       {singleSelectedEvent && (
@@ -221,7 +221,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                     }}>{t("poster-selector.remove")}</Button>
                   </Col>
                 </Row>
-                <Row>
+                <Row className="mb-3">
                   <Col>
                     <Button
                       onClick={() => setSingleDisplayOverrides(!singleDisplayOverrides)}>{singleDisplayOverrides ? t("poster-selector.hide-overrides") : t("poster-selector.display-overrides")}</Button>
@@ -233,22 +233,22 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                       <>
                         <FormInput label={t("poster-selector.single-override-title")} name="overrideTitle"
                                    value={getValueFromConfiguration("overrideTitle") ?? ""}
-                                   onChange={configurationChange} />
+                                   onChange={configurationChange} className="mb-3" />
                         <FormInput label={t("poster-selector.single-override-subtitle")} name="overrideSubTitle"
                                    value={getValueFromConfiguration("overrideSubTitle") ?? ""}
-                                   onChange={configurationChange} />
+                                   onChange={configurationChange} className="mb-3" />
                         <FormInput label={t("poster-selector.single-override-ticket-price")} name="overrideTicketPrice"
                                    value={getValueFromConfiguration("overrideTicketPrice") ?? ""}
-                                   onChange={configurationChange} />
+                                   onChange={configurationChange} className="mb-3" />
                         <FormInput label={t("poster-selector.single-read-more-text")} name="readMoreText"
                                    value={getValueFromConfiguration("readMoreText") ?? ""}
-                                   onChange={configurationChange} />
-                        <FormInput label={t("poster-selector.single-read-more-url")} name="readMoreUrl"
-                                   value={getValueFromConfiguration("readMoreUrl") ?? ""}
-                                   onChange={configurationChange} />
+                                   onChange={configurationChange} className="mb-3" />
+                        <FormInput label={t("poster-selector.single-read-more-url")} name="overrideReadMoreUrl"
+                                   value={getValueFromConfiguration("overrideReadMoreUrl") ?? ""}
+                                   onChange={configurationChange} className="mb-3" />
                         <FormCheckbox label={t("poster-selector.single-hide-time")} name="hideTime"
                                       value={getValueFromConfiguration("hideTime") ?? false}
-                                      onChange={configurationChange} />
+                                      onChange={configurationChange} className="mb-3" />
                       </>
                     )}
                   </Col>

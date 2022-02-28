@@ -108,7 +108,7 @@ function FeedSelector({ value, onChange, formElement }) {
         />
       );
     } else if (element?.input === "poster-selector") {
-      return (<PosterSelector feedSource={feedSourceData} configurationChange={configurationChange} getValueFromConfiguration={getValueFromConfiguration} />);
+      return (<PosterSelector key={element.key} feedSource={feedSourceData} configurationChange={configurationChange} getValueFromConfiguration={getValueFromConfiguration} />);
     }
 
     return (
