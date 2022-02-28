@@ -1,13 +1,14 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Button, Row, Spinner } from "react-bootstrap";
+import { Button, Card, InputGroup, Row, Spinner } from "react-bootstrap";
 import Select from "../../util/forms/select";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import dayjs from "dayjs";
 import localeDa from "dayjs/locale/da";
 import FormInput from "../../util/forms/form-input";
+import FormCheckbox from "../../util/forms/form-checkbox";
 
 // TODO: Fix all translations.
 
@@ -22,6 +23,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
   const [singleSearchEvents, setSingleSearchEvents] = useState(null);
   const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
   const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
+  const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
 
   const posterType = getValueFromConfiguration("posterType");
 
@@ -176,7 +178,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
     return capitalize(dayjs(date).locale(localeDa).format("LLLL"));
   };
 
-  return <>
+  return <Card className="mb-3"><Card.Body>
     {!posterType && (
       <>
         <Button onClick={() => configurationChange({
@@ -197,27 +199,61 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
       <div className="mb-3">
         {posterType === "single" && (
           <>
-            <h4>Enkelt plakat</h4>
+            <h5>{t('poster-selector.selected-type-single')}</h5>
             {(singleSelectedEvent || singleSelectedOccurrence) && (
-              <Row>
-                <Col>
-                  <>
-                    {singleSelectedEvent && (
-                      <div>Valgt begivenhed: {singleSelectedEvent.name} ({singleSelectedEvent?.organizer?.name})</div>
+              <>
+                <Row>
+                  <Col>
+                    <>
+                      {singleSelectedEvent && (
+                        <div>Valgt begivenhed: {singleSelectedEvent.name} ({singleSelectedEvent?.organizer?.name})</div>
+                      )}
+                      {singleSelectedOccurrence && (
+                        <div>Valgt forekomst: {formatDate(singleSelectedOccurrence.startDate)} -
+                          Pris: {singleSelectedOccurrence.ticketPriceRange}</div>
+                      )}
+                    </>
+                  </Col>
+                  <Col>
+                    <Button variant="danger" onClick={() => {
+                      setSingleSelectedEvent(null);
+                      setSingleSelectedOccurrence(null);
+                    }}>{t("poster-selector.remove")}</Button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Button
+                      onClick={() => setSingleDisplayOverrides(!singleDisplayOverrides)}>{singleDisplayOverrides ? t("poster-selector.hide-overrides") : t("poster-selector.display-overrides")}</Button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    {singleDisplayOverrides && (
+                      <>
+                        <FormInput label={t("poster-selector.single-override-title")} name="overrideTitle"
+                                   value={getValueFromConfiguration("overrideTitle") ?? ""}
+                                   onChange={configurationChange} />
+                        <FormInput label={t("poster-selector.single-override-subtitle")} name="overrideSubTitle"
+                                   value={getValueFromConfiguration("overrideSubTitle") ?? ""}
+                                   onChange={configurationChange} />
+                        <FormInput label={t("poster-selector.single-override-ticket-price")} name="overrideTicketPrice"
+                                   value={getValueFromConfiguration("overrideTicketPrice") ?? ""}
+                                   onChange={configurationChange} />
+                        <FormInput label={t("poster-selector.single-read-more-text")} name="readMoreText"
+                                   value={getValueFromConfiguration("readMoreText") ?? ""}
+                                   onChange={configurationChange} />
+                        <FormInput label={t("poster-selector.single-read-more-url")} name="readMoreUrl"
+                                   value={getValueFromConfiguration("readMoreUrl") ?? ""}
+                                   onChange={configurationChange} />
+                        <FormCheckbox label={t("poster-selector.single-hide-time")} name="hideTime"
+                                      value={getValueFromConfiguration("hideTime") ?? false}
+                                      onChange={configurationChange} />
+                      </>
                     )}
-                    {singleSelectedOccurrence && (
-                      <div>Valgt forekomst: {formatDate(singleSelectedOccurrence.startDate)} -
-                        Pris: {singleSelectedOccurrence.ticketPriceRange}</div>
-                    )}
-                  </>
-                </Col>
-                <Col>
-                  <Button onClick={() => {
-                    setSingleSelectedEvent(null);
-                    setSingleSelectedOccurrence(null);
-                  }}>Remove</Button>
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
+              </>
             )}
 
             {(!singleSelectedEvent || !singleSelectedOccurrence) && (
@@ -233,13 +269,15 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                   </Col>
                   {(singleSearchType === "title" || singleSearchType === "url") && (
                     <Col>
-                      <FormInput label={t('poster-selector.single-search-text')} name="poster-search" value={singleSearch}
-                             onChange={({ target }) => setSingleSearch(target.value)} />
+                      <FormInput label={t("poster-selector.single-search-text")} name="poster-search"
+                                 value={singleSearch}
+                                 onChange={({ target }) => setSingleSearch(target.value)} />
                     </Col>
                   )}
                   {(singleSearchType === "tags" || singleSearchType === "places" || singleSearchType === "organizers") && (
                     <Col>
-                      <label className="form-label" htmlFor="single-search-select">{t('poster-selector.single-search-select')}</label>
+                      <label className="form-label"
+                             htmlFor="single-search-select">{t("poster-selector.single-search-select")}</label>
                       <AsyncSelect
                         id="single-search-select"
                         isClearable
@@ -253,7 +291,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                     </Col>
                   )}
                   <Col>
-                    <Button onClick={singleSearchFetch}>{t("poster-selector.single-search-button")}</Button>
+                    <Button onClick={singleSearchFetch} className="mt-3" variant="success">{t("poster-selector.single-search-button")}</Button>
                   </Col>
                 </Row>
                 <Row>
@@ -285,7 +323,9 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                             </td>
                           </tr>
                         ))}
-                        {singleSearchEvents?.length === 0 && <tr><td colSpan="3">{t('poster-selector.no-results')}</td></tr>}
+                        {singleSearchEvents?.length === 0 && <tr>
+                          <td colSpan="3">{t("poster-selector.no-results")}</td>
+                        </tr>}
                         </tbody>
                       </table>
                     </Col>
@@ -329,7 +369,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
         )}
       </div>
     )}
-  </>;
+  </Card.Body></Card>;
 }
 
 PosterSelector.propTypes = {

@@ -763,6 +763,17 @@
     "single-search-type-place": "Sted",
     "single-search-type-organizer": "Arrangør",
     "single-search-type-tag": "Tag",
-    "no-results": "0 begivenheder fundet"
+    "remove": "Afvælg",
+    "no-results": "0 begivenheder fundet",
+    "single-override-title": "Overskriv overskrift",
+    "single-override-subtitle": "Overskriv underoverskrift",
+    "single-override-ticket-price": "Overskriv pristekst",
+    "single-read-more-text": "\"Læs mere\" tekst",
+    "single-read-more-url": "Overskriv \"læs mere\"-url",
+    "single-hide-time": "Skjul tidspunkt",
+    "hide-overrides": "Skjul overskrivningsmuligheder",
+    "display-overrides": "Vis overskrivningsmuligheder",
+    "selected-type-single": "Valgt type: Enkelt begivenhed",
+    "selected-type-subscription": "Valgt type: Abonnement"
   }
 }
