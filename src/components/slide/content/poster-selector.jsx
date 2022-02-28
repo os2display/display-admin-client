@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Button, Row } from "react-bootstrap";
+import { Button, Row, Spinner } from "react-bootstrap";
 import Select from "../../util/forms/select";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
@@ -16,9 +16,10 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
   const apiToken = localStorage.getItem("api-token");
 
   const [singleSearch, setSingleSearch] = useState("");
+  const [singleSearchLoading, setSingleSearchLoading] = useState(false);
   const [singleSearchType, setSingleSearchType] = useState("title");
   const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
-  const [singleSearchEvents, setSingleSearchEvents] = useState([]);
+  const [singleSearchEvents, setSingleSearchEvents] = useState(null);
   const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
   const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
 
@@ -78,6 +79,9 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
       case "title":
         query = `${query}&name=${singleSearch}`;
         break;
+      case "url":
+        query = `${query}&url=${singleSearch}`;
+        break;
       case "tags":
         query = `${query}&tag=${singleSearchTypeValueId}`;
         break;
@@ -88,6 +92,8 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
         query = `${query}&place=${singleSearchTypeValueId}`;
         break;
     }
+
+    setSingleSearchLoading(true);
 
     // TODO: Get this endpoint in a different way.
     fetch(`${url}${query}`, {
@@ -101,6 +107,9 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
       })
       .catch(() => {
         // @TODO: Handle error.
+      })
+      .finally(() => {
+        setSingleSearchLoading(false);
       });
   };
 
@@ -248,7 +257,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                   </Col>
                 </Row>
                 <Row>
-                  {!singleSelectedEvent && singleSearchEvents?.length > 0 && (
+                  {!singleSelectedEvent && singleSearchEvents !== null && (
                     <Col>
                       <table className="table table-hover text-left">
                         <thead>
@@ -276,10 +285,12 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                             </td>
                           </tr>
                         ))}
+                        {singleSearchEvents?.length === 0 && <tr><td colSpan="3">{t('poster-selector.no-results')}</td></tr>}
                         </tbody>
                       </table>
                     </Col>
                   )}
+                  {singleSearchLoading && <Spinner animation="border" />}
 
                   {singleSelectedEvent !== null && (
                     <Col>
