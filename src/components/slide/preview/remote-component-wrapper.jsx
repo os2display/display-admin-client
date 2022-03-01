@@ -39,7 +39,7 @@ function RemoteComponentWrapper({
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
 
-    useState(null);
+  useState(null);
   // Remote component configuration
   const requires = createRequires(resolve);
   const RemoteComponent = createRemoteComponent({ requires });
