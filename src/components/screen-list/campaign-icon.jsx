@@ -44,7 +44,7 @@ function CampaignIcon({ id }) {
           })
         ).then((result) => {
           let allCampaignsCopy = [...allCampaigns];
-          if (allCampaignsCopy.lenght > 0) {
+          if (allCampaignsCopy.length > 0) {
             allCampaignsCopy = allCampaignsCopy.concat(
               result.data["hydra:member"].map(({ campaign }) => campaign)
             );
