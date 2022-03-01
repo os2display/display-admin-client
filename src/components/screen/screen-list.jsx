@@ -238,7 +238,8 @@ function ScreenList() {
     {
       key: "campaign",
       label: t("screen-list.columns.campaign"),
-      content: (d) => CampaignIcon(idFromUrl(d["@id"])),
+      // eslint-disable-next-line react/destructuring-assignment
+      content: (d) => <CampaignIcon id={idFromUrl(d["@id"])} />,
     },
     {
       key: "edit",
