@@ -311,19 +311,19 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
             <h5>{t('poster-selector.selected-type-single')}</h5>
             {(singleSelectedEvent || singleSelectedOccurrence) && (
               <>
-                <Row className="mb-3">
-                  <Col>
+                <Row>
+                  <Col md="9">
                     <>
                       {singleSelectedEvent && (
-                        <div>Valgt begivenhed: {singleSelectedEvent.name} ({singleSelectedEvent?.organizer?.name})</div>
+                        <div><strong>Valgt begivenhed:</strong> {singleSelectedEvent.name} ({singleSelectedEvent?.organizer?.name})</div>
                       )}
                       {singleSelectedOccurrence && (
-                        <div>Valgt forekomst: {formatDate(singleSelectedOccurrence.startDate)} -
+                        <div><strong>Valgt forekomst:</strong> {formatDate(singleSelectedOccurrence.startDate)} -
                           Pris: {singleSelectedOccurrence.ticketPriceRange}</div>
                       )}
                     </>
                   </Col>
-                  <Col>
+                  <Col md="3">
                     <Button variant="danger" onClick={() => {
                       setSingleSelectedEvent(null);
                       setSingleSelectedOccurrence(null);
