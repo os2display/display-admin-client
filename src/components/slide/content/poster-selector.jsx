@@ -36,35 +36,41 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
   const posterType = getValueFromConfiguration("posterType");
 
   useEffect(() => {
-    const url = feedSource.admin[0].endpointEntity;
-    const eventId = getValueFromConfiguration("singleSelectedEvent");
-    const occurrenceId = getValueFromConfiguration("singleSelectedOccurrence");
+    if (posterType === 'single') {
+      const url = feedSource.admin[0].endpointEntity;
+      const eventId = getValueFromConfiguration("singleSelectedEvent");
+      const occurrenceId = getValueFromConfiguration("singleSelectedOccurrence");
 
-    fetch(`${url}?path=${eventId}`, {
-      headers: {
-        authorization: `Bearer ${apiToken ?? ""}`
+      if (eventId !== null) {
+        fetch(`${url}?path=${eventId}`, {
+          headers: {
+            authorization: `Bearer ${apiToken ?? ""}`
+          }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setSingleSelectedEvent(data);
+          })
+          .catch(() => {
+            // TODO: Display error.
+          });
       }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setSingleSelectedEvent(data);
-      })
-      .catch(() => {
-        // TODO: Display error.
-      });
 
-    fetch(`${url}?path=${occurrenceId}`, {
-      headers: {
-        authorization: `Bearer ${apiToken ?? ""}`
+      if (occurrenceId !== null) {
+        fetch(`${url}?path=${occurrenceId}`, {
+          headers: {
+            authorization: `Bearer ${apiToken ?? ""}`
+          }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setSingleSelectedOccurrence(data);
+          })
+          .catch(() => {
+            // TODO: Display error.
+          });
       }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setSingleSelectedOccurrence(data);
-      })
-      .catch(() => {
-        // TODO: Display error.
-      });
+    }
   }, []);
 
   useEffect(() => {
