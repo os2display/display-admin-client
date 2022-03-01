@@ -100,10 +100,15 @@ function ContentForm({
         returnElement = (
           <FormInput
             name="duration"
-            value={slide?.duration ? Math.floor(slide.duration / 1000) : 0}
+            min={formData.min}
+            type={formData.type}
+            label={formData.label}
+            helpText={formData.helpText}
+            formGroupClasses={formData.formGroupClasses}
+            value={slide?.duration ? Math.floor(slide.duration / 1000) : 10}
             onChange={(value) => {
               onSlideChange({
-                target: { id: "duration", value: value * 1000 },
+                target: { id: "duration", value: Math.max(value, 1) * 1000 },
               });
             }}
           />
@@ -125,7 +130,6 @@ function ContentForm({
             value={formStateObject[formData.name]}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
-            min={formData.min ? formData.min : undefined}
           />
         );
 

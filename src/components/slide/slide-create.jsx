@@ -19,8 +19,7 @@ function SlideCreate() {
     description: "",
     templateInfo: [],
     theme: themeInfo,
-    // Duration defaults to 15s
-    content: { duration: 15 },
+    content: {},
     media: [],
     published: { from: null, to: null },
   };
