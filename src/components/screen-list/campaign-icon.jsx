@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 import idFromUrl from "../util/helpers/id-from-url";
 import calculateIsPublished from "../util/helpers/calculate-is-published";
 import {
@@ -13,10 +14,11 @@ import {
 /**
  * An icon to show if the screen has an active campaign.
  *
- * @param {string} id The id of the screen.
+ * @param {object} props - The props.
+ * @param {string} props.id The id of the screen.
  * @returns {object} The campaign icon.
  */
-function CampaignIcon(id) {
+function CampaignIcon({ id }) {
   const dispatch = useDispatch();
   const [isOverriddenByCampaign, setIsOverriddenByCampaign] = useState(false);
   const [screenCampaignsChecked, setScreenCampaignsChecked] = useState(false);
@@ -42,9 +44,11 @@ function CampaignIcon(id) {
           })
         ).then((result) => {
           let allCampaignsCopy = [...allCampaigns];
-          allCampaignsCopy = allCampaignsCopy.concat(
-            result.data["hydra:member"].map(({ campaign }) => campaign)
-          );
+          if (allCampaignsCopy.length > 0) {
+            allCampaignsCopy = allCampaignsCopy.concat(
+              result.data["hydra:member"].map(({ campaign }) => campaign)
+            );
+          }
           setAllCampaigns(allCampaignsCopy);
         });
       });
@@ -68,5 +72,9 @@ function CampaignIcon(id) {
     />
   );
 }
+
+CampaignIcon.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default CampaignIcon;
