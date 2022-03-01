@@ -17,14 +17,20 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
   const apiToken = localStorage.getItem("api-token");
 
   const [singleSearch, setSingleSearch] = useState("");
-  const [singleSearchLoading, setSingleSearchLoading] = useState(false);
   const [singleSearchType, setSingleSearchType] = useState("title");
   const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
   const [singleSearchEvents, setSingleSearchEvents] = useState(null);
   const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
   const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
   const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
+  const [subscriptionPlaceValue, setSubscriptionPlaceValue] = useState([]);
 
+  const [subscriptionOrganizerValue, setSubscriptionOrganizerValue] = useState([]);
+  const [subscriptionTagValue, setSubscriptionTagValue] = useState([]);
+  const [subscriptionNumberValue, setSubscriptionNumberValue] = useState(5);
+  const [subscriptionEvents, setSubscriptionEvents] = useState(null);
+
+  const [loadingResults, setLoadingResults] = useState(false);
   const posterType = getValueFromConfiguration("posterType");
 
   useEffect(() => {
@@ -71,6 +77,92 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
     }
   }, [singleSelectedOccurrence]);
 
+  useEffect(() => {
+    if (subscriptionPlaceValue) {
+      configurationChange({ target: { id: "subscriptionPlaceValue", value: subscriptionPlaceValue } });
+    }
+  }, [subscriptionPlaceValue]);
+
+  useEffect(() => {
+    if (subscriptionOrganizerValue) {
+      configurationChange({ target: { id: "subscriptionOrganizerValue", value: subscriptionOrganizerValue } });
+    }
+  }, [subscriptionOrganizerValue]);
+
+  useEffect(() => {
+    if (subscriptionTagValue) {
+      configurationChange({ target: { id: "subscriptionTagValue", value: subscriptionTagValue } });
+    }
+  }, [subscriptionTagValue]);
+
+  useEffect(() => {
+    if (subscriptionNumberValue) {
+      configurationChange({ target: { id: "subscriptionNumberValue", value: subscriptionNumberValue } });
+    }
+  }, [subscriptionNumberValue]);
+
+  const subscriptionFetch = () => {
+    const url = feedSource.admin[0].endpointSearch;
+    let query = `?type=events`;
+
+    console.log(subscriptionPlaceValue);
+    console.log(subscriptionOrganizerValue);
+    console.log(subscriptionTagValue);
+
+    const places = subscriptionPlaceValue.map((option) => option.value);
+
+    places.forEach((place) => {
+      query = `${query}&place=${place}`;
+    });
+
+    const organizers = subscriptionOrganizerValue.map((option) => option.value);
+
+    organizers.forEach((organizer) => {
+      query = `${query}&organizer=${organizer}`;
+    });
+
+    const tags = subscriptionTagValue.map((option) => option.value);
+
+    tags.forEach((tag) => {
+      query = `${query}&tag=${tag}`;
+    });
+
+    query = `${query}&items_per_page=${subscriptionNumberValue}`;
+
+    console.log('new query', query);
+
+    /*
+    query = `${query}&tag=${singleSearchTypeValueId}`;
+    query = `${query}&organizer=${singleSearchTypeValueId}`;
+    query = `${query}&place=${singleSearchTypeValueId}`;
+*/
+    setLoadingResults(true);
+
+    // TODO: Get this endpoint in a different way.
+    fetch(`${url}${query}`, {
+      headers: {
+        authorization: `Bearer ${apiToken ?? ""}`
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSubscriptionEvents(data);
+      })
+      .catch(() => {
+        // @TODO: Handle error.
+      })
+      .finally(() => {
+        setLoadingResults(false);
+      });
+  }
+
+  // Fetch results.
+  useEffect(() => {
+    if (posterType === 'subscription') {
+      subscriptionFetch();
+    }
+  }, [subscriptionPlaceValue, subscriptionOrganizerValue, subscriptionTagValue, subscriptionNumberValue]);
+
   const singleSearchFetch = () => {
     const url = feedSource.admin[0].endpointSearch;
     let query = `?type=events`;
@@ -95,7 +187,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
         break;
     }
 
-    setSingleSearchLoading(true);
+    setLoadingResults(true);
 
     // TODO: Get this endpoint in a different way.
     fetch(`${url}${query}`, {
@@ -111,7 +203,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
         // @TODO: Handle error.
       })
       .finally(() => {
-        setSingleSearchLoading(false);
+        setLoadingResults(false);
       });
   };
 
@@ -143,10 +235,10 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
     }
   ];
 
-  const loadOptions = (inputValue, callback) => {
+  const loadDropdownOptions = (inputValue, callback, type) => {
     const url = feedSource.admin[0].endpointSearch;
 
-    let query = `?type=${singleSearchType}&display=options`;
+    let query = `?type=${type}&display=options`;
 
     if (inputValue) {
       query = `${query}&name=${inputValue}`;
@@ -173,27 +265,36 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
 
-  const formatDate = (date) => {
+  const formatDate = (date, format) => {
     if (!date) return "";
-    return capitalize(dayjs(date).locale(localeDa).format("LLLL"));
+    return capitalize(dayjs(date).locale(localeDa).format(format ?? "LLLL"));
   };
+
+  const numberOptions = Array.from(Array(10).keys());
 
   return <Card className="mb-3"><Card.Body>
     {!posterType && (
-      <>
-        <Button onClick={() => configurationChange({
-          target: {
-            id: "posterType",
-            value: "single"
-          }
-        })}>{t("feed-selector.poster-feed-type-single")}</Button>
-        <Button onClick={() => configurationChange({
-          target: {
-            id: "posterType",
-            value: "subscription"
-          }
-        })}>{t("feed-selector.poster-feed-type-subscription")}</Button>
-      </>
+      <Row>
+        <Col>
+          <h5>{t('poster-selector.select-mode')}</h5>
+        </Col>
+        <Col>
+          <Button onClick={() => configurationChange({
+            target: {
+              id: "posterType",
+              value: "single"
+            }
+          })}>{t("poster-selector.poster-feed-type-single")}</Button>
+        </Col>
+        <Col>
+          <Button onClick={() => configurationChange({
+            target: {
+              id: "posterType",
+              value: "subscription"
+            }
+          })}>{t("poster-selector.poster-feed-type-subscription")}</Button>
+        </Col>
+      </Row>
     )}
     {posterType && (
       <div className="mb-3">
@@ -283,7 +384,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                         isClearable
                         isSearchable
                         defaultOptions
-                        loadOptions={loadOptions}
+                        loadOptions={(inputValue, callback) => loadDropdownOptions(inputValue, callback, singleSearchType)}
                         defaultInputValue={singleSearchTypeValue}
                         onChange={(newValue) => {
                           setSingleSearchTypeValue(newValue);
@@ -330,7 +431,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                       </table>
                     </Col>
                   )}
-                  {singleSearchLoading && <Spinner animation="border" />}
+                  {loadingResults && <Spinner animation="border" />}
 
                   {singleSelectedEvent !== null && (
                     <Col>
@@ -364,7 +465,121 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
         )}
         {posterType === "subscription" && (
           <>
+            <Row>
+              <Col>
+                <h5>{t('poster-selector.selected-type-subscription')}</h5>
+                <small className="form-text">{t('poster-selector.subscription-helptext')}</small>
 
+                <Row>
+                  <Col md="3" className="bg-light">
+                    <h5 className="mt-3">{t('poster-selector.filters')}</h5>
+                    <div className="mb-2">
+                      <div className="form-group">
+                        <label htmlFor="os2display-poster--select-subscription-places">{t('poster-selector.filters-place')}</label>
+                        <AsyncSelect
+                          id="subscription-search-place"
+                          isClearable
+                          isSearchable
+                          defaultOptions
+                          isMulti={true}
+                          loadOptions={(inputValue, callback) => loadDropdownOptions(inputValue, callback, "places")}
+                          defaultInputValue={getValueFromConfiguration('subscriptionPlace') ?? []}
+                          onChange={(newValue) => {
+                            setSubscriptionPlaceValue(newValue);
+                          }} />
+                        <small className="form-text">{t('poster-selector.filter-place-helptext')}</small>
+                      </div>
+                    </div>
+
+                    <div className="mb-2">
+                      <div className="form-group">
+                        <label htmlFor="os2display-poster--select-subscription-organizers">{t('poster-selector.filters-organizer')}</label>
+                        <AsyncSelect
+                          id="subscription-search-place"
+                          isClearable
+                          isSearchable
+                          defaultOptions
+                          isMulti={true}
+                          loadOptions={(inputValue, callback) => loadDropdownOptions(inputValue, callback, "organizers")}
+                          defaultInputValue={getValueFromConfiguration('subscriptionOrganizer') ?? []}
+                          onChange={(newValue) => {
+                            setSubscriptionOrganizerValue(newValue);
+                          }} />
+                        <small className="form-text">{t('poster-selector.filter-organizer-helptext')}</small>
+                      </div>
+                    </div>
+
+                    <div className="mb-2">
+                      <div className="form-group">
+                        <label htmlFor="os2display-poster--select-subscription-tags">{t('poster-selector.filters-tag')}</label>
+                        <AsyncSelect
+                          id="subscription-search-place"
+                          isClearable
+                          isSearchable
+                          defaultOptions
+                          isMulti={true}
+                          loadOptions={(inputValue, callback) => loadDropdownOptions(inputValue, callback, "tags")}
+                          defaultInputValue={getValueFromConfiguration('subscriptionTag') ?? []}
+                          onChange={(newValue) => {
+                            setSubscriptionTagValue(newValue);
+                          }} />
+                        <small className="form-text">{t('poster-selector.filter-tag-helptext')}</small>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="form-group">
+                        <div>
+                          <label htmlFor="os2display-poster--select-number">Antal slides</label>
+                          <select id="os2display-poster--select-number" value={subscriptionNumberValue} onChange={({ target }) => setSubscriptionNumberValue(target.value)}>
+                            {numberOptions.map((i) => (
+                              <option value={i+1}>{i+1}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <span className="small text-muted">Vælg op til 10 begivenheder som vil blive vist på hvert sit slide</span>
+                      </div>
+                    </div>
+                  </Col>
+                  <div className="col-md-9">
+                    <div>
+                      <h5 className="mt-3">Forhåndsvisning af begivenheder udfra valg</h5>
+                      <table className="table table-hover text-left">
+                        <thead>
+                        <tr>
+                          <th scope="col">Billede</th>
+                          <th scope="col">Begivenhed</th>
+                          <th scope="col">Sted</th>
+                          <th scope="col">Dato</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {loadingResults && <Spinner animation="border" />}
+                        {subscriptionEvents?.map((event) => {
+                          const firstOccurrence = event?.occurrences.length > 0 ? event.occurrences[0] : null;
+
+                          return (
+                            <tr>
+                              <td><img src={event?.images?.small} alt={event.name} style={{maxWidth: "80px"}} /></td>
+                              <td><strong>{event.name}</strong><br />{event?.organizer?.name}</td>
+                              <td>{firstOccurrence && firstOccurrence.place?.name}</td>
+                              <td>
+                                {firstOccurrence && (
+                                  <>
+                                    {formatDate(firstOccurrence.startDate, 'L') + " - " + formatDate(firstOccurrence.endDate, 'L')}
+                                  </>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </Row>
+              </Col>
+            </Row>
           </>
         )}
       </div>
