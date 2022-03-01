@@ -20,14 +20,16 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
   const [singleSearchType, setSingleSearchType] = useState("title");
   const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
   const [singleSearchEvents, setSingleSearchEvents] = useState(null);
-  const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
-  const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
   const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
-  const [subscriptionPlaceValue, setSubscriptionPlaceValue] = useState([]);
 
-  const [subscriptionOrganizerValue, setSubscriptionOrganizerValue] = useState([]);
-  const [subscriptionTagValue, setSubscriptionTagValue] = useState([]);
-  const [subscriptionNumberValue, setSubscriptionNumberValue] = useState(5);
+  const [singleSelectedEvent, setSingleSelectedEvent] = useState(getValueFromConfiguration("singleSelectedEvent") ?? null);
+  const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(getValueFromConfiguration("singleSelectedOccurrence") ?? null);
+
+  const [subscriptionPlaceValue, setSubscriptionPlaceValue] = useState(getValueFromConfiguration("subscriptionPlaceValue") ?? []);
+  const [subscriptionOrganizerValue, setSubscriptionOrganizerValue] = useState(getValueFromConfiguration("subscriptionOrganizerValue") ?? []);
+  const [subscriptionTagValue, setSubscriptionTagValue] = useState(getValueFromConfiguration("subscriptionTagValue") ?? []);
+  const [subscriptionNumberValue, setSubscriptionNumberValue] = useState(getValueFromConfiguration("subscriptionNumberValue") ?? 5);
+
   const [subscriptionEvents, setSubscriptionEvents] = useState(null);
 
   const [loadingResults, setLoadingResults] = useState(false);
@@ -483,7 +485,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                           defaultOptions
                           isMulti={true}
                           loadOptions={(inputValue, callback) => loadDropdownOptions(inputValue, callback, "places")}
-                          defaultInputValue={getValueFromConfiguration('subscriptionPlace') ?? []}
+                          value={subscriptionPlaceValue}
                           onChange={(newValue) => {
                             setSubscriptionPlaceValue(newValue);
                           }} />
@@ -501,7 +503,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                           defaultOptions
                           isMulti={true}
                           loadOptions={(inputValue, callback) => loadDropdownOptions(inputValue, callback, "organizers")}
-                          defaultInputValue={getValueFromConfiguration('subscriptionOrganizer') ?? []}
+                          value={subscriptionOrganizerValue}
                           onChange={(newValue) => {
                             setSubscriptionOrganizerValue(newValue);
                           }} />
@@ -519,7 +521,7 @@ function PosterSelector({ feedSource, getValueFromConfiguration, configurationCh
                           defaultOptions
                           isMulti={true}
                           loadOptions={(inputValue, callback) => loadDropdownOptions(inputValue, callback, "tags")}
-                          defaultInputValue={getValueFromConfiguration('subscriptionTag') ?? []}
+                          value={subscriptionTagValue}
                           onChange={(newValue) => {
                             setSubscriptionTagValue(newValue);
                           }} />
