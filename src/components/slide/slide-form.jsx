@@ -196,8 +196,8 @@ function SlideForm({
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <Row>
+          <h1>{headerText}</h1>
           <Col md>
-            <h1>{headerText}</h1>
             <ContentBody>
               <FormInput
                 name="title"
@@ -374,30 +374,12 @@ function SlideForm({
                 />
               </ContentBody>
             )}
-            <ContentFooter>
-              <Button
-                variant="secondary"
-                type="button"
-                id="cancel_slide"
-                onClick={() => history.push("/slide/list/")}
-                size="lg"
-                className="me-3"
-              >
-                {t("slide-form.cancel-button")}
-              </Button>
-              <Button
-                variant="primary"
-                type="button"
-                onClick={handleSubmit}
-                id="save_slide"
-                size="lg"
-              >
-                {t("slide-form.save-button")}
-              </Button>
-            </ContentFooter>
           </Col>
           {showPreview && (
-            <Col md className="responsive-side">
+            <Col
+              md
+              className="responsive-side shadow-sm p-3 mb-3 bg-body rounded"
+            >
               <RemoteComponentWrapper
                 url={selectedTemplate?.resources?.component}
                 slide={slide}
@@ -438,6 +420,27 @@ function SlideForm({
             />
           )}
         </div>
+        <ContentFooter>
+          <Button
+            variant="secondary"
+            type="button"
+            id="cancel_slide"
+            onClick={() => history.push("/slide/list/")}
+            size="lg"
+            className="me-3"
+          >
+            {t("slide-form.cancel-button")}
+          </Button>
+          <Button
+            variant="primary"
+            type="button"
+            onClick={handleSubmit}
+            id="save_slide"
+            size="lg"
+          >
+            {t("slide-form.save-button")}
+          </Button>
+        </ContentFooter>
       </Form>
     </>
   );

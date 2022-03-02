@@ -96,7 +96,6 @@ function ContentForm({
         if (data.required) {
           requiredFieldCallback(data.name);
         }
-
         returnElement = (
           <FormInput
             name="duration"
@@ -105,10 +104,11 @@ function ContentForm({
             label={formData.label}
             helpText={formData.helpText}
             formGroupClasses={formData.formGroupClasses}
-            value={slide?.duration ? Math.floor(slide.duration / 1000) : 10}
+            value={slide.duration ? Math.floor(slide.duration / 1000) : 10}
             onChange={(value) => {
+              const newValue = value.target.value;
               onSlideChange({
-                target: { id: "duration", value: Math.max(value, 1) * 1000 },
+                target: { id: "duration", value: Math.max(newValue, 1) * 1000 },
               });
             }}
           />
