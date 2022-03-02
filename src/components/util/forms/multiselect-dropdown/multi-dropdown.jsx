@@ -167,7 +167,7 @@ function MultiSelectComponent({
             labelledBy={name}
           />
           {error && <div className="invalid-feedback-multi">{textOnError}</div>}
-          {helpText && <small className="form-text">{helpText}</small>}
+          {helpText && <small>{helpText}</small>}
         </div>
       )}
     </>

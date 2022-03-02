@@ -123,9 +123,7 @@ function PlaylistCampaignForm({
             </Col>
           </Row>
           <Row>
-            <small className="form-text">
-              {t("playlist-campaign-form.publish-helptext")}
-            </small>
+            <small>{t("playlist-campaign-form.publish-helptext")}</small>
           </Row>
         </ContentBody>
         <ContentFooter>

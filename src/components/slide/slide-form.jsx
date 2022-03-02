@@ -72,13 +72,17 @@ function SlideForm({
   const { data: templates, isLoading: loadingTemplates } =
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
-      itemsPerPage: 10,
+      itemsPerPage: 300,
+      orderBy: "createdAt",
+      order: "desc",
     });
 
   // Load themes.
   const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
     title: searchTextTheme,
-    itemsPerPage: searchTextTheme ? 10 : 0,
+    itemsPerPage: 300,
+    orderBy: "createdAt",
+    order: "desc",
   });
 
   /**
@@ -355,9 +359,7 @@ function SlideForm({
                 </Col>
               </Row>
               <Row>
-                <small className="form-text">
-                  {t("slide-form.publish-helptext")}
-                </small>
+                <small>{t("slide-form.publish-helptext")}</small>
               </Row>
             </ContentBody>
             {themesOptions && (
@@ -365,6 +367,7 @@ function SlideForm({
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-form.slide-theme-label")}
+                  helpText={t("slide-form.slide-theme-help-text")}
                   handleSelection={selectTheme}
                   options={themesOptions}
                   selected={selectedTheme}

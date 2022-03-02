@@ -291,9 +291,11 @@
     "columns": {
       "published": "Udgivet",
       "name": "Navn",
-      "number-of-slides": "Slides tilknyttede",
-      "remove-from-list": "Fjern fra liste"
+      "number-of-slides": "Slides tilknyttede"
     },
+    "edit-button": "Rediger",
+    "edit-playlists-help-text": "Hvis du vil redigere en spilleliste, åbnes dette i en ny fane.",
+    "remove-from-list": "Fjern fra liste",
     "info-modal": {
       "slides": "Spillelisten indeholder følgende slides"
     }
@@ -312,7 +314,8 @@
     "slide-name-label": "Slidets navn",
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
-    "slide-template-help-text": "Typen af skabelon afgør hvilke muligheder du får, for at tilpasse indholdet af dit slide. Indtast søgning for at se installerede skabeloner.",
+    "slide-template-help-text": "Alle slideskabeloner er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges én skabelon per slide.",
+    "slide-theme-help-text": "Alle temaer er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges ét tema per slide.",
     "slide-from-label": "Udgivet fra",
     "slide-to-label": "Udgivet til",
     "slide-theme-label": "Slidets tema",
@@ -410,7 +413,8 @@
     }
   },
   "campaign-form": {
-    "title-campaign": "Skærme og skærmgrupper"
+    "title-campaign-screens": "Skærme",
+    "title-campaign-groups": "Skærmgrupper"
   },
   "playlist-form": {
     "schedule-header": "Planlægning"
@@ -431,18 +435,36 @@
   },
   "playlist-drag-and-drop": {
     "columns": {
-      "name": "Navn"
+      "name": "Navn",
+      "published": "Udgivet"
     },
-    "remove-from-list": "Fjern fra liste"
+    "edit-button": "Rediger",
+    "remove-from-list": "Fjern fra liste",
+    "edit-playlists-help-text": "Hvis du vil redigere en spilleliste, åbnes dette i en ny fane."
   },
   "select-slides-table": {
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
+    "columns": {
+      "name": "Navn",
+      "template": "Skabelon",
+      "slide-on-playlists": "Spillelister",
+      "published": "Udgivet"
+    },
+    "edit-button": "Rediger",
+    "edit-slides-help-text": "Hvis du vil redigere et slide, åbnes dette i en ny fane.",
     "remove-from-list": "Fjern fra liste"
   },
   "select-screens-table": {
+    "columns": {
+      "name": "Navn",
+      "on-groups": "Tilknyttede grupper",
+      "location": "Lokation"
+    },
     "remove-from-list": "Fjern fra liste",
+    "edit-screens-help-text": "Hvis du vil redigere en skærm, åbnes dette i en ny fane.",
+    "edit-button": "Rediger",
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     }
@@ -483,22 +505,22 @@
     "nothing-selected": "Vælg en af mulighederne"
   },
   "groups-dropdown": {
-    "search-to-se-possible-selections": "For at se mulige grupper, skal du fremsøge dem pr navn.",
+    "search-to-se-possible-selections": "De 100 nyeste grupper bliver hentet automatisk, for at se andre mulige grupper, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere grupper",
     "nothing-selected": "Vælg en af grupperne"
   },
   "playlists-dropdown": {
     "label": "Vælg en eller flere spillelister",
     "nothing-selected": "Vælg en af spillelisterne",
-    "search-to-se-possible-selections": "For at se mulige spillelister, skal du fremsøge dem pr navn."
+    "search-to-se-possible-selections": "De 100 nyeste spillelister bliver hentet automatisk, for at se andre mulige spillelister, skal du fremsøge dem pr navn."
   },
   "screens-dropdown": {
-    "search-to-se-possible-selections": "For at se mulige skærmes, skal du fremsøge dem pr navn.",
+    "search-to-se-possible-selections": "De 100 nyeste skærme bliver hentet automatisk, for at se andre mulige skærme, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere skærme",
     "nothing-selected": "Vælg en af skærmene"
   },
   "slides-dropdown": {
-    "search-to-se-possible-selections": "For at se mulige slides, skal du fremsøge dem pr navn.",
+    "search-to-se-possible-selections": "De 100 nyeste slides bliver hentet automatisk, for at se andre mulige slides, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere slides",
     "nothing-selected": "Vælg en af følgende slides"
   },
@@ -510,6 +532,8 @@
     "columns": {
       "name": "Navn"
     },
+    "edit-groups-help-text": "Hvis du vil redigere en gruppe, åbnes dette i en ny fane.",
+    "edit-button": "Rediger",
     "remove-from-list": "Fjern fra liste"
   },
   "image-uploader": {
@@ -590,7 +614,7 @@
   },
   "screen-form": {
     "nothing-selected": "Vælg en af skabelonerne",
-    "search-to-se-possible-selections": "For at se mulige skærme, skal du fremsøge dem pr navn.",
+    "search-to-se-possible-selections": "Alle layouts er hentet og klar i listen, listen er stadig søgbar.",
     "screen-resolution-height": "Højde",
     "screen-resolution-width": "Bredde",
     "screen-region-playlists": "Spillelister tilknyttet regionen",

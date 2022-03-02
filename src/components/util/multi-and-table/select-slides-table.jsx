@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import LinkForList from "../list/link-for-list";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import Published from "../published";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
@@ -31,7 +32,9 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: slides } = useGetV1SlidesQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
+    orderBy: "createdAt",
+    order: "desc",
   });
   const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
@@ -106,12 +109,12 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const columns = [
     {
       path: "title",
-      label: t("slides-list.columns.name"),
+      label: t("select-slides-table.columns.name"),
     },
     {
       content: (templateData) => TemplateLabelInList(templateData),
       key: "template",
-      label: t("slides-list.columns.template"),
+      label: t("select-slides-table.columns.template"),
     },
     {
       key: "playlists",
@@ -119,12 +122,22 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
       content: ({ onPlaylists: localOnPlaylists }) => (
         <ListButton callback={openInfoModal} inputData={localOnPlaylists} />
       ),
-      label: t("slides-list.columns.slide-on-playlists"),
+      label: t("select-slides-table.columns.slide-on-playlists"),
     },
     {
       key: "published",
       content: (publishedData) => Published(publishedData),
-      label: t("slides-list.columns.published"),
+      label: t("select-slides-table.columns.published"),
+    },
+    {
+      key: "edit",
+      content: (d) =>
+        LinkForList(
+          d["@id"],
+          `slide/edit`,
+          t("select-slides-table.edit-button"),
+          true
+        ),
     },
     {
       key: "delete",
@@ -148,12 +161,15 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
             filterCallback={onFilter}
           />
           {selectedData?.length > 0 && (
-            <DragAndDropTable
-              columns={columns}
-              onDropped={handleAdd}
-              name={name}
-              data={selectedData}
-            />
+            <>
+              <DragAndDropTable
+                columns={columns}
+                onDropped={handleAdd}
+                name={name}
+                data={selectedData}
+              />
+              <small>{t("select-slides-table.edit-slides-help-text")}</small>
+            </>
           )}
           <InfoModal
             show={showInfoModal}

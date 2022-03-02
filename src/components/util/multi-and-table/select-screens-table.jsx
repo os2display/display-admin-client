@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import LinkForList from "../list/link-for-list";
 import ListButton from "../list/list-button";
 import InfoModal from "../../info-modal/info-modal";
 import Table from "../table/table";
@@ -29,7 +30,9 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: screens } = useGetV1ScreensQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
+    orderBy: "createdAt",
+    order: "desc",
   });
   const { data } = useGetV1CampaignsByIdScreensQuery({ id: campaignId });
 
@@ -101,7 +104,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
     {
       path: "title",
       sort: true,
-      label: t("screen-list.columns.name"),
+      label: t("select-screens-table.columns.name"),
     },
     {
       // eslint-disable-next-line react/prop-types
@@ -113,11 +116,21 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
         />
       ),
       key: "groups",
-      label: t("screen-list.columns.on-groups"),
+      label: t("select-screens-table.columns.on-groups"),
     },
     {
       path: "location",
-      label: t("screen-list.columns.location"),
+      label: t("select-screens-table.columns.location"),
+    },
+    {
+      key: "edit",
+      content: (d) =>
+        LinkForList(
+          d["@id"],
+          `screen/edit`,
+          t("select-screens-table.edit-button"),
+          true
+        ),
     },
     {
       key: "delete",
@@ -141,7 +154,10 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
             filterCallback={onFilter}
           />
           {selectedData?.length > 0 && (
-            <Table columns={columns} data={selectedData} />
+            <>
+              <Table columns={columns} data={selectedData} />
+              <small>{t("select-screens-table.edit-screens-help-text")}</small>
+            </>
           )}
           <InfoModal
             show={showInfoModal}

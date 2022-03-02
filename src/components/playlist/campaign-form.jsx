@@ -20,20 +20,25 @@ function CampaignForm({ campaign, handleInput }) {
   return (
     <>
       {campaign && (
-        <ContentBody>
-          <h2 className="h4">{t("campaign-form.title-campaign")}</h2>
-          <SelectScreensTable
-            handleChange={handleInput}
-            name="screens"
-            campaignId={idFromUrl(campaign["@id"])}
-          />
-          <SelectGroupsTable
-            handleChange={handleInput}
-            name="groups"
-            getSelectedMethod={useGetV1CampaignsByIdScreenGroupsQuery}
-            id={idFromUrl(campaign["@id"])}
-          />
-        </ContentBody>
+        <>
+          <ContentBody>
+            <h2 className="h4">{t("campaign-form.title-campaign-screens")}</h2>
+            <SelectScreensTable
+              handleChange={handleInput}
+              name="screens"
+              campaignId={idFromUrl(campaign["@id"])}
+            />
+          </ContentBody>
+          <ContentBody>
+            <h2 className="h4">{t("campaign-form.title-campaign-groups")}</h2>
+            <SelectGroupsTable
+              handleChange={handleInput}
+              name="groups"
+              getSelectedMethod={useGetV1CampaignsByIdScreenGroupsQuery}
+              id={idFromUrl(campaign["@id"])}
+            />
+          </ContentBody>
+        </>
       )}
     </>
   );

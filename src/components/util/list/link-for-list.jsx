@@ -8,12 +8,17 @@ import idFromUrl from "../helpers/id-from-url";
  * @param {object} id The id of what is being edited.
  * @param {string} param The data type param.
  * @param {string} label The label.
+ * @param {boolean} targetBlank Whether to open in a new tab.
  * @returns {object} A link for the list.
  */
-function LinkForList(id, param, label) {
+function LinkForList(id, param, label, targetBlank) {
   const newId = idFromUrl(id);
   return (
-    <Link className="btn btn-primary" to={`/${param}/${newId}`}>
+    <Link
+      className="btn btn-primary"
+      target={targetBlank ? "_blank" : ""}
+      to={`/${param}/${newId}`}
+    >
       {label}
     </Link>
   );

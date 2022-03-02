@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
+import LinkForList from "../list/link-for-list";
 import { useGetV1ScreenGroupsQuery } from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 
@@ -21,7 +22,9 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
   const [searchText, setSearchText] = useState("");
   const { data: groups } = useGetV1ScreenGroupsQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
+    orderBy: "createdAt",
+    order: "desc",
   });
   const { data } = getSelectedMethod({
     id,
@@ -86,6 +89,16 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
       label: t("select-groups-table.columns.name"),
     },
     {
+      key: "edit",
+      content: (d) =>
+        LinkForList(
+          d["@id"],
+          "group/edit",
+          t("select-groups-table.edit-button"),
+          true
+        ),
+    },
+    {
       key: "delete",
       content: (screenData) => (
         <Button variant="danger" onClick={() => removeFromList(screenData)}>
@@ -106,7 +119,10 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
             filterCallback={onFilter}
           />
           {selectedData.length > 0 && (
-            <Table columns={columns} data={selectedData} />
+            <>
+              <Table columns={columns} data={selectedData} />
+              <small>{t("select-groups-table.edit-groups-help-text")}</small>
+            </>
           )}
         </>
       )}

@@ -80,7 +80,7 @@ function Select({
           </option>
         ))}
       </select>
-      {helpText && <small className="form-text">{helpText}</small>}
+      {helpText && <small>{helpText}</small>}
       {error && <div className="invalid-feedback">{textOnError}</div>}
     </FormGroup>
   );
