@@ -32,7 +32,7 @@ function SearchBox({ value, onChange, showLabel }) {
           id="search-field"
           role="search"
           name="search"
-          value={value}
+          value={value ?? ""}
           className="form-control"
           onChange={(e) => onChange(e.currentTarget.value)}
         />
