@@ -46,7 +46,7 @@ function FormCheckbox({
         checked={value}
         label={label}
       />
-      {helpText && <small className="form-text">{helpText}</small>}
+      {helpText && <small>{helpText}</small>}
     </FormGroup>
   );
 }

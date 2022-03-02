@@ -52,7 +52,7 @@ function RichText({
           theme="snow"
         />
       </FormGroup>
-      {helpText && <small className="form-text">{helpText}</small>}
+      {helpText && <small>{helpText}</small>}
     </>
   );
 }

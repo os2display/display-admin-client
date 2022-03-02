@@ -64,7 +64,7 @@ function FormInput({
         {error && <div className="invalid-feedback">{invalidInputText}</div>}
         {inputGroupExtra}
       </InputGroup>
-      {helpText && <small className="form-text">{helpText}</small>}
+      {helpText && <small>{helpText}</small>}
     </FormGroup>
   );
   /* eslint-enable react/jsx-props-no-spreading */

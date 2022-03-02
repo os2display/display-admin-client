@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import LinkForList from "../list/link-for-list";
 import Table from "../table/table";
 import {
   useGetV1PlaylistsQuery,
@@ -30,8 +31,10 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   const [onSlides, setOnSlides] = useState(false);
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
     isCampaign: false,
+    orderBy: "createdAt",
+    order: "desc",
   });
   const { data } = useGetV1SlidesByIdPlaylistsQuery({ id });
 
@@ -126,10 +129,20 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
       ),
     },
     {
+      key: "edit",
+      content: (d) =>
+        LinkForList(
+          d["@id"],
+          `playlist/edit`,
+          t("select-playlists-table.edit-button"),
+          true
+        ),
+    },
+    {
       key: "delete",
       content: (screenData) => (
         <Button variant="danger" onClick={() => removeFromList(screenData)}>
-          {t("select-playlists-table.columns.remove-from-list")}
+          {t("select-playlists-table.remove-from-list")}
         </Button>
       ),
     },
@@ -148,7 +161,12 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
             helpText={helpText}
           />
           {selectedData.length > 0 && (
-            <Table columns={columns} data={selectedData} />
+            <>
+              <Table columns={columns} data={selectedData} />
+              <small>
+                {t("playlist-drag-and-drop.edit-playlists-help-text")}
+              </small>
+            </>
           )}
           <InfoModal
             show={showInfoModal}

@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import LinkForList from "../util/list/link-for-list";
 import Published from "../util/published";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
@@ -34,7 +35,9 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
+    orderBy: "createdAt",
+    order: "desc",
   });
 
   /** Set loaded data into form state. */
@@ -98,9 +101,19 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     },
     {
       path: "published",
-      label: t("playlist-campaign-list.columns.published"),
+      label: t("playlist-drag-and-drop.columns.published"),
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
+    },
+    {
+      key: "edit",
+      content: (d) =>
+        LinkForList(
+          d["@id"],
+          `playlist/edit`,
+          t("playlist-drag-and-drop.edit-button"),
+          true
+        ),
     },
     {
       key: "delete",
@@ -126,12 +139,17 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
             />
           </div>
           {selectedData.length > 0 && (
-            <DragAndDropTable
-              columns={columns}
-              onDropped={handleChange}
-              name={name}
-              data={selectedData}
-            />
+            <>
+              <DragAndDropTable
+                columns={columns}
+                onDropped={handleChange}
+                name={name}
+                data={selectedData}
+              />
+              <small>
+                {t("playlist-drag-and-drop.edit-playlists-help-text")}
+              </small>
+            </>
           )}
         </>
       )}

@@ -84,11 +84,7 @@ function ContentForm({
               acceptedMimetypes={formData.acceptedMimetypes ?? defaultMimetypes}
             />
 
-            {formData.helpText && (
-              <small className="form-text text-muted">
-                {formData.helpText}
-              </small>
-            )}
+            {formData.helpText && <small>{formData.helpText}</small>}
           </div>
         );
         break;
@@ -238,9 +234,7 @@ function ContentForm({
               defaultValue={formStateObject[formData.name]}
             />
             {formData?.helpText && (
-              <small className="form-text text-muted d-flex">
-                {formData.helpText}
-              </small>
+              <small className="form-text d-flex">{formData.helpText}</small>
             )}
           </>
         );
