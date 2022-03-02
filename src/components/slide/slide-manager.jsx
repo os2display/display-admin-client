@@ -500,9 +500,7 @@ function SlideManager({
             theme: formStateObject.theme ?? "",
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,
-            duration: formStateObject?.content?.duration
-              ? parseInt(formStateObject.content.duration, 10) * 1000
-              : null,
+            duration: formStateObject.duration || null,
             content: formStateObject.content,
             media: formStateObject.media,
             feed: formStateObject.feed,

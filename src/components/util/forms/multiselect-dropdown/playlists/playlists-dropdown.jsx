@@ -57,7 +57,7 @@ PlaylistsDropdown.propTypes = {
       disabled: PropTypes.bool,
     })
   ).isRequired,
-  helpText: PropTypes.func,
+  helpText: PropTypes.string,
   filterCallback: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.any).isRequired,
   name: PropTypes.string.isRequired,
