@@ -231,23 +231,25 @@ function GroupsList() {
         newBtnLink="/group/create"
       />
       <ContentBody>
-        {listData && (
-          <List
-            columns={columns}
-            totalItems={listData["hydra:totalItems"]}
-            currentPage={page}
-            handlePageChange={onChangePage}
-            selectedRows={selectedRows}
-            data={listData["hydra:member"]}
-            clearSelectedRows={clearSelectedRows}
-            handleDelete={openDeleteModal}
-            deleteSuccess={isDeleteSuccess || false}
-            handleSort={onChangeSort}
-            handleSearch={onSearch}
-            isLoading={isLoading || isDeleting}
-            loadingMessage={loadingMessage}
-          />
-        )}
+        <>
+          {listData && (
+            <List
+              columns={columns}
+              totalItems={listData["hydra:totalItems"]}
+              currentPage={page}
+              handlePageChange={onChangePage}
+              selectedRows={selectedRows}
+              data={listData["hydra:member"]}
+              clearSelectedRows={clearSelectedRows}
+              handleDelete={openDeleteModal}
+              deleteSuccess={isDeleteSuccess || false}
+              handleSort={onChangeSort}
+              handleSearch={onSearch}
+              isLoading={isLoading || isDeleting}
+              loadingMessage={loadingMessage}
+            />
+          )}
+        </>
       </ContentBody>
       <DeleteModal
         show={showDeleteModal}

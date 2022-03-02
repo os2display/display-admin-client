@@ -107,8 +107,16 @@ function FeedSelector({ value, onChange, formElement }) {
           singleSelect={formElement.singleSelect ?? false}
         />
       );
-    } else if (element?.input === "poster-selector") {
-      return (<PosterSelector key={element.key} feedSource={feedSourceData} configurationChange={configurationChange} getValueFromConfiguration={getValueFromConfiguration} />);
+    }
+    if (element?.input === "poster-selector") {
+      return (
+        <PosterSelector
+          key={element.key}
+          feedSource={feedSourceData}
+          configurationChange={configurationChange}
+          getValueFromConfiguration={getValueFromConfiguration}
+        />
+      );
     }
 
     return (
@@ -118,7 +126,8 @@ function FeedSelector({ value, onChange, formElement }) {
         onChange={configurationChange}
         name={element.name}
         formStateObject={value?.configuration ?? {}}
-        onFileChange={() => {}} />
+        onFileChange={() => {}}
+      />
     );
   };
 

@@ -239,22 +239,24 @@ function ThemesList() {
       />
       {data && data["hydra:member"] && (
         <ContentBody>
-          {listData && (
-            <List
-              columns={columns}
-              totalItems={listData["hydra:totalItems"]}
-              data={listData["hydra:member"]}
-              currentPage={page}
-              handlePageChange={onChangePage}
-              selectedRows={selectedRows}
-              clearSelectedRows={clearSelectedRows}
-              handleDelete={openDeleteModal}
-              handleSort={onChangeSort}
-              handleSearch={onSearch}
-              isLoading={isLoading || isDeleting}
-              loadingMessage={loadingMessage}
-            />
-          )}
+          <>
+            {listData && (
+              <List
+                columns={columns}
+                totalItems={listData["hydra:totalItems"]}
+                data={listData["hydra:member"]}
+                currentPage={page}
+                handlePageChange={onChangePage}
+                selectedRows={selectedRows}
+                clearSelectedRows={clearSelectedRows}
+                handleDelete={openDeleteModal}
+                handleSort={onChangeSort}
+                handleSearch={onSearch}
+                isLoading={isLoading || isDeleting}
+                loadingMessage={loadingMessage}
+              />
+            )}
+          </>
         </ContentBody>
       )}
       <DeleteModal
