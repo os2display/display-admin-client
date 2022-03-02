@@ -754,6 +754,17 @@
     }
   },
   "poster-selector": {
+    "preview-of-events": "Forhåndsvisning af begivenheder udfra valg",
+    "table-image": "Billede",
+    "table-event": "Begivenhed",
+    "table-date": "Dato",
+    "table-price": "Pris",
+    "table-place": "Sted",
+    "number-of-slides": "Antal slides",
+    "number-of-slides-helptext": "Vælg op til 10 begivenheder som vil blive vist på hvert sit slide",
+    "choose-an-occurrence": "Vælg en forekomst",
+    "search-for-event": "Søg efter arrangement",
+    "chosen-occurrence": "Valgt forekomst",
     "single-search-type": "Søgekriterium",
     "single-search-text": "Søgetekst",
     "single-search-select": "Søgetekst",

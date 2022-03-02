@@ -385,9 +385,11 @@ function PosterSelector({
                           )}
                           {singleSelectedOccurrence && (
                             <div>
-                              <strong>Valgt forekomst:</strong>{" "}
+                              <strong>
+                                {t("poster-selector.chosen-occurrence")}:
+                              </strong>{" "}
                               {formatDate(singleSelectedOccurrence.startDate)} -
-                              Pris: {singleSelectedOccurrence.ticketPriceRange}
+                              {singleSelectedOccurrence.ticketPriceRange}
                             </div>
                           )}
                         </>
@@ -494,7 +496,9 @@ function PosterSelector({
                 {(!singleSelectedEvent || !singleSelectedOccurrence) && (
                   <>
                     <Row>
-                      <h5 className="mt-2">Søg efter arrangement</h5>
+                      <h5 className="mt-2">
+                        {t("poster-selector.search-for-event")}
+                      </h5>
                     </Row>
                     <Row>
                       <Col>
@@ -567,9 +571,15 @@ function PosterSelector({
                           <table className="table table-hover text-left">
                             <thead>
                               <tr>
-                                <th scope="col">Billede</th>
-                                <th scope="col">Begivenhed</th>
-                                <th scope="col">Dato</th>
+                                <th scope="col">
+                                  {t("poster-selector.table-image")}
+                                </th>
+                                <th scope="col">
+                                  {t("poster-selector.table-event")}
+                                </th>
+                                <th scope="col">
+                                  {t("poster-selector.table-date")}
+                                </th>
                               </tr>
                             </thead>
                             <tbody>
@@ -621,14 +631,18 @@ function PosterSelector({
 
                       {singleSelectedEvent !== null && (
                         <Col>
-                          <h5>Vælg en forekomst</h5>
+                          <h5>{t("poster-selector.choose-an-occurrence")}</h5>
                           {!singleSelectedOccurrence && (
                             <>
                               <table className="table table-hover text-left">
                                 <thead>
                                   <tr>
-                                    <th scope="col">Dato</th>
-                                    <th scope="col">Pris</th>
+                                    <th scope="col">
+                                      {t("poster-selector.table-date")}
+                                    </th>
+                                    <th scope="col">
+                                      {t("poster-selector.table-price")}
+                                    </th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -761,7 +775,7 @@ function PosterSelector({
                           <div className="form-group">
                             <div>
                               <label htmlFor="os2display-poster--select-number">
-                                Antal slides
+                                {t("poster-selector.number-of-slides")}
                                 <select
                                   id="os2display-poster--select-number"
                                   value={subscriptionNumberValue}
@@ -776,8 +790,7 @@ function PosterSelector({
                               </label>
                             </div>
                             <span className="small text-muted">
-                              Vælg op til 10 begivenheder som vil blive vist på
-                              hvert sit slide
+                              {t("poster-selector.number-of-slides-helptext")}
                             </span>
                           </div>
                         </div>
@@ -785,15 +798,23 @@ function PosterSelector({
                       <div className="col-md-9">
                         <div>
                           <h5 className="mt-3">
-                            Forhåndsvisning af begivenheder udfra valg
+                            {t("poster-selector.preview-of-events")}
                           </h5>
                           <table className="table table-hover text-left">
                             <thead>
                               <tr>
-                                <th scope="col">Billede</th>
-                                <th scope="col">Begivenhed</th>
-                                <th scope="col">Sted</th>
-                                <th scope="col">Dato</th>
+                                <th scope="col">
+                                  {t("poster-selector.table-image")}
+                                </th>
+                                <th scope="col">
+                                  {t("poster-selector.table-event")}
+                                </th>
+                                <th scope="col">
+                                  {t("poster-selector.table-place")}
+                                </th>
+                                <th scope="col">
+                                  {t("poster-selector.table-date")}
+                                </th>
                               </tr>
                             </thead>
                             <tbody>
