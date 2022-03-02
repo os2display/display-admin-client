@@ -116,7 +116,12 @@ function List({
   /** @param {string} newSearchText Updates the search text state and url. */
   function onSearch(newSearchText) {
     localStorage.setItem("search", newSearchText); // Search should persist
-    updateUrlParams("search", newSearchText);
+    const params = new URLSearchParams(search);
+    params.delete("search");
+    params.append("search", newSearchText);
+    params.delete("page");
+    params.append("page", 1);
+    history.push({ search: params.toString() });
   }
 
   /** @param {string} isPublished Updates the search text state and url. */
