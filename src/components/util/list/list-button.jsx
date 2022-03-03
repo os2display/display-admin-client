@@ -42,6 +42,7 @@ function ListButton({ callback, inputData, apiCall }) {
         </button>
       )}
       {!label && (
+        <div style={{height: "38px"}}>
         <Spinner
           as="span"
           animation="border"
@@ -50,6 +51,7 @@ function ListButton({ callback, inputData, apiCall }) {
           aria-hidden="true"
           className="m-1"
         />
+        </div>
       )}
     </>
   );
