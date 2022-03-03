@@ -5,7 +5,6 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import idFromUrl from "../util/helpers/id-from-url";
 import { api } from "../../redux/api/api.generated";
-import Am4ThemesColorTheme from "./calendar-colors";
 
 /**
  * A calendar view for lists.
@@ -52,6 +51,8 @@ function Calendar({ screen }) {
                   from: playlist.published.from,
                   to: playlist.published.to,
                   id: playlist["@id"],
+                  color: "lightblue",
+                  black: "#000"
                 };
               }
             );
@@ -66,26 +67,10 @@ function Calendar({ screen }) {
   }, []);
 
   useEffect(() => {
-    am4core.useTheme(Am4ThemesColorTheme);
-    const colorSet = new am4core.ColorSet();
-    // Add theme colors
-    const data = playlistsByRegion.map((item, index) => {
-      // There are 10 colors in the theme, so
-      // if the index exceeds 9, the last int in
-      // the number is used
-      const number = index > 9 ? index % 10 : index;
-
-      return {
-        ...item,
-        color: colorSet.getIndex(number),
-        black: "#000",
-      };
-    });
-
     // Create chart, match id with that in the returned html.
     const chart = am4core.create(chartId, am4charts.XYChart);
     chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
-    chart.data = data;
+    chart.data = playlistsByRegion;
 
     // Create vertical axis
     const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
