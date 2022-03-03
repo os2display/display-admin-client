@@ -100,6 +100,7 @@ function SlideForm({
   // Add event listeners for keypress
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
+
     // Remove event listeners on cleanup
     return () => {
       window.removeEventListener("keydown", downHandler);

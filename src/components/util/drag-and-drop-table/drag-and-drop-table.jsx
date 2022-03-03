@@ -139,7 +139,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
           </Droppable>
         </DragDropContext>
       </Table>
-      <small id="aria-label-for-drag-and-drop" className="form-text">
+      <small id="aria-label-for-drag-and-drop">
         {t("drag-and-drop-table.help-text")}
       </small>
     </div>

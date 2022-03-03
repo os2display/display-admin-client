@@ -2,6 +2,8 @@ import { React, useEffect, useState } from "react";
 import { Button, Col } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CampaignIcon from "../screen-list/campaign-icon";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import selectedHelper from "../util/helpers/selectedHelper";
@@ -281,19 +283,26 @@ function ScreenList() {
         title={t("screen-list.header")}
         newBtnTitle={t("screen-list.create-new-screen")}
         newBtnLink="/screen/create"
-      />
-      <Col md="auto">
-        {view === "list" && (
-          <Button onClick={() => setView("calendar")}>
-            {t("screen-list.change-view-calendar")}
-          </Button>
-        )}
-        {view === "calendar" && (
-          <Button onClick={() => setView("list")}>
-            {t("screen-list.change-view-list")}
-          </Button>
-        )}
-      </Col>
+      >
+        <Col md="auto">
+          {view === "list" && (
+            <Button
+              style={{ width: "110px" }}
+              onClick={() => setView("calendar")}
+            >
+              <FontAwesomeIcon className="me-1" icon={faCalendar} />
+              {t("screen-list.change-view-calendar")}
+            </Button>
+          )}
+          {view === "calendar" && (
+            <Button style={{ width: "110px" }} onClick={() => setView("list")}>
+              <FontAwesomeIcon className="me-1" icon={faList} />{" "}
+              {t("screen-list.change-view-list")}
+            </Button>
+          )}
+        </Col>
+      </ContentHeader>
+
       <ContentBody>
         <>
           {listData && (
@@ -305,7 +314,7 @@ function ScreenList() {
               handlePageChange={onChangePage}
               selectedRows={selectedRows}
               clearSelectedRows={clearSelectedRows}
-              withChart={view === "calendar"}
+              calendarView={view === "calendar"}
               handleDelete={openDeleteModal}
               isLoading={isLoading || isDeleting}
               loadingMessage={loadingMessage}

@@ -10,6 +10,7 @@ import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import RadioButtons from "../forms/radio-buttons";
 import ListLoading from "../loading-component/list-loading";
+import CalendarList from "../../screen-list/calendar-list";
 
 /**
  * @param {object} props - The props.
@@ -17,7 +18,7 @@ import ListLoading from "../loading-component/list-loading";
  * @param {Array} props.columns - The columns for the table.
  * @param {Array} props.selectedRows - The selected rows, for styling.
  * @param {Function} props.clearSelectedRows - Callback to clear the selected rows.
- * @param {boolean} props.withChart - If the list should display a gantt chart
+ * @param {boolean} props.calendarView - If the list should display a gantt chart
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
  * @param {Function} props.handleDelete - For deleting elements in the list.
@@ -34,7 +35,7 @@ function List({
   displayPublished,
   selectedRows,
   clearSelectedRows,
-  withChart,
+  calendarView,
   handlePageChange,
   handleSort,
   handleSearch,
@@ -224,15 +225,19 @@ function List({
           />
         )}
       </Row>
-      <Table
-        onSort={updateUrlAndSort}
-        data={data}
-        sortOrder={orderParams}
-        sortPath={sortParams}
-        columns={columns}
-        selectedRows={selectedRows}
-        withChart={withChart}
-      />
+      <>
+        {!calendarView && (
+          <Table
+            onSort={updateUrlAndSort}
+            data={data}
+            sortOrder={orderParams}
+            sortPath={sortParams}
+            columns={columns}
+            selectedRows={selectedRows}
+          />
+        )}
+        {calendarView && <CalendarList data={data} />}
+      </>
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}
@@ -244,7 +249,7 @@ function List({
 }
 
 List.defaultProps = {
-  withChart: false,
+  calendarView: false,
   handleIsPublished: () => {},
   displayPublished: false,
 };
@@ -258,7 +263,7 @@ List.propTypes = {
   clearSelectedRows: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  withChart: PropTypes.bool,
+  calendarView: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
   handleSort: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
