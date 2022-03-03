@@ -36,9 +36,13 @@ function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
   );
 }
 
+ContentHeader.defaultProps = {
+  children: <></>,
+};
+
 ContentHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   newBtnTitle: PropTypes.string.isRequired,
   newBtnLink: PropTypes.string.isRequired,
 };

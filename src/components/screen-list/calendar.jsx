@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
+import { useHistory } from "react-router-dom";
 import idFromUrl from "../util/helpers/id-from-url";
 import { api } from "../../redux/api/api.generated";
 
@@ -14,6 +15,7 @@ import { api } from "../../redux/api/api.generated";
  * @returns {object} The gantt chart.
  */
 function Calendar({ screen }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [playlistsByRegion, setPlaylistsByRegion] = useState([]);
 
@@ -41,18 +43,27 @@ function Calendar({ screen }) {
       if (results.length > 0) {
         results.forEach((region, index) => {
           if (region.data && region.data["hydra:member"]) {
+            // As playlists default to being published, if they have no values for
+            // from / to, I here create today (from), and a year from today (to).
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth();
+            const day = today.getDate();
+            const inAYear = new Date(year + 1, month, day);
+
             // Map data so it fits amcharts
             const regionData = region.data["hydra:member"].map(
               ({ playlist }) => {
                 return {
                   title: playlist.title,
                   category: playlist["@id"],
+                  // url: `playlist/${idFromUrl(playlist["@id"])}`,
                   categoryTitle: `Region ${index + 1}:`,
-                  from: playlist.published.from,
-                  to: playlist.published.to,
+                  from: playlist.published.from || today,
+                  to: playlist.published.to || inAYear,
                   id: playlist["@id"],
                   color: "lightblue",
-                  black: "#000"
+                  black: "#000",
                 };
               }
             );
@@ -80,7 +91,7 @@ function Calendar({ screen }) {
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.inversed = true;
 
-        // Create horizontal axis
+    // Create horizontal axis
     const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd";
     // dateAxis.renderer.minGridDistance = 70;
@@ -90,6 +101,17 @@ function Calendar({ screen }) {
 
     // Create the "gantt boxes".
     const series1 = chart.series.push(new am4charts.ColumnSeries());
+
+    /** @param {object} ev The click event */
+    function redirect(ev) {
+      history.push(
+        `/playlist/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
+      );
+    }
+
+    // Redirect on click
+    series1.columns.template.events.on("hit", redirect);
+
     series1.columns.template.width = am4core.percent(80);
     // Add a tooltip with the dates, as this can be difficult to read in the visualization.
     series1.columns.template.tooltipText = "{title}: {openDateX} - {dateX}";
@@ -100,6 +122,7 @@ function Calendar({ screen }) {
     series1.columns.template.propertyFields.fill = "color";
     series1.columns.template.propertyFields.stroke = "black";
     series1.columns.template.strokeOpacity = 1;
+    series1.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
 
     // Add labels
     const valueLabel = series1.bullets.push(new am4charts.LabelBullet());
