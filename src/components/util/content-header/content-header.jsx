@@ -26,7 +26,6 @@ function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
       {newBtnTitle && (
         <Col xs="auto">
           <Button href={newBtnLink}>
-            {" "}
             <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
             {newBtnTitle}
           </Button>

@@ -118,7 +118,7 @@ function Calendar({ screen }) {
     series1.dataFields.openDateX = "from";
     series1.dataFields.dateX = "to";
     series1.dataFields.categoryY = "category";
-    // get color from color data (calendar-colors.jsx)
+
     series1.columns.template.propertyFields.fill = "color";
     series1.columns.template.propertyFields.stroke = "black";
     series1.columns.template.strokeOpacity = 1;
