@@ -39,7 +39,7 @@ Table.defaultProps = {
 
 Table.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+    PropTypes.shape({ name: PropTypes.string, "@id": PropTypes.string })
   ).isRequired,
   onSort: PropTypes.func,
   columns: ColumnProptypes.isRequired,

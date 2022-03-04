@@ -1,25 +1,24 @@
-import React from "react";
+import React, { cloneElement, Fragment } from "react";
 import PropTypes from "prop-types";
-import Calendar from "./calendar";
 
 /**
  * @param {object} props The props.
  * @param {Array} props.data The data to display in the calendar list.
+ * @param {Array} props.children The children being passed from parent
  * @returns {object} The calendar list.
  */
-function CalendarList({ data }) {
+function CalendarList({ data, children }) {
   return (
     <table className="table table-hover">
-      <tbody>
-        {data.map((item) => (
-          <tr key={item["@id"]}>
-            <td colSpan="100%">
-              <h2 className="h4">{item.title}</h2>
-              <Calendar screen={item} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
+      {children && (
+        <tbody>
+          {data.map((item) => (
+            <Fragment key={item["@id"]}>
+              {cloneElement(children, { item })}
+            </Fragment>
+          ))}
+        </tbody>
+      )}
     </table>
   );
 }
@@ -28,5 +27,6 @@ CalendarList.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({ title: PropTypes.string, id: PropTypes.number })
   ).isRequired,
+  children: PropTypes.node.isRequired,
 };
 export default CalendarList;

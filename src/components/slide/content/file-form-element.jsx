@@ -45,9 +45,9 @@ function FileFormElement({
           type="text"
           label={t("file-form-element.title-label")}
           placeholder={
-            !disableInput && t("file-form-element.title-placeholder")
+            !disableInput ? t("file-form-element.title-placeholder") : ""
           }
-          helpText={!disableInput && t("file-form-element.title-help-text")}
+          helpText={!disableInput ? t("file-form-element.title-help-text") : ""}
           value={inputFile.title}
           onChange={onChangeFile}
           formGroupClasses="mb-3"
@@ -58,10 +58,10 @@ function FileFormElement({
           type="text"
           label={t("file-form-element.description-label")}
           placeholder={
-            !disableInput && t("file-form-element.description-placeholder")
+            !disableInput ? t("file-form-element.description-placeholder") : ""
           }
           helpText={
-            !disableInput && t("file-form-element.description-help-text")
+            !disableInput ? t("file-form-element.description-help-text") : ""
           }
           value={inputFile.description}
           onChange={onChangeFile}
@@ -75,9 +75,9 @@ function FileFormElement({
           type="text"
           label={t("file-form-element.license-label")}
           placeholder={
-            !disableInput && t("file-form-element.license-placeholder")
+            !disableInput ? t("file-form-element.license-placeholder") :""
           }
-          helpText={!disableInput && t("file-form-element.license-help-text")}
+          helpText={!disableInput ? t("file-form-element.license-help-text"):""}
           value={inputFile.license}
           onChange={onChangeFile}
           formGroupClasses="mb-3"

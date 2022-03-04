@@ -21,8 +21,8 @@ function Published({ published }) {
 
 Published.propTypes = {
   published: PropTypes.shape({
-    from: PropTypes.number,
-    to: PropTypes.number,
+    from: PropTypes.string,
+    to: PropTypes.string,
   }).isRequired,
 };
 

@@ -28,7 +28,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   const [selectedData, setSelectedData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [onSlides, setOnSlides] = useState(false);
+  const [onSlides, setOnSlides] = useState();
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
     itemsPerPage: 100,

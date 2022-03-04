@@ -27,6 +27,7 @@ import CalendarList from "../../screen-list/calendar-list";
  * @param {Function} props.handleSearch - Callback for seach.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.handleIsPublished - Callback for published filter.
+ * @param {Array} props.children The children being passed from parent
  * @returns {object} The List.
  */
 function List({
@@ -42,6 +43,7 @@ function List({
   totalItems,
   handleDelete,
   handleIsPublished,
+  children,
 }) {
   const { t } = useTranslation("common");
   const history = useHistory();
@@ -236,7 +238,7 @@ function List({
             selectedRows={selectedRows}
           />
         )}
-        {calendarView && <CalendarList data={data} />}
+        {calendarView && <CalendarList data={data}>{children}</CalendarList>}
       </>
       <Pagination
         itemsCount={totalItems}
@@ -252,6 +254,7 @@ List.defaultProps = {
   calendarView: false,
   handleIsPublished: () => {},
   displayPublished: false,
+  children: <></>,
 };
 
 List.propTypes = {
@@ -269,6 +272,7 @@ List.propTypes = {
   handleSearch: PropTypes.func.isRequired,
   displayPublished: PropTypes.bool,
   handleIsPublished: PropTypes.func,
+  children: PropTypes.node,
 };
 
 export default ListLoading(List);
