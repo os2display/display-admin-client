@@ -29,8 +29,10 @@ function MediaSelectorModal({
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    if (selectedMedia) {
-      const newSelected = selectedMedia.map((entry) => entry["@id"]);
+    if (selectedMedia && selectedMedia.length > 0) {
+      const newSelected = selectedMedia
+        .map((entry) => entry["@id"])
+        .filter((anyValue) => typeof anyValue !== "undefined");
       setSelected(newSelected);
     }
   }, [selectedMedia]);
@@ -47,7 +49,6 @@ function MediaSelectorModal({
     } else {
       const newSelected = [];
       let found = false;
-
       [...selected].forEach((element) => {
         if (
           element === data["@id"] ||
@@ -75,10 +76,9 @@ function MediaSelectorModal({
   const getSelectedIds = () => {
     return selected.reduce((prev, entry) => {
       const next = [...prev];
-
-      if (typeof entry === "string") {
+      if (entry && typeof entry === "string") {
         next.push(entry);
-      } else if (Object.prototype.hasOwnProperty.call(entry, "@id")) {
+      } else if (entry && Object.prototype.hasOwnProperty.call(entry, "@id")) {
         next.push(entry["@id"]);
       }
       return next;

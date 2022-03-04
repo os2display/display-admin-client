@@ -79,6 +79,7 @@ function ContentForm({
 
             <FileSelector
               files={getInputFiles(formData)}
+              multiple={formData.multipleImages}
               onFilesChange={onFileChange}
               name={formData.name}
               acceptedMimetypes={formData.acceptedMimetypes ?? defaultMimetypes}

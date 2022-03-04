@@ -39,6 +39,23 @@ function RemoteComponentWrapper({
       // Local slide and local content, to not accidentally mess with the actual content.
       const newSlide = { ...slide };
       newSlide.mediaData = mediaData;
+
+      // Map temp images so they are visible in preview before save
+      const mediaDataCopy = { ...mediaData };
+
+      // Find tempid keys
+      const keys = Object.keys(mediaDataCopy).filter((key) =>
+        key.includes("TEMP")
+      );
+
+      // Create "fake" url to file
+      keys.forEach((key) => {
+        mediaDataCopy[key] = {
+          assets: { uri: URL.createObjectURL(mediaDataCopy[key].file) },
+        };
+      });
+
+      newSlide.mediaData = mediaDataCopy;
       setRemoteComponentSlide(newSlide);
     }
   }, [slide, mediaData]);

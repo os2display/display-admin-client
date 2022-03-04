@@ -23,7 +23,7 @@ import FileDropzone from "./file-dropzone";
  */
 function FileSelector({
   files,
-  multiple = true,
+  multiple = false,
   onFilesChange,
   enableMediaLibrary = true,
   name,
@@ -89,7 +89,11 @@ function FileSelector({
 
       {enableMediaLibrary && (
         <>
-          <Button variant="success" onClick={() => setShowMediaModal(true)}>
+          <Button
+            disabled={!multiple && files.length > 0}
+            variant="success"
+            onClick={() => setShowMediaModal(true)}
+          >
             {t("file-selector.open-media-library")}
           </Button>
           <MediaSelectorModal
