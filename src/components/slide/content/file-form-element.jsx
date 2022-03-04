@@ -75,9 +75,11 @@ function FileFormElement({
           type="text"
           label={t("file-form-element.license-label")}
           placeholder={
-            !disableInput ? t("file-form-element.license-placeholder") :""
+            !disableInput ? t("file-form-element.license-placeholder") : ""
           }
-          helpText={!disableInput ? t("file-form-element.license-help-text"):""}
+          helpText={
+            !disableInput ? t("file-form-element.license-help-text") : ""
+          }
           value={inputFile.license}
           onChange={onChangeFile}
           formGroupClasses="mb-3"
