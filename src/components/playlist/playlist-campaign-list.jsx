@@ -1,6 +1,4 @@
 import { React, useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
 import { Button, Col } from "react-bootstrap";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

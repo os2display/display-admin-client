@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
  * @returns {object} The Content header.
  */
 function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
+  const navigate = useNavigate();
+
   return (
     <Row className="align-items-center justify-content-between my-3">
       <Col>
