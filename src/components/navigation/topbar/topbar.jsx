@@ -37,6 +37,12 @@ function Topbar() {
     context.selectedTenant.set(
       context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
     );
+    localStorage.setItem(
+      "selected-tenant",
+      JSON.stringify(
+        context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
+      )
+    );
   }
 
   return (

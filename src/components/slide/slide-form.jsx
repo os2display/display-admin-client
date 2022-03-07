@@ -408,7 +408,7 @@ function SlideForm({
             <RadioButtons
               label={t("slide-form.horizontal-or-vertical-label")}
               selected={previewLayout}
-              radioGroupName="vertical_horizontal"
+              radioGroupName="vertical_horizontal_mobile"
               disabled={!showPreview}
               options={[
                 {

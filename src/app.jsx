@@ -1,7 +1,6 @@
 import { React, useEffect, useState, Suspense } from "react";
-import { useTranslation, I18nextProvider } from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import { Routes, Route, Navigate } from "react-router-dom";
-
 import i18next from "i18next";
 import { ToastContainer } from "react-toastify";
 import Container from "react-bootstrap/Container";
@@ -43,7 +42,6 @@ import "./app.scss";
  * @returns {object} The component.
  */
 function App() {
-  const { t } = useTranslation("common");
   const [authenticated, setAuthenticated] = useState();
   const [selectedTenant, setSelectedTenant] = useState();
   const [accessConfig, setAccessConfig] = useState();
@@ -131,10 +129,7 @@ function App() {
         <I18nextProvider i18n={i18next}>
           <Suspense
             fallback={
-              <LoadingComponent
-                isLoading
-                loadingMessage={t("auth-handler.please-wait")}
-              />
+              <LoadingComponent isLoading loadingMessage="Vent venligst" />
             }
           >
             <ToastContainer

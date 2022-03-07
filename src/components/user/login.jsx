@@ -1,11 +1,12 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Alert, Button, Card, Form, Row, Spinner } from "react-bootstrap";
+import { Alert, Button, Card, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
+import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
@@ -271,7 +272,9 @@ function Login() {
           </Form>
         </Card>
       )}
-      {!ready && <Spinner animation="border" />}
+      {!ready && (
+        <LoadingComponent isLoading loadingMessage={t("login.please-wait")} />
+      )}
     </>
   );
 }

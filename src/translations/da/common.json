@@ -733,6 +733,7 @@
     "select-some-options": "Vælg..."
   },
   "login": {
+    "please-wait": "Vent venligst",
     "please-authenticate": "Log ind",
     "select-some-options": "Vælg...",
     "email": "Email",
@@ -825,7 +826,7 @@
     "filters-tag": "Tags",
     "filter-tag-helptext": "Begynd at skrive det tag du ønsker begivenheder fra, og vælg det på listen som kommer frem."
   },
-  "no-acccess":{
+  "no-access":{
     "you-dont-have-access": "Du har ikke adgang til denne side",
     "go-back": "Gå tilbage"
   },
