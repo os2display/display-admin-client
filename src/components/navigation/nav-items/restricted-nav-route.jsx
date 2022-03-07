@@ -11,8 +11,11 @@ import UserContext from "../../../context/user-context";
  */
 function RestrictedNavRoute({ children, roles }) {
   const context = useContext(UserContext);
-  const userHasRequiredRole =
-    context.userRole.get && roles.includes(context.userRole.get);
+
+  // If the user has a role with access to children.
+  const userHasRequiredRole = context.selectedTenant.get?.roles.find((value) =>
+    roles.includes(value)
+  );
 
   if (!userHasRequiredRole) {
     return <></>;
@@ -20,4 +23,5 @@ function RestrictedNavRoute({ children, roles }) {
 
   return children;
 }
+
 export default RestrictedNavRoute;

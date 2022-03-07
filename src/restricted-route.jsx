@@ -12,8 +12,11 @@ import NoAccess from "./components/no-access/no-access";
  */
 export default function RestrictedRoute({ children, roles }) {
   const context = useContext(UserContext);
-  const userHasRequiredRole =
-    context.userRole.get && roles.includes(context.userRole.get);
+
+  // If the user has a role with access to children.
+  const userHasRequiredRole = context.selectedTenant.get?.roles.find((value) =>
+    roles.includes(value)
+  );
 
   if (context.authenticated.get && !userHasRequiredRole) {
     return <NoAccess />;

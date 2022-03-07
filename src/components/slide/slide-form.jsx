@@ -429,7 +429,7 @@ function SlideForm({
             variant="secondary"
             type="button"
             id="cancel_slide"
-            onClick={() => history.push("/slide/list/")}
+            onClick={() => navigate("/slide/list/")}
             size="lg"
             className="me-3"
           >

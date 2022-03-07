@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
@@ -13,16 +13,32 @@ import {
   faQuestionCircle,
   faUserCircle,
   faSignOutAlt,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import UserContext from "../../../context/user-context";
 import "./topbar.scss";
 
 /**
- * The TopBar component.
+ * The top bar navigation component.
  *
- * @returns {object} The TopBar
+ * @returns {object} The top bar navigation component
  */
-function TopBar() {
-  const [t] = useTranslation("common");
+function Topbar() {
+  const { t } = useTranslation("common");
+  const context = useContext(UserContext);
+
+  /**
+   * Change tenant on select tenant
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target Event target
+   */
+  function onTenantChange({ target }) {
+    context.selectedTenant.set(
+      context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
+    );
+  }
+
   return (
     <Navbar
       variant="light"
@@ -36,6 +52,41 @@ function TopBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3" />
       <Navbar.Collapse id="basic-navbar-nav" className="px-3">
         <Nav className="ms-md-auto mt-3 mt-md-0">
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="link"
+              id="topbar_user"
+              className="text-dark text-decoration-none"
+            >
+              <FontAwesomeIcon
+                className="me-1 fa-lg text-dark text-muted"
+                icon={faUserCircle}
+              />
+              {context.userEmail.get} ({context.selectedTenant.get?.title})
+            </Dropdown.Toggle>
+            <Dropdown.Menu style={{ width: "100%" }}>
+              {context.tenants.get.map((tenant) => (
+                <Dropdown.Item
+                  onClick={onTenantChange}
+                  id={tenant.tenantKey}
+                  className="dropdown-item"
+                >
+                  <FontAwesomeIcon
+                    className="me-1"
+                    style={{
+                      color:
+                        tenant.tenantKey ===
+                        context.selectedTenant.get.tenantKey
+                          ? "#6c757d"
+                          : "transparent",
+                    }}
+                    icon={faCheck}
+                  />
+                  {tenant.title}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
           <Dropdown className="me-md-3 mb-2 mb-md-0">
             <Dropdown.Toggle variant="primary" id="topbar_add">
               <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
@@ -75,29 +126,16 @@ function TopBar() {
               <span className="visually-hidden">{t("topbar.faq")}</span>
             </Link>
           </Nav.Item>
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="link"
-              id="topbar_user"
-              className="text-dark text-decoration-none"
-            >
-              <FontAwesomeIcon
-                className="me-1 fa-lg text-dark text-muted"
-                icon={faUserCircle}
-              />
-              {t("topbar.user")}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Link id="topbar_signout" className="dropdown-item" to="/logout">
-                <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
-                {t("topbar.signout")}
-              </Link>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Nav.Item className="me-md-3 mb-2 mb-md-0">
+            <Link id="topbar_signout" className="btn btn-dark" to="/logout">
+              <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
+              {t("topbar.signout")}
+            </Link>
+          </Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
 }
 
-export default TopBar;
+export default Topbar;

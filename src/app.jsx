@@ -1,13 +1,14 @@
 import { React, useEffect, useState, Suspense } from "react";
+import { useTranslation, I18nextProvider } from "react-i18next";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { I18nextProvider } from "react-i18next";
+
 import i18next from "i18next";
 import { ToastContainer } from "react-toastify";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import RestrictedRoute from "./restricted-route";
-import TopBar from "./components/navigation/topbar/topbar";
+import Topbar from "./components/navigation/topbar/topbar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import SlidesList from "./components/slide/slides-list";
@@ -29,8 +30,10 @@ import ThemesList from "./components/themes/themes-list";
 import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import UserContext from "./context/user-context";
+import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
+import { displayError } from "./components/util/list/toast-component/display-toast";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
@@ -40,17 +43,30 @@ import "./app.scss";
  * @returns {object} The component.
  */
 function App() {
+  const { t } = useTranslation("common");
   const [authenticated, setAuthenticated] = useState();
-  const [userRole, setUserRole] = useState();
+  const [selectedTenant, setSelectedTenant] = useState();
   const [accessConfig, setAccessConfig] = useState();
+  const [tenants, setTenants] = useState();
+  const [userEmail, setUserEmail] = useState("");
 
   const userStore = {
-    userRole: { get: userRole, set: setUserRole },
     authenticated: { get: authenticated, set: setAuthenticated },
     accessConfig: { get: accessConfig, set: setAccessConfig },
+    tenants: { get: tenants, set: setTenants },
+    selectedTenant: { get: selectedTenant, set: setSelectedTenant },
+    userEmail: { get: userEmail, set: setUserEmail },
   };
 
   const handleReauthenticate = () => {
+    localStorage.removeItem("api-token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("selected-tenant");
+    localStorage.removeItem("tenants");
+
+    setSelectedTenant(null);
+    setTenants(null);
+    setUserEmail("");
     setAuthenticated(false);
   };
 
@@ -60,21 +76,24 @@ function App() {
 
     if (token !== null) {
       setAuthenticated(true);
+
+      // If there is a selected tenant, fetch from local storage and use
+      if (localStorage.getItem("selected-tenant")) {
+        setSelectedTenant(JSON.parse(localStorage.getItem("selected-tenant")));
+      }
+
+      // Fetch the users tenants from local storage and use
+      if (localStorage.getItem("tenants")) {
+        setTenants(JSON.parse(localStorage.getItem("tenants")));
+      }
+
+      // Get the user email for displaying in top bar.
+      setUserEmail(localStorage.getItem("email"));
     } else {
       setAuthenticated(false);
     }
 
     document.addEventListener("reauthenticate", handleReauthenticate);
-
-    i18next.init({
-      interpolation: { escapeValue: false }, // React already does escaping
-      lng: "da", // language to use
-      resources: {
-        da: {
-          common: commonDa,
-        },
-      },
-    });
 
     return () => {
       document.removeEventListener("reauthenticate", handleReauthenticate);
@@ -86,6 +105,11 @@ function App() {
       .then((response) => response.json())
       .then((jsonData) => {
         setAccessConfig(jsonData);
+      })
+      .catch(() => {
+        displayError(
+          "An error occurred, the access config is not found or is erroneous."
+        );
       });
   }, []);
 
@@ -104,23 +128,30 @@ function App() {
   return (
     <>
       <UserContext.Provider value={userStore}>
-        <Suspense fallback={<LoadingComponent />}>
-          <I18nextProvider i18n={i18next}>
+        <I18nextProvider i18n={i18next}>
+          <Suspense
+            fallback={
+              <LoadingComponent
+                isLoading
+                loadingMessage={t("auth-handler.please-wait")}
+              />
+            }
+          >
+            <ToastContainer
+              autoClose="10000"
+              position="bottom-right"
+              hideProgressBar={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              progress={undefined}
+            />
             <AuthHandler>
               <Container fluid className="h-100 px-0 bg-light">
                 <Row className="row-full-height g-0">
                   <SideBar />
                   <Col lg={9} xl={10}>
-                    <TopBar />
-                    <ToastContainer
-                      autoClose="10000"
-                      position="bottom-right"
-                      hideProgressBar={false}
-                      closeOnClick
-                      pauseOnHover
-                      draggable
-                      progress={undefined}
-                    />
+                    <Topbar />
                     {accessConfig && (
                       <main className="col p-3">
                         <Routes>
@@ -292,6 +323,7 @@ function App() {
                               </RestrictedRoute>
                             }
                           />
+                          <Route path="logout" element={<Logout />} />
                           <Route
                             path="*"
                             element={<Navigate to="/slide/list" />}
@@ -303,8 +335,8 @@ function App() {
                 </Row>
               </Container>
             </AuthHandler>
-          </I18nextProvider>
-        </Suspense>
+          </Suspense>
+        </I18nextProvider>
       </UserContext.Provider>
     </>
   );

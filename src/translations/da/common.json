@@ -654,11 +654,10 @@
   },
   "topbar": {
     "brand": "OS2Display",
-    "add": "Ny",
+    "add": "Opret",
     "add-slide": "Nyt slide",
     "add-screen": "Ny skærm",
     "add-playlist": "Ny spilleliste",
-    "user": "Username",
     "signout": "Log ud"
   },
   "sidebar": {
@@ -735,6 +734,7 @@
   },
   "login": {
     "please-authenticate": "Log ind",
+    "select-some-options": "Vælg...",
     "email": "Email",
     "password": "Kodeord",
     "error": "Log ind fejlede",
@@ -743,7 +743,9 @@
     "error-oidc-login": "Log ind med AD fejlede",
     "error-fetching-oidc-urls": "Opsætning af AD login fejlede",
     "login-with-oidc": "Log ind med AD",
-    "login-with-username-password": "Log ind med email og kodeord"
+    "login-with-username-password": "Log ind med email og kodeord",
+    "select-tenant-label": "Vælg tilhørselsforhold",
+    "tenant-help-text": "Tilhørselsforhold kan blive ændret igen når du er logget ind"
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten"

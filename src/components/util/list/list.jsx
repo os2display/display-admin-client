@@ -128,7 +128,9 @@ function List({
     params.append("search", newSearchText);
     params.delete("page");
     params.append("page", 1);
-    history.push({ search: params.toString() });
+    navigate({
+      search: params.toString(),
+    });
   }
 
   /** @param {string} isPublished Updates the search text state and url. */
