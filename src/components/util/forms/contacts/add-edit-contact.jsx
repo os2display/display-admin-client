@@ -19,20 +19,12 @@ import FormInput from "../form-input";
  */
 function AddEditContact({
   addContact,
-  contact: inputContact,
   onMediaChange,
   getInputImage,
 }) {
   const { t } = useTranslation("common");
   const [edit, setEdit] = useState(false);
-  const [contact, setContact] = useState({
-    name: "",
-    phone: "",
-    title: "",
-    email: "",
-    image: "",
-    tempId: ulid(new Date().getTime()),
-  });
+  const [contact, setContact] = useState(null);
 
   useEffect(() => {
     if (inputContact) {
@@ -111,16 +103,16 @@ function AddEditContact({
       </Row>
       <FileSelector
         files={
-          contact.tempId
+          contact.id
             ? getInputImage({
-                name: `contacts-image-${contact.tempId}`,
+                name: `contacts-image-${contact.id}`,
               })
             : []
         }
         onFilesChange={onMediaChange}
         acceptedMimetypes={["image/*"]}
         multiple={false}
-        name={`contacts-image-${contact.tempId}`}
+        name={`contacts-image-${contact.id}`}
       />
       {!edit && (
         <Button variant="primary" type="button" onClick={() => onAdd()}>
@@ -138,12 +130,13 @@ function AddEditContact({
 
 AddEditContact.propTypes = {
   addContact: PropTypes.func.isRequired,
-  contact: PropTypes.objectOf({
+  removeContact: PropTypes.func.isRequired,
+  contact: PropTypes.shape({
     name: PropTypes.string,
     image: PropTypes.string,
     phone: PropTypes.number,
     title: PropTypes.string,
-  }).isRequired,
+  }),
   onMediaChange: PropTypes.func.isRequired,
   getInputImage: PropTypes.func.isRequired,
 };

@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Card } from "react-bootstrap";
 import AddEditContact from "./add-edit-contact";
 import ContactView from "./contact-view";
+import { ulid } from "ulid";
 
 /**
  * A contacts component for forms.
@@ -25,14 +27,14 @@ function Contacts({
   formData,
 }) {
   const [contacts, setContacts] = useState([]);
-  const [contactToEdit, setContactToEdit] = useState();
+  const [contactToEdit, setContactToEdit] = useState(null);
 
   // Initial state, if editing a slide with saved contacts
   useEffect(() => {
     if (value?.contacts) {
       setContacts(value.contacts);
     }
-  }, []);
+  }, [value]);
 
   /**
    * Set state on change in input field
@@ -41,25 +43,9 @@ function Contacts({
    */
   function addContact(contact) {
     const contactsCopy = [...contacts];
-    // If the contact is being edited, it has an index.
-    if (Number.isInteger(contact.index)) {
-      contactsCopy[contact.index] = contact;
-    } else {
-      contactsCopy.push({ ...contact, index: contactsCopy.length });
-    }
-    setContactToEdit();
+    contactsCopy.push({ ...contact, id: ulid(new Date().getTime()) });
     setContacts(contactsCopy);
   }
-
-  // If contacts change, return the value to slide manager.
-  useEffect(() => {
-    const returnTarget = {
-      value: { contacts },
-      id: name,
-    };
-
-    onChange({ target: returnTarget });
-  }, [contacts.length, contacts]);
 
   /**
    * Set state on change in input field
@@ -70,51 +56,66 @@ function Contacts({
     setContactToEdit(contact);
   }
 
-  /** @param {object} contact The contact to remove */
+-  /** @param {object} contact The contact to remove */
   function removeContact(contact) {
     setContacts(
-      [...contacts].filter(({ tempId }) => !(tempId === contact.tempId))
+      [...contacts].filter(({ id }) => !(id === contact.id))
     );
   }
 
   return (
-    <div className={formGroupClasses}>
-      {contacts.length > 0 && (
-        <div className="d-flex flex-wrap">
-          {contacts.map((contact) => (
-            <ContactView
-              contact={contact}
-              removeContact={removeContact}
-              getInputImage={getInputImage}
-              editContact={editContact}
-            />
-          ))}
-        </div>
-      )}
-      {(contacts.length < 6 || contactToEdit) && (
-        <AddEditContact
-          formData={formData}
-          contact={contactToEdit}
-          addContact={addContact}
-          getInputImage={getInputImage}
-          nextIndex={contactToEdit ? contactToEdit.index : contacts.length}
-          onMediaChange={onMediaChange}
-        />
-      )}
-    </div>
+    <Card className={formGroupClasses}>
+      <Card.Body>
+        {contacts.length > 0 && (
+          <div className="d-flex flex-wrap">
+            {contacts.map((contact) => (
+              <ContactView
+                contact={contact}
+                removeContact={removeContact}
+                getInputImage={getInputImage}
+                editContact={editContact}
+              />
+            ))}
+          </div>
+        )}
+        {(contacts.length < 6 || contactToEdit) && (
+          <AddEditContact
+            formData={formData}
+            contact={contactToEdit}
+            getInputImage={getInputImage}
+            nextIndex={
+              contactToEdit ? contactToEdit.index : contacts.length
+            }
+            onMediaChange={onMediaChange}
+            editContact={() => {}}
+            addContact={() => {}}/>
+        )}
+      </Card.Body>
+    </Card>
   );
 }
+
 Contacts.defaultProps = {
   formGroupClasses: "",
 };
 
 Contacts.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.objectOf(PropTypes.any).isRequired,
+  value: PropTypes.shape({
+    contacts: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      image: PropTypes.string,
+      phone: PropTypes.number,
+      title: PropTypes.string,
+      email: PropTypes.string,
+    })),
+  }),
   formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onMediaChange: PropTypes.func.isRequired,
   getInputImage: PropTypes.func.isRequired,
   formData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
+
 export default Contacts;
