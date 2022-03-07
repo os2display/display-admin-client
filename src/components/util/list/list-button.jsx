@@ -42,14 +42,16 @@ function ListButton({ callback, inputData, apiCall }) {
         </button>
       )}
       {!label && (
-        <Spinner
-          as="span"
-          animation="border"
-          size="sm"
-          role="status"
-          aria-hidden="true"
-          className="m-1"
-        />
+        <div style={{ height: "38px" }}>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="m-1"
+          />
+        </div>
       )}
     </>
   );

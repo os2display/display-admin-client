@@ -140,6 +140,8 @@
     "edit-button": "Rediger"
   },
   "playlist-campaign-list": {
+    "change-view-calendar": "Kalender",
+    "change-view-list": "Liste",
     "playlist": {
       "header": "Spillelister",
       "create-new": "Opret ny spilleliste",

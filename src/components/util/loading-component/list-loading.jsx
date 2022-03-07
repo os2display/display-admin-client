@@ -18,8 +18,8 @@ function ListLoading(Component) {
     if (!isLoading) return <Component {...props} />;
     return (
       <div className="d-flex m-5 justify-content-center">
-        <Spinner animation="border" className="mr-3" />
-        {loadingMessage && <h2>{loadingMessage}</h2>}
+        <Spinner animation="border" className="m-2" />
+        {loadingMessage && <h2 className="m-2">{loadingMessage}</h2>}
       </div>
     );
   };
