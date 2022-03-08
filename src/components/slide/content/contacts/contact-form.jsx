@@ -5,33 +5,22 @@ import { Button, Col, Row } from "react-bootstrap";
 import { ulid } from "ulid";
 import { useTranslation } from "react-i18next";
 import FileSelector from "../../../slide/content/file-selector";
-import FormInput from "../form-input";
+import FormInput from "../../../util/forms/form-input";
 
 /**
- * An input for adding/editing contacts.
+ * Contact form.
  *
  * @param {string} props The props.
- * @param {Function} props.onMediaChange For keeping images updated
- * @param {Function} props.addContact For adding contact
- * @param {Function} props.contact The contact currently being edited
- * @param {Function} props.getInputImage For getting contact image
- * @returns {object} Add/edit contact component.
+ * @param {Function} props.onChange Callback when contact changes.
+ * @param {Function} props.getInputFiles For getting contact image.
+ * @returns {object} Contact form component.
  */
-function AddEditContact({
-  addContact,
-  onMediaChange,
-  getInputImage,
+function ContactForm({
+  contact,
+  onChange,
+   getInputFiles,
 }) {
   const { t } = useTranslation("common");
-  const [edit, setEdit] = useState(false);
-  const [contact, setContact] = useState(null);
-
-  useEffect(() => {
-    if (inputContact) {
-      setContact(inputContact);
-      setEdit(true);
-    }
-  }, [inputContact]);
 
   /**
    * @param {object} props The props
@@ -39,30 +28,14 @@ function AddEditContact({
    */
   function onInput({ target }) {
     let localContact = { ...contact };
-    localContact = JSON.parse(JSON.stringify(localContact));
     set(localContact, target.name, target.value);
-    setContact(localContact);
-  }
-
-  /** Adding contact callback */
-  function onAdd() {
-    addContact(contact);
-
-    setContact({
-      name: "",
-      phone: "",
-      title: "",
-      email: "",
-      image: "",
-      tempId: ulid(new Date().getTime()),
-    });
-    setEdit(false);
+    onChange(localContact);
   }
 
   return (
     <>
       <Row className="g-2">
-        <Col xs="auto">
+        <Col>
           <FormInput
             name="title"
             type="text"
@@ -71,7 +44,7 @@ function AddEditContact({
             onChange={onInput}
           />
         </Col>
-        <Col md>
+        <Col>
           <FormInput
             name="name"
             type="text"
@@ -82,7 +55,7 @@ function AddEditContact({
         </Col>
       </Row>
       <Row className="g-2">
-        <Col xs="auto">
+        <Col>
           <FormInput
             name="phone"
             type="number"
@@ -91,7 +64,7 @@ function AddEditContact({
             onChange={onInput}
           />
         </Col>
-        <Col md>
+        <Col>
           <FormInput
             name="email"
             type="email"
@@ -102,43 +75,26 @@ function AddEditContact({
         </Col>
       </Row>
       <FileSelector
-        files={
-          contact.id
-            ? getInputImage({
-                name: `contacts-image-${contact.id}`,
-              })
-            : []
-        }
-        onFilesChange={onMediaChange}
+        files={[]}
+        onFilesChange={(t) => {console.log('TODO: onFilesChange', t)}}
         acceptedMimetypes={["image/*"]}
         multiple={false}
         name={`contacts-image-${contact.id}`}
       />
-      {!edit && (
-        <Button variant="primary" type="button" onClick={() => onAdd()}>
-          {t("add-edit-contact.add-contact")}
-        </Button>
-      )}
-      {edit && (
-        <Button variant="primary" type="button" onClick={() => onAdd()}>
-          {t("add-edit-contact.update-contact")}
-        </Button>
-      )}
     </>
   );
 }
 
-AddEditContact.propTypes = {
-  addContact: PropTypes.func.isRequired,
-  removeContact: PropTypes.func.isRequired,
+ContactForm.propTypes = {
   contact: PropTypes.shape({
     name: PropTypes.string,
     image: PropTypes.string,
     phone: PropTypes.number,
     title: PropTypes.string,
-  }),
+  }).isRequired,
+  getInputFiles: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onMediaChange: PropTypes.func.isRequired,
-  getInputImage: PropTypes.func.isRequired,
 };
 
-export default AddEditContact;
+export default ContactForm;

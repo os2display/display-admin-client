@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card } from "react-bootstrap";
-import AddEditContact from "./add-edit-contact";
-import ContactView from "./contact-view";
+import { Button, Card, Row } from "react-bootstrap";
+import ContactForm from "./contact-form";
 import { ulid } from "ulid";
+import { useTranslation } from "react-i18next";
+import Col from "react-bootstrap/Col";
 
 /**
  * A contacts component for forms.
@@ -22,12 +23,12 @@ function Contacts({
   value,
   onChange,
   formGroupClasses,
-  getInputImage,
+  getInputFiles,
   onMediaChange,
   formData,
 }) {
+  const { t } = useTranslation("common");
   const [contacts, setContacts] = useState([]);
-  const [contactToEdit, setContactToEdit] = useState(null);
 
   // Initial state, if editing a slide with saved contacts
   useEffect(() => {
@@ -37,27 +38,33 @@ function Contacts({
   }, [value]);
 
   /**
-   * Set state on change in input field
-   *
-   * @param {object} contact The contact to add
+   * Add a contact.
    */
-  function addContact(contact) {
+  function addContact() {
     const contactsCopy = [...contacts];
-    contactsCopy.push({ ...contact, id: ulid(new Date().getTime()) });
+    contactsCopy.push({
+      name: "",
+      phone: undefined,
+      title: "",
+      email: "",
+      image: "",
+      id: ulid(new Date().getTime()),
+    });
     setContacts(contactsCopy);
   }
 
-  /**
-   * Set state on change in input field
-   *
-   * @param {object} contact The contact to edit
-   */
-  function editContact(contact) {
-    setContactToEdit(contact);
+  const updateContact = (changedContact) => {
+    const newContacts =  [...contacts];
+    const findIndex = newContacts.findIndex(({ id }) => !(id === contact.id));
+    console.log('findIndex', findIndex);
   }
 
--  /** @param {object} contact The contact to remove */
-  function removeContact(contact) {
+  /**
+   * Remove a contact.
+   *
+   * @param {object} contact The contact to remove
+   */
+  const removeContact = (contact) => {
     setContacts(
       [...contacts].filter(({ id }) => !(id === contact.id))
     );
@@ -66,29 +73,34 @@ function Contacts({
   return (
     <Card className={formGroupClasses}>
       <Card.Body>
-        {contacts.length > 0 && (
-          <div className="d-flex flex-wrap">
-            {contacts.map((contact) => (
-              <ContactView
-                contact={contact}
-                removeContact={removeContact}
-                getInputImage={getInputImage}
-                editContact={editContact}
-              />
-            ))}
-          </div>
-        )}
-        {(contacts.length < 6 || contactToEdit) && (
-          <AddEditContact
-            formData={formData}
-            contact={contactToEdit}
-            getInputImage={getInputImage}
-            nextIndex={
-              contactToEdit ? contactToEdit.index : contacts.length
-            }
-            onMediaChange={onMediaChange}
-            editContact={() => {}}
-            addContact={() => {}}/>
+        <Row className="mb-3">
+          {contacts.map((contact) => (
+            <Col md="4" key={contact.id}>
+              <Card className="m-3">
+                <Card.Body>
+                  <ContactForm
+                    contact={contact}
+                    onChange={(changedContact) => {console.log("TODO: on change", changedContact)}}
+                    getInputFiles={getInputFiles}
+                    onMediaChange={() => {}}
+                  />
+                </Card.Body>
+
+                <Card.Footer>
+                  <Button variant="danger" type="button" onClick={() => {removeContact(contact)}}>
+                    {t("contacts.remove-contact")}
+                  </Button>
+                </Card.Footer>
+              </Card>
+            </Col>
+          ))}
+
+        </Row>
+
+        {contacts?.length < 6 && (
+          <Button variant="primary" type="button" onClick={addContact}>
+            {t("contacts.add-contact")}
+          </Button>
         )}
       </Card.Body>
     </Card>
@@ -113,8 +125,7 @@ Contacts.propTypes = {
   }),
   formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  onMediaChange: PropTypes.func.isRequired,
-  getInputImage: PropTypes.func.isRequired,
+  getInputFiles: PropTypes.func.isRequired,
   formData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

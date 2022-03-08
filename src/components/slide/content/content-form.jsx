@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
-import Contacts from "../../util/forms/contacts/contacts";
+import Contacts from "./contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 import FileSelector from "./file-selector";
@@ -162,14 +162,12 @@ function ContentForm({
 
         break;
       case "contacts":
-        // TODO: onMediaChange.
         returnElement = (
           <Contacts
-            onMediaChange={() => {}}
-            getInputImage={getInputFiles}
+            getInputFiles={getInputFiles}
             name={formData.name}
             formData={formData}
-            value={formStateObject[formData.name]}
+            value={formStateObject[formData.name] ?? {contacts: []}}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
           />
