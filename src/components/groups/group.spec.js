@@ -1,7 +1,13 @@
 describe("Group pages work", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.visit("/group/create");
+    cy.get("#login").click();
   });
+
   it("It loads create group page", () => {
     cy.get("#save_group").should("exist");
   });
