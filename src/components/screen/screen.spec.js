@@ -1,10 +1,15 @@
 describe("Screen pages work", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     // Mock successful response on get layouts
     cy.intercept("GET", "**/layouts*", { fixture: "screens/layouts.json" }).as(
       "layouts"
     );
     cy.visit("/screen/create");
+    cy.get("#login").click();
     cy.wait(["@layouts"]);
   });
   it("It loads create screen page", () => {
