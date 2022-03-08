@@ -98,19 +98,18 @@ describe("Slide pages work", () => {
 
     // Neither the sidebar or overlay should be displayed
     cy.get(".responsive-side").should("not.exist");
-    cy.get("#checkbox-preview").should("not.exist");
+    cy.get("#checkbox-show-preview").should("not.exist");
 
     // Pick a template to get the preview section visible
     cy.get("#template-section")
       .find(".dropdown-container")
       .eq(0)
       .type("{enter}");
-    cy.get("#template-section").find(".search").find('[type="text"]').type("d");
     cy.get("#template-section").find('[type="checkbox"]').check();
     cy.get("#template-section").find(".dropdown-container").eq(0).click();
 
     // Preview checkbox cheked and sidebar should be displayed
-    cy.get("#checkbox-preview").check();
+    cy.get("#checkbox-show-preview").check();
     cy.get(".responsive-side").should("exist");
     cy.get(".preview-overlay").should("not.exist");
 
