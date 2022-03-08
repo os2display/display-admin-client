@@ -1,9 +1,16 @@
 describe("Playlist pages work", () => {
   beforeEach(() => {
+    cy.visit("/playlist/list");
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/slides*", {
       fixture: "playlists/playlist-slide.json",
     }).as("slides");
     cy.visit("/playlist/create");
+    cy.get("#login").click();
+    cy.wait(["@token"]);
     cy.wait(["@slides"]);
   });
   it("It loads create playlist page", () => {
@@ -12,7 +19,7 @@ describe("Playlist pages work", () => {
 
   it("It drags and drops slide", () => {
     // Intercept slides in dropdown
-    cy.intercept("GET", "**/slides?itemsPerPage=10&title=d", {
+    cy.intercept("GET", "**/slides?**", {
       fixture: "playlists/slides.json",
     });
 
@@ -27,7 +34,7 @@ describe("Playlist pages work", () => {
     cy.get("#slides-section")
       .get("tbody")
       .find("tr td")
-      .should("have.length", 12);
+      .should("have.length", 14);
     cy.get("#slides-section")
       .get("tbody")
       .find("tr td")
@@ -42,7 +49,7 @@ describe("Playlist pages work", () => {
         cy.get("#slides-section")
           .get("tbody")
           .find("tr td")
-          .eq(7)
+          .eq(8)
           .invoke("text")
           .should("eq", firstElementText);
       });
@@ -50,7 +57,7 @@ describe("Playlist pages work", () => {
 
   it("It removes slide", () => {
     // Intercept slides in dropdown
-    cy.intercept("GET", "**/slides?itemsPerPage=10&title=d", {
+    cy.intercept("GET", "**/slides?**", {
       fixture: "playlists/slides.json",
     }).as("slides");
 
@@ -62,7 +69,7 @@ describe("Playlist pages work", () => {
     cy.get("#slides-section")
       .find("tbody")
       .find("tr td")
-      .should("have.length", 6);
+      .should("have.length", 7);
 
     // Remove slide
     cy.get("#slides-section").find("tbody").find(".remove-from-list").click();

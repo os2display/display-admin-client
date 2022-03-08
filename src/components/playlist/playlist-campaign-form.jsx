@@ -86,7 +86,7 @@ function PlaylistCampaignForm({
             onChange={handleInput}
           />
         </ContentBody>
-        <ContentBody>
+        <ContentBody id="slides-section">
           <h2 className="h4">{t("playlist-campaign-form.title-slides")}</h2>
           <SelectSlidesTable
             handleChange={handleInput}
@@ -130,7 +130,7 @@ function PlaylistCampaignForm({
           <Button
             variant="secondary"
             type="button"
-            id="playlist_cancel"
+            id="cancel_playlist"
             onClick={() => navigate(-1)}
             size="lg"
             className="me-3"
