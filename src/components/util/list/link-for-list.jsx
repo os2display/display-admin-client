@@ -16,11 +16,8 @@ function LinkForList(id, param, label, targetBlank) {
   return (
     <Link
       className="btn btn-primary"
-<<<<<<< HEAD
-      target={targetBlank ? "_blank" : ""}
-=======
       id="edit_button"
->>>>>>> bedd484 (coding standards apply)
+      target={targetBlank ? "_blank" : ""}
       to={`/${param}/${newId}`}
     >
       {label}

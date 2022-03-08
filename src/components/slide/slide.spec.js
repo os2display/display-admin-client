@@ -1,10 +1,15 @@
 describe("Slide pages work", () => {
   beforeEach(() => {
-    // Intercept themes in dropdown
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/themes*", {
       fixture: "slides/themes.json",
     }).as("themes");
     cy.visit("/slide/create");
+    cy.get("#login").click();
+    cy.wait(["@token"]);
     cy.wait(["@themes"]);
   });
 
@@ -14,16 +19,17 @@ describe("Slide pages work", () => {
 
   it("It picks template and redirects on save", () => {
     // Intercept templates in dropdown
-    cy.intercept("GET", "**/templates?itemsPerPage=10&title=d", {
+    cy.intercept("GET", "**/templates?itemsPerPage=300&**", {
       fixture: "slides/templates.json",
-    });
+    }).as("templates");
+    cy.visit("/slide/create");
+    cy.wait(["@templates"]);
 
     // Pick a template
     cy.get("#template-section")
       .find(".dropdown-container")
       .eq(0)
       .type("{enter}");
-    cy.get("#template-section").find(".search").find('[type="text"]').type("d");
     cy.get("#template-section")
       .find(".item-renderer")
       .find("span")
@@ -84,13 +90,15 @@ describe("Slide pages work", () => {
 
   it("It shows and hides preview", () => {
     // Intercept templates in dropdown
-    cy.intercept("GET", "**/templates?itemsPerPage=10&title=d", {
+    cy.intercept("GET", "**/templates?itemsPerPage=300&**", {
       fixture: "slides/templates.json",
-    });
+    }).as("templates");
+    cy.visit("/slide/create");
+    cy.wait(["@templates"]);
 
     // Neither the sidebar or overlay should be displayed
     cy.get(".responsive-side").should("not.exist");
-    cy.get("#formBasicCheckboxshow-preview").should("not.exist");
+    cy.get("#checkbox-preview").should("not.exist");
 
     // Pick a template to get the preview section visible
     cy.get("#template-section")
@@ -102,7 +110,7 @@ describe("Slide pages work", () => {
     cy.get("#template-section").find(".dropdown-container").eq(0).click();
 
     // Preview checkbox cheked and sidebar should be displayed
-    cy.get("#formBasicCheckboxshow-preview").check();
+    cy.get("#checkbox-preview").check();
     cy.get(".responsive-side").should("exist");
     cy.get(".preview-overlay").should("not.exist");
 

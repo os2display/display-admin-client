@@ -51,7 +51,7 @@ function TopBar() {
 
   return (
     <Navbar
-      id="topbar"
+    id="topbar"
       variant="light"
       bg="white"
       expand="lg"
@@ -62,7 +62,11 @@ function TopBar() {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3" />
       <Navbar.Collapse id="basic-navbar-nav" className="px-3">
-        <Nav className="ms-md-auto mt-3 mt-md-0">
+        <Nav className="ms-md-auto mt-3 mt-md-0"><>
+          {!context.tenants.get &&
+                     <div className="name">   {context.userEmail.get} ({context.selectedTenant.get?.title})}</div>
+                     }
+        {context.tenants.get &&
           <Dropdown>
             <Dropdown.Toggle
               variant="link"
@@ -98,6 +102,7 @@ function TopBar() {
               ))}
             </Dropdown.Menu>
           </Dropdown>
+}</>
           <Dropdown className="me-md-3 mb-2 mb-md-0">
             <Dropdown.Toggle variant="primary" id="topbar_add">
               <FontAwesomeIcon className="me-1" icon={faPlusCircle} />

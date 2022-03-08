@@ -37,7 +37,8 @@ function FormCheckbox({
   return (
     <FormGroup
       className={formGroupClasses}
-      controlId={`formBasicCheckbox${name}`}
+      controlId={`checkbox-${name}`}
+      id={`checkbox-${name}`}
     >
       <FormCheck
         onChange={onChecked}
