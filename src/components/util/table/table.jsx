@@ -11,20 +11,11 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
  * @param {Array} props.selectedRows The selected rows array.
  * @param {object} props.onSort The callback for sort.
  * @param {Array} props.data The data to display in the table.
- * @param {boolean} props.withChart If the table should display a gantt chart
  * @param {string} props.sortPath The path to sort by
  * @param {string} props.sortOrder The order asc/desc
  * @returns {object} The table.
  */
-function Table({
-  columns,
-  selectedRows,
-  onSort,
-  sortPath,
-  sortOrder,
-  data,
-  withChart,
-}) {
+function Table({ columns, selectedRows, onSort, sortPath, sortOrder, data }) {
   return (
     <div className="table-responsive">
       <table className="table table-hover">
@@ -34,12 +25,7 @@ function Table({
           sortPath={sortPath}
           sortOrder={sortOrder}
         />
-        <TableBody
-          withChart={withChart}
-          selectedRows={selectedRows}
-          columns={columns}
-          data={data}
-        />
+        <TableBody selectedRows={selectedRows} columns={columns} data={data} />
       </table>
     </div>
   );
@@ -47,19 +33,17 @@ function Table({
 Table.defaultProps = {
   selectedRows: [],
   onSort: () => {},
-  withChart: false,
   sortOrder: "asc",
   sortPath: "title",
 };
 
 Table.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+    PropTypes.shape({ name: PropTypes.string, "@id": PropTypes.string })
   ).isRequired,
   onSort: PropTypes.func,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes,
-  withChart: PropTypes.bool,
   sortPath: PropTypes.string,
   sortOrder: PropTypes.string,
 };

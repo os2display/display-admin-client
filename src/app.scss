@@ -68,6 +68,9 @@ body,
 }
 
 .table {
+  td {
+    vertical-align: middle;
+  }
   td:last-child {
     button {
       float: right;

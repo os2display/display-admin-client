@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
+import { Button, Col } from "react-bootstrap";
+import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import selectedHelper from "../util/helpers/selectedHelper";
 import ContentHeader from "../util/content-header/content-header";
 import ListButton from "../util/list/list-button";
@@ -13,6 +15,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentBody from "../util/content-body/content-body";
 import Published from "../util/published";
+import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
 import {
   displayError,
   displaySuccess,
@@ -34,6 +37,7 @@ function PlaylistCampaignList() {
 
   // Local state
   const [selectedRows, setSelectedRows] = useState([]);
+  const [view, setView] = useState("list");
   const [isDeleting, setIsDeleting] = useState(false);
   const [sortBy, setSortBy] = useState();
   const [onSlides, setOnSlides] = useState();
@@ -290,7 +294,25 @@ function PlaylistCampaignList() {
         title={t(`playlist-campaign-list.${location}.header`)}
         newBtnTitle={t(`playlist-campaign-list.${location}.create-new`)}
         newBtnLink={`/${location}/create`}
-      />
+      >
+        <Col md="auto">
+          {location === "playlist" && view === "list" && (
+            <Button
+              style={{ width: "110px" }}
+              onClick={() => setView("calendar")}
+            >
+              <FontAwesomeIcon className="me-1" icon={faCalendar} />
+              {t("playlist-campaign-list.change-view-calendar")}
+            </Button>
+          )}
+          {location === "playlist" && view === "calendar" && (
+            <Button style={{ width: "110px" }} onClick={() => setView("list")}>
+              <FontAwesomeIcon className="me-1" icon={faList} />
+              {t("playlist-campaign-list.change-view-list")}
+            </Button>
+          )}
+        </Col>
+      </ContentHeader>
       {listData && (
         <ContentBody>
           <List
@@ -304,10 +326,15 @@ function PlaylistCampaignList() {
             data={listData["hydra:member"]}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
+            calendarView={view === "calendar"}
             handleIsPublished={onIsPublished}
             isLoading={isLoading || isDeleting}
             loadingMessage={loadingMessage}
-          />
+          >
+            {location === "playlist" && view === "calendar" && (
+              <PlaylistCalendarCell />
+            )}
+          </List>
         </ContentBody>
       )}
       <DeleteModal
