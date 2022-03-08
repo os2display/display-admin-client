@@ -2,8 +2,9 @@ import { React, useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlusCircle,
@@ -16,8 +17,8 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../../context/user-context";
-import "./top-bar.scss";
 import localStorageKeys from "../../util/local-storage-keys";
+import "./top-bar.scss";
 
 /**
  * The top bar navigation component.
@@ -27,6 +28,7 @@ import localStorageKeys from "../../util/local-storage-keys";
 function TopBar() {
   const { t } = useTranslation("common");
   const context = useContext(UserContext);
+  const navigate = useNavigate();
 
   /**
    * Change tenant on select tenant
@@ -44,6 +46,7 @@ function TopBar() {
         context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
       )
     );
+    navigate("/slide/list/");
   }
 
   return (

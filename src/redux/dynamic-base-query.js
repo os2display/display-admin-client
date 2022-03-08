@@ -34,6 +34,13 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   if (apiToken) {
     newArgs.headers.authorization = `Bearer ${apiToken ?? ""}`;
   }
+  // Attach tenant key .
+  const tenantKey = JSON.parse(
+    localStorage.getItem(localStorageKeys.SELECTED_TENANT)
+  );
+  if (tenantKey) {
+    newArgs.headers["Authorization-Tenant-Key"] = tenantKey.tenantKey;
+  }
 
   const baseResult = await fetchBaseQuery({ baseUrl })(
     newArgs,
