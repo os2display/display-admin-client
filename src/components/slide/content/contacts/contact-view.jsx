@@ -9,13 +9,13 @@ import { useTranslation } from "react-i18next";
  * @param {object} props The props.
  * @param {object} props.contact The contact to view
  * @param {Function} props.editContact The callback on edit contact
- * @param {Function} props.getInputImage The callback for retrieving contact image
+ * @param {Function} props.getInputFiles The callback for retrieving contact image
  * @param {Function} props.removeContact The callback on remove contact
  * @returns {object} A view component.
  */
-function ContactView({ contact, editContact, getInputImage, removeContact }) {
+function ContactView({ contact, editContact, getInputFiles, removeContact }) {
   const { t } = useTranslation("common");
-  const image = getInputImage({ name: `contacts-image-${contact.tempId}` });
+  const image = getInputFiles({ name: `contacts-image-${contact.tempId}` });
   let imageUrl = "";
 
   // Get image url, different depending on if it is going to be saved or if it is saved
@@ -56,7 +56,7 @@ ContactView.propTypes = {
     title: PropTypes.string,
   }).isRequired,
   editContact: PropTypes.func.isRequired,
-  getInputImage: PropTypes.func.isRequired,
+  getInputFiles: PropTypes.func.isRequired,
   removeContact: PropTypes.func.isRequired,
 };
 

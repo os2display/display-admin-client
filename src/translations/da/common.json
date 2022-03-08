@@ -826,6 +826,10 @@
     "filters-tag": "Tags",
     "filter-tag-helptext": "Begynd at skrive det tag du ønsker begivenheder fra, og vælg det på listen som kommer frem."
   },
+  "contacts": {
+    "add-contact": "Tilføj kontakt",
+    "remove-contact": "Fjern kontakt"
+  },
   "no-access":{
     "you-dont-have-access": "Du har ikke adgang til denne side",
     "go-back": "Gå tilbage"

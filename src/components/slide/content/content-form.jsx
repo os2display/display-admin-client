@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import FormInput from "../../util/forms/form-input";
 import Select from "../../util/forms/select";
-import Contacts from "../../util/forms/contacts/contacts";
+import Contacts from "./contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 import FileSelector from "./file-selector";
@@ -36,8 +36,7 @@ function ContentForm({
   formStateObject,
   mediaData,
 }) {
-  const getInputFiles = (formData) => {
-    const field = formStateObject[formData.name];
+  const getInputFiles = (field) => {
     const inputFiles = [];
 
     if (Array.isArray(field)) {
@@ -78,7 +77,7 @@ function ContentForm({
             )}
 
             <FileSelector
-              files={getInputFiles(formData)}
+              files={getInputFiles(formStateObject[formData.name])}
               multiple={formData.multipleImages}
               onFilesChange={onFileChange}
               name={formData.name}
@@ -162,16 +161,15 @@ function ContentForm({
 
         break;
       case "contacts":
-        // TODO: onMediaChange.
         returnElement = (
           <Contacts
-            onMediaChange={() => {}}
-            getInputImage={getInputFiles}
+            getInputFiles={getInputFiles}
             name={formData.name}
             formData={formData}
-            value={formStateObject[formData.name]}
+            inputContacts={formStateObject[formData.name] ?? []}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
+            onFilesChange={onFileChange}
           />
         );
 
