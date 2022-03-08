@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { Redirect, useParams } from "react-router";
+import { Redirect, useParams, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
@@ -17,7 +16,7 @@ import FormInput from "../util/forms/form-input";
 function EditUser() {
   const { t } = useTranslation("common");
   const [formStateObject, setFormStateObject] = useState({});
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [userName, setUserName] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -97,7 +96,7 @@ function EditUser() {
             variant="secondary"
             type="button"
             id="user_cancel"
-            onClick={() => history.goBack()}
+            onClick={() => navigate(-1)}
             size="lg"
             className="me-3"
           >

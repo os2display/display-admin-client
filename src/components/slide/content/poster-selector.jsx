@@ -9,6 +9,7 @@ import localeDa from "dayjs/locale/da";
 import Select from "../../util/forms/select";
 import FormInput from "../../util/forms/form-input";
 import FormCheckbox from "../../util/forms/form-checkbox";
+import localStorageKeys from "../../util/local-storage-keys";
 
 // TODO: Fix all translations.
 
@@ -26,7 +27,7 @@ function PosterSelector({
   configurationChange,
 }) {
   const { t } = useTranslation("common");
-  const apiToken = localStorage.getItem("api-token");
+  const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
 
   const [singleSearch, setSingleSearch] = useState("");
   const [singleSearchType, setSingleSearchType] = useState("title");

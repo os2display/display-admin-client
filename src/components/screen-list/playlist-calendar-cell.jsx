@@ -43,6 +43,7 @@ function PlaylistCalendarCell({ item: playlist }) {
           };
         });
       }
+
       return setDataForCalendar(slides);
     });
   }, []);

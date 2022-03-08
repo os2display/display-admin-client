@@ -23,6 +23,14 @@ And modify the entries to suit your setup.
 }
 ```
 
+### Create public/access-config file
+
+This file contains the access config.
+
+```bash
+cp public/example-access-config.json public/access-config.json
+```
+
 ### Up the containers
 
 ```bash
@@ -32,7 +40,7 @@ docker-compose up -d
 ### Install npm packages
 
 ```bash
-docker-compose run node yarn install
+docker-compose run node yarn
 ```
 
 ## Testing with cypress

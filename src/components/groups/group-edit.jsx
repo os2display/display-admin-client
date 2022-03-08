@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   useGetV1ScreenGroupsByIdQuery,
@@ -25,7 +25,6 @@ function GroupEdit() {
     t("group-edit.loading-messages.loading-group")
   );
   const { id } = useParams();
-
   const [PutV1ScreenGroup, { error: saveError, isSuccess: isSaveSuccess }] =
     usePutV1ScreenGroupsByIdMutation();
 

@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
@@ -32,7 +32,7 @@ function MediaForm({
   loadingMessage,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -58,7 +58,7 @@ function MediaForm({
             type="button"
             id="media_cancel"
             className="m-1"
-            onClick={() => history.push("/media/list/")}
+            onClick={() => navigate("/media/list/")}
           >
             {t("media-form.cancel-button")}
           </Button>
@@ -74,7 +74,7 @@ function MediaForm({
             variant="secondary"
             id="back_to_list"
             className="m-1"
-            onClick={() => history.push("/media/list/")}
+            onClick={() => navigate(-1)}
           >
             {t("media-form.back-to-list")}
           </Button>

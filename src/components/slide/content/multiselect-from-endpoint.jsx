@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dropdown";
+import localStorageKeys from "../../util/local-storage-keys";
 
 /**
  * Multiselect with options supplied by endpoint.
@@ -29,7 +30,7 @@ function MultiselectFromEndpoint({
   useEffect(() => {
     if (optionsEndpoint) {
       // @TODO: Handle this in service.
-      const apiToken = localStorage.getItem("api-token");
+      const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
       fetch(optionsEndpoint, {
         headers: {
           authorization: `Bearer ${apiToken ?? ""}`,

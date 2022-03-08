@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
@@ -37,7 +37,7 @@ function PlaylistCampaignForm({
   children,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const [publishedFromError, setPublishedFromError] = useState(false);
   const [publishedToError, setPublishedToError] = useState(false);
 
@@ -131,7 +131,7 @@ function PlaylistCampaignForm({
             variant="secondary"
             type="button"
             id="playlist_cancel"
-            onClick={() => history.push("/playlist/list/")}
+            onClick={() => navigate(-1)}
             size="lg"
             className="me-3"
           >

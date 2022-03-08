@@ -1,13 +1,18 @@
-import { Alert, Button, Card, Form, Row, Spinner } from "react-bootstrap";
+import { React, useEffect, useState, useContext } from "react";
+import { Alert, Button, Card, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { React, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
+import { MultiSelect } from "react-multi-select-component";
+import LoadingComponent from "../util/loading-component/loading-component";
+import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
 import ConfigLoader from "../../config-loader";
+import { displayError } from "../util/list/toast-component/display-toast";
+import localStorageKeys from "../util/local-storage-keys";
 
 /**
  * Login component
@@ -15,24 +20,46 @@ import ConfigLoader from "../../config-loader";
  * @returns {object} - The component
  */
 function Login() {
+  // Hooks
   const { t } = useTranslation("common");
   const { search } = useLocation();
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
+  // Context
+  const context = useContext(UserContext);
+
+  // Local stage
+  const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [oidcAuthUrls, setOidcAuthUrls] = useState("");
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
   const [ready, setReady] = useState(false);
 
-  const onChange = ({ target }) => {
-    if (target?.id === "email") {
-      setEmail(target.value);
-    } else if (target?.id === "password") {
-      setPassword(target.value);
-    }
-  };
+  /**
+   * Select tenant function
+   *
+   * @param {Array} selected - The multiform returns an array of selected
+   *   values, this is a single select, so it will only have one entry
+   */
+  function onSelectTenant(selected) {
+    const { value } = selected[0];
+
+    // set selected tenant in context
+    context.selectedTenant.set(
+      context.tenants.get.find((tenant) => tenant.tenantKey === value)
+    );
+
+    // Set authenticated when tenant is selected
+    context.authenticated.set(true);
+
+    // Save selected tenant in localstorage
+    localStorage.setItem(
+      localStorageKeys.SELECTED_TENANT,
+      JSON.stringify(
+        context.tenants.get.find((tenant) => tenant.tenantKey === value)
+      )
+    );
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -41,7 +68,7 @@ function Login() {
     dispatch(
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
-          email,
+          email: context.userEmail.get,
           password,
         }),
       })
@@ -49,21 +76,44 @@ function Login() {
       .then((response) => {
         if (response?.error) {
           if (response?.error?.data?.message === "Invalid credentials.") {
-            setError(t("login.invalid-credentials"));
+            setError(true);
+            setPassword("");
+            displayError(t("login.invalid-credentials"));
           } else {
-            setError(response.error.data.message ?? t("login.error"));
+            setError(true);
+            setPassword("");
+            displayError(response.error.data.message ?? t("login.error"));
           }
         }
 
         if (response?.data?.token) {
-          localStorage.setItem("api-token", response.data.token);
+          // Set token in local storage, to persist login on refresh
+          localStorage.setItem(localStorageKeys.API_TOKEN, response.data.token);
+          localStorage.setItem(localStorageKeys.EMAIL, context.userEmail.get);
 
-          const event = new Event("authenticated");
-          document.dispatchEvent(event);
+          // If there are more than one tenant, the user should pick a tenant
+          if (response.data.tenants.length > 1) {
+            // Save tenants
+            localStorage.setItem(
+              localStorageKeys.TENANTS,
+              JSON.stringify(response.data.tenants)
+            );
+            context.tenants.set(response.data.tenants);
+          } else {
+            // authenticated, and use the only received tenant.
+            context.authenticated.set(true);
+            localStorage.setItem(
+              localStorageKeys.SELECTED_TENANT,
+              JSON.stringify(response.data.tenants[0])
+            );
+            context.selectedTenant.set(response.data.tenants[0]);
+          }
         }
       })
       .catch((err) => {
-        setError(JSON.stringify(err));
+        setError(true);
+        setPassword("");
+        displayError(JSON.stringify(err));
       });
   };
 
@@ -91,10 +141,7 @@ function Login() {
           .then((data) => {
             if (isMounted) {
               if (data?.token) {
-                localStorage.setItem("api-token", data.token);
-
-                const event = new Event("authenticated");
-                document.dispatchEvent(event);
+                context.authenticated.set(true);
               }
             }
           })
@@ -160,25 +207,64 @@ function Login() {
                 )}
               </Col>
               <Col md>
-                <h3>{t("login.login-with-username-password")}</h3>
-                <FormInput
-                  onChange={onChange}
-                  value={email}
-                  name="email"
-                  label={t("login.email")}
-                  required
-                />
-                <FormInput
-                  onChange={onChange}
-                  value={password}
-                  name="password"
-                  label={t("login.password")}
-                  type="password"
-                  required
-                />
-                {error && (
-                  <div className="alert-danger mt-3 mb-3 p-3">{error}</div>
-                )}
+                <>
+                  {!context.tenants.get && (
+                    <>
+                      <h3>{t("login.login-with-username-password")}</h3>
+                      <FormInput
+                        className={
+                          error ? "form-control is-invalid" : "form-control"
+                        }
+                        onChange={(ev) =>
+                          context.userEmail.set(ev.target.value)
+                        }
+                        value={context.userEmail.get}
+                        name="email"
+                        label={t("login.email")}
+                        required
+                      />
+                      <FormInput
+                        className={
+                          error ? "form-control is-invalid" : "form-control"
+                        }
+                        onChange={(ev) => setPassword(ev.target.value)}
+                        value={password}
+                        name="password"
+                        label={t("login.password")}
+                        type="password"
+                        required
+                      />
+                    </>
+                  )}
+                  {!context.selectedTenant.get &&
+                    context.tenants.get?.length > 1 && (
+                      <div>
+                        <Form.Label htmlFor="tenant">
+                          {t("login.select-tenant-label")}
+                        </Form.Label>
+                        <MultiSelect
+                          overrideStrings={{
+                            selectSomeItems: t("login.select-some-options"),
+                          }}
+                          disableSearch
+                          options={
+                            context.tenants.get.map((item) => {
+                              return {
+                                label: item.title,
+                                value: item.tenantKey,
+                              };
+                            }) || []
+                          }
+                          hasSelectAll={false}
+                          onChange={onSelectTenant}
+                          className="single-select"
+                          labelledBy="tenant"
+                        />
+                        <small>{t("login.tenant-help-text")}</small>
+                      </div>
+                    )}
+                </>
+
                 <Button type="submit" className="mt-3">
                   {t("login.submit")}
                 </Button>
@@ -187,7 +273,9 @@ function Login() {
           </Form>
         </Card>
       )}
-      {!ready && <Spinner animation="border" />}
+      {!ready && (
+        <LoadingComponent isLoading loadingMessage={t("login.please-wait")} />
+      )}
     </>
   );
 }

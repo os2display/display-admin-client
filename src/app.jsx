@@ -1,15 +1,14 @@
-import { React, useEffect, useState } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { React, useEffect, useState, Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
+import { Routes, Route, Navigate } from "react-router-dom";
 import i18next from "i18next";
 import { ToastContainer } from "react-toastify";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Spinner } from "react-bootstrap";
-import Login from "./components/user/login";
-import Logout from "./components/user/logout";
-import TopBar from "./components/navigation/topbar/topbar";
+import localStorageKeys from "./components/util/local-storage-keys";
+import RestrictedRoute from "./restricted-route";
+import Topbar from "./components/navigation/topbar/top-bar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import SlidesList from "./components/slide/slides-list";
@@ -21,7 +20,6 @@ import PlaylistCampaignEdit from "./components/playlist/playlist-campaign-edit";
 import PlaylistCampaignCreate from "./components/playlist/playlist-campaign-create";
 import MediaList from "./components/media/media-list";
 import commonDa from "./translations/da/common.json";
-import EditUser from "./components/edit-user/edit-user";
 import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
@@ -31,6 +29,10 @@ import MediaCreate from "./components/media/media-create";
 import ThemesList from "./components/themes/themes-list";
 import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
+import UserContext from "./context/user-context";
+import Logout from "./components/user/logout";
+import AuthHandler from "./auth-handler";
+import LoadingComponent from "./components/util/loading-component/loading-component";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
@@ -40,29 +42,89 @@ import "./app.scss";
  * @returns {object} The component.
  */
 function App() {
-  const [authenticated, setAuthenticated] = useState(null);
+  const [authenticated, setAuthenticated] = useState();
+  const [selectedTenant, setSelectedTenant] = useState();
+  const [accessConfig, setAccessConfig] = useState();
+  const [tenants, setTenants] = useState();
+  const [userEmail, setUserEmail] = useState("");
 
-  const handleReauthenticate = () => {
-    setAuthenticated(false);
+  const userStore = {
+    authenticated: { get: authenticated, set: setAuthenticated },
+    accessConfig: { get: accessConfig, set: setAccessConfig },
+    tenants: { get: tenants, set: setTenants },
+    selectedTenant: { get: selectedTenant, set: setSelectedTenant },
+    userEmail: { get: userEmail, set: setUserEmail },
   };
 
-  const handleAuthenticated = () => {
-    setAuthenticated(true);
+  const handleReauthenticate = () => {
+    localStorage.removeItem(localStorageKeys.API_TOKEN);
+    localStorage.removeItem(localStorageKeys.EMAIL);
+    localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
+    localStorage.removeItem(localStorageKeys.TENANTS);
+
+    setSelectedTenant(null);
+    setTenants(null);
+    setUserEmail("");
+    setAuthenticated(false);
   };
 
   // Check that authentication token exists.
   useEffect(() => {
-    const token = localStorage.getItem("api-token");
+    const token = localStorage.getItem(localStorageKeys.API_TOKEN);
 
     if (token !== null) {
       setAuthenticated(true);
+
+      // If there is a selected tenant, fetch from local storage and use
+      if (localStorage.getItem(localStorageKeys.SELECTED_TENANT)) {
+        setSelectedTenant(
+          JSON.parse(localStorage.getItem(localStorageKeys.SELECTED_TENANT))
+        );
+      }
+
+      // Fetch the users tenants from local storage and use
+      if (localStorage.getItem(localStorageKeys.TENANTS)) {
+        setTenants(JSON.parse(localStorage.getItem(localStorageKeys.TENANTS)));
+      }
+
+      // Get the user email for displaying in top bar.
+      setUserEmail(localStorage.getItem(localStorageKeys.EMAIL));
     } else {
       setAuthenticated(false);
     }
 
     document.addEventListener("reauthenticate", handleReauthenticate);
-    document.addEventListener("authenticated", handleAuthenticated);
 
+    return () => {
+      document.removeEventListener("reauthenticate", handleReauthenticate);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetch("/access-config.json")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        setAccessConfig(jsonData);
+      })
+      .catch(() => {
+        setAccessConfig({
+          campaign: {
+            roles: ["ROLE_ADMIN"],
+          },
+          screen: {
+            roles: ["ROLE_ADMIN"],
+          },
+          settings: {
+            roles: ["ROLE_ADMIN"],
+          },
+          groups: {
+            roles: ["ROLE_ADMIN"],
+          },
+        });
+      });
+  }, []);
+
+  useEffect(() => {
     i18next.init({
       interpolation: { escapeValue: false }, // React already does escaping
       lng: "da", // language to use
@@ -72,74 +134,218 @@ function App() {
         },
       },
     });
-
-    return () => {
-      document.removeEventListener("reauthenticate", handleReauthenticate);
-      document.removeEventListener("authenticated", handleAuthenticated);
-    };
   }, []);
 
   return (
     <>
-      <I18nextProvider i18n={i18next}>
-        <>
-          {authenticated === false && <Login />}
-          {authenticated === null && <Spinner animation="border" />}
-          {authenticated === true && (
-            <Container fluid className="h-100 px-0 bg-light">
-              <Row className="row-full-height g-0">
-                <SideBar />
-                <Col lg={9} xl={10}>
-                  <TopBar />
-                  <ToastContainer
-                    autoClose="10000"
-                    position="bottom-right"
-                    hideProgressBar={false}
-                    closeOnClick
-                    pauseOnHover
-                    draggable
-                    progress={undefined}
-                  />
-                  <main className="col p-3">
-                    <Switch>
-                      <Route
-                        path="/:location(campaign|playlist)/create"
-                        component={PlaylistCampaignCreate}
-                      />
-                      <Route
-                        path="/:location(campaign|playlist)/edit/:id"
-                        component={PlaylistCampaignEdit}
-                      />
-                      <Route
-                        path="/:location(campaign|playlist)/list"
-                        component={PlaylistCampaignList}
-                      />
-                      <Route path="/screen/list" component={ScreenList} />
-                      <Route path="/screen/create" component={ScreenCreate} />
-                      <Route path="/screen/edit/:id" component={ScreenEdit} />
-                      <Route path="/group/list" component={GroupsList} />
-                      <Route path="/group/edit/:id" component={GroupEdit} />
-                      <Route path="/group/create" component={GroupCreate} />
-                      <Route path="/slide/list" component={SlidesList} />
-                      <Route path="/slide/create" component={SlideCreate} />
-                      <Route path="/slide/edit/:id" component={SlideEdit} />
-                      <Route path="/media/list" component={MediaList} />
-                      <Route path="/media/create" component={MediaCreate} />
-                      <Route path="/themes/list" component={ThemesList} />
-                      <Route path="/themes/edit/:id" component={ThemeEdit} />
-                      <Route path="/themes/create" component={ThemeCreate} />
-                      <Route path="/users/" component={UserList} />
-                      <Route path="/user/:id" component={EditUser} />
-                      <Route path="/logout" component={Logout} />
-                      <Redirect from="/" to="/slide/list" exact />
-                    </Switch>
-                  </main>
-                </Col>
-              </Row>
-            </Container>
-          )}
-        </>
-      </I18nextProvider>
+      <UserContext.Provider value={userStore}>
+        <I18nextProvider i18n={i18next}>
+          <Suspense
+            fallback={
+              <LoadingComponent isLoading loadingMessage="Vent venligst" />
+            }
+          >
+            <ToastContainer
+              autoClose="10000"
+              position="bottom-right"
+              hideProgressBar={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              progress={undefined}
+            />
+            <AuthHandler>
+              <Container fluid className="h-100 px-0 bg-light">
+                <Row className="row-full-height g-0">
+                  <SideBar />
+                  <Col lg={9} xl={10}>
+                    <Topbar />
+                    {accessConfig && (
+                      <main className="col p-3">
+                        <Routes>
+                          <Route path="campaign">
+                            <Route
+                              path="create"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.campaign.roles}
+                                >
+                                  <PlaylistCampaignCreate location="campaign" />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="edit/:id"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.campaign.roles}
+                                >
+                                  <PlaylistCampaignEdit location="campaign" />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="list"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.campaign.roles}
+                                >
+                                  <PlaylistCampaignList location="campaign" />
+                                </RestrictedRoute>
+                              }
+                            />
+                          </Route>
+                          <Route path="playlist">
+                            <Route
+                              path="create"
+                              element={
+                                <PlaylistCampaignCreate location="playlist" />
+                              }
+                            />
+                            <Route
+                              path="edit/:id"
+                              element={
+                                <PlaylistCampaignEdit location="playlist" />
+                              }
+                            />
+                            <Route
+                              path="list"
+                              element={
+                                <PlaylistCampaignList location="playlist" />
+                              }
+                            />
+                          </Route>
+
+                          <Route path="screen">
+                            <Route
+                              path="list"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.screen.roles}
+                                >
+                                  <ScreenList />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="create"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.screen.roles}
+                                >
+                                  <ScreenCreate />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="edit/:id"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.screen.roles}
+                                >
+                                  <ScreenEdit />
+                                </RestrictedRoute>
+                              }
+                            />
+                          </Route>
+                          <Route path="group">
+                            <Route
+                              path="list"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.groups.roles}
+                                >
+                                  <GroupsList />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="edit/:id"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.groups.roles}
+                                >
+                                  <GroupEdit />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="create"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.groups.roles}
+                                >
+                                  <GroupCreate />
+                                </RestrictedRoute>
+                              }
+                            />
+                          </Route>
+                          <Route path="slide">
+                            <Route path="list" element={<SlidesList />} />
+                            <Route path="create" element={<SlideCreate />} />
+                            <Route path="edit/:id" element={<SlideEdit />} />
+                          </Route>
+                          <Route path="media">
+                            <Route path="list" element={<MediaList />} />
+                            <Route path="create" element={<MediaCreate />} />
+                          </Route>
+                          <Route path="themes">
+                            <Route
+                              path="list"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.settings.roles}
+                                >
+                                  <ThemesList />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="edit/:id"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.settings.roles}
+                                >
+                                  <ThemeEdit />
+                                </RestrictedRoute>
+                              }
+                            />
+                            <Route
+                              path="create"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.settings.roles}
+                                >
+                                  <ThemeCreate />
+                                </RestrictedRoute>
+                              }
+                            />
+                          </Route>
+                          <Route
+                            path="users"
+                            element={
+                              <RestrictedRoute
+                                roles={accessConfig.settings.roles}
+                              >
+                                <UserList />
+                              </RestrictedRoute>
+                            }
+                          />
+                          <Route path="logout" element={<Logout />} />
+                          <Route
+                            path="*"
+                            element={<Navigate to="/slide/list" />}
+                          />
+                        </Routes>
+                      </main>
+                    )}
+                  </Col>
+                </Row>
+              </Container>
+            </AuthHandler>
+          </Suspense>
+        </I18nextProvider>
+      </UserContext.Provider>
     </>
   );
 }
