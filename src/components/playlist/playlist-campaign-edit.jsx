@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import PlaylistCampaignManager from "./playlist-campaign-manager";
 import idFromUrl from "../util/helpers/id-from-url";
 import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
@@ -7,9 +8,11 @@ import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
 /**
  * The playlist/campaign edit component.
  *
+ * @param {object} props Props.
+ * @param {string} props.location Either playlist or campaign.
  * @returns {object} The playlist/campaign edit page.
  */
-function PlaylistCampaignEdit() {
+function PlaylistCampaignEdit({ location }) {
   const { id } = useParams();
   const [slideId, setSlideId] = useState();
   const {
@@ -30,6 +33,7 @@ function PlaylistCampaignEdit() {
       {slideId && (
         <PlaylistCampaignManager
           saveMethod="PUT"
+          location={location}
           initialState={data}
           id={id}
           loadingError={loadingError}
@@ -40,5 +44,9 @@ function PlaylistCampaignEdit() {
     </>
   );
 }
+
+PlaylistCampaignEdit.propTypes = {
+  location: PropTypes.string.isRequired,
+};
 
 export default PlaylistCampaignEdit;

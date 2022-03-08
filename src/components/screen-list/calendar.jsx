@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import idFromUrl from "../util/helpers/id-from-url";
 
 /**
@@ -14,7 +14,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @returns {object} The gantt chart.
  */
 function Calendar({ id, data }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const chartId = `chart${id}`;
 
   useEffect(() => {
@@ -53,7 +53,7 @@ function Calendar({ id, data }) {
 
     /** @param {object} ev The click event */
     function redirect(ev) {
-      history.push(
+      navigate(
         `/playlist/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
       );
     }

@@ -45,4 +45,9 @@
   bottom: 0;
   left: 0;
   overflow: hidden;
+
+  button {
+    position: fixed;
+    z-index: 20;
+  }
 }

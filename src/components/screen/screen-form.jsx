@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Button, Form, Col, Row, Spinner, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
@@ -45,7 +45,7 @@ function ScreenForm({
   loadingMessage,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
@@ -298,7 +298,7 @@ function ScreenForm({
             variant="secondary"
             type="button"
             id="screen_cancel"
-            onClick={() => history.push("/screen/list/")}
+            onClick={() => navigate("/screen/list/")}
             size="lg"
             className="me-3"
           >

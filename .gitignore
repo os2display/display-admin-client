@@ -36,3 +36,4 @@ temp/
 json-server/
 
 public/config.json
+public/access-config.json

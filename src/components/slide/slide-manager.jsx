@@ -6,7 +6,7 @@ import { ulid } from "ulid";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   api,
   usePostMediaCollectionMutation,
@@ -20,6 +20,7 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import idFromUrl from "../util/helpers/id-from-url";
+import localStorageKeys from "../util/local-storage-keys";
 
 /**
  * The slide manager component.
@@ -41,7 +42,7 @@ function SlideManager({
 }) {
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const headerText =
     saveMethod === "PUT"
       ? t("slide-manager.edit-slide-header")
@@ -489,7 +490,7 @@ function SlideManager({
 
         // Sets theme in localstorage, to load it on create new slide
         if (formStateObject.theme) {
-          localStorage.setItem("prev-used-theme-id", formStateObject.theme);
+          localStorage.setItem(localStorageKeys.THEME, formStateObject.theme);
         }
 
         // Construct data for submitting.
@@ -565,7 +566,7 @@ function SlideManager({
   useEffect(() => {
     if (isSaveSuccessPost && postData) {
       setSubmitting(false);
-      history.push(`/slide/edit/${idFromUrl(postData["@id"])}`);
+      navigate(`/slide/edit/${idFromUrl(postData["@id"])}`);
     } else if (isSaveSuccessPut) {
       setSubmitting(false);
     }

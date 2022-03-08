@@ -1,6 +1,6 @@
 import { React, useEffect } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
@@ -11,6 +11,7 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import RadioButtons from "../forms/radio-buttons";
 import ListLoading from "../loading-component/list-loading";
 import CalendarList from "../../screen-list/calendar-list";
+import localStorageKeys from "../local-storage-keys";
 
 /**
  * @param {object} props - The props.
@@ -46,7 +47,7 @@ function List({
   children,
 }) {
   const { t } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Page params
   const { search } = useLocation();
@@ -83,26 +84,28 @@ function List({
     const order = orderParams || localStorage.order || "asc";
     params.delete("order");
     params.append("order", order);
-    localStorage.setItem("order", order);
+    localStorage.setItem(localStorageKeys.ORDER, order);
 
     // sort
     const sort = sortParams || localStorage.sort || "title";
     params.delete("sort");
     params.append("sort", sort);
-    localStorage.setItem("sort", sort);
+    localStorage.setItem(localStorageKeys.SORT, sort);
 
     // search
     const localSearch = searchParams || localStorage.search || "";
     params.delete("search");
 
     if (localSearch) {
-      localStorage.setItem("search", localSearch);
+      localStorage.setItem(localStorageKeys.SEARCH, localSearch);
       params.append("search", localSearch);
     } else {
-      localStorage.removeItem("search");
+      localStorage.removeItem(localStorageKeys.SEARCH);
     }
 
-    history.push({ search: params.toString() });
+    navigate({
+      search: params.toString(),
+    });
   }, []);
 
   /**
@@ -113,18 +116,22 @@ function List({
     const params = new URLSearchParams(search);
     params.delete(dataKey);
     params.append(dataKey, value);
-    history.push({ search: params.toString() });
+    navigate({
+      search: params.toString(),
+    });
   }
 
   /** @param {string} newSearchText Updates the search text state and url. */
   function onSearch(newSearchText) {
-    localStorage.setItem("search", newSearchText); // Search should persist
+    localStorage.setItem(localStorageKeys.SEARCH, newSearchText); // Search should persist
     const params = new URLSearchParams(search);
     params.delete("search");
     params.append("search", newSearchText);
     params.delete("page");
     params.append("page", 1);
-    history.push({ search: params.toString() });
+    navigate({
+      search: params.toString(),
+    });
   }
 
   /** @param {string} isPublished Updates the search text state and url. */
@@ -144,9 +151,11 @@ function List({
     params.delete("order");
     params.append("sort", sortByInput.path);
     params.append("order", sortByInput.order);
-    localStorage.setItem("order", sortByInput.order);
-    localStorage.setItem("sort", sortByInput.path);
-    history.replace({ search: params.toString() });
+    localStorage.setItem(localStorageKeys.ORDER, sortByInput.order);
+    localStorage.setItem(localStorageKeys.SORT, sortByInput.path);
+    navigate({
+      search: params.toString(),
+    });
   }
 
   /** Sets page from url using callback */

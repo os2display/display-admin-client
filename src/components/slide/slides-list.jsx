@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -8,6 +8,7 @@ import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
 import Published from "../util/published";
+import UserContext from "../../context/user-context";
 import LinkForList from "../util/list/link-for-list";
 import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
@@ -30,6 +31,7 @@ import {
  */
 function SlidesList() {
   const { t } = useTranslation("common");
+  const context = useContext(UserContext);
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
@@ -70,6 +72,12 @@ function SlidesList() {
       setListData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   /** Deletes multiple slides. */
   useEffect(() => {
@@ -267,7 +275,8 @@ function SlidesList() {
         t("slides-list.error-messages.slides-load-error", {
           error: slidesGetError.error
             ? slidesGetError.error
-            : slidesGetError.data["hydra:description"],
+            : slidesGetError.data["hydra:description"] ||
+              slidesGetError.data.message,
         })
       );
     }

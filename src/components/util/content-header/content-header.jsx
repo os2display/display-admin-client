@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
 /**
  * A content header for lists.
@@ -17,6 +18,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
  * @returns {object} The Content header.
  */
 function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
+  const navigate = useNavigate();
+
   return (
     <Row className="align-items-center justify-content-between my-3">
       <Col>
@@ -25,7 +28,7 @@ function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
       {children}
       {newBtnTitle && (
         <Col xs="auto">
-          <Button href={newBtnLink}>
+          <Button onClick={() => navigate(newBtnLink)}>
             <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
             {newBtnTitle}
           </Button>

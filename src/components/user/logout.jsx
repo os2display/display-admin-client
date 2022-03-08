@@ -1,6 +1,6 @@
-import { Spinner } from "react-bootstrap";
 import { React, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 
 /**
  * Logout component
@@ -9,8 +9,6 @@ import { Redirect } from "react-router-dom";
  */
 function Logout() {
   useEffect(() => {
-    localStorage.removeItem("api-token");
-
     const event = new Event("reauthenticate");
     document.dispatchEvent(event);
   }, []);
@@ -18,7 +16,7 @@ function Logout() {
   return (
     <>
       <Spinner animation="border" />
-      <Redirect to="/" />
+      <Navigate to="/login" />
     </>
   );
 }
