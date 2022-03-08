@@ -19,6 +19,7 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import idFromUrl from "../util/helpers/id-from-url";
+import localStorageKeys from "../util/local-storage-keys";
 
 /**
  * The slide manager component.
@@ -490,7 +491,7 @@ function SlideManager({
 
         // Sets theme in localstorage, to load it on create new slide
         if (formStateObject.theme) {
-          localStorage.setItem("prev-used-theme-id", formStateObject.theme);
+          localStorage.setItem(localStorageKeys.THEME, formStateObject.theme);
         }
 
         // Construct data for submitting.

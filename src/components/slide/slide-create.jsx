@@ -1,5 +1,6 @@
 import { React } from "react";
 import SlideManager from "./slide-manager";
+import localStorageKeys from "../util/local-storage-keys";
 
 /**
  * The slide create component.
@@ -9,8 +10,8 @@ import SlideManager from "./slide-manager";
 function SlideCreate() {
   // If a theme is previously used, chances are they want the same theme.
   let themeInfo = null;
-  if (localStorage.getItem("prev-used-theme-id")) {
-    themeInfo = localStorage.getItem("prev-used-theme-id");
+  if (localStorage.getItem(localStorageKeys.THEME)) {
+    themeInfo = localStorage.getItem(localStorageKeys.THEME);
   }
 
   // Initialize to empty slide object.

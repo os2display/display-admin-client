@@ -1,10 +1,10 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import ConfigLoader from "../config-loader";
+import localStorageKeys from "../components/util/local-storage-keys";
 
 const extendedBaseQuery = async (args, api, extraOptions) => {
   const config = await ConfigLoader.loadConfig();
   const baseUrl = config.api;
-  const apiTokenLocalStorageKey = "api-token";
 
   const newArgs = { ...args };
 
@@ -30,7 +30,7 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   }
 
   // Attach api token.
-  const apiToken = localStorage.getItem(apiTokenLocalStorageKey);
+  const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
   if (apiToken) {
     newArgs.headers.authorization = `Bearer ${apiToken ?? ""}`;
   }
@@ -43,7 +43,7 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
 
   // Handle authentication errors. Emit that the user should reauthenticate.
   if (baseResult?.error?.data?.code === 401) {
-    localStorage.removeItem(apiTokenLocalStorageKey);
+    localStorage.removeItem(localStorageKeys.API_TOKEN);
 
     const event = new Event("reauthenticate");
     document.dispatchEvent(event);

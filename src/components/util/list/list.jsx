@@ -11,6 +11,7 @@ import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import RadioButtons from "../forms/radio-buttons";
 import ListLoading from "../loading-component/list-loading";
 import CalendarList from "../../screen-list/calendar-list";
+import localStorageKeys from "../local-storage-keys";
 
 /**
  * @param {object} props - The props.
@@ -83,23 +84,23 @@ function List({
     const order = orderParams || localStorage.order || "asc";
     params.delete("order");
     params.append("order", order);
-    localStorage.setItem("order", order);
+    localStorage.setItem(localStorageKeys.ORDER, order);
 
     // sort
     const sort = sortParams || localStorage.sort || "title";
     params.delete("sort");
     params.append("sort", sort);
-    localStorage.setItem("sort", sort);
+    localStorage.setItem(localStorageKeys.SORT, sort);
 
     // search
     const localSearch = searchParams || localStorage.search || "";
     params.delete("search");
 
     if (localSearch) {
-      localStorage.setItem("search", localSearch);
+      localStorage.setItem(localStorageKeys.SEARCH, localSearch);
       params.append("search", localSearch);
     } else {
-      localStorage.removeItem("search");
+      localStorage.removeItem(localStorageKeys.SEARCH);
     }
 
     navigate({
@@ -122,7 +123,7 @@ function List({
 
   /** @param {string} newSearchText Updates the search text state and url. */
   function onSearch(newSearchText) {
-    localStorage.setItem("search", newSearchText); // Search should persist
+    localStorage.setItem(localStorageKeys.SEARCH, newSearchText); // Search should persist
     const params = new URLSearchParams(search);
     params.delete("search");
     params.append("search", newSearchText);
@@ -150,8 +151,8 @@ function List({
     params.delete("order");
     params.append("sort", sortByInput.path);
     params.append("order", sortByInput.order);
-    localStorage.setItem("order", sortByInput.order);
-    localStorage.setItem("sort", sortByInput.path);
+    localStorage.setItem(localStorageKeys.ORDER, sortByInput.order);
+    localStorage.setItem(localStorageKeys.SORT, sortByInput.path);
     navigate({
       search: params.toString(),
     });

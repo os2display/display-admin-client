@@ -20,6 +20,7 @@ import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 import FeedSelector from "./content/feed-selector";
 import RadioButtons from "../util/forms/radio-buttons";
 import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
+import localStorageKeys from "../util/local-storage-keys";
 import "./slide-form.scss";
 
 /**
@@ -146,9 +147,11 @@ function SlideForm({
 
   /** Get show from local storage */
   useEffect(() => {
-    const localStorageShow = localStorage.getItem("preview-slide");
+    const localStorageShow = localStorage.getItem(localStorageKeys.PREVIEW);
     setShowPreview(localStorageShow === "true");
-    const localStorageLayout = localStorage.getItem("preview-slide-layout");
+    const localStorageLayout = localStorage.getItem(
+      localStorageKeys.PREVIEW_LAYOUT
+    );
     if (localStorageLayout) {
       setPreviewLayout(localStorageLayout);
     }
@@ -162,7 +165,7 @@ function SlideForm({
    */
   function changeShowPreview({ target }) {
     const { value } = target;
-    localStorage.setItem("preview-slide", value);
+    localStorage.setItem(localStorageKeys.PREVIEW, value);
 
     setShowPreview(value);
   }
@@ -193,7 +196,7 @@ function SlideForm({
    */
   function onChangePreviewLayout({ target }) {
     setPreviewLayout(target.value);
-    localStorage.setItem("preview-slide-layout", target.value);
+    localStorage.setItem(localStorageKeys.PREVIEW_LAYOUT, target.value);
   }
 
   return (

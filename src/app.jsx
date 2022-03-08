@@ -6,8 +6,9 @@ import { ToastContainer } from "react-toastify";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import localStorageKeys from "./components/util/local-storage-keys";
 import RestrictedRoute from "./restricted-route";
-import Topbar from "./components/navigation/topbar/topbar";
+import Topbar from "./components/navigation/topbar/top-bar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import SlidesList from "./components/slide/slides-list";
@@ -57,10 +58,10 @@ function App() {
   };
 
   const handleReauthenticate = () => {
-    localStorage.removeItem("api-token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("selected-tenant");
-    localStorage.removeItem("tenants");
+    localStorage.removeItem(localStorageKeys.API_TOKEN);
+    localStorage.removeItem(localStorageKeys.EMAIL);
+    localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
+    localStorage.removeItem(localStorageKeys.TENANTS);
 
     setSelectedTenant(null);
     setTenants(null);
@@ -70,23 +71,25 @@ function App() {
 
   // Check that authentication token exists.
   useEffect(() => {
-    const token = localStorage.getItem("api-token");
+    const token = localStorage.getItem(localStorageKeys.API_TOKEN);
 
     if (token !== null) {
       setAuthenticated(true);
 
       // If there is a selected tenant, fetch from local storage and use
-      if (localStorage.getItem("selected-tenant")) {
-        setSelectedTenant(JSON.parse(localStorage.getItem("selected-tenant")));
+      if (localStorage.getItem(localStorageKeys.SELECTED_TENANT)) {
+        setSelectedTenant(
+          JSON.parse(localStorage.getItem(localStorageKeys.SELECTED_TENANT))
+        );
       }
 
       // Fetch the users tenants from local storage and use
-      if (localStorage.getItem("tenants")) {
-        setTenants(JSON.parse(localStorage.getItem("tenants")));
+      if (localStorage.getItem(localStorageKeys.TENANTS)) {
+        setTenants(JSON.parse(localStorage.getItem(localStorageKeys.TENANTS)));
       }
 
       // Get the user email for displaying in top bar.
-      setUserEmail(localStorage.getItem("email"));
+      setUserEmail(localStorage.getItem(localStorageKeys.EMAIL));
     } else {
       setAuthenticated(false);
     }
@@ -108,6 +111,20 @@ function App() {
         displayError(
           "An error occurred, the access config is not found or is erroneous."
         );
+        setAccessConfig({
+          campaign: {
+            roles: ["ROLE_ADMIN"],
+          },
+          screen: {
+            roles: ["ROLE_ADMIN"],
+          },
+          settings: {
+            roles: ["ROLE_ADMIN"],
+          },
+          groups: {
+            roles: ["ROLE_ADMIN"],
+          },
+        });
       });
   }, []);
 

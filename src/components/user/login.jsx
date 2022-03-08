@@ -12,6 +12,7 @@ import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
+import localStorageKeys from "../util/local-storage-keys";
 
 /**
  * Login component
@@ -53,7 +54,7 @@ function Login() {
 
     // Save selected tenant in localstorage
     localStorage.setItem(
-      "selected-tenant",
+      localStorageKeys.SELECTED_TENANT,
       JSON.stringify(
         context.tenants.get.find((tenant) => tenant.tenantKey === value)
       )
@@ -87,14 +88,14 @@ function Login() {
 
         if (response?.data?.token) {
           // Set token in local storage, to persist login on refresh
-          localStorage.setItem("api-token", response.data.token);
-          localStorage.setItem("email", context.userEmail.get);
+          localStorage.setItem(localStorageKeys.API_TOKEN, response.data.token);
+          localStorage.setItem(localStorageKeys.EMAIL, context.userEmail.get);
 
           // If there are more than one tenant, the user should pick a tenant
           if (response.data.tenants.length > 1) {
             // Save tenants
             localStorage.setItem(
-              "tenants",
+              localStorageKeys.TENANTS,
               JSON.stringify(response.data.tenants)
             );
             context.tenants.set(response.data.tenants);
@@ -102,7 +103,7 @@ function Login() {
             // authenticated, and use the only received tenant.
             context.authenticated.set(true);
             localStorage.setItem(
-              "selected-tenant",
+              localStorageKeys.SELECTED_TENANT,
               JSON.stringify(response.data.tenants[0])
             );
             context.selectedTenant.set(response.data.tenants[0]);

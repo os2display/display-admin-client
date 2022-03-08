@@ -16,14 +16,15 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../../context/user-context";
-import "./topbar.scss";
+import "./top-bar.scss";
+import localStorageKeys from "../../util/local-storage-keys";
 
 /**
  * The top bar navigation component.
  *
  * @returns {object} The top bar navigation component
  */
-function Topbar() {
+function TopBar() {
   const { t } = useTranslation("common");
   const context = useContext(UserContext);
 
@@ -38,7 +39,7 @@ function Topbar() {
       context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
     );
     localStorage.setItem(
-      "selected-tenant",
+      localStorageKeys.SELECTED_TENANT,
       JSON.stringify(
         context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
       )
@@ -144,4 +145,4 @@ function Topbar() {
   );
 }
 
-export default Topbar;
+export default TopBar;
