@@ -36,8 +36,7 @@ function ContentForm({
   formStateObject,
   mediaData,
 }) {
-  const getInputFiles = (formData) => {
-    const field = formStateObject[formData.name];
+  const getInputFiles = (field) => {
     const inputFiles = [];
 
     if (Array.isArray(field)) {
@@ -78,7 +77,7 @@ function ContentForm({
             )}
 
             <FileSelector
-              files={getInputFiles(formData)}
+              files={getInputFiles(formStateObject[formData.name])}
               multiple={formData.multipleImages}
               onFilesChange={onFileChange}
               name={formData.name}
@@ -167,9 +166,10 @@ function ContentForm({
             getInputFiles={getInputFiles}
             name={formData.name}
             formData={formData}
-            value={formStateObject[formData.name] ?? {contacts: []}}
+            inputContacts={formStateObject[formData.name] ?? []}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
+            onFilesChange={onFileChange}
           />
         );
 

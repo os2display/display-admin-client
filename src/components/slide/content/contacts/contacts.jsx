@@ -1,100 +1,97 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Card, Row } from "react-bootstrap";
-import ContactForm from "./contact-form";
 import { ulid } from "ulid";
 import { useTranslation } from "react-i18next";
 import Col from "react-bootstrap/Col";
+import ContactForm from "./contact-form";
 
 /**
  * A contacts component for forms.
  *
  * @param {string} props The props.
- * @param {string} props.name The name of the rich text field
- * @param {string} props.value The value of the rich text field
- * @param {Function} props.onChange The callback for changes in the rich text field
- * @param {string} props.formGroupClasses Classes for the formgroup
- * @param {Function} props.onMediaChange For keeping images updated
- * @param {object} props.formData FormData for retrieving images
+ * @param {string} props.inputContacts TODO
+ * @param {string} props.formGroupClasses TODO
+ * @param {Function} props.onFilesChange TODO
  * @returns {object} A contacts component.
  */
 function Contacts({
   name,
-  value,
-  onChange,
+  inputContacts,
   formGroupClasses,
   getInputFiles,
-  onMediaChange,
-  formData,
+  onFilesChange,
+  onChange,
 }) {
   const { t } = useTranslation("common");
   const [contacts, setContacts] = useState([]);
 
   // Initial state, if editing a slide with saved contacts
   useEffect(() => {
-    if (value?.contacts) {
-      setContacts(value.contacts);
+    if (inputContacts) {
+      setContacts(inputContacts);
     }
-  }, [value]);
+  }, [inputContacts]);
 
-  /**
-   * Add a contact.
-   */
-  function addContact() {
-    const contactsCopy = [...contacts];
-    contactsCopy.push({
+  const addContact = () => {
+    const newContacts = [...contacts];
+    newContacts.push({
+      id: ulid(new Date().getTime()),
       name: "",
-      phone: undefined,
+      phone: "",
       title: "",
       email: "",
-      image: "",
-      id: ulid(new Date().getTime()),
+      image: [],
     });
-    setContacts(contactsCopy);
-  }
+    onChange({ target: { id: name, value: newContacts } });
+  };
 
   const updateContact = (changedContact) => {
-    const newContacts =  [...contacts];
-    const findIndex = newContacts.findIndex(({ id }) => !(id === contact.id));
-    console.log('findIndex', findIndex);
-  }
-
-  /**
-   * Remove a contact.
-   *
-   * @param {object} contact The contact to remove
-   */
-  const removeContact = (contact) => {
-    setContacts(
-      [...contacts].filter(({ id }) => !(id === contact.id))
+    const newContacts = [...contacts];
+    const findIndex = newContacts.findIndex(
+      ({ id }) => id === changedContact.id
     );
-  }
+    newContacts[findIndex] = changedContact;
+    onChange({ target: { id: name, value: newContacts } });
+  };
+
+  const removeContact = (contact) => {
+    const newContacts = [...contacts].filter(({ id }) => !(id === contact.id));
+    onChange({ target: { id: name, value: newContacts } });
+  };
 
   return (
     <Card className={formGroupClasses}>
       <Card.Body>
         <Row className="mb-3">
-          {contacts.map((contact) => (
+          {contacts.map((contact, index) => (
             <Col md="4" key={contact.id}>
               <Card className="m-3">
                 <Card.Body>
                   <ContactForm
+                    name={name}
+                    index={index}
                     contact={contact}
-                    onChange={(changedContact) => {console.log("TODO: on change", changedContact)}}
+                    onChange={updateContact}
                     getInputFiles={getInputFiles}
-                    onMediaChange={() => {}}
+                    onFilesChange={onFilesChange}
                   />
                 </Card.Body>
 
                 <Card.Footer>
-                  <Button variant="danger" type="button" onClick={() => {removeContact(contact)}}>
+                  <Button
+                    variant="danger"
+                    type="button"
+                    onClick={() => {
+                      removeContact(contact);
+                    }}
+                  >
                     {t("contacts.remove-contact")}
                   </Button>
                 </Card.Footer>
               </Card>
             </Col>
           ))}
-
         </Row>
 
         {contacts?.length < 6 && (
@@ -113,20 +110,20 @@ Contacts.defaultProps = {
 
 Contacts.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.shape({
-    contacts: PropTypes.arrayOf(PropTypes.shape({
+  inputContacts: PropTypes.arrayOf(
+    PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
-      image: PropTypes.string,
-      phone: PropTypes.number,
+      image: PropTypes.arrayOf(PropTypes.string),
+      phone: PropTypes.string,
       title: PropTypes.string,
       email: PropTypes.string,
-    })),
-  }),
+    })
+  ).isRequired,
   formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  onFilesChange: PropTypes.func.isRequired,
   getInputFiles: PropTypes.func.isRequired,
-  formData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Contacts;

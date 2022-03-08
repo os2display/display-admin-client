@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
+import get from "lodash.get";
 import { ulid } from "ulid";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
@@ -362,7 +363,7 @@ function SlideManager({
           // It is a new temp file.
           else {
             if (!Array.isArray(localFormStateObject.content[fieldId])) {
-              localFormStateObject.content[fieldId] = [];
+              set(localFormStateObject.content, fieldId, []);
             }
 
             // Create a tempId for the media.
@@ -410,11 +411,9 @@ function SlideManager({
 
     // Setup submittingMedia list.
     mediaFields.forEach((fieldName) => {
-      if (
-        Object.prototype.hasOwnProperty.call(formStateObject.content, fieldName)
-      ) {
-        const fieldData = formStateObject.content[fieldName];
+      const fieldData = get(formStateObject.content, fieldName);
 
+      if (fieldData) {
         if (Array.isArray(fieldData)) {
           fieldData.forEach((mediaId) => {
             const entry = mediaData[mediaId];
@@ -541,11 +540,16 @@ function SlideManager({
         newFormStateObject.media.push(savedMediaData["@id"]);
 
         // Replace TEMP-- id with real id.
-        newFormStateObject.content[submittedMedia.fieldName] =
-          newFormStateObject.content[submittedMedia.fieldName].map((mediaId) =>
-            mediaId === submittedMedia.tempId ? savedMediaData["@id"] : mediaId
-          );
-        setFormStateObject(newFormStateObject);
+        set(
+          newFormStateObject.content,
+          submittedMedia.fieldName,
+          get(newFormStateObject.content, submittedMedia.fieldName).map(
+            (mediaId) =>
+              mediaId === submittedMedia.tempId
+                ? savedMediaData["@id"]
+                : mediaId
+          )
+        );
 
         const newMediaData = { ...mediaData };
         newMediaData[savedMediaData["@id"]] = savedMediaData;

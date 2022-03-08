@@ -1,10 +1,9 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import PropTypes from "prop-types";
 import set from "lodash.set";
-import { Button, Col, Row } from "react-bootstrap";
-import { ulid } from "ulid";
+import { Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import FileSelector from "../../../slide/content/file-selector";
+import FileSelector from "../file-selector";
 import FormInput from "../../../util/forms/form-input";
 
 /**
@@ -16,9 +15,12 @@ import FormInput from "../../../util/forms/form-input";
  * @returns {object} Contact form component.
  */
 function ContactForm({
+  name,
+  index,
   contact,
   onChange,
-   getInputFiles,
+  getInputFiles,
+  onFilesChange,
 }) {
   const { t } = useTranslation("common");
 
@@ -27,7 +29,7 @@ function ContactForm({
    * @param {object} props.target Event target.
    */
   function onInput({ target }) {
-    let localContact = { ...contact };
+    const localContact = { ...contact };
     set(localContact, target.name, target.value);
     onChange(localContact);
   }
@@ -58,7 +60,7 @@ function ContactForm({
         <Col>
           <FormInput
             name="phone"
-            type="number"
+            type="text"
             label={t("add-edit-contact.phone")}
             value={contact.phone}
             onChange={onInput}
@@ -75,26 +77,33 @@ function ContactForm({
         </Col>
       </Row>
       <FileSelector
-        files={[]}
-        onFilesChange={(t) => {console.log('TODO: onFilesChange', t)}}
+        files={getInputFiles(contact.image)}
+        onFilesChange={({ target }) => {
+          onFilesChange({
+            target: { id: `${name}.${index}.image`, value: target.value },
+          });
+        }}
         acceptedMimetypes={["image/*"]}
         multiple={false}
-        name={`contacts-image-${contact.id}`}
+        name="image"
       />
     </>
   );
 }
 
 ContactForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   contact: PropTypes.shape({
     name: PropTypes.string,
-    image: PropTypes.string,
-    phone: PropTypes.number,
+    image: PropTypes.arrayOf(PropTypes.string),
+    phone: PropTypes.string,
+    email: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
   getInputFiles: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onMediaChange: PropTypes.func.isRequired,
+  onFilesChange: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
