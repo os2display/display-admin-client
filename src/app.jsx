@@ -33,7 +33,6 @@ import UserContext from "./context/user-context";
 import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
-import { displayError } from "./components/util/list/toast-component/display-toast";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
@@ -108,9 +107,6 @@ function App() {
         setAccessConfig(jsonData);
       })
       .catch(() => {
-        displayError(
-          "An error occurred, the access config is not found or is erroneous."
-        );
         setAccessConfig({
           campaign: {
             roles: ["ROLE_ADMIN"],
