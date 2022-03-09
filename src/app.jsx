@@ -46,25 +46,24 @@ function App() {
   const [selectedTenant, setSelectedTenant] = useState();
   const [accessConfig, setAccessConfig] = useState();
   const [tenants, setTenants] = useState();
-  const [userEmail, setUserEmail] = useState("");
+  const [userName, setUserName] = useState("");
 
   const userStore = {
     authenticated: { get: authenticated, set: setAuthenticated },
     accessConfig: { get: accessConfig, set: setAccessConfig },
     tenants: { get: tenants, set: setTenants },
     selectedTenant: { get: selectedTenant, set: setSelectedTenant },
-    userEmail: { get: userEmail, set: setUserEmail },
+    userName: { get: userName, set: setUserName },
   };
 
   const handleReauthenticate = () => {
     localStorage.removeItem(localStorageKeys.API_TOKEN);
-    localStorage.removeItem(localStorageKeys.EMAIL);
     localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
     localStorage.removeItem(localStorageKeys.TENANTS);
 
     setSelectedTenant(null);
     setTenants(null);
-    setUserEmail("");
+    setUserName("");
     setAuthenticated(false);
   };
 
@@ -87,8 +86,8 @@ function App() {
         setTenants(JSON.parse(localStorage.getItem(localStorageKeys.TENANTS)));
       }
 
-      // Get the user email for displaying in top bar.
-      setUserEmail(localStorage.getItem(localStorageKeys.EMAIL));
+      // Get the user name for displaying in top bar.
+      setUserName(localStorage.getItem(localStorageKeys.USER_NAME));
     } else {
       setAuthenticated(false);
     }
