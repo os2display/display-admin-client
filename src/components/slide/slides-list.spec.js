@@ -1,14 +1,18 @@
 describe("Slides list tests", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/slides*", {
       fixture: "slides/slides.json",
     }).as("slides");
     cy.intercept("GET", "**/templates/*", {
       fixture: "slides/templates.json",
     }).as("templates");
-
     cy.visit("/slide/list");
-    cy.wait(["@slides", "@templates", "@templates"]);
+    cy.get("#login").click();
+    cy.wait(["@slides", "@templates", "@templates", "@token"]);
   });
 
   it("It loads slides list", () => {

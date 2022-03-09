@@ -3,7 +3,12 @@ describe("media list tests", () => {
     cy.intercept("GET", "**/media*", {
       fixture: "media/media.json",
     }).as("media");
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.visit("/media/list");
+    cy.get("#login").click();
     cy.wait(["@media"]);
   });
 

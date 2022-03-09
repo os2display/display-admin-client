@@ -1,10 +1,15 @@
 describe("Table header loads", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/themes*", {
       fixture: "themes/themes-first-page.json",
     }).as("themesData");
     cy.visit("/themes/list");
-    cy.wait(["@themesData"]);
+    cy.get("#login").click();
+    cy.wait(["@themesData", "@token"]);
   });
 
   it("It loads", () => {
@@ -20,6 +25,9 @@ describe("Table header loads", () => {
         order: "desc",
       },
     }).as("secondQuery");
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(300);
     cy.get("#table-header-title").click();
     cy.wait("@secondQuery").then((interception) => {
       assert.isNotNull(interception.response.body, "The api is called again");

@@ -1,5 +1,9 @@
 describe("Screen list loads", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/screen-groups*", {
       fixture: "screens/groups.json",
     }).as("groups");
@@ -7,7 +11,8 @@ describe("Screen list loads", () => {
       fixture: "screens/screens.json",
     }).as("screens");
     cy.visit("/screen/list");
-    cy.wait(["@screens", "@screens", "@groups", "@groups"]);
+    cy.get("#login").click();
+    cy.wait(["@screens", "@screens", "@groups", "@groups", "@token"]);
   });
 
   it("It loads screens list", () => {

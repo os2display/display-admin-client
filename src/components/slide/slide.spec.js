@@ -9,8 +9,7 @@ describe("Slide pages work", () => {
     }).as("themes");
     cy.visit("/slide/create");
     cy.get("#login").click();
-    cy.wait(["@token"]);
-    cy.wait(["@themes"]);
+    cy.wait(["@themes", "@token"]);
   });
 
   it("It loads create slide page", () => {
@@ -107,6 +106,9 @@ describe("Slide pages work", () => {
       .type("{enter}");
     cy.get("#template-section").find('[type="checkbox"]').check();
     cy.get("#template-section").find(".dropdown-container").eq(0).click();
+    cy.get("#template-section").find(".dropdown-container").type("{esc}");
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(300);
 
     // Preview checkbox cheked and sidebar should be displayed
     cy.get("#checkbox-show-preview").check();
@@ -116,7 +118,7 @@ describe("Slide pages work", () => {
     // Open preview overlay
     cy.get("#preview_slide").click();
     cy.get(".preview-overlay").should("exist");
-    cy.get("#close_preview_button").click();
+    cy.get("#close_preview_button").click({ force: true });
 
     // Redirects, goes back and responsive side is opened due to local storage
     cy.get("#cancel_slide").click();
@@ -142,7 +144,6 @@ describe("Slide pages work", () => {
 
     // Select a theme
     cy.get("#theme-section").find(".dropdown-container").eq(0).type("{enter}");
-    cy.get("#theme-section").find(".search").find('[type="text"]').type("d");
     cy.get("#theme-section").find('[type="checkbox"]').check();
 
     // Mock successful response on post

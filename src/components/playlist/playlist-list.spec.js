@@ -1,5 +1,9 @@
 describe("Playlists list tests", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/playlists*", {
       fixture: "playlists/playlists.json",
     }).as("playlists");
@@ -9,9 +13,11 @@ describe("Playlists list tests", () => {
     }).as("slides");
 
     cy.visit("/playlist/list");
+    cy.get("#login").click();
     cy.wait([
       "@playlists",
       "@playlists",
+      "@token",
       "@slides",
       "@slides",
       "@slides",

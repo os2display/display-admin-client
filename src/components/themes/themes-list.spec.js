@@ -1,10 +1,15 @@
 describe("themes list tests", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/themes*", {
       fixture: "themes/themes-first-page.json",
     }).as("themesData");
     cy.visit("/themes/list");
-    cy.wait(["@themesData", "@themesData"]);
+    cy.get("#login").click();
+    cy.wait(["@themesData", "@themesData", "@token"]);
   });
 
   it("It loads themes list", () => {

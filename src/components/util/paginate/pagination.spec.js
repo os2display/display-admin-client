@@ -1,10 +1,15 @@
 describe("Pagination loads", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/themes*", {
       fixture: "themes/themes-first-page.json",
     }).as("themesData");
     cy.visit("/themes/list");
-    cy.wait(["@themesData"]);
+    cy.get("#login").click();
+    cy.wait(["@themesData", "@token"]);
   });
 
   it("It loads", () => {
@@ -29,6 +34,7 @@ describe("Pagination loads", () => {
         }).as("themesData");
         cy.get(".pagination").find(".page-link").eq(1).click();
         cy.wait(["@themesData"]);
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(300);
         cy.get("tbody").find("tr").should("have.length", 10);
         cy.get("tbody")

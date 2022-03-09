@@ -1,5 +1,4 @@
 describe("Simple app loads", () => {
-
   beforeEach(() => {
     cy.intercept("POST", "**/token", {
       statusCode: 201,
@@ -10,8 +9,7 @@ describe("Simple app loads", () => {
     }).as("slides");
     cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
     cy.get("#login").click();
-    cy.wait(["@token"]);
-    cy.wait(["@slides"]);
+    cy.wait(["@slides", "@token"]);
   });
 
   it("Loads and simple test", () => {

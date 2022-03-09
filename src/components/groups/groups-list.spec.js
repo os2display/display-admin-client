@@ -1,10 +1,15 @@
 describe("Groups list tests", () => {
   beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.intercept("GET", "**/screen-groups*", {
       fixture: "groups/groups.json",
     }).as("groups");
 
     cy.visit("/group/list");
+    cy.get("#login").click();
     cy.wait(["@groups", "@groups"]);
   });
 

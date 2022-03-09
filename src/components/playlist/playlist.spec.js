@@ -10,8 +10,7 @@ describe("Playlist pages work", () => {
     }).as("slides");
     cy.visit("/playlist/create");
     cy.get("#login").click();
-    cy.wait(["@token"]);
-    cy.wait(["@slides"]);
+    cy.wait(["@slides", "@token"]);
   });
   it("It loads create playlist page", () => {
     cy.get("#save_playlist").should("exist");

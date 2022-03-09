@@ -1,12 +1,20 @@
 describe("Theme pages work", () => {
-  it("It loads create theme page", () => {
+  beforeEach(() => {
+    cy.visit("/themes/list");
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
     cy.visit("/themes/create");
+    cy.get("#login").click();
+    cy.wait(["@token"]);
+  });
+
+  it("It loads create theme page", () => {
     cy.get("#save_theme").should("exist");
   });
 
   it("It redirects on save", () => {
-    cy.visit("/themes/create");
-
     // Mock error response on post
     cy.intercept("POST", "**/themes", {
       statusCode: 201,
@@ -30,8 +38,6 @@ describe("Theme pages work", () => {
   });
 
   it("It display error toast on save error", () => {
-    cy.visit("/themes/create");
-
     // Mock error response on post
     cy.intercept("POST", "**/themes", {
       statusCode: 500,
@@ -49,7 +55,6 @@ describe("Theme pages work", () => {
   });
 
   it("It cancels create theme", () => {
-    cy.visit("/themes/create");
     cy.get("#cancel_theme").should("exist");
     cy.get("#cancel_theme").click();
     cy.get("#cancel_theme").should("not.exist");
