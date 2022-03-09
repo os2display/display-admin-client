@@ -57,11 +57,13 @@ function Login() {
     } else {
       // authenticated, and use the only received tenant.
       context.authenticated.set(true);
-      localStorage.setItem(
-        localStorageKeys.SELECTED_TENANT,
-        JSON.stringify(data.tenants[0])
-      );
-      context.selectedTenant.set(data.tenants[0]);
+      if (data.tenants?.length > 0) {
+        localStorage.setItem(
+          localStorageKeys.SELECTED_TENANT,
+          JSON.stringify(data.tenants[0])
+        );
+        context.selectedTenant.set(data.tenants[0]);
+      }
     }
   }
 
