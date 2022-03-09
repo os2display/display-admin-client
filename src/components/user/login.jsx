@@ -44,11 +44,10 @@ function Login() {
   function login(data) {
     // Set token in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
-    context.userName.set(data.user.fullname);
-    localStorage.setItem(localStorageKeys.USER_NAME, data.user.fullname);
-
+    context.userName.set(data.user?.fullname);
+    localStorage.setItem(localStorageKeys.USER_NAME, data.user?.fullname);
     // If there are more than one tenant, the user should pick a tenant
-    if (data.tenants.length > 1) {
+    if (data.tenants?.length > 1) {
       // Save tenants
       localStorage.setItem(
         localStorageKeys.TENANTS,
@@ -108,22 +107,22 @@ function Login() {
         if (response?.error) {
           if (response?.error?.data?.message === "Invalid credentials.") {
             setError(true);
-            setPassword("");
             displayError(t("login.invalid-credentials"));
           } else {
             setError(true);
-            setPassword("");
-            displayError(response.error.data.message ?? t("login.error"));
+            displayError(
+              response?.error?.error ||
+                response?.error?.data?.message ||
+                t("login.error")
+            );
           }
         }
-
         if (response?.data?.token) {
           login(response.data);
         }
       })
       .catch((err) => {
         setError(true);
-        setPassword("");
         displayError(JSON.stringify(err));
       });
   };
