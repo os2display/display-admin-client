@@ -118,7 +118,7 @@ function Login() {
           }
         }
         if (response?.data?.token) {
-          login(response?.data);
+          login(response.data);
         }
       })
       .catch((err) => {
