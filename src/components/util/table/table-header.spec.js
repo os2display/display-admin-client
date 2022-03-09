@@ -26,8 +26,8 @@ describe("Table header loads", () => {
       },
     }).as("secondQuery");
 
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(300);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(300);
     cy.get("#table-header-title").click();
     cy.wait("@secondQuery").then((interception) => {
       assert.isNotNull(interception.response.body, "The api is called again");
