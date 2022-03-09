@@ -53,40 +53,6 @@ services:
       MYSQL_DATABASE: db
       MYSQL_ROOT_PASSWORD: password
 
-  api:
-    image: itkdev/os2display-api-service:alpha
-    networks:
-      - app
-    depends_on:
-      - mariadb
-    environment:
-      PHP_MAX_EXECUTION_TIME: 30
-      PHP_MEMORY_LIMIT: 128M
-      PHP_UPLOAD_MAX_FILESIZE: 8M
-      APP_ENV: prod
-      APP_TRUSTED_PROXIES: 127.0.0.1,REMOTE_ADDR
-      APP_SECRET: MySuperSecret
-      APP_CORS_ALLOW_ORIGIN: '*'
-      APP_DATABASE_URL: mysql://db:db@mariadb:3306/db?serverVersion=mariadb-10.4.21
-      APP_DEFAULT_DATE_FORMAT: Y-m-d\TH:i:s.v\Z
-
-  nginx-api:
-    image: itkdev/os2display-api-service-nginx:alpha
-    networks:
-      - app
-      - frontend
-    depends_on:
-      - api
-    ports:
-      - '80'
-    environment:
-      PHP_FPM_SERVER: api
-      NGINX_FPM_UPLOAD_MAX: 8M
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=frontend"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_api.rule=Host(`${COMPOSE_API_DOMAIN}`)"
-
   cypress:
     image: cypress/included:9.1.1
     networks:
@@ -94,11 +60,9 @@ services:
       - frontend
     depends_on:
       - nginx
-      - nginx-api
     environment:
       - CYPRESS_VIDEO=false
       - CYPRESS_baseUrl=http://nginx
-      #- DISPLAY=host.docker.internal:0
     volumes:
       - .:/e2e
       - /tmp/.X11-unix:/tmp/.X11-unix
