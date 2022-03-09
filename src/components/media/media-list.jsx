@@ -197,7 +197,7 @@ function MediaList({ fromModal, handleSelected }) {
     <>
       <Row className="align-items-center justify-content-between mt-2">
         <Col>
-          <h1>{t("media-list.header")}</h1>
+          <h1 id="media-list-title">{t("media-list.header")}</h1>
         </Col>
         {!fromModal && (
           <>

@@ -51,6 +51,7 @@ function TopBar() {
 
   return (
     <Navbar
+      id="topbar"
       variant="light"
       bg="white"
       expand="lg"
@@ -62,41 +63,50 @@ function TopBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3" />
       <Navbar.Collapse id="basic-navbar-nav" className="px-3">
         <Nav className="ms-md-auto mt-3 mt-md-0">
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="link"
-              id="topbar_user"
-              className="text-dark text-decoration-none"
-            >
-              <FontAwesomeIcon
-                className="me-1 fa-lg text-dark text-muted"
-                icon={faUserCircle}
-              />
-              {context.userEmail.get} ({context.selectedTenant.get?.title})
-            </Dropdown.Toggle>
-            <Dropdown.Menu style={{ width: "100%" }}>
-              {context.tenants.get.map((tenant) => (
-                <Dropdown.Item
-                  onClick={onTenantChange}
-                  id={tenant.tenantKey}
-                  className="dropdown-item"
+          <>
+            {!context.tenants.get && (
+              <div className="name">
+                {context.userEmail.get} ({context.selectedTenant.get?.title})
+              </div>
+            )}
+            {context.tenants.get && (
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="link"
+                  id="topbar_user"
+                  className="text-dark text-decoration-none"
                 >
                   <FontAwesomeIcon
-                    className="me-1"
-                    style={{
-                      color:
-                        tenant.tenantKey ===
-                        context.selectedTenant.get.tenantKey
-                          ? "#6c757d"
-                          : "transparent",
-                    }}
-                    icon={faCheck}
+                    className="me-1 fa-lg text-dark text-muted"
+                    icon={faUserCircle}
                   />
-                  {tenant.title}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+                  {context.userEmail.get} ({context.selectedTenant.get?.title})
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ width: "100%" }}>
+                  {context.tenants.get.map((tenant) => (
+                    <Dropdown.Item
+                      onClick={onTenantChange}
+                      id={tenant.tenantKey}
+                      className="dropdown-item"
+                    >
+                      <FontAwesomeIcon
+                        className="me-1"
+                        style={{
+                          color:
+                            tenant.tenantKey ===
+                            context.selectedTenant.get.tenantKey
+                              ? "#6c757d"
+                              : "transparent",
+                        }}
+                        icon={faCheck}
+                      />
+                      {tenant.title}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </>
           <Dropdown className="me-md-3 mb-2 mb-md-0">
             <Dropdown.Toggle variant="primary" id="topbar_add">
               <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
@@ -104,7 +114,7 @@ function TopBar() {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Link
-                id="nav-items_add_slide"
+                id="nav-add-new-slide"
                 className="dropdown-item"
                 to="/slide/create"
               >
@@ -113,7 +123,7 @@ function TopBar() {
               </Link>
 
               <Link
-                id="nav-items_add_playlist"
+                id="nav-add-new-playlist"
                 className="dropdown-item"
                 to="/playlist/create"
               >
@@ -121,7 +131,7 @@ function TopBar() {
                 {t("topbar.add-playlist")}
               </Link>
               <Link
-                id="nav-items_add_screen"
+                id="nav-add-new-screen"
                 className="dropdown-item"
                 to="/screen/create"
               >

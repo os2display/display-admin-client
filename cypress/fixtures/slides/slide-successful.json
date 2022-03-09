@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "@vocab": "http://displayapiservice.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "Slide/title",
+    "description": "Slide/description",
+    "created": "Slide/created",
+    "modified": "Slide/modified",
+    "modifiedBy": "Slide/modifiedBy",
+    "createdBy": "Slide/createdBy",
+    "templateInfo": "Slide/templateInfo",
+    "theme": "Slide/theme",
+    "onPlaylists": "Slide/onPlaylists",
+    "duration": "Slide/duration",
+    "published": "Slide/published",
+    "media": "Slide/media",
+    "content": "Slide/content",
+    "feed": "Slide/feed"
+  },
+  "@type": "Slide",
+  "@id": "/v1/slides/000622HP9N1G5P1CMD035H159G",
+  "title": "Aut consequatur excepturi ut totam aspernatur.",
+  "description": "Et aut harum aut est. Et hic et totam. Possimus veritatis nemo sit repellat dolorem. Distinctio id voluptates laborum voluptas voluptas repellat.",
+  "created": "1970-03-17T08:57:16.000Z",
+  "modified": "2022-01-30T15:42:42.000Z",
+  "modifiedBy": "",
+  "createdBy": "",
+  "templateInfo": {
+    "@id": "/v1/templates/00EPSCBVJS0TB0118C1JPM1VPM",
+    "options": []
+  },
+  "theme": "/v1/themes/01FTNTE789TEPTT7MC3TYM91JJ",
+  "onPlaylists": [],
+  "duration": 9834,
+  "published": {
+    "from": "2021-06-02T16:19:12.000Z",
+    "to": "2021-06-14T01:24:17.000Z"
+  },
+  "media": [
+    "/v1/media/014BH0252D18481TYB050J1WD9"
+  ],
+  "content": [],
+  "feed": null
+}

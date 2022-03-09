@@ -1,6 +1,18 @@
 describe("Simple app loads", () => {
+  beforeEach(() => {
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
+    cy.intercept("GET", "**/slides*", {
+      fixture: "slides/slides.json",
+    }).as("slides");
+    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
+    cy.get("#login").click();
+    cy.wait(["@slides", "@token"]);
+  });
+
   it("Loads and simple test", () => {
-    cy.visit("/slides");
-    cy.get("#root").should("not.be.empty");
+    cy.get("tbody").find("tr").should("have.length", 10);
   });
 });

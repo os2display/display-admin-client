@@ -1,0 +1,247 @@
+{
+  "@context": {
+    "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "title": "Theme/title",
+    "description": "Theme/description",
+    "onSlides": "Theme/onSlides",
+    "created": "Theme/created",
+    "modified": "Theme/modified",
+    "modifiedBy": "Theme/modifiedBy",
+    "createdBy": "Theme/createdBy",
+    "css": "Theme/css"
+  },
+  "@type": "Theme",
+  "@id": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+  "title": "Consequatur quisquam recusandae asperiores accusamus.",
+  "description": "Occaecati debitis et saepe eum sint dolorem. Enim ipsum inventore sed libero et velit qui suscipit. Deserunt laudantium quibusdam enim nostrum soluta qui ipsam non.",
+  "onSlides": [
+    {
+      "@context": {
+        "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+        "hydra": "http://www.w3.org/ns/hydra/core#",
+        "title": "Slide/title",
+        "description": "Slide/description",
+        "created": "Slide/created",
+        "modified": "Slide/modified",
+        "modifiedBy": "Slide/modifiedBy",
+        "createdBy": "Slide/createdBy",
+        "templateInfo": "Slide/templateInfo",
+        "theme": "Slide/theme",
+        "onPlaylists": "Slide/onPlaylists",
+        "duration": "Slide/duration",
+        "published": "Slide/published",
+        "media": "Slide/media",
+        "content": "Slide/content"
+      },
+      "@type": "Slide",
+      "@id": "/v1/slides/00015Y0ZVC18N407JD07SM0YCF",
+      "title": "Odio quidem ab dolores dolores.",
+      "description": "Accusamus odio atque numquam sunt asperiores ab. Consequatur similique amet velit sit qui doloremque dicta. Ducimus repellat facere odit quia deserunt id quos.",
+      "created": "1970-01-15T17:36:43+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "templateInfo": {
+        "@id": "/v1/templates/000YR9PMQC0GMC1TP90V9N07WX",
+        "options": []
+      },
+      "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+      "onPlaylists": [],
+      "duration": 107879,
+      "published": {
+        "from": null,
+        "to": null
+      },
+      "media": [
+        "/v1/media/00042YZWK214MP01NA1GF517Q2",
+        "/v1/media/00TET3FF6K1Q011N5S12621E4H",
+        "/v1/media/01DCA32QJY1BH600BV1H140JDK"
+      ],
+      "content": []
+    },
+    {
+      "@context": {
+        "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+        "hydra": "http://www.w3.org/ns/hydra/core#",
+        "title": "Slide/title",
+        "description": "Slide/description",
+        "created": "Slide/created",
+        "modified": "Slide/modified",
+        "modifiedBy": "Slide/modifiedBy",
+        "createdBy": "Slide/createdBy",
+        "templateInfo": "Slide/templateInfo",
+        "theme": "Slide/theme",
+        "onPlaylists": "Slide/onPlaylists",
+        "duration": "Slide/duration",
+        "published": "Slide/published",
+        "media": "Slide/media",
+        "content": "Slide/content"
+      },
+      "@type": "Slide",
+      "@id": "/v1/slides/004PNRTPEW0QB008MP03AN0ENW",
+      "title": "Dolore aliquid ut.",
+      "description": "Ut ratione omnis optio cum. Mollitia reprehenderit fuga necessitatibus eveniet et temporibus ullam. Rem expedita cumque explicabo in totam qui vel quibusdam. Odio sequi iure ullam facilis.",
+      "created": "1975-02-16T14:12:37+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "templateInfo": {
+        "@id": "/v1/templates/00HH42EEHC05QT14VQ041R1KEY",
+        "options": []
+      },
+      "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+      "onPlaylists": [],
+      "duration": 103936,
+      "published": {
+        "from": "2021-05-17T17:17:49+02:00",
+        "to": "2022-01-23T07:05:45+01:00"
+      },
+      "media": [
+        "/v1/media/0010X8D6JJ03G50T1J1FCW1XH6",
+        "/v1/media/002GWG3M6210WM1T6510DQ0HVP",
+        "/v1/media/00Q69PPBDK15WE0BVC17G10PS4",
+        "/v1/media/012GS4Q0NS17ZV19MC142D0SFX",
+        "/v1/media/01BTDHQH3Z06N40M9V0TJ41YA8"
+      ],
+      "content": []
+    },
+    {
+      "@context": {
+        "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+        "hydra": "http://www.w3.org/ns/hydra/core#",
+        "title": "Slide/title",
+        "description": "Slide/description",
+        "created": "Slide/created",
+        "modified": "Slide/modified",
+        "modifiedBy": "Slide/modifiedBy",
+        "createdBy": "Slide/createdBy",
+        "templateInfo": "Slide/templateInfo",
+        "theme": "Slide/theme",
+        "onPlaylists": "Slide/onPlaylists",
+        "duration": "Slide/duration",
+        "published": "Slide/published",
+        "media": "Slide/media",
+        "content": "Slide/content"
+      },
+      "@type": "Slide",
+      "@id": "/v1/slides/016EYNSKQ91AAV1JY811M30A08",
+      "title": "Reprehenderit ea magnam sequi.",
+      "description": "Ipsum cum fuga adipisci. Rerum voluptatibus maxime et sunt. Aut asperiores harum quia. Enim ut facere nam.",
+      "created": "2011-11-19T19:45:35+01:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "templateInfo": {
+        "@id": "/v1/templates/00XZXR5XDH0D1M16K10NYQ0A55",
+        "options": []
+      },
+      "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+      "onPlaylists": [],
+      "duration": 52260,
+      "published": {
+        "from": "2021-03-13T16:24:38+01:00",
+        "to": "2021-05-11T06:14:12+02:00"
+      },
+      "media": [
+        "/v1/media/0027FWF7Y014RG0KW9053S1AX6",
+        "/v1/media/004MDCEC451GPJ1DW80D1Z026F",
+        "/v1/media/006JX41CMS1KH80QM404BH1D3J"
+      ],
+      "content": []
+    },
+    {
+      "@context": {
+        "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+        "hydra": "http://www.w3.org/ns/hydra/core#",
+        "title": "Slide/title",
+        "description": "Slide/description",
+        "created": "Slide/created",
+        "modified": "Slide/modified",
+        "modifiedBy": "Slide/modifiedBy",
+        "createdBy": "Slide/createdBy",
+        "templateInfo": "Slide/templateInfo",
+        "theme": "Slide/theme",
+        "onPlaylists": "Slide/onPlaylists",
+        "duration": "Slide/duration",
+        "published": "Slide/published",
+        "media": "Slide/media",
+        "content": "Slide/content"
+      },
+      "@type": "Slide",
+      "@id": "/v1/slides/01CF81S6H819ET05SW1H3T0EP4",
+      "title": "Quidem amet eum cum.",
+      "description": "Sed qui corporis excepturi cum. Hic et eos ea iusto rerum reiciendis sed. Facilis omnis iusto itaque sunt reprehenderit id quis blanditiis.",
+      "created": "2018-06-05T13:22:05+02:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "templateInfo": {
+        "@id": "/v1/templates/00EPSCBVJS0TB0118C1JPM1VPM",
+        "options": []
+      },
+      "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+      "onPlaylists": [],
+      "duration": 51838,
+      "published": {
+        "from": "2021-01-24T17:00:32+01:00",
+        "to": "2021-09-01T16:22:53+02:00"
+      },
+      "media": [
+        "/v1/media/00W2E6VC0V12QK1WYH0CMP151C"
+      ],
+      "content": []
+    },
+    {
+      "@context": {
+        "@vocab": "http://api-display-admin-client.local.itkdev.dk/docs.jsonld#",
+        "hydra": "http://www.w3.org/ns/hydra/core#",
+        "title": "Slide/title",
+        "description": "Slide/description",
+        "created": "Slide/created",
+        "modified": "Slide/modified",
+        "modifiedBy": "Slide/modifiedBy",
+        "createdBy": "Slide/createdBy",
+        "templateInfo": "Slide/templateInfo",
+        "theme": "Slide/theme",
+        "onPlaylists": "Slide/onPlaylists",
+        "duration": "Slide/duration",
+        "published": "Slide/published",
+        "media": "Slide/media",
+        "content": "Slide/content"
+      },
+      "@type": "Slide",
+      "@id": "/v1/slides/01CG45J4K70V2P0W7F0TER04TB",
+      "title": "Nihil sit cumque fugit maxime enim.",
+      "description": "Perspiciatis omnis voluptatem doloribus in mollitia eveniet. Asperiores ab eum quos a molestiae. Placeat dolores molestias adipisci sunt ea voluptas.",
+      "created": "2018-06-16T11:26:52+02:00",
+      "modified": "2021-12-09T12:01:33+01:00",
+      "modifiedBy": "",
+      "createdBy": "",
+      "templateInfo": {
+        "@id": "/v1/templates/00EPSCBVJS0TB0118C1JPM1VPM",
+        "options": []
+      },
+      "theme": "/v1/themes/01FPFH3WX93S4575W6Q9T8K0Y8",
+      "onPlaylists": [],
+      "duration": 66680,
+      "published": {
+        "from": "2021-06-10T16:39:18+02:00",
+        "to": null
+      },
+      "media": [
+        "/v1/media/00042YZWK214MP01NA1GF517Q2",
+        "/v1/media/003TDPM2KY04T213HD08KN0307",
+        "/v1/media/007PSND6HX16X21HAH017P141Z",
+        "/v1/media/00XA10EH8H0YYY1H4B1CC40SSA",
+        "/v1/media/01DCA32QJY1BH600BV1H140JDK"
+      ],
+      "content": []
+    }
+  ],
+  "created": "2021-12-09T12:01:33+01:00",
+  "modified": "2021-12-09T12:01:33+01:00",
+  "modifiedBy": "",
+  "createdBy": "",
+  "css": ""
+}

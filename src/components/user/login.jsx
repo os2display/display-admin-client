@@ -265,7 +265,7 @@ function Login() {
                     )}
                 </>
 
-                <Button type="submit" className="mt-3">
+                <Button type="submit" className="mt-3" id="login">
                   {t("login.submit")}
                 </Button>
               </Col>

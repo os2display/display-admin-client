@@ -40,7 +40,7 @@ function ThemeForm({
           isLoading={isLoading}
           loadingMessage={loadingMessage}
         />
-        <h1>{headerText}</h1>
+        <h1 id="themeTitle">{headerText}</h1>
         <ContentBody>
           <FormInput
             name="title"

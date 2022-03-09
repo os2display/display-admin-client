@@ -148,7 +148,7 @@ function ScreenForm({
         </div>
       )}
       <Form>
-        <h1>{headerText}</h1>
+        <h1 id="screenTitle">{headerText}</h1>
         <ContentBody>
           <h2 className="h4">{t("screen-form.screen-about")}</h2>
           <FormInput
@@ -264,7 +264,7 @@ function ScreenForm({
             </Col>
           </Row>
         </ContentBody>
-        <ContentBody>
+        <ContentBody id="layout-section">
           <h2 className="h4">{t("screen-form.screen-layout")}</h2>
           <div className="row">
             {layoutOptions && (
@@ -297,7 +297,7 @@ function ScreenForm({
           <Button
             variant="secondary"
             type="button"
-            id="screen_cancel"
+            id="cancel_screen"
             onClick={() => navigate("/screen/list/")}
             size="lg"
             className="me-3"
