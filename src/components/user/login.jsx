@@ -31,9 +31,40 @@ function Login() {
   // Local stage
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [oidcAuthUrls, setOidcAuthUrls] = useState("");
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
   const [ready, setReady] = useState(false);
+
+  /**
+   * Login, both called from oidc login and manuel login.
+   *
+   * @param {object} data - Login data
+   */
+  function login(data) {
+    // Set token in local storage, to persist login on refresh
+    localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
+    context.userName.set(data.user.fullname);
+    localStorage.setItem(localStorageKeys.USER_NAME, data.user.fullname);
+
+    // If there are more than one tenant, the user should pick a tenant
+    if (data.tenants.length > 1) {
+      // Save tenants
+      localStorage.setItem(
+        localStorageKeys.TENANTS,
+        JSON.stringify(data.tenants)
+      );
+      context.tenants.set(data.tenants);
+    } else {
+      // authenticated, and use the only received tenant.
+      context.authenticated.set(true);
+      localStorage.setItem(
+        localStorageKeys.SELECTED_TENANT,
+        JSON.stringify(data.tenants[0])
+      );
+      context.selectedTenant.set(data.tenants[0]);
+    }
+  }
 
   /**
    * Select tenant function
@@ -68,7 +99,7 @@ function Login() {
     dispatch(
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
-          email: context.userEmail.get,
+          email,
           password,
         }),
       })
@@ -87,27 +118,7 @@ function Login() {
         }
 
         if (response?.data?.token) {
-          // Set token in local storage, to persist login on refresh
-          localStorage.setItem(localStorageKeys.API_TOKEN, response.data.token);
-          localStorage.setItem(localStorageKeys.EMAIL, context.userEmail.get);
-
-          // If there are more than one tenant, the user should pick a tenant
-          if (response.data.tenants.length > 1) {
-            // Save tenants
-            localStorage.setItem(
-              localStorageKeys.TENANTS,
-              JSON.stringify(response.data.tenants)
-            );
-            context.tenants.set(response.data.tenants);
-          } else {
-            // authenticated, and use the only received tenant.
-            context.authenticated.set(true);
-            localStorage.setItem(
-              localStorageKeys.SELECTED_TENANT,
-              JSON.stringify(response.data.tenants[0])
-            );
-            context.selectedTenant.set(response.data.tenants[0]);
-          }
+          login(response.data);
         }
       })
       .catch((err) => {
@@ -141,7 +152,7 @@ function Login() {
           .then((data) => {
             if (isMounted) {
               if (data?.token) {
-                context.authenticated.set(true);
+                login(data);
               }
             }
           })
@@ -215,10 +226,8 @@ function Login() {
                         className={
                           error ? "form-control is-invalid" : "form-control"
                         }
-                        onChange={(ev) =>
-                          context.userEmail.set(ev.target.value)
-                        }
-                        value={context.userEmail.get}
+                        onChange={(ev) => setEmail(ev.target.value)}
+                        value={email}
                         name="email"
                         label={t("login.email")}
                         required

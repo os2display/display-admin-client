@@ -4,7 +4,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlusCircle,
@@ -66,7 +65,10 @@ function TopBar() {
           <>
             {!context.tenants.get && (
               <div className="name">
-                {context.userEmail.get} ({context.selectedTenant.get?.title})
+                {context.userName.get} (
+                {context.selectedTenant.get?.title ||
+                  context.selectedTenant.get?.tenantKey}
+                )
               </div>
             )}
             {context.tenants.get && (
