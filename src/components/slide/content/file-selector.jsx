@@ -54,7 +54,7 @@ function FileSelector({
     const newFiles = [...files];
 
     target?.value?.forEach((id) => {
-      const found = newFiles.find((f) => f['@id'] === id);
+      const found = newFiles.find((f) => f["@id"] === id);
 
       if (!found) {
         newFiles.push(id);
@@ -69,21 +69,19 @@ function FileSelector({
   };
 
   const removeFile = (fileEntry) => {
-    const newFiles = [...files].filter(
-      (f) => {
-        if (Object.prototype.hasOwnProperty.call(fileEntry, '@id')) {
-          if (f["@id"] === fileEntry["@id"]) {
-            return false;
-          }
+    const newFiles = [...files].filter((f) => {
+      if (Object.prototype.hasOwnProperty.call(fileEntry, "@id")) {
+        if (f["@id"] === fileEntry["@id"]) {
+          return false;
         }
-        if (Object.prototype.hasOwnProperty.call(fileEntry, 'tempId')) {
-          if (f.tempId === fileEntry.tempId) {
-            return false;
-          }
-        }
-        return true;
       }
-    );
+      if (Object.prototype.hasOwnProperty.call(fileEntry, "tempId")) {
+        if (f.tempId === fileEntry.tempId) {
+          return false;
+        }
+      }
+      return true;
+    });
 
     onFilesChange({ target: { id: name, value: newFiles } });
   };
