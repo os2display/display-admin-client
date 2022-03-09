@@ -51,7 +51,17 @@ function FileSelector({
   };
 
   const filesAddedFromLibrary = ({ target }) => {
-    onFilesChange({ target: { id: name, value: [...files, ...target.value] } });
+    const newFiles = [...files];
+
+    target?.value?.forEach((id) => {
+      const found = newFiles.find((f) => f['@id'] === id);
+
+      if (!found) {
+        newFiles.push(id);
+      }
+    });
+
+    onFilesChange({ target: { id: name, value: newFiles } });
   };
 
   const fileDataChange = () => {
@@ -59,9 +69,22 @@ function FileSelector({
   };
 
   const removeFile = (fileEntry) => {
-    const newFiles = files.filter(
-      (f) => f["@id"] !== fileEntry["@id"] && f.tempId !== fileEntry.tempId
+    const newFiles = [...files].filter(
+      (f) => {
+        if (Object.prototype.hasOwnProperty.call(fileEntry, '@id')) {
+          if (f["@id"] === fileEntry["@id"]) {
+            return false;
+          }
+        }
+        if (Object.prototype.hasOwnProperty.call(fileEntry, 'tempId')) {
+          if (f.tempId === fileEntry.tempId) {
+            return false;
+          }
+        }
+        return true;
+      }
     );
+
     onFilesChange({ target: { id: name, value: newFiles } });
   };
 
