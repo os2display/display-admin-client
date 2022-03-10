@@ -30,6 +30,7 @@ import ThemesList from "./components/themes/themes-list";
 import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import UserContext from "./context/user-context";
+import PublicPlaylists from "./components/playlist/public-playlists";
 import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
@@ -213,6 +214,9 @@ function App() {
                                 <PlaylistCampaignList location="playlist" />
                               }
                             />
+                          </Route>
+                          <Route path="public">
+                            <Route path="list" element={<PublicPlaylists />} />
                           </Route>
 
                           <Route path="screen">

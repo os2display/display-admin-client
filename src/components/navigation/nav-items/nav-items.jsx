@@ -74,6 +74,17 @@ function NavItems() {
             </Nav.Item>
           </RestrictedNavRoute>
           <RestrictedNavRoute roles={context.accessConfig.get.campaign.roles}>
+            <Nav.Item className="nav-second-level">
+              <NavLink
+                id="nav-items_content_public_playlists"
+                className="nav-link"
+                to="/public/list"
+              >
+                {t("nav-items.public-playlists")}
+              </NavLink>
+            </Nav.Item>
+          </RestrictedNavRoute>
+          <RestrictedNavRoute roles={context.accessConfig.get.campaign.roles}>
             <Nav.Item>
               <NavLink
                 id="nav-items_screens_screens"

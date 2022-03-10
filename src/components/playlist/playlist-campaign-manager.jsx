@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import set from "lodash.set";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
@@ -44,6 +44,8 @@ function PlaylistCampaignManager({
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
+  const { search } = useLocation();
+  const publicParams = new URLSearchParams(search).get("public");
   const headerText =
     saveMethod === "PUT"
       ? t(`playlist-campaign-manager.${location}.edit-header`)
@@ -114,6 +116,22 @@ function PlaylistCampaignManager({
       setFormStateObject(localFormStateObject);
     }
   }, [initialState]);
+
+  useEffect(() => {
+    // If redirected from create public playlist
+    if (publicParams === "true") {
+      // Set public checkbox true
+      const localFormStateObject = { ...formStateObject };
+      set(localFormStateObject, "public", true);
+      setFormStateObject(localFormStateObject);
+      // Remove public search param
+      const params = new URLSearchParams(search);
+      params.delete("public");
+      navigate({
+        search: params.toString(),
+      });
+    }
+  }, [publicParams]);
 
   // Slides are saved successfully, display a message
   useEffect(() => {

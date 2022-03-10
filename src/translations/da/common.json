@@ -427,7 +427,30 @@
     "publish-title": "Udgivelse",
     "publish-helptext": "Hvis der ikke vælges udgivet til/fra er spillelisten udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet spillelisten vises i."
   },
+  "public-playlists": {
+    "change-view-calendar": "Kalender",
+    "change-view-list": "Liste",
+    "header": "Offentlige spillelister",
+    "create-new": "Opret ny offentlig spilleliste",
+    "edit-button": "Rediger",
+    "loading": "Henter offentlige spillelister...",
+    "info-modal": {
+      "slides": "Spillelisten indeholder følgende slides"
+    },
+    "loading-messages": {
+      "loading": "Henter spillelister"
+    },
+    "error-messages": {
+      "load-error": "Der skete en fejl da spillelisterne skulle hentes: {{error}}"
+    },
+    "columns": {
+      "published": "Udgivet",
+      "name": "Navn",
+      "number-of-slides": "Slides tilknyttede"
+    }
+  },
   "playlist-drag-and-drop": {
+    "show-only-public": "Vis kun offentlige spillelister",
     "columns": {
       "name": "Navn",
       "published": "Udgivet"
@@ -633,6 +656,7 @@
     "screen-resolution-of-screen-height-placeholder": "Angiv skærmens højde"
   },
   "nav-items": {
+    "public-playlists": "Offentlige spillelister",
     "dashboard": "Oversigt",
     "content-media": "Medier",
     "content-slides": "Slides",
@@ -823,11 +847,11 @@
     "add-contact": "Tilføj kontakt",
     "remove-contact": "Fjern kontakt"
   },
-  "no-access":{
+  "no-access": {
     "you-dont-have-access": "Du har ikke adgang til denne side",
     "go-back": "Gå tilbage"
   },
-  "auth-handler":{
+  "auth-handler": {
     "please-wait": "Vent venligst..."
   }
 }

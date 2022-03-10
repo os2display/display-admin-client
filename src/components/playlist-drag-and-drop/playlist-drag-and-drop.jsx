@@ -6,6 +6,7 @@ import LinkForList from "../util/list/link-for-list";
 import Published from "../util/published";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
+import FormCheckbox from "../util/forms/form-checkbox";
 import {
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
   useGetV1PlaylistsQuery,
@@ -25,15 +26,18 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
+  const [onlyPublicPlaylists, setOnlyPublicPlaylists] = useState(false);
 
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
       regionId,
       page: 1,
+      itemsPerPage: 100,
     });
 
   const { data: playlists } = useGetV1PlaylistsQuery({
+    isCampaign: false,
     title: searchText,
     itemsPerPage: 100,
     orderBy: "createdAt",
@@ -133,6 +137,14 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     <>
       {playlists && playlists["hydra:member"] && selectedData && (
         <>
+          <FormCheckbox
+            label={t("playlist-drag-and-drop.show-only-public")}
+            onChange={() => {
+              setOnlyPublicPlaylists(!onlyPublicPlaylists);
+            }}
+            value={onlyPublicPlaylists}
+            name="show-only-public"
+          />
           <div className="mb-3">
             <PlaylistsDropdown
               filterCallback={onFilter}

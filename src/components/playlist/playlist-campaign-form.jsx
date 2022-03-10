@@ -105,7 +105,7 @@ function PlaylistCampaignForm({
                 name="published.from"
                 type="datetime-local"
                 label={t("playlist-campaign-form.publish-from-label")}
-                value={playlist.published.from ?? ""}
+                value={playlist.published?.from ?? ""}
                 error={publishedFromError}
                 onChange={handleInput}
               />
@@ -117,7 +117,7 @@ function PlaylistCampaignForm({
                 type="datetime-local"
                 error={publishedToError}
                 label={t("playlist-campaign-form.publish-to-label")}
-                value={playlist.published.to ?? ""}
+                value={playlist.published?.to ?? ""}
                 onChange={handleInput}
               />
             </Col>
