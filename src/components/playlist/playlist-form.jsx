@@ -39,7 +39,7 @@ function PlaylistForm({ playlist, handleInput }) {
               name="public"
             />
             {playlist.public && (
-              <Alert className="mt-3" variant="warning">
+              <Alert className="mt-3 text-dark" variant="warning">
                 {t("playlist-form.warning")}
               </Alert>
             )}
