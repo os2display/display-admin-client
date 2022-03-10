@@ -13,7 +13,6 @@ import FileSelector from "./file-selector";
  *
  * @param {object} props - The props.
  * @param {Array} props.data - The data to render in the form element.
- * @param {object} props.slide - The slide that is being modified.
  * @param {Function} props.requiredFieldCallback - If the form is required, a
  *   callback to add to validation.
  * @param {Array} props.errors - An error list, if there are validation errors.
@@ -25,7 +24,6 @@ import FileSelector from "./file-selector";
  */
 function ContentForm({
   data,
-  slide,
   requiredFieldCallback,
   errors,
   onChange,
@@ -267,7 +265,6 @@ function ContentForm({
 
 ContentForm.defaultProps = {
   errors: [],
-  slide: null,
   requiredFieldCallback: null,
   onChange: null,
   mediaData: {},
@@ -283,7 +280,6 @@ ContentForm.propTypes = {
     required: PropTypes.bool,
     multipleImages: PropTypes.bool,
   }).isRequired,
-  slide: PropTypes.shape({
     duration: PropTypes.number,
   }),
   errors: PropTypes.arrayOf(PropTypes.string),
