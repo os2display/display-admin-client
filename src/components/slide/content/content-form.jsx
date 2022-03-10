@@ -95,7 +95,11 @@ function ContentForm({
             label={formData.label}
             helpText={formData.helpText}
             formGroupClasses={formData.formGroupClasses}
-            value={formStateObject[formData.name] ? Math.floor(formStateObject[formData.name] / 1000) : 10}
+            value={
+              formStateObject[formData.name]
+                ? Math.floor(formStateObject[formData.name] / 1000)
+                : 10
+            }
             onChange={(value) => {
               const newValue = value.target.value;
               onChange({
@@ -280,8 +284,6 @@ ContentForm.propTypes = {
     required: PropTypes.bool,
     multipleImages: PropTypes.bool,
   }).isRequired,
-    duration: PropTypes.number,
-  }),
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({}).isRequired,
   requiredFieldCallback: PropTypes.func,
