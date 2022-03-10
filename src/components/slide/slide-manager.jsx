@@ -256,7 +256,6 @@ function SlideManager({
           // @TODO: Handle error.
         });
     }
-
     // Load theme if set, getTheme because if not, it runs on every time formstateobject is changed
     if (formStateObject?.theme && getTheme) {
       dispatch(
@@ -265,9 +264,16 @@ function SlideManager({
         })
       )
         .then((result) => {
-          const theme = result.data;
+          // To only get the theme once.
           setGetTheme(false);
-          setSelectedTheme([theme]);
+          // If the theme exists, it will be used.
+          if (result.data) {
+            const theme = result.data;
+            setSelectedTheme([theme]);
+          } else {
+            // Or else the local storage contained an old value, and the theme is reset.
+            formStateObject.theme = "";
+          }
         })
         .catch(() => {
           // @TODO: Handle error.

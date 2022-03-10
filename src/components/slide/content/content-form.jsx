@@ -18,8 +18,6 @@ import FileSelector from "./file-selector";
  *   callback to add to validation.
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
- * @param {Function} props.onSlideChange - Callback, if the value of a slide
- *   field changes.
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onFileChange - When file has changed call this function.
  * @param {Array} props.mediaData - Array of loaded media entities.
@@ -31,7 +29,6 @@ function ContentForm({
   requiredFieldCallback,
   errors,
   onChange,
-  onSlideChange,
   onFileChange,
   formStateObject,
   mediaData,
@@ -94,16 +91,16 @@ function ContentForm({
         }
         returnElement = (
           <FormInput
-            name="duration"
+            name={formData.name}
             min={formData.min}
             type={formData.type}
             label={formData.label}
             helpText={formData.helpText}
             formGroupClasses={formData.formGroupClasses}
-            value={slide.duration ? Math.floor(slide.duration / 1000) : 10}
+            value={formStateObject[formData.name] ? Math.floor(formStateObject[formData.name] / 1000) : 10}
             onChange={(value) => {
               const newValue = value.target.value;
-              onSlideChange({
+              onChange({
                 target: { id: "duration", value: Math.max(newValue, 1) * 1000 },
               });
             }}
@@ -273,7 +270,6 @@ ContentForm.defaultProps = {
   slide: null,
   requiredFieldCallback: null,
   onChange: null,
-  onSlideChange: null,
   mediaData: {},
 };
 
@@ -294,7 +290,6 @@ ContentForm.propTypes = {
   formStateObject: PropTypes.shape({}).isRequired,
   requiredFieldCallback: PropTypes.func,
   onChange: PropTypes.func,
-  onSlideChange: PropTypes.func,
   onFileChange: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.object),
 };
