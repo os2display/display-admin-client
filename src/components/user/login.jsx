@@ -54,7 +54,7 @@ function Login() {
         JSON.stringify(data.tenants)
       );
       context.tenants.set(data.tenants);
-    } else {
+    } else if (data.tenants?.length > 0) {
       // authenticated, and use the only received tenant.
       context.authenticated.set(true);
       localStorage.setItem(
@@ -62,6 +62,9 @@ function Login() {
         JSON.stringify(data.tenants[0])
       );
       context.selectedTenant.set(data.tenants[0]);
+    } else {
+      setError(true);
+      displayError(t("login.missing-tenants"));
     }
   }
 

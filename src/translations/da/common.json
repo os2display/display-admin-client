@@ -725,6 +725,7 @@
     "select-some-options": "Vælg..."
   },
   "login": {
+    "missing-tenants": "Denne bruger er ugyldig, da den ikke har tenants tilknyttet",
     "please-wait": "Vent venligst",
     "please-authenticate": "Log ind",
     "select-some-options": "Vælg...",
