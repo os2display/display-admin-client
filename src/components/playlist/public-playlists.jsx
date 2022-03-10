@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import { Button, Col } from "react-bootstrap";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import ContentHeader from "../util/content-header/content-header";
 import ListButton from "../util/list/list-button";
@@ -20,9 +19,7 @@ import {
 /**
  * The list component for public playlists.
  *
- * @param {object} props Props.
- * @param {string} props.location Either playlist or campaign.
- * @returns {object} The shared list, shared by playlists and campaigns.
+ * @returns {object} The playlist containing public playlists.
  */
 function PublicPlaylists() {
   const { t } = useTranslation("common");
@@ -48,7 +45,7 @@ function PublicPlaylists() {
     order: sortBy?.order,
     title: searchText,
     published: isPublished,
-    isCampaign: location === "campaign",
+    isCampaign: false,
   });
 
   useEffect(() => {
@@ -203,9 +200,5 @@ function PublicPlaylists() {
     </>
   );
 }
-
-PublicPlaylists.propTypes = {
-  location: PropTypes.string.isRequired,
-};
 
 export default PublicPlaylists;
