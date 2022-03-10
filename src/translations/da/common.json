@@ -411,7 +411,10 @@
     "title-campaign-groups": "Skærmgrupper"
   },
   "playlist-form": {
-    "schedule-header": "Planlægning"
+    "schedule-header": "Planlægning",
+    "public-playlist-checkbox-label": "Gør spillelisten offentlig",
+    "public-playlist": "Offentlig",
+    "warning": "Vær opmærksom på at offentlige spillelister kan ses af alle der har adgang til systemet."
   },
   "playlist-campaign-form": {
     "title-about": "Om spillelisten",
