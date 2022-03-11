@@ -250,7 +250,6 @@ function SlideForm({
                         <ContentForm
                           data={formElement}
                           onChange={handleContent}
-                          onSlideChange={handleInput}
                           onFileChange={handleMedia}
                           name={formElement.name}
                           mediaData={mediaData}
