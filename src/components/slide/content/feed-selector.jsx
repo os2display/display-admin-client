@@ -35,7 +35,7 @@ function FeedSelector({ value, onChange, formElement }) {
     data: feedSourcesData,
     error: feedSourcesLoadingError,
     isLoading: feedSourcesLoading,
-  } = useGetV1FeedSourcesQuery({ page: 1 });
+  } = useGetV1FeedSourcesQuery({ page: 1, supportedFeedOutputType: formElement.supportedFeedOutputType });
 
   useEffect(() => {
     if (feedSourcesData) {

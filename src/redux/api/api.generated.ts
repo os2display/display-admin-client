@@ -77,6 +77,7 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          supportedFeedOutputType: queryArg.supportedFeedOutputType,
           title: queryArg.title,
           description: queryArg.description,
           order: queryArg.order,
@@ -244,6 +245,7 @@ export const api = createApi({
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
           published: queryArg.published,
+          order: queryArg.order,
         },
       }),
     }),
@@ -334,6 +336,7 @@ export const api = createApi({
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
           published: queryArg.published,
+          order: queryArg.order,
         },
       }),
     }),
@@ -423,6 +426,7 @@ export const api = createApi({
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
           published: queryArg.published,
+          order: queryArg.order,
         },
       }),
     }),
@@ -570,6 +574,7 @@ export const api = createApi({
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
           published: queryArg.published,
+          order: queryArg.order,
         },
       }),
     }),
@@ -654,15 +659,15 @@ export type GetOidcAuthTokenItemApiResponse =
   /** status 200 Get JWT token from OIDC token */ Token;
 export type GetOidcAuthTokenItemApiArg = {
   /** OIDC state */
-  state?: any;
+  state?: string;
   /** OIDC id token */
-  idToken?: any;
+  idToken?: string;
 };
 export type GetOidcAuthUrlsItemApiResponse =
   /** status 200 Get authentication and end session endpoints */ OidcEndpoints;
 export type GetOidcAuthUrlsItemApiArg = {
   /** The key for the provider to use. Leave out to use the default provider */
-  providerKey?: any;
+  providerKey?: string;
 };
 export type PostLoginInfoScreenApiResponse =
   /** status 200 Login with bindKey to get JWT token for screen */ ScreenLoginOutput;
@@ -686,7 +691,6 @@ export type GetV1CampaignsByIdScreenGroupsApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1CampaignsByIdScreensApiResponse = unknown;
@@ -699,7 +703,6 @@ export type GetV1CampaignsByIdScreensApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1FeedSourcesApiResponse = unknown;
@@ -707,13 +710,15 @@ export type GetV1FeedSourcesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  supportedFeedOutputType?: {
+    ""?: string[];
+  };
   title?: string;
   description?: string;
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1FeedSourcesByIdApiResponse = unknown;
@@ -732,7 +737,6 @@ export type GetV1FeedsApiArg = {
   itemsPerPage?: string;
   order?: {
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1FeedsByIdApiResponse = unknown;
@@ -764,7 +768,6 @@ export type GetV1MediaApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostMediaCollectionApiResponse = unknown;
@@ -798,7 +801,6 @@ export type GetV1MediaByIdSlidesApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1PlaylistsApiResponse = unknown;
@@ -816,7 +818,6 @@ export type GetV1PlaylistsApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostV1PlaylistsApiResponse = unknown;
@@ -846,6 +847,9 @@ export type GetV1PlaylistsByIdSlidesApiArg = {
   itemsPerPage?: string;
   /** If true only published content will be shown */
   published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
 };
 export type PutV1PlaylistsByIdSlidesApiResponse = unknown;
 export type PutV1PlaylistsByIdSlidesApiArg = {
@@ -902,6 +906,9 @@ export type GetV1ScreenGroupsByIdCampaignsApiArg = {
   itemsPerPage?: string;
   /** If true only published content will be shown */
   published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
 };
 export type PutV1ScreenGroupsByIdCampaignsApiResponse = unknown;
 export type PutV1ScreenGroupsByIdCampaignsApiArg = {
@@ -925,7 +932,6 @@ export type GetV1ScreensApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostV1ScreensApiResponse = unknown;
@@ -949,8 +955,9 @@ export type DeleteV1ScreensByIdApiArg = {
 };
 export type PostScreenBindKeyApiResponse = unknown;
 export type PostScreenBindKeyApiArg = {
-  id?: any;
-  /** Get login info with JWT token for given nonce */
+  /** The screen id */
+  id: string;
+  /** Bind the screen with the bind key */
   screenBindObject: ScreenBindObject;
 };
 export type GetV1ScreensByIdCampaignsApiResponse = unknown;
@@ -961,6 +968,9 @@ export type GetV1ScreensByIdCampaignsApiArg = {
   itemsPerPage?: string;
   /** If true only published content will be shown */
   published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
 };
 export type PutV1ScreensByIdCampaignsApiResponse = unknown;
 export type PutV1ScreensByIdCampaignsApiArg = {
@@ -1017,7 +1027,8 @@ export type DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiArg = {
 };
 export type PostScreenUnbindApiResponse = unknown;
 export type PostScreenUnbindApiArg = {
-  id?: any;
+  /** The screen id */
+  id: string;
   /** Unbind from machine */
   body: string;
 };
@@ -1034,7 +1045,6 @@ export type GetV1SlidesApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostV1SlidesApiResponse = unknown;
@@ -1064,6 +1074,9 @@ export type GetV1SlidesByIdPlaylistsApiArg = {
   itemsPerPage?: string;
   /** If true only published content will be shown */
   published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
 };
 export type PutV1SlidesByIdPlaylistsApiResponse = unknown;
 export type PutV1SlidesByIdPlaylistsApiArg = {
@@ -1079,7 +1092,6 @@ export type GetV1TemplatesApiArg = {
   description?: string;
   order?: {
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1TemplatesByIdApiResponse = unknown;
@@ -1097,7 +1109,6 @@ export type GetV1ThemesApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostV1ThemesApiResponse = unknown;
@@ -1121,6 +1132,16 @@ export type DeleteV1ThemesByIdApiArg = {
 };
 export type Token = {
   token?: string;
+  tenants?: {
+    tenantKey?: string;
+    title?: string;
+    description?: string;
+    roles?: string[];
+  }[];
+  user?: {
+    fullname?: string;
+    email?: string;
+  };
 };
 export type OidcEndpoints = {
   authorizationUrl?: string;
@@ -1129,7 +1150,6 @@ export type OidcEndpoints = {
 export type ScreenLoginOutput = {
   bindKey?: string;
   token?: string;
-  screenId?: string;
 };
 export type ScreenLoginInput = object;
 export type Credentials = {

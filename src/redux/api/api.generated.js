@@ -60,6 +60,7 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
+                    supportedFeedOutputType: queryArg.supportedFeedOutputType,
                     title: queryArg.title,
                     description: queryArg.description,
                     order: queryArg.order
@@ -181,7 +182,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    published: queryArg.published
+                    published: queryArg.published,
+                    order: queryArg.order
                 }
             }); }
         }),
@@ -244,7 +246,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    published: queryArg.published
+                    published: queryArg.published,
+                    order: queryArg.order
                 }
             }); }
         }),
@@ -309,7 +312,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    published: queryArg.published
+                    published: queryArg.published,
+                    order: queryArg.order
                 }
             }); }
         }),
@@ -417,7 +421,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    published: queryArg.published
+                    published: queryArg.published,
+                    order: queryArg.order
                 }
             }); }
         }),
