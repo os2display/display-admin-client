@@ -1815,8 +1815,6 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
-<<<<<<< HEAD
-=======
                     },
                     {
                         "name": "tenants.tenantKey",
@@ -1848,7 +1846,6 @@
                         "style": "form",
                         "explode": true,
                         "allowReserved": false
->>>>>>> 30344d6 (AR-544: shared playlist)
                     }
                 ],
                 "deprecated": false
@@ -5339,63 +5336,6 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
-<<<<<<< HEAD
-                    },
-                    {
-                        "name": "order[title]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[description]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[createdAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-=======
->>>>>>> 30344d6 (AR-544: shared playlist)
                     }
                 ],
                 "deprecated": false
@@ -6432,19 +6372,11 @@
                     "campaignScreenGroups": {
                         "$ref": "#/components/schemas/Collection"
                     },
-<<<<<<< HEAD
-                    "feeds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-=======
                     "tenants": {
                         "$ref": "#/components/schemas/Collection"
                     },
                     "isCampaign": {
                         "type": "boolean"
->>>>>>> 30344d6 (AR-544: shared playlist)
                     },
                     "published": {
                         "default": {
@@ -6459,9 +6391,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "supportedFeedOutputType": {
-                        "type": "string"
                     }
                 }
             },
@@ -6568,9 +6497,6 @@
                     "title": {
                         "type": "string"
                     },
-<<<<<<< HEAD
-                    "feeds": {
-=======
                     "description": {
                         "type": "string"
                     },
@@ -6581,7 +6507,6 @@
                         }
                     },
                     "tenants": {
->>>>>>> 30344d6 (AR-544: shared playlist)
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -6609,9 +6534,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "supportedFeedOutputType": {
-                        "type": "string"
                     }
                 }
             },
@@ -8653,14 +8575,11 @@
                         "readOnly": true,
                         "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     },
-<<<<<<< HEAD
-=======
                     "refresh_token": {
                         "type": "string",
                         "readOnly": true,
                         "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     },
->>>>>>> 30344d6 (AR-544: shared playlist)
                     "tenants": {
                         "type": "array",
                         "items": {
@@ -8706,8 +8625,6 @@
                                 "example": "johndoe@example.com"
                             }
                         }
-<<<<<<< HEAD
-=======
                     }
                 }
             },
@@ -8732,7 +8649,6 @@
                     "refresh_token": {
                         "type": "string",
                         "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
->>>>>>> 30344d6 (AR-544: shared playlist)
                     }
                 }
             },
