@@ -42,6 +42,16 @@ export const api = createApi({
         body: queryArg.credentials,
       }),
     }),
+    postRefreshTokenItem: build.mutation<
+      PostRefreshTokenItemApiResponse,
+      PostRefreshTokenItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/token/refresh`,
+        method: "POST",
+        body: queryArg.refreshTokenRequest,
+      }),
+    }),
     getV1CampaignsByIdScreenGroups: build.query<
       GetV1CampaignsByIdScreenGroupsApiResponse,
       GetV1CampaignsByIdScreenGroupsApiArg
@@ -197,6 +207,7 @@ export const api = createApi({
           published: queryArg.published,
           isCampaign: queryArg.isCampaign,
           order: queryArg.order,
+          "tenants.tenantKey": queryArg["tenants.tenantKey"],
         },
       }),
     }),
@@ -609,6 +620,39 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/v1/templates/${queryArg.id}` }),
     }),
+    getV1Tenants: build.query<GetV1TenantsApiResponse, GetV1TenantsApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/tenants`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+        },
+      }),
+    }),
+    getTenantItem: build.query<GetTenantItemApiResponse, GetTenantItemApiArg>({
+      query: (queryArg) => ({ url: `/v1/tenants/${queryArg.id}` }),
+    }),
+    putTenantItem: build.mutation<
+      PutTenantItemApiResponse,
+      PutTenantItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/tenants/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.tenant,
+      }),
+    }),
+    deleteTenantItem: build.mutation<
+      DeleteTenantItemApiResponse,
+      DeleteTenantItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/tenants/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
     getV1Themes: build.query<GetV1ThemesApiResponse, GetV1ThemesApiArg>({
       query: (queryArg) => ({
         url: `/v1/themes`,
@@ -680,6 +724,12 @@ export type PostCredentialsItemApiResponse =
 export type PostCredentialsItemApiArg = {
   /** Generate new JWT Token */
   credentials: Credentials;
+};
+export type PostRefreshTokenItemApiResponse =
+  /** status 200 Refresh JWT token */ RefreshTokenResponse;
+export type PostRefreshTokenItemApiArg = {
+  /** Refresh JWT Token */
+  refreshTokenRequest: RefreshTokenRequest;
 };
 export type GetV1CampaignsByIdScreenGroupsApiResponse = unknown;
 export type GetV1CampaignsByIdScreenGroupsApiArg = {
@@ -818,6 +868,9 @@ export type GetV1PlaylistsApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+  };
+  "tenants.tenantKey"?: {
+    ""?: string[];
   };
 };
 export type PostV1PlaylistsApiResponse = unknown;
@@ -1098,6 +1151,31 @@ export type GetV1TemplatesByIdApiResponse = unknown;
 export type GetV1TemplatesByIdApiArg = {
   id: string;
 };
+export type GetV1TenantsApiResponse = unknown;
+export type GetV1TenantsApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+};
+export type GetTenantItemApiResponse = unknown;
+export type GetTenantItemApiArg = {
+  /** Resource identifier */
+  id: string;
+};
+export type PutTenantItemApiResponse = unknown;
+export type PutTenantItemApiArg = {
+  /** Resource identifier */
+  id: string;
+  /** The updated Tenant resource */
+  tenant: Tenant;
+};
+export type DeleteTenantItemApiResponse = unknown;
+export type DeleteTenantItemApiArg = {
+  /** Resource identifier */
+  id: string;
+};
 export type GetV1ThemesApiResponse = unknown;
 export type GetV1ThemesApiArg = {
   page?: number;
@@ -1132,6 +1210,7 @@ export type DeleteV1ThemesByIdApiArg = {
 };
 export type Token = {
   token?: string;
+  refresh_token?: string;
   tenants?: {
     tenantKey?: string;
     title?: string;
@@ -1156,10 +1235,18 @@ export type Credentials = {
   email?: string;
   password?: string;
 };
+export type RefreshTokenResponse = {
+  token?: string;
+  refresh_token?: string;
+};
+export type RefreshTokenRequest = {
+  refresh_token?: string;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
   schedules?: string[];
+  tenants?: string[];
   isCampaign?: boolean;
   modifiedBy?: string;
   createdBy?: string;
@@ -1197,6 +1284,53 @@ export type SlideSlideInput = {
   media?: string[];
   content?: string[];
 };
+export type Collection = {
+  empty?: boolean;
+  keys?: number[];
+  values?: string[];
+  iterator?: any;
+};
+export type User = {
+  email?: string;
+  fullName: string;
+  password?: string;
+  activeTenant?: string;
+  userRoleTenants?: UserRoleTenant[];
+  provider?: string;
+  userIdentifier?: string;
+  username?: string;
+  roles?: string[];
+  tenants?: Collection;
+  salt?: string | null;
+  roleTenant?: string[];
+  userRoleTenant?: UserRoleTenant[];
+  id?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+  createdBy?: string;
+  modifiedBy?: string;
+};
+export type UserRoleTenant = {
+  user?: User;
+  tenant?: string;
+  roles?: string[];
+  id?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+  createdBy?: string;
+  modifiedBy?: string;
+};
+export type Tenant = {
+  tenantKey?: string;
+  userRoleTenants?: UserRoleTenant[];
+  title?: string;
+  description?: string;
+  id?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+  createdBy?: string;
+  modifiedBy?: string;
+};
 export type ThemeThemeInput = {
   title?: string;
   description?: string;
@@ -1209,6 +1343,7 @@ export const {
   useGetOidcAuthUrlsItemQuery,
   usePostLoginInfoScreenMutation,
   usePostCredentialsItemMutation,
+  usePostRefreshTokenItemMutation,
   useGetV1CampaignsByIdScreenGroupsQuery,
   useGetV1CampaignsByIdScreensQuery,
   useGetV1FeedSourcesQuery,
@@ -1266,6 +1401,10 @@ export const {
   usePutV1SlidesByIdPlaylistsMutation,
   useGetV1TemplatesQuery,
   useGetV1TemplatesByIdQuery,
+  useGetV1TenantsQuery,
+  useGetTenantItemQuery,
+  usePutTenantItemMutation,
+  useDeleteTenantItemMutation,
   useGetV1ThemesQuery,
   usePostV1ThemesMutation,
   useGetV1ThemesByIdQuery,

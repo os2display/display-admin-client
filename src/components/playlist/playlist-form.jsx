@@ -2,9 +2,10 @@ import { React } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
-import FormCheckbox from "../util/forms/form-checkbox";
 import Schedule from "../util/schedule/schedule";
+import { useGetV1TenantsQuery } from '../../redux/api/api.generated';
 import ContentBody from "../util/content-body/content-body";
+import TenantsDropdown from '../util/forms/multiselect-dropdown/tenants/tenants-dropdown';
 
 /**
  * The playlist form component.
@@ -14,12 +15,16 @@ import ContentBody from "../util/content-body/content-body";
  * @param {Function} props.handleInput Handles form input.
  * @returns {object} The playlist form.
  */
-function PlaylistForm({ playlist, handleInput }) {
+function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   const { t } = useTranslation("common");
+
+  const { data: tenants } = useGetV1TenantsQuery({
+    itemsPerPage: 100,
+  });
 
   return (
     <>
-      {playlist && (
+      {playlist && tenants && (
         <>
           <ContentBody>
             <h2 className="h4">{t("playlist-form.schedule-header")}</h2>
@@ -30,19 +35,17 @@ function PlaylistForm({ playlist, handleInput }) {
               }
             />
           </ContentBody>
-          <ContentBody>
-            <h2 className="h4">{t("playlist-form.public-playlist")}</h2>
-            <FormCheckbox
-              label={t("playlist-form.public-playlist-checkbox-label")}
-              onChange={handleInput}
-              value={playlist.public}
-              name="public"
-            />
-            {playlist.public && (
+          <ContentBody highlightSection={highlightSharedSection}>
+            <h2 className="h4">{t("playlist-form.share-playlist")}</h2>
+              <TenantsDropdown
+                    name="tenants"
+                    handleTenantSelection={handleInput}
+                    selected={playlist.tenants}
+                    data={tenants["hydra:member"]}
+              ></TenantsDropdown>
               <Alert className="mt-3 text-dark" variant="warning">
                 {t("playlist-form.warning")}
               </Alert>
-            )}
           </ContentBody>
         </>
       )}

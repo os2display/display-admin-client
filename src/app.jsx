@@ -30,7 +30,7 @@ import ThemesList from "./components/themes/themes-list";
 import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
 import UserContext from "./context/user-context";
-import PublicPlaylists from "./components/playlist/public-playlists";
+import SharedPlaylists from "./components/playlist/shared-playlists";
 import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
@@ -216,7 +216,7 @@ function App() {
                             />
                           </Route>
                           <Route path="public">
-                            <Route path="list" element={<PublicPlaylists />} />
+                            <Route path="list" element={<SharedPlaylists />} />
                           </Route>
 
                           <Route path="screen">

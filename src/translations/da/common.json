@@ -412,9 +412,8 @@
   },
   "playlist-form": {
     "schedule-header": "Planlægning",
-    "public-playlist-checkbox-label": "Gør spillelisten offentlig",
-    "public-playlist": "Offentlig",
-    "warning": "Vær opmærksom på at offentlige spillelister kan ses af alle der har adgang til systemet."
+    "share-playlist": "Del denne spilleliste",
+    "warning": "Vær opmærksom på, at ved at dele en spilleliste kan modtageren sætte den på en skærm men ikke ændre i den. Alt indholdet på spillelisten (slides, medier, temaer) bliver tilgængeligt for modtagerens skærmklient."
   },
   "playlist-campaign-form": {
     "title-about": "Om spillelisten",
@@ -430,13 +429,13 @@
     "publish-title": "Udgivelse",
     "publish-helptext": "Hvis der ikke vælges udgivet til/fra er spillelisten udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet spillelisten vises i."
   },
-  "public-playlists": {
+  "shared-playlists": {
     "change-view-calendar": "Kalender",
     "change-view-list": "Liste",
-    "header": "Offentlige spillelister",
+    "header": "Delte spillelister",
     "create-new": "Opret ny offentlig spilleliste",
     "edit-button": "Rediger",
-    "loading": "Henter offentlige spillelister...",
+    "loading": "Henter delte spillelister...",
     "info-modal": {
       "slides": "Spillelisten indeholder følgende slides"
     },
@@ -543,6 +542,10 @@
     "search-to-se-possible-selections": "De 100 nyeste slides bliver hentet automatisk, for at se andre mulige slides, skal du fremsøge dem pr navn.",
     "label": "Vælg en eller flere slides",
     "nothing-selected": "Vælg en af følgende slides"
+  },
+  "tenants-dropdown": {
+    "label": "Vælg en eller flere at dele med",
+    "nothing-selected": "Vælg en af følgende afdelinger at dele med"
   },
   "select": {
     "validation-text": "Dette felt skal udfyldes",

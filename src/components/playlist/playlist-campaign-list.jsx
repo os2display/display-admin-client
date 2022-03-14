@@ -1,8 +1,9 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Button, Col } from "react-bootstrap";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
+import UserContext from '../../context/user-context';
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import ContentHeader from "../util/content-header/content-header";
@@ -35,6 +36,9 @@ import {
  */
 function PlaylistCampaignList({ location }) {
   const { t } = useTranslation("common");
+
+  // Context
+  const context = useContext(UserContext);
 
   // Local state
   const [selectedRows, setSelectedRows] = useState([]);
@@ -71,8 +75,10 @@ function PlaylistCampaignList({ location }) {
     order: sortBy?.order,
     title: searchText,
     published: isPublished,
+    "tenants.tenantKey": context.selectedTenant?.get.tenantKey,
     isCampaign: location === "campaign",
   });
+  debugger
 
   useEffect(() => {
     if (data) {

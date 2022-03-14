@@ -45,13 +45,14 @@ function PlaylistCampaignManager({
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const { search } = useLocation();
-  const publicParams = new URLSearchParams(search).get("public");
+  const sharedParams = new URLSearchParams(search).get("shared");
   const headerText =
     saveMethod === "PUT"
       ? t(`playlist-campaign-manager.${location}.edit-header`)
       : t(`playlist-campaign-manager.${location}.create-header`);
   const [formStateObject, setFormStateObject] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [highlightSharedSection, setHighlightSharedSection] = useState(false);
   const [slidesToAdd, setSlidesToAdd] = useState([]);
   const [screensToAdd, setScreensToAdd] = useState([]);
   const [groupsToAdd, setGroupsToAdd] = useState([]);
@@ -119,19 +120,16 @@ function PlaylistCampaignManager({
 
   useEffect(() => {
     // If redirected from create public playlist
-    if (publicParams === "true") {
-      // Set public checkbox true
-      const localFormStateObject = { ...formStateObject };
-      set(localFormStateObject, "public", true);
-      setFormStateObject(localFormStateObject);
-      // Remove public search param
+    if (sharedParams === "true") {
+      // Remove shared search param
+      setHighlightSharedSection(true);
       const params = new URLSearchParams(search);
-      params.delete("public");
+      params.delete("shared");
       navigate({
         search: params.toString(),
       });
     }
-  }, [publicParams]);
+  }, [sharedParams]);
 
   // Slides are saved successfully, display a message
   useEffect(() => {
@@ -320,6 +318,7 @@ function PlaylistCampaignManager({
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject, target.id, target.value);
+    console.log(localFormStateObject)
     setFormStateObject(localFormStateObject);
   }
 
@@ -446,6 +445,7 @@ function PlaylistCampaignManager({
           )}
           {location === "playlist" && (
             <PlaylistForm
+            highlightSharedSection={highlightSharedSection}
               handleInput={handleInput}
               playlist={formStateObject}
             />

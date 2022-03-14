@@ -169,6 +169,42 @@
             },
             "parameters": []
         },
+        "/v1/authentication/token/refresh": {
+            "post": {
+                "operationId": "postRefreshTokenItem",
+                "tags": [
+                    "Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Refresh JWT token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RefreshTokenResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Get JWT token from refresh token.",
+                "description": "",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Refresh JWT Token",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshTokenRequest"
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/campaigns/{id}/screen-groups": {
             "get": {
                 "operationId": "get-v1-campaign-id-screen-group",
@@ -1779,6 +1815,40 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+<<<<<<< HEAD
+=======
+                    },
+                    {
+                        "name": "tenants.tenantKey",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "tenants.tenantKey[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+>>>>>>> 30344d6 (AR-544: shared playlist)
                     }
                 ],
                 "deprecated": false
@@ -5190,6 +5260,320 @@
             },
             "parameters": []
         },
+        "/v1/tenants": {
+            "get": {
+                "operationId": "get-v1-tenants",
+                "tags": [
+                    "Tenants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieves a collection of tenant resources.",
+                "description": "Retrieves a collection of tenant resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+<<<<<<< HEAD
+                    },
+                    {
+                        "name": "order[title]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[description]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[createdAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+=======
+>>>>>>> 30344d6 (AR-544: shared playlist)
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/tenants/{id}": {
+            "get": {
+                "operationId": "getTenantItem",
+                "tags": [
+                    "Tenant"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tenant resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tenant.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tenant"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tenant"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a Tenant resource.",
+                "description": "Retrieves a Tenant resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "putTenantItem",
+                "tags": [
+                    "Tenant"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tenant resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tenant.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tenant"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tenant"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetTenantItem": {
+                                "operationId": "getTenantItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/tenants/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Replaces the Tenant resource.",
+                "description": "Replaces the Tenant resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated Tenant resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tenant.jsonld"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tenant"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tenant"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "deleteTenantItem",
+                "tags": [
+                    "Tenant"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Tenant resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Removes the Tenant resource.",
+                "description": "Removes the Tenant resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/themes": {
             "get": {
                 "operationId": "get-v1-themes",
@@ -6048,8 +6432,19 @@
                     "campaignScreenGroups": {
                         "$ref": "#/components/schemas/Collection"
                     },
+<<<<<<< HEAD
+                    "feeds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+=======
+                    "tenants": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
                     "isCampaign": {
                         "type": "boolean"
+>>>>>>> 30344d6 (AR-544: shared playlist)
                     },
                     "published": {
                         "default": {
@@ -6064,6 +6459,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "supportedFeedOutputType": {
+                        "type": "string"
                     }
                 }
             },
@@ -6141,6 +6539,9 @@
                     "campaignScreenGroups": {
                         "$ref": "#/components/schemas/Collection.jsonld"
                     },
+                    "tenants": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
                     "isCampaign": {
                         "type": "boolean"
                     },
@@ -6167,10 +6568,20 @@
                     "title": {
                         "type": "string"
                     },
+<<<<<<< HEAD
+                    "feeds": {
+=======
                     "description": {
                         "type": "string"
                     },
                     "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenants": {
+>>>>>>> 30344d6 (AR-544: shared playlist)
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -6198,6 +6609,9 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "supportedFeedOutputType": {
+                        "type": "string"
                     }
                 }
             },
@@ -6247,6 +6661,12 @@
                         "type": "string"
                     },
                     "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenants": {
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -7584,6 +8004,127 @@
                     }
                 }
             },
+            "Tenant": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "tenantKey": {
+                        "type": "string"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant"
+                        }
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Tenant.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "tenantKey": {
+                        "type": "string"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
+                        }
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
             "Theme.Theme": {
                 "type": "object",
                 "description": "",
@@ -7760,6 +8301,350 @@
                     }
                 }
             },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The hashed password",
+                        "type": "string"
+                    },
+                    "activeTenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant"
+                        }
+                    },
+                    "provider": {
+                        "type": "string"
+                    },
+                    "userIdentifier": {
+                        "readOnly": true,
+                        "description": "A visual identifier that represents this user.",
+                        "type": "string"
+                    },
+                    "username": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "roles": {
+                        "readOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenants": {
+                        "readOnly": true,
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "salt": {
+                        "readOnly": true,
+                        "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "roleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "userRoleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "fullName"
+                ]
+            },
+            "User.jsonld": {
+                "type": "object",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The hashed password",
+                        "type": "string"
+                    },
+                    "activeTenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
+                        }
+                    },
+                    "provider": {
+                        "type": "string"
+                    },
+                    "userIdentifier": {
+                        "readOnly": true,
+                        "description": "A visual identifier that represents this user.",
+                        "type": "string"
+                    },
+                    "username": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "roles": {
+                        "readOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenants": {
+                        "readOnly": true,
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
+                    "salt": {
+                        "readOnly": true,
+                        "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "roleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "userRoleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "fullName"
+                ]
+            },
+            "UserRoleTenant": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "tenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserRoleTenant.jsonld": {
+                "type": "object",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User.jsonld"
+                    },
+                    "tenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
             "Token": {
                 "type": "object",
                 "properties": {
@@ -7768,6 +8653,14 @@
                         "readOnly": true,
                         "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     },
+<<<<<<< HEAD
+=======
+                    "refresh_token": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    },
+>>>>>>> 30344d6 (AR-544: shared playlist)
                     "tenants": {
                         "type": "array",
                         "items": {
@@ -7813,6 +8706,33 @@
                                 "example": "johndoe@example.com"
                             }
                         }
+<<<<<<< HEAD
+=======
+                    }
+                }
+            },
+            "RefreshTokenResponse": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    },
+                    "refresh_token": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    }
+                }
+            },
+            "RefreshTokenRequest": {
+                "type": "object",
+                "properties": {
+                    "refresh_token": {
+                        "type": "string",
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+>>>>>>> 30344d6 (AR-544: shared playlist)
                     }
                 }
             },
