@@ -90,6 +90,7 @@ function GroupsList() {
     }
   }, [isDeleteSuccess]);
 
+  // If the tenant is changed, data should be refetched
   useEffect(() => {
     if (context.selectedTenant.get) {
       refetch();

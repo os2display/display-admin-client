@@ -18,9 +18,9 @@ import {
 } from "../../redux/api/api.generated";
 
 /**
- * The list component for public playlists.
+ * The list component for shared playlists.
  *
- * @returns {object} The playlist containing public playlists.
+ * @returns {object} The playlist containing shared playlists.
  */
 function SharedPlaylists() {
   const { t } = useTranslation("common");
@@ -60,6 +60,7 @@ function SharedPlaylists() {
     }
   }, [data]);
 
+    // If the tenant is changed, data should be refetched
   useEffect(() => {
     if (context.selectedTenant.get) {
       refetch();
