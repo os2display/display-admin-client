@@ -1,8 +1,9 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Button, Col } from "react-bootstrap";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
+import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import ListButton from "../util/list/list-button";
 import List from "../util/list/list";
@@ -24,6 +25,9 @@ import {
 function SharedPlaylists() {
   const { t } = useTranslation("common");
 
+  // Context
+  const context = useContext(UserContext);
+
   // Local state
   const [view, setView] = useState("list");
   const [sortBy, setSortBy] = useState();
@@ -39,9 +43,11 @@ function SharedPlaylists() {
     data,
     error: playlistsGetError,
     isLoading,
+    refetch,
   } = useGetV1PlaylistsQuery({
     page,
     orderBy: sortBy?.path,
+    "tenants.tenantKey": context.selectedTenant?.get.tenantKey,
     order: sortBy?.order,
     title: searchText,
     published: isPublished,
@@ -53,6 +59,12 @@ function SharedPlaylists() {
       setListData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   /** @param {Array} slideData The array of playlists. */
   function openInfoModal(slideData) {

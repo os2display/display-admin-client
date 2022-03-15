@@ -38,6 +38,7 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
   const tenantKey = JSON.parse(
     localStorage.getItem(localStorageKeys.SELECTED_TENANT)
   );
+
   if (tenantKey) {
     newArgs.headers["Authorization-Tenant-Key"] = tenantKey.tenantKey;
   }

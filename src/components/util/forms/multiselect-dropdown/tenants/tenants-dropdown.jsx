@@ -9,7 +9,6 @@ import MultiSelectComponent from "../multi-dropdown";
  * @param {string} props.name - The id of the form element
  * @param {Array} props.errors - A list of errors, or null.
  * @param {object} props.data - The data for the slides dropdown.
- * @param {Function} props.filterCallback - The callback on search filter.
  * @returns {object} - The multidropdown of playlists.
  */
 function TenantsDropdown({

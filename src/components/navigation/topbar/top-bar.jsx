@@ -2,7 +2,7 @@ import { React, useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -27,7 +27,6 @@ import "./top-bar.scss";
 function TopBar() {
   const { t } = useTranslation("common");
   const context = useContext(UserContext);
-  const navigate = useNavigate();
 
   /**
    * Change tenant on select tenant
@@ -45,7 +44,6 @@ function TopBar() {
         context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
       )
     );
-    navigate("/slide/list/");
   }
 
   return (
@@ -71,7 +69,7 @@ function TopBar() {
                 )
               </div>
             )}
-            {context.tenants.get && (
+            {context.tenants?.get && (
               <Dropdown>
                 <Dropdown.Toggle
                   variant="link"
@@ -82,7 +80,8 @@ function TopBar() {
                     className="me-1 fa-lg text-dark text-muted"
                     icon={faUserCircle}
                   />
-                  {context.userEmail.get} ({context.selectedTenant.get?.title})
+                  {context.userEmail?.get} ({context.selectedTenant?.get?.title}
+                  )
                 </Dropdown.Toggle>
                 <Dropdown.Menu style={{ width: "100%" }}>
                   {context.tenants.get.map((tenant) => (

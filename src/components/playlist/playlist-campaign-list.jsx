@@ -3,8 +3,8 @@ import { Button, Col } from "react-bootstrap";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import UserContext from '../../context/user-context';
 import { useTranslation } from "react-i18next";
+import UserContext from "../../context/user-context";
 import selectedHelper from "../util/helpers/selectedHelper";
 import ContentHeader from "../util/content-header/content-header";
 import ListButton from "../util/list/list-button";
@@ -36,8 +36,6 @@ import {
  */
 function PlaylistCampaignList({ location }) {
   const { t } = useTranslation("common");
-
-  // Context
   const context = useContext(UserContext);
 
   // Local state
@@ -75,16 +73,20 @@ function PlaylistCampaignList({ location }) {
     order: sortBy?.order,
     title: searchText,
     published: isPublished,
-    "tenants.tenantKey": context.selectedTenant?.get.tenantKey,
     isCampaign: location === "campaign",
   });
-  debugger
 
   useEffect(() => {
     if (data) {
       setListData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   /** Deletes multiple playlists. */
   useEffect(() => {

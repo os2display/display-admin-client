@@ -1,8 +1,9 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Button, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UserContext from "../../context/user-context";
 import CampaignIcon from "../screen-list/campaign-icon";
 import ScreenCalendarCell from "../screen-list/screen-calendar-cell";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -33,6 +34,7 @@ import "./screen-list.scss";
  */
 function ScreenList() {
   const { t } = useTranslation("common");
+  const context = useContext(UserContext);
 
   // Local state
   const [view, setView] = useState("list");
@@ -74,6 +76,12 @@ function ScreenList() {
       setListData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   /** Deletes multiple screens. */
   useEffect(() => {

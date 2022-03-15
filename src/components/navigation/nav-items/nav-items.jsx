@@ -80,7 +80,7 @@ function NavItems() {
                 className="nav-link"
                 to="/public/list"
               >
-                {t("nav-items.public-playlists")}
+                {t("nav-items.shared-playlists")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>

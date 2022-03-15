@@ -452,7 +452,7 @@
     }
   },
   "playlist-drag-and-drop": {
-    "show-only-public": "Vis kun offentlige spillelister",
+    "show-only-shared": "Vis kun spillelister delt med mig",
     "columns": {
       "name": "Navn",
       "published": "Udgivet"
@@ -662,7 +662,7 @@
     "screen-resolution-of-screen-height-placeholder": "Angiv skærmens højde"
   },
   "nav-items": {
-    "public-playlists": "Offentlige spillelister",
+    "shared-playlists": "Delte spillelister",
     "dashboard": "Oversigt",
     "content-media": "Medier",
     "content-slides": "Slides",

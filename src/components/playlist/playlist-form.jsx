@@ -1,11 +1,12 @@
-import { React } from "react";
+import { React, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
+import UserContext from "../../context/user-context";
 import Schedule from "../util/schedule/schedule";
-import { useGetV1TenantsQuery } from '../../redux/api/api.generated';
+import { useGetV1TenantsQuery } from "../../redux/api/api.generated";
 import ContentBody from "../util/content-body/content-body";
-import TenantsDropdown from '../util/forms/multiselect-dropdown/tenants/tenants-dropdown';
+import TenantsDropdown from "../util/forms/multiselect-dropdown/tenants/tenants-dropdown";
 
 /**
  * The playlist form component.
@@ -13,10 +14,13 @@ import TenantsDropdown from '../util/forms/multiselect-dropdown/tenants/tenants-
  * @param {object} props - The props.
  * @param {object} props.playlist The playlist object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
+ * @param {boolean} props.highlightSharedSection - Hightlight section concerning
+ *   shared info
  * @returns {object} The playlist form.
  */
 function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   const { t } = useTranslation("common");
+  const context = useContext(UserContext);
 
   const { data: tenants } = useGetV1TenantsQuery({
     itemsPerPage: 100,
@@ -37,15 +41,17 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
           </ContentBody>
           <ContentBody highlightSection={highlightSharedSection}>
             <h2 className="h4">{t("playlist-form.share-playlist")}</h2>
-              <TenantsDropdown
-                    name="tenants"
-                    handleTenantSelection={handleInput}
-                    selected={playlist.tenants}
-                    data={tenants["hydra:member"]}
-              ></TenantsDropdown>
-              <Alert className="mt-3 text-dark" variant="warning">
-                {t("playlist-form.warning")}
-              </Alert>
+            <TenantsDropdown
+              name="tenants"
+              handleTenantSelection={handleInput}
+              selected={playlist.tenants}
+              data={tenants["hydra:member"].filter(({ tenantKey }) => {
+                return context.selectedTenant.get.tenantKey !== tenantKey;
+              })}
+            />
+            <Alert className="mt-3 text-dark" variant="warning">
+              {t("playlist-form.warning")}
+            </Alert>
           </ContentBody>
         </>
       )}
@@ -53,9 +59,14 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   );
 }
 
+PlaylistForm.defaultProps = {
+  highlightSharedSection: false,
+};
+
 PlaylistForm.propTypes = {
   playlist: PropTypes.objectOf(PropTypes.any).isRequired,
   handleInput: PropTypes.func.isRequired,
+  highlightSharedSection: PropTypes.bool,
 };
 
 export default PlaylistForm;

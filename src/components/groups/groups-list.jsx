@@ -1,9 +1,10 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
 import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
+import UserContext from "../../context/user-context";
 import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
@@ -25,6 +26,7 @@ import {
  */
 function GroupsList() {
   const { t } = useTranslation("common");
+  const context = useContext(UserContext);
 
   // Local state
   const [selectedRows, setSelectedRows] = useState([]);
@@ -87,6 +89,12 @@ function GroupsList() {
       setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
+
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   // Display error on unsuccessful deletion
   useEffect(() => {

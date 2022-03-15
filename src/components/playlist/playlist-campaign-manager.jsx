@@ -318,7 +318,6 @@ function PlaylistCampaignManager({
   function handleInput({ target }) {
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject, target.id, target.value);
-    console.log(localFormStateObject)
     setFormStateObject(localFormStateObject);
   }
 
@@ -377,6 +376,9 @@ function PlaylistCampaignManager({
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
+      tenants: formStateObject.tenants.map((tenant) => {
+        return idFromUrl(tenant["@id"]);
+      }),
       schedules: formStateObject.schedules.map((schedule) => {
         return {
           rrule: schedule.rrule,
@@ -445,7 +447,7 @@ function PlaylistCampaignManager({
           )}
           {location === "playlist" && (
             <PlaylistForm
-            highlightSharedSection={highlightSharedSection}
+              highlightSharedSection={highlightSharedSection}
               handleInput={handleInput}
               playlist={formStateObject}
             />
