@@ -73,7 +73,7 @@ function SlidesList() {
     }
   }, [data]);
 
-    // If the tenant is changed, data should be refetched
+  // If the tenant is changed, data should be refetched
   useEffect(() => {
     if (context.selectedTenant.get) {
       refetch();
