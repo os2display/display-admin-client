@@ -90,6 +90,8 @@ export const api = createApi({
           supportedFeedOutputType: queryArg.supportedFeedOutputType,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -114,6 +116,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -150,6 +154,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -204,6 +210,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           isCampaign: queryArg.isCampaign,
           order: queryArg.order,
@@ -255,6 +263,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -290,6 +300,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -346,6 +358,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -378,6 +392,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -436,6 +452,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -538,6 +556,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -584,6 +604,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -610,6 +632,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -628,6 +652,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
         },
       }),
     }),
@@ -661,6 +687,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -765,6 +793,12 @@ export type GetV1FeedSourcesApiArg = {
   };
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -785,6 +819,12 @@ export type GetV1FeedsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     createdAt?: "asc" | "desc";
   };
@@ -814,6 +854,12 @@ export type GetV1MediaApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -826,8 +872,6 @@ export type PostMediaCollectionApiArg = {
     title: string;
     description: string;
     license: string;
-    modifiedBy?: string;
-    createdBy?: string;
     file: Blob;
   };
 };
@@ -860,6 +904,12 @@ export type GetV1PlaylistsApiArg = {
   itemsPerPage?: number;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   /** If true only campaigns will be shown */
@@ -898,6 +948,12 @@ export type GetV1PlaylistsByIdSlidesApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -922,6 +978,12 @@ export type GetV1ScreenGroupsApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -957,6 +1019,12 @@ export type GetV1ScreenGroupsByIdCampaignsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -981,6 +1049,12 @@ export type GetV1ScreensApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -1019,6 +1093,12 @@ export type GetV1ScreensByIdCampaignsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -1092,6 +1172,12 @@ export type GetV1SlidesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -1125,6 +1211,12 @@ export type GetV1SlidesByIdPlaylistsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -1143,6 +1235,12 @@ export type GetV1TemplatesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     createdAt?: "asc" | "desc";
   };
@@ -1158,6 +1256,12 @@ export type GetV1TenantsApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
 };
 export type GetTenantItemApiResponse = unknown;
 export type GetTenantItemApiArg = {
@@ -1183,6 +1287,12 @@ export type GetV1ThemesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -1248,22 +1358,16 @@ export type PlaylistPlaylistInput = {
   schedules?: string[];
   tenants?: string[];
   isCampaign?: boolean;
-  modifiedBy?: string;
-  createdBy?: string;
   published?: string[];
 };
 export type ScreenGroupScreenGroupInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
 };
 export type ScreenScreenInput = {
   title?: string;
   description?: string;
   size?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   layout?: string;
   location?: string;
   dimensions?: string[];
@@ -1274,8 +1378,6 @@ export type ScreenBindObject = {
 export type SlideSlideInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   templateInfo?: string[];
   theme?: string;
   duration?: number | null;
@@ -1334,8 +1436,6 @@ export type Tenant = {
 export type ThemeThemeInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   css?: string;
 };
 export const {

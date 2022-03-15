@@ -70,6 +70,8 @@ exports.api = (0, react_1.createApi)({
                     supportedFeedOutputType: queryArg.supportedFeedOutputType,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order
                 }
             }); }
@@ -88,6 +90,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order
                 }
             }); }
@@ -115,6 +119,8 @@ exports.api = (0, react_1.createApi)({
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order
                 }
             }); }
@@ -154,6 +160,8 @@ exports.api = (0, react_1.createApi)({
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     published: queryArg.published,
                     isCampaign: queryArg.isCampaign,
                     order: queryArg.order,
@@ -190,6 +198,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     published: queryArg.published,
                     order: queryArg.order
                 }
@@ -216,6 +226,8 @@ exports.api = (0, react_1.createApi)({
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order
                 }
             }); }
@@ -254,6 +266,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     published: queryArg.published,
                     order: queryArg.order
                 }
@@ -280,6 +294,8 @@ exports.api = (0, react_1.createApi)({
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order
                 }
             }); }
@@ -320,6 +336,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     published: queryArg.published,
                     order: queryArg.order
                 }
@@ -395,6 +413,8 @@ exports.api = (0, react_1.createApi)({
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     published: queryArg.published,
                     order: queryArg.order
                 }
@@ -429,6 +449,8 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     published: queryArg.published,
                     order: queryArg.order
                 }
@@ -449,6 +471,8 @@ exports.api = (0, react_1.createApi)({
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order
                 }
             }); }
@@ -463,7 +487,9 @@ exports.api = (0, react_1.createApi)({
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
-                    description: queryArg.description
+                    description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy
                 }
             }); }
         }),
@@ -491,6 +517,8 @@ exports.api = (0, react_1.createApi)({
                     itemsPerPage: queryArg.itemsPerPage,
                     title: queryArg.title,
                     description: queryArg.description,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order
                 }
             }); }
