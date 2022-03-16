@@ -197,32 +197,31 @@ function List({
         <Col>
           <SearchBox value={searchParams} onChange={onSearch} />
         </Col>
-        {handleDelete ||
-          (clearSelectedRows && (
-            <Col className="d-flex justify-content-end">
-              {handleDelete && (
-                <Button
-                  variant="danger"
-                  id="delete-button"
-                  disabled={disableDeleteButton}
-                  onClick={() => handleDelete()}
-                  className="me-3"
-                >
-                  {t("list.delete-button")}
-                </Button>
-              )}
-              {clearSelectedRows && (
-                <Button
-                  id="clear-rows-button"
-                  disabled={selectedRows.length === 0}
-                  onClick={() => clearSelectedRows()}
-                  variant="dark"
-                >
-                  {t("list.deselect-all")}
-                </Button>
-              )}
-            </Col>
-          ))}
+        <Col className="d-flex justify-content-end">
+          <>
+            {handleDelete && (
+              <Button
+                variant="danger"
+                id="delete-button"
+                disabled={disableDeleteButton}
+                onClick={() => handleDelete()}
+                className="me-3"
+              >
+                {t("list.delete-button")}
+              </Button>
+            )}
+            {clearSelectedRows && (
+              <Button
+                id="clear-rows-button"
+                disabled={selectedRows.length === 0}
+                onClick={() => clearSelectedRows()}
+                variant="dark"
+              >
+                {t("list.deselect-all")}
+              </Button>
+            )}
+          </>
+        </Col>
       </Row>
       <Row>
         {displayPublished && publishedParams && (
@@ -273,6 +272,7 @@ List.defaultProps = {
   displayPublished: false,
   children: <></>,
   selectedRows: [],
+  clearSelectedRows: null,
 };
 
 List.propTypes = {
@@ -281,7 +281,7 @@ List.propTypes = {
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   selectedRows: SelectedRowsProptypes,
-  clearSelectedRows: PropTypes.func.isRequired,
+  clearSelectedRows: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
   calendarView: PropTypes.bool,

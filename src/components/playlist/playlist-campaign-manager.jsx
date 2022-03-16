@@ -370,15 +370,19 @@ function PlaylistCampaignManager({
       ? new Date(formStateObject.published.to).toISOString()
       : null;
 
+    const saveTenants = formStateObject.tenants
+      ? formStateObject.tenants.map((tenant) => {
+          return idFromUrl(tenant["@id"]);
+        })
+      : [];
+
     const saveData = {
       title: formStateObject.title,
       isCampaign: location === "campaign",
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
-      tenants: formStateObject.tenants.map((tenant) => {
-        return idFromUrl(tenant["@id"]);
-      }),
+      tenants: saveTenants,
       schedules: formStateObject.schedules.map((schedule) => {
         return {
           rrule: schedule.rrule,

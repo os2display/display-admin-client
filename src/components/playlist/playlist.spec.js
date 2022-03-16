@@ -1,5 +1,11 @@
 describe("Playlist pages work", () => {
   beforeEach(() => {
+    // Mock successful response on get tenants
+    cy.intercept("GET", "**/tenants*", {
+      statusCode: 201,
+      fixture: "playlists/tenants.json",
+    }).as("tenants");
+
     cy.visit("/playlist/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
@@ -10,8 +16,9 @@ describe("Playlist pages work", () => {
     }).as("slides");
     cy.visit("/playlist/create");
     cy.get("#login").click();
-    cy.wait(["@slides", "@token"]);
+    cy.wait(["@slides", "@token", "@tenants"]);
   });
+
   it("It loads create playlist page", () => {
     cy.get("#save_playlist").should("exist");
   });
