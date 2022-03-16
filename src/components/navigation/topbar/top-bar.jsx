@@ -82,7 +82,7 @@ function TopBar() {
                     className="me-1 fa-lg text-dark text-muted"
                     icon={faUserCircle}
                   />
-                  {context.userEmail.get} ({context.selectedTenant.get?.title})
+                  {context.userEmail?.get} ({context.selectedTenant?.get?.title})
                 </Dropdown.Toggle>
                 <Dropdown.Menu style={{ width: "100%" }}>
                   {context.tenants.get.map((tenant) => (
