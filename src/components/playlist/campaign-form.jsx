@@ -17,6 +17,7 @@ import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
  */
 function CampaignForm({ campaign, handleInput }) {
   const { t } = useTranslation("common");
+
   return (
     <>
       {campaign && (
