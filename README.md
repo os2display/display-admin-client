@@ -2,7 +2,7 @@
 
 This is an admin for OS2Display. 
 This is based on create-react-app.
-See [https://github.com/os2display/display-docs/blob/main/admin-client.md](https://github.com/os2display/display-docs/blob/main/admin-client.md) for a description of the admin.
+See [https://github.com/os2display/display-docs/blob/main/admin.md](https://github.com/os2display/display-docs/blob/main/admin.md) for a description of the admin.
 
 ## Docker development setup
 
