@@ -1,8 +1,8 @@
-# Display admin
+# OS2Display Admin
 
-The admin for OS2Display ver. 2.
-
+This is an admin for OS2Display. 
 This is based on create-react-app.
+See [https://github.com/os2display/display-docs/blob/main/admin.md](https://github.com/os2display/display-docs/blob/main/admin.md) for a description of the admin.
 
 ## Docker development setup
 
@@ -25,7 +25,7 @@ And modify the entries to suit your setup.
 
 ### Create public/access-config file
 
-This file contains the access config.
+This file contains the access config. This file is only required if other access setting are required than what is default.
 
 ```bash
 cp public/example-access-config.json public/access-config.json
@@ -41,26 +41,6 @@ docker-compose up -d
 
 ```bash
 docker-compose run node yarn
-```
-
-## Testing with cypress
-
-We use [cypress](https://www.cypress.io/) for testing.
-
-To run cypress tests in the cypress container:
-
-```bash
-docker-compose run cypress run
-```
-
-### Linting
-
-```bash
-docker-compose run node yarn check-coding-standards
-```
-
-```bash
-docker-compose run node yarn apply-coding-standards
 ```
 
 ### Redux Toolkit
@@ -81,39 +61,22 @@ npm install
 npm start
 ```
 
-## System description
+## Testing with cypress
 
-| Component   | Description  | Accessible by |
-| ----------- | :----------- | :-----------  |
-| Slide | A slide is the visible content on a screen. | Admin, editor |
-| Media | Media is either images or videos used as content for slides. | Admin, editor |
-| Theme | A theme has css, that can override the slide css. | Admin |
-| Template | The template is how the slide looks, and which content is on the slide. Templates are imported from manually and developed outside the admin. Templates are accessible to choose on Slides. | Admin, editor |
-| Playlist | A playlist arranges the order of the slides, and the playlist is scheduled. | Admin, editor |
-| Campaign | A campaign is a playlist, that takes precedence over all other playlists on the screen. If there a multiple campaigns, they are queued. A campaign is either directly attached to a screen, or attached to a group affecting the screens that are members of that group. | Admin |
-| Group | A group is a collection of screens. | Admin |
-| Layout | A layout consists of different regions, and each region can have a number of playlists connected. A layout is connected to a screen. | Admin |
-| Screen | A screen is connected to an actual screen, and has a layout with different playlists in. | Admin |
+We use [cypress](https://www.cypress.io/) for testing.
 
-```mermaid
-flowchart LR
-    Slide -->|1| D[Theme]
-    Slide -->|1| E[Template]
-    Slide -->|fa:fa-asterisk| F[Media]
+To run cypress tests in the cypress container:
+
+```bash
+docker-compose run cypress run
 ```
 
-```mermaid
-flowchart LR
-    Screen-->|fa:fa-asterisk|Layout
-    Layout -->|fa:fa-asterisk|Playlist
-    Playlist -->|fa:fa-asterisk|Slide
+### Linting
 
-    Screen-->|fa:fa-asterisk|G[Campaign]
-    G -->|fa:fa-asterisk|H[Slide]
+```bash
+docker-compose run node yarn check-coding-standards
+```
 
-    Screen-->|fa:fa-asterisk|Group
-
-    Group-->|fa:fa-asterisk|L[Campaign]
-    L -->|fa:fa-asterisk| M[Slide]
-
+```bash
+docker-compose run node yarn apply-coding-standards
 ```
