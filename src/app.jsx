@@ -215,7 +215,7 @@ function App() {
                               }
                             />
                           </Route>
-                          <Route path="public">
+                          <Route path="shared">
                             <Route path="list" element={<SharedPlaylists />} />
                           </Route>
 

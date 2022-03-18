@@ -119,7 +119,7 @@ function PlaylistCampaignManager({
   }, [initialState]);
 
   useEffect(() => {
-    // If redirected from create public playlist
+    // If redirected from create shared playlist
     if (sharedParams === "true") {
       // Remove shared search param
       setHighlightSharedSection(true);
