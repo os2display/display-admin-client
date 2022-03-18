@@ -144,7 +144,7 @@ describe("Playlist pages work", () => {
   });
 
   it("Playlist section is highlighted if shared true is in url", () => {
-  cy.visit("/playlist/create?shared=true")
+    cy.visit("/playlist/create?shared=true");
     cy.get("#shared-section").should("have.class", "border-warning");
   });
 });
