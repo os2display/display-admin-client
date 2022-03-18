@@ -245,11 +245,14 @@ function Login() {
                         type="password"
                         required
                       />
+                      <Button type="submit" className="mt-3" id="login">
+                        {t("login.submit")}
+                      </Button>
                     </>
                   )}
                   {!context.selectedTenant.get &&
                     context.tenants.get?.length > 1 && (
-                      <div>
+                      <div id="tenant-picker-section">
                         <Form.Label htmlFor="tenant">
                           {t("login.select-tenant-label")}
                         </Form.Label>
@@ -275,10 +278,6 @@ function Login() {
                       </div>
                     )}
                 </>
-
-                <Button type="submit" className="mt-3" id="login">
-                  {t("login.submit")}
-                </Button>
               </Col>
             </Row>
           </Form>

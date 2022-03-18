@@ -70,7 +70,7 @@ function TopBar() {
               </div>
             )}
             {context.tenants?.get && (
-              <Dropdown>
+              <Dropdown className="user-dropdown">
                 <Dropdown.Toggle
                   variant="link"
                   id="topbar_user"
@@ -80,8 +80,10 @@ function TopBar() {
                     className="me-1 fa-lg text-dark text-muted"
                     icon={faUserCircle}
                   />
-                  {context.userEmail?.get} ({context.selectedTenant?.get?.title}
-                  )
+                  <span className="user-dropdown-name">
+                    {context.userName?.get} (
+                    {context.selectedTenant?.get?.title})
+                  </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu style={{ width: "100%" }}>
                   {context.tenants.get.map((tenant) => (
