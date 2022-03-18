@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
  */
 function ContentBody({ children, id, highlightSection }) {
   const classes = `shadow-sm p-3 mb-3 bg-body rounded ${
-    highlightSection ? "border border-success" : ""
+    highlightSection ? "border border-warning" : ""
   }`;
 
   return (

@@ -142,4 +142,9 @@ describe("Playlist pages work", () => {
     cy.get("#schedule_details_button").click();
     cy.get("#schedule_details").should("exist");
   });
+
+  it("Playlist section is highlighted if shared true is in url", () => {
+  cy.visit("/playlist/create?shared=true")
+    cy.get("#shared-section").should("have.class", "border-warning");
+  });
 });
