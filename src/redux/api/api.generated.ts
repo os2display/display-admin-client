@@ -657,27 +657,11 @@ export const api = createApi({
         },
       }),
     }),
-    getTenantItem: build.query<GetTenantItemApiResponse, GetTenantItemApiArg>({
+    getV1TenantsById: build.query<
+      GetV1TenantsByIdApiResponse,
+      GetV1TenantsByIdApiArg
+    >({
       query: (queryArg) => ({ url: `/v1/tenants/${queryArg.id}` }),
-    }),
-    putTenantItem: build.mutation<
-      PutTenantItemApiResponse,
-      PutTenantItemApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/tenants/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.tenant,
-      }),
-    }),
-    deleteTenantItem: build.mutation<
-      DeleteTenantItemApiResponse,
-      DeleteTenantItemApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/tenants/${queryArg.id}`,
-        method: "DELETE",
-      }),
     }),
     getV1Themes: build.query<GetV1ThemesApiResponse, GetV1ThemesApiArg>({
       query: (queryArg) => ({
@@ -1263,21 +1247,8 @@ export type GetV1TenantsApiArg = {
     ""?: string[];
   };
 };
-export type GetTenantItemApiResponse = unknown;
-export type GetTenantItemApiArg = {
-  /** Resource identifier */
-  id: string;
-};
-export type PutTenantItemApiResponse = unknown;
-export type PutTenantItemApiArg = {
-  /** Resource identifier */
-  id: string;
-  /** The updated Tenant resource */
-  tenant: Tenant;
-};
-export type DeleteTenantItemApiResponse = unknown;
-export type DeleteTenantItemApiArg = {
-  /** Resource identifier */
+export type GetV1TenantsByIdApiResponse = unknown;
+export type GetV1TenantsByIdApiArg = {
   id: string;
 };
 export type GetV1ThemesApiResponse = unknown;
@@ -1386,53 +1357,6 @@ export type SlideSlideInput = {
   media?: string[];
   content?: string[];
 };
-export type Collection = {
-  empty?: boolean;
-  keys?: number[];
-  values?: string[];
-  iterator?: any;
-};
-export type User = {
-  email?: string;
-  fullName: string;
-  password?: string;
-  activeTenant?: string;
-  userRoleTenants?: UserRoleTenant[];
-  provider?: string;
-  userIdentifier?: string;
-  username?: string;
-  roles?: string[];
-  tenants?: Collection;
-  salt?: string | null;
-  roleTenant?: string[];
-  userRoleTenant?: UserRoleTenant[];
-  id?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-  createdBy?: string;
-  modifiedBy?: string;
-};
-export type UserRoleTenant = {
-  user?: User;
-  tenant?: string;
-  roles?: string[];
-  id?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-  createdBy?: string;
-  modifiedBy?: string;
-};
-export type Tenant = {
-  tenantKey?: string;
-  userRoleTenants?: UserRoleTenant[];
-  title?: string;
-  description?: string;
-  id?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-  createdBy?: string;
-  modifiedBy?: string;
-};
 export type ThemeThemeInput = {
   title?: string;
   description?: string;
@@ -1502,9 +1426,7 @@ export const {
   useGetV1TemplatesQuery,
   useGetV1TemplatesByIdQuery,
   useGetV1TenantsQuery,
-  useGetTenantItemQuery,
-  usePutTenantItemMutation,
-  useDeleteTenantItemMutation,
+  useGetV1TenantsByIdQuery,
   useGetV1ThemesQuery,
   usePostV1ThemesMutation,
   useGetV1ThemesByIdQuery,
