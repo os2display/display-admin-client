@@ -1,14 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import LinkForList from "../util/list/link-for-list";
+import UserContext from "../../context/user-context";
 import Published from "../util/published";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
+import FormCheckbox from "../util/forms/form-checkbox";
 import {
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
-  useGetV1PlaylistsQuery,
+  api,
 } from "../../redux/api/api.generated";
 
 /**
@@ -25,20 +28,43 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
+  const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
+  const dispatch = useDispatch();
+
+  // Context
+  const context = useContext(UserContext);
 
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
       regionId,
       page: 1,
+      itemsPerPage: 100,
     });
 
-  const { data: playlists } = useGetV1PlaylistsQuery({
-    title: searchText,
-    itemsPerPage: 100,
-    orderBy: "createdAt",
-    order: "desc",
-  });
+  // Fetch playlist data
+  // Either its all the playlists withing the tenants, or the shared with me playlists
+  useEffect(() => {
+    const callParamters = {
+      isCampaign: false,
+      title: searchText,
+      itemsPerPage: 100,
+      orderBy: "createdAt",
+      order: "desc",
+    };
+    if (onlySharedPlaylists) {
+      callParamters["tenants.tenantKey"] =
+        context.selectedTenant?.get.tenantKey;
+    }
+    dispatch(api.endpoints.getV1Playlists.initiate(callParamters)).then(
+      (result) => {
+        if (result.data) {
+          setPlaylists(result.data);
+        }
+      }
+    );
+  }, [onlySharedPlaylists]);
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -133,6 +159,14 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     <>
       {playlists && playlists["hydra:member"] && selectedData && (
         <>
+          <FormCheckbox
+            label={t("playlist-drag-and-drop.show-only-shared")}
+            onChange={() => {
+              setOnlySharedPlaylists(!onlySharedPlaylists);
+            }}
+            value={onlySharedPlaylists}
+            name="show-only-shared"
+          />
           <div className="mb-3">
             <PlaylistsDropdown
               filterCallback={onFilter}

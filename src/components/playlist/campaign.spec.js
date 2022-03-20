@@ -1,12 +1,6 @@
-describe("Playlist pages work", () => {
+describe("Campaign pages work", () => {
   beforeEach(() => {
-    // Mock successful response on get tenants
-    cy.intercept("GET", "**/tenants*", {
-      statusCode: 201,
-      fixture: "playlists/tenants.json",
-    }).as("tenants");
-
-    cy.visit("/playlist/list");
+    cy.visit("/campaign/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
@@ -14,12 +8,12 @@ describe("Playlist pages work", () => {
     cy.intercept("GET", "**/slides*", {
       fixture: "playlists/playlist-slide.json",
     }).as("slides");
-    cy.visit("/playlist/create");
+    cy.visit("/campaign/create");
     cy.get("#login").click();
-    cy.wait(["@slides", "@token", "@tenants"]);
+    cy.wait(["@slides", "@token"]);
   });
 
-  it("It loads create playlist page", () => {
+  it("It loads create campaign page", () => {
     cy.get("#save_playlist").should("exist");
   });
 
@@ -82,17 +76,11 @@ describe("Playlist pages work", () => {
     cy.get("#slides-section").find("tbody").should("not.exist");
   });
 
-  it("It redirects on save", () => {
+  it("It displays success toast on save", () => {
     // Mock successful response on post
-    cy.intercept("POST", "**/playlists", {
+    cy.intercept("PUT", "**/playlists/*", {
       statusCode: 201,
       fixture: "playlists/playlist-successful.json",
-    });
-
-    // Mock successful response on slides put
-    cy.intercept("PUT", "**/slides", {
-      statusCode: 201,
-      fixture: "playlists/playlist-slide.json",
     });
 
     // Mock successful response on get
@@ -100,11 +88,12 @@ describe("Playlist pages work", () => {
       fixture: "playlists/playlist-successful.json",
     });
 
+    cy.visit("/campaign/edit/123");
+
     // Displays success toast and redirects
     cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_playlist").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-    cy.url().should("include", "playlist/edit/");
 
     cy.get("#title")
       .invoke("val")
@@ -113,10 +102,16 @@ describe("Playlist pages work", () => {
 
   it("It display error toast on save error", () => {
     // Mock error response on post
-    cy.intercept("POST", "**/playlists", {
+    cy.intercept("PUT", "**/playlists/*", {
       statusCode: 500,
       fixture: "error.json",
     });
+
+    cy.intercept("GET", "**/playlists/*", {
+      fixture: "playlists/playlist-successful.json",
+    });
+
+    cy.visit("/campaign/edit/123");
 
     // Displays error toast and stays on page
     cy.get(".Toastify").find(".Toastify__toast--error").should("not.exist");
@@ -125,21 +120,11 @@ describe("Playlist pages work", () => {
     cy.get(".Toastify")
       .find(".Toastify__toast--error")
       .contains("An error occurred");
-    cy.url().should("include", "playlist/create");
   });
 
-  it("It cancels create playlist", () => {
+  it("It cancels create campaign", () => {
     cy.get("#cancel_playlist").should("exist");
     cy.get("#cancel_playlist").click();
     cy.get("#cancel_playlist").should("not.exist");
-  });
-
-  it("Add scheduling to playlist", () => {
-    cy.get(".Schedule-item").should("not.exist");
-    cy.get("#add_schedule").click();
-    cy.get(".Schedule-item").should("exist");
-    cy.get("#schedule_details").should("not.exist");
-    cy.get("#schedule_details_button").click();
-    cy.get("#schedule_details").should("exist");
   });
 });

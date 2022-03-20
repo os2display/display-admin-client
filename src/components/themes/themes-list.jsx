@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "../util/list/checkbox-for-list";
@@ -7,6 +7,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import LinkForList from "../util/list/link-for-list";
+import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import {
@@ -25,6 +26,7 @@ import {
  */
 function ThemesList() {
   const { t } = useTranslation("common");
+  const context = useContext(UserContext);
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
@@ -85,6 +87,13 @@ function ThemesList() {
       setIsDeleting(false);
     }
   }, [isDeleteSuccess]);
+
+  // If the tenant is changed, data should be refetched
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   // Display error on unsuccessful deletion
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import set from "lodash.set";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
@@ -44,12 +44,15 @@ function PlaylistCampaignManager({
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
+  const { search } = useLocation();
+  const sharedParams = new URLSearchParams(search).get("shared");
   const headerText =
     saveMethod === "PUT"
       ? t(`playlist-campaign-manager.${location}.edit-header`)
       : t(`playlist-campaign-manager.${location}.create-header`);
   const [formStateObject, setFormStateObject] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [highlightSharedSection, setHighlightSharedSection] = useState(false);
   const [slidesToAdd, setSlidesToAdd] = useState([]);
   const [screensToAdd, setScreensToAdd] = useState([]);
   const [groupsToAdd, setGroupsToAdd] = useState([]);
@@ -114,6 +117,19 @@ function PlaylistCampaignManager({
       setFormStateObject(localFormStateObject);
     }
   }, [initialState]);
+
+  useEffect(() => {
+    // If redirected from create shared playlist
+    if (sharedParams === "true") {
+      // Remove shared search param
+      setHighlightSharedSection(true);
+      const params = new URLSearchParams(search);
+      params.delete("shared");
+      navigate({
+        search: params.toString(),
+      });
+    }
+  }, [sharedParams]);
 
   // Slides are saved successfully, display a message
   useEffect(() => {
@@ -354,12 +370,19 @@ function PlaylistCampaignManager({
       ? new Date(formStateObject.published.to).toISOString()
       : null;
 
+    const saveTenants = formStateObject.tenants
+      ? formStateObject.tenants.map((tenant) => {
+          return idFromUrl(tenant["@id"]);
+        })
+      : [];
+
     const saveData = {
       title: formStateObject.title,
       isCampaign: location === "campaign",
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
+      tenants: saveTenants,
       schedules: formStateObject.schedules.map((schedule) => {
         return {
           rrule: schedule.rrule,
@@ -428,6 +451,7 @@ function PlaylistCampaignManager({
           )}
           {location === "playlist" && (
             <PlaylistForm
+              highlightSharedSection={highlightSharedSection}
               handleInput={handleInput}
               playlist={formStateObject}
             />

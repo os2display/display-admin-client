@@ -169,6 +169,42 @@
             },
             "parameters": []
         },
+        "/v1/authentication/token/refresh": {
+            "post": {
+                "operationId": "postRefreshTokenItem",
+                "tags": [
+                    "Authentication"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Refresh JWT token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RefreshTokenResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Get JWT token from refresh token.",
+                "description": "",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Refresh JWT Token",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshTokenRequest"
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/campaigns/{id}/screen-groups": {
             "get": {
                 "operationId": "get-v1-campaign-id-screen-group",
@@ -708,6 +744,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "order[title]",
                         "in": "query",
                         "description": "",
@@ -946,6 +1044,68 @@
                         },
                         "style": "form",
                         "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
                         "allowReserved": false
                     },
                     {
@@ -1261,6 +1421,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "order[title]",
                         "in": "query",
                         "description": "",
@@ -1374,12 +1596,6 @@
                                         "type": "string"
                                     },
                                     "license": {
-                                        "type": "string"
-                                    },
-                                    "modifiedBy": {
-                                        "type": "string"
-                                    },
-                                    "createdBy": {
                                         "type": "string"
                                     },
                                     "file": {
@@ -1699,6 +1915,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "published",
                         "in": "query",
                         "description": "If true only published content will be shown",
@@ -1778,6 +2056,37 @@
                         },
                         "style": "form",
                         "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "tenants.tenantKey",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "tenants.tenantKey[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
                         "allowReserved": false
                     }
                 ],
@@ -2073,6 +2382,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "published",
                         "in": "query",
                         "description": "If true only published content will be shown",
@@ -2355,6 +2726,68 @@
                         },
                         "style": "form",
                         "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
                         "allowReserved": false
                     },
                     {
@@ -2739,6 +3172,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "published",
                         "in": "query",
                         "description": "If true only published content will be shown",
@@ -3015,6 +3510,68 @@
                         },
                         "style": "form",
                         "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
                         "allowReserved": false
                     },
                     {
@@ -3405,6 +3962,68 @@
                         },
                         "style": "form",
                         "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
                         "allowReserved": false
                     },
                     {
@@ -4382,6 +5001,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "published",
                         "in": "query",
                         "description": "If true only published content will be shown",
@@ -4837,6 +5518,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "published",
                         "in": "query",
                         "description": "If true only published content will be shown",
@@ -5124,6 +5867,68 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "order[createdAt]",
                         "in": "query",
                         "description": "",
@@ -5168,6 +5973,197 @@
                 },
                 "summary": "Retrieve a Template resource.",
                 "description": "Retrieves a Template resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/tenants": {
+            "get": {
+                "operationId": "get-v1-tenants",
+                "tags": [
+                    "Tenants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieves a collection of tenant resources.",
+                "description": "Retrieves a collection of tenant resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/tenants/{id}": {
+            "get": {
+                "operationId": "get-v1-tenant-id",
+                "tags": [
+                    "Tenants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieve a tenant resource.",
+                "description": "Retrieves a tenant resource.",
                 "parameters": [
                     {
                         "name": "id",
@@ -5268,6 +6264,68 @@
                         },
                         "style": "form",
                         "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
                         "allowReserved": false
                     },
                     {
@@ -6048,6 +7106,9 @@
                     "campaignScreenGroups": {
                         "$ref": "#/components/schemas/Collection"
                     },
+                    "tenants": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
                     "isCampaign": {
                         "type": "boolean"
                     },
@@ -6141,6 +7202,9 @@
                     "campaignScreenGroups": {
                         "$ref": "#/components/schemas/Collection.jsonld"
                     },
+                    "tenants": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
                     "isCampaign": {
                         "type": "boolean"
                     },
@@ -6176,14 +7240,14 @@
                             "type": "string"
                         }
                     },
+                    "tenants": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "isCampaign": {
                         "type": "boolean"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
                     },
                     "published": {
                         "default": {
@@ -6252,14 +7316,14 @@
                             "type": "string"
                         }
                     },
+                    "tenants": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "isCampaign": {
                         "type": "boolean"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
                     },
                     "published": {
                         "default": {
@@ -6581,12 +7645,6 @@
                     "size": {
                         "type": "string"
                     },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "layout": {
                         "type": "string"
                     },
@@ -6655,12 +7713,6 @@
                         "type": "string"
                     },
                     "size": {
-                        "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
                         "type": "string"
                     },
                     "layout": {
@@ -6842,12 +7894,6 @@
                     },
                     "description": {
                         "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
                     }
                 }
             },
@@ -6894,12 +7940,6 @@
                         "type": "string"
                     },
                     "description": {
-                        "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
                         "type": "string"
                     }
                 }
@@ -7296,12 +8336,6 @@
                     "description": {
                         "type": "string"
                     },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "templateInfo": {
                         "default": {
                             "@id": "",
@@ -7411,12 +8445,6 @@
                         "type": "string"
                     },
                     "description": {
-                        "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
                         "type": "string"
                     },
                     "templateInfo": {
@@ -7584,6 +8612,127 @@
                     }
                 }
             },
+            "Tenant": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "tenantKey": {
+                        "type": "string"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant"
+                        }
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Tenant.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "tenantKey": {
+                        "type": "string"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
+                        }
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
             "Theme.Theme": {
                 "type": "object",
                 "description": "",
@@ -7693,12 +8842,6 @@
                     "description": {
                         "type": "string"
                     },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "css": {
                         "type": "string"
                     }
@@ -7749,13 +8892,351 @@
                     "description": {
                         "type": "string"
                     },
-                    "modifiedBy": {
+                    "css": {
                         "type": "string"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The hashed password",
+                        "type": "string"
+                    },
+                    "activeTenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant"
+                        }
+                    },
+                    "provider": {
+                        "type": "string"
+                    },
+                    "userIdentifier": {
+                        "readOnly": true,
+                        "description": "A visual identifier that represents this user.",
+                        "type": "string"
+                    },
+                    "username": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "roles": {
+                        "readOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenants": {
+                        "readOnly": true,
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "salt": {
+                        "readOnly": true,
+                        "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "roleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "userRoleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "createdBy": {
                         "type": "string"
                     },
-                    "css": {
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "fullName"
+                ]
+            },
+            "User.jsonld": {
+                "type": "object",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The hashed password",
+                        "type": "string"
+                    },
+                    "activeTenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "userRoleTenants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
+                        }
+                    },
+                    "provider": {
+                        "type": "string"
+                    },
+                    "userIdentifier": {
+                        "readOnly": true,
+                        "description": "A visual identifier that represents this user.",
+                        "type": "string"
+                    },
+                    "username": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "roles": {
+                        "readOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenants": {
+                        "readOnly": true,
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
+                    "salt": {
+                        "readOnly": true,
+                        "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "roleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "userRoleTenant": {
+                        "writeOnly": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "fullName"
+                ]
+            },
+            "UserRoleTenant": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "tenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserRoleTenant.jsonld": {
+                "type": "object",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User.jsonld"
+                    },
+                    "tenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
                         "type": "string"
                     }
                 }
@@ -7764,6 +9245,11 @@
                 "type": "object",
                 "properties": {
                     "token": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    },
+                    "refresh_token": {
                         "type": "string",
                         "readOnly": true,
                         "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -7813,6 +9299,30 @@
                                 "example": "johndoe@example.com"
                             }
                         }
+                    }
+                }
+            },
+            "RefreshTokenResponse": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    },
+                    "refresh_token": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    }
+                }
+            },
+            "RefreshTokenRequest": {
+                "type": "object",
+                "properties": {
+                    "refresh_token": {
+                        "type": "string",
+                        "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     }
                 }
             },

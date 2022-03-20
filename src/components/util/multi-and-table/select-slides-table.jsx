@@ -30,12 +30,14 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const [onPlaylists, setOnPlaylists] = useState();
   const [searchText, setSearchText] = useState("");
   const [showInfoModal, setShowInfoModal] = useState(false);
+
   const { data: slides } = useGetV1SlidesQuery({
     title: searchText,
     itemsPerPage: 100,
     orderBy: "createdAt",
     order: "desc",
   });
+
   const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
   /** Map loaded data. */

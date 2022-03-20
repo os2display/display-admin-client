@@ -73,6 +73,17 @@ function NavItems() {
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
+          <RestrictedNavRoute roles={context.accessConfig.get.shared.roles}>
+            <Nav.Item className="nav-second-level">
+              <NavLink
+                id="nav-items_content_shared_playlists"
+                className="nav-link"
+                to="/shared/list"
+              >
+                {t("nav-items.shared-playlists")}
+              </NavLink>
+            </Nav.Item>
+          </RestrictedNavRoute>
           <RestrictedNavRoute roles={context.accessConfig.get.campaign.roles}>
             <Nav.Item>
               <NavLink

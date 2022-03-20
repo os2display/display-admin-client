@@ -1,8 +1,9 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Button, Col, Row } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import UserContext from "../../context/user-context";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
@@ -32,6 +33,9 @@ import "./media-list.scss";
 function MediaList({ fromModal, handleSelected }) {
   // Translations
   const { t } = useTranslation("common");
+
+  // Context
+  const context = useContext(UserContext);
 
   // Url params
   const { search } = useLocation();
@@ -82,6 +86,13 @@ function MediaList({ fromModal, handleSelected }) {
       setTotalItems(mediaData["hydra:totalItems"]);
     }
   }, [mediaData]);
+
+  // If the tenant is changed, data should be refetched
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   /** Closes delete modal. */
   function onCloseDeleteModal() {

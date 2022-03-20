@@ -42,6 +42,16 @@ export const api = createApi({
         body: queryArg.credentials,
       }),
     }),
+    postRefreshTokenItem: build.mutation<
+      PostRefreshTokenItemApiResponse,
+      PostRefreshTokenItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/token/refresh`,
+        method: "POST",
+        body: queryArg.refreshTokenRequest,
+      }),
+    }),
     getV1CampaignsByIdScreenGroups: build.query<
       GetV1CampaignsByIdScreenGroupsApiResponse,
       GetV1CampaignsByIdScreenGroupsApiArg
@@ -80,6 +90,8 @@ export const api = createApi({
           supportedFeedOutputType: queryArg.supportedFeedOutputType,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -104,6 +116,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -140,6 +154,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -194,9 +210,12 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           isCampaign: queryArg.isCampaign,
           order: queryArg.order,
+          "tenants.tenantKey": queryArg["tenants.tenantKey"],
         },
       }),
     }),
@@ -244,6 +263,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -279,6 +300,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -335,6 +358,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -367,6 +392,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -425,6 +452,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -527,6 +556,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -573,6 +604,8 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -599,6 +632,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -609,6 +644,25 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/v1/templates/${queryArg.id}` }),
     }),
+    getV1Tenants: build.query<GetV1TenantsApiResponse, GetV1TenantsApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/tenants`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+        },
+      }),
+    }),
+    getV1TenantsById: build.query<
+      GetV1TenantsByIdApiResponse,
+      GetV1TenantsByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/tenants/${queryArg.id}` }),
+    }),
     getV1Themes: build.query<GetV1ThemesApiResponse, GetV1ThemesApiArg>({
       query: (queryArg) => ({
         url: `/v1/themes`,
@@ -617,6 +671,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -681,6 +737,12 @@ export type PostCredentialsItemApiArg = {
   /** Generate new JWT Token */
   credentials: Credentials;
 };
+export type PostRefreshTokenItemApiResponse =
+  /** status 200 Refresh JWT token */ RefreshTokenResponse;
+export type PostRefreshTokenItemApiArg = {
+  /** Refresh JWT Token */
+  refreshTokenRequest: RefreshTokenRequest;
+};
 export type GetV1CampaignsByIdScreenGroupsApiResponse = unknown;
 export type GetV1CampaignsByIdScreenGroupsApiArg = {
   id: string;
@@ -715,6 +777,12 @@ export type GetV1FeedSourcesApiArg = {
   };
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -735,6 +803,12 @@ export type GetV1FeedsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     createdAt?: "asc" | "desc";
   };
@@ -764,6 +838,12 @@ export type GetV1MediaApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -776,8 +856,6 @@ export type PostMediaCollectionApiArg = {
     title: string;
     description: string;
     license: string;
-    modifiedBy?: string;
-    createdBy?: string;
     file: Blob;
   };
 };
@@ -810,6 +888,12 @@ export type GetV1PlaylistsApiArg = {
   itemsPerPage?: number;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   /** If true only campaigns will be shown */
@@ -818,6 +902,9 @@ export type GetV1PlaylistsApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+  };
+  "tenants.tenantKey"?: {
+    ""?: string[];
   };
 };
 export type PostV1PlaylistsApiResponse = unknown;
@@ -845,6 +932,12 @@ export type GetV1PlaylistsByIdSlidesApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -869,6 +962,12 @@ export type GetV1ScreenGroupsApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -904,6 +1003,12 @@ export type GetV1ScreenGroupsByIdCampaignsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -928,6 +1033,12 @@ export type GetV1ScreensApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -966,6 +1077,12 @@ export type GetV1ScreensByIdCampaignsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -1039,6 +1156,12 @@ export type GetV1SlidesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -1072,6 +1195,12 @@ export type GetV1SlidesByIdPlaylistsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
@@ -1090,12 +1219,36 @@ export type GetV1TemplatesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     createdAt?: "asc" | "desc";
   };
 };
 export type GetV1TemplatesByIdApiResponse = unknown;
 export type GetV1TemplatesByIdApiArg = {
+  id: string;
+};
+export type GetV1TenantsApiResponse = unknown;
+export type GetV1TenantsApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+};
+export type GetV1TenantsByIdApiResponse = unknown;
+export type GetV1TenantsByIdApiArg = {
   id: string;
 };
 export type GetV1ThemesApiResponse = unknown;
@@ -1105,6 +1258,12 @@ export type GetV1ThemesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
@@ -1132,6 +1291,7 @@ export type DeleteV1ThemesByIdApiArg = {
 };
 export type Token = {
   token?: string;
+  refresh_token?: string;
   tenants?: {
     tenantKey?: string;
     title?: string;
@@ -1156,27 +1316,29 @@ export type Credentials = {
   email?: string;
   password?: string;
 };
+export type RefreshTokenResponse = {
+  token?: string;
+  refresh_token?: string;
+};
+export type RefreshTokenRequest = {
+  refresh_token?: string;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
   schedules?: string[];
+  tenants?: string[];
   isCampaign?: boolean;
-  modifiedBy?: string;
-  createdBy?: string;
   published?: string[];
 };
 export type ScreenGroupScreenGroupInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
 };
 export type ScreenScreenInput = {
   title?: string;
   description?: string;
   size?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   layout?: string;
   location?: string;
   dimensions?: string[];
@@ -1187,8 +1349,6 @@ export type ScreenBindObject = {
 export type SlideSlideInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   templateInfo?: string[];
   theme?: string;
   duration?: number | null;
@@ -1200,8 +1360,6 @@ export type SlideSlideInput = {
 export type ThemeThemeInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   css?: string;
 };
 export const {
@@ -1209,6 +1367,7 @@ export const {
   useGetOidcAuthUrlsItemQuery,
   usePostLoginInfoScreenMutation,
   usePostCredentialsItemMutation,
+  usePostRefreshTokenItemMutation,
   useGetV1CampaignsByIdScreenGroupsQuery,
   useGetV1CampaignsByIdScreensQuery,
   useGetV1FeedSourcesQuery,
@@ -1266,6 +1425,8 @@ export const {
   usePutV1SlidesByIdPlaylistsMutation,
   useGetV1TemplatesQuery,
   useGetV1TemplatesByIdQuery,
+  useGetV1TenantsQuery,
+  useGetV1TenantsByIdQuery,
   useGetV1ThemesQuery,
   usePostV1ThemesMutation,
   useGetV1ThemesByIdQuery,

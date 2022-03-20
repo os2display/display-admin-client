@@ -198,23 +198,29 @@ function List({
           <SearchBox value={searchParams} onChange={onSearch} />
         </Col>
         <Col className="d-flex justify-content-end">
-          <Button
-            variant="danger"
-            id="delete-button"
-            disabled={disableDeleteButton}
-            onClick={() => handleDelete()}
-            className="me-3"
-          >
-            {t("list.delete-button")}
-          </Button>
-          <Button
-            id="clear-rows-button"
-            disabled={selectedRows.length === 0}
-            onClick={() => clearSelectedRows()}
-            variant="dark"
-          >
-            {t("list.deselect-all")}
-          </Button>
+          <>
+            {handleDelete && (
+              <Button
+                variant="danger"
+                id="delete-button"
+                disabled={disableDeleteButton}
+                onClick={() => handleDelete()}
+                className="me-3"
+              >
+                {t("list.delete-button")}
+              </Button>
+            )}
+            {clearSelectedRows && (
+              <Button
+                id="clear-rows-button"
+                disabled={selectedRows.length === 0}
+                onClick={() => clearSelectedRows()}
+                variant="dark"
+              >
+                {t("list.deselect-all")}
+              </Button>
+            )}
+          </>
         </Col>
       </Row>
       <Row>
@@ -262,8 +268,11 @@ function List({
 List.defaultProps = {
   calendarView: false,
   handleIsPublished: () => {},
+  handleDelete: null,
   displayPublished: false,
   children: <></>,
+  selectedRows: [],
+  clearSelectedRows: null,
 };
 
 List.propTypes = {
@@ -271,10 +280,10 @@ List.propTypes = {
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
-  selectedRows: SelectedRowsProptypes.isRequired,
-  clearSelectedRows: PropTypes.func.isRequired,
+  selectedRows: SelectedRowsProptypes,
+  clearSelectedRows: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func,
   calendarView: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
   handleSort: PropTypes.func.isRequired,

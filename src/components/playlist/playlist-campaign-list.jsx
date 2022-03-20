@@ -1,9 +1,10 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Button, Col } from "react-bootstrap";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import UserContext from "../../context/user-context";
 import selectedHelper from "../util/helpers/selectedHelper";
 import ContentHeader from "../util/content-header/content-header";
 import ListButton from "../util/list/list-button";
@@ -35,6 +36,7 @@ import {
  */
 function PlaylistCampaignList({ location }) {
   const { t } = useTranslation("common");
+  const context = useContext(UserContext);
 
   // Local state
   const [selectedRows, setSelectedRows] = useState([]);
@@ -79,6 +81,13 @@ function PlaylistCampaignList({ location }) {
       setListData(data);
     }
   }, [data]);
+
+  // If the tenant is changed, data should be refetched
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
 
   /** Deletes multiple playlists. */
   useEffect(() => {
