@@ -1,23 +1,4 @@
 describe("Login works", () => {
-  beforeEach(() => {
-    // // Mock successful response on get tenants
-    // cy.intercept("GET", "**/tenants*", {
-    //   statusCode: 201,
-    //   fixture: "playlists/tenants.json",
-    // }).as("tenants");
-    // cy.visit("/playlist/list");
-    // cy.intercept("POST", "**/token", {
-    //   statusCode: 201,
-    //   fixture: "token.json",
-    // }).as("token");
-    // cy.intercept("GET", "**/slides*", {
-    //   fixture: "playlists/playlist-slide.json",
-    // }).as("slides");
-    // cy.visit("/playlist/create");
-    // cy.get("#login").click();
-    // cy.wait(["@slides", "@token", "@tenants"]);
-  });
-
   it("Login one tenant works", () => {
     cy.visit("/playlist/list");
     cy.intercept("POST", "**/token", {

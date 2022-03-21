@@ -1,4 +1,4 @@
-describe("Playlists list tests", () => {
+describe("Shared list tests", () => {
   beforeEach(() => {
     cy.intercept("POST", "**/token", {
       statusCode: 201,
