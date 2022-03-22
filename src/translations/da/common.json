@@ -452,7 +452,7 @@
     }
   },
   "playlist-drag-and-drop": {
-    "show-only-shared": "Vis kun spillelister delt med mig",
+    "show-only-shared": "Vis delte spillelister",
     "columns": {
       "name": "Navn",
       "published": "Udgivet"

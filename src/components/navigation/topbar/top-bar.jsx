@@ -82,7 +82,8 @@ function TopBar() {
                   />
                   <span className="user-dropdown-name">
                     {context.userName?.get} (
-                    {context.selectedTenant?.get?.title} || {context.selectedTenant?.get?.tenantKey})
+                    {context.selectedTenant?.get?.title} ||{" "}
+                    {context.selectedTenant?.get?.tenantKey})
                   </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu style={{ width: "100%" }}>
