@@ -1,9 +1,11 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Alert } from "react-bootstrap";
 import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dropdown";
 import localStorageKeys from "../../util/local-storage-keys";
+import {
+  displayError
+} from "../../util/list/toast-component/display-toast";
 
 /**
  * Multiselect with options supplied by endpoint.
@@ -51,7 +53,7 @@ function MultiselectFromEndpoint({
             })
           );
         })
-        .catch(() => setError(true));
+        .catch(() => displayError(t("multiselect-from-endpoint.error-fetching")));
     }
   }, [optionsEndpoint]);
 
@@ -85,11 +87,6 @@ function MultiselectFromEndpoint({
           filterCallback={() => {}}
           label={label ?? t("multiselect.select")}
         />
-      )}
-      {error && (
-        <Alert variant="warning">
-          {t("multiselect-from-endpoint.error-fetching")}
-        </Alert>
       )}
     </>
   );
