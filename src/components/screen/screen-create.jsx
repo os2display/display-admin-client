@@ -20,9 +20,9 @@ import {
  * @returns {object} The screen create page.
  */
 function ScreenCreate() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "screen-create" });
   const navigate = useNavigate();
-  const headerText = t("screen-create.create-screen-header");
+  const headerText = t("create-screen-header");
   const [groupId, setGroupId] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
   const [savingScreen, setSavingScreen] = useState(false);
@@ -74,7 +74,7 @@ function ScreenCreate() {
   /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && data && groupsToAdd) {
-      setLoadingMessage(t("screen-create.loading-messages.saving-groups"));
+      setLoadingMessage(t("loading-messages.saving-groups"));
       PutV1ScreensByIdScreenGroups({
         id: idFromUrl(data["@id"]),
         body: JSON.stringify(groupsToAdd),
@@ -86,7 +86,7 @@ function ScreenCreate() {
   useEffect(() => {
     if (isSaveSuccessGroups) {
       setSavingGroups(false);
-      displaySuccess(t("screen-create.success-messages.saved-groups"));
+      displaySuccess(t("success-messages.saved-groups"));
     }
   }, [isSaveSuccessGroups]);
 
@@ -94,13 +94,7 @@ function ScreenCreate() {
   useEffect(() => {
     if (saveErrorGroups) {
       setSavingGroups(false);
-      displayError(
-        t("screen-create.error-messages.save-groups-error", {
-          error: saveErrorGroups.error
-            ? saveErrorGroups.error
-            : saveErrorGroups.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-groups-error"), saveErrorGroups);
     }
   }, [saveErrorGroups]);
 
@@ -108,7 +102,7 @@ function ScreenCreate() {
   useEffect(() => {
     if (isSavePlaylistSuccess) {
       setSavingPlaylists(false);
-      displaySuccess(t("screen-create.success-messages.saved-playlists"));
+      displaySuccess(t("success-messages.saved-playlists"));
     }
   }, [isSavePlaylistSuccess]);
 
@@ -116,20 +110,14 @@ function ScreenCreate() {
   useEffect(() => {
     if (savePlaylistError) {
       setSavingPlaylists(false);
-      displayError(
-        t("screen-create.error-messages.save-playlists-error", {
-          error: savePlaylistError.error
-            ? savePlaylistError.error
-            : savePlaylistError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-playlists-error"), savePlaylistError);
     }
   }, [savePlaylistError]);
 
   /** If the screen is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(t("screen-create.success-messages.saved-screen"));
+      displaySuccess(t("success-messages.saved-screen"));
       setSavingScreen(false);
     }
   }, [isSaveSuccess]);
@@ -137,13 +125,7 @@ function ScreenCreate() {
   /** If the screen is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(
-        t("screen-create.error-messages.save-screen-error", {
-          error: saveError.error
-            ? saveError.error
-            : saveError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-screen-error"), saveError);
       setSavingScreen(false);
     }
   }, [saveError]);
@@ -151,7 +133,7 @@ function ScreenCreate() {
   /** Adds playlists to regions. */
   useEffect(() => {
     if (isSaveSuccess && playlistsToAdd && playlistsToAdd.length > 0 && data) {
-      setLoadingMessage(t("screen-create.loading-messages.saving-playlists"));
+      setLoadingMessage(t("loading-messages.saving-playlists"));
       const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
       putPlaylistScreenRegionItem({
         body: JSON.stringify(playlistToAdd?.list),
@@ -245,7 +227,7 @@ function ScreenCreate() {
   /** Handles submit. */
   function handleSubmit() {
     setSavingScreen(true);
-    setLoadingMessage(t("screen-create.loading-messages.saving-screen"));
+    setLoadingMessage(t("loading-messages.saving-screen"));
     const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
     localFormStateObject.dimensions.width = parseInt(
       localFormStateObject.dimensions.width,

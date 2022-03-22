@@ -32,7 +32,7 @@ import "./media-list.scss";
  */
 function MediaList({ fromModal, handleSelected }) {
   // Translations
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "media-list" });
 
   // Context
   const context = useContext(UserContext);
@@ -58,7 +58,7 @@ function MediaList({ fromModal, handleSelected }) {
     searchParams === null ? "" : searchParams
   );
   const [loadingMessage, setLoadingMessage] = useState(
-    t("media-list.loading-messages.loading-media")
+    t("loading-messages.loading-media")
   );
 
   // Delete method
@@ -136,9 +136,9 @@ function MediaList({ fromModal, handleSelected }) {
       // As we are deleting multiple pieces of media, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       if (isDeleteSuccess) {
-        displaySuccess(t("media-list.success-messages.media-delete"));
+        displaySuccess(t("success-messages.media-delete"));
       }
-      setLoadingMessage(t("media-list.loading-messages.deleting-media"));
+      setLoadingMessage(t("loading-messages.deleting-media"));
       const toDelete = mediaToDelete.splice(0, 1).shift();
       const toDeleteId = idFromUrl(toDelete["@id"]);
       DeleteV1Media({ id: toDeleteId });
@@ -148,7 +148,7 @@ function MediaList({ fromModal, handleSelected }) {
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && mediaToDelete.length === 0) {
-      displaySuccess(t("media-list.success-messages.media-delete"));
+      displaySuccess(t("success-messages.media-delete"));
       refetch();
       setIsDeleting(false);
     }
@@ -158,13 +158,7 @@ function MediaList({ fromModal, handleSelected }) {
   useEffect(() => {
     if (isDeleteError) {
       setIsDeleting(false);
-      displayError(
-        t("media-list.error-messages.media-delete-error", {
-          error: isDeleteError.error
-            ? isDeleteError.error
-            : isDeleteError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.media-delete-error"), isDeleteError);
     }
   }, [isDeleteError]);
 
@@ -194,13 +188,7 @@ function MediaList({ fromModal, handleSelected }) {
 
   useEffect(() => {
     if (mediaLoadError) {
-      displayError(
-        t("media-list.error-messages.media-load-error", {
-          error: mediaLoadError.error
-            ? mediaLoadError.error
-            : mediaLoadError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.media-load-error"), mediaLoadError);
     }
   }, [mediaLoadError]);
 
@@ -208,13 +196,13 @@ function MediaList({ fromModal, handleSelected }) {
     <>
       <Row className="align-items-center justify-content-between mt-2">
         <Col>
-          <h1 id="media-list-title">{t("media-list.header")}</h1>
+          <h1 id="media-list-title">{t("header")}</h1>
         </Col>
         {!fromModal && (
           <>
             <Col xs="auto">
               <Link className="btn btn-success" to="/media/create">
-                {t("media-list.upload-new-media")}
+                {t("upload-new-media")}
               </Link>
             </Col>
             <Col xs="auto">
@@ -225,7 +213,7 @@ function MediaList({ fromModal, handleSelected }) {
                   disabled={!selectedMedia.length > 0}
                   onClick={() => setShowDeleteModal(true)}
                 >
-                  {t("media-list.delete-button")}
+                  {t("delete-button")}
                 </Button>
               </div>
             </Col>

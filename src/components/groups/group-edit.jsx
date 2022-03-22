@@ -17,12 +17,12 @@ import GroupForm from "./group-form";
  * @returns {object} The group edit page.
  */
 function GroupEdit() {
-  const { t } = useTranslation("common");
-  const headerText = t("group-edit.edit-group-header");
+  const { t } = useTranslation("common", { keyPrefix: "group-edit" });
+  const headerText = t("edit-group-header");
   const [formStateObject, setFormStateObject] = useState();
   const [savingGroup, setSavingGroup] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(
-    t("group-edit.loading-messages.loading-group")
+    t("loading-messages.loading-group")
   );
   const { id } = useParams();
   const [PutV1ScreenGroup, { error: saveError, isSuccess: isSaveSuccess }] =
@@ -45,20 +45,14 @@ function GroupEdit() {
   useEffect(() => {
     if (isSaveSuccess) {
       setSavingGroup(false);
-      displaySuccess(t("group-edit.success-messages.saved-group"));
+      displaySuccess(t("success-messages.saved-group"));
     }
   }, [isSaveSuccess]);
 
   /** If the group is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(
-        t("group-edit.error-messages.save-group-error", {
-          error: saveError.error
-            ? saveError.error
-            : saveError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-group-error"), saveError);
       setSavingGroup(false);
     }
   }, [saveError]);
@@ -67,7 +61,7 @@ function GroupEdit() {
   useEffect(() => {
     if (loadError) {
       displayError(
-        t("group-edit.error-messages.load-group-error", {
+        t("error-messages.load-group-error", {
           error: loadError.error
             ? loadError.error
             : loadError.data["hydra:description"],
@@ -92,7 +86,7 @@ function GroupEdit() {
   /** Handles submit. */
   function handleSubmit() {
     setSavingGroup(true);
-    setLoadingMessage(t("group-edit.loading-messages.saving-group"));
+    setLoadingMessage(t("loading-messages.saving-group"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,

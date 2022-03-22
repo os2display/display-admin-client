@@ -82,7 +82,7 @@ function TopBar() {
                   />
                   <span className="user-dropdown-name">
                     {context.userName?.get} (
-                    {context.selectedTenant?.get?.title})
+                    {context.selectedTenant?.get?.title} || {context.selectedTenant?.get?.tenantKey})
                   </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu style={{ width: "100%" }}>
@@ -110,46 +110,55 @@ function TopBar() {
               </Dropdown>
             )}
           </>
-          <Dropdown className="me-md-3 mb-2 mb-md-0">
-            <Dropdown.Toggle variant="primary" id="topbar_add">
-              <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
-              {t("topbar.add")}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Link
-                id="nav-add-new-slide"
-                className="dropdown-item"
-                to="/slide/create"
+          <Nav.Item className="m-1">
+            <Dropdown
+              style={{ width: "100%" }}
+              className="me-md-3 mb-2 mb-md-0"
+            >
+              <Dropdown.Toggle
+                style={{ width: "100%" }}
+                variant="primary"
+                id="topbar_add"
               >
-                <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
-                {t("topbar.add-slide")}
-              </Link>
+                <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
+                {t("topbar.add")}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Link
+                  id="nav-add-new-slide"
+                  className="dropdown-item"
+                  to="/slide/create"
+                >
+                  <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
+                  {t("topbar.add-slide")}
+                </Link>
 
-              <Link
-                id="nav-add-new-playlist"
-                className="dropdown-item"
-                to="/playlist/create"
-              >
-                <FontAwesomeIcon className="me-2" icon={faStream} />
-                {t("topbar.add-playlist")}
-              </Link>
-              <Link
-                id="nav-add-new-screen"
-                className="dropdown-item"
-                to="/screen/create"
-              >
-                <FontAwesomeIcon className="me-2" icon={faDesktop} />
-                {t("topbar.add-screen")}
-              </Link>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Nav.Item className="me-md-3 mb-2 mb-md-0">
+                <Link
+                  id="nav-add-new-playlist"
+                  className="dropdown-item"
+                  to="/playlist/create"
+                >
+                  <FontAwesomeIcon className="me-2" icon={faStream} />
+                  {t("topbar.add-playlist")}
+                </Link>
+                <Link
+                  id="nav-add-new-screen"
+                  className="dropdown-item"
+                  to="/screen/create"
+                >
+                  <FontAwesomeIcon className="me-2" icon={faDesktop} />
+                  {t("topbar.add-screen")}
+                </Link>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Nav.Item>
+          <Nav.Item className="m-1">
             <Link id="topbar-faq" className="btn btn-dark" to="/faq">
               <FontAwesomeIcon icon={faQuestionCircle} />
               <span className="visually-hidden">{t("topbar.faq")}</span>
             </Link>
           </Nav.Item>
-          <Nav.Item className="me-md-3 mb-2 mb-md-0">
+          <Nav.Item className="m-1">
             <Link id="topbar_signout" className="btn btn-dark" to="/logout">
               <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
               {t("topbar.signout")}

@@ -54,7 +54,7 @@ function MultiSelectComponent({
     const localMappedOptions =
       options?.map((item) => {
         return {
-          label: item.title,
+          label: item.title || item.tenantKey,
           value: item["@id"] || item.id,
           disabled: false,
         };
@@ -64,7 +64,7 @@ function MultiSelectComponent({
     if (selected.length > 0) {
       localMappedSelected = selected.map((item) => {
         return {
-          label: item.title,
+          label: item.title || item.tenantKey,
           value: item["@id"] || item.id,
           disabled: false,
         };

@@ -13,12 +13,12 @@ import {
  * @returns {object} The create media page.
  */
 function MediaCreate() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "media-create" });
   const [formStateObject, setFormStateObject] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [mediaToCreate, setMediaToCreate] = useState([]);
-  const headerText = t("media-create.create-media");
+  const headerText = t("create-media");
 
   const [
     PostV1MediaCollection,
@@ -49,13 +49,7 @@ function MediaCreate() {
   /** If the media is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(
-        t("media-create.error-messages.save-media-error", {
-          error: saveError.data
-            ? saveError.data["hydra:description"]
-            : saveError.error,
-        })
-      );
+      displayError(t("error-messages.save-media-error"), saveError);
       setIsSaving(false);
     }
   }, [saveError]);
@@ -63,7 +57,7 @@ function MediaCreate() {
   /** If the image is saved, display the success message, and remove image from ui */
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(t("media-create.success-messages.saved-media"));
+      displaySuccess(t("success-messages.saved-media"));
       setIsSaving(false);
       const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
       localFormStateObject.images = [];
@@ -76,8 +70,8 @@ function MediaCreate() {
     const localMediaToCreate = [];
     formStateObject.images.forEach((element) => {
       setLoadingMessage(
-        t("media-create.loading-messages.saving-media", {
-          title: element.title || t("media-create.unamed"),
+        t("loading-messages.saving-media", {
+          title: element.title || t("unamed"),
         })
       );
       const formData = new FormData();

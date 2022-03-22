@@ -15,9 +15,9 @@ import {
  * @returns {object} The group edit page.
  */
 function GroupCreate() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "group-create" });
   const navigate = useNavigate();
-  const headerText = t("group-create.create-new-group-header");
+  const headerText = t("create-new-group-header");
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
@@ -36,7 +36,7 @@ function GroupCreate() {
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      displaySuccess(t("group-create.success-messages.saved-group"));
+      displaySuccess(t("success-messages.saved-group"));
       navigate(`/group/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
@@ -44,14 +44,7 @@ function GroupCreate() {
   /** If the group is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(
-        t("group-create.error-messages.save-group-error", {
-          title: formStateObject.title || t("group-create.unamed-group"),
-          error: saveError.data
-            ? saveError.data["hydra:description"]
-            : saveError.error,
-        })
-      );
+      displayError(t("error-messages.save-group-error"), saveError);
     }
   }, [saveError]);
 
@@ -88,7 +81,7 @@ function GroupCreate() {
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={isSaving}
-      loadingMessage={t("group-create.loading-messages.saving-group")}
+      loadingMessage={t("loading-messages.saving-group")}
     />
   );
 }

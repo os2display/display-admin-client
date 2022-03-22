@@ -15,12 +15,10 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @returns {object} The themes create page.
  */
 function ThemeCreate() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "theme-create" });
   const navigate = useNavigate();
-  const headerText = t("theme-create.create-new-theme");
-  const [loadingMessage] = useState(
-    t("theme-create.loading-messages.saving-theme")
-  );
+  const headerText = t("create-new-theme");
+  const [loadingMessage] = useState(t("loading-messages.saving-theme"));
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
@@ -68,20 +66,14 @@ function ThemeCreate() {
   /** If the theme is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(t("theme-create.success-messages.saved-theme"));
+      displaySuccess(t("success-messages.saved-theme"));
     }
   }, [isSaveSuccess]);
 
   /** If the theme is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(
-        t("theme-create.error-messages.save-theme-error", {
-          error: saveError.error
-            ? saveError.error
-            : saveError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-theme-error"), saveError);
     }
   }, [saveError]);
 

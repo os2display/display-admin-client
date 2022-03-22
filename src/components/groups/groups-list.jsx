@@ -25,7 +25,7 @@ import {
  * @returns {object} The groups list.
  */
 function GroupsList() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "groups-list" });
   const context = useContext(UserContext);
 
   // Local state
@@ -38,7 +38,7 @@ function GroupsList() {
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("groups-list.loading-messages.loading-groups")
+    t("loading-messages.loading-groups")
   );
 
   // Delete call
@@ -72,9 +72,9 @@ function GroupsList() {
       // As we are deleting multiple groups, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       if (isDeleteSuccess) {
-        displaySuccess(t("groups-list.success-messages.group-delete"));
+        displaySuccess(t("success-messages.group-delete"));
       }
-      setLoadingMessage(t("groups-list.loading-messages.deleting-group"));
+      setLoadingMessage(t("loading-messages.deleting-group"));
       const groupToDelete = groupsToDelete.splice(0, 1).shift();
       const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
       DeleteV1ScreenGroups({ id: groupToDeleteId });
@@ -84,7 +84,7 @@ function GroupsList() {
   // Sets success messages in local storage, because the page is reloaded
   useEffect(() => {
     if (isDeleteSuccess && groupsToDelete.length === 0) {
-      displaySuccess(t("groups-list.success-messages.group-delete"));
+      displaySuccess(t("success-messages.group-delete"));
       refetch();
       setIsDeleting(false);
     }
@@ -101,13 +101,7 @@ function GroupsList() {
   useEffect(() => {
     if (isDeleteError) {
       setIsDeleting(false);
-      displayError(
-        t("groups-list.error-messages.group-delete-error", {
-          error: isDeleteError.error
-            ? isDeleteError.error
-            : isDeleteError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.group-delete-error"), isDeleteError);
     }
   }, [isDeleteError]);
 
@@ -181,7 +175,7 @@ function GroupsList() {
   const columns = [
     {
       key: "pick",
-      label: t("groups-list.columns.pick"),
+      label: t("columns.pick"),
       content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
@@ -192,16 +186,15 @@ function GroupsList() {
     {
       path: "title",
       sort: true,
-      label: t("groups-list.columns.name"),
+      label: t("columns.name"),
     },
     {
       path: "createdBy",
-      label: t("groups-list.columns.created-by"),
+      label: t("columns.created-by"),
     },
     {
       key: "edit",
-      content: (d) =>
-        LinkForList(d["@id"], "group/edit", t("groups-list.edit-button")),
+      content: (d) => LinkForList(d["@id"], "group/edit", t("edit-button")),
     },
     {
       key: "delete",
@@ -212,7 +205,7 @@ function GroupsList() {
             disabled={selectedRows.length > 0}
             onClick={() => openDeleteModal(d)}
           >
-            {t("groups-list.delete-button")}
+            {t("delete-button")}
           </Button>
         </>
       ),
@@ -222,21 +215,15 @@ function GroupsList() {
   // Error with retrieving list of groups
   useEffect(() => {
     if (groupsGetError) {
-      displayError(
-        t("groups-list.error-messages.groups-load-error", {
-          error: groupsGetError.error
-            ? groupsGetError.error
-            : groupsGetError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.groups-load-error"), groupsGetError);
     }
   }, [groupsGetError]);
 
   return (
     <>
       <ContentHeader
-        title={t("groups-list.header")}
-        newBtnTitle={t("groups-list.create-new-group")}
+        title={t("header")}
+        newBtnTitle={t("create-new-group")}
         newBtnLink="/group/create"
       />
       <ContentBody>

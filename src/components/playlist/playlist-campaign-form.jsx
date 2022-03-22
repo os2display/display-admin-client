@@ -22,6 +22,7 @@ import LoadingComponent from "../util/loading-component/loading-component";
  * @param {boolean} props.isLoading Indicator of whether the form is loading
  * @param {string} props.loadingMessage The loading message for the spinner
  * @param {boolean} props.isCampaign If it is a campaign form.
+ * @param {string} props.location Either playlist or campaign.
  * @param {Array} props.children The children being passed from parent
  * @returns {object} The form shared by campaigns and playlists.
  */
@@ -34,6 +35,7 @@ function PlaylistCampaignForm({
   isLoading,
   loadingMessage,
   isCampaign,
+  location,
   children,
 }) {
   const { t } = useTranslation("common");
@@ -131,7 +133,7 @@ function PlaylistCampaignForm({
             variant="secondary"
             type="button"
             id="cancel_playlist"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(`/${location}/list`)}
             size="lg"
             className="me-3"
           >
@@ -168,6 +170,7 @@ PlaylistCampaignForm.propTypes = {
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,
   isCampaign: PropTypes.bool,
+  location: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 

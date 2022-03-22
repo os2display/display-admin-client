@@ -21,7 +21,7 @@ import localStorageKeys from "../util/local-storage-keys";
  */
 function Login() {
   // Hooks
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "login" });
   const { search } = useLocation();
   const dispatch = useDispatch();
 
@@ -64,7 +64,7 @@ function Login() {
       context.selectedTenant.set(data.tenants[0]);
     } else {
       setError(true);
-      displayError(t("login.missing-tenants"));
+      displayError(t("missing-tenants"));
     }
   }
 
@@ -110,14 +110,10 @@ function Login() {
         if (response?.error) {
           if (response?.error?.data?.message === "Invalid credentials.") {
             setError(true);
-            displayError(t("login.invalid-credentials"));
+            displayError(t("invalid-credentials"), response.error);
           } else {
             setError(true);
-            displayError(
-              response?.error?.error ||
-                response?.error?.data?.message ||
-                t("login.error")
-            );
+            displayError(t("error"), response.error);
           }
         }
         if (response?.data?.token) {
@@ -126,7 +122,7 @@ function Login() {
       })
       .catch((err) => {
         setError(true);
-        displayError(JSON.stringify(err));
+        displayError(t("error"), err);
       });
   };
 
@@ -160,7 +156,7 @@ function Login() {
           })
           .catch(() => {
             if (isMounted) {
-              setOidcAuthLoadingError(t("login.error-oidc-login"));
+              setOidcAuthLoadingError(t("error-oidc-login"));
             }
           })
           .finally(() => {
@@ -182,7 +178,7 @@ function Login() {
           })
           .catch(() => {
             if (isMounted) {
-              setOidcAuthLoadingError(t("login.error-fetching-oidc-urls"));
+              setOidcAuthLoadingError(t("error-fetching-oidc-urls"));
             }
           })
           .finally(() => {
@@ -205,14 +201,14 @@ function Login() {
           <Form onSubmit={onSubmit} className="m-3">
             <Row>
               <Col md>
-                <h3 className="mb-3">{t("login.login-with-oidc")}</h3>
+                <h3 className="mb-3">{t("login-with-oidc")}</h3>
                 {oidcAuthUrls && (
                   <Button
                     className="btn btn-primary"
                     type="button"
                     href={oidcAuthUrls.authorizationUrl}
                   >
-                    {t("login.login-with-oidc")}
+                    {t("login-with-oidc")}
                   </Button>
                 )}
                 {oidcAuthLoadingError && (
@@ -223,7 +219,7 @@ function Login() {
                 <>
                   {!context.tenants.get && (
                     <>
-                      <h3>{t("login.login-with-username-password")}</h3>
+                      <h3>{t("login-with-username-password")}</h3>
                       <FormInput
                         className={
                           error ? "form-control is-invalid" : "form-control"
@@ -231,7 +227,7 @@ function Login() {
                         onChange={(ev) => setEmail(ev.target.value)}
                         value={email}
                         name="email"
-                        label={t("login.email")}
+                        label={t("email")}
                         required
                       />
                       <FormInput
@@ -241,7 +237,7 @@ function Login() {
                         onChange={(ev) => setPassword(ev.target.value)}
                         value={password}
                         name="password"
-                        label={t("login.password")}
+                        label={t("password")}
                         type="password"
                         required
                       />
@@ -254,11 +250,11 @@ function Login() {
                     context.tenants.get?.length > 1 && (
                       <div id="tenant-picker-section">
                         <Form.Label htmlFor="tenant">
-                          {t("login.select-tenant-label")}
+                          {t("select-tenant-label")}
                         </Form.Label>
                         <MultiSelect
                           overrideStrings={{
-                            selectSomeItems: t("login.select-some-options"),
+                            selectSomeItems: t("select-some-options"),
                           }}
                           disableSearch
                           options={
@@ -274,7 +270,7 @@ function Login() {
                           className="single-select"
                           labelledBy="tenant"
                         />
-                        <small>{t("login.tenant-help-text")}</small>
+                        <small>{t("tenant-help-text")}</small>
                       </div>
                     )}
                 </>
@@ -284,7 +280,7 @@ function Login() {
         </Card>
       )}
       {!ready && (
-        <LoadingComponent isLoading loadingMessage={t("login.please-wait")} />
+        <LoadingComponent isLoading loadingMessage={t("please-wait")} />
       )}
     </>
   );

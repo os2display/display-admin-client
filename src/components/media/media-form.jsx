@@ -74,7 +74,7 @@ function MediaForm({
             variant="secondary"
             id="back_to_list"
             className="m-1"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/media/list")}
           >
             {t("media-form.back-to-list")}
           </Button>

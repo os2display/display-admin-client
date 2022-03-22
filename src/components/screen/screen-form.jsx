@@ -44,7 +44,7 @@ function ScreenForm({
   isLoading,
   loadingMessage,
 }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "screen-form" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedLayout, setSelectedLayout] = useState();
@@ -101,10 +101,10 @@ function ScreenForm({
         if (response.error) {
           const err = response.error;
           displayError(
-            t("screen.error-messages.error-binding", {
-              error: err.data,
+            t("error-messages.error-binding", {
               status: err.status,
-            })
+            }),
+            err
           );
         } else {
           // Set screenUser to true, to indicate it has been set.
@@ -126,10 +126,10 @@ function ScreenForm({
         if (response.error) {
           const err = response.error;
           displayError(
-            t("screen.error-messages.error-unbinding", {
-              error: err.data,
+            t("error-messages.error-unbinding", {
               status: err.status,
-            })
+            }),
+            err
           );
         } else {
           // Set screenUser to null, to indicate it has been removed.
@@ -150,45 +150,43 @@ function ScreenForm({
       <Form>
         <h1 id="screenTitle">{headerText}</h1>
         <ContentBody>
-          <h2 className="h4">{t("screen-form.screen-about")}</h2>
+          <h2 className="h4">{t("screen-about")}</h2>
           <FormInput
             name="title"
             type="text"
-            label={t("screen-form.screen-name-label")}
-            invalidText={t("screen-form.screen-name-validation")}
-            helpText={t("screen-form.screen-name-placeholder")}
+            label={t("screen-name-label")}
+            invalidText={t("screen-name-validation")}
+            helpText={t("screen-name-placeholder")}
             value={screen.title}
             onChange={handleInput}
           />
           <FormInputArea
             name="description"
             type="text"
-            label={t("screen-form.screen-description-label")}
-            helpText={t("screen-form.screen-description-placeholder")}
+            label={t("screen-description-label")}
+            helpText={t("screen-description-placeholder")}
             value={screen.description}
             onChange={handleInput}
           />
         </ContentBody>
         {Object.prototype.hasOwnProperty.call(screen, "@id") && (
           <ContentBody>
-            <h2 className="h4 mb-3">{t("screen.bind-header")}</h2>
+            <h2 className="h4 mb-3">{t("bind-header")}</h2>
             {screen?.screenUser && (
               <>
                 <div className="mb-3">
                   <Alert key="screen-bound" variant="success">
-                    {t("screen.already-bound")}
+                    {t("already-bound")}
                   </Alert>
                 </div>
-                <Button onClick={handleUnbindScreen}>
-                  {t("screen.unbind")}
-                </Button>
+                <Button onClick={handleUnbindScreen}>{t("unbind")}</Button>
               </>
             )}
             {!screen?.screenUser && (
               <>
                 <div className="mb-3">
                   <Alert key="screen-not-bound" variant="danger">
-                    {t("screen.not-bound")}
+                    {t("not-bound")}
                   </Alert>
                 </div>
                 <FormInput
@@ -197,16 +195,16 @@ function ScreenForm({
                   }}
                   name="bindKey"
                   value={bindKey}
-                  label={t("screen.bindkey-label")}
+                  label={t("bindkey-label")}
                   className="mb-3"
                 />
-                <Button onClick={handleBindScreen}>{t("screen.bind")}</Button>
+                <Button onClick={handleBindScreen}>{t("bind")}</Button>
               </>
             )}
           </ContentBody>
         )}
         <ContentBody>
-          <h2 className="h4">{t("screen-form.screen-groups")}</h2>
+          <h2 className="h4">{t("screen-groups")}</h2>
           <SelectGroupsTable
             handleChange={handleInput}
             name="inScreenGroups"
@@ -215,24 +213,24 @@ function ScreenForm({
           />
         </ContentBody>
         <ContentBody>
-          <h2 className="h4">{t("screen-form.screen-location")}</h2>
+          <h2 className="h4">{t("screen-location")}</h2>
           <FormInput
             name="location"
             type="text"
             required
-            label={t("screen-form.screen-location-label")}
-            helpText={t("screen-form.screen-location-placeholder")}
+            label={t("screen-location-label")}
+            helpText={t("screen-location-placeholder")}
             value={screen.location}
             onChange={handleInput}
           />
         </ContentBody>
         <ContentBody>
-          <h2 className="h4">{t("screen-form.screen-settings")}</h2>
+          <h2 className="h4">{t("screen-settings")}</h2>
           <FormInput
             name="size"
             type="text"
-            label={t("screen-form.screen-size-of-screen-label")}
-            helpText={t("screen-form.screen-size-of-screen-placeholder")}
+            label={t("screen-size-of-screen-label")}
+            helpText={t("screen-size-of-screen-placeholder")}
             value={screen.size}
             onChange={handleInput}
           />
@@ -241,9 +239,9 @@ function ScreenForm({
               <FormInput
                 name="dimensions.height"
                 type="number"
-                label={t("screen-form.screen-resolution-height")}
+                label={t("screen-resolution-height")}
                 placeholder={t(
-                  "screen-form.screen-resolution-of-screen-height-placeholder"
+                  "screen-resolution-of-screen-height-placeholder"
                 )}
                 value={screen.dimensions.height}
                 onChange={handleInput}
@@ -254,10 +252,8 @@ function ScreenForm({
               <FormInput
                 name="dimensions.width"
                 type="number"
-                label={t("screen-form.screen-resolution-width")}
-                placeholder={t(
-                  "screen-form.screen-resolution-of-screen-width-placeholder"
-                )}
+                label={t("screen-resolution-width")}
+                placeholder={t("screen-resolution-of-screen-width-placeholder")}
                 value={screen.dimensions.width}
                 onChange={handleInput}
               />
@@ -265,16 +261,16 @@ function ScreenForm({
           </Row>
         </ContentBody>
         <ContentBody id="layout-section">
-          <h2 className="h4">{t("screen-form.screen-layout")}</h2>
+          <h2 className="h4">{t("screen-layout")}</h2>
           <div className="row">
             {layoutOptions && (
               <div className="col-md-8">
                 <MultiSelectComponent
-                  label={t("screen-form.screen-layout-label")}
-                  noSelectedString={t("screen-form.nothing-selected")}
+                  label={t("screen-layout-label")}
+                  noSelectedString={t("nothing-selected")}
                   handleSelection={handleAdd}
                   options={layoutOptions}
-                  helpText={t("screen-form.search-to-se-possible-selections")}
+                  helpText={t("search-to-se-possible-selections")}
                   selected={selectedLayout ? [selectedLayout] : []}
                   name="layout"
                   singleSelect
@@ -298,11 +294,11 @@ function ScreenForm({
             variant="secondary"
             type="button"
             id="cancel_screen"
-            onClick={() => navigate("/screen/list/")}
+            onClick={() => navigate("/screen/list")}
             size="lg"
             className="me-3"
           >
-            {t("screen-form.cancel-button")}
+            {t("cancel-button")}
           </Button>
           <Button
             variant="primary"
@@ -311,7 +307,7 @@ function ScreenForm({
             size="lg"
             onClick={handleSubmit}
           >
-            {t("screen-form.save-button")}
+            {t("save-button")}
           </Button>
         </ContentFooter>
       </Form>

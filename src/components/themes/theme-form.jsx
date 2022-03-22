@@ -73,7 +73,7 @@ function ThemeForm({
             variant="secondary"
             type="button"
             id="cancel_theme"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/theme/list")}
             size="lg"
             className="me-3"
           >
