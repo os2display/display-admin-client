@@ -859,5 +859,8 @@
   },
   "auth-handler": {
     "please-wait": "Vent venligst..."
+  },
+  "multiselect-from-endpoint": {
+    "error-fetching": "Der opstod en fejl da konfigurationsmulighederne skulle hentes. Datakilden er måske forkert konfigureret."
   }
 }
