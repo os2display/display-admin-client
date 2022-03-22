@@ -3,5 +3,5 @@
   "testFiles": "**/*.spec.js",
   "pluginsFile": false,
   "supportFile": false,
-  "viewportHeight": 1000
+  "viewportHeight": 4000
 }
