@@ -24,9 +24,6 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-      #      HTTPS config - uncomment to enable redirect from :80 to :443
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
     image: node:14
@@ -38,17 +35,34 @@ services:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://node:3000/tags" ]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
-  cypress:
-    image: cypress/included:7.5.0
+  mariadb:
+    # Database with pre-load fixtures for testing for the API.
+    image: itkdev/os2display-api-mariadb:alpha
     networks:
       - app
+    environment:
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db
+      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: password
+
+  cypress:
+    image: cypress/included:9.1.1
+    networks:
+      - app
+      - frontend
     depends_on:
       - nginx
     environment:
       - CYPRESS_VIDEO=false
       - CYPRESS_baseUrl=http://nginx
-      #- DISPLAY=host.docker.internal:0
     volumes:
       - .:/e2e
       - /tmp/.X11-unix:/tmp/.X11-unix
