@@ -12,17 +12,17 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ~/.yarn
+          path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: install
-        run: yarn
+        run: npm
 
       - name: Build production assets
-        run: yarn build
+        run: npm run build
 
   frontend-coding-standards:
     name: Frontend coding standards
@@ -36,17 +36,17 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ~/.yarn
+          path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: install
-        run: yarn
+        run: npm install
 
       - name: React coding standards
-        run: yarn check-coding-standards
+        run: npm run check-coding-standards
 
   cypress:
     name: Cypress
@@ -63,7 +63,7 @@ jobs:
         run: docker network create frontend
 
       - name: Install client
-        run: docker-compose run node yarn
+        run: docker-compose run node npm install
 
       - name: Cypress run
         run: docker-compose run cypress run
