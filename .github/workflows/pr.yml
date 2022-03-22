@@ -50,69 +50,68 @@ jobs:
       - name: React coding standards
         run: yarn check-coding-standards
 
-# TODO: Fix cypress testing
- cypress:
-   name: Cypress
-   runs-on: ubuntu-latest
-   strategy:
-     fail-fast: false
-     matrix:
-       browser: ["chrome"]
-   services:
-     mariadb:
-       image: itkdev/os2display-api-mariadb:alpha
-       env:
-         MYSQL_USER: db
-         MYSQL_PASSWORD: db
-         MYSQL_DATABASE: db
-         MYSQL_ROOT_PASSWORD: db
-       ports:
-         - 3306:3306
-       options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-     api:
-       image: itkdev/os2display-api-service:alpha
-       env:
-         PHP_MAX_EXECUTION_TIME: 30
-         PHP_MEMORY_LIMIT: 128M
-         PHP_UPLOAD_MAX_FILESIZE: 8M
-         APP_ENV: prod
-         APP_TRUSTED_PROXIES: 127.0.0.1,REMOTE_ADDR
-         APP_SECRET: MySuperSecret
-         APP_CORS_ALLOW_ORIGIN: '*'
-         APP_DATABASE_URL: mysql://db:db@127.0.0.1:3306/db?serverVersion=mariadb-10.4.21
-         APP_DEFAULT_DATE_FORMAT: Y-m-d\TH:i:s.v\Z
-       ports:
-         - 9000:9000
-     nginx-api:
-       image: itkdev/os2display-api-service-nginx:alpha
-       env:
-         PHP_FPM_SERVER: 127.0.0.1
-         NGINX_FPM_UPLOAD_MAX: 8M
-       ports:
-         - 80:80
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: ["chrome"]
+    services:
+      mariadb:
+        image: itkdev/os2display-api-mariadb:alpha
+        env:
+          MYSQL_USER: db
+          MYSQL_PASSWORD: db
+          MYSQL_DATABASE: db
+          MYSQL_ROOT_PASSWORD: db
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      api:
+        image: itkdev/os2display-api-service:alpha
+        env:
+          PHP_MAX_EXECUTION_TIME: 30
+          PHP_MEMORY_LIMIT: 128M
+          PHP_UPLOAD_MAX_FILESIZE: 8M
+          APP_ENV: prod
+          APP_TRUSTED_PROXIES: 127.0.0.1,REMOTE_ADDR
+          APP_SECRET: MySuperSecret
+          APP_CORS_ALLOW_ORIGIN: '*'
+          APP_DATABASE_URL: mysql://db:db@127.0.0.1:3306/db?serverVersion=mariadb-10.4.21
+          APP_DEFAULT_DATE_FORMAT: Y-m-d\TH:i:s.v\Z
+        ports:
+          - 9000:9000
+      nginx-api:
+        image: itkdev/os2display-api-service-nginx:alpha
+        env:
+          PHP_FPM_SERVER: 127.0.0.1
+          NGINX_FPM_UPLOAD_MAX: 8M
+        ports:
+          - 80:80
 
-   steps:
-     - name: Checkout
-       uses: actions/checkout@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-     - name: Pull docker images
-       run: docker compose --file docker-compose.actions.yml pull --quiet
+      - name: Pull docker images
+        run: docker compose --file docker-compose.actions.yml pull --quiet
 
-     - name: Install and configure client
-       run: |
-         cp .docker/actions.config.json public/config.json
-         docker compose --file docker-compose.actions.yml run node yarn install
+      - name: Install and configure client
+        run: |
+          cp .docker/actions.config.json public/config.json
+          docker compose --file docker-compose.actions.yml run node yarn install
 
-     - name: Run the application
-       run: docker compose --file docker-compose.actions.yml up -d
+      - name: Run the application
+        run: docker compose --file docker-compose.actions.yml up -d
 
-     - name: Cypress run
-       run: docker compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
+      - name: Cypress run
+        run: docker compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
 
-     - name: Archive screenshots
-       if: ${{ failure() }}
-       uses: actions/upload-artifact@v2
-       with:
-         name: cypress-screenhosts-${{ matrix.browser }}
-         path: cypress/screenshots
-         retention-days: 7
+      - name: Archive screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenhosts-${{ matrix.browser }}
+          path: cypress/screenshots
+          retention-days: 7
