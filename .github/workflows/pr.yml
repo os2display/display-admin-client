@@ -58,8 +58,6 @@ jobs:
       matrix:
         browser: ["chrome"]
     steps:
-
-    steps:
       - name: Checkout
         uses: actions/checkout@v2
 
