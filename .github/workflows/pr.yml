@@ -62,22 +62,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup network
-        run: docker network create frontend
-
-      - name: Pull docker images
-        run: docker compose pull --quiet
-
-      - name: Configure client
-        run: cp .docker/actions.config.json public/config.json
+        run: docker network create d
 
       - name: Install client
-        run: docker compose run node yarn
-
-      - name: Run the application
-        run: docker compose up -d
+        run: docker-compose run node yarn
 
       - name: Cypress run
-        run: docker compose run cypress run --browser ${{ matrix.browser }}
+        run: docker-compose run cypress run --browser ${{ matrix.browser }}
 
       - name: Archive screenshots
         if: ${{ failure() }}
@@ -86,3 +77,4 @@ jobs:
           name: cypress-screenhosts-${{ matrix.browser }}
           path: cypress/screenshots
           retention-days: 7
+
