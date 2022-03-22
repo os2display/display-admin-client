@@ -12,7 +12,6 @@ describe("Login works", () => {
 
     cy.visit("/group/list");
 
-    //
     cy.get("#login").click();
     cy.wait(["@token"]);
     cy.get(".name").should("have.text", "John Doe (ABC Tenant)");
