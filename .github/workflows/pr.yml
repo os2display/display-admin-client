@@ -61,6 +61,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup network
+        run: docker network create frontend
+
       - name: Pull docker images
         run: docker compose pull --quiet
 
