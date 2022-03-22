@@ -62,18 +62,18 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Pull docker images
-        run: docker compose --file docker-compose.actions.yml pull --quiet
+        run: docker compose pull --quiet
 
       - name: Install and configure client
         run: |
           cp .docker/actions.config.json public/config.json
-          docker compose --file docker-compose.actions.yml run node yarn install
+          docker compose run node yarn
 
       - name: Run the application
-        run: docker compose --file docker-compose.actions.yml up -d
+        run: docker compose up -d
 
       - name: Cypress run
-        run: docker compose --file docker-compose.actions.yml run cypress run --browser ${{ matrix.browser }}
+        run: docker compose run cypress run --browser ${{ matrix.browser }}
 
       - name: Archive screenshots
         if: ${{ failure() }}
