@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { Alert } from "react-bootstrap";
 import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dropdown";
 import localStorageKeys from "../../util/local-storage-keys";
-import { Alert } from "react-bootstrap";
 
 /**
  * Multiselect with options supplied by endpoint.
@@ -87,7 +87,9 @@ function MultiselectFromEndpoint({
         />
       )}
       {error && (
-        <Alert variant="warning">{t('multiselect-from-endpoint.error-fetching')}</Alert>
+        <Alert variant="warning">
+          {t("multiselect-from-endpoint.error-fetching")}
+        </Alert>
       )}
     </>
   );
