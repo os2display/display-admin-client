@@ -24,6 +24,9 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
+            #      HTTPS config - uncomment to enable redirect from :80 to :443
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
     image: node:14
@@ -42,9 +45,8 @@ services:
       retries: 3
       start_period: 60s
 
-
   cypress:
-    image: cypress/included:9.1.1
+    image: cypress/included:7.5.0
     networks:
       - app
       - frontend
