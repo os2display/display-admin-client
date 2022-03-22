@@ -63,9 +63,7 @@ function TopBar() {
           <>
             {!context.tenants.get && (
               <div className="name">
-                {context.userName.get} (
-                {context.selectedTenant.get?.title}
-                )
+                {context.userName.get} ({context.selectedTenant.get?.title})
               </div>
             )}
             {context.tenants?.get && (
