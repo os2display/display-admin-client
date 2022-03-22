@@ -120,6 +120,9 @@ function App() {
           groups: {
             roles: ["ROLE_ADMIN"],
           },
+          shared: {
+            roles: ["ROLE_ADMIN"],
+          },
         });
       });
   }, []);
