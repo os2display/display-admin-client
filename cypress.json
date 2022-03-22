@@ -3,5 +3,9 @@
   "testFiles": "**/*.spec.js",
   "pluginsFile": false,
   "supportFile": false,
-  "viewportHeight": 4000
+  "viewportHeight": 4000,
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
 }
