@@ -64,10 +64,11 @@ jobs:
       - name: Pull docker images
         run: docker compose pull --quiet
 
-      - name: Install and configure client
-        run: |
-          cp .docker/actions.config.json public/config.json
-          docker compose run node yarn
+      - name: Configure client
+        run: cp .docker/actions.config.json public/config.json
+
+      - name: Install client
+        run: docker compose run node yarn
 
       - name: Run the application
         run: docker compose up -d
