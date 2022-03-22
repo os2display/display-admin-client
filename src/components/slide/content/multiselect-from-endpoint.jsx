@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dropdown";
 import localStorageKeys from "../../util/local-storage-keys";
-import {
-  displayError
-} from "../../util/list/toast-component/display-toast";
+import { displayError } from "../../util/list/toast-component/display-toast";
 
 /**
  * Multiselect with options supplied by endpoint.
@@ -29,7 +27,6 @@ function MultiselectFromEndpoint({
 }) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState(null);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (optionsEndpoint) {
@@ -53,7 +50,9 @@ function MultiselectFromEndpoint({
             })
           );
         })
-        .catch(() => displayError(t("multiselect-from-endpoint.error-fetching")));
+        .catch(() =>
+          displayError(t("multiselect-from-endpoint.error-fetching"))
+        );
     }
   }, [optionsEndpoint]);
 
