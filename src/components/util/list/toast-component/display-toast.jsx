@@ -11,23 +11,22 @@ export function displaySuccess(text) {
 }
 
 /**
- * @param {string} errorString The toast display text
- * @param {object} error The error
+ * @param {string} errorString - The toast display text
+ * @param {object} error - The error
  */
 export function displayError(errorString, error) {
   let errorText = "";
 
-  if (error) {
-    if (error["hydra:description"]) {
-      errorText = error["hydra:description"];
-    }
-    if (error.data) {
-      errorText = error.data["hydra:description"] || error.data.message;
-    }
-    if (error.error) {
-      errorText = error.error;
-    }
+  if (error && error["hydra:description"]) {
+    errorText = error["hydra:description"];
   }
+  if (error && error.data) {
+    errorText = error.data["hydra:description"] || error.data.message;
+  }
+  if (error && error.error) {
+    errorText = error.error;
+  }
+
   const displayText = `${errorString} ${errorText} ${dayjs().format(
     "HH:mm:ss"
   )}`;
