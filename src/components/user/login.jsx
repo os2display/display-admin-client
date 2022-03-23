@@ -242,7 +242,7 @@ function Login() {
                         required
                       />
                       <Button type="submit" className="mt-3" id="login">
-                        {t("login.submit")}
+                        {t("submit")}
                       </Button>
                     </>
                   )}

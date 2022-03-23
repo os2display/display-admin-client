@@ -18,9 +18,15 @@ export function displayError(errorString, error) {
   let errorText = "";
 
   if (error) {
-    errorText = error.data
-      ? error.data["hydra:description"] || error.data.message
-      : error.error;
+    if (error["hydra:description"]) {
+      errorText = error["hydra:description"];
+    }
+    if (error.data) {
+      errorText = error.data["hydra:description"] || error.data.message;
+    }
+    if (error.error) {
+      errorText = error.error;
+    }
   }
   const displayText = `${errorString} ${errorText} ${dayjs().format(
     "HH:mm:ss"
