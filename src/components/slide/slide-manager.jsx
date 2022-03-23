@@ -475,7 +475,7 @@ function SlideManager({
         // Construct data for submitting.
         const saveData = {
           slideSlideInput: JSON.stringify({
-            title: [],
+            title: formStateObject.title,
             theme: formStateObject.theme ?? "",
             description: formStateObject.description,
             templateInfo: formStateObject.templateInfo,

@@ -238,7 +238,7 @@ function ScreenCreate() {
       10
     );
     const saveData = {
-      title: [],
+      title: localFormStateObject.title,
       description: localFormStateObject.description,
       size: localFormStateObject.size,
       modifiedBy: localFormStateObject.modifiedBy,

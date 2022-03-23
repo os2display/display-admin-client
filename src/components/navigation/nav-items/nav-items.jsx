@@ -27,7 +27,7 @@ function NavItems() {
     <>
       {context.accessConfig?.get && (
         <>
-          <Nav.Item className="nav-item">
+          <Nav.Item>
             <NavLink
               id="nav-items_content_slides"
               className="nav-link"
