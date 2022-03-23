@@ -17,11 +17,11 @@ import {
  * @returns {object} The themes create page.
  */
 function ThemeEdit() {
-  const { t } = useTranslation("common");
-  const headerText = t("theme-edit.edit-theme");
+  const { t } = useTranslation("common", { keyPrefix: "theme-edit" });
+  const headerText = t("edit-theme");
   const [formStateObject, setFormStateObject] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("theme-edit.loading-messages.loading-theme")
+    t("loading-messages.loading-theme")
   );
   const { id } = useParams();
 
@@ -46,35 +46,21 @@ function ThemeEdit() {
   /** If the theme is not loaded, display the error message */
   useEffect(() => {
     if (loadError) {
-      displayError(
-        t("theme-edit.error-messages.load-theme-error", {
-          error: loadError.error
-            ? loadError.error
-            : loadError.data["hydra:description"],
-          id,
-        })
-      );
+      displayError(t("error-messages.load-theme-error"), loadError);
     }
   }, [loadError]);
 
   /** If the theme is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(t("theme-edit.success-messages.saved-theme"));
+      displaySuccess(t("success-messages.saved-theme"));
     }
   }, [isSaveSuccess]);
 
   /** If the theme is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(
-        t("theme-edit.error-messages.save-theme-error", {
-          error: saveError.error
-            ? saveError.error
-            : saveError.data["hydra:description"],
-          id,
-        })
-      );
+      displayError(t("error-messages.save-theme-error"), saveError);
     }
   }, [saveError]);
 
@@ -92,7 +78,7 @@ function ThemeEdit() {
 
   /** Handles submit. */
   function handleSubmit() {
-    setLoadingMessage(t("theme-edit.loading-messages.saving-theme"));
+    setLoadingMessage(t("loading-messages.saving-theme"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,

@@ -23,7 +23,7 @@ import {
  * @returns {object} The playlist containing shared playlists.
  */
 function SharedPlaylists() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "shared-playlists" });
 
   // Context
   const context = useContext(UserContext);
@@ -123,17 +123,17 @@ function SharedPlaylists() {
     {
       path: "title",
       sort: true,
-      label: t("shared-playlists.columns.name"),
+      label: t("columns.name"),
     },
     {
       path: "published",
-      label: t("shared-playlists.columns.published"),
+      label: t("columns.published"),
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
     },
     {
       key: "slides",
-      label: t("shared-playlists.columns.number-of-slides"),
+      label: t("columns.number-of-slides"),
       // eslint-disable-next-line react/prop-types
       content: ({ slides }) => (
         <ListButton
@@ -148,21 +148,15 @@ function SharedPlaylists() {
   // Error with retrieving list of playlists
   useEffect(() => {
     if (playlistsGetError) {
-      displayError(
-        t("shared-playlists.error-messages.load-error", {
-          error: playlistsGetError.error
-            ? playlistsGetError.error
-            : playlistsGetError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.load-error"), playlistsGetError);
     }
   }, [playlistsGetError]);
 
   return (
     <>
       <ContentHeader
-        title={t("shared-playlists.header")}
-        newBtnTitle={t("shared-playlists.create-new")}
+        title={t("header")}
+        newBtnTitle={t("create-new")}
         newBtnLink="/playlist/create?shared=true"
       >
         <Col md="auto">
@@ -172,13 +166,13 @@ function SharedPlaylists() {
               onClick={() => setView("calendar")}
             >
               <FontAwesomeIcon className="me-1" icon={faCalendar} />
-              {t("shared-playlists.change-view-calendar")}
+              {t("change-view-calendar")}
             </Button>
           )}
           {view === "calendar" && (
             <Button style={{ width: "110px" }} onClick={() => setView("list")}>
               <FontAwesomeIcon className="me-1" icon={faList} />
-              {t("shared-playlists.change-view-list")}
+              {t("change-view-list")}
             </Button>
           )}
         </Col>
@@ -196,7 +190,7 @@ function SharedPlaylists() {
             calendarView={view === "calendar"}
             handleIsPublished={onIsPublished}
             isLoading={isLoading}
-            loadingMessage={t("shared-playlists.loading")}
+            loadingMessage={t("loading")}
           >
             {view === "calendar" && <PlaylistCalendarCell />}
           </List>
@@ -208,7 +202,7 @@ function SharedPlaylists() {
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}
         dataKey="slide"
-        modalTitle={t("shared-playlists.info-modal.slides")}
+        modalTitle={t("info-modal.slides")}
       />
     </>
   );

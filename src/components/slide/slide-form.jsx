@@ -431,7 +431,7 @@ function SlideForm({
             variant="secondary"
             type="button"
             id="cancel_slide"
-            onClick={() => navigate("/slide/list/")}
+            onClick={() => navigate("/slide/list")}
             size="lg"
             className="me-3"
           >

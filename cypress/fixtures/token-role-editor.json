@@ -7,7 +7,7 @@
       "title": "ABC Tenant",
       "description": "Nulla quam ipsam voluptatem cupiditate.",
       "roles": [
-        "ROLE_ADMIN"
+        "ROLE_EDITOR"
       ]
     }
   ],

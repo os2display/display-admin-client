@@ -27,7 +27,7 @@ function NavItems() {
     <>
       {context.accessConfig?.get && (
         <>
-          <Nav.Item className="nav-item">
+          <Nav.Item>
             <NavLink
               id="nav-items_content_slides"
               className="nav-link"
@@ -115,7 +115,7 @@ function NavItems() {
               <NavLink
                 id="nav-items_settings"
                 className="nav-link"
-                to="/settings"
+                to="/themes/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faCog} />
                 {t("nav-items.configuration")}
@@ -130,17 +130,6 @@ function NavItems() {
                 to="/themes/list"
               >
                 {t("nav-items.configuration-themes")}
-              </NavLink>
-            </Nav.Item>
-          </RestrictedNavRoute>
-          <RestrictedNavRoute roles={context.accessConfig.get.settings.roles}>
-            <Nav.Item className="nav-second-level">
-              <NavLink
-                id="nav-items_configuration_users"
-                className="nav-link"
-                to="/users"
-              >
-                {t("nav-items.configuration-users")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>

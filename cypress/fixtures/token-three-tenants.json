@@ -9,6 +9,22 @@
       "roles": [
         "ROLE_ADMIN"
       ]
+    },
+    {
+      "tenantKey": "DEF",
+      "title": "DEF Tenant",
+      "description": "Inventore sed libero et.",
+      "roles": [
+        "ROLE_EDITOR"
+      ]
+    },
+    {
+      "tenantKey": "XYZ",
+      "title": "XYC Tenant",
+      "description": "Itaque quibusdam tempora velit porro ut velit.",
+      "roles": [
+        "ROLE_ADMIN"
+      ]
     }
   ],
   "user": {

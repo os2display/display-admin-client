@@ -30,7 +30,7 @@ import {
  * @returns {object} The slides list
  */
 function SlidesList() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "slides-list" });
   const context = useContext(UserContext);
 
   // Local state
@@ -46,7 +46,7 @@ function SlidesList() {
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("slides-list.loading-messages.loading-slides")
+    t("loading-messages.loading-slides")
   );
 
   // Delete call
@@ -86,9 +86,9 @@ function SlidesList() {
       // As we are deleting multiple slides, the ui will jump if the "is deleting" value from the hook is used.
       setIsDeleting(true);
       if (isDeleteSuccess) {
-        displaySuccess(t("slides-list.success-messages.slide-delete"));
+        displaySuccess(t("success-messages.slide-delete"));
       }
-      setLoadingMessage(t("slides-list.loading-messages.deleting-slide"));
+      setLoadingMessage(t("loading-messages.deleting-slide"));
       const localSlidesToDelete = [...slidesToDelete];
       const slideToDelete = localSlidesToDelete.splice(0, 1).shift();
       const slideToDeleteId = idFromUrl(slideToDelete["@id"]);
@@ -100,7 +100,7 @@ function SlidesList() {
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && slidesToDelete.length === 0) {
-      displaySuccess(t("slides-list.success-messages.slide-delete"));
+      displaySuccess(t("success-messages.slide-delete"));
       refetch();
       setIsDeleting(false);
     }
@@ -110,13 +110,7 @@ function SlidesList() {
   useEffect(() => {
     if (isDeleteError) {
       setIsDeleting(false);
-      displayError(
-        t("slides-list.error-messages.slide-delete-error", {
-          error: isDeleteError.error
-            ? isDeleteError.error
-            : isDeleteError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.slide-delete-error"), isDeleteError);
     }
   }, [isDeleteError]);
 
@@ -215,7 +209,7 @@ function SlidesList() {
   const columns = [
     {
       key: "pick",
-      label: t("slides-list.columns.pick"),
+      label: t("columns.pick"),
       content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
@@ -226,7 +220,7 @@ function SlidesList() {
     {
       path: "title",
       sort: true,
-      label: t("slides-list.columns.name"),
+      label: t("columns.name"),
     },
     {
       // eslint-disable-next-line react/prop-types
@@ -234,7 +228,7 @@ function SlidesList() {
         <TemplateLabelInList templateInfo={templateInfo} />
       ),
       key: "template",
-      label: t("slides-list.columns.template"),
+      label: t("columns.template"),
     },
     {
       key: "playlists",
@@ -242,18 +236,17 @@ function SlidesList() {
       content: ({ onPlaylists: localOnPlaylists }) => (
         <ListButton callback={openInfoModal} inputData={localOnPlaylists} />
       ),
-      label: t("slides-list.columns.slide-on-playlists"),
+      label: t("columns.slide-on-playlists"),
     },
     {
       key: "published",
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
-      label: t("slides-list.columns.published"),
+      label: t("columns.published"),
     },
     {
       key: "edit",
-      content: (d) =>
-        LinkForList(d["@id"], "slide/edit", t("slides-list.edit-button")),
+      content: (d) => LinkForList(d["@id"], "slide/edit", t("edit-button")),
     },
     {
       key: "delete",
@@ -263,7 +256,7 @@ function SlidesList() {
           disabled={selectedRows.length > 0}
           onClick={() => openDeleteModal(d)}
         >
-          {t("slides-list.delete-button")}
+          {t("delete-button")}
         </Button>
       ),
     },
@@ -272,22 +265,15 @@ function SlidesList() {
   // Error with retrieving list of slides
   useEffect(() => {
     if (slidesGetError) {
-      displayError(
-        t("slides-list.error-messages.slides-load-error", {
-          error: slidesGetError.error
-            ? slidesGetError.error
-            : slidesGetError.data["hydra:description"] ||
-              slidesGetError.data.message,
-        })
-      );
+      displayError(t("error-messages.slides-load-error"), slidesGetError);
     }
   }, [slidesGetError]);
 
   return (
     <>
       <ContentHeader
-        title={t("slides-list.header")}
-        newBtnTitle={t("slides-list.create-new-slide")}
+        title={t("header")}
+        newBtnTitle={t("create-new-slide")}
         newBtnLink="/slide/create"
       />
       {listData && (
@@ -321,7 +307,7 @@ function SlidesList() {
         apiCall={useGetV1PlaylistsByIdQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onPlaylists}
-        modalTitle={t("slides-list.info-modal.slide-on-playlists")}
+        modalTitle={t("info-modal.slide-on-playlists")}
       />
     </>
   );

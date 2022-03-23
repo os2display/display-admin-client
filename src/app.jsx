@@ -131,6 +131,7 @@ function App() {
     i18next.init({
       interpolation: { escapeValue: false }, // React already does escaping
       lng: "da", // language to use
+      keySeparator: ".",
       resources: {
         da: {
           common: commonDa,
@@ -219,9 +220,17 @@ function App() {
                             />
                           </Route>
                           <Route path="shared">
-                            <Route path="list" element={<SharedPlaylists />} />
+                            <Route
+                              path="list"
+                              element={
+                                <RestrictedRoute
+                                  roles={accessConfig.shared.roles}
+                                >
+                                  <SharedPlaylists />
+                                </RestrictedRoute>
+                              }
+                            />
                           </Route>
-
                           <Route path="screen">
                             <Route
                               path="list"

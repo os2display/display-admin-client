@@ -17,7 +17,6 @@ export default function RestrictedRoute({ children, roles }) {
   const userHasRequiredRole = context.selectedTenant.get?.roles.find((value) =>
     roles.includes(value)
   );
-
   if (context.authenticated.get && !userHasRequiredRole) {
     return <NoAccess />;
   }

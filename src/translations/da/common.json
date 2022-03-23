@@ -22,7 +22,7 @@
       "saved-theme": "Temaet er gemt"
     },
     "error-messages": {
-      "save-theme-error": "Der skete en fejl da temaet skulle gemmes: {{error}}"
+      "save-theme-error": "Der skete en fejl da temaet skulle gemmes:"
     }
   },
   "theme-edit": {
@@ -35,8 +35,8 @@
       "saved-theme": "Temaet er gemt"
     },
     "error-messages": {
-      "save-theme-error": "Der skete en fejl da temaet skulle gemmes: {{error}}",
-      "load-theme-error": "Der skete en fejl da temaet med følgende id: {{id}} skulle hentes: {{error}}"
+      "save-theme-error": "Der skete en fejl da temaet skulle gemmes:",
+      "load-theme-error": "Der skete en fejl da temaet med følgende id: {{id}} skulle hentes:"
     }
   },
   "slides-list": {
@@ -55,8 +55,8 @@
       "deleting-slide": "Sletter slide(s)"
     },
     "error-messages": {
-      "slide-delete-error": "Der skete en fejl da {{title}} skulle slettes: {{error}}",
-      "slides-load-error": "Der skete en fejl da slides skulle hentes: {{error}}"
+      "slide-delete-error": "Der skete en fejl da {{title}} skulle slettes:",
+      "slides-load-error": "Der skete en fejl da slides skulle hentes:"
     },
     "success-messages": {
       "slide-delete": "Slidet er blevet slettet"
@@ -96,8 +96,8 @@
       "deleting-screen": "Sletter skærm(e)"
     },
     "error-messages": {
-      "screen-delete-error": "Der skete en fejl da skærmen skulle slettes: {{error}}",
-      "screens-load-error": "Der skete en fejl da skærmene skulle hentes: {{error}}"
+      "screen-delete-error": "Der skete en fejl da skærmen skulle slettes:",
+      "screens-load-error": "Der skete en fejl da skærmene skulle hentes:"
     },
     "success-messages": {
       "screen-delete": "Skærmen er blevet slettet"
@@ -120,8 +120,8 @@
       "deleting-group": "Sletter gruppe(r)"
     },
     "error-messages": {
-      "group-delete-error": "Der skete en fejl da gruppen skulle slettes: {{error}}",
-      "groups-load-error": "Der skete en fejl da grupperne skulle hentes: {{error}}"
+      "group-delete-error": "Der skete en fejl da gruppen skulle slettes:",
+      "groups-load-error": "Der skete en fejl da grupperne skulle hentes:"
     },
     "success-messages": {
       "group-delete": "Gruppen er blevet slettet"
@@ -148,8 +148,8 @@
         "deleting": "Sletter spilleliste: {{title}}"
       },
       "error-messages": {
-        "delete-error": "Der skete en fejl da spillelisten skulle slettes: {{error}}",
-        "load-error": "Der skete en fejl da spillelisterne skulle hentes: {{error}}"
+        "delete-error": "Der skete en fejl da spillelisten skulle slettes:",
+        "load-error": "Der skete en fejl da spillelisterne skulle hentes:"
       },
       "success-messages": {
         "delete": "Spillelisten er blevet slettet"
@@ -169,8 +169,8 @@
         "deleting": "Sletter kampagnen: {{title}}"
       },
       "error-messages": {
-        "delete-error": "Der skete en fejl da kampagnen skulle slettes: {{error}}",
-        "load-error": "Der skete en fejl da kampagnerne skulle hentes: {{error}}"
+        "delete-error": "Der skete en fejl da kampagnen skulle slettes:",
+        "load-error": "Der skete en fejl da kampagnerne skulle hentes:"
       },
       "success-messages": {
         "delete": "Kampagnen er blevet slettet"
@@ -196,8 +196,8 @@
       "deleting-theme": "Sletter tema(er)"
     },
     "error-messages": {
-      "theme-delete-error": "Der skete en fejl da temaet skulle slettes: {{error}}",
-      "themes-load-error": "Der skete en fejl da temaerne skulle hentes: {{error}}"
+      "theme-delete-error": "Der skete en fejl da temaet skulle slettes:",
+      "themes-load-error": "Der skete en fejl da temaerne skulle hentes:"
     },
     "success-messages": {
       "theme-delete": "Temaet er blevet slettet"
@@ -218,8 +218,8 @@
       "deleting-media": "Sletter Medie(r)"
     },
     "error-messages": {
-      "media-delete-error": "Der skete en fejl da mediet skulle slettes: {{error}}",
-      "media-load-error": "Der skete en fejl da medier skulle hentes: {{error}}"
+      "media-delete-error": "Der skete en fejl da mediet skulle slettes:",
+      "media-load-error": "Der skete en fejl da medier skulle hentes:"
     },
     "success-messages": {
       "media-delete": "Mediet er blevet slettet"
@@ -235,7 +235,7 @@
       "saved-media": "Mediet er gemt"
     },
     "error-messages": {
-      "save-media-error": "Der skete en fejl da mediet skulle gemmes: {{error}}"
+      "save-media-error": "Der skete en fejl da mediet skulle gemmes:"
     }
   },
   "media-edit": {
@@ -261,10 +261,10 @@
       "saved-playlist": "Spillelisten er gemt"
     },
     "error-messages": {
-      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
-      "save-slide-error": "Der skete en fejl da slidet skulle gemmes: {{error}}",
-      "save-media-error": "Der skete en fejl da mediet skulle tilknyttes til slidet: {{error}}",
-      "load-slide-error": "Der skete en fejl da slidet med følgende id: {{id}} skulle hentes: {{error}}"
+      "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes:",
+      "save-slide-error": "Der skete en fejl da slidet skulle gemmes:",
+      "save-media-error": "Der skete en fejl da mediet skulle tilknyttes til slidet:",
+      "load-slide-error": "Der skete en fejl da slidet skulle hentes:"
     }
   },
   "slide-media-modal": {
@@ -274,8 +274,8 @@
   },
   "slide-preview": {
     "error-messages": {
-      "loading-template-error": "Der skete en fejl da slidets skabelon skulle hentes: {{error}}",
-      "loading-content-error": "Der skete en fejl da slidets indhold skulle hentes: {{error}}"
+      "loading-template-error": "Der skete en fejl da slidets skabelon skulle hentes:",
+      "loading-content-error": "Der skete en fejl da slidets indhold skulle hentes:"
     },
     "loading-messages": {
       "loading": "Henter template og indhold til slide"
@@ -341,7 +341,7 @@
       "saved-group": "Gruppen er gemt"
     },
     "error-messages": {
-      "save-group-error": "Der skete en fejl da gruppen skulle gemmes: {{error}}"
+      "save-group-error": "Der skete en fejl da gruppen skulle gemmes:"
     }
   },
   "group-edit": {
@@ -354,8 +354,8 @@
       "saved-group": "Gruppen er gemt"
     },
     "error-messages": {
-      "save-group-error": "Der skete en fejl da gruppen skulle gemmes: {{error}}",
-      "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes: {{error}}"
+      "save-group-error": "Der skete en fejl da gruppen skulle gemmes:",
+      "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes:"
     }
   },
   "playlist-campaign-manager": {
@@ -375,11 +375,11 @@
         "saved-groups": "Grupper er tilknyttet kampagnen"
       },
       "error-messages": {
-        "save-group-error": "Der skete en fejl da gruppen/grupperne skulle tilknyttes til kampagnen: {{error}}",
-        "save-error": "Der skete en fejl da kampagnen skulle gemmes: {{error}}",
-        "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til kampagnen: {{error}}",
-        "save-screens-error": "Der skete en fejl da skærmen/skærmene skulle tilknyttes til kampagnen: {{error}}",
-        "load-error": "Der skete en fejl da kampagnen med følgende id: {{id}} skulle hentes: {{error}}"
+        "save-group-error": "Der skete en fejl da gruppen/grupperne skulle tilknyttes til kampagnen:",
+        "save-error": "Der skete en fejl da kampagnen skulle gemmes:",
+        "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til kampagnen:",
+        "save-screens-error": "Der skete en fejl da skærmen/skærmene skulle tilknyttes til kampagnen:",
+        "load-error": "Der skete en fejl da kampagnen med følgende id: {{id}} skulle hentes:"
       }
     },
     "playlist": {
@@ -398,11 +398,11 @@
         "saved-groups": "Grupper er tilknyttet spillelisten"
       },
       "error-messages": {
-        "save-screens-error": "Der skete en fejl da skærmen/skærmene skulle tilknyttes til spillelisten: {{error}}",
-        "save-group-error": "Der skete en fejl da gruppen/grupperne skulle tilknyttes til spillelisten: {{error}}",
-        "save-error": "Der skete en fejl da spillelisten skulle gemmes: {{error}}",
-        "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten: {{error}}",
-        "load-error": "Der skete en fejl da spillelisten med følgende id: {{id}} skulle hentes: {{error}}"
+        "save-screens-error": "Der skete en fejl da skærmen/skærmene skulle tilknyttes til spillelisten:",
+        "save-group-error": "Der skete en fejl da gruppen/grupperne skulle tilknyttes til spillelisten:",
+        "save-error": "Der skete en fejl da spillelisten skulle gemmes:",
+        "save-slides-error": "Der skete en fejl da slides skulle tilknyttes til spillelisten:",
+        "load-error": "Der skete en fejl da spillelisten med følgende id: {{id}} skulle hentes:"
       }
     }
   },
@@ -443,7 +443,7 @@
       "loading": "Henter spillelister"
     },
     "error-messages": {
-      "load-error": "Der skete en fejl da spillelisterne skulle hentes: {{error}}"
+      "load-error": "Der skete en fejl da spillelisterne skulle hentes:"
     },
     "columns": {
       "published": "Udgivet",
@@ -452,7 +452,7 @@
     }
   },
   "playlist-drag-and-drop": {
-    "show-only-shared": "Vis kun spillelister delt med mig",
+    "show-only-shared": "Vis delte spillelister",
     "columns": {
       "name": "Navn",
       "published": "Udgivet"
@@ -611,10 +611,10 @@
       "saved-groups": "Grupper er tilknyttet skærmen"
     },
     "error-messages": {
-      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes: {{error}}",
-      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner: {{error}}",
-      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen: {{error}}",
-      "load-screen-error": "Der skete en fejl da skærmen med følgende id: {{id}} skulle hentes: {{error}}"
+      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes:",
+      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner:",
+      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen:",
+      "load-screen-error": "Der skete en fejl da skærmen med følgende id: {{id}} skulle hentes:"
     }
   },
   "screen-create": {
@@ -630,12 +630,22 @@
       "saved-groups": "Grupper er tilknyttet skærmen"
     },
     "error-messages": {
-      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes: {{error}}",
-      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner: {{error}}",
-      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen: {{error}}"
+      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes:",
+      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner:",
+      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen:"
     }
   },
   "screen-form": {
+    "bind-header": "Tilkobling",
+    "bind": "Tilkobl skærm",
+    "unbind": "Afkobl skærm",
+    "not-bound": "Skærmen er ikke tilkoblet",
+    "already-bound": "Skærmen er tilkoblet",
+    "bindkey-label": "Tilkoblingskode",
+    "error-messages": {
+      "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles:",
+      "error-unbinding": "Der skete en fejl ({{status}}) da skærmen skulle afkobles:"
+    },
     "nothing-selected": "Vælg en af skabelonerne",
     "search-to-se-possible-selections": "Alle layouts er hentet og klar i listen, listen er stadig søgbar.",
     "screen-resolution-height": "Højde",
@@ -761,7 +771,7 @@
     "select-some-options": "Vælg...",
     "email": "Email",
     "password": "Kodeord",
-    "error": "Log ind fejlede",
+    "error": "Log ind fejlede:",
     "invalid-credentials": "Log ind blev ikke genkendt",
     "submit": "Log ind",
     "error-oidc-login": "Log ind med AD fejlede",
@@ -791,18 +801,6 @@
   },
   "file-selector": {
     "open-media-library": "Vælg fra mediearkiv"
-  },
-  "screen": {
-    "bind-header": "Tilkobling",
-    "bind": "Tilkobl skærm",
-    "unbind": "Afkobl skærm",
-    "not-bound": "Skærmen er ikke tilkoblet",
-    "already-bound": "Skærmen er tilkoblet",
-    "bindkey-label": "Tilkoblingskode",
-    "error-messages": {
-      "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles: \"{{error}}\"",
-      "error-unbinding": "Der skete en fejl ({{status}}) da skærmen skulle afkobles: \"{{error}}\""
-    }
   },
   "poster-selector": {
     "preview-of-events": "Forhåndsvisning af begivenheder udfra valg",

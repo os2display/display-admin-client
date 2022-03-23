@@ -42,14 +42,16 @@ function PlaylistCampaignManager({
   slideId,
   location,
 }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", {
+    keyPrefix: "playlist-campaign-manager",
+  });
   const navigate = useNavigate();
   const { search } = useLocation();
   const sharedParams = new URLSearchParams(search).get("shared");
   const headerText =
     saveMethod === "PUT"
-      ? t(`playlist-campaign-manager.${location}.edit-header`)
-      : t(`playlist-campaign-manager.${location}.create-header`);
+      ? t(`${location}.edit-header`)
+      : t(`${location}.create-header`);
   const [formStateObject, setFormStateObject] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
   const [highlightSharedSection, setHighlightSharedSection] = useState(false);
@@ -134,29 +136,21 @@ function PlaylistCampaignManager({
   // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessSlides) {
-      displaySuccess(
-        t(`playlist-campaign-manager.${location}.success-messages.saved-slides`)
-      );
+      displaySuccess(t(`${location}.success-messages.saved-slides`));
     }
   }, [isSaveSuccessSlides]);
 
   // Screens are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessScreens) {
-      displaySuccess(
-        t(
-          `playlist-campaign-manager.${location}.success-messages.saved-screens`
-        )
-      );
+      displaySuccess(t(`${location}.success-messages.saved-screens`));
     }
   }, [isSaveSuccessScreens]);
 
   // Groups are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessGroups) {
-      displaySuccess(
-        t(`playlist-campaign-manager.${location}.success-messages.saved-groups`)
-      );
+      displaySuccess(t(`${location}.success-messages.saved-groups`));
     }
   }, [isSaveSuccessGroups]);
 
@@ -167,11 +161,7 @@ function PlaylistCampaignManager({
       screensToAdd &&
       formStateObject.screens
     ) {
-      setLoadingMessage(
-        t(
-          `playlist-campaign-manager.${location}.loading-messages.saving-screens`
-        )
-      );
+      setLoadingMessage(t(`${location}.loading-messages.saving-screens`));
 
       PutV1ScreensByIdCampaigns({
         id: id || idFromUrl(data["@id"]),
@@ -187,11 +177,7 @@ function PlaylistCampaignManager({
       groupsToAdd &&
       formStateObject.groups
     ) {
-      setLoadingMessage(
-        t(
-          `playlist-campaign-manager.${location}.loading-messages.saving-groups`
-        )
-      );
+      setLoadingMessage(t(`${location}.loading-messages.saving-groups`));
       PutV1ScreenGroupsByIdCampaigns({
         id: id || idFromUrl(data["@id"]),
         body: JSON.stringify(groupsToAdd),
@@ -206,11 +192,7 @@ function PlaylistCampaignManager({
       slidesToAdd &&
       Array.isArray(formStateObject.slides)
     ) {
-      setLoadingMessage(
-        t(
-          `playlist-campaign-manager.${location}.loading-messages.saving-slides`
-        )
-      );
+      setLoadingMessage(t(`${location}.loading-messages.saving-slides`));
       PutV1PlaylistsByIdSlides({
         id: id || idFromUrl(data["@id"]),
         body: JSON.stringify(slidesToAdd),
@@ -222,14 +204,8 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (saveErrorSlides) {
       displayError(
-        t(
-          `playlist-campaign-manager.${location}.error-messages.save-slides-error`,
-          {
-            error: saveErrorSlides.error
-              ? saveErrorSlides.error
-              : saveErrorSlides.data["hydra:description"],
-          }
-        )
+        t(`${location}.error-messages.save-slides-error`),
+        saveErrorSlides
       );
     }
   }, [saveErrorSlides]);
@@ -238,14 +214,8 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (saveErrorScreens) {
       displayError(
-        t(
-          `playlist-campaign-manager.${location}.error-messages.save-screens-error`,
-          {
-            error: saveErrorScreens.error
-              ? saveErrorScreens.error
-              : saveErrorScreens.data["hydra:description"],
-          }
-        )
+        t(`${location}.error-messages.save-screens-error`),
+        saveErrorScreens
       );
     }
   }, [saveErrorScreens]);
@@ -254,14 +224,8 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (saveErrorGroups) {
       displayError(
-        t(
-          `playlist-campaign-manager.${location}.error-messages.save-group-error`,
-          {
-            error: saveErrorGroups.error
-              ? saveErrorGroups.error
-              : saveErrorGroups.data["hydra:description"],
-          }
-        )
+        t(`${location}.error-messages.save-group-error`),
+        saveErrorGroups
       );
     }
   }, [saveErrorGroups]);
@@ -269,23 +233,14 @@ function PlaylistCampaignManager({
   /** Slides are not saved successfully, display a message */
   useEffect(() => {
     if (loadingError) {
-      displayError(
-        t(`playlist-campaign-manager.${location}.error-messages.load-error`, {
-          error: loadingError.error
-            ? loadingError.error
-            : loadingError.data["hydra:description"],
-          id,
-        })
-      );
+      displayError(t(`${location}.error-messages.load-error`), loadingError);
     }
   }, [loadingError]);
 
   /** If the slide is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccessPost || isSaveSuccessPut) {
-      displaySuccess(
-        t(`playlist-campaign-manager.${location}.success-messages.saved`)
-      );
+      displaySuccess(t(`${location}.success-messages.saved`));
     }
   }, [isSaveSuccessPost, isSaveSuccessPut]);
 
@@ -293,13 +248,7 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (saveErrorPut || saveErrorPost) {
       const saveError = saveErrorPut || saveErrorPost;
-      displayError(
-        t(`playlist-campaign-manager.${location}.error-messages.save-error`, {
-          error: saveError.error
-            ? saveError.error
-            : saveError.data["hydra:description"],
-        })
-      );
+      displayError(t(`${location}.error-messages.save-error`), saveError);
     }
   }, [saveErrorPut, saveErrorPost]);
 
@@ -356,11 +305,7 @@ function PlaylistCampaignManager({
 
   /** Handles submit. */
   function handleSubmit() {
-    setLoadingMessage(
-      t(
-        `playlist-campaign-manager.${location}.loading-messages.saving-playlist`
-      )
-    );
+    setLoadingMessage(t(`${location}.loading-messages.saving-playlist`));
 
     // Set published.
     const from = formStateObject.published.from
@@ -395,9 +340,7 @@ function PlaylistCampaignManager({
       },
     };
 
-    setLoadingMessage(
-      t(`playlist-campaign-manager.${location}.loading-messages.saving`)
-    );
+    setLoadingMessage(t(`${location}.loading-messages.saving`));
     if (saveMethod === "POST") {
       PostV1Playlist({
         playlistPlaylistInput: JSON.stringify(saveData),
@@ -426,6 +369,7 @@ function PlaylistCampaignManager({
     <>
       {formStateObject && (
         <PlaylistCampaignForm
+          location={location}
           playlist={formStateObject}
           headerText={`${headerText}: ${
             formStateObject && formStateObject.title

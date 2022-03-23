@@ -39,7 +39,10 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
               }
             />
           </ContentBody>
-          <ContentBody highlightSection={highlightSharedSection}>
+          <ContentBody
+            id="shared-section"
+            highlightSection={highlightSharedSection}
+          >
             <h2 className="h4">{t("playlist-form.share-playlist")}</h2>
             <TenantsDropdown
               name="tenants"

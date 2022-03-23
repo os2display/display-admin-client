@@ -21,8 +21,8 @@ import {
  * @returns {object} The screen edit page.
  */
 function ScreenEdit() {
-  const { t } = useTranslation("common");
-  const headerText = t("screen-edit.edit-screen-header");
+  const { t } = useTranslation("common", { keyPrefix: "screen-edit" });
+  const headerText = t("edit-screen-header");
   const [formStateObject, setFormStateObject] = useState();
   const [groupId, setGroupId] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
@@ -68,7 +68,7 @@ function ScreenEdit() {
   /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if (isSaveSuccess && groupsToAdd) {
-      setLoadingMessage(t("screen-edit.loading-messages.saving-groups"));
+      setLoadingMessage(t("loading-messages.saving-groups"));
       setSavingGroups(true);
       PutV1ScreensByIdScreenGroups({
         id,
@@ -81,7 +81,7 @@ function ScreenEdit() {
   useEffect(() => {
     if (isSaveSuccessGroups) {
       setSavingGroups(false);
-      displaySuccess(t("screen-edit.success-messages.saved-groups"));
+      displaySuccess(t("success-messages.saved-groups"));
     }
   }, [isSaveSuccessGroups]);
 
@@ -89,11 +89,7 @@ function ScreenEdit() {
   useEffect(() => {
     if (saveErrorGroups) {
       setSavingGroups(false);
-      displayError(
-        t("screen-edit.error-messages.save-groups-error", {
-          error: saveErrorGroups.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-groups-error"), saveErrorGroups);
     }
   }, [saveErrorGroups]);
 
@@ -102,7 +98,7 @@ function ScreenEdit() {
   useEffect(() => {
     if (isSavePlaylistSuccess) {
       setSavingPlaylists(false);
-      displaySuccess(t("screen-edit.success-messages.saved-playlists"));
+      displaySuccess(t("success-messages.saved-playlists"));
     }
   }, [isSavePlaylistSuccess]);
 
@@ -110,20 +106,14 @@ function ScreenEdit() {
   useEffect(() => {
     if (savePlaylistError) {
       setSavingPlaylists(false);
-      displayError(
-        t("screen-edit.error-messages.save-playlists-error", {
-          error: savePlaylistError.error
-            ? savePlaylistError.error
-            : savePlaylistError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-playlists-error"), savePlaylistError);
     }
   }, [savePlaylistError]);
 
   /** If the screen is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(t("screen-edit.success-messages.saved-screen"));
+      displaySuccess(t("success-messages.saved-screen"));
       setSavingScreen(false);
     }
   }, [isSaveSuccess]);
@@ -131,13 +121,7 @@ function ScreenEdit() {
   /** If the screen is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(
-        t("screen-edit.error-messages.save-screen-error", {
-          error: saveError.error
-            ? saveError.error
-            : saveError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-screen-error"), saveError);
       setSavingScreen(false);
     }
   }, [saveError]);
@@ -145,21 +129,14 @@ function ScreenEdit() {
   /** If the screen is not loaded, display the error message */
   useEffect(() => {
     if (loadError) {
-      displayError(
-        t("screen-edit.error-messages.load-screen-error", {
-          error: loadError.error
-            ? loadError.error
-            : loadError.data["hydra:description"],
-          id,
-        })
-      );
+      displayError(t("error-messages.load-screen-error", { id }), loadError);
     }
   }, [loadError]);
 
   /** Adds playlists to regions. */
   useEffect(() => {
     if (isSaveSuccess && playlistsToAdd && playlistsToAdd.length > 0) {
-      setLoadingMessage(t("screen-edit.loading-messages.saving-playlists"));
+      setLoadingMessage(t("loading-messages.saving-playlists"));
       const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
       putPlaylistScreenRegionItem({
         body: JSON.stringify(playlistToAdd?.list),
@@ -248,7 +225,7 @@ function ScreenEdit() {
   /** Handles submit. */
   function handleSubmit() {
     setSavingScreen(true);
-    setLoadingMessage(t("screen-edit.loading-messages.saving-screen"));
+    setLoadingMessage(t("loading-messages.saving-screen"));
     const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
     localFormStateObject.dimensions.width = parseInt(
       localFormStateObject.dimensions.width,

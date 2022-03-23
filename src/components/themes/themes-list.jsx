@@ -25,7 +25,7 @@ import {
  * @returns {object} The themes list
  */
 function ThemesList() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "themes-list" });
   const context = useContext(UserContext);
 
   // Local state
@@ -38,7 +38,7 @@ function ThemesList() {
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("themes-list.loading-messages.loading-themes")
+    t("loading-messages.loading-themes")
   );
 
   // Delete call
@@ -70,9 +70,9 @@ function ThemesList() {
 
       setIsDeleting(true);
       if (isDeleteSuccess) {
-        displaySuccess(t("themes-list.success-messages.theme-delete"));
+        displaySuccess(t("success-messages.theme-delete"));
       }
-      setLoadingMessage(t("themes-list.loading-messages.deleting-themes"));
+      setLoadingMessage(t("loading-messages.deleting-themes"));
       const themeToDelete = themesToDelete.splice(0, 1).shift();
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
       DeleteV1Themes({ id: themeToDeleteId });
@@ -82,7 +82,7 @@ function ThemesList() {
   // Display success messages
   useEffect(() => {
     if (isDeleteSuccess && themesToDelete.length === 0) {
-      displaySuccess(t("themes-list.success-messages.theme-delete"));
+      displaySuccess(t("success-messages.theme-delete"));
       refetch();
       setIsDeleting(false);
     }
@@ -99,13 +99,7 @@ function ThemesList() {
   useEffect(() => {
     if (isDeleteError) {
       setIsDeleting(false);
-      displayError(
-        t("themes-list.error-messages.theme-delete-error", {
-          error: isDeleteError.error
-            ? isDeleteError.error
-            : isDeleteError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.theme-delete-error"), isDeleteError);
     }
   }, [isDeleteError]);
 
@@ -179,7 +173,7 @@ function ThemesList() {
   const columns = [
     {
       key: "pick",
-      label: t("themes-list.columns.pick"),
+      label: t("columns.pick"),
       content: (d) => (
         <CheckboxForList
           onSelected={() => handleSelected(d)}
@@ -192,22 +186,21 @@ function ThemesList() {
     {
       path: "title",
       sort: true,
-      label: t("themes-list.columns.name"),
+      label: t("columns.name"),
     },
     {
       path: "createdBy",
-      label: t("themes-list.columns.created-by"),
+      label: t("columns.created-by"),
     },
     {
       key: "slides",
       // eslint-disable-next-line react/prop-types
       content: ({ onSlides }) => <>{onSlides.length}</>,
-      label: t("themes-list.columns.number-of-slides"),
+      label: t("columns.number-of-slides"),
     },
     {
       key: "edit",
-      content: (d) =>
-        LinkForList(d["@id"], "themes/edit", t("themes-list.edit-button")),
+      content: (d) => LinkForList(d["@id"], "themes/edit", t("edit-button")),
     },
     {
       key: "delete",
@@ -219,7 +212,7 @@ function ThemesList() {
             disabled={selectedRows.length > 0 || d.onSlides.length > 0}
             onClick={() => openDeleteModal(d)}
           >
-            {t("themes-list.delete-button")}
+            {t("delete-button")}
           </Button>
         </>
       ),
@@ -229,21 +222,15 @@ function ThemesList() {
   // Error with retrieving list of themes
   useEffect(() => {
     if (themesGetError) {
-      displayError(
-        t("themes-list.error-messages.themes-load-error", {
-          error: themesGetError.error
-            ? themesGetError.error
-            : themesGetError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.themes-load-error"), themesGetError);
     }
   }, [themesGetError]);
 
   return (
     <>
       <ContentHeader
-        title={t("themes-list.header")}
-        newBtnTitle={t("themes-list.create-new-theme")}
+        title={t("header")}
+        newBtnTitle={t("create-new-theme")}
         newBtnLink="/themes/create"
       />
       {data && data["hydra:member"] && (

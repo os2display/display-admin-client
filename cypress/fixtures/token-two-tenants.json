@@ -1,5 +1,6 @@
 {
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDY3MzY4MzgsImV4cCI6MTY0Njc0MDQzOCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiam9obmRvZUBleGFtcGxlLmNvbSJ9.up161pB9QiReZy8Cv_gQy5zc4CG1fpm-Ns_TSTGuQkqZ7bny5Ekl4qWSHbHRlbyHy8G0LS1lRFSj_xlCFhoS5h_M6cgU3j8H1GnYCh6E3F-lypH--UOD3TjogsvanFh59eLHYOF9gpzGuNFxA5nLLb_l4jeCaIaF912qw_BGMCrXZb_xKZvUNTNkSAZogzuNvxx7qqUdwTAtBVI3RFD15s5e11xWaSfcS4jK9KcdZ7tJmvsKWEKs_Fg_A0glnlsybpJjK6krasSMsuOdVx3G_WNO_VRoi3SlTmsZcpuTE363RE3DElYlGNgwLCIlyy9Fcyw2Jd1-BkqcQAoaQssxxg",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDc1OTc2OTEsImV4cCI6MTY0NzYwMTI5MSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiam9obmRvZUBleGFtcGxlLmNvbSJ9.vjEnY7Gmz2T-6JPtpWzRywe4h5QuzPDMFXxFslsViKwiW1V89_jIZgRbzRv8b1R1VWii1-7tqTix2SvNEbJbDCZUpJF1q2efa4RtkUTr4KX_1sfUlqhUUr8oCSU6J5ISLSZf9YzyYdJgNjaIYVO4mvOWChJJFEjFjz-nHJl3G40Fx5bUERz49N9sRnwbZAhb4lXBNp3kcyIBH76-s2j-KrH9RJIjCIZ9z06h8271coJx9jBW-1eVx08Jd8_yRSu0AMtifZNgtNkAfCYPabfknhdjdSENwRQSkT5JtadOdqQ3c-LjQCzfaikU1M1BtrJX3rq3pMzWdAnoypwVjt5Gpg",
+  "refresh_token": "456cb0ebec60e141cea22e09e77bb1a2335d18fb40e81abd8a653ae08fce6eaa001727771e7ca26e60c46e067a72b0e9165aff305ed7e28796c20068631f65b9",
   "tenants": [
     {
       "tenantKey": "ABC",
@@ -10,12 +11,24 @@
       ]
     },
     {
+      "tenantKey": "DEF",
+      "title": "DEF Tenant",
+      "description": "Inventore sed libero et.",
+      "roles": [
+        "ROLE_ADMIN"
+      ]
+    },
+    {
       "tenantKey": "XYZ",
       "title": "XYC Tenant",
       "description": "Itaque quibusdam tempora velit porro ut velit.",
       "roles": [
-        "ROLE_EDITOR"
+        "ROLE_ADMIN"
       ]
     }
-  ]
+  ],
+  "user": {
+    "fullname": "John Doe",
+    "email": "johndoe@example.com"
+  }
 }

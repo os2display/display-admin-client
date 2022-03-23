@@ -40,13 +40,11 @@ function SlideManager({
   isLoading,
   loadingError,
 }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "slide-manager" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const headerText =
-    saveMethod === "PUT"
-      ? t("slide-manager.edit-slide-header")
-      : t("slide-manager.create-slide-header");
+    saveMethod === "PUT" ? t("edit-slide-header") : t("create-slide-header");
   const [getTheme, setGetTheme] = useState(true);
   const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
@@ -57,7 +55,7 @@ function SlideManager({
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [selectedTheme, setSelectedTheme] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("slide-manager.loading-messages.loading-slide")
+    t("loading-messages.loading-slide")
   );
 
   // Initialize to empty slide object.
@@ -94,14 +92,14 @@ function SlideManager({
   // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveMediaSuccess) {
-      displaySuccess(t("slide-manager.success-messages.saved-media"));
+      displaySuccess(t("success-messages.saved-media"));
     }
   }, [isSaveMediaSuccess]);
 
   // Groups are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessPlaylists) {
-      displaySuccess(t(`slide-manager.success-messages.saved-playlist`));
+      displaySuccess(t(`success-messages.saved-playlist`));
     }
   }, [isSaveSuccessPlaylists]);
 
@@ -109,33 +107,21 @@ function SlideManager({
   useEffect(() => {
     if (saveMediaError) {
       setSubmitting(false);
-      displayError(
-        t("slide-manager.error-messages.save-media-error", {
-          error: saveMediaError.error
-            ? saveMediaError.error
-            : saveMediaError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-media-error"), saveMediaError);
     }
   }, [saveMediaError]);
 
   // Playlists are not saved successfully, display a message
   useEffect(() => {
     if (saveErrorPlaylists) {
-      displayError(
-        t(`slide-manager.error-messages.save-playlist-error`, {
-          error: saveErrorPlaylists.error
-            ? saveErrorPlaylists.error
-            : saveErrorPlaylists.data["hydra:description"],
-        })
-      );
+      displayError(t(`error-messages.save-playlist-error`), saveErrorPlaylists);
     }
   }, [saveErrorPlaylists]);
 
   /** If the slide is saved, display the success message */
   useEffect(() => {
     if (isSaveSuccessPost || isSaveSuccessPut) {
-      displaySuccess(t("slide-manager.success-messages.saved-slide"));
+      displaySuccess(t("success-messages.saved-slide"));
     }
   }, [isSaveSuccessPost || isSaveSuccessPut]);
 
@@ -143,27 +129,14 @@ function SlideManager({
   useEffect(() => {
     if (saveErrorPut || saveErrorPost) {
       const saveError = saveErrorPut || saveErrorPost;
-      displayError(
-        t("slide-manager.error-messages.save-slide-error", {
-          error: saveError.error
-            ? saveError.error
-            : saveError.data["hydra:description"],
-        })
-      );
+      displayError(t("error-messages.save-slide-error"), saveError);
     }
   }, [saveErrorPut, saveErrorPost]);
 
   /** If the slide is not loaded, display the error message */
   useEffect(() => {
     if (loadingError) {
-      displayError(
-        t("slide-manager.error-messages.load-slide-error", {
-          error: loadingError.error
-            ? loadingError.error
-            : loadingError.data["hydra:description"],
-          id,
-        })
-      );
+      displayError(t("error-messages.load-slide-error"), loadingError);
     }
   }, [loadingError]);
 
@@ -436,7 +409,7 @@ function SlideManager({
     // Trigger submitting hooks.
     setSubmitting(true);
     setSubmittingMedia(newSubmittingMedia);
-    setLoadingMessage(t("slide-manager.loading-messages.saving-media"));
+    setLoadingMessage(t("loading-messages.saving-media"));
   }
 
   /** When the group is saved, the slide will be saved. */
@@ -446,7 +419,7 @@ function SlideManager({
       playlistsToAdd &&
       formStateObject.playlists
     ) {
-      setLoadingMessage(t("slide-manager.loading-messages.saving-playlists"));
+      setLoadingMessage(t("loading-messages.saving-playlists"));
       PutV1SlidesByIdPlaylists({
         id: id || idFromUrl(postData["@id"]),
         body: JSON.stringify(playlistsToAdd),
@@ -518,10 +491,10 @@ function SlideManager({
         };
 
         if (saveMethod === "POST") {
-          setLoadingMessage(t("slide-manager.loading-messages.saving-slide"));
+          setLoadingMessage(t("loading-messages.saving-slide"));
           PostV1Slides(saveData);
         } else if (saveMethod === "PUT") {
-          setLoadingMessage(t("slide-manager.loading-messages.saving-slide"));
+          setLoadingMessage(t("loading-messages.saving-slide"));
           const putData = { ...saveData, id };
 
           PutV1Slides(putData);
