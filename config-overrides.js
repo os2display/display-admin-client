@@ -5,7 +5,8 @@ module.exports = function override(config, env) {
     'remote-component.config.js': `${__dirname}/src/remote-component.config.js`,
   };
   config.resolve.fallback = {
-    http: require.resolve("stream-http"),
+    "http": require.resolve("stream-http"),
+    "https": require.resolve("https-browserify")
   };
 
   return config;
