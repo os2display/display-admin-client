@@ -2372,17 +2372,17 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@paciolan/remote-component@^2.11.0":
-  version "2.11.0"
-  resolved "https://registry.npmjs.org/@paciolan/remote-component/-/remote-component-2.11.0.tgz"
-  integrity sha512-ujQxfJa0Cp0q+uCiTFpscYD7q14f2rVuUl934HgVXBW/CBChfzLwZGYjtF59IAsbwVGMpgpUlMdD0B26p/hxTg==
+"@paciolan/remote-component@^2.12.1":
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/@paciolan/remote-component/-/remote-component-2.12.1.tgz#5d286349f3796cc10e0d4ee54de19e410643749b"
+  integrity sha512-UPU2ApOo2nYaFE9+uPJQXLzQizMGPcwP559c7iK5tJaaI5SHKtfBqh45bFWsQzJB8mOKxUv+REZe8qxa4eqcYw==
   dependencies:
-    "@paciolan/remote-module-loader" "^2.6.0"
+    "@paciolan/remote-module-loader" "^3.0.2"
 
-"@paciolan/remote-module-loader@^2.6.0":
-  version "2.6.2"
-  resolved "https://registry.npmjs.org/@paciolan/remote-module-loader/-/remote-module-loader-2.6.2.tgz"
-  integrity sha512-A49c4kX70zNpjFNuLwa53+xMlGf1W/DXMqBFR1JOMGTIpfZ6KJLpfonRG+2eA1c3CFZNvn+j99QWFEd6lgKSMA==
+"@paciolan/remote-module-loader@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@paciolan/remote-module-loader/-/remote-module-loader-3.0.2.tgz#e07a24d5c8e80b6e02f978f9dc3290d5382aa559"
+  integrity sha512-1mL9xTkdp/M1TlRBYWsK5k8Lo7ErpWGkxTlMg1oqEnEn/lSNLqRR7Ah2QK9dGjQnxiKlQ+TkJk9gg21A7Y1W0w==
 
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.4"
@@ -4110,6 +4110,11 @@ builtin-modules@^3.1.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/builtin-modules/-/builtin-modules-3.2.0.tgz"
   integrity sha512-lGzLKcioL90C7wMczpkY0n/oART3MbBa8R9OFGE1rJxoVI86u4WAGfEk8Wjv10eKSyTHVGkSo3bvBylCEtk7LA==
+
+builtin-status-codes@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
+  integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
 bytes@3.0.0:
   version "3.0.0"
@@ -10452,7 +10457,7 @@ readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.2.2, readable
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-readable-stream@^3.0.6, readable-stream@^3.1.1:
+readable-stream@^3.0.6, readable-stream@^3.1.1, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.0.tgz"
   integrity sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
@@ -11338,6 +11343,16 @@ static-module@^3.0.2:
   version "1.5.0"
   resolved "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
+
+stream-http@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/stream-http/-/stream-http-3.2.0.tgz#1872dfcf24cb15752677e40e5c3f9cc1926028b5"
+  integrity sha512-Oq1bLqisTyK3TSCXpPbT4sdeYNdmyZJv1LxpEm2vu1ZhK89kSE5YXwZc3cWk0MagGaKriBh9mCFbVGtO+vY29A==
+  dependencies:
+    builtin-status-codes "^3.0.0"
+    inherits "^2.0.4"
+    readable-stream "^3.6.0"
+    xtend "^4.0.2"
 
 strict-uri-encode@^2.0.0:
   version "2.0.0"

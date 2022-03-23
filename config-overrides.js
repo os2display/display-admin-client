@@ -4,6 +4,9 @@ module.exports = function override(config, env) {
   config.resolve.alias = {
     'remote-component.config.js': `${__dirname}/src/remote-component.config.js`,
   };
+  config.resolve.fallback = {
+    http: require.resolve("stream-http"),
+  };
 
   return config;
 };
