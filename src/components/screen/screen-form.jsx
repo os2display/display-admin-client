@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Col, Row, Spinner, Alert } from "react-bootstrap";
+import { Button, Form, Col, Spinner, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

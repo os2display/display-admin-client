@@ -9,7 +9,7 @@ import {
   usePutV1ScreensByIdScreenGroupsMutation,
   usePutPlaylistScreenRegionItemMutation,
 } from "../../redux/api/api.generated";
-import ScreenForm from './screen-form';
+import ScreenForm from "./screen-form";
 import {
   displaySuccess,
   displayError,
@@ -22,7 +22,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {object} props The props.
  * @param {object} props.initialState Initial screen state.
  * @param {string} props.saveMethod POST or PUT.
- * @param {string | null} props.id screen id.
+ * @param {string | null} props.id Screen id.
  * @param {boolean} props.isLoading Is the screen state loading?
  * @param {object} props.loadingError Loading error.
  * @param {string} props.groupId The group id
@@ -34,24 +34,24 @@ function ScreenManager({
   id,
   isLoading,
   loadingError,
-  groupId
+  groupId,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-manager" });
   const navigate = useNavigate();
   const headerText =
     saveMethod === "PUT" ? t("edit-screen-header") : t("create-screen-header");
-    const [loadingMessage, setLoadingMessage] = useState("");
-    const [savingScreen, setSavingScreen] = useState(false);
-    const [savingGroups, setSavingGroups] = useState(false);
-    const [savingPlaylists, setSavingPlaylists] = useState(false);
-    const [groupsToAdd, setGroupsToAdd] = useState();
-    const [playlistsToAdd, setPlaylistsToAdd] = useState();
+  const [loadingMessage, setLoadingMessage] = useState("");
+  const [savingScreen, setSavingScreen] = useState(false);
+  const [savingGroups, setSavingGroups] = useState(false);
+  const [savingPlaylists, setSavingPlaylists] = useState(false);
+  const [groupsToAdd, setGroupsToAdd] = useState();
+  const [playlistsToAdd, setPlaylistsToAdd] = useState();
 
   // Initialize to empty screen object.
   const [formStateObject, setFormStateObject] = useState(null);
 
   const [PutV1Screens, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
-  usePutV1ScreensByIdMutation();
+    usePutV1ScreensByIdMutation();
 
   // Handler for creating screen.
   const [
@@ -70,20 +70,18 @@ function ScreenManager({
     { error: saveErrorGroups, isSuccess: isSaveSuccessGroups },
   ] = usePutV1ScreensByIdScreenGroupsMutation();
 
+  /** When the screen is saved, the groups will be saved. */
+  useEffect(() => {
+    if ((isSaveSuccessPut || isSaveSuccessPost) && groupsToAdd) {
+      setLoadingMessage(t("loading-messages.saving-groups"));
+      PutV1ScreensByIdScreenGroups({
+        id: id || idFromUrl(postData["@id"]),
+        body: JSON.stringify(groupsToAdd),
+      });
+    }
+  }, [isSaveSuccessPost, isSaveSuccessPut]);
 
-    /** When the screen is saved, the groups will be saved. */
-    useEffect(() => {
-      if ((isSaveSuccessPut || isSaveSuccessPost) && groupsToAdd) {
-        setLoadingMessage(t("loading-messages.saving-groups"));
-        setSavingGroups(true);
-        PutV1ScreensByIdScreenGroups({
-          id: id || idFromUrl(postData["@id"]),
-          body: JSON.stringify(groupsToAdd),
-        });
-      }
-    }, [isSaveSuccessPost, isSaveSuccessPut]);
-
-    // Playlists are saved successfully, display a message
+  // Playlists are saved successfully, display a message
   useEffect(() => {
     if (isSavePlaylistSuccess) {
       setSavingPlaylists(false);
@@ -107,7 +105,6 @@ function ScreenManager({
     }
   }, [savePlaylistError]);
 
-
   // Groups are not saved successfully, display an error message
   useEffect(() => {
     if (saveErrorGroups) {
@@ -127,7 +124,10 @@ function ScreenManager({
   /** If the screen is saved with error, display the error message */
   useEffect(() => {
     if (saveErrorPut || saveErrorPost) {
-      displayError(t("error-messages.save-screen-error"), saveErrorPut || saveErrorPost);
+      displayError(
+        t("error-messages.save-screen-error"),
+        saveErrorPut || saveErrorPost
+      );
       setSavingScreen(false);
     }
   }, [saveErrorPut, saveErrorPost]);
@@ -145,36 +145,37 @@ function ScreenManager({
    * @param {object} props - The props.
    * @param {object} props.target - Event target.
    */
-   function handleInput({ target }) {
+  function handleInput({ target }) {
     let localFormStateObject = { ...formStateObject };
     localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
     set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
   }
 
-
   /** Set loaded data into form state. */
   useEffect(() => {
-   if (initialState) {
+    if (initialState) {
       const localFormStateObject = JSON.parse(JSON.stringify(initialState));
       setFormStateObject(localFormStateObject);
     }
   }, [initialState]);
 
-    /** Adds playlists to regions. */
-    useEffect(() => {
-      if ((isSaveSuccessPost || isSaveSuccessPut) && playlistsToAdd && playlistsToAdd.length > 0) {
-        setLoadingMessage(t("loading-messages.saving-playlists"));
-        const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
-        debugger
-        putPlaylistScreenRegionItem({
-          body: JSON.stringify(playlistToAdd?.list),
-          id: playlistToAdd.screenId || idFromUrl(postData["@id"]),
-          regionId: playlistToAdd.regionId,
-        });
-      }
-    }, [isSavePlaylistSuccess, isSaveSuccessPut, isSaveSuccessPost]);
-
+  /** Adds playlists to regions. */
+  useEffect(() => {
+    if (
+      (isSaveSuccessPost || isSaveSuccessPut) &&
+      playlistsToAdd &&
+      playlistsToAdd.length > 0
+    ) {
+      setLoadingMessage(t("loading-messages.saving-playlists"));
+      const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
+      putPlaylistScreenRegionItem({
+        body: JSON.stringify(playlistToAdd?.list),
+        id: playlistToAdd.screenId || idFromUrl(postData["@id"]),
+        regionId: playlistToAdd.regionId,
+      });
+    }
+  }, [isSavePlaylistSuccess, isSaveSuccessPut, isSaveSuccessPost]);
 
   /** Set playlists to save, if any */
   function savePlaylists() {
@@ -200,7 +201,7 @@ function ScreenManager({
         const filteredPlaylists = formStateObjectPlaylists
           .map((localPlaylists, index) => {
             if (element === localPlaylists.regionId) {
-              return { playlist: localPlaylists.id, shared: localPlaylists.shared, weight: index };
+              return { playlist: localPlaylists.id, weight: index };
             }
             return undefined;
           })
@@ -218,7 +219,7 @@ function ScreenManager({
         formStateObject.regions.forEach((element) => {
           toSave.push({
             list: [],
-            regionId: idFromUrl(element,1),
+            regionId: idFromUrl(element, 1),
             screenId: id,
           });
         });
@@ -226,12 +227,14 @@ function ScreenManager({
 
       // Set playlists to save
       setPlaylistsToAdd(toSave);
+      setSavingPlaylists(true);
     }
   }
 
   /** Set groups to save, if any */
   function saveGroups() {
     if (Array.isArray(formStateObject.inScreenGroups)) {
+      setSavingGroups(true);
       setGroupsToAdd(
         formStateObject.inScreenGroups.map((group) => {
           return idFromUrl(group);
@@ -240,75 +243,83 @@ function ScreenManager({
     }
   }
 
- /** Handles submit. */
- function handleSubmit() {
-  setSavingScreen(true);
-  setLoadingMessage(t("loading-messages.saving-screen"));
-  const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
-  localFormStateObject.dimensions.width = parseInt(
-    localFormStateObject.dimensions.width,
-    10
-  );
-  localFormStateObject.dimensions.height = parseInt(
-    localFormStateObject.dimensions.height,
-    10
-  );
-  const saveData = {screenScreenInput: JSON.stringify({
-    title: localFormStateObject.title,
-    description: localFormStateObject.description,
-    size: localFormStateObject.size,
-    modifiedBy: localFormStateObject.modifiedBy,
-    createdBy: localFormStateObject.createdBy,
-    layout: localFormStateObject.layout,
-    location: localFormStateObject.location,
-    dimensions: {
-      width: localFormStateObject.dimensions.width,
-      height: localFormStateObject.dimensions.height,
-    },
-  })
-};
-
-  if (saveMethod === "POST") {
+  /** Handles submit. */
+  function handleSubmit() {
+    setSavingScreen(true);
     setLoadingMessage(t("loading-messages.saving-screen"));
-    PostV1Screens(saveData);
-  } else if (saveMethod === "PUT") {
-    setLoadingMessage(t("loading-messages.saving-screen"));
-    const putData = { ...saveData, id };
+    const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
+    localFormStateObject.dimensions.width = parseInt(
+      localFormStateObject.dimensions.width,
+      10
+    );
+    localFormStateObject.dimensions.height = parseInt(
+      localFormStateObject.dimensions.height,
+      10
+    );
+    const saveData = {
+      screenScreenInput: JSON.stringify({
+        title: localFormStateObject.title,
+        description: localFormStateObject.description,
+        size: localFormStateObject.size,
+        modifiedBy: localFormStateObject.modifiedBy,
+        createdBy: localFormStateObject.createdBy,
+        layout: localFormStateObject.layout,
+        location: localFormStateObject.location,
+        dimensions: {
+          width: localFormStateObject.dimensions.width,
+          height: localFormStateObject.dimensions.height,
+        },
+      }),
+    };
 
-    PutV1Screens(putData);
-  } else {
-    throw new Error("Unsupported save method");
+    if (saveMethod === "POST") {
+      setLoadingMessage(t("loading-messages.saving-screen"));
+      PostV1Screens(saveData);
+    } else if (saveMethod === "PUT") {
+      setLoadingMessage(t("loading-messages.saving-screen"));
+      const putData = { ...saveData, id };
+
+      PutV1Screens(putData);
+    } else {
+      throw new Error("Unsupported save method");
+    }
+
+    saveGroups();
+    savePlaylists();
   }
-
-
-  saveGroups();
-  savePlaylists();
-}
 
   /** Handle submitting is done. */
   useEffect(() => {
-    if (isSaveSuccessPost && postData) {
+    if (isSaveSuccessPost && postData && !savingPlaylists && !savingGroups) {
       setSavingScreen(false);
       navigate(`/screen/edit/${idFromUrl(postData["@id"])}`);
     } else if (isSaveSuccessPut) {
       setSavingScreen(false);
     }
-  }, [isSaveSuccessPut, isSaveSuccessPost, postData]);
+  }, [
+    isSaveSuccessPut,
+    isSaveSuccessPost,
+    postData,
+    isSavePlaylistSuccess,
+    isSaveSuccessGroups,
+    savingGroups,
+    savingPlaylists,
+  ]);
 
   return (
     <>
       {formStateObject && (
         <ScreenForm
-        screen={formStateObject}
-        headerText={headerText}
-        handleInput={handleInput}
-        handleSubmit={handleSubmit}
-        isLoading={
-          savingScreen || savingPlaylists || savingGroups || isLoading
-        }
-        loadingMessage={loadingMessage}
-        groupId={groupId}
-      />
+          screen={formStateObject}
+          headerText={headerText}
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          isLoading={
+            savingScreen || savingPlaylists || savingGroups || isLoading
+          }
+          loadingMessage={loadingMessage}
+          groupId={groupId}
+        />
       )}
     </>
   );
@@ -319,7 +330,7 @@ ScreenManager.defaultProps = {
   isLoading: false,
   loadingError: null,
   groupId: null,
-  initialState: null
+  initialState: null,
 };
 
 ScreenManager.propTypes = {
