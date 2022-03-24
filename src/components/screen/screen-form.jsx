@@ -234,7 +234,7 @@ function ScreenForm({
             value={screen.size}
             onChange={handleInput}
           />
-          <Row className="g-2">
+          <div className="d-flex g-2">
             <Col md>
               <FormInput
                 name="dimensions.height"
@@ -258,7 +258,7 @@ function ScreenForm({
                 onChange={handleInput}
               />
             </Col>
-          </Row>
+          </div>
         </ContentBody>
         <ContentBody id="layout-section">
           <h2 className="h4">{t("screen-layout")}</h2>
