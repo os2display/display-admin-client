@@ -124,6 +124,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
           )}
           <InfoModal
             show={showInfoModal}
+            redirectTo="/slide/edit"
             apiCall={useGetV1PlaylistsByIdSlidesQuery}
             onClose={onCloseInfoModal}
             dataKey="slide"

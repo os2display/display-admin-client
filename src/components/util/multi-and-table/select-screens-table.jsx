@@ -123,6 +123,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
             </>
           )}
           <InfoModal
+            redirectTo="/group/edit"
             show={showInfoModal}
             apiCall={useGetV1ScreensByIdScreenGroupsQuery}
             onClose={onCloseInfoModal}

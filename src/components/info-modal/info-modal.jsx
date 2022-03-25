@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import ModalDialog from "../util/modal/modal-dialog";
 import TitleFetcher from "./title-fetcher";
@@ -16,6 +17,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {Array} props.dataStructureToDisplay The playlists to list.
  * @param {string} props.modalTitle The info modal string.
  * @param {string} props.dataKey The data key for mapping the data.
+ * @param {string} props.redirectTo Redirect link to.
  * @returns {object} The modal.
  */
 function InfoModal({
@@ -25,6 +27,7 @@ function InfoModal({
   dataStructureToDisplay,
   modalTitle,
   dataKey,
+  redirectTo,
 }) {
   if (!show) {
     return <></>;
@@ -92,10 +95,24 @@ function InfoModal({
           <>
             {paginatedDataStructure &&
               paginatedDataStructure.map((item) => (
-                <TitleFetcher apiCall={apiCall} dataUrl={item} key={item} />
+                <TitleFetcher
+                  redirectTo={redirectTo}
+                  apiCall={apiCall}
+                  dataUrl={item}
+                  key={item}
+                />
               ))}
             {fetchedData &&
-              fetchedData.map((item) => <li key={item.title}>{item.title}</li>)}
+              fetchedData.map((item) => (
+                <li key={item["@id"]}>
+                  <Link
+                    to={`${redirectTo}/${idFromUrl(item["@id"])}`}
+                    target="_blank"
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
           </>
         </ul>
         {page * paginationVariables < totalItems && (
@@ -122,6 +139,7 @@ InfoModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   modalTitle: PropTypes.string.isRequired,
   dataKey: PropTypes.string,
+  redirectTo: PropTypes.string.isRequired,
 };
 
 export default InfoModal;

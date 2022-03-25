@@ -277,6 +277,7 @@ function PlaylistCampaignList({ location }) {
       />
       <InfoModal
         show={showInfoModal}
+        redirectTo="/slide/edit"
         apiCall={useGetV1PlaylistsByIdSlidesQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}

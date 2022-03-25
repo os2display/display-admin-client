@@ -36,12 +36,6 @@ describe("Playlists list tests", () => {
     cy.get("tbody").find("tr td").should("exist");
   });
 
-  it("It opens info modal (playlist list)", () => {
-    cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(1).click();
-    cy.get("#info-modal").should("exist");
-  });
-
   it("It goes to edit (playlist list)", () => {
     // Mock successful response on get
     cy.intercept("GET", "**/playlists/*", {

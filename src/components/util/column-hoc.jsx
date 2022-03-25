@@ -20,25 +20,33 @@ function ColumnHoc(columns) {
     isShared,
     ...props
   }) {
-    const { t } = useTranslation("common", { keyPrefix: "slides-list" });
+    const { t } = useTranslation("common", { keyPrefix: "column-hoc" });
 
-    const pickCell = handleSelected
-      ? [
-          {
-            key: "pick",
-            label: t("columns.pick"),
-            content: (d) => (
-              <CheckboxForList
-                onSelected={() => handleSelected(d)}
-                // eslint-disable-next-line react/destructuring-assignment
-                disabled={disableCheckbox && d.onSlides.length > 0}
-                selected={selectedRows.indexOf(d) > -1}
-              />
-            ),
-          },
-        ]
-      : [];
-    const returnColumns = pickCell.concat(columns({ ...props, isShared }));
+    const firstColumns = [
+      {
+        path: "title",
+        label: t("name"),
+      },
+      {
+        path: "createdBy",
+        label: t("created-by"),
+      },
+    ];
+    if (handleSelected) {
+      firstColumns.unshift({
+        key: "pick",
+        content: (d) => (
+          <CheckboxForList
+            onSelected={() => handleSelected(d)}
+            // eslint-disable-next-line react/destructuring-assignment
+            disabled={disableCheckbox && d.onSlides.length > 0}
+            selected={selectedRows.indexOf(d) > -1}
+          />
+        ),
+      });
+    }
+
+    const returnColumns = firstColumns.concat(columns({ ...props, isShared }));
     if (!isShared) {
       returnColumns.push({
         key: "delete",

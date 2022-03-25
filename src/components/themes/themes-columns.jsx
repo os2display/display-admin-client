@@ -15,14 +15,6 @@ function getThemesColumns({ editNewTab }) {
 
   const columns = [
     {
-      path: "title",
-      label: t("columns.name"),
-    },
-    {
-      path: "createdBy",
-      label: t("columns.created-by"),
-    },
-    {
       key: "slides",
       // eslint-disable-next-line react/prop-types
       content: ({ onSlides }) => <>{onSlides.length}</>,

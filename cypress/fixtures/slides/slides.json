@@ -17,7 +17,9 @@
         "options": []
       },
       "theme": "",
-      "onPlaylists": [],
+      "onPlaylists": [
+        "/v1/playlists/00S7ZQK8Y90R351YES1DJN0RKR"
+      ],
       "duration": 70592,
       "published": {
         "from": null,

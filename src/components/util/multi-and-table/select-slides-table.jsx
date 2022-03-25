@@ -133,6 +133,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
           )}
           <InfoModal
             show={showInfoModal}
+            redirectTo="/playlist/edit"
             apiCall={useGetV1PlaylistsByIdQuery}
             onClose={onCloseInfoModal}
             dataStructureToDisplay={onPlaylists}

@@ -39,7 +39,7 @@ function ListButton({ callback, inputData, apiCall }) {
     <>
       {label && (
         <button
-          className="btn btn-secondary"
+          className="btn btn-secondary list-button"
           type="button"
           disabled={label === "0"}
           onClick={() => callback(inputData)}

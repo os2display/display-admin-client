@@ -21,8 +21,8 @@ function GroupCreate() {
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
-    createdBy: "@TODO:",
-    modifiedBy: "@TODO:",
+    createdBy: "",
+    modifiedBy: "",
   });
 
   const [
