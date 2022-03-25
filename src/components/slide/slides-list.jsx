@@ -55,8 +55,6 @@ function SlidesList() {
     refetch,
   } = useGetV1SlidesQuery({
     page,
-    // orderBy: "createdAt",
-    // order: "desc",
     order: { createdAt: "desc" },
     title: searchText,
     published: isPublished,

@@ -17,6 +17,7 @@ function ColumnHoc(columns) {
     handleDelete,
     disableCheckbox = false,
     disableDelete = false,
+    isShared,
     ...props
   }) {
     const { t } = useTranslation("common", { keyPrefix: "slides-list" });
@@ -37,26 +38,26 @@ function ColumnHoc(columns) {
           },
         ]
       : [];
-
-    const returnColumns = pickCell.concat(columns(props));
-
-    returnColumns.push({
-      key: "delete",
-      content: (d) => (
-        <Button
-          variant="danger"
-          className="remove-from-list"
-          disabled={
-            // eslint-disable-next-line react/destructuring-assignment
-            disableDelete && (selectedRows.length > 0 || d.onSlides?.length > 0)
-          }
-          onClick={() => handleDelete(d)}
-        >
-          {t("delete-button")}
-        </Button>
-      ),
-    });
-
+    const returnColumns = pickCell.concat(columns({ ...props, isShared }));
+    if (!isShared) {
+      returnColumns.push({
+        key: "delete",
+        content: (d) => (
+          <Button
+            variant="danger"
+            className="remove-from-list"
+            disabled={
+              disableDelete &&
+              // eslint-disable-next-line react/destructuring-assignment
+              (selectedRows.length > 0 || d.onSlides?.length > 0)
+            }
+            onClick={() => handleDelete(d)}
+          >
+            {t("delete-button")}
+          </Button>
+        ),
+      });
+    }
     return returnColumns;
   };
 }

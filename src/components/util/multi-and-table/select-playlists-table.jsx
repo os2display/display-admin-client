@@ -30,8 +30,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
     title: searchText,
     itemsPerPage: 100,
     isCampaign: false,
-    orderBy: "desc",
-    order: "desc",
+    order: { createdAt: "desc" },
   });
   const { data } = useGetV1SlidesByIdPlaylistsQuery({ id });
 

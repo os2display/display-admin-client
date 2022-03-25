@@ -30,8 +30,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const { data: slides } = useGetV1SlidesQuery({
     title: searchText,
     itemsPerPage: 100,
-    orderBy: "desc",
-    order: "desc",
+    order: { createdAt: "desc" },
   });
 
   const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });

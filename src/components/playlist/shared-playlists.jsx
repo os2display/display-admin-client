@@ -44,8 +44,7 @@ function SharedPlaylists() {
     refetch,
   } = useGetV1PlaylistsQuery({
     page,
-    orderBy: "desc",
-    order: "desc",
+    order: { createdAt: "desc" },
     "tenants.tenantKey": context.selectedTenant?.get.tenantKey,
     title: searchText,
     published: isPublished,
@@ -110,8 +109,7 @@ function SharedPlaylists() {
   // The columns for the table.
   const columns = getPlaylistColumns({
     listButtonCallback: openInfoModal,
-    apiCall: useGetV1PlaylistsByIdSlidesQuery,
-    editDisabled: true,
+    isShared: true,
   });
 
   // Error with retrieving list of playlists

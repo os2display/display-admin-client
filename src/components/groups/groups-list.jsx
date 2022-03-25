@@ -52,8 +52,7 @@ function GroupsList() {
     refetch,
   } = useGetV1ScreenGroupsQuery({
     page,
-    orderBy: "createdAt",
-    order: "desc",
+    order: { createdAt: "desc" },
     title: searchText,
   });
 

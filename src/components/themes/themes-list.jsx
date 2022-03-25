@@ -49,8 +49,7 @@ function ThemesList() {
     refetch,
   } = useGetV1ThemesQuery({
     page,
-    orderBy: "desc",
-    order: "desc",
+    order: { createdAt: "desc" },
     title: searchText,
   });
 

@@ -29,8 +29,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   const { data: screens } = useGetV1ScreensQuery({
     title: searchText,
     itemsPerPage: 100,
-    orderBy: "desc",
-    order: "desc",
+    order: { createdAt: "desc" },
   });
   const { data } = useGetV1CampaignsByIdScreensQuery({ id: campaignId });
 

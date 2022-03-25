@@ -34,10 +34,10 @@ function getSlidesColumns({ editNewTab, listButtonCallback }) {
     {
       key: "playlists",
       // eslint-disable-next-line react/prop-types
-      content: ({ onPlaylists: localOnPlaylists }) => (
+      content: ({ onPlaylists }) => (
         <ListButton
-          callback={listButtonCallback}
-          inputData={localOnPlaylists}
+          callback={() => listButtonCallback(onPlaylists)}
+          inputData={onPlaylists}
         />
       ),
       label: t("columns.slide-on-playlists"),

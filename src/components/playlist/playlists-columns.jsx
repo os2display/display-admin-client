@@ -11,8 +11,7 @@ import LinkForList from "../util/list/link-for-list";
  * @param {object} props - The props.
  * @param {boolean} props.editNewTab - Open edit dialog in new tab.
  * @param {Function} props.listButtonCallback - The callback for getting data in
- * @param {boolean} props.editDisabled - Whether the elements in the list can be
- *   edited or not
+ * @param {boolean} props.isShared - Whether the element is shared
  * @param {Function} props.apiCall - The api to call
  * @returns {object} The columns for the playlists lists.
  */
@@ -20,7 +19,7 @@ function getPlaylistColumns({
   editNewTab,
   listButtonCallback,
   apiCall,
-  editDisabled = false,
+  isShared = false,
 }) {
   const { t } = useTranslation("common", {
     keyPrefix: "playlist-campaign-list",
@@ -37,7 +36,10 @@ function getPlaylistColumns({
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
     },
-    {
+  ];
+
+  if (!isShared) {
+    columns.push({
       key: "slides",
       label: t("columns.number-of-slides"),
       // eslint-disable-next-line react/prop-types
@@ -48,10 +50,7 @@ function getPlaylistColumns({
           apiCall={apiCall}
         />
       ),
-    },
-  ];
-
-  if (!editDisabled) {
+    });
     columns.push({
       key: "edit",
       // eslint-disable-next-line react/prop-types

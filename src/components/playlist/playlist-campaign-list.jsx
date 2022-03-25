@@ -67,8 +67,7 @@ function PlaylistCampaignList({ location }) {
     refetch,
   } = useGetV1PlaylistsQuery({
     page,
-    orderBy: "desc",
-    order: "desc",
+    order: { createdAt: "desc" },
     title: searchText,
     published: isPublished,
     isCampaign: location === "campaign",
