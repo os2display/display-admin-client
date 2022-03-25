@@ -598,8 +598,9 @@
     "table-header-for-indicator": "Drag and drop indikator",
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
-  "screen-edit": {
+  "screen-manager": {
     "edit-screen-header": "Rediger følgende skærm",
+    "create-screen-header": "Opret ny skærm",
     "loading-messages": {
       "saving-screen": "Gemmer skærmen",
       "saving-playlists": "Tilknytter spillelister til skærmens regioner",
@@ -615,24 +616,6 @@
       "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner:",
       "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen:",
       "load-screen-error": "Der skete en fejl da skærmen med følgende id: {{id}} skulle hentes:"
-    }
-  },
-  "screen-create": {
-    "create-screen-header": "Opret ny skærm",
-    "loading-messages": {
-      "saving-screen": "Gemmer skærmen",
-      "saving-playlists": "Tilknytter spillelister til skærmens regioner",
-      "saving-groups": "Tilknytter grupper til skærmen"
-    },
-    "success-messages": {
-      "saved-screen": "Skærmen er gemt",
-      "saved-playlists": "Spillelister er tilknyttet til skærmens regioner",
-      "saved-groups": "Grupper er tilknyttet skærmen"
-    },
-    "error-messages": {
-      "save-screen-error": "Der skete en fejl da skærmen skulle gemmes:",
-      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner:",
-      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen:"
     }
   },
   "screen-form": {

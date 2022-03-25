@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Col, Row, Spinner, Alert } from "react-bootstrap";
+import { Button, Form, Col, Spinner, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -234,7 +234,7 @@ function ScreenForm({
             value={screen.size}
             onChange={handleInput}
           />
-          <Row className="g-2">
+          <div className="d-flex g-2">
             <Col md>
               <FormInput
                 name="dimensions.height"
@@ -258,7 +258,7 @@ function ScreenForm({
                 onChange={handleInput}
               />
             </Col>
-          </Row>
+          </div>
         </ContentBody>
         <ContentBody id="layout-section">
           <h2 className="h4">{t("screen-layout")}</h2>
