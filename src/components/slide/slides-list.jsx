@@ -1,23 +1,18 @@
 import { React, useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
-import Published from "../util/published";
 import UserContext from "../../context/user-context";
-import LinkForList from "../util/list/link-for-list";
-import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import TemplateLabelInList from "../util/template-label-in-list";
 import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
+import getSlidesColumns from "./slides-columns";
 import {
   useGetV1SlidesQuery,
   useDeleteV1SlidesByIdMutation,
@@ -35,7 +30,6 @@ function SlidesList() {
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [sortBy, setSortBy] = useState();
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [page, setPage] = useState();
@@ -61,8 +55,9 @@ function SlidesList() {
     refetch,
   } = useGetV1SlidesQuery({
     page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
+    // orderBy: "createdAt",
+    // order: "desc",
+    order: { createdAt: "desc" },
     title: searchText,
     published: isPublished,
   });
@@ -188,15 +183,6 @@ function SlidesList() {
   }
 
   /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -206,61 +192,13 @@ function SlidesList() {
   }
 
   // The columns for the table.
-  const columns = [
-    {
-      key: "pick",
-      label: t("columns.pick"),
-      content: (d) => (
-        <CheckboxForList
-          onSelected={() => handleSelected(d)}
-          selected={selectedRows.indexOf(d) > -1}
-        />
-      ),
-    },
-    {
-      path: "title",
-      sort: true,
-      label: t("columns.name"),
-    },
-    {
-      // eslint-disable-next-line react/prop-types
-      content: ({ templateInfo }) => (
-        <TemplateLabelInList templateInfo={templateInfo} />
-      ),
-      key: "template",
-      label: t("columns.template"),
-    },
-    {
-      key: "playlists",
-      // eslint-disable-next-line react/prop-types
-      content: ({ onPlaylists: localOnPlaylists }) => (
-        <ListButton callback={openInfoModal} inputData={localOnPlaylists} />
-      ),
-      label: t("columns.slide-on-playlists"),
-    },
-    {
-      key: "published",
-      // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
-      label: t("columns.published"),
-    },
-    {
-      key: "edit",
-      content: (d) => LinkForList(d["@id"], "slide/edit", t("edit-button")),
-    },
-    {
-      key: "delete",
-      content: (d) => (
-        <Button
-          variant="danger"
-          disabled={selectedRows.length > 0}
-          onClick={() => openDeleteModal(d)}
-        >
-          {t("delete-button")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = getSlidesColumns({
+    selectedRows,
+    handleSelected,
+    editNewTab: false,
+    handleDelete: openDeleteModal,
+    listButtonCallback: openInfoModal,
+  });
 
   // Error with retrieving list of slides
   useEffect(() => {
@@ -287,7 +225,6 @@ function SlidesList() {
             selectedRows={selectedRows}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}
-            handleSort={onChangeSort}
             handleSearch={onSearch}
             handleIsPublished={onIsPublished}
             displayPublished
