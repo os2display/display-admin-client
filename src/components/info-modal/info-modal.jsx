@@ -81,7 +81,7 @@ function InfoModal({
   }
 
   return (
-    <Modal show size="m" onHide={onClose} id="info-modal">
+    <Modal animation={false} show size="m" onHide={onClose} id="info-modal">
       <ModalDialog
         title={modalTitle}
         onClose={onClose}
@@ -94,7 +94,8 @@ function InfoModal({
               paginatedDataStructure.map((item) => (
                 <TitleFetcher apiCall={apiCall} dataUrl={item} key={item} />
               ))}
-            {fetchedData && fetchedData.map((item) => <li>{item.title}</li>)}
+            {fetchedData &&
+              fetchedData.map((item) => <li key={item.title}>{item.title}</li>)}
           </>
         </ul>
         {page * paginationVariables < totalItems && (
@@ -113,7 +114,10 @@ InfoModal.defaultProps = {
 
 InfoModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  dataStructureToDisplay: PropTypes.arrayOf(PropTypes.string),
+  dataStructureToDisplay: PropTypes.oneOfType(
+    PropTypes.shape({}),
+    PropTypes.string
+  ),
   apiCall: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   modalTitle: PropTypes.string.isRequired,
