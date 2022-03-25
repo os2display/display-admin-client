@@ -20,7 +20,6 @@ import PlaylistCampaignEdit from "./components/playlist/playlist-campaign-edit";
 import PlaylistCampaignCreate from "./components/playlist/playlist-campaign-create";
 import MediaList from "./components/media/media-list";
 import commonDa from "./translations/da/common.json";
-import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
 import SlideEdit from "./components/slide/slide-edit";
@@ -336,16 +335,6 @@ function App() {
                               }
                             />
                           </Route>
-                          <Route
-                            path="users"
-                            element={
-                              <RestrictedRoute
-                                roles={accessConfig.settings.roles}
-                              >
-                                <UserList />
-                              </RestrictedRoute>
-                            }
-                          />
                           <Route path="logout" element={<Logout />} />
                           <Route
                             path="*"
