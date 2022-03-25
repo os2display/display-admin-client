@@ -87,6 +87,7 @@ function TopBar() {
                     <Dropdown.Item
                       onClick={onTenantChange}
                       id={tenant.tenantKey}
+                      key={tenant.tenantKey}
                       className="dropdown-item"
                     >
                       <FontAwesomeIcon
