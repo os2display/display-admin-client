@@ -971,6 +971,7 @@ export type GetV1ScreenGroupsApiArg = {
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
   };
 };
 export type PostV1ScreenGroupsApiResponse = unknown;
