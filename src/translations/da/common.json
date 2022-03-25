@@ -7,8 +7,7 @@
     },
     "header": "Brugere",
     "create-new-user": "Opret ny bruger",
-    "delete-button": "Slet",
-    "edit-button": "Rediger"
+    "delete-button": "Slet"
   },
   "remote-component-wrapper": {
     "close-preview": "Luk preview"
@@ -63,8 +62,7 @@
     },
     "header": "Slides",
     "create-new-slide": "Opret nyt slide",
-    "delete-button": "Slet",
-    "edit-button": "Rediger"
+    "delete-button": "Slet"
   },
   "form-table": {
     "button-add-column": "Tilføj kolonne",
@@ -106,8 +104,7 @@
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
     "change-view-calendar": "Kalender",
-    "delete-button": "Slet",
-    "edit-button": "Rediger"
+    "delete-button": "Slet"
   },
   "groups-list": {
     "columns": {
@@ -128,8 +125,7 @@
     },
     "header": "Grupper",
     "create-new-group": "Opret ny gruppe",
-    "delete-button": "Slet",
-    "edit-button": "Rediger"
+    "delete-button": "Slet"
   },
   "playlist-campaign-list": {
     "change-view-calendar": "Kalender",
@@ -181,8 +177,7 @@
       "name": "Navn",
       "number-of-slides": "Slides tilknyttede"
     },
-    "delete-button": "Slet",
-    "edit-button": "Rediger"
+    "delete-button": "Slet"
   },
   "themes-list": {
     "columns": {
@@ -204,15 +199,13 @@
     },
     "header": "Temaer",
     "create-new-theme": "Opret nyt tema",
-    "delete-button": "Slet",
-    "edit-button": "Rediger"
+    "delete-button": "Slet"
   },
   "media-list": {
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
     "upload-new-media": "Upload",
     "delete-button": "Slet",
-    "edit-button": "Rediger",
     "loading-messages": {
       "loading-media": "Henter medier",
       "deleting-media": "Sletter Medie(r)"
@@ -287,7 +280,6 @@
       "name": "Navn",
       "number-of-slides": "Slides tilknyttede"
     },
-    "edit-button": "Rediger",
     "edit-playlists-help-text": "Hvis du vil redigere en spilleliste, åbnes dette i en ny fane.",
     "remove-from-list": "Fjern fra liste",
     "info-modal": {
@@ -434,7 +426,6 @@
     "change-view-list": "Liste",
     "header": "Delte spillelister",
     "create-new": "Opret ny delt spilleliste",
-    "edit-button": "Rediger",
     "loading": "Henter delte spillelister...",
     "info-modal": {
       "slides": "Spillelisten indeholder følgende slides"
@@ -457,7 +448,6 @@
       "name": "Navn",
       "published": "Udgivet"
     },
-    "edit-button": "Rediger",
     "remove-from-list": "Fjern fra liste",
     "edit-playlists-help-text": "Hvis du vil redigere en spilleliste, åbnes dette i en ny fane."
   },
@@ -471,7 +461,6 @@
       "slide-on-playlists": "Spillelister",
       "published": "Udgivet"
     },
-    "edit-button": "Rediger",
     "edit-slides-help-text": "Hvis du vil redigere et slide, åbnes dette i en ny fane.",
     "remove-from-list": "Fjern fra liste"
   },
@@ -483,7 +472,6 @@
     },
     "remove-from-list": "Fjern fra liste",
     "edit-screens-help-text": "Hvis du vil redigere en skærm, åbnes dette i en ny fane.",
-    "edit-button": "Rediger",
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
     }
@@ -556,7 +544,6 @@
       "name": "Navn"
     },
     "edit-groups-help-text": "Hvis du vil redigere en gruppe, åbnes dette i en ny fane.",
-    "edit-button": "Rediger",
     "remove-from-list": "Fjern fra liste"
   },
   "image-uploader": {
@@ -597,6 +584,9 @@
   "drag-and-drop-table": {
     "table-header-for-indicator": "Drag and drop indikator",
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
+  },
+  "link-for-list":{
+    "label": "Rediger"
   },
   "screen-manager": {
     "edit-screen-header": "Rediger følgende skærm",

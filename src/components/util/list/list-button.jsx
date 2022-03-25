@@ -20,6 +20,9 @@ function ListButton({ callback, inputData, apiCall }) {
     if (Array.isArray(inputData)) {
       setLabel(inputData.length.toString());
     }
+    return () => {
+      setLabel("");
+    };
   }, []);
 
   /** Set label. */
@@ -27,6 +30,9 @@ function ListButton({ callback, inputData, apiCall }) {
     if (data?.data) {
       setLabel(data.data["hydra:totalItems"].toString());
     }
+    return () => {
+      setLabel("");
+    };
   }, [data]);
 
   return (

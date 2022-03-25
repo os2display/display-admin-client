@@ -74,7 +74,7 @@ function SlideForm({
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
       itemsPerPage: 300,
-      orderBy: "createdAt",
+      orderBy: "desc",
       order: "desc",
     });
 
@@ -82,7 +82,7 @@ function SlideForm({
   const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
     title: searchTextTheme,
     itemsPerPage: 300,
-    orderBy: "createdAt",
+    orderBy: "desc",
     order: "desc",
   });
 
