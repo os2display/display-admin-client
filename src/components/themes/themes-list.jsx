@@ -1,15 +1,13 @@
 import { React, useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
 import selectedHelper from "../util/helpers/selectedHelper";
 import DeleteModal from "../delete-modal/delete-modal";
-import LinkForList from "../util/list/link-for-list";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
+import getThemesColumns from "./themes-columns";
 import {
   displayError,
   displaySuccess,
@@ -30,7 +28,6 @@ function ThemesList() {
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [sortBy, setSortBy] = useState();
   const [selectedRows, setSelectedRows] = useState([]);
   const [page, setPage] = useState();
   const [themesToDelete, setThemesToDelete] = useState([]);
@@ -52,8 +49,8 @@ function ThemesList() {
     refetch,
   } = useGetV1ThemesQuery({
     page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
+    orderBy: "desc",
+    order: "desc",
     title: searchText,
   });
 
@@ -72,7 +69,7 @@ function ThemesList() {
       if (isDeleteSuccess) {
         displaySuccess(t("success-messages.theme-delete"));
       }
-      setLoadingMessage(t("loading-messages.deleting-themes"));
+      setLoadingMessage(t("loading-messages.deleting-theme"));
       const themeToDelete = themesToDelete.splice(0, 1).shift();
       const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
       DeleteV1Themes({ id: themeToDeleteId });
@@ -152,15 +149,6 @@ function ThemesList() {
   }
 
   /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -170,54 +158,14 @@ function ThemesList() {
   }
 
   // The columns for the table.
-  const columns = [
-    {
-      key: "pick",
-      label: t("columns.pick"),
-      content: (d) => (
-        <CheckboxForList
-          onSelected={() => handleSelected(d)}
-          selected={selectedRows.indexOf(d) > -1}
-          // eslint-disable-next-line react/destructuring-assignment
-          disabled={d.onSlides.length > 0}
-        />
-      ),
-    },
-    {
-      path: "title",
-      sort: true,
-      label: t("columns.name"),
-    },
-    {
-      path: "createdBy",
-      label: t("columns.created-by"),
-    },
-    {
-      key: "slides",
-      // eslint-disable-next-line react/prop-types
-      content: ({ onSlides }) => <>{onSlides.length}</>,
-      label: t("columns.number-of-slides"),
-    },
-    {
-      key: "edit",
-      content: (d) => LinkForList(d["@id"], "themes/edit", t("edit-button")),
-    },
-    {
-      key: "delete",
-      content: (d) => (
-        <>
-          <Button
-            variant="danger"
-            // eslint-disable-next-line react/destructuring-assignment
-            disabled={selectedRows.length > 0 || d.onSlides.length > 0}
-            onClick={() => openDeleteModal(d)}
-          >
-            {t("delete-button")}
-          </Button>
-        </>
-      ),
-    },
-  ];
+  const columns = getThemesColumns({
+    selectedRows,
+    handleSelected,
+    editNewTab: false,
+    handleDelete: openDeleteModal,
+    disableCheckbox: true,
+    disableDelete: true,
+  });
 
   // Error with retrieving list of themes
   useEffect(() => {
@@ -246,7 +194,6 @@ function ThemesList() {
                 selectedRows={selectedRows}
                 clearSelectedRows={clearSelectedRows}
                 handleDelete={openDeleteModal}
-                handleSort={onChangeSort}
                 handleSearch={onSearch}
                 isLoading={isLoading || isDeleting}
                 loadingMessage={loadingMessage}
