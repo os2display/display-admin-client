@@ -7,20 +7,17 @@ import { useTranslation } from "react-i18next";
 import UserContext from "../../context/user-context";
 import selectedHelper from "../util/helpers/selectedHelper";
 import ContentHeader from "../util/content-header/content-header";
-import ListButton from "../util/list/list-button";
 import List from "../util/list/list";
 import DeleteModal from "../delete-modal/delete-modal";
 import InfoModal from "../info-modal/info-modal";
-import LinkForList from "../util/list/link-for-list";
 import idFromUrl from "../util/helpers/id-from-url";
-import CheckboxForList from "../util/list/checkbox-for-list";
 import ContentBody from "../util/content-body/content-body";
-import Published from "../util/published";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
 import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
+import getPlaylistColumns from "./playlists-columns";
 import {
   useDeleteV1PlaylistsByIdMutation,
   useGetV1PlaylistsByIdSlidesQuery,
@@ -44,7 +41,6 @@ function PlaylistCampaignList({ location }) {
   const [selectedRows, setSelectedRows] = useState([]);
   const [view, setView] = useState("list");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [sortBy, setSortBy] = useState();
   const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
   const [playlistsToDelete, setPlaylistsToDelete] = useState([]);
@@ -71,8 +67,8 @@ function PlaylistCampaignList({ location }) {
     refetch,
   } = useGetV1PlaylistsQuery({
     page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
+    orderBy: "desc",
+    order: "desc",
     title: searchText,
     published: isPublished,
     isCampaign: location === "campaign",
@@ -198,15 +194,6 @@ function PlaylistCampaignList({ location }) {
   }
 
   /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -216,58 +203,14 @@ function PlaylistCampaignList({ location }) {
   }
 
   // The columns for the table.
-  const columns = [
-    {
-      key: "pick",
-      label: t(`${location}.columns.pick`),
-      content: (d) => (
-        <CheckboxForList
-          onSelected={() => handleSelected(d)}
-          selected={selectedRows.indexOf(d) > -1}
-        />
-      ),
-    },
-    {
-      path: "title",
-      sort: true,
-      label: t("columns.name"),
-    },
-    {
-      path: "published",
-      label: t("columns.published"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
-    },
-    {
-      key: "slides",
-      label: t("columns.number-of-slides"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ slides }) => (
-        <ListButton
-          callback={openInfoModal}
-          inputData={slides}
-          apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        />
-      ),
-    },
-    {
-      key: "edit",
-      content: (d) =>
-        LinkForList(d["@id"], `${location}/edit`, t("edit-button")),
-    },
-    {
-      key: "delete",
-      content: (d) => (
-        <Button
-          variant="danger"
-          disabled={selectedRows.length > 0}
-          onClick={() => openDeleteModal(d)}
-        >
-          {t("delete-button")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = getPlaylistColumns({
+    selectedRows,
+    handleSelected,
+    editNewTab: false,
+    handleDelete: openDeleteModal,
+    listButtonCallback: openInfoModal,
+    apiCall: useGetV1PlaylistsByIdSlidesQuery,
+  });
 
   // Error with retrieving list of playlists
   useEffect(() => {
@@ -309,7 +252,6 @@ function PlaylistCampaignList({ location }) {
           <List
             displayPublished
             columns={columns}
-            handleSort={onChangeSort}
             handlePageChange={onChangePage}
             totalItems={listData["hydra:totalItems"]}
             handleSearch={onSearch}

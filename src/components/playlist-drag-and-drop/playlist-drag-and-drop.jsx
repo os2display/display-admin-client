@@ -1,15 +1,15 @@
 import { React, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import LinkForList from "../util/list/link-for-list";
 import UserContext from "../../context/user-context";
-import Published from "../util/published";
+import getPlaylistColumns from "../playlist/playlists-columns";
+import InfoModal from "../info-modal/info-modal";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
 import FormCheckbox from "../util/forms/form-checkbox";
 import {
+  useGetV1PlaylistsByIdSlidesQuery,
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
   api,
 } from "../../redux/api/api.generated";
@@ -26,11 +26,14 @@ import {
  */
 function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
+  const dispatch = useDispatch();
+
+  const [onSlides, setOnSlides] = useState();
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
   const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
   const [playlists, setPlaylists] = useState([]);
-  const dispatch = useDispatch();
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   // Context
   const context = useContext(UserContext);
@@ -51,7 +54,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       title: searchText,
       itemsPerPage: 100,
       orderBy: "createdAt",
-      order: "desc",
+      order: "asc",
     };
     if (onlySharedPlaylists) {
       callParamters["tenants.tenantKey"] =
@@ -105,6 +108,18 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     handleChange({ target });
   }
 
+  /** @param {Array} slidesArray The array of playlists. */
+  function openInfoModal(slidesArray) {
+    setOnSlides(slidesArray);
+    setShowInfoModal(true);
+  }
+
+  /** Closes the info modal. */
+  function onCloseInfoModal() {
+    setShowInfoModal(false);
+    setOnSlides();
+  }
+
   /**
    * Adds group to list of groups.
    *
@@ -119,41 +134,11 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     });
   }
 
-  // The columns of the list
-  const columns = [
-    {
-      path: "title",
-      label: t("playlist-drag-and-drop.columns.name"),
-    },
-    {
-      path: "published",
-      label: t("playlist-drag-and-drop.columns.published"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
-    },
-    {
-      key: "edit",
-      content: (d) =>
-        LinkForList(
-          d["@id"],
-          `playlist/edit`,
-          t("playlist-drag-and-drop.edit-button"),
-          true
-        ),
-    },
-    {
-      key: "delete",
-      content: (playlistData) => (
-        <Button
-          className="remove-from-list"
-          variant="danger"
-          onClick={() => removeFromList(playlistData)}
-        >
-          {t("playlist-drag-and-drop.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = getPlaylistColumns({
+    editNewTab: true,
+    handleDelete: (playlistData) => removeFromList(playlistData),
+    listButtonCallback: openInfoModal,
+  });
 
   return (
     <>
@@ -184,13 +169,18 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
                 name={name}
                 data={selectedData}
               />
-              <small>
-                {t("playlist-drag-and-drop.edit-playlists-help-text")}
-              </small>
             </>
           )}
         </>
       )}
+      <InfoModal
+        show={showInfoModal}
+        apiCall={useGetV1PlaylistsByIdSlidesQuery}
+        onClose={onCloseInfoModal}
+        dataKey="slide"
+        dataStructureToDisplay={onSlides}
+        modalTitle={t("select-playlists-table.info-modal.slides")}
+      />
     </>
   );
 }

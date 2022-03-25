@@ -1,8 +1,6 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import LinkForList from "../list/link-for-list";
 import Table from "../table/table";
 import {
   useGetV1PlaylistsQuery,
@@ -10,9 +8,8 @@ import {
   useGetV1PlaylistsByIdSlidesQuery,
 } from "../../../redux/api/api.generated";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
-import ListButton from "../list/list-button";
 import InfoModal from "../../info-modal/info-modal";
-import Published from "../published";
+import getPlaylistColumns from "../../playlist/playlists-columns";
 
 /**
  * A multiselect and table for groups.
@@ -33,7 +30,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
     title: searchText,
     itemsPerPage: 100,
     isCampaign: false,
-    orderBy: "createdAt",
+    orderBy: "desc",
     order: "desc",
   });
   const { data } = useGetV1SlidesByIdPlaylistsQuery({ id });
@@ -103,50 +100,11 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   }
 
   // The columns for the table.
-  const columns = [
-    {
-      path: "title",
-      label: t("select-playlists-table.columns.name"),
-    },
-    {
-      path: "published",
-      label: t("select-playlists-table.columns.published"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ publishedFrom, publishedTo }) => (
-        <Published published={{ from: publishedFrom, to: publishedTo }} />
-      ),
-    },
-    {
-      key: "slides",
-      label: t("select-playlists-table.columns.number-of-slides"),
-      content: (playlist) => (
-        <ListButton
-          callback={openInfoModal}
-          // eslint-disable-next-line react/destructuring-assignment
-          inputData={playlist["@id"]}
-          apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        />
-      ),
-    },
-    {
-      key: "edit",
-      content: (d) =>
-        LinkForList(
-          d["@id"],
-          `playlist/edit`,
-          t("select-playlists-table.edit-button"),
-          true
-        ),
-    },
-    {
-      key: "delete",
-      content: (screenData) => (
-        <Button variant="danger" onClick={() => removeFromList(screenData)}>
-          {t("select-playlists-table.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = getPlaylistColumns({
+    editNewTab: true,
+    handleDelete: removeFromList,
+    listButtonCallback: openInfoModal,
+  });
 
   return (
     <>
@@ -163,9 +121,6 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
           {selectedData.length > 0 && (
             <>
               <Table columns={columns} data={selectedData} />
-              <small>
-                {t("playlist-drag-and-drop.edit-playlists-help-text")}
-              </small>
             </>
           )}
           <InfoModal
