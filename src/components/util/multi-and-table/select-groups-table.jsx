@@ -1,9 +1,8 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
-import LinkForList from "../list/link-for-list";
+import getGroupColumns from "../../groups/groups-columns";
 import { useGetV1ScreenGroupsQuery } from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 
@@ -24,7 +23,7 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
     title: searchText,
     itemsPerPage: 100,
     orderBy: "createdAt",
-    order: "desc",
+    order: "asc",
   });
   const { data } = getSelectedMethod({
     id,
@@ -82,31 +81,11 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
     handleChange({ target });
   }
 
-  // The columns for the table.
-  const columns = [
-    {
-      path: "title",
-      label: t("select-groups-table.columns.name"),
-    },
-    {
-      key: "edit",
-      content: (d) =>
-        LinkForList(
-          d["@id"],
-          "group/edit",
-          t("select-groups-table.edit-button"),
-          true
-        ),
-    },
-    {
-      key: "delete",
-      content: (screenData) => (
-        <Button variant="danger" onClick={() => removeFromList(screenData)}>
-          {t("select-groups-table.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = getGroupColumns({
+    editNewTab: true,
+    handleDelete: removeFromList,
+  });
+
   return (
     <>
       {groups && groups["hydra:member"] && (
