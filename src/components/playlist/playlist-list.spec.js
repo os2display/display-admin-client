@@ -58,10 +58,18 @@ describe("Playlists list tests", () => {
     cy.get("thead").find("th").should("have.length", 7);
   });
 
-  it("It removes all selected", () => {
-    cy.get("tbody").find("tr td button").eq(0).click();
-    cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
-    cy.get("#clear-rows-button").click();
-    cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
+    cy.intercept("GET", "**/playlists*", {
+      fixture: "published/published-in-playlist.json",
+    }).as("published-in-playlist");
+
+    cy.intercept("GET", "**/slides*", {
+      fixture: "playlists/playlist-slide.json",
+    }).as("slides");
+
+    cy.visit("/playlist/list");
+        cy.get("tbody").find("tr td").eq(3).should("have.text", "Fra: torsdag d. 24. marts 2022 kl. 17:31Til: fredag d. 1. april 2022 kl. 14:31");
+        cy.get("tbody").find("tr td").eq(10).should("have.text", "Fra: fredag d. 18. marts 2022 kl. 16:04Til: -");
+        cy.get("tbody").find("tr td").eq(17).should("have.text", "Fra: -Til: lørdag d. 26. marts 2022 kl. 15:25");
+        cy.get("tbody").find("tr td").eq(24).should("have.text", "Ja");
   });
 });
