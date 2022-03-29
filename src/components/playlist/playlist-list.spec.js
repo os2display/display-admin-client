@@ -55,7 +55,7 @@ describe("Playlists list tests", () => {
   });
 
   it("The correct amount of column headers loaded (playlist list)", () => {
-    cy.get("thead").find("th").should("have.length", 6);
+    cy.get("thead").find("th").should("have.length", 7);
   });
 
   it("It removes all selected", () => {

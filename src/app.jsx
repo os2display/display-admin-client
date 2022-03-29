@@ -1,6 +1,6 @@
 import { React, useEffect, useState, Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import i18next from "i18next";
 import { ToastContainer } from "react-toastify";
 import Container from "react-bootstrap/Container";
@@ -336,10 +336,10 @@ function App() {
                             />
                           </Route>
                           <Route path="logout" element={<Logout />} />
-                          {/* <Route
+                          <Route
                             path="*"
                             element={<Navigate to="/slide/list" />}
-                          /> */}
+                          />
                         </Routes>
                       </main>
                     )}

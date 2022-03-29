@@ -142,7 +142,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
   return (
     <>
-      {playlists && playlists["hydra:member"] && selectedData && (
+      {playlists && playlists["hydra:member"] && (
         <>
           <FormCheckbox
             label={t("playlist-drag-and-drop.show-only-shared")}

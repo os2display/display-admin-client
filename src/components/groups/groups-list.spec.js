@@ -33,7 +33,7 @@ describe("Groups list tests", () => {
   });
 
   it("The correct amount of column headers loaded (groups list)", () => {
-    cy.get("thead").find("th").should("have.length", 5);
+    cy.get("thead").find("th").should("have.length", 6);
   });
 
   it("It removes all selected", () => {
