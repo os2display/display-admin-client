@@ -58,6 +58,19 @@ describe("Playlists list tests", () => {
     cy.get("thead").find("th").should("have.length", 7);
   });
 
+  it("It removes all selected", () => {
+    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
+    cy.get("#clear-rows-button").click();
+    cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
+  });
+
+  it("Published dates", () => {
+    const twentyNinthOfMarch = new Date('2022-03-29T12:30:00.000Z');
+
+    // Sets time to a specific date, in this case 2022-03-24
+    cy.clock(twentyNinthOfMarch);
+
     cy.intercept("GET", "**/playlists*", {
       fixture: "published/published-in-playlist.json",
     }).as("published-in-playlist");
