@@ -47,6 +47,7 @@ function App() {
   const [accessConfig, setAccessConfig] = useState();
   const [tenants, setTenants] = useState();
   const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
 
   const userStore = {
     authenticated: { get: authenticated, set: setAuthenticated },
@@ -54,6 +55,7 @@ function App() {
     tenants: { get: tenants, set: setTenants },
     selectedTenant: { get: selectedTenant, set: setSelectedTenant },
     userName: { get: userName, set: setUserName },
+    email: { get: email, set: setEmail },
   };
 
   const handleReauthenticate = () => {
@@ -88,6 +90,9 @@ function App() {
 
       // Get the user name for displaying in top bar.
       setUserName(localStorage.getItem(localStorageKeys.USER_NAME));
+
+      // Get the user name for displaying in top bar.
+      setEmail(localStorage.getItem(localStorageKeys.EMAIL));
     } else {
       setAuthenticated(false);
     }

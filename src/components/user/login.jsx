@@ -45,7 +45,9 @@ function Login() {
     // Set token in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
     context.userName.set(data.user?.fullname);
+    context.email.set(data.user?.email);
     localStorage.setItem(localStorageKeys.USER_NAME, data.user?.fullname);
+    localStorage.setItem(localStorageKeys.EMAIL, data.user?.email);
     // If there are more than one tenant, the user should pick a tenant
     if (data.tenants?.length > 1) {
       // Save tenants

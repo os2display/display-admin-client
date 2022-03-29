@@ -29,6 +29,7 @@ function GroupsList() {
   const context = useContext(UserContext);
 
   // Local state
+  const [createdBy, setCreatedBy] = useState("all");
   const [inScreens, setInScreens] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -58,6 +59,7 @@ function GroupsList() {
     page,
     order: { createdAt: "desc" },
     title: searchText,
+    createdBy,
   });
 
   useEffect(() => {
@@ -153,6 +155,19 @@ function GroupsList() {
     setPage(pageNumber);
   }
 
+  /**
+   * Sets created by filter.
+   *
+   * @param {number} createdByInput - The created by filter.
+   */
+  function onCreatedByFilter(createdByInput) {
+    if (createdByInput === "all") {
+      setCreatedBy(createdByInput);
+    } else {
+      setCreatedBy(context.email.get);
+    }
+  }
+
   /** @param {Array} screenData The array of groups. */
   function openInfoModal(screenData) {
     setInScreens(screenData);
@@ -208,6 +223,7 @@ function GroupsList() {
               handlePageChange={onChangePage}
               selectedRows={selectedRows}
               data={listData["hydra:member"]}
+              handleCreatedByCurrentUser={onCreatedByFilter}
               clearSelectedRows={clearSelectedRows}
               handleDelete={openDeleteModal}
               deleteSuccess={isDeleteSuccess || false}

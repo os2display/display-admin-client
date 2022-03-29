@@ -15,6 +15,11 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
     newArgs.params[`order[${key}]`] = `${value}`;
   }
 
+  // remove the created by if set to all, as all is not really a filter.
+  if (newArgs.params?.createdBy === "all") {
+    delete newArgs.params.createdBy;
+  }
+
   if (!Object.prototype.hasOwnProperty.call(newArgs, "headers")) {
     newArgs.headers = {};
   }

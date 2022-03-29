@@ -43,6 +43,7 @@ function PlaylistCampaignList({ location }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
+  const [createdBy, setCreatedBy] = useState("all");
   const [playlistsToDelete, setPlaylistsToDelete] = useState([]);
   const [isPublished, setIsPublished] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -71,6 +72,7 @@ function PlaylistCampaignList({ location }) {
     title: searchText,
     published: isPublished,
     isCampaign: location === "campaign",
+    createdBy,
   });
 
   useEffect(() => {
@@ -180,6 +182,19 @@ function PlaylistCampaignList({ location }) {
   }
 
   /**
+   * Sets created by filter.
+   *
+   * @param {number} createdByInput - The created by filter.
+   */
+  function onCreatedByFilter(createdByInput) {
+    if (createdByInput === "all") {
+      setCreatedBy(createdByInput);
+    } else {
+      setCreatedBy(context.email.get);
+    }
+  }
+
+  /**
    * Sets is published
    *
    * @param {number} localIsPublished - Whether the playlist is published.
@@ -252,6 +267,7 @@ function PlaylistCampaignList({ location }) {
             displayPublished
             columns={columns}
             handlePageChange={onChangePage}
+            handleCreatedByCurrentUser={onCreatedByFilter}
             totalItems={listData["hydra:totalItems"]}
             handleSearch={onSearch}
             selectedRows={selectedRows}
