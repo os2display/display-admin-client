@@ -4,15 +4,11 @@ import { useTranslation } from "react-i18next";
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserContext from "../../context/user-context";
-import CampaignIcon from "../screen-list/campaign-icon";
 import ScreenCalendarCell from "../screen-list/screen-calendar-cell";
-import CheckboxForList from "../util/list/checkbox-for-list";
 import selectedHelper from "../util/helpers/selectedHelper";
-import LinkForList from "../util/list/link-for-list";
 import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
-import ListButton from "../util/list/list-button";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -26,6 +22,7 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import "./screen-list.scss";
+import getScreenColumns from "./screen-columns";
 
 /**
  * The screen list component.
@@ -39,7 +36,6 @@ function ScreenList() {
   // Local state
   const [view, setView] = useState("list");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [sortBy, setSortBy] = useState();
   const [page, setPage] = useState();
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -66,8 +62,7 @@ function ScreenList() {
     refetch,
   } = useGetV1ScreensQuery({
     page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
+    order: { title: "asc" },
     title: searchText,
   });
 
@@ -177,15 +172,6 @@ function ScreenList() {
   }
 
   /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -195,63 +181,14 @@ function ScreenList() {
   }
 
   // The columns for the table.
-  const columns = [
-    {
-      key: "pick",
-      label: t("columns.pick"),
-      content: (d) => (
-        <CheckboxForList
-          onSelected={() => handleSelected(d)}
-          selected={selectedRows.indexOf(d) > -1}
-        />
-      ),
-    },
-    {
-      path: "title",
-      sort: true,
-      label: t("columns.name"),
-    },
-    {
-      // eslint-disable-next-line react/prop-types
-      content: ({ inScreenGroups }) => (
-        <ListButton
-          callback={openInfoModal}
-          inputData={inScreenGroups}
-          apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-        />
-      ),
-      key: "groups",
-      label: t("columns.on-groups"),
-    },
-    {
-      path: "location",
-      label: t("columns.location"),
-    },
-    {
-      key: "campaign",
-      label: t("columns.campaign"),
-      // eslint-disable-next-line react/destructuring-assignment
-      content: (d) => <CampaignIcon id={idFromUrl(d["@id"])} />,
-    },
-    {
-      key: "edit",
-      content: (d) => LinkForList(d["@id"], "screen/edit", t("edit-button")),
-    },
-    {
-      key: "delete",
-      content: (d) => (
-        <>
-          <Button
-            variant="danger"
-            disabled={selectedRows.length > 0}
-            onClick={() => openDeleteModal(d)}
-          >
-            {t("delete-button")}
-          </Button>
-        </>
-      ),
-    },
-  ];
+  const columns = getScreenColumns({
+    selectedRows,
+    handleSelected,
+    editNewTab: false,
+    handleDelete: openDeleteModal,
+    listButtonCallback: openInfoModal,
+    apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+  });
 
   // Error with retrieving list of screen
   useEffect(() => {
@@ -285,7 +222,6 @@ function ScreenList() {
           )}
         </Col>
       </ContentHeader>
-
       <ContentBody>
         <>
           {listData && (
@@ -301,7 +237,6 @@ function ScreenList() {
               handleDelete={openDeleteModal}
               isLoading={isLoading || isDeleting}
               loadingMessage={loadingMessage}
-              handleSort={onChangeSort}
               handleSearch={onSearch}
             >
               <ScreenCalendarCell />

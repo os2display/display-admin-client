@@ -8,38 +8,14 @@ describe("Shared list tests", () => {
       fixture: "playlists/playlists.json",
     }).as("playlists");
 
-    cy.intercept("GET", "**/slides*", {
-      fixture: "playlists/playlist-slide.json",
-    }).as("slides");
-
     cy.visit("/shared/list");
     cy.get("#login").click();
-    cy.wait([
-      "@playlists",
-      "@playlists",
-      "@token",
-      "@slides",
-      "@slides",
-      "@slides",
-      "@slides",
-      "@slides",
-      "@slides",
-      "@slides",
-      "@slides",
-      "@slides",
-      "@slides",
-    ]);
+    cy.wait(["@playlists", "@playlists", "@token"]);
   });
   it("It loads shared playlist list", () => {
     cy.visit("/shared/list");
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("exist");
-  });
-
-  it("It opens info modal (shared playlist list)", () => {
-    cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(1).click();
-    cy.get("#info-modal").should("exist");
   });
 
   it("A shared playlist should not be editable or deletable", () => {
@@ -55,6 +31,6 @@ describe("Shared list tests", () => {
   });
 
   it("The correct amount of column headers loaded (shared playlist list)", () => {
-    cy.get("thead").find("th").should("have.length", 3);
+    cy.get("thead").find("th").should("have.length", 2);
   });
 });

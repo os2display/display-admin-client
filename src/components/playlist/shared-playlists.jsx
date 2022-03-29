@@ -5,13 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
-import ListButton from "../util/list/list-button";
 import List from "../util/list/list";
 import InfoModal from "../info-modal/info-modal";
 import ContentBody from "../util/content-body/content-body";
-import Published from "../util/published";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
 import { displayError } from "../util/list/toast-component/display-toast";
+import getPlaylistColumns from "./playlists-columns";
 import {
   useGetV1PlaylistsByIdSlidesQuery,
   useGetV1PlaylistsQuery,
@@ -30,7 +29,6 @@ function SharedPlaylists() {
 
   // Local state
   const [view, setView] = useState("list");
-  const [sortBy, setSortBy] = useState();
   const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
   const [isPublished, setIsPublished] = useState();
@@ -46,9 +44,8 @@ function SharedPlaylists() {
     refetch,
   } = useGetV1PlaylistsQuery({
     page,
-    orderBy: sortBy?.path,
+    order: { createdAt: "desc" },
     "tenants.tenantKey": context.selectedTenant?.get.tenantKey,
-    order: sortBy?.order,
     title: searchText,
     published: isPublished,
     isCampaign: false,
@@ -101,15 +98,6 @@ function SharedPlaylists() {
   }
 
   /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -119,31 +107,10 @@ function SharedPlaylists() {
   }
 
   // The columns for the table.
-  const columns = [
-    {
-      path: "title",
-      sort: true,
-      label: t("columns.name"),
-    },
-    {
-      path: "published",
-      label: t("columns.published"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
-    },
-    {
-      key: "slides",
-      label: t("columns.number-of-slides"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ slides }) => (
-        <ListButton
-          callback={openInfoModal}
-          inputData={slides}
-          apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        />
-      ),
-    },
-  ];
+  const columns = getPlaylistColumns({
+    listButtonCallback: openInfoModal,
+    isShared: true,
+  });
 
   // Error with retrieving list of playlists
   useEffect(() => {
@@ -182,7 +149,6 @@ function SharedPlaylists() {
           <List
             displayPublished
             columns={columns}
-            handleSort={onChangeSort}
             handlePageChange={onChangePage}
             totalItems={listData["hydra:totalItems"]}
             handleSearch={onSearch}

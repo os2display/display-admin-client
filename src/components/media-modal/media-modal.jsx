@@ -33,7 +33,13 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
   }
 
   return (
-    <Modal show={show} size="xl" id="media-modal" onHide={onClose}>
+    <Modal
+      animation={false}
+      show={show}
+      size="xl"
+      id="media-modal"
+      onHide={onClose}
+    >
       <ModalDialog
         title={
           multiple

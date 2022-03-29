@@ -1,14 +1,10 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import LinkForList from "../list/link-for-list";
-import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
-import Published from "../published";
+import getSlidesColumns from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
-import TemplateLabelInList from "../template-label-in-list";
-import ListButton from "../list/list-button";
 import InfoModal from "../../info-modal/info-modal";
+import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import {
   useGetV1SlidesQuery,
   useGetV1PlaylistsByIdSlidesQuery,
@@ -34,8 +30,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const { data: slides } = useGetV1SlidesQuery({
     title: searchText,
     itemsPerPage: 100,
-    orderBy: "createdAt",
-    order: "desc",
+    order: { createdAt: "desc" },
   });
 
   const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
@@ -108,52 +103,11 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     handleChange({ target });
   }
   /* eslint-disable-next-line no-unused-vars */
-  const columns = [
-    {
-      path: "title",
-      label: t("select-slides-table.columns.name"),
-    },
-    {
-      content: (templateData) => TemplateLabelInList(templateData),
-      key: "template",
-      label: t("select-slides-table.columns.template"),
-    },
-    {
-      key: "playlists",
-      // eslint-disable-next-line react/prop-types
-      content: ({ onPlaylists: localOnPlaylists }) => (
-        <ListButton callback={openInfoModal} inputData={localOnPlaylists} />
-      ),
-      label: t("select-slides-table.columns.slide-on-playlists"),
-    },
-    {
-      key: "published",
-      content: (publishedData) => Published(publishedData),
-      label: t("select-slides-table.columns.published"),
-    },
-    {
-      key: "edit",
-      content: (d) =>
-        LinkForList(
-          d["@id"],
-          `slide/edit`,
-          t("select-slides-table.edit-button"),
-          true
-        ),
-    },
-    {
-      key: "delete",
-      content: (slideData) => (
-        <Button
-          variant="danger"
-          className="remove-from-list"
-          onClick={() => removeFromList(slideData)}
-        >
-          {t("select-slides-table.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = getSlidesColumns({
+    editNewTab: true,
+    handleDelete: removeFromList,
+    listButtonCallback: openInfoModal,
+  });
 
   return (
     <>

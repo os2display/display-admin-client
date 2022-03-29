@@ -90,7 +90,13 @@ function MediaSelectorModal({
   }
 
   return (
-    <Modal show={show} size="xl" id="slide-media-modal" onHide={onClose}>
+    <Modal
+      animation={false}
+      show={show}
+      size="xl"
+      id="slide-media-modal"
+      onHide={onClose}
+    >
       <ModalDialog
         title={
           multiple

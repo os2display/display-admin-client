@@ -74,16 +74,14 @@ function SlideForm({
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
       itemsPerPage: 300,
-      orderBy: "createdAt",
-      order: "desc",
+      order: { createdAt: "desc" },
     });
 
   // Load themes.
   const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
     title: searchTextTheme,
     itemsPerPage: 300,
-    orderBy: "createdAt",
-    order: "desc",
+    order: { createdAt: "desc" },
   });
 
   /**

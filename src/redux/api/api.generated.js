@@ -406,7 +406,8 @@ exports.api = (0, react_1.createApi)({
             }); }
         }),
         getV1Slides: build.query({
-            query: function (queryArg) { return ({
+            query: function (queryArg) {
+                return ({
                 url: "/v1/slides",
                 params: {
                     page: queryArg.page,

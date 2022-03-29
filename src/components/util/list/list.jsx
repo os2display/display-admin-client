@@ -24,7 +24,6 @@ import localStorageKeys from "../local-storage-keys";
  * @param {number} props.totalItems - The total items, for pagination.
  * @param {Function} props.handleDelete - For deleting elements in the list.
  *   element with success.
- * @param {Function} props.handleSort - Callback for sort.
  * @param {Function} props.handleSearch - Callback for seach.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.handleIsPublished - Callback for published filter.
@@ -39,7 +38,6 @@ function List({
   clearSelectedRows,
   calendarView,
   handlePageChange,
-  handleSort,
   handleSearch,
   totalItems,
   handleDelete,
@@ -52,8 +50,6 @@ function List({
   // Page params
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search).get("search");
-  const sortParams = new URLSearchParams(search).get("sort");
-  const orderParams = new URLSearchParams(search).get("order");
   const pageParams = new URLSearchParams(search).get("page");
   let publishedParams;
   if (displayPublished) {
@@ -79,18 +75,6 @@ function List({
     const page = pageParams || 1;
     params.delete("page");
     params.append("page", page);
-
-    // order
-    const order = orderParams || localStorage.order || "asc";
-    params.delete("order");
-    params.append("order", order);
-    localStorage.setItem(localStorageKeys.ORDER, order);
-
-    // sort
-    const sort = sortParams || localStorage.sort || "title";
-    params.delete("sort");
-    params.append("sort", sort);
-    localStorage.setItem(localStorageKeys.SORT, sort);
 
     // search
     const localSearch = searchParams || localStorage.search || "";
@@ -144,36 +128,12 @@ function List({
     updateUrlParams("page", nextPage);
   }
 
-  /** @param {number} sortByInput - The next page. */
-  function updateUrlAndSort(sortByInput) {
-    const params = new URLSearchParams(search);
-    params.delete("sort");
-    params.delete("order");
-    params.append("sort", sortByInput.path);
-    params.append("order", sortByInput.order);
-    localStorage.setItem(localStorageKeys.ORDER, sortByInput.order);
-    localStorage.setItem(localStorageKeys.SORT, sortByInput.path);
-    navigate({
-      search: params.toString(),
-    });
-  }
-
   /** Sets page from url using callback */
   useEffect(() => {
     if (pageParams) {
       handlePageChange(parseInt(pageParams, 10));
     }
   }, [pageParams]);
-
-  /** Sets sort from url using callback */
-  useEffect(() => {
-    if (orderParams && sortParams) {
-      handleSort({
-        path: sortParams,
-        order: orderParams,
-      });
-    }
-  }, [orderParams, sortParams]);
 
   /** Sets search from url using callback */
   useEffect(() => {
@@ -244,14 +204,7 @@ function List({
       </Row>
       <>
         {!calendarView && (
-          <Table
-            onSort={updateUrlAndSort}
-            data={data}
-            sortOrder={orderParams}
-            sortPath={sortParams}
-            columns={columns}
-            selectedRows={selectedRows}
-          />
+          <Table data={data} columns={columns} selectedRows={selectedRows} />
         )}
         {calendarView && <CalendarList data={data}>{children}</CalendarList>}
       </>
@@ -286,7 +239,6 @@ List.propTypes = {
   handleDelete: PropTypes.func,
   calendarView: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
-  handleSort: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   displayPublished: PropTypes.bool,
   handleIsPublished: PropTypes.func,

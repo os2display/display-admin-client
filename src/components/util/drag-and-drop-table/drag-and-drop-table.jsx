@@ -5,9 +5,9 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical } from "@fortawesome/free-solid-svg-icons";
-import "./drag-and-drop-table.scss";
 import TableHeader from "../table/table-header";
 import ColumnProptypes from "../../proptypes/column-proptypes";
+import "./drag-and-drop-table.scss";
 
 /**
  * @param {object} props The props.

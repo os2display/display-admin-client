@@ -1,11 +1,9 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import selectedHelper from "../util/helpers/selectedHelper";
-import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import UserContext from "../../context/user-context";
-import LinkForList from "../util/list/link-for-list";
+import getGroupColumns from "./groups-columns";
 import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
@@ -34,7 +32,6 @@ function GroupsList() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [page, setPage] = useState();
   const [groupsToDelete, setGroupsToDelete] = useState([]);
-  const [sortBy, setSortBy] = useState();
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
@@ -55,8 +52,7 @@ function GroupsList() {
     refetch,
   } = useGetV1ScreenGroupsQuery({
     page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
+    order: { createdAt: "desc" },
     title: searchText,
   });
 
@@ -154,15 +150,6 @@ function GroupsList() {
   }
 
   /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -172,45 +159,12 @@ function GroupsList() {
   }
 
   // The columns for the table.
-  const columns = [
-    {
-      key: "pick",
-      label: t("columns.pick"),
-      content: (d) => (
-        <CheckboxForList
-          onSelected={() => handleSelected(d)}
-          selected={selectedRows.indexOf(d) > -1}
-        />
-      ),
-    },
-    {
-      path: "title",
-      sort: true,
-      label: t("columns.name"),
-    },
-    {
-      path: "createdBy",
-      label: t("columns.created-by"),
-    },
-    {
-      key: "edit",
-      content: (d) => LinkForList(d["@id"], "group/edit", t("edit-button")),
-    },
-    {
-      key: "delete",
-      content: (d) => (
-        <>
-          <Button
-            variant="danger"
-            disabled={selectedRows.length > 0}
-            onClick={() => openDeleteModal(d)}
-          >
-            {t("delete-button")}
-          </Button>
-        </>
-      ),
-    },
-  ];
+  const columns = getGroupColumns({
+    selectedRows,
+    handleSelected,
+    editNewTab: false,
+    handleDelete: openDeleteModal,
+  });
 
   // Error with retrieving list of groups
   useEffect(() => {
@@ -239,7 +193,6 @@ function GroupsList() {
               clearSelectedRows={clearSelectedRows}
               handleDelete={openDeleteModal}
               deleteSuccess={isDeleteSuccess || false}
-              handleSort={onChangeSort}
               handleSearch={onSearch}
               isLoading={isLoading || isDeleting}
               loadingMessage={loadingMessage}

@@ -16,40 +16,6 @@ describe("Table header loads", () => {
     cy.get("table").find("thead").should("not.be.empty");
   });
 
-  it("It sorts by title", () => {
-    cy.intercept({
-      method: "GET",
-      url: "**/themes*",
-      query: {
-        page: "1",
-        order: "desc",
-      },
-    }).as("secondQuery");
-
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(300);
-    cy.get("#table-header-title").click();
-    cy.wait("@secondQuery").then((interception) => {
-      assert.isNotNull(interception.response.body, "The api is called again");
-    });
-  });
-
-  it("Loads parametres sort url", () => {
-    cy.intercept({
-      method: "GET",
-      url: "**/themes*",
-      query: {
-        page: "1",
-        order: "desc",
-        sort: "title",
-      },
-    }).as("themesData");
-    cy.visit("/themes/list?page=1&order=desc&sort=title");
-    cy.wait("@themesData").then((interception) => {
-      assert.isNotNull(interception.response.body, "The api is called");
-    });
-  });
-
   it("Loads parametres search url", () => {
     cy.visit("/themes/list?page=1&order=asc&sort=title&search=harum");
     cy.get("#search-field")

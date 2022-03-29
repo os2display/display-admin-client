@@ -53,8 +53,7 @@ function ScreenForm({
   const { data: layouts } = useGetV1LayoutsQuery({
     page: 1,
     itemsPerPage: 20,
-    orderBy: "createdAt",
-    order: "desc",
+    order: { createdAt: "desc" },
   });
 
   useEffect(() => {

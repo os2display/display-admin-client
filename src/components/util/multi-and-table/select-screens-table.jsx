@@ -1,12 +1,10 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import LinkForList from "../list/link-for-list";
-import ListButton from "../list/list-button";
 import InfoModal from "../../info-modal/info-modal";
 import Table from "../table/table";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
+import getScreenColumns from "../../screen/screen-columns";
 import {
   useGetV1ScreensQuery,
   useGetV1ScreensByIdScreenGroupsQuery,
@@ -31,8 +29,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   const { data: screens } = useGetV1ScreensQuery({
     title: searchText,
     itemsPerPage: 100,
-    orderBy: "createdAt",
-    order: "desc",
+    order: { createdAt: "desc" },
   });
   const { data } = useGetV1CampaignsByIdScreensQuery({ id: campaignId });
 
@@ -99,48 +96,14 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
     };
     handleChange({ target });
   }
-  /* eslint-disable-next-line no-unused-vars */
-  const columns = [
-    {
-      path: "title",
-      sort: true,
-      label: t("select-screens-table.columns.name"),
-    },
-    {
-      // eslint-disable-next-line react/prop-types
-      content: ({ inScreenGroups }) => (
-        <ListButton
-          callback={openInfoModal}
-          inputData={inScreenGroups}
-          apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-        />
-      ),
-      key: "groups",
-      label: t("select-screens-table.columns.on-groups"),
-    },
-    {
-      path: "location",
-      label: t("select-screens-table.columns.location"),
-    },
-    {
-      key: "edit",
-      content: (d) =>
-        LinkForList(
-          d["@id"],
-          `screen/edit`,
-          t("select-screens-table.edit-button"),
-          true
-        ),
-    },
-    {
-      key: "delete",
-      content: (slideData) => (
-        <Button variant="danger" onClick={() => removeFromList(slideData)}>
-          {t("select-screens-table.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
+
+  // The columns for the table.
+  const columns = getScreenColumns({
+    editNewTab: true,
+    handleDelete: removeFromList,
+    listButtonCallback: openInfoModal,
+    apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+  });
 
   return (
     <>
