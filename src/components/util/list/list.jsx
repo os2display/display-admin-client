@@ -8,10 +8,10 @@ import SearchBox from "../search-box/search-box";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
-import RadioButtons from "../forms/radio-buttons";
 import ListLoading from "../loading-component/list-loading";
 import CalendarList from "../../screen-list/calendar-list";
 import localStorageKeys from "../local-storage-keys";
+import FormCheckbox from "../forms/form-checkbox";
 
 /**
  * @param {object} props - The props.
@@ -44,7 +44,7 @@ function List({
   handleIsPublished,
   children,
 }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
 
   // Page params
@@ -120,7 +120,11 @@ function List({
 
   /** @param {string} isPublished Updates the search text state and url. */
   function onIsPublished({ target }) {
-    updateUrlParams("published", target.value);
+    if (target.value) {
+      updateUrlParams("published", target.id);
+    } else {
+      updateUrlParams("published", "all");
+    }
   }
 
   /** @param {number} nextPage - The next page. */
@@ -157,7 +161,25 @@ function List({
         <Col>
           <SearchBox value={searchParams} onChange={onSearch} />
         </Col>
-        <Col className="d-flex justify-content-end">
+        {displayPublished && publishedParams && (
+          <Col md="auto">
+            <>
+              <FormCheckbox
+                label={t("published")}
+                onChange={onIsPublished}
+                name="published"
+                value={publishedParams === "published"}
+              />
+              <FormCheckbox
+                label={t("not-published")}
+                name="not-published"
+                onChange={onIsPublished}
+                value={publishedParams === "not-published"}
+              />
+            </>
+          </Col>
+        )}
+        <Col md="auto" className="d-flex justify-content-end">
           <>
             {handleDelete && (
               <Button
@@ -167,7 +189,7 @@ function List({
                 onClick={() => handleDelete()}
                 className="me-3"
               >
-                {t("list.delete-button")}
+                {t("delete-button")}
               </Button>
             )}
             {clearSelectedRows && (
@@ -177,31 +199,13 @@ function List({
                 onClick={() => clearSelectedRows()}
                 variant="dark"
               >
-                {t("list.deselect-all")}
+                {t("deselect-all")}
               </Button>
             )}
           </>
         </Col>
       </Row>
-      <Row>
-        {displayPublished && publishedParams && (
-          <RadioButtons
-            label={t("list.published-label")}
-            labelScreenReaderOnly
-            selected={publishedParams}
-            radioGroupName="published"
-            options={[
-              { id: "all", label: t("list.radio-labels.all") },
-              { id: "published", label: t("list.radio-labels.published") },
-              {
-                id: "not-published",
-                label: t("list.radio-labels.not-published"),
-              },
-            ]}
-            handleChange={onIsPublished}
-          />
-        )}
-      </Row>
+      <Row />
       <>
         {!calendarView && (
           <Table data={data} columns={columns} selectedRows={selectedRows} />

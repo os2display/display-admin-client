@@ -479,7 +479,9 @@
   },
   "published": {
     "yes": "Ja",
-    "no": "Nej"
+    "no": "Nej",
+    "from": "Fra",
+    "to": "Til"
   },
   "modal-dialog": {
     "cancel": "Annuller",
@@ -544,14 +546,10 @@
     "checkbox-form-aria-label": "Vælg dette medie til massehandling"
   },
   "list": {
-    "published-label": "Udgivetfilter",
     "delete-button": "Slet",
     "deselect-all": "Fravælg alle",
-    "radio-labels": {
-      "published": "Udgivet",
-      "not-published": "Ikke udgivet",
-      "all": "Alle"
-    }
+    "published": "Udgivet",
+    "not-published": "Ikke udgivet"
   },
   "image": {
     "image-currently-uploading": "Billedet du er ved at overføre",

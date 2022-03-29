@@ -64,4 +64,25 @@ describe("Playlists list tests", () => {
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");
   });
+
+  it("Published dates", () => {
+    const twentyNinthOfMarch = new Date('2022-03-29T12:30:00.000Z');
+
+    // Sets time to a specific date, in this case 2022-03-24
+    cy.clock(twentyNinthOfMarch);
+
+    cy.intercept("GET", "**/playlists*", {
+      fixture: "published/published-in-playlist.json",
+    }).as("published-in-playlist");
+
+    cy.intercept("GET", "**/slides*", {
+      fixture: "playlists/playlist-slide.json",
+    }).as("slides");
+
+    cy.visit("/playlist/list");
+        cy.get("tbody").find("tr td").eq(3).should("have.text", "Fra: torsdag d. 24. marts 2022 kl. 17:31Til: fredag d. 1. april 2022 kl. 14:31");
+        cy.get("tbody").find("tr td").eq(10).should("have.text", "Fra: fredag d. 18. marts 2022 kl. 16:04Til: -");
+        cy.get("tbody").find("tr td").eq(17).should("have.text", "Fra: -Til: lørdag d. 26. marts 2022 kl. 15:25");
+        cy.get("tbody").find("tr td").eq(24).should("have.text", "Ja");
+  });
 });
