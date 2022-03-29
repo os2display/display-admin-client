@@ -63,7 +63,7 @@ function ScreenList() {
   } = useGetV1ScreensQuery({
     page,
     order: { title: "asc" },
-    title: searchText,
+    search: searchText,
   });
 
   useEffect(() => {

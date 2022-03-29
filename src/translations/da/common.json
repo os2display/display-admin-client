@@ -194,6 +194,7 @@
     "create-new-theme": "Opret nyt tema"
   },
   "media-list": {
+    "delete-button": "Slet",
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
     "upload-new-media": "Upload",
