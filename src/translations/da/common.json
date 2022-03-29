@@ -1,13 +1,10 @@
 {
   "user-list": {
     "columns": {
-      "pick": "Vælg bruger",
-      "name": "Navn",
       "created-by": "Oprettet af"
     },
     "header": "Brugere",
-    "create-new-user": "Opret ny bruger",
-    "delete-button": "Slet"
+    "create-new-user": "Opret ny bruger"
   },
   "remote-component-wrapper": {
     "close-preview": "Luk preview"
@@ -40,8 +37,6 @@
   },
   "slides-list": {
     "columns": {
-      "pick": "Vælg slide",
-      "name": "Navn",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
       "published": "Udgivet"
@@ -61,8 +56,7 @@
       "slide-delete": "Slidet er blevet slettet"
     },
     "header": "Slides",
-    "create-new-slide": "Opret nyt slide",
-    "delete-button": "Slet"
+    "create-new-slide": "Opret nyt slide"
   },
   "form-table": {
     "button-add-column": "Tilføj kolonne",
@@ -80,8 +74,6 @@
   },
   "screen-list": {
     "columns": {
-      "pick": "Vælg skærm",
-      "name": "Navn",
       "campaign": "Kampagne",
       "on-groups": "Tilknyttede grupper",
       "location": "Lokation"
@@ -103,14 +95,17 @@
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
     "change-view-list": "Liste",
-    "change-view-calendar": "Kalender",
-    "delete-button": "Slet"
+    "change-view-calendar": "Kalender"
+  },
+  "groups-columns": {
+    "screens": "Skærme i gruppen"
   },
   "groups-list": {
     "columns": {
-      "pick": "Vælg gruppe",
-      "name": "Navn",
       "created-by": "Oprettet af"
+    },
+    "info-modal": {
+      "screens": "Gruppen indeholder følgende skærme"
     },
     "loading-messages": {
       "loading-groups": "Henter grupper",
@@ -124,8 +119,7 @@
       "group-delete": "Gruppen er blevet slettet"
     },
     "header": "Grupper",
-    "create-new-group": "Opret ny gruppe",
-    "delete-button": "Slet"
+    "create-new-group": "Opret ny gruppe"
   },
   "playlist-campaign-list": {
     "change-view-calendar": "Kalender",
@@ -134,7 +128,6 @@
       "header": "Spillelister",
       "create-new": "Opret ny spilleliste",
       "columns": {
-        "pick": "Vælg spilleliste"
       },
       "info-modal": {
         "slides": "Spillelisten indeholder følgende slides"
@@ -155,7 +148,6 @@
       "header": "Kampagner",
       "create-new": "Opret ny kampagne",
       "columns": {
-        "pick": "Vælg kampagne"
       },
       "info-modal": {
         "slides": "Kampagnen indeholder følgende slides"
@@ -174,15 +166,16 @@
     },
     "columns": {
       "published": "Udgivet",
-      "name": "Navn",
       "number-of-slides": "Slides tilknyttede"
-    },
+    }
+  },
+  "column-hoc": {
+    "name": "Navn",
+    "created-by": "Oprettet af",
     "delete-button": "Slet"
   },
   "themes-list": {
     "columns": {
-      "pick": "Vælg tema",
-      "name": "Navn",
       "created-by": "Oprettet af",
       "number-of-slides": "Antal tilknyttede slides"
     },
@@ -198,14 +191,12 @@
       "theme-delete": "Temaet er blevet slettet"
     },
     "header": "Temaer",
-    "create-new-theme": "Opret nyt tema",
-    "delete-button": "Slet"
+    "create-new-theme": "Opret nyt tema"
   },
   "media-list": {
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
     "upload-new-media": "Upload",
-    "delete-button": "Slet",
     "loading-messages": {
       "loading-media": "Henter medier",
       "deleting-media": "Sletter Medie(r)"
@@ -277,7 +268,6 @@
   "select-playlists-table": {
     "columns": {
       "published": "Udgivet",
-      "name": "Navn",
       "number-of-slides": "Slides tilknyttede"
     },
     "edit-playlists-help-text": "Hvis du vil redigere en spilleliste, åbnes dette i en ny fane.",
@@ -438,14 +428,12 @@
     },
     "columns": {
       "published": "Udgivet",
-      "name": "Navn",
       "number-of-slides": "Slides tilknyttede"
     }
   },
   "playlist-drag-and-drop": {
     "show-only-shared": "Vis delte spillelister",
     "columns": {
-      "name": "Navn",
       "published": "Udgivet"
     },
     "remove-from-list": "Fjern fra liste",
@@ -456,7 +444,6 @@
       "slide-on-playlists": "Slidet er på de følgende spillelister"
     },
     "columns": {
-      "name": "Navn",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
       "published": "Udgivet"
@@ -466,7 +453,6 @@
   },
   "select-screens-table": {
     "columns": {
-      "name": "Navn",
       "on-groups": "Tilknyttede grupper",
       "location": "Lokation"
     },
@@ -540,9 +526,6 @@
     "nothing-selected": "Der er ikke valgt noget"
   },
   "select-groups-table": {
-    "columns": {
-      "name": "Navn"
-    },
     "edit-groups-help-text": "Hvis du vil redigere en gruppe, åbnes dette i en ny fane.",
     "remove-from-list": "Fjern fra liste"
   },
@@ -720,7 +703,6 @@
   },
   "add-edit-contact": {
     "title": "Titel",
-    "name": "Navn",
     "phone": "Telefonnummer",
     "email": "E-mail",
     "add-contact": "Tilføj kontakt",

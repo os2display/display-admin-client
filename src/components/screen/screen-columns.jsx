@@ -21,10 +21,6 @@ function getScreenColumns({ editNewTab, listButtonCallback, apiCall }) {
 
   const columns = [
     {
-      path: "title",
-      label: t("columns.name"),
-    },
-    {
       // eslint-disable-next-line react/prop-types
       content: ({ inScreenGroups }) => (
         <ListButton

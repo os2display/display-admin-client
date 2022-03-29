@@ -20,10 +20,6 @@ function getSlidesColumns({ editNewTab, listButtonCallback }) {
 
   const columns = [
     {
-      path: "title",
-      label: t("columns.name"),
-    },
-    {
       // eslint-disable-next-line react/prop-types
       content: ({ templateInfo }) => (
         <TemplateLabelInList templateInfo={templateInfo} />

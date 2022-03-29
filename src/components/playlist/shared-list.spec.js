@@ -31,6 +31,6 @@ describe("Shared list tests", () => {
   });
 
   it("The correct amount of column headers loaded (shared playlist list)", () => {
-    cy.get("thead").find("th").should("have.length", 2);
+    cy.get("thead").find("th").should("have.length", 3);
   });
 });

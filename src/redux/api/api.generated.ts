@@ -384,6 +384,15 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV1ScreenGroupsByIdScreens: build.query<
+      GetV1ScreenGroupsByIdScreensApiResponse,
+      GetV1ScreenGroupsByIdScreensApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/screens`,
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+      }),
+    }),
     getV1Screens: build.query<GetV1ScreensApiResponse, GetV1ScreensApiArg>({
       query: (queryArg) => ({
         url: `/v1/screens`,
@@ -1027,6 +1036,13 @@ export type DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiArg = {
   id: string;
   campaignId: string;
 };
+export type GetV1ScreenGroupsByIdScreensApiResponse = unknown;
+export type GetV1ScreenGroupsByIdScreensApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+};
 export type GetV1ScreensApiResponse = unknown;
 export type GetV1ScreensApiArg = {
   page?: number;
@@ -1401,6 +1417,7 @@ export const {
   useGetV1ScreenGroupsByIdCampaignsQuery,
   usePutV1ScreenGroupsByIdCampaignsMutation,
   useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation,
+  useGetV1ScreenGroupsByIdScreensQuery,
   useGetV1ScreensQuery,
   usePostV1ScreensMutation,
   useGetV1ScreensByIdQuery,

@@ -164,6 +164,7 @@ function SharedPlaylists() {
       )}
       <InfoModal
         show={showInfoModal}
+        redirectTo="/slide/edit"
         apiCall={useGetV1PlaylistsByIdSlidesQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={onSlides}

@@ -252,6 +252,7 @@ function ScreenList() {
       />
       <InfoModal
         show={showInfoModal}
+        redirectTo="/group/edit"
         apiCall={useGetV1ScreensByIdScreenGroupsQuery}
         onClose={onCloseInfoModal}
         dataStructureToDisplay={inGroups}

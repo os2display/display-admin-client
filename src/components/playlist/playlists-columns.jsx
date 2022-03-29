@@ -27,10 +27,6 @@ function getPlaylistColumns({
 
   const columns = [
     {
-      path: "title",
-      label: t("columns.name"),
-    },
-    {
       path: "published",
       label: t("columns.published"),
       // eslint-disable-next-line react/prop-types

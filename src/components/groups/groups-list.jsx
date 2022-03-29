@@ -8,12 +8,14 @@ import DeleteModal from "../delete-modal/delete-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
+import InfoModal from "../info-modal/info-modal";
 import {
   displaySuccess,
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
   useGetV1ScreenGroupsQuery,
+  useGetV1ScreenGroupsByIdScreensQuery,
   useDeleteV1ScreenGroupsByIdMutation,
 } from "../../redux/api/api.generated";
 
@@ -27,6 +29,8 @@ function GroupsList() {
   const context = useContext(UserContext);
 
   // Local state
+  const [inScreens, setInScreens] = useState();
+  const [showInfoModal, setShowInfoModal] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -149,6 +153,18 @@ function GroupsList() {
     setPage(pageNumber);
   }
 
+  /** @param {Array} screenData The array of groups. */
+  function openInfoModal(screenData) {
+    setInScreens(screenData);
+    setShowInfoModal(true);
+  }
+
+  /** Closes the info modal. */
+  function onCloseInfoModal() {
+    setShowInfoModal(false);
+    setInScreens();
+  }
+
   /**
    * Handles search.
    *
@@ -164,6 +180,8 @@ function GroupsList() {
     handleSelected,
     editNewTab: false,
     handleDelete: openDeleteModal,
+    listButtonCallback: openInfoModal,
+    apiCall: useGetV1ScreenGroupsByIdScreensQuery,
   });
 
   // Error with retrieving list of groups
@@ -205,6 +223,14 @@ function GroupsList() {
         onClose={onCloseModal}
         handleAccept={handleDelete}
         selectedRows={selectedRows}
+      />
+      <InfoModal
+        show={showInfoModal}
+        redirectTo="/screen/edit"
+        apiCall={useGetV1ScreenGroupsByIdScreensQuery}
+        onClose={onCloseInfoModal}
+        dataStructureToDisplay={inScreens}
+        modalTitle={t("info-modal.screens")}
       />
     </>
   );
