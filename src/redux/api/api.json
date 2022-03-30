@@ -3671,23 +3671,9 @@
                         "allowReserved": false
                     },
                     {
-                        "name": "title",
+                        "name": "search",
                         "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "description",
-                        "in": "query",
-                        "description": "",
+                        "description": "Search on both location and title",
                         "required": false,
                         "deprecated": false,
                         "allowEmptyValue": true,

@@ -5,16 +5,15 @@ describe("Nav items loads", () => {
       fixture: "token.json",
     }).as("token");
     cy.visit("");
+    cy.intercept("GET", "**/layouts*", { fixture: "screens/layouts.json" }).as(
+      "layouts"
+    );
+    cy.visit("/screen/create");
     cy.get("#login").click();
+    cy.wait(["@layouts"]);
   });
   it("It loads", () => {
     cy.get("nav").should("exist");
-  });
-
-  it("It navigates to slides list", () => {
-    cy.get("h1")
-      .invoke("text")
-      .should("match", /^Slides/);
   });
 
   it("It navigates to media list", () => {
@@ -25,7 +24,6 @@ describe("Nav items loads", () => {
   });
 
   it("It navigates to slides list", () => {
-    cy.get("#nav-items_content_media").click();
     cy.get("#nav-items_content_slides").click();
     cy.get("h1")
       .invoke("text")
@@ -79,5 +77,21 @@ describe("Nav items loads", () => {
     cy.get("h1")
       .invoke("text")
       .should("match", /^Opret ny skærm/);
+  });
+
+  it("It loads different menu on smaller screens", () => {
+    cy.viewport(550, 750);
+    cy.get("#basic-navbar-nav-burger").should("exist");
+    cy.get(".name").should("exist");
+    cy.get("#top-bar-brand").should("exist");
+    cy.get("#topbar-faq").should("not.be.visible");
+    cy.get("#sidebar").should("not.be.visible");
+    cy.get("#topbar_signout").should("not.be.visible");
+    cy.get("#basic-navbar-nav-burger").click();
+    cy.get("#basic-navbar-nav").should("exist");
+    cy.get("#basic-navbar-nav").find(".nav-item").should("have.length", 12);
+    cy.get("#basic-navbar-nav").find(".nav-add-new").should("have.length", 3);
+    cy.get("#basic-navbar-nav").find("#topbar-faq").should("be.visible");
+    cy.get("#basic-navbar-nav").find("#topbar_signout").should("be.visible");
   });
 });

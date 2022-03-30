@@ -399,8 +399,7 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
-          title: queryArg.title,
-          description: queryArg.description,
+          search: queryArg.search,
           createdBy: queryArg.createdBy,
           modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
@@ -1048,8 +1047,8 @@ export type GetV1ScreensApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  title?: string;
-  description?: string;
+  /** Search on both location and title */
+  search?: string;
   createdBy?: {
     ""?: string[];
   };

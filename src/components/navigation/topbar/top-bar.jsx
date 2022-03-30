@@ -15,6 +15,7 @@ import {
   faSignOutAlt,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import NavItems from "../nav-items/nav-items";
 import UserContext from "../../../context/user-context";
 import localStorageKeys from "../../util/local-storage-keys";
 import "./top-bar.scss";
@@ -54,61 +55,71 @@ function TopBar() {
       expand="lg"
       className="border-bottom shadow-sm"
     >
-      <Navbar.Brand href="/" className="col-lg-2 d-lg-none ms-3">
+      <Navbar.Brand
+        href="/"
+        id="top-bar-brand"
+        className="col-lg-2 d-lg-none ms-3"
+      >
         {t("topbar.brand")}
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-3" />
-      <Navbar.Collapse id="basic-navbar-nav" className="px-3">
-        <Nav className="ms-md-auto mt-3 mt-md-0">
-          <>
-            {!context.tenants.get && (
-              <div className="name">
-                {context.userName.get} ({context.selectedTenant.get?.title})
-              </div>
-            )}
-            {context.tenants?.get && (
-              <Dropdown className="user-dropdown">
-                <Dropdown.Toggle
-                  variant="link"
-                  id="topbar_user"
-                  className="text-dark text-decoration-none"
+      <>
+        {!context.tenants.get && (
+          <div className="name">
+            {context.userName.get} ({context.selectedTenant.get?.title})
+          </div>
+        )}
+        {context.tenants?.get && (
+          <Dropdown className="user-dropdown">
+            <Dropdown.Toggle
+              variant="link"
+              id="topbar_user"
+              className="text-dark text-decoration-none"
+            >
+              <FontAwesomeIcon
+                className="me-1 fa-lg text-dark text-muted"
+                icon={faUserCircle}
+              />
+              <span className="user-dropdown-name">
+                {context.userName?.get} ({context.selectedTenant?.get?.title})
+              </span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu style={{ width: "100%" }}>
+              {context.tenants.get.map((tenant) => (
+                <Dropdown.Item
+                  onClick={onTenantChange}
+                  id={tenant.tenantKey}
+                  key={tenant.tenantKey}
+                  className="dropdown-item"
                 >
                   <FontAwesomeIcon
-                    className="me-1 fa-lg text-dark text-muted"
-                    icon={faUserCircle}
+                    className="me-1"
+                    style={{
+                      color:
+                        tenant.tenantKey ===
+                        context.selectedTenant.get.tenantKey
+                          ? "#6c757d"
+                          : "transparent",
+                    }}
+                    icon={faCheck}
                   />
-                  <span className="user-dropdown-name">
-                    {context.userName?.get} (
-                    {context.selectedTenant?.get?.title})
-                  </span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu style={{ width: "100%" }}>
-                  {context.tenants.get.map((tenant) => (
-                    <Dropdown.Item
-                      onClick={onTenantChange}
-                      id={tenant.tenantKey}
-                      key={tenant.tenantKey}
-                      className="dropdown-item"
-                    >
-                      <FontAwesomeIcon
-                        className="me-1"
-                        style={{
-                          color:
-                            tenant.tenantKey ===
-                            context.selectedTenant.get.tenantKey
-                              ? "#6c757d"
-                              : "transparent",
-                        }}
-                        icon={faCheck}
-                      />
-                      {tenant.title}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            )}
-          </>
-          <Nav.Item className="m-1">
+                  {tenant.title}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        )}
+      </>
+      <Navbar.Toggle
+        aria-controls="basic-navbar-nav"
+        id="basic-navbar-nav-burger"
+        className="me-3"
+      />
+      <Navbar.Collapse id="basic-navbar-nav" className="px-3">
+        <Nav variant="dark" className="topbar-nav d-none d-md-block d-lg-none">
+          <NavItems />
+        </Nav>
+        <Nav className="ms-md-auto mt-3 mt-md-0">
+          <Nav.Item className="add-new-dropdown">
             <Dropdown
               style={{ width: "100%" }}
               className="me-md-3 mb-2 mb-md-0"
@@ -150,14 +161,18 @@ function TopBar() {
               </Dropdown.Menu>
             </Dropdown>
           </Nav.Item>
-          <Nav.Item className="m-1">
-            <Link id="topbar-faq" className="btn btn-dark" to="/faq">
-              <FontAwesomeIcon icon={faQuestionCircle} />
-              <span className="visually-hidden">{t("topbar.faq")}</span>
+          <Nav.Item>
+            <Link id="topbar-faq" className="btn btn-dark me-1 mb-1" to="/faq">
+              <FontAwesomeIcon className="me-1" icon={faQuestionCircle} />
+              <span>{t("topbar.faq")}</span>
             </Link>
           </Nav.Item>
-          <Nav.Item className="m-1">
-            <Link id="topbar_signout" className="btn btn-dark" to="/logout">
+          <Nav.Item>
+            <Link
+              id="topbar_signout"
+              className="btn btn-dark me-1 mb-1"
+              to="/logout"
+            >
               <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
               {t("topbar.signout")}
             </Link>

@@ -298,8 +298,7 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    title: queryArg.title,
-                    description: queryArg.description,
+                    search: queryArg.search,
                     createdBy: queryArg.createdBy,
                     modifiedBy: queryArg.modifiedBy,
                     order: queryArg.order

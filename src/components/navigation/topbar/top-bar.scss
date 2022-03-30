@@ -1,13 +1,38 @@
 .navbar-light {
-  .topbar-nav {
-    &.navbar-nav {
+  .navbar-nav {
+    .nav-second-level::before {
+      content: "\00a0\00a0\00a0";
+    }
+    .nav-item {
+      display: flex;
+
+      .nav-add-new {
+        align-self: center;
+      }
       .nav-link {
-        color: var(--bs-gray-dark);
+        color: black;
+        svg {
+          display: none;
+        }
+      }
+    }
+
+    .topbar-nav {
+      &.navbar-nav {
+        .nav-link {
+          color: var(--bs-gray-dark);
+        }
+      }
+    }
+  }
+  .show {
+    .navbar-nav {
+      .add-new-dropdown {
+        display: none;
       }
     }
   }
 }
-
 // Stolen from brand-css
 .name {
   padding-top: 0.3125rem;
