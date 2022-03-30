@@ -23,7 +23,6 @@ describe("Slide pages work", () => {
     }).as("templates");
     cy.visit("/slide/create");
     cy.wait(["@templates"]);
-
     // Pick a template
     cy.get("#template-section")
       .find(".dropdown-container")

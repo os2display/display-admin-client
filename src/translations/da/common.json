@@ -547,6 +547,7 @@
     "checkbox-form-aria-label": "Vælg dette medie til massehandling"
   },
   "list": {
+    "my-content": "Vis kun indhold oprettet af mig",
     "delete-button": "Slet",
     "deselect-all": "Fravælg alle",
     "published": "Udgivet",

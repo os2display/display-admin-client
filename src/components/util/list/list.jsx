@@ -27,6 +27,7 @@ import FormCheckbox from "../forms/form-checkbox";
  * @param {Function} props.handleSearch - Callback for seach.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.handleIsPublished - Callback for published filter.
+ * @param {Function} props.handleCreatedByCurrentUser - Callback for created by filter.
  * @param {Array} props.children The children being passed from parent
  * @returns {object} The List.
  */
@@ -42,6 +43,7 @@ function List({
   totalItems,
   handleDelete,
   handleIsPublished,
+  handleCreatedByCurrentUser,
   children,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
@@ -51,6 +53,12 @@ function List({
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search).get("search");
   const pageParams = new URLSearchParams(search).get("page");
+
+  let createdByParams;
+  if (handleCreatedByCurrentUser) {
+    createdByParams = new URLSearchParams(search).get("createdBy");
+  }
+
   let publishedParams;
   if (displayPublished) {
     publishedParams = new URLSearchParams(search).get("published");
@@ -75,6 +83,13 @@ function List({
     const page = pageParams || 1;
     params.delete("page");
     params.append("page", page);
+
+    // createdBy
+    if (handleCreatedByCurrentUser) {
+      const createdBy = createdByParams || "all";
+      params.delete("createdBy");
+      params.append("createdBy", createdBy);
+    }
 
     // search
     const localSearch = searchParams || localStorage.search || "";
@@ -127,6 +142,15 @@ function List({
     }
   }
 
+  /** @param {string} createdBy Updates the search text state and url. */
+  function onIsCreatedByChange({ target }) {
+    if (target.value) {
+      updateUrlParams("createdBy", target.id);
+    } else {
+      updateUrlParams("createdBy", "all");
+    }
+  }
+
   /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
     updateUrlParams("page", nextPage);
@@ -138,6 +162,13 @@ function List({
       handlePageChange(parseInt(pageParams, 10));
     }
   }, [pageParams]);
+
+  /** Sets page from url using callback */
+  useEffect(() => {
+    if (createdByParams) {
+      handleCreatedByCurrentUser(createdByParams);
+    }
+  }, [createdByParams]);
 
   /** Sets search from url using callback */
   useEffect(() => {
@@ -161,24 +192,38 @@ function List({
         <Col>
           <SearchBox value={searchParams} onChange={onSearch} />
         </Col>
-        {displayPublished && publishedParams && (
-          <Col md="auto">
-            <>
-              <FormCheckbox
-                label={t("published")}
-                onChange={onIsPublished}
-                name="published"
-                value={publishedParams === "published"}
-              />
-              <FormCheckbox
-                label={t("not-published")}
-                name="not-published"
-                onChange={onIsPublished}
-                value={publishedParams === "not-published"}
-              />
-            </>
-          </Col>
-        )}
+        <>
+          {displayPublished && publishedParams && (
+            <Col md="auto">
+              <>
+                <FormCheckbox
+                  label={t("published")}
+                  onChange={onIsPublished}
+                  name="published"
+                  value={publishedParams === "published"}
+                />
+                <FormCheckbox
+                  label={t("not-published")}
+                  name="not-published"
+                  onChange={onIsPublished}
+                  value={publishedParams === "not-published"}
+                />
+              </>
+            </Col>
+          )}
+          {createdByParams && handleCreatedByCurrentUser && (
+            <Col md="auto">
+              <>
+                <FormCheckbox
+                  label={t("my-content")}
+                  name="current-user"
+                  onChange={onIsCreatedByChange}
+                  value={createdByParams === "current-user"}
+                />
+              </>
+            </Col>
+          )}
+        </>
         <Col md="auto" className="d-flex justify-content-end">
           <>
             {handleDelete && (
@@ -224,6 +269,7 @@ function List({
 
 List.defaultProps = {
   calendarView: false,
+  handleCreatedByCurrentUser: null,
   handleIsPublished: () => {},
   handleDelete: null,
   displayPublished: false,
@@ -246,6 +292,7 @@ List.propTypes = {
   handleSearch: PropTypes.func.isRequired,
   displayPublished: PropTypes.bool,
   handleIsPublished: PropTypes.func,
+  handleCreatedByCurrentUser: PropTypes.func,
   children: PropTypes.node,
 };
 

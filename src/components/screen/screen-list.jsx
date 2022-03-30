@@ -35,6 +35,7 @@ function ScreenList() {
 
   // Local state
   const [view, setView] = useState("list");
+  const [createdBy, setCreatedBy] = useState("all");
   const [isDeleting, setIsDeleting] = useState(false);
   const [page, setPage] = useState();
   const [selectedRows, setSelectedRows] = useState([]);
@@ -64,6 +65,7 @@ function ScreenList() {
     page,
     order: { title: "asc" },
     search: searchText,
+    createdBy,
   });
 
   useEffect(() => {
@@ -172,6 +174,19 @@ function ScreenList() {
   }
 
   /**
+   * Sets created by filter.
+   *
+   * @param {number} createdByInput - The created by filter.
+   */
+  function onCreatedByFilter(createdByInput) {
+    if (createdByInput === "all") {
+      setCreatedBy(createdByInput);
+    } else {
+      setCreatedBy(context.email.get);
+    }
+  }
+
+  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -231,6 +246,7 @@ function ScreenList() {
               data={listData["hydra:member"]}
               currentPage={page}
               handlePageChange={onChangePage}
+              handleCreatedByCurrentUser={onCreatedByFilter}
               selectedRows={selectedRows}
               clearSelectedRows={clearSelectedRows}
               calendarView={view === "calendar"}

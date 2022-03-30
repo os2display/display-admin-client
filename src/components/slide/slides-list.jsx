@@ -33,6 +33,7 @@ function SlidesList() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [onPlaylists, setOnPlaylists] = useState();
   const [page, setPage] = useState();
+  const [createdBy, setCreatedBy] = useState("all");
   const [isPublished, setIsPublished] = useState();
   const [slidesToDelete, setSlidesToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -58,6 +59,7 @@ function SlidesList() {
     order: { createdAt: "desc" },
     title: searchText,
     published: isPublished,
+    createdBy,
   });
 
   useEffect(() => {
@@ -168,6 +170,19 @@ function SlidesList() {
   }
 
   /**
+   * Sets created by filter.
+   *
+   * @param {number} createdByInput - The created by filter.
+   */
+  function onCreatedByFilter(createdByInput) {
+    if (createdByInput === "all") {
+      setCreatedBy(createdByInput);
+    } else {
+      setCreatedBy(context.email.get);
+    }
+  }
+
+  /**
    * Sets is published
    *
    * @param {number} localIsPublished - Whether the slide is published.
@@ -220,6 +235,7 @@ function SlidesList() {
             data={listData["hydra:member"]}
             currentPage={page}
             handlePageChange={onChangePage}
+            handleCreatedByCurrentUser={onCreatedByFilter}
             selectedRows={selectedRows}
             clearSelectedRows={clearSelectedRows}
             handleDelete={openDeleteModal}

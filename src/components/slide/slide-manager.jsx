@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import set from "lodash.set";
 import get from "lodash.get";
@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/user-context";
 import {
   api,
   usePostMediaCollectionMutation,
@@ -40,11 +41,18 @@ function SlideManager({
   isLoading,
   loadingError,
 }) {
+  // Hooks
   const { t } = useTranslation("common", { keyPrefix: "slide-manager" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const headerText =
-    saveMethod === "PUT" ? t("edit-slide-header") : t("create-slide-header");
+
+  // Context
+  const context = useContext(UserContext);
+
+  // State
+  const [headerText] = useState(
+    saveMethod === "PUT" ? t("edit-slide-header") : t("create-slide-header")
+  );
   const [getTheme, setGetTheme] = useState(true);
   const [getTemplate, setGetTemplate] = useState(true);
   const [mediaFields, setMediaFields] = useState([]);
@@ -469,7 +477,25 @@ function SlideManager({
 
         // Sets theme in localstorage, to load it on create new slide
         if (formStateObject.theme) {
-          localStorage.setItem(localStorageKeys.THEME, formStateObject.theme);
+          const { tenantKey } = context.selectedTenant.get;
+          let previouslySavedTheme = localStorage.getItem(
+            localStorageKeys.THEME
+          );
+          if (previouslySavedTheme) {
+            previouslySavedTheme = JSON.parse(previouslySavedTheme);
+            previouslySavedTheme[tenantKey] = formStateObject.theme;
+            localStorage.setItem(
+              localStorageKeys.THEME,
+              JSON.stringify(previouslySavedTheme)
+            );
+          } else {
+            const themeToSave = {};
+            themeToSave[tenantKey] = formStateObject.theme;
+            localStorage.setItem(
+              localStorageKeys.THEME,
+              JSON.stringify(themeToSave)
+            );
+          }
         }
 
         // Construct data for submitting.

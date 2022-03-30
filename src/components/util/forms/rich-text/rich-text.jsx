@@ -34,7 +34,13 @@ function RichText({
    * @param {string} richText The rich text returned from reactquill
    */
   function onRichTextChange(richText) {
-    const returnTarget = { value: DOMPurify.sanitize(richText), id: name };
+    let sanitizedHtml = DOMPurify.sanitize(richText);
+    // It returns <p><br></p> if the input is empty, apparently "needed"
+    // https://github.com/quilljs/quill/issues/1328
+    if (sanitizedHtml === "<p><br></p>") {
+      sanitizedHtml = sanitizedHtml.replace("<p><br></p>", "");
+    }
+    const returnTarget = { value: sanitizedHtml, id: name };
     onChange({ target: returnTarget });
   }
 

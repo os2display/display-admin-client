@@ -29,6 +29,7 @@ function ThemesList() {
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [createdBy, setCreatedBy] = useState("all");
   const [page, setPage] = useState();
   const [themesToDelete, setThemesToDelete] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -51,6 +52,7 @@ function ThemesList() {
     page,
     order: { createdAt: "desc" },
     title: searchText,
+    createdBy,
   });
 
   useEffect(() => {
@@ -148,6 +150,19 @@ function ThemesList() {
   }
 
   /**
+   * Sets created by filter.
+   *
+   * @param {number} createdByInput - The created by filter.
+   */
+  function onCreatedByFilter(createdByInput) {
+    if (createdByInput === "all") {
+      setCreatedBy(createdByInput);
+    } else {
+      setCreatedBy(context.email.get);
+    }
+  }
+
+  /**
    * Handles search.
    *
    * @param {object} localSearchText - The search text.
@@ -189,6 +204,7 @@ function ThemesList() {
                 totalItems={listData["hydra:totalItems"]}
                 data={listData["hydra:member"]}
                 currentPage={page}
+                handleCreatedByCurrentUser={onCreatedByFilter}
                 handlePageChange={onChangePage}
                 selectedRows={selectedRows}
                 clearSelectedRows={clearSelectedRows}

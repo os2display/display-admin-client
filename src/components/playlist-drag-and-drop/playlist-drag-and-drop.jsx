@@ -138,6 +138,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     editNewTab: true,
     handleDelete: (playlistData) => removeFromList(playlistData),
     listButtonCallback: openInfoModal,
+    apiCall: useGetV1PlaylistsByIdSlidesQuery,
   });
 
   return (
