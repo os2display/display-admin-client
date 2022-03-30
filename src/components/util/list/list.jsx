@@ -215,7 +215,7 @@ function List({
             <Col md="auto">
               <>
                 <FormCheckbox
-                  label="HUSK LABEL"
+                  label={t("my-content")}
                   name="current-user"
                   onChange={onIsCreatedByChange}
                   value={createdByParams === "current-user"}
