@@ -16,18 +16,18 @@ describe("Nav items loads", () => {
     cy.get("nav").should("exist");
   });
 
-  it("It navigates to media list", () => {
-    cy.get("#nav-items_content_media").click();
-    cy.get("h1")
-      .invoke("text")
-      .should("match", /^Medier/);
-  });
-
   it("It navigates to slides list", () => {
     cy.get("#nav-items_content_slides").click();
     cy.get("h1")
       .invoke("text")
       .should("match", /^Slides/);
+  });
+
+  it("It navigates to media list", () => {
+    cy.get("#nav-items_content_media").click();
+    cy.get("h1")
+      .invoke("text")
+      .should("match", /^Medier/);
   });
 
   it("It navigates to screens list", () => {
@@ -78,7 +78,6 @@ describe("Nav items loads", () => {
       .invoke("text")
       .should("match", /^Opret ny skærm/);
   });
-
   it("It loads different menu on smaller screens", () => {
     cy.viewport(550, 750);
     cy.get("#basic-navbar-nav-burger").should("exist");
