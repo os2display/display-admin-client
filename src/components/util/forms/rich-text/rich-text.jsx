@@ -45,7 +45,7 @@ function RichText({
   }
 
   return (
-    <>
+    <div>
       <FormGroup className={formGroupClasses}>
         <FormLabel htmlFor={name}>
           {label}
@@ -59,7 +59,7 @@ function RichText({
         />
       </FormGroup>
       {helpText && <small>{helpText}</small>}
-    </>
+    </div>
   );
 }
 

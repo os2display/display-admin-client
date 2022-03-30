@@ -124,6 +124,90 @@ function SlideForm({
         .then((response) => response.json())
         .then((data) => {
           setContentFormElements(data);
+          setContentFormElements([
+            {
+                "key": "image-text-form-1",
+                "input": "header",
+                "text": "Skabelon: Rejseplanen",
+                "name": "header1",
+                "formGroupClasses": "h4 mb-3"
+            },
+            {
+                "key": "image-text-form-2",
+                "input": "header-h3",
+                "text": "Indhold",
+                "name": "header2",
+                "formGroupClasses": "h5 mb-3"
+            },
+            {
+                "key": "image-text-form-3",
+                "input": "textarea",
+                "name": "title",
+                "label": "Overskrift på slide",
+                "helpText": "Her kan du skrive overskriften til slidet",
+                "formGroupClasses": "col-md-6"
+            },
+            {
+                "key": "image-text-form-4",
+                "input": "rich-text-input",
+                "name": "text",
+                "label": "Tekst på slide",
+                "helpText": "Her kan du skrive teksten til slidet",
+                "formGroupClasses": "col-md-6 me-1"
+            },
+            {
+              "key": "image-text-form-5",
+              "input": "textarea",
+              "name": "distance",
+              "label": "Afstand",
+              "helpText": "Her kan du skrive teksten til afstandsfeltet",
+              "formGroupClasses": "col-md-6"
+          },
+          {
+            "key": "image-text-form-6",
+            "input": "textarea",
+            "name": "time_moderate",
+            "label": "Tid (Moderat)",
+            "helpText": "Her kan du skrive teksten til tidsfeltet (moderat)",
+            "formGroupClasses": "col-md-6"
+        },
+          {
+            "key": "image-text-form-7",
+            "input": "textarea",
+            "name": "time_fast",
+            "label": "Tid (Hurtigt)",
+            "helpText": "Her kan du skrive teksten til tidsfeltet (hurtigt)",
+            "formGroupClasses": "col-md-6"
+        },
+            {
+                "key": "image-text-form-8",
+                "multipleImages": false,
+                "input": "image",
+                "name": "image",
+                "label": "Billede",
+                "helpText": "Her uploades dit billede med indtegnet rute",
+            },
+            {
+                "key": "image-text-form-9",
+                "input": "travel-plan",
+                "name": "travel-plan",
+                "label": "Vælg relevante stoppesteder",
+                "helpText": "Hvis du er i tvivl om hvilke stoppesteder, henviser vi til din lokale busservice",
+                "formGroupClasses": "col-md-6 mb-3",
+                "name": "station"
+            },
+            {
+              "key": "image-text-form-10",
+              "input": "duration",
+              "name": "duration",
+              "min": "1",
+              "type": "number",
+              "label": "Varighed (i sekunder)",
+              "helpText": "Her skal du skrive varigheden på slidet.",
+              "required": true,
+              "formGroupClasses": "col-md-6 mb-3"
+            }
+        ])
         })
         .catch(() => {
           // @TODO: Handle error case. Display error for user.

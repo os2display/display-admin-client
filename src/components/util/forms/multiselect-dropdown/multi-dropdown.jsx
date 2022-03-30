@@ -54,7 +54,7 @@ function MultiSelectComponent({
     const localMappedOptions =
       options?.map((item) => {
         return {
-          label: item.title,
+          label: item.title || item.name,
           value: item["@id"] || item.id,
           disabled: false,
         };
@@ -64,7 +64,7 @@ function MultiSelectComponent({
     if (selected.length > 0) {
       localMappedSelected = selected.map((item) => {
         return {
-          label: item.title,
+          label: item.title || item.name,
           value: item["@id"] || item.id,
           disabled: false,
         };
@@ -113,13 +113,12 @@ function MultiSelectComponent({
 
     if (data.length > 0) {
       const ids = data.map(({ value }) => value);
-
       selectedOptions = Object.values(
         [...selected, ...options]
-          .filter((option) => ids.includes(option["@id"]))
+          .filter((option) => ids.includes(option["@id"] || option.id))
           .reduce((a, c) => {
             const aCopy = { ...a };
-            aCopy[c["@id"]] = c;
+            aCopy[c["@id"] || c.id] = c;
             return aCopy;
           }, {})
       );
