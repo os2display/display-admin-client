@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import SearchBox from "../search-box/search-box";
+import useModal from '../../../context/delete-modal-context/delete-modal-context';
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
-import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 import ListLoading from "../loading-component/list-loading";
 import CalendarList from "../../screen-list/calendar-list";
 import localStorageKeys from "../local-storage-keys";
@@ -17,8 +17,6 @@ import FormCheckbox from "../forms/form-checkbox";
  * @param {object} props - The props.
  * @param {Array} props.data - The data for the list.
  * @param {Array} props.columns - The columns for the table.
- * @param {Array} props.selectedRows - The selected rows, for styling.
- * @param {Function} props.clearSelectedRows - Callback to clear the selected rows.
  * @param {boolean} props.calendarView - If the list should display a gantt chart
  * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
@@ -35,8 +33,6 @@ function List({
   data,
   columns,
   displayPublished,
-  selectedRows,
-  clearSelectedRows,
   calendarView,
   handlePageChange,
   handleSearch,
@@ -48,6 +44,7 @@ function List({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
+  const { setModal, setSelected, selected } = useModal();
 
   // Page params
   const { search } = useLocation();
@@ -65,7 +62,7 @@ function List({
   }
 
   // At least one row must be selected for deletion.
-  const disableDeleteButton = !selectedRows.length > 0;
+  const disableDeleteButton = !selected.length > 0;
   const pageSize = 10;
 
   /** Set url search params using pageParams and localstorage */
@@ -231,17 +228,17 @@ function List({
                 variant="danger"
                 id="delete-button"
                 disabled={disableDeleteButton}
-                onClick={() => handleDelete()}
+                onClick={() => handleDelete(selected)}
                 className="me-3"
               >
                 {t("delete-button")}
               </Button>
             )}
-            {clearSelectedRows && (
+            {selected && (
               <Button
                 id="clear-rows-button"
-                disabled={selectedRows.length === 0}
-                onClick={() => clearSelectedRows()}
+                disabled={selected.length === 0}
+                onClick={() => setSelected([])}
                 variant="dark"
               >
                 {t("deselect-all")}
@@ -253,7 +250,7 @@ function List({
       <Row />
       <>
         {!calendarView && (
-          <Table data={data} columns={columns} selectedRows={selectedRows} />
+          <Table data={data} columns={columns} />
         )}
         {calendarView && <CalendarList data={data}>{children}</CalendarList>}
       </>
@@ -274,8 +271,6 @@ List.defaultProps = {
   handleDelete: null,
   displayPublished: false,
   children: <></>,
-  selectedRows: [],
-  clearSelectedRows: null,
 };
 
 List.propTypes = {
@@ -283,8 +278,6 @@ List.propTypes = {
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
-  selectedRows: SelectedRowsProptypes,
-  clearSelectedRows: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
   calendarView: PropTypes.bool,

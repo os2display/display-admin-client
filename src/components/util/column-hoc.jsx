@@ -3,6 +3,8 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import CheckboxForList from "./list/checkbox-for-list";
+import selectedHelper from './helpers/selectedHelper';
+import useModal from '../../context/delete-modal-context/delete-modal-context';
 
 /**
  * Hoc that wraps arrays in checkbox and delete button
@@ -21,6 +23,7 @@ function ColumnHoc(columns) {
     ...props
   }) {
     const { t } = useTranslation("common", { keyPrefix: "column-hoc" });
+    const { selected, setSelected, setModal } = useModal();
 
     const firstColumns = [
       {
@@ -32,19 +35,24 @@ function ColumnHoc(columns) {
         label: t("created-by"),
       },
     ];
-    if (handleSelected) {
       firstColumns.unshift({
         key: "pick",
         content: (d) => (
           <CheckboxForList
-            onSelected={() => handleSelected(d)}
+            onSelected={() =>  setSelected(selectedHelper(d, [...selected]))}
             // eslint-disable-next-line react/destructuring-assignment
             disabled={disableCheckbox && d.onSlides.length > 0}
-            selected={selectedRows.indexOf(d) > -1}
+            selected={selected.indexOf(d) > -1}
           />
         ),
       });
-    }
+
+function clickDelete(item){
+  setSelected([{id: item["@id"], title: item.title}])
+  setModal({
+    accept: handleDelete,
+  })
+}
 
     const returnColumns = firstColumns.concat(columns({ ...props, isShared }));
     if (!isShared) {
@@ -55,11 +63,10 @@ function ColumnHoc(columns) {
             variant="danger"
             className="remove-from-list"
             disabled={
-              disableDelete &&
               // eslint-disable-next-line react/destructuring-assignment
-              (selectedRows.length > 0 || d.onSlides?.length > 0)
+              (selected.length > 0 || d.onSlides?.length > 0)
             }
-            onClick={() => handleDelete(d)}
+            onClick={() => clickDelete(d)}
           >
             {t("delete-button")}
           </Button>

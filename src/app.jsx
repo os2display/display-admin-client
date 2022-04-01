@@ -33,6 +33,7 @@ import SharedPlaylists from "./components/playlist/shared-playlists";
 import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
+import ModalProvider from './context/delete-modal-context/delete-modal-provider';
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
@@ -148,6 +149,7 @@ function App() {
     <>
       <UserContext.Provider value={userStore}>
         <I18nextProvider i18n={i18next}>
+          <ModalProvider>
           <Suspense
             fallback={
               <LoadingComponent isLoading loadingMessage="Vent venligst" />
@@ -353,6 +355,7 @@ function App() {
               </Container>
             </AuthHandler>
           </Suspense>
+          </ModalProvider>
         </I18nextProvider>
       </UserContext.Provider>
     </>

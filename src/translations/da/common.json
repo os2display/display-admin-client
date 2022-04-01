@@ -480,7 +480,9 @@
     "delete-search": "Slet søgning"
   },
   "delete-modal": {
-    "title": "Er du sikker på du vil slette følgende"
+    "title": "Er du sikker på du vil slette følgende",
+    "delete": "Slet",
+    "cancel":  "Annuller"
   },
   "info-modal": {
     "decline-text": "Luk dialog",
