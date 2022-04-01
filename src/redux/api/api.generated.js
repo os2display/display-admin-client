@@ -165,7 +165,7 @@ exports.api = (0, react_1.createApi)({
                     published: queryArg.published,
                     isCampaign: queryArg.isCampaign,
                     order: queryArg.order,
-                    "tenants.tenantKey": queryArg["tenants.tenantKey"]
+                    sharedWithMe: queryArg.sharedWithMe
                 }
             }); }
         }),
@@ -364,7 +364,11 @@ exports.api = (0, react_1.createApi)({
         getV1ScreensByIdRegionsAndRegionIdPlaylists: build.query({
             query: function (queryArg) { return ({
                 url: "/v1/screens/" + queryArg.id + "/regions/" + queryArg.regionId + "/playlists",
-                params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+                params: {
+                    page: queryArg.page,
+                    itemsPerPage: queryArg.itemsPerPage,
+                    sharedWithMe: queryArg.sharedWithMe
+                }
             }); }
         }),
         putPlaylistScreenRegionItem: build.mutation({

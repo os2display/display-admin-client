@@ -10,7 +10,7 @@ import InfoModal from "../info-modal/info-modal";
 import ContentBody from "../util/content-body/content-body";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
 import { displayError } from "../util/list/toast-component/display-toast";
-import getPlaylistColumns from "./playlists-columns";
+import getSharedPlaylistColumns from "./shared-playlists-column";
 import {
   useGetV1PlaylistsByIdSlidesQuery,
   useGetV1PlaylistsQuery,
@@ -45,10 +45,10 @@ function SharedPlaylists() {
   } = useGetV1PlaylistsQuery({
     page,
     order: { createdAt: "desc" },
-    "tenants.tenantKey": context.selectedTenant?.get.tenantKey,
     title: searchText,
     published: isPublished,
     isCampaign: false,
+    sharedWithMe: true,
   });
 
   useEffect(() => {
@@ -107,9 +107,8 @@ function SharedPlaylists() {
   }
 
   // The columns for the table.
-  const columns = getPlaylistColumns({
+  const columns = getSharedPlaylistColumns({
     listButtonCallback: openInfoModal,
-    isShared: true,
   });
 
   // Error with retrieving list of playlists

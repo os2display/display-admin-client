@@ -13,11 +13,11 @@ import InfoModal from "../info-modal/info-modal";
 import idFromUrl from "../util/helpers/id-from-url";
 import ContentBody from "../util/content-body/content-body";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
+import getPlaylistColumns from "./playlists-columns";
 import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
-import getPlaylistColumns from "./playlists-columns";
 import {
   useDeleteV1PlaylistsByIdMutation,
   useGetV1PlaylistsByIdSlidesQuery,
@@ -73,6 +73,7 @@ function PlaylistCampaignList({ location }) {
     published: isPublished,
     isCampaign: location === "campaign",
     createdBy,
+    sharedWithMe: false,
   });
 
   useEffect(() => {

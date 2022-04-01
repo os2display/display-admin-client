@@ -19,7 +19,9 @@ import "./drag-and-drop-table.scss";
  * @returns {object} The drag and drop table.
  */
 function DragAndDropTable({ columns, data, name, onDropped }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", {
+    keyPrefix: "drag-and-drop-table",
+  });
 
   /**
    * Renders a cell with the content received.
@@ -29,6 +31,9 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
    * @returns {object | string} Returns a rendered jsx object, or the path.
    */
   function renderCell(item, column) {
+    if (column.render && !column.render(item)) {
+      return t("not-available");
+    }
     if (column.content) {
       return column.content(item);
     }
@@ -87,6 +92,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
     // styles we need to apply on draggables
     ...draggableStyle,
   });
+
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div className="table-responsive">
@@ -139,9 +145,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
           </Droppable>
         </DragDropContext>
       </Table>
-      <small id="aria-label-for-drag-and-drop">
-        {t("drag-and-drop-table.help-text")}
-      </small>
+      <small id="aria-label-for-drag-and-drop">{t("help-text")}</small>
     </div>
   );
 }
