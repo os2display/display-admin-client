@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import getSlidesColumns from "../../slide/slides-columns";
+import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import InfoModal from "../../info-modal/info-modal";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
@@ -103,10 +103,11 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     handleChange({ target });
   }
   /* eslint-disable-next-line no-unused-vars */
-  const columns = getSlidesColumns({
-    editNewTab: true,
+  const columns = SelectSlideColumns({
     handleDelete: removeFromList,
     listButtonCallback: openInfoModal,
+    apiCall: useGetV1PlaylistsByIdQuery,
+    editTarget: "slide",
   });
 
   return (

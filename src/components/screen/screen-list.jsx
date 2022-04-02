@@ -81,9 +81,6 @@ function ScreenList() {
   /** Deletes multiple screens. */
   useEffect(() => {
     if (isDeleting && selected.length > 0) {
-      if (isDeleteSuccess) {
-        displaySuccess(t("success-messages.screen-delete"));
-      }
       const screenToDelete = selected[0];
       setSelected(selected.slice(1));
       const screenToDeleteId = idFromUrl(screenToDelete.id);
