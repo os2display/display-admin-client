@@ -9,7 +9,7 @@ import {
 } from "../../../redux/api/api.generated";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import InfoModal from "../../info-modal/info-modal";
-import getPlaylistColumns from "../../playlist/playlists-columns";
+import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
 
 /**
  * A multiselect and table for groups.
@@ -87,7 +87,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -100,10 +100,11 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   }
 
   // The columns for the table.
-  const columns = getPlaylistColumns({
-    editNewTab: true,
+  const columns = SelectPlaylistColumns({
     handleDelete: removeFromList,
     listButtonCallback: openInfoModal,
+    apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    editTarget: "playlist",
   });
 
   return (

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import getPlaylistColumns from "../playlist/playlists-columns";
+import { SelectPlaylistColumns } from "../playlist/playlists-columns";
 import InfoModal from "../info-modal/info-modal";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
@@ -79,7 +79,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -114,11 +114,11 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     });
   }
 
-  const columns = getPlaylistColumns({
-    editNewTab: true,
-    handleDelete: (playlistData) => removeFromList(playlistData),
+  const columns = SelectPlaylistColumns({
+    handleDelete: removeFromList,
     listButtonCallback: openInfoModal,
     apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    editTarget: "playlist",
   });
 
   return (

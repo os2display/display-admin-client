@@ -62,7 +62,7 @@ function ColumnHoc(columns) {
     returnColumns.push({
       key: "edit-delete-buttons",
       content: (d) => (
-        <div className="d-flex">
+        <div className="d-flex justify-content-end">
           {/* eslint-disable-next-line react/destructuring-assignment */}
           <LinkForList id={d["@id"]} param={`${pathname.split("/")[1]}/edit`} />
           <Button

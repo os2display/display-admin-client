@@ -134,7 +134,7 @@
       },
       "loading-messages": {
         "loading": "Henter spillelister",
-        "deleting": "Sletter spilleliste: {{title}}"
+        "deleting": "Sletter spilleliste"
       },
       "error-messages": {
         "delete-error": "Der skete en fejl da spillelisten skulle slettes:",
@@ -154,7 +154,7 @@
       },
       "loading-messages": {
         "loading": "Henter kampagner",
-        "deleting": "Sletter kampagnen: {{title}}"
+        "deleting": "Sletter kampagnen"
       },
       "error-messages": {
         "delete-error": "Der skete en fejl da kampagnen skulle slettes:",

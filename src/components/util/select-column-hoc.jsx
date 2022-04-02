@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import { React, useContext } from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import UserContext from "../../context/user-context";
 import LinkForList from "./list/link-for-list";
 
 /**
@@ -18,6 +19,7 @@ function SelectColumnHoc(columns) {
     ...props
   }) {
     const { t } = useTranslation("common", { keyPrefix: "select-column-hoc" });
+    const context = useContext(UserContext);
 
     const firstColumns = [
       {
@@ -34,9 +36,12 @@ function SelectColumnHoc(columns) {
 
     returnColumns.push({
       key: "edit-delete-buttons",
-      content: ({ "@id": id }) => (
-        <div className="d-flex">
-          <LinkForList id={id} param={`${editTarget}/edit`} targetBlank />
+      content: ({ "@id": id, tenants }) => (
+        <div className="d-flex justify-content-end">
+          {!tenants?.find(
+            (tenant) =>
+              tenant.tenantKey === context.selectedTenant.get.tenantKey
+          ) && <LinkForList id={id} param={`${editTarget}/edit`} targetBlank />}
           <Button
             variant="danger"
             className="remove-from-list"
