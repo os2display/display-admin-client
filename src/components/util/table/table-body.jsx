@@ -1,19 +1,17 @@
 import { React, Fragment } from "react";
 import PropTypes from "prop-types";
-import useModal from '../../../context/delete-modal-context/delete-modal-context';
 import get from "lodash.get";
+import useModal from "../../../context/delete-modal-context/delete-modal-context";
 import ColumnProptypes from "../../proptypes/column-proptypes";
-import SelectedRowsProptypes from "../../proptypes/selected-rows-proptypes";
 
 /**
  * @param {object} props The props.
  * @param {Array} props.columns The columns for the table.
- * @param {Array} props.selectedRows The selected rows array.
  * @param {Array} props.data The data to display.
  * @returns {object} The table body.
  */
-function TableBody({ columns, selectedRows, data }) {
-  const {  selected } = useModal();
+function TableBody({ columns, data }) {
+  const { selected } = useModal();
 
   /**
    * Renders a cell with the content received.
@@ -37,7 +35,7 @@ function TableBody({ columns, selectedRows, data }) {
    */
   function isRowSelected(item) {
     let classes = "";
-    if (selected.find((x) => x.id === item.id)) classes += "bg-light";
+    if (selected.find((x) => x.id === item["@id"])) classes += "bg-light";
     return classes;
   }
 
@@ -63,7 +61,6 @@ TableBody.propTypes = {
     PropTypes.shape({ name: PropTypes.string, "@id": PropTypes.string })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
-  selectedRows: SelectedRowsProptypes.isRequired,
 };
 
 export default TableBody;

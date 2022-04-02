@@ -2,8 +2,7 @@ import { React, useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
-import selectedHelper from "../util/helpers/selectedHelper";
-import DeleteModal from "../delete-modal/delete-modal";
+import useModal from "../../context/delete-modal-context/delete-modal-context";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
@@ -25,14 +24,12 @@ import {
 function ThemesList() {
   const { t } = useTranslation("common", { keyPrefix: "themes-list" });
   const context = useContext(UserContext);
+  const { selected, setSelected } = useModal();
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
   const [createdBy, setCreatedBy] = useState("all");
   const [page, setPage] = useState();
-  const [themesToDelete, setThemesToDelete] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
@@ -63,23 +60,20 @@ function ThemesList() {
 
   /** Deletes multiple themes. */
   useEffect(() => {
-    if (themesToDelete.length > 0) {
-      // As we are deleting multiple themes, the ui will jump if the "is deleting" value from the hook is used.
-
-      setIsDeleting(true);
+    if (isDeleting && selected.length > 0) {
       if (isDeleteSuccess) {
         displaySuccess(t("success-messages.theme-delete"));
       }
-      setLoadingMessage(t("loading-messages.deleting-theme"));
-      const themeToDelete = themesToDelete.splice(0, 1).shift();
-      const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
+      const themeToDelete = selected[0];
+      setSelected(selected.slice(1));
+      const themeToDeleteId = idFromUrl(themeToDelete.id);
       DeleteV1Themes({ id: themeToDeleteId });
     }
-  }, [themesToDelete, isDeleteSuccess]);
+  }, [isDeleting, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && themesToDelete.length === 0) {
+    if (isDeleteSuccess && selected.length === 0) {
       displaySuccess(t("success-messages.theme-delete"));
       refetch();
       setIsDeleting(false);
@@ -101,43 +95,10 @@ function ThemesList() {
     }
   }, [isDeleteError]);
 
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} row The selected row.
-   */
-  function handleSelected(row) {
-    setSelectedRows(selectedHelper(row, [...selectedRows]));
-  }
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
-  /**
-   * Opens the delete modal
-   *
-   * @param {object} item The item to delete
-   */
-  function openDeleteModal(item) {
-    if (item) {
-      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
-    }
-    setShowDeleteModal(true);
-  }
-
-  /** Deletes theme(s), and closes modal. */
+  /** Starts the deletion process. */
   function handleDelete() {
-    setThemesToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseDeleteModal() {
-    clearSelectedRows();
-    setShowDeleteModal(false);
+    setIsDeleting(true);
+    setLoadingMessage(t("loading-messages.deleting-theme"));
   }
 
   /**
@@ -173,12 +134,9 @@ function ThemesList() {
 
   // The columns for the table.
   const columns = getThemesColumns({
-    selectedRows,
-    handleSelected,
-    editNewTab: false,
-    handleDelete: openDeleteModal,
-    disableCheckbox: true,
-    disableDelete: true,
+    handleDelete,
+    disableCheckbox: ({ onSlides }) => onSlides.length > 0,
+    disableDelete: ({ onSlides }) => onSlides.length > 0,
   });
 
   // Error with retrieving list of themes
@@ -206,9 +164,7 @@ function ThemesList() {
                 currentPage={page}
                 handleCreatedByCurrentUser={onCreatedByFilter}
                 handlePageChange={onChangePage}
-                selectedRows={selectedRows}
-                clearSelectedRows={clearSelectedRows}
-                handleDelete={openDeleteModal}
+                handleDelete={handleDelete}
                 handleSearch={onSearch}
                 isLoading={isLoading || isDeleting}
                 loadingMessage={loadingMessage}
@@ -217,12 +173,6 @@ function ThemesList() {
           </>
         </ContentBody>
       )}
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={onCloseDeleteModal}
-        handleAccept={handleDelete}
-        selectedRows={selectedRows}
-      />
     </>
   );
 }

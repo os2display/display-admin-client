@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../util/modal/modal-dialog";
-import SelectedRowsProptypes from "../proptypes/selected-rows-proptypes";
 
 /**
  * Delete modal component, a modal that deletes elements.
@@ -48,7 +47,6 @@ function DeleteModal({ show, onClose, selectedRows, handleAccept }) {
 DeleteModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  selectedRows: SelectedRowsProptypes.isRequired,
   handleAccept: PropTypes.func.isRequired,
 };
 

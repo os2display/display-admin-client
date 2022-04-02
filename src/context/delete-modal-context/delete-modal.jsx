@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
-import { Modal } from 'react-bootstrap';
-import ModalDialog from '../../components/util/modal/modal-dialog';
-import { useTranslation } from 'react-i18next';
+import { Modal } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { PropTypes } from "prop-types";
+import ModalDialog from "../../components/util/modal/modal-dialog";
 
 /**
- * @param root0
- * @param root0.modal
- * @param root0.unSetModal
- * @param root0.onAccept
- * @param root0.onReject
+ * Delete modal component, a modal that deletes elements.
+ *
+ * @param {object} props - The props.
+ * @param {Function} props.unSetModal - Close the modal.
+ * @param {Function} props.onAccept - A callback on accept.
+ * @param {Array} props.selected - The selected entries, to list.
+ * @param {Function} props.setSelected - Set selected entries.
+ * @returns {object} The delete modal.
  */
- function DeleteModal({ unSetModal, onAccept, selected }) {
+function DeleteModal({ unSetModal, onAccept, selected, setSelected }) {
   const { t } = useTranslation("common", { keyPrefix: "delete-modal" });
 
   /**
@@ -34,12 +38,16 @@ import { useTranslation } from 'react-i18next';
     };
   }, []);
 
+  /** If the user rejects deletion, the selected should be reset and the modal closed. */
   function rejectDeletion() {
     unSetModal();
+    setSelected([]);
   }
+
+  /** If the user accepts deletion, the callback is called and the modal closed. */
   function acceptDeletion() {
-    unSetModal();
     onAccept();
+    unSetModal();
   }
 
   return (
@@ -59,6 +67,7 @@ import { useTranslation } from 'react-i18next';
         acceptText={t("delete")}
       >
         <ul>
+          {/* eslint-disable-next-line react/prop-types */}
           {selected.map(({ title }) => (
             <li>{title}</li>
           ))}
@@ -67,5 +76,12 @@ import { useTranslation } from 'react-i18next';
     </Modal>
   );
 }
+
+DeleteModal.propTypes = {
+  unSetModal: PropTypes.func.isRequired,
+  onAccept: PropTypes.func.isRequired,
+  setSelected: PropTypes.func.isRequired,
+  selected: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default DeleteModal;

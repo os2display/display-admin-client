@@ -5,12 +5,13 @@ import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserContext from "../../context/user-context";
 import ScreenCalendarCell from "../screen-list/screen-calendar-cell";
-import selectedHelper from "../util/helpers/selectedHelper";
 import List from "../util/list/list";
+import { ScreenColumns } from "./screen-columns";
 import InfoModal from "../info-modal/info-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
+import useModal from "../../context/delete-modal-context/delete-modal-context";
 import {
   useGetV1ScreensQuery,
   useDeleteV1ScreensByIdMutation,
@@ -20,8 +21,6 @@ import {
   displaySuccess,
   displayError,
 } from "../util/list/toast-component/display-toast";
-import getScreenColumns from "./screen-columns";
-import useModal from '../../context/delete-modal-context/delete-modal-context';
 import "./screen-list.scss";
 
 /**
@@ -32,7 +31,7 @@ import "./screen-list.scss";
 function ScreenList() {
   const { t } = useTranslation("common", { keyPrefix: "screen-list" });
   const context = useContext(UserContext);
-  const {  selected,setSelected } = useModal();
+  const { selected, setSelected } = useModal();
 
   // Local state
   const [view, setView] = useState("list");
@@ -40,7 +39,6 @@ function ScreenList() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [page, setPage] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [screensToDelete, setScreensToDelete] = useState([]);
   const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
@@ -83,15 +81,11 @@ function ScreenList() {
   /** Deletes multiple screens. */
   useEffect(() => {
     if (isDeleting && selected.length > 0) {
-      debugger
-      // As we are deleting multiple screens, the ui will jump if the "is deleting" value from the hook is used.
-      setIsDeleting(true);
       if (isDeleteSuccess) {
         displaySuccess(t("success-messages.screen-delete"));
       }
-      setLoadingMessage(t("loading-messages.deleting-screen"));
       const screenToDelete = selected[0];
-      setSelected(selected.slice(1))
+      setSelected(selected.slice(1));
       const screenToDeleteId = idFromUrl(screenToDelete.id);
       DeleteV1Screens({ id: screenToDeleteId });
     }
@@ -99,10 +93,10 @@ function ScreenList() {
 
   // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && screensToDelete.length === 0) {
+    if (isDeleteSuccess && selected.length === 0) {
       displaySuccess(t("success-messages.screen-delete"));
-      refetch();
       setIsDeleting(false);
+      refetch();
     }
   }, [isDeleteSuccess]);
 
@@ -114,14 +108,10 @@ function ScreenList() {
     }
   }, [isDeleteError]);
 
-  /**
-   * Deletes screen(s), and closes modal.
-   *
-   * @param {string} id - The id of the screen to delete.
-   */
+  /** Starts the deletion process. */
   function handleDelete() {
-    debugger
     setIsDeleting(true);
+    setLoadingMessage(t("loading-messages.deleting-screen"));
   }
 
   /** @param {Array} groupsData The array of groups. */
@@ -168,9 +158,8 @@ function ScreenList() {
   }
 
   // The columns for the table.
-  const columns = getScreenColumns({
-    editNewTab: false,
-    handleDelete: handleDelete,
+  const columns = ScreenColumns({
+    handleDelete,
     listButtonCallback: openInfoModal,
     apiCall: useGetV1ScreensByIdScreenGroupsQuery,
   });

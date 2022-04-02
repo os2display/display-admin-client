@@ -1,8 +1,9 @@
-import { React, useContext } from "react";
+import { React, useContext, useEffect } from "react";
 import { Nav } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faDesktop,
   faStream,
@@ -11,6 +12,7 @@ import {
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../../context/user-context";
+import useModal from "../../../context/delete-modal-context/delete-modal-context";
 import RestrictedNavRoute from "./restricted-nav-route";
 import "./nav-items.scss";
 
@@ -20,8 +22,14 @@ import "./nav-items.scss";
  * @returns {object} Nav items
  */
 function NavItems() {
-  const [t] = useTranslation("common");
+  const { t } = useTranslation("common");
+  const { setSelected } = useModal();
   const context = useContext(UserContext);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setSelected([]);
+  }, [pathname]);
 
   return (
     <>

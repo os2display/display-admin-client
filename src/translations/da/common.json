@@ -174,6 +174,11 @@
     "created-by": "Oprettet af",
     "delete-button": "Slet"
   },
+  "select-column-hoc": {
+    "name": "Navn",
+    "created-by": "Oprettet af",
+    "delete-button": "Fjern"
+  },
   "themes-list": {
     "columns": {
       "created-by": "Oprettet af",
@@ -557,7 +562,7 @@
     "checkbox-form-aria-label": "Vælg dette medie til massehandling"
   },
   "list": {
-    "my-content": "Vis kun indhold oprettet af mig",
+    "my-content": "Mit indhold",
     "delete-button": "Slet",
     "deselect-all": "Fravælg alle",
     "published": "Udgivet",

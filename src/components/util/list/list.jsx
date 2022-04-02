@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import SearchBox from "../search-box/search-box";
-import useModal from '../../../context/delete-modal-context/delete-modal-context';
+import useModal from "../../../context/delete-modal-context/delete-modal-context";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import ListLoading from "../loading-component/list-loading";
@@ -228,7 +228,11 @@ function List({
                 variant="danger"
                 id="delete-button"
                 disabled={disableDeleteButton}
-                onClick={() => handleDelete(selected)}
+                onClick={() =>
+                  setModal({
+                    accept: handleDelete,
+                  })
+                }
                 className="me-3"
               >
                 {t("delete-button")}
@@ -249,9 +253,7 @@ function List({
       </Row>
       <Row />
       <>
-        {!calendarView && (
-          <Table data={data} columns={columns} />
-        )}
+        {!calendarView && <Table data={data} columns={columns} />}
         {calendarView && <CalendarList data={data}>{children}</CalendarList>}
       </>
       <Pagination

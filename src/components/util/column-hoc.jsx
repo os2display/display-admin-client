@@ -2,10 +2,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import CheckboxForList from "./list/checkbox-for-list";
-import selectedHelper from './helpers/selectedHelper';
-import useModal from '../../context/delete-modal-context/delete-modal-context';
-
+import selectedHelper from "./helpers/selectedHelper";
+import useModal from "../../context/delete-modal-context/delete-modal-context";
+import LinkForList from "./list/link-for-list";
 /**
  * Hoc that wraps arrays in checkbox and delete button
  *
@@ -14,18 +15,38 @@ import useModal from '../../context/delete-modal-context/delete-modal-context';
  */
 function ColumnHoc(columns) {
   return function WithColumnHoc({
-    selectedRows,
-    handleSelected,
     handleDelete,
-    disableCheckbox = false,
-    disableDelete = false,
-    isShared,
+    disableCheckbox = () => {},
+    disableDelete = () => {},
     ...props
   }) {
     const { t } = useTranslation("common", { keyPrefix: "column-hoc" });
     const { selected, setSelected, setModal } = useModal();
+    const { pathname } = useLocation();
+
+    /**
+     * Sets item to delete, and opens delete modal.
+     *
+     * @param {object} item - Item to delete
+     */
+    function openDeleteModal(item) {
+      setSelected([{ id: item["@id"], title: item.title }]);
+      setModal({
+        accept: handleDelete,
+      });
+    }
 
     const firstColumns = [
+      {
+        key: "pick",
+        content: (d) => (
+          <CheckboxForList
+            onSelected={() => setSelected(selectedHelper(d, [...selected]))}
+            disabled={disableCheckbox(d)}
+            selected={selected.find((item) => item.id === d["@id"])}
+          />
+        ),
+      },
       {
         path: "title",
         label: t("name"),
@@ -35,44 +56,27 @@ function ColumnHoc(columns) {
         label: t("created-by"),
       },
     ];
-      firstColumns.unshift({
-        key: "pick",
-        content: (d) => (
-          <CheckboxForList
-            onSelected={() =>  setSelected(selectedHelper(d, [...selected]))}
-            // eslint-disable-next-line react/destructuring-assignment
-            disabled={disableCheckbox && d.onSlides.length > 0}
-            selected={selected.indexOf(d) > -1}
-          />
-        ),
-      });
 
-function clickDelete(item){
-  setSelected([{id: item["@id"], title: item.title}])
-  setModal({
-    accept: handleDelete,
-  })
-}
+    const returnColumns = firstColumns.concat(columns({ ...props }));
 
-    const returnColumns = firstColumns.concat(columns({ ...props, isShared }));
-    if (!isShared) {
-      returnColumns.push({
-        key: "delete",
-        content: (d) => (
+    returnColumns.push({
+      key: "edit-delete-buttons",
+      content: (d) => (
+        <div className="d-flex">
+          {/* eslint-disable-next-line react/destructuring-assignment */}
+          <LinkForList id={d["@id"]} param={`${pathname.split("/")[1]}/edit`} />
           <Button
             variant="danger"
             className="remove-from-list"
-            disabled={
-              // eslint-disable-next-line react/destructuring-assignment
-              (selected.length > 0 || d.onSlides?.length > 0)
-            }
-            onClick={() => clickDelete(d)}
+            disabled={disableDelete(d)}
+            onClick={() => openDeleteModal(d)}
           >
             {t("delete-button")}
           </Button>
-        ),
-      });
-    }
+        </div>
+      ),
+    });
+
     return returnColumns;
   };
 }

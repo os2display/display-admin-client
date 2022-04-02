@@ -5,11 +5,11 @@
  */
 function selectedHelper(row, selectedData) {
   const id = row["@id"];
-  const alreadySelected = selectedData.find((x) => x["@id"] === id);
+  const alreadySelected = selectedData.find((x) => x === id);
   if (alreadySelected) {
     selectedData.splice(selectedData.indexOf(alreadySelected), 1);
   } else {
-    selectedData.push(row);
+    selectedData.push({ id: row["@id"], title: row.title });
   }
   return selectedData;
 }
