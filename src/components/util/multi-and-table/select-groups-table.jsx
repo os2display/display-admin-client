@@ -2,8 +2,11 @@ import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
-import getGroupColumns from "../../groups/groups-columns";
-import { useGetV1ScreenGroupsQuery } from "../../../redux/api/api.generated";
+import { SelectGroupColumns } from "../../groups/groups-columns";
+import {
+  useGetV1ScreenGroupsQuery,
+  useGetV1ScreenGroupsByIdScreensQuery,
+} from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 
 /**
@@ -69,7 +72,7 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -81,9 +84,11 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
     handleChange({ target });
   }
 
-  const columns = getGroupColumns({
-    editNewTab: true,
+  const columns = SelectGroupColumns({
+    // Todo info modal
     handleDelete: removeFromList,
+    apiCall: useGetV1ScreenGroupsByIdScreensQuery,
+    editTarget: "group",
   });
 
   return (

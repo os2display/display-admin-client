@@ -1,10 +1,9 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import selectedHelper from "../util/helpers/selectedHelper";
 import List from "../util/list/list";
 import UserContext from "../../context/user-context";
-import getGroupColumns from "./groups-columns";
-import DeleteModal from "../delete-modal/delete-modal";
+import useModal from "../../context/delete-modal-context/delete-modal-context";
+import { GroupColumns } from "./groups-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -26,17 +25,15 @@ import {
  */
 function GroupsList() {
   const { t } = useTranslation("common", { keyPrefix: "groups-list" });
+  const { selected, setSelected } = useModal();
   const context = useContext(UserContext);
 
   // Local state
   const [createdBy, setCreatedBy] = useState("all");
   const [inScreens, setInScreens] = useState();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [page, setPage] = useState();
-  const [groupsToDelete, setGroupsToDelete] = useState([]);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
@@ -70,22 +67,20 @@ function GroupsList() {
 
   /** Deletes multiple groups. */
   useEffect(() => {
-    if (groupsToDelete.length > 0) {
-      // As we are deleting multiple groups, the ui will jump if the "is deleting" value from the hook is used.
-      setIsDeleting(true);
+    if (isDeleting && selected.length > 0) {
       if (isDeleteSuccess) {
         displaySuccess(t("success-messages.group-delete"));
       }
-      setLoadingMessage(t("loading-messages.deleting-group"));
-      const groupToDelete = groupsToDelete.splice(0, 1).shift();
-      const groupToDeleteId = idFromUrl(groupToDelete["@id"]);
+      const groupToDelete = selected[0];
+      setSelected(selected.slice(1));
+      const groupToDeleteId = idFromUrl(groupToDelete.id);
       DeleteV1ScreenGroups({ id: groupToDeleteId });
     }
-  }, [groupsToDelete, isDeleteSuccess]);
+  }, [isDeleting, isDeleteSuccess]);
 
   // Sets success messages in local storage, because the page is reloaded
   useEffect(() => {
-    if (isDeleteSuccess && groupsToDelete.length === 0) {
+    if (isDeleteSuccess && selected.length === 0) {
       displaySuccess(t("success-messages.group-delete"));
       refetch();
       setIsDeleting(false);
@@ -107,43 +102,10 @@ function GroupsList() {
     }
   }, [isDeleteError]);
 
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} row The selected row.
-   */
-  function handleSelected(row) {
-    setSelectedRows(selectedHelper(row, [...selectedRows]));
-  }
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
-  /**
-   * Opens the delete modal
-   *
-   * @param {object} item The item to delete
-   */
-  function openDeleteModal(item) {
-    if (item) {
-      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
-    }
-    setShowDeleteModal(true);
-  }
-
-  /** Deletes group(s), and closes modal. */
+  /** Starts the deletion process. */
   function handleDelete() {
-    setGroupsToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseModal() {
-    clearSelectedRows();
-    setShowDeleteModal(false);
+    setIsDeleting(true);
+    setLoadingMessage(t("loading-messages.deleting-group"));
   }
 
   /**
@@ -190,11 +152,8 @@ function GroupsList() {
   }
 
   // The columns for the table.
-  const columns = getGroupColumns({
-    selectedRows,
-    handleSelected,
-    editNewTab: false,
-    handleDelete: openDeleteModal,
+  const columns = GroupColumns({
+    handleDelete,
     listButtonCallback: openInfoModal,
     apiCall: useGetV1ScreenGroupsByIdScreensQuery,
   });
@@ -221,11 +180,9 @@ function GroupsList() {
               totalItems={listData["hydra:totalItems"]}
               currentPage={page}
               handlePageChange={onChangePage}
-              selectedRows={selectedRows}
               data={listData["hydra:member"]}
               handleCreatedByCurrentUser={onCreatedByFilter}
-              clearSelectedRows={clearSelectedRows}
-              handleDelete={openDeleteModal}
+              handleDelete={handleDelete}
               deleteSuccess={isDeleteSuccess || false}
               handleSearch={onSearch}
               isLoading={isLoading || isDeleting}
@@ -234,12 +191,6 @@ function GroupsList() {
           )}
         </>
       </ContentBody>
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={onCloseModal}
-        handleAccept={handleDelete}
-        selectedRows={selectedRows}
-      />
       <InfoModal
         show={showInfoModal}
         redirectTo="/screen/edit"
