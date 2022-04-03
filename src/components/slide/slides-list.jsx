@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
 import UserContext from "../../context/user-context";
+import ListContext from "../../context/list-context";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import useModal from "../../context/modal-context/modal-context-hook";
@@ -27,12 +28,15 @@ function SlidesList() {
   const context = useContext(UserContext);
   const { selected, setSelected } = useModal();
 
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    createdBy: { get: createdBy },
+    isPublished: { get: isPublished },
+  } = useContext(ListContext);
+
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [page, setPage] = useState();
-  const [createdBy, setCreatedBy] = useState("all");
-  const [isPublished, setIsPublished] = useState();
-  const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
     t("loading-messages.loading-slides")
@@ -69,6 +73,10 @@ function SlidesList() {
     }
   }, [context.selectedTenant.get]);
 
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, isPublished, createdBy]);
+
   /** Deletes multiple slides. */
   useEffect(() => {
     if (isDeleting && selected.length > 0) {
@@ -102,50 +110,6 @@ function SlidesList() {
     setLoadingMessage(t("loading-messages.deleting-slide"));
   }
 
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Sets created by filter.
-   *
-   * @param {number} createdByInput - The created by filter.
-   */
-  function onCreatedByFilter(createdByInput) {
-    if (createdByInput === "all") {
-      setCreatedBy(createdByInput);
-    } else {
-      setCreatedBy(context.email.get);
-    }
-  }
-
-  /**
-   * Sets is published
-   *
-   * @param {number} localIsPublished - Whether the slide is published.
-   */
-  function onIsPublished(localIsPublished) {
-    if (localIsPublished === "all") {
-      setIsPublished(undefined);
-    } else {
-      setIsPublished(localIsPublished === "published");
-    }
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
-  }
-
   // The columns for the table.
   const columns = SlideColumns({
     handleDelete,
@@ -174,12 +138,7 @@ function SlidesList() {
             columns={columns}
             totalItems={listData["hydra:totalItems"]}
             data={listData["hydra:member"]}
-            currentPage={page}
-            handlePageChange={onChangePage}
-            handleCreatedByCurrentUser={onCreatedByFilter}
             handleDelete={handleDelete}
-            handleSearch={onSearch}
-            handleIsPublished={onIsPublished}
             displayPublished
             isLoading={isLoading || isDeleting}
             loadingMessage={loadingMessage}

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import useModal from "../../context/modal-context/modal-context-hook";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
+import ListContext from "../../context/list-context";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
 import ContentBody from "../util/content-body/content-body";
@@ -36,13 +37,16 @@ function PlaylistCampaignList({ location }) {
   const { selected, setSelected } = useModal();
   const context = useContext(UserContext);
 
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    listView: { get: view, set: setView },
+    createdBy: { get: createdBy },
+    isPublished: { get: isPublished },
+  } = useContext(ListContext);
+
   // Local state
-  const [view, setView] = useState("list");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [page, setPage] = useState();
-  const [createdBy, setCreatedBy] = useState("all");
-  const [isPublished, setIsPublished] = useState();
-  const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
     t(`${location}.loading-messages.loading`)
@@ -83,6 +87,10 @@ function PlaylistCampaignList({ location }) {
     }
   }, [context.selectedTenant.get]);
 
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, isPublished, createdBy]);
+
   /** Deletes multiple playlists. */
   useEffect(() => {
     if (isDeleting && selected.length > 0) {
@@ -117,50 +125,6 @@ function PlaylistCampaignList({ location }) {
   function handleDelete() {
     setIsDeleting(true);
     setLoadingMessage(t(`${location}.loading-messages.deleting`));
-  }
-
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Sets created by filter.
-   *
-   * @param {number} createdByInput - The created by filter.
-   */
-  function onCreatedByFilter(createdByInput) {
-    if (createdByInput === "all") {
-      setCreatedBy(createdByInput);
-    } else {
-      setCreatedBy(context.email.get);
-    }
-  }
-
-  /**
-   * Sets is published
-   *
-   * @param {number} localIsPublished - Whether the playlist is published.
-   */
-  function onIsPublished(localIsPublished) {
-    if (localIsPublished === "all") {
-      setIsPublished(undefined);
-    } else {
-      setIsPublished(localIsPublished === "published");
-    }
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
   }
 
   // The columns for the table.
@@ -210,16 +174,11 @@ function PlaylistCampaignList({ location }) {
       {listData && (
         <ContentBody>
           <List
-            displayPublished
-            columns={columns}
-            handlePageChange={onChangePage}
-            handleCreatedByCurrentUser={onCreatedByFilter}
-            totalItems={listData["hydra:totalItems"]}
-            handleSearch={onSearch}
             data={listData["hydra:member"]}
+            columns={columns}
             handleDelete={handleDelete}
-            calendarView={view === "calendar"}
-            handleIsPublished={onIsPublished}
+            totalItems={listData["hydra:totalItems"]}
+            displayPublished
             isLoading={isLoading || isDeleting}
             loadingMessage={loadingMessage}
           >

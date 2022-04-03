@@ -1,6 +1,7 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import List from "../util/list/list";
+import ListContext from "../../context/list-context";
 import UserContext from "../../context/user-context";
 import useModal from "../../context/modal-context/modal-context-hook";
 import { GroupColumns } from "./groups-columns";
@@ -25,13 +26,15 @@ import {
 function GroupsList() {
   const { t } = useTranslation("common", { keyPrefix: "groups-list" });
   const { selected, setSelected } = useModal();
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    createdBy: { get: createdBy },
+  } = useContext(ListContext);
   const context = useContext(UserContext);
 
   // Local state
-  const [createdBy, setCreatedBy] = useState("all");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [page, setPage] = useState();
-  const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
     t("loading-messages.loading-groups")
@@ -61,6 +64,10 @@ function GroupsList() {
       setListData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, createdBy]);
 
   /** Deletes multiple groups. */
   useEffect(() => {
@@ -102,37 +109,6 @@ function GroupsList() {
     setLoadingMessage(t("loading-messages.deleting-group"));
   }
 
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Sets created by filter.
-   *
-   * @param {number} createdByInput - The created by filter.
-   */
-  function onCreatedByFilter(createdByInput) {
-    if (createdByInput === "all") {
-      setCreatedBy(createdByInput);
-    } else {
-      setCreatedBy(context.email.get);
-    }
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
-  }
-
   // The columns for the table.
   const columns = GroupColumns({
     handleDelete,
@@ -161,13 +137,9 @@ function GroupsList() {
             <List
               columns={columns}
               totalItems={listData["hydra:totalItems"]}
-              currentPage={page}
-              handlePageChange={onChangePage}
               data={listData["hydra:member"]}
-              handleCreatedByCurrentUser={onCreatedByFilter}
               handleDelete={handleDelete}
               deleteSuccess={isDeleteSuccess || false}
-              handleSearch={onSearch}
               isLoading={isLoading || isDeleting}
               loadingMessage={loadingMessage}
             />

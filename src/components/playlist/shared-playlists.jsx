@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import List from "../util/list/list";
+import ListContext from "../../context/list-context";
 import ContentBody from "../util/content-body/content-body";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
 import { displayError } from "../util/list/toast-component/display-toast";
@@ -22,12 +23,14 @@ function SharedPlaylists() {
 
   // Context
   const context = useContext(UserContext);
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    listView: { get: view, set: setView },
+    isPublished: { get: isPublished },
+  } = useContext(ListContext);
 
   // Local state
-  const [view, setView] = useState("list");
-  const [page, setPage] = useState();
-  const [isPublished, setIsPublished] = useState();
-  const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
 
   // Get method
@@ -51,43 +54,16 @@ function SharedPlaylists() {
     }
   }, [data]);
 
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, isPublished]);
+
   // If the tenant is changed, data should be refetched
   useEffect(() => {
     if (context.selectedTenant.get) {
       refetch();
     }
   }, [context.selectedTenant.get]);
-
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Sets is published
-   *
-   * @param {number} localIsPublished - Whether the playlist is published.
-   */
-  function onIsPublished(localIsPublished) {
-    if (localIsPublished === "all") {
-      setIsPublished(undefined);
-    } else {
-      setIsPublished(localIsPublished === "published");
-    }
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
-  }
 
   // The columns for the table.
   const columns = getSharedPlaylistColumns();
@@ -129,12 +105,9 @@ function SharedPlaylists() {
           <List
             displayPublished
             columns={columns}
-            handlePageChange={onChangePage}
+            showCreatedByFilter={false}
             totalItems={listData["hydra:totalItems"]}
-            handleSearch={onSearch}
             data={listData["hydra:member"]}
-            calendarView={view === "calendar"}
-            handleIsPublished={onIsPublished}
             isLoading={isLoading}
             loadingMessage={t("loading")}
           >
