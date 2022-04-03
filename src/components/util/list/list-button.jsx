@@ -27,7 +27,7 @@ function ListButton({ apiCall, redirectTo, displayData, modalTitle, dataKey }) {
 
   useEffect(() => {
     if (Array.isArray(displayData)) {
-      setLabel(displayData.length.toString());
+      setLabel(`${displayData.length}`);
     }
     return () => {
       setLabel("");
