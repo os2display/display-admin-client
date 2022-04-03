@@ -33,7 +33,7 @@ import SharedPlaylists from "./components/playlist/shared-playlists";
 import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
-import ModalProvider from "./context/delete-modal-context/delete-modal-provider";
+import ModalProvider from "./context/modal-context/modal-provider";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 

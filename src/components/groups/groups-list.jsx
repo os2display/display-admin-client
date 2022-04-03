@@ -2,12 +2,11 @@ import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import List from "../util/list/list";
 import UserContext from "../../context/user-context";
-import useModal from "../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import { GroupColumns } from "./groups-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
-import InfoModal from "../info-modal/info-modal";
 import {
   displaySuccess,
   displayError,
@@ -30,8 +29,6 @@ function GroupsList() {
 
   // Local state
   const [createdBy, setCreatedBy] = useState("all");
-  const [inScreens, setInScreens] = useState();
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [page, setPage] = useState();
   const [searchText, setSearchText] = useState();
@@ -68,9 +65,6 @@ function GroupsList() {
   /** Deletes multiple groups. */
   useEffect(() => {
     if (isDeleting && selected.length > 0) {
-      if (isDeleteSuccess) {
-        displaySuccess(t("success-messages.group-delete"));
-      }
       const groupToDelete = selected[0];
       setSelected(selected.slice(1));
       const groupToDeleteId = idFromUrl(groupToDelete.id);
@@ -130,18 +124,6 @@ function GroupsList() {
     }
   }
 
-  /** @param {Array} screenData The array of groups. */
-  function openInfoModal(screenData) {
-    setInScreens(screenData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setInScreens();
-  }
-
   /**
    * Handles search.
    *
@@ -154,8 +136,9 @@ function GroupsList() {
   // The columns for the table.
   const columns = GroupColumns({
     handleDelete,
-    listButtonCallback: openInfoModal,
     apiCall: useGetV1ScreenGroupsByIdScreensQuery,
+    infoModalRedirect: "/screen/edit",
+    infoModalTitle: t("info-modal.screens"),
   });
 
   // Error with retrieving list of groups
@@ -191,14 +174,6 @@ function GroupsList() {
           )}
         </>
       </ContentBody>
-      <InfoModal
-        show={showInfoModal}
-        redirectTo="/screen/edit"
-        apiCall={useGetV1ScreenGroupsByIdScreensQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={inScreens}
-        modalTitle={t("info-modal.screens")}
-      />
     </>
   );
 }

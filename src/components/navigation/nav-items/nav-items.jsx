@@ -12,7 +12,7 @@ import {
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../../context/user-context";
-import useModal from "../../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../../context/modal-context/modal-context-hook";
 import RestrictedNavRoute from "./restricted-nav-route";
 import "./nav-items.scss";
 

@@ -7,11 +7,10 @@ import UserContext from "../../context/user-context";
 import ScreenCalendarCell from "../screen-list/screen-calendar-cell";
 import List from "../util/list/list";
 import { ScreenColumns } from "./screen-columns";
-import InfoModal from "../info-modal/info-modal";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
-import useModal from "../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import {
   useGetV1ScreensQuery,
   useDeleteV1ScreensByIdMutation,
@@ -38,8 +37,6 @@ function ScreenList() {
   const [createdBy, setCreatedBy] = useState("all");
   const [isDeleting, setIsDeleting] = useState(false);
   const [page, setPage] = useState();
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
@@ -111,18 +108,6 @@ function ScreenList() {
     setLoadingMessage(t("loading-messages.deleting-screen"));
   }
 
-  /** @param {Array} groupsData The array of groups. */
-  function openInfoModal(groupsData) {
-    setInGroups(groupsData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setInGroups();
-  }
-
   /**
    * Sets next page.
    *
@@ -157,8 +142,9 @@ function ScreenList() {
   // The columns for the table.
   const columns = ScreenColumns({
     handleDelete,
-    listButtonCallback: openInfoModal,
     apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+    infoModalRedirect: "/group/edit",
+    infoModalTitle: t("info-modal.screen-in-groups"),
   });
 
   // Error with retrieving list of screen
@@ -214,14 +200,6 @@ function ScreenList() {
           )}
         </>
       </ContentBody>
-      <InfoModal
-        show={showInfoModal}
-        redirectTo="/group/edit"
-        apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={inGroups}
-        modalTitle={t("info-modal.screen-in-groups")}
-      />
     </>
   );
 }

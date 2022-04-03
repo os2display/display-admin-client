@@ -10,11 +10,18 @@ import Published from "../util/published";
  * Columns for playlists lists.
  *
  * @param {object} props - The props.
- * @param {Function} props.listButtonCallback - The callback for getting data in
  * @param {Function} props.apiCall - The api to call
+ * @param {string} props.infoModalRedirect - The url for redirecting in the info modal.
+ * @param {string} props.infoModalTitle - The info modal title.
+ * @param {string} props.dataKey The data key for mapping the data.
  * @returns {object} The columns for the playlists lists.
  */
-function getPlaylistColumns({ listButtonCallback, apiCall }) {
+function getPlaylistColumns({
+  apiCall,
+  infoModalRedirect,
+  infoModalTitle,
+  dataKey,
+}) {
   const context = useContext(UserContext);
   const { t } = useTranslation("common", {
     keyPrefix: "playlists-columns",
@@ -42,9 +49,11 @@ function getPlaylistColumns({ listButtonCallback, apiCall }) {
       // eslint-disable-next-line react/prop-types
       content: ({ slides }) => (
         <ListButton
-          callback={listButtonCallback}
-          inputData={slides}
           apiCall={apiCall}
+          redirectTo={infoModalRedirect}
+          displayData={slides}
+          modalTitle={infoModalTitle}
+          dataKey={dataKey}
         />
       ),
     },

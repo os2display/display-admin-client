@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import SearchBox from "../search-box/search-box";
-import useModal from "../../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../../context/modal-context/modal-context-hook";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import ListLoading from "../loading-component/list-loading";
@@ -230,6 +230,7 @@ function List({
                 disabled={disableDeleteButton}
                 onClick={() =>
                   setModal({
+                    delete: true,
                     accept: handleDelete,
                   })
                 }

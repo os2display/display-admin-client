@@ -8,11 +8,12 @@ import SelectColumnHoc from "../util/select-column-hoc";
  * Columns for group lists.
  *
  * @param {object} props - The props.
- * @param {Function} props.listButtonCallback - The callback for getting data in
  * @param {Function} props.apiCall - The api to call
+ * @param {string} props.infoModalRedirect - The url for redirecting in the info modal.
+ * @param {string} props.infoModalTitle - The info modal title.
  * @returns {object} The columns for the group lists.
  */
-function getGroupColumns({ listButtonCallback, apiCall }) {
+function getGroupColumns({ apiCall, infoModalRedirect, infoModalTitle }) {
   const { t } = useTranslation("common", { keyPrefix: "groups-columns" });
 
   const columns = [
@@ -20,8 +21,9 @@ function getGroupColumns({ listButtonCallback, apiCall }) {
       // eslint-disable-next-line react/prop-types
       content: ({ screens }) => (
         <ListButton
-          callback={listButtonCallback}
-          inputData={screens}
+          redirectTo={infoModalRedirect}
+          displayData={screens}
+          modalTitle={infoModalTitle}
           apiCall={apiCall}
         />
       ),

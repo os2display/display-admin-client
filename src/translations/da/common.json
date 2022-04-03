@@ -470,7 +470,6 @@
       "on-groups": "Tilknyttede grupper",
       "location": "Lokation"
     },
-    "remove-from-list": "Fjern fra liste",
     "edit-screens-help-text": "Hvis du vil redigere en skærm, åbnes dette i en ny fane.",
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
@@ -545,7 +544,10 @@
   },
   "select-groups-table": {
     "edit-groups-help-text": "Hvis du vil redigere en gruppe, åbnes dette i en ny fane.",
-    "remove-from-list": "Fjern fra liste"
+    "remove-from-list": "Fjern fra liste",
+    "info-modal": {
+      "screens": "Gruppen indeholder følgende skærme"
+    }
   },
   "image-uploader": {
     "validation-text": "Dette felt skal udfyldes",

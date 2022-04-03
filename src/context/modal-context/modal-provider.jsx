@@ -2,9 +2,10 @@ import React, { useCallback, useState } from "react";
 import { PropTypes } from "prop-types";
 import DeleteModalContext from "./modal-context";
 import DeleteModal from "./delete-modal";
+import InfoModal from "./info-modal";
 
 /**
- * The modal provider, allows to open delete modals
+ * The modal provider, allows to open delete/info modals
  *
  * @param {object} props - The props.
  * @param {Array} props.children The children being passed from parent
@@ -25,12 +26,22 @@ function ModalProvider({ children }) {
       {...children}
     >
       {children}
-      {modal && (
+      {modal?.delete && (
         <DeleteModal
           onAccept={modal.accept}
           unSetModal={unSetModal}
           selected={selected}
           setSelected={setSelected}
+        />
+      )}
+      {modal?.info && (
+        <InfoModal
+          apiCall={modal.apiCall}
+          displayData={modal.displayData}
+          modalTitle={modal.modalTitle}
+          dataKey={modal.dataKey}
+          redirectTo={modal.redirectTo}
+          unSetModal={unSetModal}
         />
       )}
     </DeleteModalContext.Provider>

@@ -9,7 +9,7 @@ import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
 import Pagination from "../util/paginate/pagination";
 import ImageList from "./image-list";
-import useModal from "../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import {
   displayError,
   displaySuccess,
@@ -183,6 +183,7 @@ function MediaList({ fromModal }) {
                   disabled={!selected.length > 0}
                   onClick={() =>
                     setModal({
+                      delete: true,
                       accept: handleDelete,
                     })
                   }

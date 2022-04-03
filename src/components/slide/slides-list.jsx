@@ -2,11 +2,10 @@ import { React, useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
-import InfoModal from "../info-modal/info-modal";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import useModal from "../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import { SlideColumns } from "./slides-columns";
 import {
   displayError,
@@ -30,11 +29,9 @@ function SlidesList() {
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [onPlaylists, setOnPlaylists] = useState();
   const [page, setPage] = useState();
   const [createdBy, setCreatedBy] = useState("all");
   const [isPublished, setIsPublished] = useState();
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
@@ -105,18 +102,6 @@ function SlidesList() {
     setLoadingMessage(t("loading-messages.deleting-slide"));
   }
 
-  /** @param {Array} playlistData The array of playlists. */
-  function openInfoModal(playlistData) {
-    setOnPlaylists(playlistData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setOnPlaylists();
-  }
-
   /**
    * Sets next page.
    *
@@ -164,8 +149,9 @@ function SlidesList() {
   // The columns for the table.
   const columns = SlideColumns({
     handleDelete,
-    listButtonCallback: openInfoModal,
     apiCall: useGetV1PlaylistsByIdQuery,
+    infoModalRedirect: "/playlist/edit",
+    infoModalTitle: t("info-modal.slide-on-playlists"),
   });
 
   // Error with retrieving list of slides
@@ -200,14 +186,6 @@ function SlidesList() {
           />
         </ContentBody>
       )}
-      <InfoModal
-        show={showInfoModal}
-        redirectTo="/playlist/edit"
-        apiCall={useGetV1PlaylistsByIdQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={onPlaylists}
-        modalTitle={t("info-modal.slide-on-playlists")}
-      />
     </>
   );
 }

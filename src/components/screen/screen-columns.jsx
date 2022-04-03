@@ -10,12 +10,18 @@ import idFromUrl from "../util/helpers/id-from-url";
  * Columns for screens lists.
  *
  * @param {object} props - The props.
- * @param {Function} props.listButtonCallback - The callback for getting data in
- *   the list button
  * @param {Function} props.apiCall - The api to call
+ * @param {string} props.infoModalRedirect - The url for redirecting in the info modal.
+ * @param {string} props.infoModalTitle - The info modal title.
+ * @param {string} props.dataKey The data key for mapping the data.
  * @returns {object} The columns for the screens lists.
  */
-function getScreenColumns({ listButtonCallback, apiCall }) {
+function getScreenColumns({
+  apiCall,
+  infoModalRedirect,
+  infoModalTitle,
+  dataKey,
+}) {
   const { t } = useTranslation("common", { keyPrefix: "screen-list" });
 
   const columns = [
@@ -23,9 +29,11 @@ function getScreenColumns({ listButtonCallback, apiCall }) {
       // eslint-disable-next-line react/prop-types
       content: ({ inScreenGroups }) => (
         <ListButton
-          callback={listButtonCallback}
-          inputData={inScreenGroups}
           apiCall={apiCall}
+          redirectTo={infoModalRedirect}
+          displayData={inScreenGroups}
+          modalTitle={infoModalTitle}
+          dataKey={dataKey}
         />
       ),
       key: "groups",

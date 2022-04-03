@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-bootstrap";
 import selectedHelper from "../util/helpers/selectedHelper";
-import useModal from "../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import ListLoading from "../util/loading-component/list-loading";
 
 /**

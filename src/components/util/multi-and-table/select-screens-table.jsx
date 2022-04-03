@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import InfoModal from "../../info-modal/info-modal";
 import Table from "../table/table";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
 import { SelectScreenColumns } from "../../screen/screen-columns";
@@ -23,9 +22,7 @@ import {
 function SelectScreensTable({ handleChange, name, campaignId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState("");
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: screens } = useGetV1ScreensQuery({
     title: searchText,
     itemsPerPage: 100,
@@ -52,18 +49,6 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
     handleChange({
       target: { id, value: value.map((item) => item["@id"]) },
     });
-  }
-
-  /** @param {Array} playlistArray The array of playlists. */
-  function openInfoModal(playlistArray) {
-    setInGroups(playlistArray);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setInGroups();
   }
 
   /**
@@ -100,9 +85,10 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   // The columns for the table.
   const columns = SelectScreenColumns({
     handleDelete: removeFromList,
-    listButtonCallback: openInfoModal,
     apiCall: useGetV1ScreensByIdScreenGroupsQuery,
     editTarget: "screen",
+    infoModalRedirect: "/group/edit",
+    infoModalTitle: t("select-screens-table.info-modal.screen-in-groups"),
   });
 
   return (
@@ -122,14 +108,6 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
               <small>{t("select-screens-table.edit-screens-help-text")}</small>
             </>
           )}
-          <InfoModal
-            redirectTo="/group/edit"
-            show={showInfoModal}
-            apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-            onClose={onCloseInfoModal}
-            dataStructureToDisplay={inGroups}
-            modalTitle={t("select-screens-table.info-modal.screen-in-groups")}
-          />
         </>
       )}
     </>

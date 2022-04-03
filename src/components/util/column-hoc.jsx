@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import CheckboxForList from "./list/checkbox-for-list";
 import selectedHelper from "./helpers/selectedHelper";
-import useModal from "../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import LinkForList from "./list/link-for-list";
 /**
  * Hoc that wraps arrays in checkbox and delete button
@@ -32,6 +32,7 @@ function ColumnHoc(columns) {
     function openDeleteModal(item) {
       setSelected([{ id: item["@id"], title: item.title }]);
       setModal({
+        delete: true,
         accept: handleDelete,
       });
     }

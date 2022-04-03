@@ -4,11 +4,10 @@ import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import useModal from "../../context/delete-modal-context/delete-modal-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import List from "../util/list/list";
-import InfoModal from "../info-modal/info-modal";
 import idFromUrl from "../util/helpers/id-from-url";
 import ContentBody from "../util/content-body/content-body";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
@@ -31,21 +30,19 @@ import {
  * @returns {object} The shared list, shared by playlists and campaigns.
  */
 function PlaylistCampaignList({ location }) {
-  const { selected, setSelected } = useModal();
   const { t } = useTranslation("common", {
     keyPrefix: "playlist-campaign-list",
   });
+  const { selected, setSelected } = useModal();
   const context = useContext(UserContext);
 
   // Local state
   const [view, setView] = useState("list");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
   const [createdBy, setCreatedBy] = useState("all");
   const [isPublished, setIsPublished] = useState();
   const [searchText, setSearchText] = useState();
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
     t(`${location}.loading-messages.loading`)
@@ -122,17 +119,6 @@ function PlaylistCampaignList({ location }) {
     setLoadingMessage(t(`${location}.loading-messages.deleting`));
   }
 
-  /** @param {Array} slideData The array of playlists. */
-  function openInfoModal(slideData) {
-    setOnSlides(slideData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-  }
-
   /**
    * Sets next page.
    *
@@ -180,8 +166,10 @@ function PlaylistCampaignList({ location }) {
   // The columns for the table.
   const columns = PlaylistColumns({
     handleDelete,
-    listButtonCallback: openInfoModal,
     apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    infoModalRedirect: "/slide/edit",
+    infoModalTitle: t(`${location}.info-modal.slides`),
+    dataKey: "slide",
   });
 
   // Error with retrieving list of playlists
@@ -241,15 +229,6 @@ function PlaylistCampaignList({ location }) {
           </List>
         </ContentBody>
       )}
-      <InfoModal
-        show={showInfoModal}
-        redirectTo="/slide/edit"
-        apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={onSlides}
-        dataKey="slide"
-        modalTitle={t(`${location}.info-modal.slides`)}
-      />
     </>
   );
 }
