@@ -55,7 +55,7 @@ describe("Playlist pages work", () => {
         cy.get("#slides-section")
           .get("tbody")
           .find("tr td")
-          .eq(9)
+          .eq(8)
           .invoke("text")
           .should("eq", firstElementText);
       });

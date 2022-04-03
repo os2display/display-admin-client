@@ -49,7 +49,7 @@ describe("Campaign pages work", () => {
         cy.get("#slides-section")
           .get("tbody")
           .find("tr td")
-          .eq(4)
+          .eq(8)
           .invoke("text")
           .should("eq", firstElementText);
       });
