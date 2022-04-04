@@ -5,6 +5,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import useModal from "../../context/modal-context/modal-context-hook";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
+import ListContext from "../../context/list-context";
 import ContentBody from "../util/content-body/content-body";
 import getThemesColumns from "./themes-columns";
 import {
@@ -28,13 +29,16 @@ function ThemesList() {
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [createdBy, setCreatedBy] = useState("all");
-  const [page, setPage] = useState();
-  const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
     t("loading-messages.loading-themes")
   );
+
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    createdBy: { get: createdBy },
+  } = useContext(ListContext);
 
   // Delete call
   const [DeleteV1Themes, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
@@ -87,6 +91,10 @@ function ThemesList() {
     }
   }, [context.selectedTenant.get]);
 
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, createdBy]);
+
   // Display error on unsuccessful deletion
   useEffect(() => {
     if (isDeleteError) {
@@ -99,37 +107,6 @@ function ThemesList() {
   function handleDelete() {
     setIsDeleting(true);
     setLoadingMessage(t("loading-messages.deleting-theme"));
-  }
-
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Sets created by filter.
-   *
-   * @param {number} createdByInput - The created by filter.
-   */
-  function onCreatedByFilter(createdByInput) {
-    if (createdByInput === "all") {
-      setCreatedBy(createdByInput);
-    } else {
-      setCreatedBy(context.email.get);
-    }
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
   }
 
   // The columns for the table.
@@ -161,11 +138,7 @@ function ThemesList() {
                 columns={columns}
                 totalItems={listData["hydra:totalItems"]}
                 data={listData["hydra:member"]}
-                currentPage={page}
-                handleCreatedByCurrentUser={onCreatedByFilter}
-                handlePageChange={onChangePage}
                 handleDelete={handleDelete}
-                handleSearch={onSearch}
                 isLoading={isLoading || isDeleting}
                 loadingMessage={loadingMessage}
               />

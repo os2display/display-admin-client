@@ -9,7 +9,7 @@ describe("themes list tests", () => {
     }).as("themesData");
     cy.visit("/themes/list");
     cy.get("#login").click();
-    cy.wait(["@themesData", "@themesData", "@token"]);
+    cy.wait(["@themesData", "@token"]);
   });
 
   it("It loads themes list", () => {

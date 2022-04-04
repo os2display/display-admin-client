@@ -10,6 +10,7 @@ import { ScreenColumns } from "./screen-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
+import ListContext from "../../context/list-context";
 import useModal from "../../context/modal-context/modal-context-hook";
 import {
   useGetV1ScreensQuery,
@@ -30,14 +31,16 @@ import "./screen-list.scss";
 function ScreenList() {
   const { t } = useTranslation("common", { keyPrefix: "screen-list" });
   const context = useContext(UserContext);
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    listView: { get: view, set: setView },
+    createdBy: { get: createdBy },
+  } = useContext(ListContext);
   const { selected, setSelected } = useModal();
 
   // Local state
-  const [view, setView] = useState("list");
-  const [createdBy, setCreatedBy] = useState("all");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [page, setPage] = useState();
-  const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
     t("loading-messages.loading-screens")
@@ -67,6 +70,10 @@ function ScreenList() {
       setListData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, createdBy]);
 
   // If the tenant is changed, data should be refetched
   useEffect(() => {
@@ -106,37 +113,6 @@ function ScreenList() {
   function handleDelete() {
     setIsDeleting(true);
     setLoadingMessage(t("loading-messages.deleting-screen"));
-  }
-
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Sets created by filter.
-   *
-   * @param {number} createdByInput - The created by filter.
-   */
-  function onCreatedByFilter(createdByInput) {
-    if (createdByInput === "all") {
-      setCreatedBy(createdByInput);
-    } else {
-      setCreatedBy(context.email.get);
-    }
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
   }
 
   // The columns for the table.
@@ -186,14 +162,10 @@ function ScreenList() {
               columns={columns}
               totalItems={listData["hydra:totalItems"]}
               data={listData["hydra:member"]}
-              currentPage={page}
-              handlePageChange={onChangePage}
-              handleCreatedByCurrentUser={onCreatedByFilter}
-              calendarView={view === "calendar"}
+              calendarViewPossible
               handleDelete={handleDelete}
               isLoading={isLoading || isDeleting}
               loadingMessage={loadingMessage}
-              handleSearch={onSearch}
             >
               <ScreenCalendarCell />
             </List>

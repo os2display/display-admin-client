@@ -1,9 +1,10 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
+import UserContext from "../../../context/user-context";
 import SearchBox from "../search-box/search-box";
 import useModal from "../../../context/modal-context/modal-context-hook";
 import Pagination from "../paginate/pagination";
@@ -12,20 +13,17 @@ import ListLoading from "../loading-component/list-loading";
 import CalendarList from "../../screen-list/calendar-list";
 import localStorageKeys from "../local-storage-keys";
 import FormCheckbox from "../forms/form-checkbox";
+import ListContext from "../../../context/list-context";
 
 /**
  * @param {object} props - The props.
  * @param {Array} props.data - The data for the list.
  * @param {Array} props.columns - The columns for the table.
- * @param {boolean} props.calendarView - If the list should display a gantt chart
- * @param {Function} props.handlePageChange - For changing the page
  * @param {number} props.totalItems - The total items, for pagination.
  * @param {Function} props.handleDelete - For deleting elements in the list.
  *   element with success.
- * @param {Function} props.handleSearch - Callback for seach.
  * @param {boolean} props.displayPublished - Whether to display the published filter
- * @param {Function} props.handleIsPublished - Callback for published filter.
- * @param {Function} props.handleCreatedByCurrentUser - Callback for created by filter.
+ * @param {Function} props.showCreatedByFilter - Callback for created by filter.
  * @param {Array} props.children The children being passed from parent
  * @returns {object} The List.
  */
@@ -33,17 +31,23 @@ function List({
   data,
   columns,
   displayPublished,
-  calendarView,
-  handlePageChange,
-  handleSearch,
   totalItems,
   handleDelete,
-  handleIsPublished,
-  handleCreatedByCurrentUser,
+  showCreatedByFilter,
   children,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
+  const {
+    searchText: { set: setSearchText },
+    page: { set: setPage },
+    createdBy: { set: setCreatedBy },
+    listView: { get: view },
+    isPublished: { set: setIsPublished },
+  } = useContext(ListContext);
+  const {
+    email: { get: email },
+  } = useContext(UserContext);
   const { setModal, setSelected, selected } = useModal();
 
   // Page params
@@ -52,7 +56,7 @@ function List({
   const pageParams = new URLSearchParams(search).get("page");
 
   let createdByParams;
-  if (handleCreatedByCurrentUser) {
+  if (showCreatedByFilter) {
     createdByParams = new URLSearchParams(search).get("createdBy");
   }
 
@@ -82,7 +86,7 @@ function List({
     params.append("page", page);
 
     // createdBy
-    if (handleCreatedByCurrentUser) {
+    if (showCreatedByFilter) {
       const createdBy = createdByParams || "all";
       params.delete("createdBy");
       params.append("createdBy", createdBy);
@@ -156,30 +160,38 @@ function List({
   /** Sets page from url using callback */
   useEffect(() => {
     if (pageParams) {
-      handlePageChange(parseInt(pageParams, 10));
+      setPage(parseInt(pageParams, 10));
     }
   }, [pageParams]);
 
   /** Sets page from url using callback */
   useEffect(() => {
     if (createdByParams) {
-      handleCreatedByCurrentUser(createdByParams);
+      if (createdByParams === "all") {
+        setCreatedBy(createdByParams);
+      } else {
+        setCreatedBy(email);
+      }
     }
   }, [createdByParams]);
 
   /** Sets search from url using callback */
   useEffect(() => {
     if (searchParams) {
-      handleSearch(searchParams);
+      setSearchText(searchParams);
     } else {
-      handleSearch("");
+      setSearchText("");
     }
   }, [searchParams]);
 
   /** Sets published filter from url using callback */
   useEffect(() => {
     if (publishedParams) {
-      handleIsPublished(publishedParams);
+      if (publishedParams === "all") {
+        setIsPublished(undefined);
+      } else {
+        setIsPublished(publishedParams === "published");
+      }
     }
   }, [publishedParams]);
 
@@ -208,7 +220,7 @@ function List({
               </>
             </Col>
           )}
-          {createdByParams && handleCreatedByCurrentUser && (
+          {createdByParams && showCreatedByFilter && (
             <Col md="auto">
               <>
                 <FormCheckbox
@@ -254,8 +266,10 @@ function List({
       </Row>
       <Row />
       <>
-        {!calendarView && <Table data={data} columns={columns} />}
-        {calendarView && <CalendarList data={data}>{children}</CalendarList>}
+        {view === "list" && <Table data={data} columns={columns} />}
+        {view === "calendar" && (
+          <CalendarList data={data}>{children}</CalendarList>
+        )}
       </>
       <Pagination
         itemsCount={totalItems}
@@ -268,9 +282,7 @@ function List({
 }
 
 List.defaultProps = {
-  calendarView: false,
-  handleCreatedByCurrentUser: null,
-  handleIsPublished: () => {},
+  showCreatedByFilter: true,
   handleDelete: null,
   displayPublished: false,
   children: <></>,
@@ -281,14 +293,10 @@ List.propTypes = {
     PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func,
-  calendarView: PropTypes.bool,
   totalItems: PropTypes.number.isRequired,
-  handleSearch: PropTypes.func.isRequired,
   displayPublished: PropTypes.bool,
-  handleIsPublished: PropTypes.func,
-  handleCreatedByCurrentUser: PropTypes.func,
+  showCreatedByFilter: PropTypes.func,
   children: PropTypes.node,
 };
 

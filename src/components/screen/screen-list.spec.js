@@ -12,7 +12,7 @@ describe("Screen list loads", () => {
     }).as("screens");
     cy.visit("/screen/list");
     cy.get("#login").click();
-    cy.wait(["@screens", "@screens", "@groups", "@groups", "@token"]);
+    cy.wait(["@screens", "@groups", "@groups", "@token"]);
   });
 
   it("It loads screens list", () => {

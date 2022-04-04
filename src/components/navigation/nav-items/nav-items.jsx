@@ -3,7 +3,6 @@ import { Nav } from "react-bootstrap";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   faDesktop,
   faStream,
@@ -11,6 +10,7 @@ import {
   faPlusCircle,
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
+import ListContext from "../../../context/list-context";
 import UserContext from "../../../context/user-context";
 import useModal from "../../../context/modal-context/modal-context-hook";
 import RestrictedNavRoute from "./restricted-nav-route";
@@ -25,10 +25,24 @@ function NavItems() {
   const { t } = useTranslation("common");
   const { setSelected } = useModal();
   const context = useContext(UserContext);
+  const { page, createdBy, listView, isPublished } = useContext(ListContext);
   const { pathname } = useLocation();
 
+  // Reset list context and selected on page change.
   useEffect(() => {
     setSelected([]);
+    if (page) {
+      page.set(1);
+    }
+    if (createdBy) {
+      createdBy.set("all");
+    }
+    if (listView) {
+      listView.set("list");
+    }
+    if (isPublished) {
+      isPublished.set(undefined);
+    }
   }, [pathname]);
 
   return (

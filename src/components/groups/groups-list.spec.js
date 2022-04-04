@@ -10,7 +10,7 @@ describe("Groups list tests", () => {
 
     cy.visit("/group/list");
     cy.get("#login").click();
-    cy.wait(["@groups", "@groups"]);
+    cy.wait(["@groups"]);
   });
 
   it("It loads groups list", () => {

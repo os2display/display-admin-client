@@ -62,7 +62,7 @@ describe("Info modal tests", () => {
     cy.wait(["@slides", "@token"]);
 
     cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(1).click();
+    cy.get("tbody").find("tr td .list-button").eq(0).click();
     cy.wait(["@playlists"]);
     cy.get("#info-modal").should("exist");
 
@@ -85,10 +85,10 @@ describe("Info modal tests", () => {
     }).as("screens");
     cy.visit("/screen/list");
     cy.get("#login").click();
-    cy.wait(["@screens", "@screens", "@groups", "@groups", "@token"]);
+    cy.wait(["@screens", "@groups", "@groups", "@token"]);
 
     cy.get("#info-modal").should("not.exist");
-    cy.get("tbody").find("tr td .list-button").eq(1).click();
+    cy.get("tbody").find("tr td .list-button").eq(0).click();
     cy.get("#info-modal").should("exist");
 
     cy.get("#info-modal")
@@ -113,7 +113,7 @@ describe("Info modal tests", () => {
       fixture: "info-modal/screen.json",
     }).as("screen");
 
-    cy.wait(["@groups", "@groups", "@screen", "@screen", "@screen", "@screen"]);
+    cy.wait(["@groups", "@screen", "@screen", "@screen", "@screen"]);
 
     cy.intercept("GET", "**/screens*", {
       fixture: "info-modal/screen.json",

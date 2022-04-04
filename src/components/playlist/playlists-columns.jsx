@@ -32,7 +32,11 @@ function getPlaylistColumns({
       path: "published",
       label: t("published"),
       // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
+      content: ({ publishedFrom, publishedTo, published }) => (
+        <Published
+          published={published || { from: publishedFrom, to: publishedTo }}
+        />
+      ),
     },
     {
       key: "slides",
@@ -47,11 +51,11 @@ function getPlaylistColumns({
         );
       },
       // eslint-disable-next-line react/prop-types
-      content: ({ slides }) => (
+      content: ({ slides, playlistSlides }) => (
         <ListButton
           apiCall={apiCall}
           redirectTo={infoModalRedirect}
-          displayData={slides}
+          displayData={slides || playlistSlides}
           modalTitle={infoModalTitle}
           dataKey={dataKey}
         />
