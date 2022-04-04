@@ -1,8 +1,6 @@
-import { React, useState, useEffect, useContext } from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import UserContext from "../../context/user-context";
 import getPlaylistColumns from "../playlist/playlists-columns";
 import InfoModal from "../info-modal/info-modal";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
@@ -10,8 +8,8 @@ import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
 import FormCheckbox from "../util/forms/form-checkbox";
 import {
   useGetV1PlaylistsByIdSlidesQuery,
+  useGetV1PlaylistsQuery,
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
-  api,
 } from "../../redux/api/api.generated";
 
 /**
@@ -26,18 +24,12 @@ import {
  */
 function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
-  const dispatch = useDispatch();
 
   const [onSlides, setOnSlides] = useState();
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
   const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
-  const [playlists, setPlaylists] = useState([]);
   const [showInfoModal, setShowInfoModal] = useState(false);
-
-  // Context
-  const context = useContext(UserContext);
-
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
@@ -46,28 +38,15 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       itemsPerPage: 100,
     });
 
-  // Fetch playlist data
-  // Either its all the playlists withing the tenants, or the shared with me playlists
-  useEffect(() => {
-    const callParamters = {
-      isCampaign: false,
-      title: searchText,
-      itemsPerPage: 100,
-      orderBy: "createdAt",
-      order: "asc",
-    };
-    if (onlySharedPlaylists) {
-      callParamters["tenants.tenantKey"] =
-        context.selectedTenant?.get.tenantKey;
-    }
-    dispatch(api.endpoints.getV1Playlists.initiate(callParamters)).then(
-      (result) => {
-        if (result.data) {
-          setPlaylists(result.data);
-        }
-      }
-    );
-  }, [onlySharedPlaylists]);
+  // Get method
+  const { data } = useGetV1PlaylistsQuery({
+    isCampaign: false,
+    title: searchText,
+    itemsPerPage: 100,
+    orderBy: "createdAt",
+    order: "asc",
+    sharedWithMe: onlySharedPlaylists,
+  });
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -79,6 +58,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       );
     }
   }, [selectedPlaylistsByRegion]);
+  /** Set loaded data into form state. */
 
   /**
    * Fetches data for the multi component
@@ -143,7 +123,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
   return (
     <>
-      {playlists && playlists["hydra:member"] && (
+      {data && data["hydra:member"] && (
         <>
           <FormCheckbox
             label={t("playlist-drag-and-drop.show-only-shared")}
@@ -159,7 +139,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
               name={name}
               handlePlaylistSelection={handleAdd}
               selected={selectedData}
-              data={playlists["hydra:member"]}
+              data={data["hydra:member"]}
             />
           </div>
           {selectedData.length > 0 && (

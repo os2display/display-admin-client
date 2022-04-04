@@ -215,7 +215,7 @@ export const api = createApi({
           published: queryArg.published,
           isCampaign: queryArg.isCampaign,
           order: queryArg.order,
-          "tenants.tenantKey": queryArg["tenants.tenantKey"],
+          sharedWithMe: queryArg.sharedWithMe,
         },
       }),
     }),
@@ -492,7 +492,11 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          sharedWithMe: queryArg.sharedWithMe,
+        },
       }),
     }),
     putPlaylistScreenRegionItem: build.mutation<
@@ -911,9 +915,8 @@ export type GetV1PlaylistsApiArg = {
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
   };
-  "tenants.tenantKey"?: {
-    ""?: string[];
-  };
+  /** If true only entities that are shared with me will be shown */
+  sharedWithMe?: boolean;
 };
 export type PostV1PlaylistsApiResponse = unknown;
 export type PostV1PlaylistsApiArg = {
@@ -1123,6 +1126,8 @@ export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  /** If true only entities that are shared with me will be shown */
+  sharedWithMe?: boolean;
 };
 export type PutPlaylistScreenRegionItemApiResponse = unknown;
 export type PutPlaylistScreenRegionItemApiArg = {

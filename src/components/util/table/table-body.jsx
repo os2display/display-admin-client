@@ -34,7 +34,8 @@ function TableBody({ columns, selectedRows, data }) {
    */
   function isRowSelected(item) {
     let classes = "";
-    if (selectedRows.find((x) => x.id === item.id)) classes += "bg-light";
+    if (selectedRows.find((x) => x["@id"] === item["@id"]))
+      classes += "bg-light";
     return classes;
   }
 

@@ -341,7 +341,15 @@
       "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes:"
     }
   },
+  "playlists-columns": {
+    "name": "Navn",
+    "created-by": "Oprettet af",
+    "delete-button": "Slet",
+    "published": "Udgivet",
+    "number-of-slides": "Slides tilknyttede"
+  },
   "playlist-campaign-manager": {
+
     "campaign": {
       "edit-header": "Rediger følgende kampagne",
       "create-header": "Opret ny kampagne",
@@ -565,6 +573,7 @@
     "image-license-placeholder": "Udfyld billedets licens"
   },
   "drag-and-drop-table": {
+    "not-available": "Ikke tilgængeligt",
     "table-header-for-indicator": "Drag and drop indikator",
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
