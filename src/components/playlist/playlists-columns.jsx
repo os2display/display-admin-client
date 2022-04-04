@@ -32,7 +32,9 @@ function getPlaylistColumns({
       path: "published",
       label: t("published"),
       // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
+      content: ({ publishedFrom, publishedTo }) => (
+        <Published published={{ from: publishedFrom, to: publishedTo }} />
+      ),
     },
     {
       key: "slides",
