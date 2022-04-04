@@ -15,6 +15,6 @@ describe("Table body loads", () => {
 
   it("It loads", () => {
     cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("have.length", 60);
+    cy.get("tbody").find("tr td").should("have.length", 50);
   });
 });

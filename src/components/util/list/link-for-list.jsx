@@ -19,7 +19,7 @@ function LinkForList({ id, param, targetBlank }) {
 
   return (
     <Link
-      className="btn btn-primary"
+      className="btn btn-primary me-2"
       id="edit_button"
       target={targetBlank ? "_blank" : ""}
       to={`/${param}/${newId}`}
@@ -29,10 +29,14 @@ function LinkForList({ id, param, targetBlank }) {
   );
 }
 
+LinkForList.defaultProps = {
+  targetBlank: false,
+};
+
 LinkForList.propTypes = {
   id: PropTypes.string.isRequired,
   param: PropTypes.string.isRequired,
-  targetBlank: PropTypes.bool.isRequired,
+  targetBlank: PropTypes.bool,
 };
 
 export default LinkForList;

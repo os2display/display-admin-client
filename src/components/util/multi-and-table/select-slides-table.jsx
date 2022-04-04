@@ -1,9 +1,8 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import getSlidesColumns from "../../slide/slides-columns";
+import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
-import InfoModal from "../../info-modal/info-modal";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import {
   useGetV1SlidesQuery,
@@ -23,9 +22,7 @@ import {
 function SelectSlidesTable({ handleChange, name, slideId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const [onPlaylists, setOnPlaylists] = useState();
   const [searchText, setSearchText] = useState("");
-  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const { data: slides } = useGetV1SlidesQuery({
     title: searchText,
@@ -60,18 +57,6 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     });
   }
 
-  /** @param {Array} playlistArray The array of playlists. */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setOnPlaylists();
-  }
-
   /**
    * Fetches data for the multi component
    *
@@ -91,7 +76,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -103,10 +88,12 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     handleChange({ target });
   }
   /* eslint-disable-next-line no-unused-vars */
-  const columns = getSlidesColumns({
-    editNewTab: true,
+  const columns = SelectSlideColumns({
     handleDelete: removeFromList,
-    listButtonCallback: openInfoModal,
+    apiCall: useGetV1PlaylistsByIdQuery,
+    editTarget: "slide",
+    infoModalRedirect: "/playlist/edit",
+    infoModalTitle: t("select-slides-table.info-modal.slide-on-playlists"),
   });
 
   return (
@@ -131,14 +118,6 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
               <small>{t("select-slides-table.edit-slides-help-text")}</small>
             </>
           )}
-          <InfoModal
-            show={showInfoModal}
-            redirectTo="/playlist/edit"
-            apiCall={useGetV1PlaylistsByIdQuery}
-            onClose={onCloseInfoModal}
-            dataStructureToDisplay={onPlaylists}
-            modalTitle={t("select-slides-table.info-modal.slide-on-playlists")}
-          />
         </>
       )}
     </>

@@ -6,15 +6,11 @@ import { useTranslation } from "react-i18next";
 import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
 import List from "../util/list/list";
-import InfoModal from "../info-modal/info-modal";
 import ContentBody from "../util/content-body/content-body";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
 import { displayError } from "../util/list/toast-component/display-toast";
 import getSharedPlaylistColumns from "./shared-playlists-column";
-import {
-  useGetV1PlaylistsByIdSlidesQuery,
-  useGetV1PlaylistsQuery,
-} from "../../redux/api/api.generated";
+import { useGetV1PlaylistsQuery } from "../../redux/api/api.generated";
 
 /**
  * The list component for shared playlists.
@@ -29,11 +25,9 @@ function SharedPlaylists() {
 
   // Local state
   const [view, setView] = useState("list");
-  const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
   const [isPublished, setIsPublished] = useState();
   const [searchText, setSearchText] = useState();
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
 
   // Get method
@@ -63,17 +57,6 @@ function SharedPlaylists() {
       refetch();
     }
   }, [context.selectedTenant.get]);
-
-  /** @param {Array} slideData The array of playlists. */
-  function openInfoModal(slideData) {
-    setOnSlides(slideData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-  }
 
   /**
    * Sets next page.
@@ -107,9 +90,7 @@ function SharedPlaylists() {
   }
 
   // The columns for the table.
-  const columns = getSharedPlaylistColumns({
-    listButtonCallback: openInfoModal,
-  });
+  const columns = getSharedPlaylistColumns();
 
   // Error with retrieving list of playlists
   useEffect(() => {
@@ -161,15 +142,6 @@ function SharedPlaylists() {
           </List>
         </ContentBody>
       )}
-      <InfoModal
-        show={showInfoModal}
-        redirectTo="/slide/edit"
-        apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={onSlides}
-        dataKey="slide"
-        modalTitle={t("info-modal.slides")}
-      />
     </>
   );
 }

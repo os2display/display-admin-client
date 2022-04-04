@@ -2,8 +2,11 @@ import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
-import getGroupColumns from "../../groups/groups-columns";
-import { useGetV1ScreenGroupsQuery } from "../../../redux/api/api.generated";
+import { SelectGroupColumns } from "../../groups/groups-columns";
+import {
+  useGetV1ScreenGroupsQuery,
+  useGetV1ScreenGroupsByIdScreensQuery,
+} from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 
 /**
@@ -16,7 +19,7 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
  * @returns {object} Select groups table.
  */
 function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "select-groups-table" });
   const [selectedData, setSelectedData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const { data: groups } = useGetV1ScreenGroupsQuery({
@@ -69,7 +72,7 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -80,10 +83,12 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
     };
     handleChange({ target });
   }
-
-  const columns = getGroupColumns({
-    editNewTab: true,
+  const columns = SelectGroupColumns({
     handleDelete: removeFromList,
+    apiCall: useGetV1ScreenGroupsByIdScreensQuery,
+    editTarget: "group",
+    infoModalRedirect: "/screen/edit",
+    infoModalTitle: t("info-modal.screens"),
   });
 
   return (
@@ -100,7 +105,7 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
           {selectedData.length > 0 && (
             <>
               <Table columns={columns} data={selectedData} />
-              <small>{t("select-groups-table.edit-groups-help-text")}</small>
+              <small>{t("edit-groups-help-text")}</small>
             </>
           )}
         </>

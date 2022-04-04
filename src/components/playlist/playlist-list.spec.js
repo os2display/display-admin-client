@@ -55,7 +55,7 @@ describe("Playlists list tests", () => {
   });
 
   it("The correct amount of column headers loaded (playlist list)", () => {
-    cy.get("thead").find("th").should("have.length", 7);
+    cy.get("thead").find("th").should("have.length", 6);
   });
 
   it("It removes all selected", () => {
@@ -89,12 +89,12 @@ describe("Playlists list tests", () => {
       );
     cy.get("tbody")
       .find("tr td")
-      .eq(10)
+      .eq(9)
       .should("have.text", "Fra: fredag d. 18. marts 2022 kl. 16:04Til: -");
     cy.get("tbody")
       .find("tr td")
-      .eq(17)
+      .eq(15)
       .should("have.text", "Fra: -Til: lørdag d. 26. marts 2022 kl. 15:25");
-    cy.get("tbody").find("tr td").eq(24).should("have.text", "Ja");
+    cy.get("tbody").find("tr td").eq(21).should("have.text", "Ja");
   });
 });

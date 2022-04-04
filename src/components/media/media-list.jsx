@@ -4,13 +4,12 @@ import { Button, Col, Row } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UserContext from "../../context/user-context";
-import selectedHelper from "../util/helpers/selectedHelper";
-import DeleteModal from "../delete-modal/delete-modal";
 import SearchBox from "../util/search-box/search-box";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
 import Pagination from "../util/paginate/pagination";
 import ImageList from "./image-list";
+import useModal from "../../context/modal-context/modal-context-hook";
 import {
   displayError,
   displaySuccess,
@@ -27,12 +26,14 @@ import "./media-list.scss";
  * @param {object} props The props.
  * @param {boolean} props.fromModal Whether it is opened from the modal, if it
  *   is, the upload and delete function should not be accesible.
- * @param {Function} props.handleSelected Callback when closing modal.
  * @returns {object} The media list.
  */
-function MediaList({ fromModal, handleSelected }) {
+function MediaList({ fromModal }) {
   // Translations
   const { t } = useTranslation("common", { keyPrefix: "media-list" });
+
+  // Selected data
+  const { selected, setSelected, setModal } = useModal();
 
   // Context
   const context = useContext(UserContext);
@@ -47,12 +48,9 @@ function MediaList({ fromModal, handleSelected }) {
   const pageSize = 10;
 
   // State
-  const [mediaToDelete, setMediaToDelete] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [media, setMedia] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedMedia, setSelectedMedia] = useState([]);
   const [page, setPage] = useState(parseInt(pageParams || 1, 10));
   const [searchText, setSearchText] = useState(
     searchParams === null ? "" : searchParams
@@ -94,11 +92,6 @@ function MediaList({ fromModal, handleSelected }) {
     }
   }, [context.selectedTenant.get]);
 
-  /** Closes delete modal. */
-  function onCloseDeleteModal() {
-    setShowDeleteModal(false);
-  }
-
   /** @param {number} nextPage - The next page. */
   function updateUrlAndChangePage(nextPage) {
     const params = new URLSearchParams(search);
@@ -132,25 +125,20 @@ function MediaList({ fromModal, handleSelected }) {
 
   /** Deletes multiple pieces of media. */
   useEffect(() => {
-    if (mediaToDelete.length > 0) {
-      // As we are deleting multiple pieces of media, the ui will jump if the "is deleting" value from the hook is used.
-      setIsDeleting(true);
-      if (isDeleteSuccess) {
-        displaySuccess(t("success-messages.media-delete"));
-      }
-      setLoadingMessage(t("loading-messages.deleting-media"));
-      const toDelete = mediaToDelete.splice(0, 1).shift();
-      const toDeleteId = idFromUrl(toDelete["@id"]);
+    if (isDeleting && selected.length > 0) {
+      const toDelete = selected[0];
+      setSelected(selected.slice(1));
+      const toDeleteId = idFromUrl(toDelete.id);
       DeleteV1Media({ id: toDeleteId });
     }
-  }, [mediaToDelete, isDeleteSuccess]);
+  }, [isDeleting, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && mediaToDelete.length === 0) {
+    if (isDeleteSuccess && selected.length === 0) {
       displaySuccess(t("success-messages.media-delete"));
-      refetch();
       setIsDeleting(false);
+      refetch();
     }
   }, [isDeleteSuccess]);
 
@@ -164,26 +152,8 @@ function MediaList({ fromModal, handleSelected }) {
 
   /** Deletes selected data, and closes modal. */
   function handleDelete() {
-    setMediaToDelete(selectedMedia);
-    setShowDeleteModal(false);
-    setSelectedMedia([]);
-  }
-
-  /**
-   * Sets the selected media in state.
-   *
-   * @param {object} inputData The selected media.
-   */
-  function handleChecked(inputData) {
-    const localMedia = inputData;
-    localMedia.selected = !localMedia.selected;
-    const selectedData = selectedHelper(localMedia, [...selectedMedia]).filter(
-      ({ selected }) => selected
-    );
-    setSelectedMedia(selectedData);
-    if (fromModal) {
-      handleSelected(selectedData);
-    }
+    setLoadingMessage(t("loading-messages.deleting-media"));
+    setIsDeleting(true);
   }
 
   useEffect(() => {
@@ -210,8 +180,13 @@ function MediaList({ fromModal, handleSelected }) {
                 <Button
                   variant="danger"
                   id="delete_media_button"
-                  disabled={!selectedMedia.length > 0}
-                  onClick={() => setShowDeleteModal(true)}
+                  disabled={!selected.length > 0}
+                  onClick={() =>
+                    setModal({
+                      delete: true,
+                      accept: handleDelete,
+                    })
+                  }
                 >
                   {t("delete-button")}
                 </Button>
@@ -230,7 +205,6 @@ function MediaList({ fromModal, handleSelected }) {
           media={media}
           isLoading={isLoading || isDeleting}
           loadingMessage={loadingMessage}
-          handleChecked={handleChecked}
         />
       </ContentBody>
       <Pagination
@@ -239,24 +213,16 @@ function MediaList({ fromModal, handleSelected }) {
         currentPage={page}
         onPageChange={updateUrlAndChangePage}
       />
-      <DeleteModal
-        show={showDeleteModal}
-        handleAccept={handleDelete}
-        onClose={onCloseDeleteModal}
-        selectedRows={selectedMedia}
-      />
     </>
   );
 }
 
 MediaList.defaultProps = {
   fromModal: false,
-  handleSelected: null,
 };
 
 MediaList.propTypes = {
   fromModal: PropTypes.bool,
-  handleSelected: PropTypes.func,
 };
 
 export default MediaList;

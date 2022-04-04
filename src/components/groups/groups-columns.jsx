@@ -2,18 +2,18 @@ import { React } from "react";
 import { useTranslation } from "react-i18next";
 import ListButton from "../util/list/list-button";
 import ColumnHoc from "../util/column-hoc";
-import LinkForList from "../util/list/link-for-list";
+import SelectColumnHoc from "../util/select-column-hoc";
 
 /**
  * Columns for group lists.
  *
  * @param {object} props - The props.
- * @param {boolean} props.editNewTab - Open edit dialog in new tab.
- * @param {Function} props.listButtonCallback - The callback for getting data in
  * @param {Function} props.apiCall - The api to call
+ * @param {string} props.infoModalRedirect - The url for redirecting in the info modal.
+ * @param {string} props.infoModalTitle - The info modal title.
  * @returns {object} The columns for the group lists.
  */
-function getGroupColumns({ editNewTab, listButtonCallback, apiCall }) {
+function getGroupColumns({ apiCall, infoModalRedirect, infoModalTitle }) {
   const { t } = useTranslation("common", { keyPrefix: "groups-columns" });
 
   const columns = [
@@ -21,24 +21,21 @@ function getGroupColumns({ editNewTab, listButtonCallback, apiCall }) {
       // eslint-disable-next-line react/prop-types
       content: ({ screens }) => (
         <ListButton
-          callback={listButtonCallback}
-          inputData={screens}
+          redirectTo={infoModalRedirect}
+          displayData={screens}
+          modalTitle={infoModalTitle}
           apiCall={apiCall}
         />
       ),
       key: "screens",
       label: t("screens"),
     },
-    {
-      key: "edit",
-      // eslint-disable-next-line react/prop-types
-      content: ({ "@id": id }) => (
-        <LinkForList id={id} param="group/edit" targetBlank={editNewTab} />
-      ),
-    },
   ];
 
   return columns;
 }
 
-export default ColumnHoc(getGroupColumns);
+const GroupColumns = ColumnHoc(getGroupColumns);
+const SelectGroupColumns = SelectColumnHoc(getGroupColumns);
+
+export { SelectGroupColumns, GroupColumns };

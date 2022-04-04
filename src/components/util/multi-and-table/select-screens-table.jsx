@@ -1,10 +1,9 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import InfoModal from "../../info-modal/info-modal";
 import Table from "../table/table";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
-import getScreenColumns from "../../screen/screen-columns";
+import { SelectScreenColumns } from "../../screen/screen-columns";
 import {
   useGetV1ScreensQuery,
   useGetV1ScreensByIdScreenGroupsQuery,
@@ -23,9 +22,7 @@ import {
 function SelectScreensTable({ handleChange, name, campaignId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState("");
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: screens } = useGetV1ScreensQuery({
     title: searchText,
     itemsPerPage: 100,
@@ -54,18 +51,6 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
     });
   }
 
-  /** @param {Array} playlistArray The array of playlists. */
-  function openInfoModal(playlistArray) {
-    setInGroups(playlistArray);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setInGroups();
-  }
-
   /**
    * Fetches data for the multi component
    *
@@ -78,14 +63,14 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   /**
    * Removes playlist from list of groups.
    *
-   * @param {object} removeItem The item to remove.
+   * @param {string} removeItem The item to remove.
    */
   function removeFromList(removeItem) {
     const indexOfItemToRemove = selectedData
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -98,11 +83,12 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   }
 
   // The columns for the table.
-  const columns = getScreenColumns({
-    editNewTab: true,
+  const columns = SelectScreenColumns({
     handleDelete: removeFromList,
-    listButtonCallback: openInfoModal,
     apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+    editTarget: "screen",
+    infoModalRedirect: "/group/edit",
+    infoModalTitle: t("select-screens-table.info-modal.screen-in-groups"),
   });
 
   return (
@@ -122,14 +108,6 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
               <small>{t("select-screens-table.edit-screens-help-text")}</small>
             </>
           )}
-          <InfoModal
-            redirectTo="/group/edit"
-            show={showInfoModal}
-            apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-            onClose={onCloseInfoModal}
-            dataStructureToDisplay={inGroups}
-            modalTitle={t("select-screens-table.info-modal.screen-in-groups")}
-          />
         </>
       )}
     </>

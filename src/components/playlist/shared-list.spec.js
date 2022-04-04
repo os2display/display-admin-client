@@ -25,7 +25,7 @@ describe("Shared list tests", () => {
     });
 
     cy.get("#delete-button").should("not.exist");
-    cy.get("#clear-rows-button").should("not.exist");
+    cy.get("#clear-rows-button").should("be.disabled");
     cy.get("tbody").find("tr td a").should("not.exist");
     cy.get("tbody").find("btn btn-danger").should("not.exist");
   });

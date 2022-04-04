@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import getPlaylistColumns from "../playlist/playlists-columns";
-import InfoModal from "../info-modal/info-modal";
+import { SelectPlaylistColumns } from "../playlist/playlists-columns";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -25,11 +24,9 @@ import {
 function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
 
-  const [onSlides, setOnSlides] = useState();
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
   const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
@@ -79,25 +76,13 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
 
     const target = { value: selectedDataCopy, id: name };
     handleChange({ target });
-  }
-
-  /** @param {Array} slidesArray The array of playlists. */
-  function openInfoModal(slidesArray) {
-    setOnSlides(slidesArray);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setOnSlides();
   }
 
   /**
@@ -114,11 +99,13 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     });
   }
 
-  const columns = getPlaylistColumns({
-    editNewTab: true,
-    handleDelete: (playlistData) => removeFromList(playlistData),
-    listButtonCallback: openInfoModal,
+  const columns = SelectPlaylistColumns({
+    handleDelete: removeFromList,
     apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    editTarget: "playlist",
+    infoModalRedirect: "/slide/edit",
+    dataKey: "slide",
+    infoModalTitle: t("select-playlists-table.info-modal.slides"),
   });
 
   return (
@@ -154,14 +141,6 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
           )}
         </>
       )}
-      <InfoModal
-        show={showInfoModal}
-        apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        onClose={onCloseInfoModal}
-        dataKey="slide"
-        dataStructureToDisplay={onSlides}
-        modalTitle={t("select-playlists-table.info-modal.slides")}
-      />
     </>
   );
 }

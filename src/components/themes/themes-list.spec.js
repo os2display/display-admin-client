@@ -37,7 +37,7 @@ describe("themes list tests", () => {
   });
 
   it("The correct amount of column headers loaded (themes list)", () => {
-    cy.get("thead").find("th").should("have.length", 6);
+    cy.get("thead").find("th").should("have.length", 5);
   });
 
   it("It removes all selected", () => {

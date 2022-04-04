@@ -2,6 +2,8 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-bootstrap";
+import selectedHelper from "../util/helpers/selectedHelper";
+import useModal from "../../context/modal-context/modal-context-hook";
 import ListLoading from "../util/loading-component/list-loading";
 
 /**
@@ -9,10 +11,10 @@ import ListLoading from "../util/loading-component/list-loading";
  *
  * @param {object} props Props.
  * @param {Array} props.media List of media elements
- * @param {Function} props.handleChecked The callback for checking the checkbox
  * @returns {object} The image list page.
  */
-function ImageList({ media, handleChecked }) {
+function ImageList({ media }) {
+  const { selected, setSelected } = useModal();
   // Translations
   const { t } = useTranslation("common");
 
@@ -22,12 +24,16 @@ function ImageList({ media, handleChecked }) {
         <div key={data["@id"]} className="col mb-3">
           <div
             className={`card bg-light h-100 media-item +
-                  ${data.selected ? " selected" : ""}`}
+                  ${
+                    selected.find((item) => item.id === data["@id"])
+                      ? " selected"
+                      : ""
+                  }`}
           >
             <button
               type="button"
               className="media-item-button"
-              onClick={() => handleChecked(data)}
+              onClick={() => setSelected(selectedHelper(data, [...selected]))}
             >
               <img
                 src={data.assets.uri}
@@ -37,7 +43,7 @@ function ImageList({ media, handleChecked }) {
             </button>
             <Form.Check
               type="checkbox"
-              checked={data.selected}
+              checked={selected.find((item) => item.id === data["@id"])}
               tabIndex={-1}
               aria-label={t("media-list.checkbox-form-aria-label")}
               readOnly
@@ -48,15 +54,6 @@ function ImageList({ media, handleChecked }) {
                 <div className="col-auto">
                   <h2 className="h6">{data.name}</h2>
                 </div>
-                {/* @TODO: readd if the api supports putting media */}
-                {/* <div className="col-auto ms-auto">
-                        <Link
-                          className="btn btn-primary btn-sm"
-                          to={`/media/edit/${idFromUrl(data["@id"])}`}
-                        >
-                          {t("media-list.edit-button")}
-                        </Link>
-                      </div> */}
               </div>
               <div className="row">
                 <div className="col">
@@ -85,7 +82,6 @@ ImageList.propTypes = {
       assets: PropTypes.shape({ uri: PropTypes.string }),
     })
   ),
-  handleChecked: PropTypes.func.isRequired,
 };
 
 export default ListLoading(ImageList);

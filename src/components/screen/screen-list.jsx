@@ -5,13 +5,12 @@ import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserContext from "../../context/user-context";
 import ScreenCalendarCell from "../screen-list/screen-calendar-cell";
-import selectedHelper from "../util/helpers/selectedHelper";
-import DeleteModal from "../delete-modal/delete-modal";
 import List from "../util/list/list";
-import InfoModal from "../info-modal/info-modal";
+import { ScreenColumns } from "./screen-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
+import useModal from "../../context/modal-context/modal-context-hook";
 import {
   useGetV1ScreensQuery,
   useDeleteV1ScreensByIdMutation,
@@ -22,7 +21,6 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import "./screen-list.scss";
-import getScreenColumns from "./screen-columns";
 
 /**
  * The screen list component.
@@ -32,17 +30,13 @@ import getScreenColumns from "./screen-columns";
 function ScreenList() {
   const { t } = useTranslation("common", { keyPrefix: "screen-list" });
   const context = useContext(UserContext);
+  const { selected, setSelected } = useModal();
 
   // Local state
   const [view, setView] = useState("list");
   const [createdBy, setCreatedBy] = useState("all");
   const [isDeleting, setIsDeleting] = useState(false);
   const [page, setPage] = useState();
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [screensToDelete, setScreensToDelete] = useState([]);
-  const [inGroups, setInGroups] = useState();
   const [searchText, setSearchText] = useState();
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
@@ -83,25 +77,20 @@ function ScreenList() {
 
   /** Deletes multiple screens. */
   useEffect(() => {
-    if (screensToDelete.length > 0) {
-      // As we are deleting multiple screens, the ui will jump if the "is deleting" value from the hook is used.
-      setIsDeleting(true);
-      if (isDeleteSuccess) {
-        displaySuccess(t("success-messages.screen-delete"));
-      }
-      setLoadingMessage(t("loading-messages.deleting-screen"));
-      const screenToDelete = screensToDelete.splice(0, 1).shift();
-      const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
+    if (isDeleting && selected.length > 0) {
+      const screenToDelete = selected[0];
+      setSelected(selected.slice(1));
+      const screenToDeleteId = idFromUrl(screenToDelete.id);
       DeleteV1Screens({ id: screenToDeleteId });
     }
-  }, [screensToDelete, isDeleteSuccess]);
+  }, [isDeleting, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && screensToDelete.length === 0) {
+    if (isDeleteSuccess && selected.length === 0) {
       displaySuccess(t("success-messages.screen-delete"));
-      refetch();
       setIsDeleting(false);
+      refetch();
     }
   }, [isDeleteSuccess]);
 
@@ -113,55 +102,10 @@ function ScreenList() {
     }
   }, [isDeleteError]);
 
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} row The selected row.
-   */
-  function handleSelected(row) {
-    setSelectedRows(selectedHelper(row, [...selectedRows]));
-  }
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
-  /**
-   * Opens the delete modal
-   *
-   * @param {object} item The item to delete
-   */
-  function openDeleteModal(item) {
-    if (item) {
-      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
-    }
-    setShowDeleteModal(true);
-  }
-
-  /** Deletes screen(s), and closes modal. */
+  /** Starts the deletion process. */
   function handleDelete() {
-    setScreensToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseModal() {
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** @param {Array} groupsData The array of groups. */
-  function openInfoModal(groupsData) {
-    setInGroups(groupsData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setInGroups();
+    setIsDeleting(true);
+    setLoadingMessage(t("loading-messages.deleting-screen"));
   }
 
   /**
@@ -196,13 +140,11 @@ function ScreenList() {
   }
 
   // The columns for the table.
-  const columns = getScreenColumns({
-    selectedRows,
-    handleSelected,
-    editNewTab: false,
-    handleDelete: openDeleteModal,
-    listButtonCallback: openInfoModal,
+  const columns = ScreenColumns({
+    handleDelete,
     apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+    infoModalRedirect: "/group/edit",
+    infoModalTitle: t("info-modal.screen-in-groups"),
   });
 
   // Error with retrieving list of screen
@@ -247,10 +189,8 @@ function ScreenList() {
               currentPage={page}
               handlePageChange={onChangePage}
               handleCreatedByCurrentUser={onCreatedByFilter}
-              selectedRows={selectedRows}
-              clearSelectedRows={clearSelectedRows}
               calendarView={view === "calendar"}
-              handleDelete={openDeleteModal}
+              handleDelete={handleDelete}
               isLoading={isLoading || isDeleting}
               loadingMessage={loadingMessage}
               handleSearch={onSearch}
@@ -260,20 +200,6 @@ function ScreenList() {
           )}
         </>
       </ContentBody>
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={onCloseModal}
-        handleAccept={handleDelete}
-        selectedRows={selectedRows}
-      />
-      <InfoModal
-        show={showInfoModal}
-        redirectTo="/group/edit"
-        apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={inGroups}
-        modalTitle={t("info-modal.screen-in-groups")}
-      />
     </>
   );
 }

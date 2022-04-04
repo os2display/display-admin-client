@@ -4,16 +4,14 @@ import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import useModal from "../../context/modal-context/modal-context-hook";
 import UserContext from "../../context/user-context";
-import selectedHelper from "../util/helpers/selectedHelper";
 import ContentHeader from "../util/content-header/content-header";
 import List from "../util/list/list";
-import DeleteModal from "../delete-modal/delete-modal";
-import InfoModal from "../info-modal/info-modal";
 import idFromUrl from "../util/helpers/id-from-url";
 import ContentBody from "../util/content-body/content-body";
 import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
-import getPlaylistColumns from "./playlists-columns";
+import { PlaylistColumns } from "./playlists-columns";
 import {
   displayError,
   displaySuccess,
@@ -35,20 +33,16 @@ function PlaylistCampaignList({ location }) {
   const { t } = useTranslation("common", {
     keyPrefix: "playlist-campaign-list",
   });
+  const { selected, setSelected } = useModal();
   const context = useContext(UserContext);
 
   // Local state
-  const [selectedRows, setSelectedRows] = useState([]);
   const [view, setView] = useState("list");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [onSlides, setOnSlides] = useState();
   const [page, setPage] = useState();
   const [createdBy, setCreatedBy] = useState("all");
-  const [playlistsToDelete, setPlaylistsToDelete] = useState([]);
   const [isPublished, setIsPublished] = useState();
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [searchText, setSearchText] = useState();
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
     t(`${location}.loading-messages.loading`)
@@ -91,27 +85,23 @@ function PlaylistCampaignList({ location }) {
 
   /** Deletes multiple playlists. */
   useEffect(() => {
-    if (playlistsToDelete.length > 0) {
+    if (isDeleting && selected.length > 0) {
       if (isDeleteSuccess) {
         displaySuccess(t(`${location}.success-messages.delete`));
       }
-      // As we are deleting multiple playlists, the ui will jump if the "is deleting" value from the hook is used.
-      setIsDeleting(true);
-      setLoadingMessage(t(`${location}.loading-messages.deleting`));
-      const toDelete = playlistsToDelete.splice(0, 1).shift();
-      const toDeleteId = idFromUrl(toDelete["@id"]);
-      DeleteV1Playlists({ id: toDeleteId });
-    } else if (isDeleteSuccess && playlistsToDelete.length > 0) {
-      displaySuccess(t(`${location}.success-messages.delete`));
+      const playlistToDelete = selected[0];
+      setSelected(selected.slice(1));
+      const playlistToDeleteId = idFromUrl(playlistToDelete.id);
+      DeleteV1Playlists({ id: playlistToDeleteId });
     }
-  }, [playlistsToDelete, isDeleteSuccess]);
+  }, [isDeleting, isDeleteSuccess]);
 
   // Display success messages
   useEffect(() => {
-    if (isDeleteSuccess && playlistsToDelete.length === 0) {
+    if (isDeleteSuccess && selected.length === 0) {
       displaySuccess(t(`${location}.success-messages.delete`));
-      refetch();
       setIsDeleting(false);
+      refetch();
     }
   }, [isDeleteSuccess]);
 
@@ -123,54 +113,10 @@ function PlaylistCampaignList({ location }) {
     }
   }, [isDeleteError]);
 
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} row The selected row.
-   */
-  function handleSelected(row) {
-    setSelectedRows(selectedHelper(row, [...selectedRows]));
-  }
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
-  /**
-   * Opens the delete modal
-   *
-   * @param {object} item The item to delete
-   */
-  function openDeleteModal(item) {
-    if (item) {
-      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
-    }
-    setShowDeleteModal(true);
-  }
-
-  /** Deletes playlist(s), and closes modal. */
+  /** Starts the deletion process. */
   function handleDelete() {
-    setPlaylistsToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseDeleteModal() {
-    setSelectedRows([]);
-    setShowDeleteModal(false);
-  }
-
-  /** @param {Array} slideData The array of playlists. */
-  function openInfoModal(slideData) {
-    setOnSlides(slideData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
+    setIsDeleting(true);
+    setLoadingMessage(t(`${location}.loading-messages.deleting`));
   }
 
   /**
@@ -218,13 +164,12 @@ function PlaylistCampaignList({ location }) {
   }
 
   // The columns for the table.
-  const columns = getPlaylistColumns({
-    selectedRows,
-    handleSelected,
-    editNewTab: false,
-    handleDelete: openDeleteModal,
-    listButtonCallback: openInfoModal,
+  const columns = PlaylistColumns({
+    handleDelete,
     apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    infoModalRedirect: "/slide/edit",
+    infoModalTitle: t(`${location}.info-modal.slides`),
+    dataKey: "slide",
   });
 
   // Error with retrieving list of playlists
@@ -271,10 +216,8 @@ function PlaylistCampaignList({ location }) {
             handleCreatedByCurrentUser={onCreatedByFilter}
             totalItems={listData["hydra:totalItems"]}
             handleSearch={onSearch}
-            selectedRows={selectedRows}
             data={listData["hydra:member"]}
-            clearSelectedRows={clearSelectedRows}
-            handleDelete={openDeleteModal}
+            handleDelete={handleDelete}
             calendarView={view === "calendar"}
             handleIsPublished={onIsPublished}
             isLoading={isLoading || isDeleting}
@@ -286,21 +229,6 @@ function PlaylistCampaignList({ location }) {
           </List>
         </ContentBody>
       )}
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={onCloseDeleteModal}
-        handleAccept={handleDelete}
-        selectedRows={selectedRows}
-      />
-      <InfoModal
-        show={showInfoModal}
-        redirectTo="/slide/edit"
-        apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={onSlides}
-        dataKey="slide"
-        modalTitle={t(`${location}.info-modal.slides`)}
-      />
     </>
   );
 }

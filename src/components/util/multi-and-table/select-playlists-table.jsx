@@ -8,8 +8,7 @@ import {
   useGetV1PlaylistsByIdSlidesQuery,
 } from "../../../redux/api/api.generated";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
-import InfoModal from "../../info-modal/info-modal";
-import getPlaylistColumns from "../../playlist/playlists-columns";
+import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
 
 /**
  * A multiselect and table for groups.
@@ -24,8 +23,6 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [onSlides, setOnSlides] = useState();
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
     itemsPerPage: 100,
@@ -56,18 +53,6 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
     });
   }
 
-  /** @param {Array} slidesArray The array of playlists. */
-  function openInfoModal(slidesArray) {
-    setOnSlides(slidesArray);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setOnSlides();
-  }
-
   /**
    * Fetches data for the multi component
    *
@@ -87,7 +72,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -100,10 +85,13 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   }
 
   // The columns for the table.
-  const columns = getPlaylistColumns({
-    editNewTab: true,
+  const columns = SelectPlaylistColumns({
     handleDelete: removeFromList,
-    listButtonCallback: openInfoModal,
+    apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    editTarget: "playlist",
+    infoModalRedirect: "/slide/edit",
+    dataKey: "slide",
+    infoModalTitle: t("select-playlists-table.info-modal.slides"),
   });
 
   return (
@@ -123,15 +111,6 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
               <Table columns={columns} data={selectedData} />
             </>
           )}
-          <InfoModal
-            show={showInfoModal}
-            redirectTo="/slide/edit"
-            apiCall={useGetV1PlaylistsByIdSlidesQuery}
-            onClose={onCloseInfoModal}
-            dataKey="slide"
-            dataStructureToDisplay={onSlides}
-            modalTitle={t("select-playlists-table.info-modal.slides")}
-          />
         </>
       )}
     </>
