@@ -283,6 +283,9 @@
     }
   },
   "slide-form": {
+    "touch-region": "Touch region",
+    "touch-region-button-text-label": "Knaptekst i touch region",
+    "touch-region-button-text-helptext": "Her kan du sætte knapteksten, hvis slidet indgår i en touch region, hvor slides bliver vist som knapper der kan åbnes.",
     "add-slide-to-playlists": "Tilføj slide til spillelister",
     "add-playlists-help-text": "For at se mulige spillelister, skal du fremsøge dem pr navn. Dette slide vil blive placeret i slutningen af spillelisten.",
     "preview-in-full-screen": "Åben preview i fuld skærm",
@@ -610,6 +613,8 @@
     }
   },
   "screen-form": {
+    "touch-region": "(Touch)",
+    "touch-region-helptext": "Touch region: En touch region fungerer anderledes end en normal region. I en touch region bliver slides der er tilføjet lavet til knapper der kan åbnes i fuld skærm.",
     "bind-header": "Tilkobling",
     "bind": "Tilkobl skærm",
     "unbind": "Afkobl skærm",

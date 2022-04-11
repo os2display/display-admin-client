@@ -7,6 +7,7 @@ export default class ConfigLoader {
         // Defaults.
         return {
           api: "/api/",
+          touchButtonRegions: false
         };
       });
   }

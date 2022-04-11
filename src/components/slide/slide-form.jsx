@@ -22,6 +22,7 @@ import RadioButtons from "../util/forms/radio-buttons";
 import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
 import localStorageKeys from "../util/local-storage-keys";
 import "./slide-form.scss";
+import ConfigLoader from "../../config-loader";
 
 /**
  * The slide form component.
@@ -68,6 +69,7 @@ function SlideForm({
   const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
+  const [config, setConfig] = useState({});
 
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
@@ -99,6 +101,10 @@ function SlideForm({
   // Add event listeners for keypress
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
+
+    ConfigLoader.loadConfig().then((loadedConfig) => {
+      setConfig(loadedConfig);
+    });
 
     // Remove event listeners on cleanup
     return () => {
@@ -337,6 +343,21 @@ function SlideForm({
                 id={idFromUrl(slide["@id"])}
               />
             </ContentBody>
+            {config?.touchButtonRegions && (
+              <ContentBody>
+                <h2 className="h4">{t("slide-form.touch-region")}</h2>
+
+                <FormInput
+                  name="touchRegionButtonText"
+                  type="text"
+                  label={t("slide-form.touch-region-button-text-label")}
+                  value={slide.content.touchRegionButtonText}
+                  onChange={handleContent}
+                />
+
+                <small>{t("slide-form.touch-region-button-text-helptext")}</small>
+              </ContentBody>
+            )}
             <ContentBody>
               <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
               <Row className="g-2">
