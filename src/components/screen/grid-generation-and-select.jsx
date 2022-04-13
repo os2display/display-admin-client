@@ -139,9 +139,9 @@ function GridGenerationAndSelect({
                           screenId={screenId}
                           regionId={idFromUrl(data["@id"])}
                         />
-                        {data?.type === 'touch-buttons' && (
+                        {data?.type === "touch-buttons" && (
                           <Alert key="screen-form-touch-buttons" variant="info">
-                            {t('screen-form.touch-region-helptext')}
+                            {t("screen-form.touch-region-helptext")}
                           </Alert>
                         )}
                       </Tab>

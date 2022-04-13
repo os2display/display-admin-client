@@ -355,7 +355,9 @@ function SlideForm({
                   onChange={handleContent}
                 />
 
-                <small>{t("slide-form.touch-region-button-text-helptext")}</small>
+                <small>
+                  {t("slide-form.touch-region-button-text-helptext")}
+                </small>
               </ContentBody>
             )}
             <ContentBody>
