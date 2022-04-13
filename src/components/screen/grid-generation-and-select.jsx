@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
-import { Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab, Alert } from "react-bootstrap";
 import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
 import uniqWith from "lodash.uniqwith";
@@ -107,7 +107,7 @@ function GridGenerationAndSelect({
                       }
                       style={{ gridArea: createGridArea(data.gridArea) }}
                     >
-                      {data.name}
+                      {data.title}
                     </div>
                   ))}
               </div>
@@ -139,6 +139,11 @@ function GridGenerationAndSelect({
                           screenId={screenId}
                           regionId={idFromUrl(data["@id"])}
                         />
+                        {data?.type === "touch-buttons" && (
+                          <Alert key="screen-form-touch-buttons" variant="info">
+                            {t("screen-form.touch-region-helptext")}
+                          </Alert>
+                        )}
                       </Tab>
                     ))}
                 </Tabs>
