@@ -584,7 +584,7 @@ function PosterSelector({
                               </tr>
                             </thead>
                             <tbody>
-                              {singleSearchEvents.map((searchEvent) => (
+                              {singleSearchEvents?.map((searchEvent) => (
                                 <tr
                                   style={{ cursor: "pointer" }}
                                   key={searchEvent["@id"]}
@@ -784,7 +784,7 @@ function PosterSelector({
                                     setSubscriptionNumberValue(target.value)
                                   }
                                 >
-                                  {numberOptions.map((i) => (
+                                  {numberOptions?.map((i) => (
                                     <option value={i + 1}>{i + 1}</option>
                                   ))}
                                 </select>
