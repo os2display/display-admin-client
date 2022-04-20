@@ -16,6 +16,7 @@ services:
       - frontend
     environment:
       - API_PATH=https://displayapiservice.local.itkdev.dk/
+      - APP_TOUCH_BUTTON_REGIONS=true
     ports:
       - '80'
     labels:
