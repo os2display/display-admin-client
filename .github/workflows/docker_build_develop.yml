@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - 'develop'
-name: Deployment (stg)
+name: Build docker image (develop)
 
 jobs:
   docker:
