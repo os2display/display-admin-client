@@ -300,7 +300,9 @@ function SlideManager({
         const newMediaData = { ...mediaData };
 
         results.forEach((result) => {
-          newMediaData[result.data["@id"]] = { ...result.data };
+          if (result.data) {
+            newMediaData[result.data["@id"]] = { ...result.data };
+          }
         });
 
         setMediaData(newMediaData);
