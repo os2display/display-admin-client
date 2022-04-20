@@ -64,7 +64,7 @@ function TopBar() {
       </Navbar.Brand>
       <>
         {!context.tenants.get && (
-          <div className="name">
+          <div className="name ms-3">
             {context.userName.get} ({context.selectedTenant.get?.title})
           </div>
         )}
