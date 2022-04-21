@@ -113,7 +113,9 @@ function PosterSelector({
     configurationChange({
       target: {
         id: "singleSelectedOccurrence",
-        value: singleSelectedOccurrence ? singleSelectedOccurrence["@id"] : null,
+        value: singleSelectedOccurrence
+          ? singleSelectedOccurrence["@id"]
+          : null,
       },
     });
   }, [singleSelectedOccurrence]);
@@ -328,7 +330,7 @@ function PosterSelector({
   const removeSingleSelected = () => {
     setSingleSelectedEvent(null);
     setSingleSelectedOccurrence(null);
-  }
+  };
 
   return (
     <Card className="mb-3">
@@ -397,10 +399,7 @@ function PosterSelector({
                         </>
                       </Col>
                       <Col md="3">
-                        <Button
-                          variant="danger"
-                          onClick={removeSingleSelected}
-                        >
+                        <Button variant="danger" onClick={removeSingleSelected}>
                           {t("poster-selector.remove")}
                         </Button>
                       </Col>
@@ -649,7 +648,7 @@ function PosterSelector({
                                     (occurrence) => (
                                       <tr
                                         style={{ cursor: "pointer" }}
-                                        key={occurrence['@id']}
+                                        key={occurrence["@id"]}
                                         onClick={() =>
                                           setSingleSelectedOccurrence(
                                             occurrence
