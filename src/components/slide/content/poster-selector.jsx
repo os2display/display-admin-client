@@ -651,6 +651,7 @@ function PosterSelector({
                                     (occurrence) => (
                                       <tr
                                         style={{ cursor: "pointer" }}
+                                        key={occurrence['@id']}
                                         onClick={() =>
                                           setSingleSelectedOccurrence(
                                             occurrence
