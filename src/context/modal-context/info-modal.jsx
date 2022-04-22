@@ -123,7 +123,7 @@ InfoModal.defaultProps = {
 };
 
 InfoModal.propTypes = {
-  displayData: PropTypes.oneOfType(PropTypes.shape({}), PropTypes.string),
+  displayData: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string]),
   apiCall: PropTypes.func.isRequired,
   modalTitle: PropTypes.string.isRequired,
   dataKey: PropTypes.string,

@@ -319,15 +319,19 @@ function SlideForm({
                         role="presentation"
                         className="preview-overlay"
                       >
-                        <RemoteComponentWrapper
-                          url={selectedTemplate?.resources?.component}
-                          slide={slide}
-                          mediaData={mediaData}
-                          showPreview={showPreview}
-                          orientation=""
-                          closeButton
-                          closeCallback={() => setPreviewOverlayVisible(false)}
-                        />
+                        {selectedTemplate?.resources?.component && (
+                          <RemoteComponentWrapper
+                            url={selectedTemplate?.resources?.component}
+                            slide={slide}
+                            mediaData={mediaData}
+                            showPreview={showPreview}
+                            orientation=""
+                            closeButton
+                            closeCallback={() =>
+                              setPreviewOverlayVisible(false)
+                            }
+                          />
+                        )}
                       </div>
                     )}
                   </ContentBody>
@@ -407,13 +411,15 @@ function SlideForm({
               md
               className="responsive-side shadow-sm p-3 mb-3 bg-body rounded"
             >
-              <RemoteComponentWrapper
-                url={selectedTemplate?.resources?.component}
-                slide={slide}
-                mediaData={mediaData}
-                showPreview={showPreview}
-                orientation={previewLayout}
-              />
+              {selectedTemplate?.resources?.component && (
+                <RemoteComponentWrapper
+                  url={selectedTemplate?.resources?.component}
+                  slide={slide}
+                  mediaData={mediaData}
+                  showPreview={showPreview}
+                  orientation={previewLayout}
+                />
+              )}
             </Col>
           )}
         </Row>

@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import RemoteComponent from "./remote-component-helper";
+import { useRemoteComponent } from "./remote-component-helper";
 import ErrorBoundary from "../../../error-boundary";
 import "./remote-component-wrapper.scss";
 
@@ -32,65 +32,75 @@ function RemoteComponentWrapper({
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
+  const [loading, err, Component] = useRemoteComponent(url);
+  const [runId, setRunId] = useState("");
 
   /** Create remoteComponentSlide from slide and mediaData */
   useEffect(() => {
     if (slide) {
       // Local slide and local content, to not accidentally mess with the actual content.
       const newSlide = { ...slide };
-      newSlide.mediaData = mediaData;
 
-      // Map temp images so they are visible in preview before save
-      const mediaDataCopy = { ...mediaData };
+      if (mediaData) {
+        newSlide.mediaData = mediaData;
 
-      // Find tempid keys
-      const keys = Object.keys(mediaDataCopy).filter((key) =>
-        key.includes("TEMP")
-      );
+        // Map temp images so they are visible in preview before save
+        const mediaDataCopy = { ...mediaData };
 
-      // Create "fake" url to file
-      keys.forEach((key) => {
-        mediaDataCopy[key] = {
-          assets: { uri: URL.createObjectURL(mediaDataCopy[key].file) },
-        };
-      });
+        // Find tempid keys
+        const keys = Object.keys(mediaDataCopy).filter((key) =>
+          key.includes("TEMP")
+        );
 
-      newSlide.mediaData = mediaDataCopy;
+        // Create "fake" url to file
+        keys.forEach((key) => {
+          mediaDataCopy[key] = {
+            assets: { uri: URL.createObjectURL(mediaDataCopy[key].file) },
+          };
+        });
+
+        newSlide.mediaData = mediaDataCopy;
+      }
+
       setRemoteComponentSlide(newSlide);
     }
   }, [slide, mediaData]);
 
+  useEffect(() => {
+    if (showPreview) {
+      setRunId(new Date().toISOString());
+    }
+  }, [showPreview]);
+
   return (
     <>
-      {remoteComponentSlide && url && (
-        <>
-          <div className="d-flex justify-content-between">
-            {closeButton && (
-              <Button
-                id="close_preview_button"
-                variant="primary"
-                type="button"
-                onClick={closeCallback}
-              >
-                {t("remote-component-wrapper.close-preview")}
-              </Button>
+      <div className="d-flex justify-content-between">
+        {closeButton && (
+          <Button
+            id="close_preview_button"
+            variant="primary"
+            type="button"
+            onClick={closeCallback}
+          >
+            {t("remote-component-wrapper.close-preview")}
+          </Button>
+        )}
+      </div>
+      <div className="remote-component-wrapper" style={style}>
+        <div className={`remote-component-content ${orientation}`}>
+          <ErrorBoundary errorText="remote-component.error-boundary-text">
+            {loading && <div />}
+            {!loading && err == null && remoteComponentSlide && Component && (
+              <Component
+                slide={remoteComponentSlide}
+                content={remoteComponentSlide.content}
+                run={runId}
+                slideDone={() => {}}
+              />
             )}
-          </div>
-          <div className="remote-component-wrapper" style={style}>
-            <div className={`remote-component-content ${orientation}`}>
-              <ErrorBoundary errorText="remote-component.error-boundary-text">
-                <RemoteComponent
-                  url={url}
-                  slide={remoteComponentSlide}
-                  content={remoteComponentSlide.content}
-                  run={showPreview}
-                  slideDone={() => {}}
-                />
-              </ErrorBoundary>
-            </div>
-          </div>
-        </>
-      )}
+          </ErrorBoundary>
+        </div>
+      </div>
     </>
   );
 }
@@ -98,7 +108,6 @@ function RemoteComponentWrapper({
 RemoteComponentWrapper.defaultProps = {
   orientation: "",
   style: {},
-  url: "",
   closeButton: false,
   closeCallback: () => {},
 };
@@ -106,7 +115,7 @@ RemoteComponentWrapper.defaultProps = {
 RemoteComponentWrapper.propTypes = {
   slide: PropTypes.shape({ content: PropTypes.shape({}).isRequired })
     .isRequired,
-  url: PropTypes.string,
+  url: PropTypes.string.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
   closeCallback: PropTypes.func,
   showPreview: PropTypes.bool.isRequired,

@@ -1,8 +1,8 @@
-import { React, useContext } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Dropdown from "react-bootstrap/Dropdown";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,7 +10,6 @@ import {
   faPhotoVideo,
   faDesktop,
   faStream,
-  faQuestionCircle,
   faUserCircle,
   faSignOutAlt,
   faCheck,
@@ -19,6 +18,7 @@ import NavItems from "../nav-items/nav-items";
 import UserContext from "../../../context/user-context";
 import localStorageKeys from "../../util/local-storage-keys";
 import "./top-bar.scss";
+import { displayError } from "../../util/list/toast-component/display-toast";
 
 /**
  * The top bar navigation component.
@@ -28,6 +28,8 @@ import "./top-bar.scss";
 function TopBar() {
   const { t } = useTranslation("common");
   const context = useContext(UserContext);
+  const location = useLocation();
+  const [tenantChangeDisabled, setTenantChangeDisabled] = useState(false);
 
   /**
    * Change tenant on select tenant
@@ -46,6 +48,13 @@ function TopBar() {
       )
     );
   }
+
+  useEffect(() => {
+    const { pathname } = location;
+    const matches = pathname.match(/(\/edit|\/create)/i);
+
+    setTenantChangeDisabled(matches !== null);
+  }, [location]);
 
   return (
     <Navbar
@@ -86,7 +95,16 @@ function TopBar() {
             <Dropdown.Menu style={{ width: "100%" }}>
               {context.tenants.get.map((tenant) => (
                 <Dropdown.Item
-                  onClick={onTenantChange}
+                  onClick={(target) => {
+                    if (tenantChangeDisabled) {
+                      displayError(
+                        t(`topbar.error-messages.tenant-change-disabled`),
+                        null
+                      );
+                    } else {
+                      onTenantChange(target);
+                    }
+                  }}
                   id={tenant.tenantKey}
                   key={tenant.tenantKey}
                   className="dropdown-item"
@@ -160,12 +178,6 @@ function TopBar() {
                 </Link>
               </Dropdown.Menu>
             </Dropdown>
-          </Nav.Item>
-          <Nav.Item>
-            <Link id="topbar-faq" className="btn btn-dark me-1 mb-1" to="/faq">
-              <FontAwesomeIcon className="me-1" icon={faQuestionCircle} />
-              <span>{t("topbar.faq")}</span>
-            </Link>
           </Nav.Item>
           <Nav.Item>
             <Link

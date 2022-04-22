@@ -76,7 +76,8 @@ function FeedSelector({ value, onChange, formElement }) {
 
   const feedSourceChange = ({ target }) => {
     const feedSource = target.value[0].value ?? null;
-    const newValue = { ...value, feedSource };
+    const configuration = value?.configuration ?? {};
+    const newValue = { ...value, feedSource, configuration };
     onChange(newValue);
   };
 

@@ -1,9 +1,10 @@
 import {
-  createRemoteComponent,
+  createUseRemoteComponent,
   createRequires,
 } from "@paciolan/remote-component";
 import { resolve } from "../../../remote-component.config";
 
 const requires = createRequires(resolve);
-const RemoteComponent = createRemoteComponent({ requires });
-export default RemoteComponent;
+
+// eslint-disable-next-line import/prefer-default-export
+export const useRemoteComponent = createUseRemoteComponent({ requires });

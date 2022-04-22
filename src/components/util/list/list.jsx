@@ -296,7 +296,7 @@ List.propTypes = {
   handleDelete: PropTypes.func,
   totalItems: PropTypes.number.isRequired,
   displayPublished: PropTypes.bool,
-  showCreatedByFilter: PropTypes.func,
+  showCreatedByFilter: PropTypes.bool,
   children: PropTypes.node,
 };
 

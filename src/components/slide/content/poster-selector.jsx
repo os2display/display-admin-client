@@ -101,25 +101,23 @@ function PosterSelector({
   }, []);
 
   useEffect(() => {
-    if (singleSelectedEvent) {
-      configurationChange({
-        target: {
-          id: "singleSelectedEvent",
-          value: singleSelectedEvent["@id"],
-        },
-      });
-    }
+    configurationChange({
+      target: {
+        id: "singleSelectedEvent",
+        value: singleSelectedEvent ? singleSelectedEvent["@id"] : null,
+      },
+    });
   }, [singleSelectedEvent]);
 
   useEffect(() => {
-    if (singleSelectedOccurrence) {
-      configurationChange({
-        target: {
-          id: "singleSelectedOccurrence",
-          value: singleSelectedOccurrence["@id"],
-        },
-      });
-    }
+    configurationChange({
+      target: {
+        id: "singleSelectedOccurrence",
+        value: singleSelectedOccurrence
+          ? singleSelectedOccurrence["@id"]
+          : null,
+      },
+    });
   }, [singleSelectedOccurrence]);
 
   useEffect(() => {
@@ -329,6 +327,11 @@ function PosterSelector({
 
   const numberOptions = Array.from(Array(10).keys());
 
+  const removeSingleSelected = () => {
+    setSingleSelectedEvent(null);
+    setSingleSelectedOccurrence(null);
+  };
+
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -396,13 +399,7 @@ function PosterSelector({
                         </>
                       </Col>
                       <Col md="3">
-                        <Button
-                          variant="danger"
-                          onClick={() => {
-                            setSingleSelectedEvent(null);
-                            setSingleSelectedOccurrence(null);
-                          }}
-                        >
+                        <Button variant="danger" onClick={removeSingleSelected}>
                           {t("poster-selector.remove")}
                         </Button>
                       </Col>
@@ -584,7 +581,7 @@ function PosterSelector({
                               </tr>
                             </thead>
                             <tbody>
-                              {singleSearchEvents.map((searchEvent) => (
+                              {singleSearchEvents?.map((searchEvent) => (
                                 <tr
                                   style={{ cursor: "pointer" }}
                                   key={searchEvent["@id"]}
@@ -651,6 +648,7 @@ function PosterSelector({
                                     (occurrence) => (
                                       <tr
                                         style={{ cursor: "pointer" }}
+                                        key={occurrence["@id"]}
                                         onClick={() =>
                                           setSingleSelectedOccurrence(
                                             occurrence
@@ -784,7 +782,7 @@ function PosterSelector({
                                     setSubscriptionNumberValue(target.value)
                                   }
                                 >
-                                  {numberOptions.map((i) => (
+                                  {numberOptions?.map((i) => (
                                     <option value={i + 1}>{i + 1}</option>
                                   ))}
                                 </select>
