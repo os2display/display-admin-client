@@ -670,7 +670,10 @@
     "add-screen": "Ny skærm",
     "add-playlist": "Ny spilleliste",
     "faq": "OS2Display",
-    "signout": "Log ud"
+    "signout": "Log ud",
+    "error-messages": {
+      "tenant-change-disabled": "Man kan ikke skifte installation når man er i gang med at redigere eller oprette indhold."
+    }
   },
   "sidebar": {
     "brand": "OS2Display"
