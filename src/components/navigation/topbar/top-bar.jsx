@@ -162,12 +162,6 @@ function TopBar() {
             </Dropdown>
           </Nav.Item>
           <Nav.Item>
-            <Link id="topbar-faq" className="btn btn-dark me-1 mb-1" to="/faq">
-              <FontAwesomeIcon className="me-1" icon={faQuestionCircle} />
-              <span>{t("topbar.faq")}</span>
-            </Link>
-          </Nav.Item>
-          <Nav.Item>
             <Link
               id="topbar_signout"
               className="btn btn-dark me-1 mb-1"
