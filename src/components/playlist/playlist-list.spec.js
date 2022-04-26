@@ -12,7 +12,7 @@ describe("Playlists list tests", () => {
       fixture: "playlists/playlist-slide.json",
     }).as("slides");
 
-    cy.visit("/playlist/list");
+    cy.visit("/admin/playlist/list");
     cy.get("#login").click();
     cy.wait([
       "@playlists",
@@ -31,7 +31,7 @@ describe("Playlists list tests", () => {
     ]);
   });
   it("It loads playlist list", () => {
-    cy.visit("/playlist/list");
+    cy.visit("/admin/playlist/list");
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("exist");
   });
@@ -79,7 +79,7 @@ describe("Playlists list tests", () => {
       fixture: "playlists/playlist-slide.json",
     }).as("slides");
 
-    cy.visit("/playlist/list");
+    cy.visit("/admin/playlist/list");
     cy.get("tbody")
       .find("tr td")
       .eq(3)

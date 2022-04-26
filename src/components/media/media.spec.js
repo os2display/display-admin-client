@@ -1,11 +1,11 @@
 describe("Media upload works", () => {
   beforeEach(() => {
-    cy.visit("/media/list");
+    cy.visit("/admin/media/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
     }).as("token");
-    cy.visit("/media/create");
+    cy.visit("/admin/media/create");
     cy.get("#login").click();
     cy.wait(["@token"]);
   });
