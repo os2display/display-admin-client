@@ -187,189 +187,189 @@ function App() {
                         {accessConfig && (
                           <main className="col p-3">
                             <Routes>
-                                <Route path="campaign">
-                                  <Route
-                                    path="create"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.campaign.roles}
-                                      >
-                                        <PlaylistCampaignCreate location="campaign" />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="edit/:id"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.campaign.roles}
-                                      >
-                                        <PlaylistCampaignEdit location="campaign" />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="list"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.campaign.roles}
-                                      >
-                                        <PlaylistCampaignList location="campaign" />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                </Route>
-                                <Route path="playlist">
-                                  <Route
-                                    path="create"
-                                    element={
-                                      <PlaylistCampaignCreate location="playlist" />
-                                    }
-                                  />
-                                  <Route
-                                    path="edit/:id"
-                                    element={
-                                      <PlaylistCampaignEdit location="playlist" />
-                                    }
-                                  />
-                                  <Route
-                                    path="list"
-                                    element={
-                                      <PlaylistCampaignList location="playlist" />
-                                    }
-                                  />
-                                </Route>
-                                <Route path="shared">
-                                  <Route
-                                    path="list"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.shared.roles}
-                                      >
-                                        <SharedPlaylists />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                </Route>
-                                <Route path="screen">
-                                  <Route
-                                    path="list"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.screen.roles}
-                                      >
-                                        <ScreenList />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="create"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.screen.roles}
-                                      >
-                                        <ScreenCreate />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="edit/:id"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.screen.roles}
-                                      >
-                                        <ScreenEdit />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                </Route>
-                                <Route path="group">
-                                  <Route
-                                    path="list"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.groups.roles}
-                                      >
-                                        <GroupsList />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="edit/:id"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.groups.roles}
-                                      >
-                                        <GroupEdit />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="create"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.groups.roles}
-                                      >
-                                        <GroupCreate />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                </Route>
-                                <Route path="slide">
-                                  <Route path="list" element={<SlidesList />} />
-                                  <Route
-                                    path="create"
-                                    element={<SlideCreate />}
-                                  />
-                                  <Route
-                                    path="edit/:id"
-                                    element={<SlideEdit />}
-                                  />
-                                </Route>
-                                <Route path="media">
-                                  <Route path="list" element={<MediaList />} />
-                                  <Route
-                                    path="create"
-                                    element={<MediaCreate />}
-                                  />
-                                </Route>
-                                <Route path="themes">
-                                  <Route
-                                    path="list"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.settings.roles}
-                                      >
-                                        <ThemesList />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="edit/:id"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.settings.roles}
-                                      >
-                                        <ThemeEdit />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                  <Route
-                                    path="create"
-                                    element={
-                                      <RestrictedRoute
-                                        roles={accessConfig.settings.roles}
-                                      >
-                                        <ThemeCreate />
-                                      </RestrictedRoute>
-                                    }
-                                  />
-                                </Route>
-                                <Route path="logout" element={<Logout />} />
+                              <Route path="campaign">
                                 <Route
-                                  path="*"
-                                  element={<Navigate to="/admin/slide/list" />}
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.campaign.roles}
+                                    >
+                                      <PlaylistCampaignCreate location="campaign" />
+                                    </RestrictedRoute>
+                                  }
                                 />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.campaign.roles}
+                                    >
+                                      <PlaylistCampaignEdit location="campaign" />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.campaign.roles}
+                                    >
+                                      <PlaylistCampaignList location="campaign" />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="playlist">
+                                <Route
+                                  path="create"
+                                  element={
+                                    <PlaylistCampaignCreate location="playlist" />
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <PlaylistCampaignEdit location="playlist" />
+                                  }
+                                />
+                                <Route
+                                  path="list"
+                                  element={
+                                    <PlaylistCampaignList location="playlist" />
+                                  }
+                                />
+                              </Route>
+                              <Route path="shared">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.shared.roles}
+                                    >
+                                      <SharedPlaylists />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="screen">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.screen.roles}
+                                    >
+                                      <ScreenList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.screen.roles}
+                                    >
+                                      <ScreenCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.screen.roles}
+                                    >
+                                      <ScreenEdit />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="group">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.groups.roles}
+                                    >
+                                      <GroupsList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.groups.roles}
+                                    >
+                                      <GroupEdit />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.groups.roles}
+                                    >
+                                      <GroupCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="slide">
+                                <Route path="list" element={<SlidesList />} />
+                                <Route
+                                  path="create"
+                                  element={<SlideCreate />}
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={<SlideEdit />}
+                                />
+                              </Route>
+                              <Route path="media">
+                                <Route path="list" element={<MediaList />} />
+                                <Route
+                                  path="create"
+                                  element={<MediaCreate />}
+                                />
+                              </Route>
+                              <Route path="themes">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <ThemesList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <ThemeEdit />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <ThemeCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="logout" element={<Logout />} />
+                              <Route
+                                path="*"
+                                element={<Navigate to="/admin/slide/list" />}
+                              />
                             </Routes>
                           </main>
                         )}

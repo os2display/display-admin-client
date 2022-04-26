@@ -98,9 +98,7 @@ function MediaSelectorModal({
       onHide={onClose}
     >
       <ModalDialog
-        title={
-        t("slide-media-modal.multiple-select-title")
-        }
+        title={t("slide-media-modal.multiple-select-title")}
         onClose={handleReject}
         handleAccept={handleAccept}
         acceptText={t("slide-media-modal.accept")}
@@ -128,7 +126,6 @@ MediaSelectorModal.propTypes = {
 };
 
 export default MediaSelectorModal;
-
 
 // {
 //   "table": [
