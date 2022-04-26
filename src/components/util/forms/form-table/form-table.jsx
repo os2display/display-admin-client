@@ -35,9 +35,11 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
 
   // Sets table/source data from content
   useEffect(() => {
-    if (value?.table) {
-      setColumns(value.table[0].columns);
-      setData(value.table[1]);
+    if (value && value.length > 0) {
+      setColumns(value[0].columns);
+      const valueCopy = [...value];
+      valueCopy.shift();
+      setData(valueCopy);
     }
     if (value?.dataSource) {
       setDataSource(value.dataSource);
@@ -200,7 +202,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
                 .filter(({ Header }) => Header) // Remove select column
                 .map(({ Header, accessor }) => (
                   <li key={accessor} className="list-group-item">
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between align-items-center">
                       {Header}
                       <FontAwesomeIcon
                         onClick={() => removeColumn(accessor)}
