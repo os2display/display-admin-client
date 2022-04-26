@@ -368,7 +368,7 @@ function App() {
                               <Route path="logout" element={<Logout />} />
                               <Route
                                 path="*"
-                                element={<Navigate to="/admin/slide/list" />}
+                                element={<Navigate to="/slide/list" />}
                               />
                             </Routes>
                           </main>
