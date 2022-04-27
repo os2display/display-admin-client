@@ -4,11 +4,11 @@ describe("Nav items loads", () => {
       statusCode: 201,
       fixture: "token.json",
     }).as("token");
-    cy.visit("/admin");
+    cy.visit("");
     cy.intercept("GET", "**/layouts*", { fixture: "screens/layouts.json" }).as(
       "layouts"
     );
-    cy.visit("/admin/screen/create");
+    cy.visit("/screen/create");
     cy.get("#login").click();
     cy.wait(["@layouts"]);
   });

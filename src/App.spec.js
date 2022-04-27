@@ -7,7 +7,7 @@ describe("Simple app loads", () => {
     cy.intercept("GET", "**/slides*", {
       fixture: "slides/slides.json",
     }).as("slides");
-    cy.visit("/admin/slide/list?published=all&page=1&order=asc&sort=title");
+    cy.visit("/slide/list?published=all&page=1&order=asc&sort=title");
     cy.get("#login").click();
     cy.wait(["@slides", "@token"]);
   });

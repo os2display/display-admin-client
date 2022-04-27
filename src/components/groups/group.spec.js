@@ -4,7 +4,7 @@ describe("Group pages work", () => {
       statusCode: 201,
       fixture: "token.json",
     }).as("token");
-    cy.visit("/admin/group/create");
+    cy.visit("/group/create");
     cy.get("#login").click();
   });
 

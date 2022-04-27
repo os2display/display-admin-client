@@ -10,7 +10,7 @@ describe("Screen list loads", () => {
     cy.intercept("GET", "**/screens*", {
       fixture: "screens/screens.json",
     }).as("screens");
-    cy.visit("/admin/screen/list");
+    cy.visit("/screen/list");
     cy.get("#login").click();
     cy.wait(["@screens", "@groups", "@groups", "@token"]);
   });

@@ -7,7 +7,7 @@ describe("Table loads", () => {
     cy.intercept("GET", "**/themes*", {
       fixture: "themes/themes-first-page.json",
     }).as("themesData");
-    cy.visit("/admin/themes/list");
+    cy.visit("/themes/list");
     cy.get("#login").click();
     cy.wait(["@themesData"]);
   });
