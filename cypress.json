@@ -4,7 +4,6 @@
   "pluginsFile": false,
   "supportFile": false,
   "viewportHeight": 4000,
-  "baseUrl": "http://admin/",
   "retries": {
     "runMode": 2,
     "openMode": 0
