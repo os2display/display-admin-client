@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
-import MultiSelectComponent from '../../../util/forms/multiselect-dropdown/multi-dropdown';
+import MultiSelectComponent from "../../../util/forms/multiselect-dropdown/multi-dropdown";
 
 /**
  * A multiselect and table for groups.
@@ -12,7 +11,13 @@ import MultiSelectComponent from '../../../util/forms/multiselect-dropdown/multi
  * @param {string} props.helpText Helptext for dropdown.
  * @returns {object} Select groups table.
  */
-function StationSelector({ onChange, name, helpText, label, value }) {
+function StationSelector({
+  onChange,
+  name,
+  helpText,
+  label,
+  value: inputValue,
+}) {
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
 
@@ -25,7 +30,7 @@ function StationSelector({ onChange, name, helpText, label, value }) {
   function handleAdd({ target }) {
     const { value, id: localId } = target;
     onChange({
-      target: { id: localId, value: value },
+      target: { id: localId, value },
     });
   }
 
@@ -38,17 +43,17 @@ function StationSelector({ onChange, name, helpText, label, value }) {
     setSearchText(filter);
   }
 
-
   useEffect(() => {
-      fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/location?input=user%20i${searchText}?&format=json`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data && data.LocationList) {
-          setData(data.LocationList.StopLocation)
+    fetch(
+      `https://xmlopen.rejseplanen.dk/bin/rest.exe/location?input=user%20i${searchText}?&format=json`
+    )
+      .then((response) => response.json())
+      .then((rpData) => {
+        if (rpData && rpData.LocationList) {
+          setData(rpData.LocationList.StopLocation);
         }
-        })
-        .catch(() =>{}
-        );
+      })
+      .catch(() => {});
   }, [searchText]);
 
   return (
@@ -59,7 +64,7 @@ function StationSelector({ onChange, name, helpText, label, value }) {
             options={data}
             handleSelection={handleAdd}
             name={name}
-            selected={value}
+            selected={inputValue}
             filterCallback={onFilter}
             label={label}
           />
@@ -71,14 +76,15 @@ function StationSelector({ onChange, name, helpText, label, value }) {
 }
 
 StationSelector.defaultProps = {
-  id: "",
+  helpText: "",
 };
 
 StationSelector.propTypes = {
+  label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  id: PropTypes.string,
-  helpText: PropTypes.string.isRequired,
+  value: PropTypes.objectOf(PropTypes.any).isRequired,
+  helpText: PropTypes.string,
 };
 
 export default StationSelector;

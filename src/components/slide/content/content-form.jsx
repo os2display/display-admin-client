@@ -7,15 +7,13 @@ import Contacts from "./contacts/contacts";
 import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 import FileSelector from "./file-selector";
-import StationSelector from './station/station-selector';
+import StationSelector from "./station/station-selector";
 
 /**
  * Render form elements for content form.
  *
  * @param {object} props - The props.
  * @param {Array} props.data - The data to render in the form element.
- * @param {Function} props.requiredFieldCallback - If the form is required, a
- *   callback to add to validation.
  * @param {Array} props.errors - An error list, if there are validation errors.
  * @param {Function} props.onChange - Callback, if the value of the field changes.
  * @param {object} props.formStateObject - The form state.
@@ -52,7 +50,6 @@ function ContentForm({
   function renderElement(formData) {
     let returnElement;
     let defaultMimetypes = null;
-
     switch (formData.input) {
       case "image":
       case "video":
@@ -84,7 +81,8 @@ function ContentForm({
         );
         break;
       case "duration":
-        returnElement = (<FormInput
+        returnElement = (
+          <FormInput
             name={formData.name}
             min={formData.min}
             type={formData.type}
@@ -121,7 +119,7 @@ function ContentForm({
         );
 
         break;
-      case "stations":
+      case "travel-plan":
         returnElement = (
           <StationSelector
             name={formData.name}
@@ -252,7 +250,6 @@ function ContentForm({
 
 ContentForm.defaultProps = {
   errors: [],
-  requiredFieldCallback: null,
   onChange: null,
   mediaData: {},
 };
@@ -269,7 +266,6 @@ ContentForm.propTypes = {
   }).isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   formStateObject: PropTypes.shape({}).isRequired,
-  requiredFieldCallback: PropTypes.func,
   onChange: PropTypes.func,
   onFileChange: PropTypes.func.isRequired,
   mediaData: PropTypes.objectOf(PropTypes.object),

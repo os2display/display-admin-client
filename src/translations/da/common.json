@@ -283,6 +283,7 @@
     }
   },
   "slide-form": {
+    "template-error": "Der skete en fejl da skabelonen skulle hentes:",
     "touch-region": "Touch region",
     "touch-region-button-text-label": "Knaptekst i touch region",
     "touch-region-button-text-helptext": "Her kan du sætte knapteksten, hvis slidet indgår i en touch region, hvor slides bliver vist som knapper der kan åbnes.",
