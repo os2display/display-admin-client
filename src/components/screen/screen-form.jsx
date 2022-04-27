@@ -21,6 +21,7 @@ import {
 } from "../../redux/api/api.generated";
 import { displayError } from "../util/list/toast-component/display-toast";
 import "./screen-form.scss";
+import FormCheckbox from "../util/forms/form-checkbox";
 
 /**
  * The screen form component.
@@ -287,6 +288,16 @@ function ScreenForm({
               />
             )}
           </div>
+        </ContentBody>
+        <ContentBody id="color-scheme-section">
+          <h2 className="h4">{t("enable-color-scheme-change-headline")}</h2>
+          <FormCheckbox
+            name="enableColorSchemeChange"
+            label={t("enable-color-scheme-change")}
+            helpText={t("enable-color-scheme-change-helptext")}
+            value={screen.enableColorSchemeChange}
+            onChange={handleInput}
+          />
         </ContentBody>
         <ContentFooter>
           <Button

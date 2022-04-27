@@ -269,6 +269,7 @@ function ScreenManager({
           width: localFormStateObject.dimensions.width,
           height: localFormStateObject.dimensions.height,
         },
+        enableColorSchemeChange: localFormStateObject.enableColorSchemeChange,
       }),
     };
 
