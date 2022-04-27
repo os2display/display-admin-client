@@ -7,7 +7,7 @@ describe("Slide pages work", () => {
     cy.intercept("GET", "**/themes*", {
       fixture: "slides/themes.json",
     }).as("themes");
-    cy.visit("/admin/slide/create");
+    cy.visit("/slide/create");
     cy.get("#login").click();
     cy.wait(["@themes", "@token"]);
   });
@@ -21,7 +21,7 @@ describe("Slide pages work", () => {
     cy.intercept("GET", "**/templates?itemsPerPage=300&**", {
       fixture: "slides/templates.json",
     }).as("templates");
-    cy.visit("/admin/slide/create");
+    cy.visit("/slide/create");
     cy.wait(["@templates"]);
     // Pick a template
     cy.get("#template-section")
@@ -91,7 +91,7 @@ describe("Slide pages work", () => {
     cy.intercept("GET", "**/templates?itemsPerPage=300&**", {
       fixture: "slides/templates.json",
     }).as("templates");
-    cy.visit("/admin/slide/create");
+    cy.visit("/slide/create");
     cy.wait(["@templates"]);
 
     // Neither the sidebar or overlay should be displayed
@@ -121,7 +121,7 @@ describe("Slide pages work", () => {
 
     // Redirects, goes back and responsive side is opened due to local storage
     cy.get("#cancel_slide").click();
-    cy.visit("/admin/slide/create");
+    cy.visit("/slide/create");
     cy.get(".responsive-side").should("exist");
   });
 
@@ -157,7 +157,7 @@ describe("Slide pages work", () => {
     });
 
     // Get the selected theme, to see if it is saved when create slide is visited again
-    // cy.visit("/admin/slide/create");
+    // cy.visit("/slide/create");
     cy.get("#theme-section")
       .find(".dropdown-heading-value")
       .eq(0)

@@ -12,7 +12,7 @@ describe("Info modal tests", () => {
       fixture: "playlists/slides.json",
     }).as("slides");
 
-    cy.visit("/admin/playlist/list");
+    cy.visit("/playlist/list");
     cy.get("#login").click();
     cy.wait([
       "@playlists",
@@ -57,7 +57,7 @@ describe("Info modal tests", () => {
     cy.intercept("GET", "**/playlists/*", {
       fixture: "info-modal/playlist.json",
     }).as("playlists");
-    cy.visit("/admin/slide/list");
+    cy.visit("/slide/list");
     cy.get("#login").click();
     cy.wait(["@slides", "@token"]);
 
@@ -83,7 +83,7 @@ describe("Info modal tests", () => {
     cy.intercept("GET", "**/screens*", {
       fixture: "screens/screens.json",
     }).as("screens");
-    cy.visit("/admin/screen/list");
+    cy.visit("/screen/list");
     cy.get("#login").click();
     cy.wait(["@screens", "@groups", "@groups", "@token"]);
 
@@ -106,7 +106,7 @@ describe("Info modal tests", () => {
       fixture: "info-modal/groups.json",
     }).as("groups");
 
-    cy.visit("/admin/group/list");
+    cy.visit("/group/list");
     cy.get("#login").click();
 
     cy.intercept("GET", "**/screens*", {

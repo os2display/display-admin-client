@@ -10,7 +10,7 @@ describe("Slides list tests", () => {
     cy.intercept("GET", "**/templates/*", {
       fixture: "slides/templates.json",
     }).as("templates");
-    cy.visit("/admin/slide/list");
+    cy.visit("/slide/list");
     cy.get("#login").click();
     cy.wait(["@slides", "@templates", "@templates", "@token"]);
   });

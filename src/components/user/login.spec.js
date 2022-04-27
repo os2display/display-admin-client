@@ -1,6 +1,6 @@
 describe("Login works", () => {
   it("Login one tenant works", () => {
-    cy.visit("/admin/playlist/list");
+    cy.visit("/playlist/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
@@ -10,7 +10,7 @@ describe("Login works", () => {
       fixture: "groups/groups.json",
     }).as("groups");
 
-    cy.visit("/admin/group/list");
+    cy.visit("/group/list");
 
     cy.get("#login").click();
     cy.wait(["@token"]);
@@ -27,7 +27,7 @@ describe("Login works", () => {
       fixture: "groups/groups.json",
     }).as("groups");
 
-    cy.visit("/admin/group/list");
+    cy.visit("/group/list");
 
     cy.get("#login").click();
 
@@ -50,7 +50,7 @@ describe("Login works", () => {
   });
 
   it("Login with tenant that has role editor", () => {
-    cy.visit("/admin/playlist/list");
+    cy.visit("/playlist/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token-role-editor.json",
@@ -60,7 +60,7 @@ describe("Login works", () => {
       fixture: "groups/groups.json",
     }).as("groups");
 
-    cy.visit("/admin/group/list");
+    cy.visit("/group/list");
 
     cy.get("#login").click();
     cy.wait(["@token"]);
@@ -69,7 +69,7 @@ describe("Login works", () => {
   });
 
   it("Role editor should not be able to visit restricted route", () => {
-    cy.visit("/admin/playlist/list");
+    cy.visit("/playlist/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token-role-editor.json",
@@ -79,7 +79,7 @@ describe("Login works", () => {
       fixture: "groups/groups.json",
     }).as("groups");
 
-    cy.visit("/admin/shared/list");
+    cy.visit("/shared/list");
 
     cy.get("#login").click();
     cy.wait(["@token"]);
@@ -89,7 +89,7 @@ describe("Login works", () => {
   });
 
   it("Login with tenant that has role admin", () => {
-    cy.visit("/admin/playlist/list");
+    cy.visit("/playlist/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
@@ -99,7 +99,7 @@ describe("Login works", () => {
       fixture: "groups/groups.json",
     }).as("groups");
 
-    cy.visit("/admin/group/list");
+    cy.visit("/group/list");
 
     cy.get("#login").click();
     cy.wait(["@token"]);

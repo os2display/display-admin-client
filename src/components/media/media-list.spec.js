@@ -7,7 +7,7 @@ describe("media list tests", () => {
       statusCode: 201,
       fixture: "token.json",
     }).as("token");
-    cy.visit("/admin/media/list");
+    cy.visit("/media/list");
     cy.get("#login").click();
     cy.wait(["@media"]);
   });

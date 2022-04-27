@@ -6,7 +6,7 @@ describe("Playlist pages work", () => {
       fixture: "playlists/tenants.json",
     }).as("tenants");
 
-    cy.visit("/admin/playlist/list");
+    cy.visit("/playlist/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
@@ -14,7 +14,7 @@ describe("Playlist pages work", () => {
     cy.intercept("GET", "**/slides*", {
       fixture: "playlists/playlist-slide.json",
     }).as("slides");
-    cy.visit("/admin/playlist/create");
+    cy.visit("/playlist/create");
     cy.get("#login").click();
     cy.wait(["@slides", "@token", "@tenants"]);
   });
@@ -144,7 +144,7 @@ describe("Playlist pages work", () => {
   });
 
   it("Playlist section is highlighted if shared true is in url", () => {
-    cy.visit("/admin/playlist/create?shared=true");
+    cy.visit("/playlist/create?shared=true");
     cy.get("#shared-section").should("have.class", "border-warning");
   });
 });

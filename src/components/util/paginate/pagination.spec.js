@@ -7,7 +7,7 @@ describe("Pagination loads", () => {
     cy.intercept("GET", "**/themes*", {
       fixture: "themes/themes-first-page.json",
     }).as("themesData");
-    cy.visit("/admin/themes/list");
+    cy.visit("/themes/list");
     cy.get("#login").click();
     cy.wait(["@themesData", "@token"]);
   });
@@ -48,7 +48,7 @@ describe("Pagination loads", () => {
     cy.intercept("GET", "**/themes*", {
       fixture: "themes/themes-second-page.json",
     }).as("themesData");
-    cy.visit("/admin/themes/list?page=2&order=asc&sort=title");
+    cy.visit("/themes/list?page=2&order=asc&sort=title");
     cy.wait(["@themesData"]);
 
     cy.get(".pagination")
