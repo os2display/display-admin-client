@@ -53,8 +53,8 @@ services:
     depends_on:
       - nginx
     environment:
-      - CYPRESS_VIDEO=false
-      - CYPRESS_baseUrl=http://nginx
+      - CYPRESS_VIDEO=true
+      - CYPRESS_baseUrl=http://nginx/admin
     volumes:
       - .:/e2e
       - /tmp/.X11-unix:/tmp/.X11-unix
