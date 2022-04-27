@@ -33,11 +33,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   /** Map loaded data. */
   useEffect(() => {
     if (data) {
-      setSelectedData(
-        data["hydra:member"].map(({ screen }) => {
-          return screen;
-        })
-      );
+      setSelectedData(data["hydra:member"].map(({ screen }) => screen));
     }
   }, [data]);
 
