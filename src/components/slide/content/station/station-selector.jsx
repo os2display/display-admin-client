@@ -62,6 +62,7 @@ function StationSelector({
         <>
           <MultiSelectComponent
             options={data}
+            singleSelect
             handleSelection={handleAdd}
             name={name}
             selected={inputValue}
