@@ -98,11 +98,7 @@ function MediaSelectorModal({
       onHide={onClose}
     >
       <ModalDialog
-        title={
-          multiple
-            ? t("slide-media-modal.multiple-select-title")
-            : t("slide-media-modal.single-select-title")
-        }
+        title={t("slide-media-modal.multiple-select-title")}
         onClose={handleReject}
         handleAccept={handleAccept}
         acceptText={t("slide-media-modal.accept")}

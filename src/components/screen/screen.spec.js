@@ -1,6 +1,6 @@
 describe("Screen pages work", () => {
   beforeEach(() => {
-    cy.visit("/screen/list");
+    cy.visit("/admin/screen/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
@@ -9,7 +9,7 @@ describe("Screen pages work", () => {
     cy.intercept("GET", "**/layouts*", { fixture: "screens/layouts.json" }).as(
       "layouts"
     );
-    cy.visit("/screen/create");
+    cy.visit("/admin/screen/create");
     cy.get("#login").click();
     cy.wait(["@layouts"]);
   });

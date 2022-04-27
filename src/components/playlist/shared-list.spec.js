@@ -8,12 +8,12 @@ describe("Shared list tests", () => {
       fixture: "playlists/playlists.json",
     }).as("playlists");
 
-    cy.visit("/shared/list");
+    cy.visit("/admin/shared/list");
     cy.get("#login").click();
     cy.wait(["@playlists", "@playlists", "@token"]);
   });
   it("It loads shared playlist list", () => {
-    cy.visit("/shared/list");
+    cy.visit("/admin/shared/list");
     cy.get("table").find("tbody").should("not.be.empty");
     cy.get("tbody").find("tr td").should("exist");
   });

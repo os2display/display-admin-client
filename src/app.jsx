@@ -119,7 +119,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("/access-config.json")
+    fetch("/admin/access-config.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setAccessConfig(jsonData);

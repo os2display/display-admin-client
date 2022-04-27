@@ -8,7 +8,7 @@ describe("Groups list tests", () => {
       fixture: "groups/groups.json",
     }).as("groups");
 
-    cy.visit("/group/list");
+    cy.visit("/admin/group/list");
     cy.get("#login").click();
     cy.wait(["@groups"]);
   });

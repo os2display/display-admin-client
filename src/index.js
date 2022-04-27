@@ -8,7 +8,7 @@ import App from "./app";
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <BrowserRouter>
+      <BrowserRouter basename="/admin">
         <App />
       </BrowserRouter>
     </React.StrictMode>

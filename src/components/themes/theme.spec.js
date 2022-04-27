@@ -1,11 +1,11 @@
 describe("Theme pages work", () => {
   beforeEach(() => {
-    cy.visit("/themes/list");
+    cy.visit("/admin/themes/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
     }).as("token");
-    cy.visit("/themes/create");
+    cy.visit("/admin/themes/create");
     cy.get("#login").click();
     cy.wait(["@token"]);
   });

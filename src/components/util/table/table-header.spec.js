@@ -7,7 +7,7 @@ describe("Table header loads", () => {
     cy.intercept("GET", "**/themes*", {
       fixture: "themes/themes-first-page.json",
     }).as("themesData");
-    cy.visit("/themes/list");
+    cy.visit("/admin/themes/list");
     cy.get("#login").click();
     cy.wait(["@themesData", "@token"]);
   });
@@ -17,7 +17,7 @@ describe("Table header loads", () => {
   });
 
   it("Loads parametres search url", () => {
-    cy.visit("/themes/list?page=1&order=asc&sort=title&search=harum");
+    cy.visit("/admin/themes/list?page=1&order=asc&sort=title&search=harum");
     cy.get("#search-field")
       .invoke("val")
       .should("match", /^harum/);
@@ -35,8 +35,8 @@ describe("Table header loads", () => {
         published: "false",
       },
     }).as("slidesData");
-    cy.visit("/slide/list");
-    cy.visit("/slide/list?page=1&order=asc&sort=title&published=not-published");
+    cy.visit("/admin/slide/list");
+    cy.visit("/admin/slide/list?page=1&order=asc&sort=title&published=not-published");
     cy.wait("@slidesData").then((interception) => {
       assert.isNotNull(interception.response.body, "Not all published");
     });
