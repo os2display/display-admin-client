@@ -613,6 +613,9 @@
     }
   },
   "screen-form": {
+    "enable-color-scheme-change-headline": "Farveskema",
+    "enable-color-scheme-change": "Aktivér farveskema skift",
+    "enable-color-scheme-change-helptext": "Hvis dette aktiveres vil skærmen skifte til \"dark mode\" når solen går ned og skifte til normal visning når solen står op. Dette påvirker kun skabeloner der understøtter \"dark mode\".",
     "touch-region": "(Touch)",
     "touch-region-helptext": "Touch region: En touch region fungerer anderledes end en normal region. I en touch region bliver slides der er tilføjet lavet til knapper der kan åbnes i fuld skærm.",
     "bind-header": "Tilkobling",

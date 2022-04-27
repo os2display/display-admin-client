@@ -36,7 +36,9 @@ describe("Table header loads", () => {
       },
     }).as("slidesData");
     cy.visit("/admin/slide/list");
-    cy.visit("/admin/slide/list?page=1&order=asc&sort=title&published=not-published");
+    cy.visit(
+      "/admin/slide/list?page=1&order=asc&sort=title&published=not-published"
+    );
     cy.wait("@slidesData").then((interception) => {
       assert.isNotNull(interception.response.body, "Not all published");
     });
