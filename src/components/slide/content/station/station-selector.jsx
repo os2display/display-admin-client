@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../../../util/forms/multiselect-dropdown/multi-dropdown";
+import { displayError } from "../../../util/list/toast-component/display-toast";
 
 /**
  * A multiselect and table for groups.
@@ -18,9 +20,9 @@ function StationSelector({
   label,
   value: inputValue,
 }) {
+  const { t } = useTranslation("common", { keyPrefix: "station-selector" });
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-
   /**
    * Adds group to list of groups.
    *
@@ -53,7 +55,9 @@ function StationSelector({
           setData(rpData.LocationList.StopLocation);
         }
       })
-      .catch(() => {});
+      .catch((er) => {
+        displayError(t("get-error"), er);
+      });
   }, [searchText]);
 
   return (
