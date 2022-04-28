@@ -23,6 +23,7 @@ import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table
 import localStorageKeys from "../util/local-storage-keys";
 import "./slide-form.scss";
 import ConfigLoader from "../../config-loader";
+import { displayError } from "../util/list/toast-component/display-toast";
 
 /**
  * The slide form component.
@@ -119,14 +120,13 @@ function SlideForm({
     if (selectedTemplate) {
       // Get content form from template resources.
       const contentFormUrl = selectedTemplate?.resources?.admin;
-
       fetch(contentFormUrl)
         .then((response) => response.json())
         .then((data) => {
           setContentFormElements(data);
         })
-        .catch(() => {
-          // @TODO: Handle error case. Display error for user.
+        .catch((er) => {
+          displayError(t("slide-form.template-error"), er);
         });
 
       newSelectedTemplates.push(selectedTemplate);

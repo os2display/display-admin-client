@@ -283,6 +283,7 @@
     }
   },
   "slide-form": {
+    "template-error": "Der skete en fejl da skabelonen skulle hentes:",
     "touch-region": "Touch region",
     "touch-region-button-text-label": "Knaptekst i touch region",
     "touch-region-button-text-helptext": "Her kan du sætte knapteksten, hvis slidet indgår i en touch region, hvor slides bliver vist som knapper der kan åbnes.",
@@ -845,5 +846,8 @@
   },
   "multiselect-from-endpoint": {
     "error-fetching": "Der opstod en fejl da konfigurationsmulighederne skulle hentes. Datakilden er måske forkert konfigureret."
+  },
+  "station-selector": {
+    "get-error": "Der var en fejl da vi skulle hente stoppested fra rejseplanen"
   }
 }

@@ -41,11 +41,7 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
       onHide={onClose}
     >
       <ModalDialog
-        title={
-          multiple
-            ? t("media-modal.multiple-select-title")
-            : t("media-modal.single-select-title")
-        }
+        title={t("media-modal.multiple-select-title")}
         onClose={onClose}
         handleAccept={() => handleAccept(selectedImages)}
       >
