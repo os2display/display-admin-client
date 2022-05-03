@@ -35,7 +35,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   /** Map loaded data. */
   useEffect(() => {
     if (data) {
-      setSelectedData(data["hydra:member"]);
+      setSelectedData(data["hydra:member"].map(({ playlist }) => playlist));
     }
   }, [data]);
 
