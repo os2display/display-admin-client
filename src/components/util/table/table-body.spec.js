@@ -1,43 +1,20 @@
 describe("Table body loads", () => {
-  it("It loads", () => {
-    cy.visit("/tags");
-    cy.get("table").find("tbody").should("not.be.empty");
-    cy.get("tbody").find("tr td").should("have.length", 60);
+  beforeEach(() => {
+    cy.intercept("GET", "**/themes*", {
+      fixture: "themes/themes-first-page.json",
+    }).as("themesData");
+    cy.visit("/themes/list");
+    cy.intercept("POST", "**/token", {
+      statusCode: 201,
+      fixture: "token.json",
+    }).as("token");
+    cy.visit("/themes/list");
+    cy.get("#login").click();
+    cy.wait(["@themesData", "@token"]);
   });
 
-  it("If checked, the buttons are disabled", () => {
-    cy.visit("/tags");
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .eq(1)
-      .should("have.length", 1);
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .eq(1)
-      .should("be.not.disabled");
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .last()
-      .should("have.length", 1);
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .last()
-      .should("be.not.disabled");
-    cy.get('[type="checkbox"]').check();
-    cy.get("tbody").find("tr").eq(0).find("button").eq(1).should("be.disabled");
-    cy.get("tbody")
-      .find("tr")
-      .eq(0)
-      .find("button")
-      .last()
-      .should("be.disabled");
+  it("It loads", () => {
+    cy.get("table").find("tbody").should("not.be.empty");
+    cy.get("tbody").find("tr td").should("have.length", 50);
   });
 });

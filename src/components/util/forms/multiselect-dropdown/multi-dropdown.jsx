@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import { useTranslation } from "react-i18next";
 import contentString from "../../helpers/content-string";
+import "./multi-dropdown.scss";
 
 /**
- * A searchablemultiselect component. Using a multiselect from
+ * A searchable multiselect component. Using a multiselect from
  * react-multi-select-component, and making some adjustments, replacing default
  * fuzzy search with string match and displaying the values selected using
  * contentstring-method.
@@ -23,6 +24,7 @@ import contentString from "../../helpers/content-string";
  * @param {string} props.helpText - Help text for the dropdown.
  * @param {Function} props.filterCallback - The callback on search filter.
  * @param {boolean} props.singleSelect - If the dropdown is single select.
+ * @param {boolean} props.disableSearch - Disable search option.
  * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({
@@ -37,6 +39,7 @@ function MultiSelectComponent({
   helpText,
   filterCallback,
   singleSelect,
+  disableSearch,
 }) {
   const { t } = useTranslation("common");
   const [error] = useState();
@@ -48,23 +51,26 @@ function MultiSelectComponent({
 
   /** Map data to fit component. */
   useEffect(() => {
-    const localMappedOptions = options.map((item) => {
-      return {
-        label: item.title,
-        value: item["@id"],
-        disabled: false,
-      };
-    });
+    const localMappedOptions =
+      options?.map((item) => {
+        return {
+          label: item.title || item.name,
+          value: item["@id"] || item.id,
+          disabled: false,
+        };
+      }) ?? [];
     let localMappedSelected = [];
+
     if (selected.length > 0) {
       localMappedSelected = selected.map((item) => {
         return {
-          label: item.title,
-          value: item["@id"],
+          label: item.title || item.name,
+          value: item["@id"] || item.id,
           disabled: false,
         };
       });
     }
+
     const optionsWithSelected = Object.values(
       [...localMappedOptions, ...localMappedSelected].reduce((a, c) => {
         const aCopy = { ...a };
@@ -73,6 +79,7 @@ function MultiSelectComponent({
       }, {})
     );
     setMappedOptions(optionsWithSelected);
+
     setMappedSelected(localMappedSelected);
   }, [selected, selected.length, options]);
 
@@ -87,14 +94,15 @@ function MultiSelectComponent({
     if (!filter) {
       return optionsToFilter;
     }
-    if (filter.length > 2) {
-      filterCallback(filter);
-    }
-    const re = new RegExp(filter, "i");
+
+    filterCallback(filter);
+
     return optionsToFilter.filter(
-      ({ label: shadowLabel }) => shadowLabel && shadowLabel.match(re)
+      ({ label: shadowLabel }) =>
+        shadowLabel && shadowLabel.match(new RegExp(filter, "i"))
     );
   }
+
   /**
    * A callback on changed data.
    *
@@ -102,14 +110,15 @@ function MultiSelectComponent({
    */
   function changeData(data) {
     let selectedOptions = [];
+
     if (data.length > 0) {
       const ids = data.map(({ value }) => value);
       selectedOptions = Object.values(
         [...selected, ...options]
-          .filter((option) => ids.includes(option["@id"]))
+          .filter((option) => ids.includes(option["@id"] || option.id))
           .reduce((a, c) => {
             const aCopy = { ...a };
-            aCopy[c["@id"]] = c;
+            aCopy[c["@id"] || c.id] = c;
             return aCopy;
           }, {})
       );
@@ -118,6 +127,7 @@ function MultiSelectComponent({
         selectedOptions = [selectedOptions[selectedOptions.length - 1]];
       }
     }
+
     const target = { value: selectedOptions, id: name };
     handleSelection({ target });
   }
@@ -144,15 +154,19 @@ function MultiSelectComponent({
             options={mappedOptions}
             value={mappedSelected}
             hasSelectAll={false}
+            disableSearch={disableSearch}
             filterOptions={filterOptions}
             onChange={changeData}
             id={name}
-            className={error ? "invalid" : ""}
+            className={`${error ? "invalid" : ""} ${
+              singleSelect ? "single-select" : ""
+            }`}
             isLoading={isLoading}
             valueRenderer={customValueRenderer}
+            labelledBy={name}
           />
           {error && <div className="invalid-feedback-multi">{textOnError}</div>}
-          {helpText && <small className="form-text">{helpText}</small>}
+          {helpText && <small>{helpText}</small>}
         </div>
       )}
     </>
@@ -167,12 +181,14 @@ MultiSelectComponent.defaultProps = {
   selected: [],
   options: [],
   singleSelect: false,
+  disableSearch: false,
+  filterCallback: () => {},
 };
 
 MultiSelectComponent.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.number,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       label: PropTypes.string,
       disabled: PropTypes.bool,
     })
@@ -180,12 +196,12 @@ MultiSelectComponent.propTypes = {
   handleSelection: PropTypes.func.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.number,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       label: PropTypes.string,
       disabled: PropTypes.bool,
     })
   ),
-  filterCallback: PropTypes.func.isRequired,
+  filterCallback: PropTypes.func,
   noSelectedString: PropTypes.string,
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
@@ -193,6 +209,7 @@ MultiSelectComponent.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   singleSelect: PropTypes.bool,
+  disableSearch: PropTypes.bool,
 };
 
 export default MultiSelectComponent;

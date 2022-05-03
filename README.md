@@ -1,8 +1,8 @@
-# Display admin
+# OS2Display Admin
 
-The admin for OS2Display ver. 2.
-
+This is an admin for OS2Display. 
 This is based on create-react-app.
+See [https://github.com/os2display/display-docs/blob/main/admin.md](https://github.com/os2display/display-docs/blob/main/admin.md) for a description of the admin.
 
 ## Docker development setup
 
@@ -23,6 +23,14 @@ And modify the entries to suit your setup.
 }
 ```
 
+### Create public/access-config file
+
+This file contains the access config. This file is only required if other access setting are required than what is default.
+
+```bash
+cp public/example-access-config.json public/access-config.json
+```
+
 ### Up the containers
 
 ```bash
@@ -32,7 +40,25 @@ docker-compose up -d
 ### Install npm packages
 
 ```bash
-docker-compose run node yarn install
+docker-compose run node yarn
+```
+
+### Redux Toolkit
+
+The communication with the API is generated from an OpenAPI
+specification with Redux Toolkit.
+
+To regenerate (when the API specification has changed):
+
+```bash
+docker-compose exec node bash
+cd src/redux/api
+
+# Action: Replace api.json with the new api.json OpenAPI specification
+
+# Install and run scripts to generate ned Redux Api slices.
+npm install
+npm start
 ```
 
 ## Testing with cypress
@@ -53,22 +79,4 @@ docker-compose run node yarn check-coding-standards
 
 ```bash
 docker-compose run node yarn apply-coding-standards
-```
-
-### Redux Toolkit
-
-The communication with the API is generated from an OpenAPI
-specification with Redux Toolkit.
-
-To regenerate (when the API specification has changed):
-
-```bash
-docker-compose exec node bash
-cd src/redux/api
-
-# Action: Replace api.json with the new api.json OpenAPI specification
-
-# Install and run scripts to generate ned Redux Api slices.
-npm install
-npm start
 ```

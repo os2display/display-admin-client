@@ -9,7 +9,7 @@ function selectedHelper(row, selectedData) {
   if (alreadySelected) {
     selectedData.splice(selectedData.indexOf(alreadySelected), 1);
   } else {
-    selectedData.push(row);
+    selectedData.push({ id: row["@id"], title: row.title });
   }
   return selectedData;
 }

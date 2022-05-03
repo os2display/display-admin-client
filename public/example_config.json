@@ -1,3 +1,4 @@
 {
-  "api": "/api/"
+  "api": "http://api-display-admin-client.local.itkdev.dk/",
+  "touchButtonRegions": false
 }

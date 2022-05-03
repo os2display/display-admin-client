@@ -1,7 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ThemeForm from "./theme-form";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import { usePostV1ThemesMutation } from "../../redux/api/api.generated";
 import idFromUrl from "../util/helpers/id-from-url";
 
@@ -11,9 +15,10 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @returns {object} The themes create page.
  */
 function ThemeCreate() {
-  const { t } = useTranslation("common");
-  const history = useHistory();
-  const headerText = t("theme-create.create-new-theme");
+  const { t } = useTranslation("common", { keyPrefix: "theme-create" });
+  const navigate = useNavigate();
+  const headerText = t("create-new-theme");
+  const [loadingMessage] = useState(t("loading-messages.saving-theme"));
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
@@ -42,7 +47,7 @@ function ThemeCreate() {
   /** When the theme is saved, it redirects to edit theme. */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      history.push(`/themes/edit/${idFromUrl(data["@id"])}`);
+      navigate(`/themes/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
 
@@ -58,15 +63,29 @@ function ThemeCreate() {
     postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
   }
 
+  /** If the theme is saved, display the success message */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("success-messages.saved-theme"));
+    }
+  }, [isSaveSuccess]);
+
+  /** If the theme is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(t("error-messages.save-theme-error"), saveError);
+    }
+  }, [saveError]);
+
   return (
     <ThemeForm
       theme={formStateObject}
       headerText={`${headerText}: ${formStateObject?.title}`}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
+      isLoading={isSaving}
+      loadingMessage={loadingMessage}
       isSaveSuccess={isSaveSuccess}
-      isSaving={isSaving}
       errors={saveError || false}
     />
   );

@@ -14,8 +14,9 @@ import "./sidebar.scss";
 function SideBar() {
   const [t] = useTranslation("common");
   const [active, setActive] = useState();
+
   return (
-    <Col className="bg-dark border-end d-none d-lg-block" lg={3} xl={2}>
+    <Col className="bg-dark border-end d-none d-lg-block">
       <Nav
         variant="dark"
         id="sidebar"

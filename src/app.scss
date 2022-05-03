@@ -43,3 +43,40 @@ body,
   bottom: 3%;
   background-color: white;
 }
+
+.spinner-overlay {
+  background-color: white;
+  color: black;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 5em;
+  z-index: 10;
+
+  .spinner-container {
+    display: flex;
+    position: fixed;
+
+    .loading-spinner {
+      margin-right: 1em;
+    }
+  }
+}
+
+.table {
+  td {
+    vertical-align: middle;
+  }
+  td:last-child {
+    button {
+      float: right;
+    }
+    .btn-secondary {
+      float: left;
+    }
+  }
+}

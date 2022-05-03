@@ -1,10 +1,14 @@
 import { React, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   useGetV1ScreenGroupsByIdQuery,
   usePutV1ScreenGroupsByIdMutation,
 } from "../../redux/api/api.generated";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import GroupForm from "./group-form";
 
 /**
@@ -13,16 +17,16 @@ import GroupForm from "./group-form";
  * @returns {object} The group edit page.
  */
 function GroupEdit() {
-  const { t } = useTranslation("common");
-  const headerText = t("group-edit.edit-group-header");
+  const { t } = useTranslation("common", { keyPrefix: "group-edit" });
+  const headerText = t("edit-group-header");
   const [formStateObject, setFormStateObject] = useState();
-  useState([]);
+  const [savingGroup, setSavingGroup] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("loading-messages.loading-group")
+  );
   const { id } = useParams();
-
-  const [
-    PutV1ScreenGroup,
-    { isLoading: isSaving, error: saveError, isSuccess: isSaveSuccess },
-  ] = usePutV1ScreenGroupsByIdMutation();
+  const [PutV1ScreenGroup, { error: saveError, isSuccess: isSaveSuccess }] =
+    usePutV1ScreenGroupsByIdMutation();
 
   const {
     data,
@@ -36,6 +40,36 @@ function GroupEdit() {
       setFormStateObject(data);
     }
   }, [data]);
+
+  /** If the group is saved, display the success message */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      setSavingGroup(false);
+      displaySuccess(t("success-messages.saved-group"));
+    }
+  }, [isSaveSuccess]);
+
+  /** If the group is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(t("error-messages.save-group-error"), saveError);
+      setSavingGroup(false);
+    }
+  }, [saveError]);
+
+  /** If the group is not loaded, display the error message */
+  useEffect(() => {
+    if (loadError) {
+      displayError(
+        t("error-messages.load-group-error", {
+          error: loadError.error
+            ? loadError.error
+            : loadError.data["hydra:description"],
+          id,
+        })
+      );
+    }
+  }, [loadError]);
 
   /**
    * Set state on change in input field
@@ -51,6 +85,8 @@ function GroupEdit() {
 
   /** Handles submit. */
   function handleSubmit() {
+    setSavingGroup(true);
+    setLoadingMessage(t("loading-messages.saving-group"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -73,10 +109,8 @@ function GroupEdit() {
           }`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoading}
-          isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
-          errors={loadError || saveError || false}
+          isLoading={isLoading || savingGroup}
+          loadingMessage={loadingMessage}
         />
       )}
     </>

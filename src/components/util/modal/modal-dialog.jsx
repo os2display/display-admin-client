@@ -69,8 +69,8 @@ function ModalDialog({
 }
 
 ModalDialog.defaultProps = {
-  acceptText: "",
-  declineText: "",
+  acceptText: null,
+  declineText: null,
   showAcceptButton: true,
   handleAccept: () => {},
   btnVariant: "primary",

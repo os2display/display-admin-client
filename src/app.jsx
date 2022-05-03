@@ -1,25 +1,25 @@
-import { React } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { React, useEffect, useState, Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
+import { Routes, Route, Navigate } from "react-router-dom";
 import i18next from "i18next";
+import { ToastContainer } from "react-toastify";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import TopBar from "./components/navigation/topbar/topbar";
+import localStorageKeys from "./components/util/local-storage-keys";
+import RestrictedRoute from "./restricted-route";
+import Topbar from "./components/navigation/topbar/top-bar";
 import SideBar from "./components/navigation/sidebar/sidebar";
 import ScreenList from "./components/screen/screen-list";
 import SlidesList from "./components/slide/slides-list";
 import GroupsList from "./components/groups/groups-list";
 import GroupCreate from "./components/groups/group-create";
 import GroupEdit from "./components/groups/group-edit";
-import PlaylistList from "./components/playlist/playlist-list";
-import PlaylistEdit from "./components/playlist/playlist-edit";
-import PlaylistCreate from "./components/playlist/playlist-create";
+import PlaylistCampaignList from "./components/playlist/playlist-campaign-list";
+import PlaylistCampaignEdit from "./components/playlist/playlist-campaign-edit";
+import PlaylistCampaignCreate from "./components/playlist/playlist-campaign-create";
 import MediaList from "./components/media/media-list";
-// import MediaEdit from "./components/media/media-edit";
 import commonDa from "./translations/da/common.json";
-import EditUser from "./components/edit-user/edit-user";
-import UserList from "./components/user-list/user-list";
 import ScreenCreate from "./components/screen/screen-create";
 import ScreenEdit from "./components/screen/screen-edit";
 import SlideEdit from "./components/slide/slide-edit";
@@ -28,6 +28,14 @@ import MediaCreate from "./components/media/media-create";
 import ThemesList from "./components/themes/themes-list";
 import ThemeCreate from "./components/themes/theme-create";
 import ThemeEdit from "./components/themes/theme-edit";
+import UserContext from "./context/user-context";
+import ListContext from "./context/list-context";
+import SharedPlaylists from "./components/playlist/shared-playlists";
+import Logout from "./components/user/logout";
+import AuthHandler from "./auth-handler";
+import LoadingComponent from "./components/util/loading-component/loading-component";
+import ModalProvider from "./context/modal-context/modal-provider";
+import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
 /**
@@ -36,53 +44,344 @@ import "./app.scss";
  * @returns {object} The component.
  */
 function App() {
-  i18next.init({
-    interpolation: { escapeValue: false }, // React already does escaping
-    lng: "da", // language to use
-    resources: {
-      da: {
-        common: commonDa,
+  const [authenticated, setAuthenticated] = useState();
+  const [selectedTenant, setSelectedTenant] = useState();
+  const [accessConfig, setAccessConfig] = useState();
+  const [tenants, setTenants] = useState();
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [page, setPage] = useState(1);
+  const [listView, setListView] = useState("list");
+  const [createdBy, setCreatedBy] = useState("all");
+  const [isPublished, setIsPublished] = useState("all");
+
+  const userStore = {
+    authenticated: { get: authenticated, set: setAuthenticated },
+    accessConfig: { get: accessConfig, set: setAccessConfig },
+    tenants: { get: tenants, set: setTenants },
+    selectedTenant: { get: selectedTenant, set: setSelectedTenant },
+    userName: { get: userName, set: setUserName },
+    email: { get: email, set: setEmail },
+  };
+  const listConfig = {
+    searchText: { get: searchText, set: setSearchText },
+    page: { get: page, set: setPage },
+    listView: { get: listView, set: setListView },
+    createdBy: { get: createdBy, set: setCreatedBy },
+    isPublished: { get: isPublished, set: setIsPublished },
+  };
+
+  const handleReauthenticate = () => {
+    localStorage.removeItem(localStorageKeys.API_TOKEN);
+    localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
+    localStorage.removeItem(localStorageKeys.TENANTS);
+
+    setSelectedTenant(null);
+    setTenants(null);
+    setUserName("");
+    setAuthenticated(false);
+  };
+
+  // Check that authentication token exists.
+  useEffect(() => {
+    const token = localStorage.getItem(localStorageKeys.API_TOKEN);
+
+    if (token !== null) {
+      setAuthenticated(true);
+
+      // If there is a selected tenant, fetch from local storage and use
+      if (localStorage.getItem(localStorageKeys.SELECTED_TENANT)) {
+        setSelectedTenant(
+          JSON.parse(localStorage.getItem(localStorageKeys.SELECTED_TENANT))
+        );
+      }
+
+      // Fetch the users tenants from local storage and use
+      if (localStorage.getItem(localStorageKeys.TENANTS)) {
+        setTenants(JSON.parse(localStorage.getItem(localStorageKeys.TENANTS)));
+      }
+
+      // Get the user name for displaying in top bar.
+      setUserName(localStorage.getItem(localStorageKeys.USER_NAME));
+
+      // Get the user name for displaying in top bar.
+      setEmail(localStorage.getItem(localStorageKeys.EMAIL));
+    } else {
+      setAuthenticated(false);
+    }
+
+    document.addEventListener("reauthenticate", handleReauthenticate);
+
+    return () => {
+      document.removeEventListener("reauthenticate", handleReauthenticate);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetch("/admin/access-config.json")
+      .then((response) => response.json())
+      .then((jsonData) => {
+        setAccessConfig(jsonData);
+      })
+      .catch(() => {
+        setAccessConfig({
+          campaign: {
+            roles: ["ROLE_ADMIN"],
+          },
+          screen: {
+            roles: ["ROLE_ADMIN"],
+          },
+          settings: {
+            roles: ["ROLE_ADMIN"],
+          },
+          groups: {
+            roles: ["ROLE_ADMIN"],
+          },
+          shared: {
+            roles: ["ROLE_ADMIN"],
+          },
+        });
+      });
+  }, []);
+
+  useEffect(() => {
+    i18next.init({
+      interpolation: { escapeValue: false }, // React already does escaping
+      lng: "da", // language to use
+      keySeparator: ".",
+      resources: {
+        da: {
+          common: commonDa,
+        },
       },
-    },
-  });
+    });
+  }, []);
 
   return (
     <>
-      <I18nextProvider i18n={i18next}>
-        <Container fluid className="h-100 px-0 bg-light">
-          <Row className="row-full-height g-0">
-            <SideBar />
-            <Col lg={9} xl={10}>
-              <TopBar />
-              <main className="col p-3">
-                <Switch>
-                  <Route path="/playlist/create" component={PlaylistCreate} />
-                  <Route path="/playlist/edit/:id" component={PlaylistEdit} />
-                  <Route path="/playlist/list" component={PlaylistList} />
-                  <Route path="/screen/list" component={ScreenList} />
-                  <Route path="/screen/create" component={ScreenCreate} />
-                  <Route path="/screen/edit/:id" component={ScreenEdit} />
-                  <Route path="/group/list" component={GroupsList} />
-                  <Route path="/group/edit/:id" component={GroupEdit} />
-                  <Route path="/group/create" component={GroupCreate} />
-                  <Route path="/slide/list" component={SlidesList} />
-                  <Route path="/slide/create" component={SlideCreate} />
-                  <Route path="/slide/edit/:id" component={SlideEdit} />
-                  <Route path="/media/list" component={MediaList} />
-                  {/* <Route path="/media/edit/:id" component={MediaEdit} /> @TODO: readd when the api supports putting media */}
-                  <Route path="/media/create" component={MediaCreate} />
-                  <Route path="/themes/list" component={ThemesList} />
-                  <Route path="/themes/edit/:id" component={ThemeEdit} />
-                  <Route path="/themes/create" component={ThemeCreate} />
-                  <Route path="/users/" component={UserList} />
-                  <Route path="/user/:id" component={EditUser} />
-                  <Redirect from="/" to="/slide/list" exact />
-                </Switch>
-              </main>
-            </Col>
-          </Row>
-        </Container>
-      </I18nextProvider>
+      <UserContext.Provider value={userStore}>
+        <I18nextProvider i18n={i18next}>
+          <ModalProvider>
+            <Suspense
+              fallback={
+                <LoadingComponent isLoading loadingMessage="Vent venligst" />
+              }
+            >
+              <ToastContainer
+                autoClose="10000"
+                position="bottom-right"
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                progress={undefined}
+              />
+              <AuthHandler>
+                <Container fluid className="h-100 px-0 bg-light">
+                  <Row className="row-full-height g-0">
+                    <SideBar />
+                    <ListContext.Provider value={listConfig}>
+                      <Col lg={9} xl={10}>
+                        <Topbar />
+                        {accessConfig && (
+                          <main className="col p-3">
+                            <Routes>
+                              <Route path="campaign">
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.campaign.roles}
+                                    >
+                                      <PlaylistCampaignCreate location="campaign" />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.campaign.roles}
+                                    >
+                                      <PlaylistCampaignEdit location="campaign" />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.campaign.roles}
+                                    >
+                                      <PlaylistCampaignList location="campaign" />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="playlist">
+                                <Route
+                                  path="create"
+                                  element={
+                                    <PlaylistCampaignCreate location="playlist" />
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <PlaylistCampaignEdit location="playlist" />
+                                  }
+                                />
+                                <Route
+                                  path="list"
+                                  element={
+                                    <PlaylistCampaignList location="playlist" />
+                                  }
+                                />
+                              </Route>
+                              <Route path="shared">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.shared.roles}
+                                    >
+                                      <SharedPlaylists />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="screen">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.screen.roles}
+                                    >
+                                      <ScreenList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.screen.roles}
+                                    >
+                                      <ScreenCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.screen.roles}
+                                    >
+                                      <ScreenEdit />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="group">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.groups.roles}
+                                    >
+                                      <GroupsList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.groups.roles}
+                                    >
+                                      <GroupEdit />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.groups.roles}
+                                    >
+                                      <GroupCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="slide">
+                                <Route path="list" element={<SlidesList />} />
+                                <Route
+                                  path="create"
+                                  element={<SlideCreate />}
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={<SlideEdit />}
+                                />
+                              </Route>
+                              <Route path="media">
+                                <Route path="list" element={<MediaList />} />
+                                <Route
+                                  path="create"
+                                  element={<MediaCreate />}
+                                />
+                              </Route>
+                              <Route path="themes">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <ThemesList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <ThemeEdit />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <ThemeCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="logout" element={<Logout />} />
+                              <Route
+                                path="*"
+                                element={<Navigate to="/slide/list" />}
+                              />
+                            </Routes>
+                          </main>
+                        )}
+                      </Col>
+                    </ListContext.Provider>
+                  </Row>
+                </Container>
+              </AuthHandler>
+            </Suspense>
+          </ModalProvider>
+        </I18nextProvider>
+      </UserContext.Provider>
     </>
   );
 }

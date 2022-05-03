@@ -1,7 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import ThemeForm from "./theme-form";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import {
   usePutV1ThemesByIdMutation,
   useGetV1ThemesByIdQuery,
@@ -13,9 +17,12 @@ import {
  * @returns {object} The themes create page.
  */
 function ThemeEdit() {
-  const { t } = useTranslation("common");
-  const headerText = t("theme-edit.edit-theme");
+  const { t } = useTranslation("common", { keyPrefix: "theme-edit" });
+  const headerText = t("edit-theme");
   const [formStateObject, setFormStateObject] = useState();
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("loading-messages.loading-theme")
+  );
   const { id } = useParams();
 
   const [
@@ -36,6 +43,27 @@ function ThemeEdit() {
     }
   }, [themeData]);
 
+  /** If the theme is not loaded, display the error message */
+  useEffect(() => {
+    if (loadError) {
+      displayError(t("error-messages.load-theme-error"), loadError);
+    }
+  }, [loadError]);
+
+  /** If the theme is saved, display the success message */
+  useEffect(() => {
+    if (isSaveSuccess) {
+      displaySuccess(t("success-messages.saved-theme"));
+    }
+  }, [isSaveSuccess]);
+
+  /** If the theme is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(t("error-messages.save-theme-error"), saveError);
+    }
+  }, [saveError]);
+
   /**
    * Set state on change in input field
    *
@@ -50,6 +78,7 @@ function ThemeEdit() {
 
   /** Handles submit. */
   function handleSubmit() {
+    setLoadingMessage(t("loading-messages.saving-theme"));
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -68,10 +97,8 @@ function ThemeEdit() {
           headerText={`${headerText}: ${formStateObject?.title}`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={isLoading}
-          isSaveSuccess={isSaveSuccess}
-          isSaving={isSaving}
-          errors={saveError || loadError || false}
+          isLoading={isLoading || isSaving}
+          loadingMessage={loadingMessage}
         />
       )}
     </>

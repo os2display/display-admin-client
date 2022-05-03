@@ -35,18 +35,16 @@ function FormCheckbox({
   }
 
   return (
-    <FormGroup
-      className={formGroupClasses}
-      controlId={`formBasicCheckbox${name}`}
-    >
+    <FormGroup className={formGroupClasses} controlId={`checkbox-${name}`}>
       <FormCheck
+        id={`checkbox-${name}`}
         onChange={onChecked}
         type="checkbox"
         name={name}
         checked={value}
         label={label}
       />
-      {helpText && <small className="form-text">{helpText}</small>}
+      {helpText && <small>{helpText}</small>}
     </FormGroup>
   );
 }

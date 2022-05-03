@@ -1,14 +1,17 @@
-import { React, useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
+import { React, useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import CheckboxForList from "../util/list/checkbox-for-list";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
-import selectedHelper from "../util/helpers/selectedHelper";
-import DeleteModal from "../delete-modal/delete-modal";
-import LinkForList from "../util/list/link-for-list";
+import useModal from "../../context/modal-context/modal-context-hook";
+import UserContext from "../../context/user-context";
 import ContentHeader from "../util/content-header/content-header";
+import ListContext from "../../context/list-context";
 import ContentBody from "../util/content-body/content-body";
+import getThemesColumns from "./themes-columns";
+import {
+  displayError,
+  displaySuccess,
+} from "../util/list/toast-component/display-toast";
 import {
   useGetV1ThemesQuery,
   useDeleteV1ThemesByIdMutation,
@@ -20,193 +23,129 @@ import {
  * @returns {object} The themes list
  */
 function ThemesList() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "themes-list" });
+  const context = useContext(UserContext);
+  const { selected, setSelected } = useModal();
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [sortBy, setSortBy] = useState();
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [page, setPage] = useState();
-  const [themesToDelete, setThemesToDelete] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [searchText, setSearchText] = useState();
+  const [listData, setListData] = useState();
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("loading-messages.loading-themes")
+  );
+
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    createdBy: { get: createdBy },
+  } = useContext(ListContext);
 
   // Delete call
-  const [DeleteV1Themes, { isSuccess: isDeleteSuccess }] =
+  const [DeleteV1Themes, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
     useDeleteV1ThemesByIdMutation();
-
-  /** Deletes multiple themes. */
-  useEffect(() => {
-    if (themesToDelete.length > 0) {
-      setIsDeleting(true);
-      const themeToDelete = themesToDelete.splice(0, 1).shift();
-      const themeToDeleteId = idFromUrl(themeToDelete["@id"]);
-      DeleteV1Themes({ id: themeToDeleteId });
-    } else if (isDeleteSuccess) {
-      window.location.reload(false);
-    }
-  }, [themesToDelete, isDeleteSuccess]);
-
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} data The selected row.
-   */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
-  }
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
-  /**
-   * Opens the delete modal
-   *
-   * @param {object} item The item to delete
-   */
-  function openDeleteModal(item) {
-    if (item) {
-      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
-    }
-    setShowDeleteModal(true);
-  }
-
-  /** Deletes theme(s), and closes modal. */
-  function handleDelete() {
-    setThemesToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseDeleteModal() {
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
-  }
-
-  // The columns for the table.
-  const columns = [
-    {
-      key: "pick",
-      label: t("themes-list.columns.pick"),
-      content: (data) => (
-        <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
-          // eslint-disable-next-line react/destructuring-assignment
-          disabled={data.onSlides.length > 0}
-        />
-      ),
-    },
-    {
-      path: "title",
-      sort: true,
-      label: t("themes-list.columns.name"),
-    },
-    {
-      path: "createdBy",
-      label: t("themes-list.columns.created-by"),
-    },
-    {
-      key: "slides",
-      // eslint-disable-next-line react/prop-types
-      content: ({ onSlides }) => <>{onSlides.length}</>,
-      label: t("themes-list.columns.number-of-slides"),
-    },
-    {
-      key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "themes/edit", t("themes-list.edit-button")),
-    },
-    {
-      key: "delete",
-      content: (data) => (
-        <>
-          <Button
-            variant="danger"
-            // eslint-disable-next-line react/destructuring-assignment
-            disabled={selectedRows.length > 0 || data.onSlides.length > 0}
-            onClick={() => openDeleteModal(data)}
-          >
-            {t("themes-list.delete-button")}
-          </Button>
-        </>
-      ),
-    },
-  ];
 
   const {
     data,
     error: themesGetError,
     isLoading,
+    refetch,
   } = useGetV1ThemesQuery({
     page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
+    order: { createdAt: "desc" },
     title: searchText,
+    createdBy,
   });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  /** Deletes multiple themes. */
+  useEffect(() => {
+    if (isDeleting && selected.length > 0) {
+      if (isDeleteSuccess) {
+        displaySuccess(t("success-messages.theme-delete"));
+      }
+      const themeToDelete = selected[0];
+      setSelected(selected.slice(1));
+      const themeToDeleteId = idFromUrl(themeToDelete.id);
+      DeleteV1Themes({ id: themeToDeleteId });
+    }
+  }, [isDeleting, isDeleteSuccess]);
+
+  // Display success messages
+  useEffect(() => {
+    if (isDeleteSuccess && selected.length === 0) {
+      displaySuccess(t("success-messages.theme-delete"));
+      refetch();
+      setIsDeleting(false);
+    }
+  }, [isDeleteSuccess]);
+
+  // If the tenant is changed, data should be refetched
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
+
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, createdBy]);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(t("error-messages.theme-delete-error"), isDeleteError);
+    }
+  }, [isDeleteError]);
+
+  /** Starts the deletion process. */
+  function handleDelete() {
+    setIsDeleting(true);
+    setLoadingMessage(t("loading-messages.deleting-theme"));
+  }
+
+  // The columns for the table.
+  const columns = getThemesColumns({
+    handleDelete,
+    disableCheckbox: ({ onSlides }) => onSlides.length > 0,
+    disableDelete: ({ onSlides }) => onSlides.length > 0,
+  });
+
+  // Error with retrieving list of themes
+  useEffect(() => {
+    if (themesGetError) {
+      displayError(t("error-messages.themes-load-error"), themesGetError);
+    }
+  }, [themesGetError]);
 
   return (
     <>
       <ContentHeader
-        title={t("themes-list.header")}
-        newBtnTitle={t("themes-list.create-new-theme")}
+        title={t("header")}
+        newBtnTitle={t("create-new-theme")}
         newBtnLink="/themes/create"
       />
       {data && data["hydra:member"] && (
         <ContentBody>
-          <List
-            columns={columns}
-            totalItems={data["hydra:totalItems"]}
-            currentPage={page}
-            handlePageChange={onChangePage}
-            selectedRows={selectedRows}
-            data={data["hydra:member"]}
-            clearSelectedRows={clearSelectedRows}
-            handleDelete={openDeleteModal}
-            error={themesGetError || false}
-            isLoading={isLoading || isDeleting || false}
-            deleteSuccess={isDeleteSuccess || false}
-            handleSort={onChangeSort}
-            handleSearch={onSearch}
-          />
+          <>
+            {listData && (
+              <List
+                columns={columns}
+                totalItems={listData["hydra:totalItems"]}
+                data={listData["hydra:member"]}
+                handleDelete={handleDelete}
+                isLoading={isLoading || isDeleting}
+                loadingMessage={loadingMessage}
+              />
+            )}
+          </>
         </ContentBody>
       )}
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={onCloseDeleteModal}
-        handleAccept={handleDelete}
-        selectedRows={selectedRows}
-      />
     </>
   );
 }

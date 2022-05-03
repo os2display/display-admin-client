@@ -24,6 +24,9 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
+      #      HTTPS config - uncomment to enable redirect from :80 to :443
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
     image: node:14
@@ -43,15 +46,15 @@ services:
       start_period: 60s
 
   cypress:
-    image: cypress/included:7.7.0
+    image: cypress/included:9.5.2
     networks:
       - app
+      - frontend
     depends_on:
       - nginx
     environment:
       - CYPRESS_VIDEO=false
-      - CYPRESS_baseUrl=http://nginx
-      #- DISPLAY=host.docker.internal:0
+      - CYPRESS_baseUrl=http://nginx/admin
     volumes:
       - .:/e2e
       - /tmp/.X11-unix:/tmp/.X11-unix

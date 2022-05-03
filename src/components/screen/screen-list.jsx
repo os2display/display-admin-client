@@ -1,25 +1,26 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Button, Col } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import CampaignIcon from "../screen-list/campaign-icon";
-import CheckboxForList from "../util/list/checkbox-for-list";
-import selectedHelper from "../util/helpers/selectedHelper";
-import LinkForList from "../util/list/link-for-list";
-import DeleteModal from "../delete-modal/delete-modal";
+import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UserContext from "../../context/user-context";
+import ScreenCalendarCell from "../screen-list/screen-calendar-cell";
 import List from "../util/list/list";
-import InfoModal from "../info-modal/info-modal";
-import ListButton from "../util/list/list-button";
-import LiveIcon from "../screen-list/live-icon";
+import { ScreenColumns } from "./screen-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
-import Dimensions from "./dimension";
 import idFromUrl from "../util/helpers/id-from-url";
+import ListContext from "../../context/list-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 import {
   useGetV1ScreensQuery,
   useDeleteV1ScreensByIdMutation,
   useGetV1ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 import "./screen-list.scss";
 
 /**
@@ -28,262 +29,149 @@ import "./screen-list.scss";
  * @returns {object} The screen list.
  */
 function ScreenList() {
-  const { t } = useTranslation("common");
-  const history = useHistory();
-
-  // Params
-  const { search } = useLocation();
-  const viewParams = new URLSearchParams(search).get("view");
-  const [view, setView] = useState(viewParams ?? "list");
+  const { t } = useTranslation("common", { keyPrefix: "screen-list" });
+  const context = useContext(UserContext);
+  const {
+    searchText: { get: searchText },
+    page: { get: page },
+    listView: { get: view, set: setView },
+    createdBy: { get: createdBy },
+  } = useContext(ListContext);
+  const { selected, setSelected } = useModal();
 
   // Local state
   const [isDeleting, setIsDeleting] = useState(false);
-  const [sortBy, setSortBy] = useState();
-  const [page, setPage] = useState();
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [screensToDelete, setScreensToDelete] = useState([]);
-  const [inGroups, setInGroups] = useState();
-  const [searchText, setSearchText] = useState();
+  const [listData, setListData] = useState();
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("loading-messages.loading-screens")
+  );
 
   // Delete call
-  const [DeleteV1Screens, { isSuccess: isDeleteSuccess }] =
-    useDeleteV1ScreensByIdMutation();
+  const [
+    DeleteV1Screens,
+    { isSuccess: isDeleteSuccess, error: isDeleteError },
+  ] = useDeleteV1ScreensByIdMutation();
 
-  /** Set the view in url. */
-  useEffect(() => {
-    const params = new URLSearchParams(search);
-    params.delete("view");
-    params.append("view", view);
-    history.replace({ search: params.toString() });
-  }, [view]);
-
-  /** Deletes multiple screens. */
-  useEffect(() => {
-    if (screensToDelete.length > 0) {
-      setIsDeleting(true);
-      const screenToDelete = screensToDelete.splice(0, 1).shift();
-      const screenToDeleteId = idFromUrl(screenToDelete["@id"]);
-      DeleteV1Screens({ id: screenToDeleteId });
-    } else if (isDeleteSuccess) {
-      window.location.reload(false);
-    }
-  }, [screensToDelete, isDeleteSuccess]);
-
-  /**
-   * Sets the selected row in state.
-   *
-   * @param {object} data The selected row.
-   */
-  function handleSelected(data) {
-    setSelectedRows(selectedHelper(data, [...selectedRows]));
-  }
-
-  /** Clears the selected rows. */
-  function clearSelectedRows() {
-    setSelectedRows([]);
-  }
-
-  /**
-   * Opens the delete modal
-   *
-   * @param {object} item The item to delete
-   */
-  function openDeleteModal(item) {
-    if (item) {
-      setSelectedRows([{ "@id": item["@id"], title: item.title }]);
-    }
-    setShowDeleteModal(true);
-  }
-
-  /** Deletes screen(s), and closes modal. */
-  function handleDelete() {
-    setScreensToDelete(selectedRows);
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** Closes the delete modal. */
-  function onCloseModal() {
-    clearSelectedRows();
-    setShowDeleteModal(false);
-  }
-
-  /** @param {Array} groupsData The array of groups. */
-  function openInfoModal(groupsData) {
-    setInGroups(groupsData);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setInGroups();
-  }
-
-  /**
-   * Sets next page.
-   *
-   * @param {number} pageNumber - The next page.
-   */
-  function onChangePage(pageNumber) {
-    setPage(pageNumber);
-  }
-
-  /**
-   * Handles sort.
-   *
-   * @param {object} localSortBy - How the data should be sorted.
-   */
-  function onChangeSort(localSortBy) {
-    setSortBy(localSortBy);
-  }
-
-  /**
-   * Handles search.
-   *
-   * @param {object} localSearchText - The search text.
-   */
-  function onSearch(localSearchText) {
-    setSearchText(localSearchText);
-  }
-
-  // The columns for the table.
-  const columns = [
-    {
-      key: "pick",
-      label: t("screens-list.columns.pick"),
-      content: (data) => (
-        <CheckboxForList
-          onSelected={() => handleSelected(data)}
-          selected={selectedRows.indexOf(data) > -1}
-        />
-      ),
-    },
-    {
-      path: "live",
-      label: t("screens-list.columns.live"),
-      content: (data) => LiveIcon(data),
-    },
-    {
-      path: "title",
-      sort: true,
-      label: t("screens-list.columns.name"),
-    },
-    {
-      // eslint-disable-next-line react/prop-types
-      content: ({ inScreenGroups }) => (
-        <ListButton
-          callback={openInfoModal}
-          inputData={inScreenGroups}
-          apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-        />
-      ),
-      key: "groups",
-      label: t("screens-list.columns.on-groups"),
-    },
-    {
-      path: "size",
-      label: t("screens-list.columns.size"),
-    },
-    {
-      key: "dimensions",
-      content: ({ dimensions }) => Dimensions(dimensions),
-      label: t("screens-list.columns.dimensions"),
-    },
-    {
-      key: "campaign",
-      // @TODO: implement overridden by campaing
-      label: t("screens-list.columns.campaign"),
-      content: (data) => CampaignIcon(data),
-    },
-    {
-      key: "edit",
-      content: (data) =>
-        LinkForList(data["@id"], "screen/edit", t("screens-list.edit-button")),
-    },
-    {
-      key: "delete",
-      content: (data) => (
-        <>
-          <Button
-            variant="danger"
-            disabled={selectedRows.length > 0}
-            onClick={() => openDeleteModal(data)}
-          >
-            {t("screens-list.delete-button")}
-          </Button>
-        </>
-      ),
-    },
-  ];
-
+  // Get method
   const {
     data,
     error: screensGetError,
     isLoading,
+    refetch,
   } = useGetV1ScreensQuery({
     page,
-    orderBy: sortBy?.path,
-    order: sortBy?.order,
-    title: searchText,
+    order: { title: "asc" },
+    search: searchText,
+    createdBy,
   });
+
+  useEffect(() => {
+    if (data) {
+      setListData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, [searchText, page, createdBy]);
+
+  // If the tenant is changed, data should be refetched
+  useEffect(() => {
+    if (context.selectedTenant.get) {
+      refetch();
+    }
+  }, [context.selectedTenant.get]);
+
+  /** Deletes multiple screens. */
+  useEffect(() => {
+    if (isDeleting && selected.length > 0) {
+      const screenToDelete = selected[0];
+      setSelected(selected.slice(1));
+      const screenToDeleteId = idFromUrl(screenToDelete.id);
+      DeleteV1Screens({ id: screenToDeleteId });
+    }
+  }, [isDeleting, isDeleteSuccess]);
+
+  // Display success messages
+  useEffect(() => {
+    if (isDeleteSuccess && selected.length === 0) {
+      displaySuccess(t("success-messages.screen-delete"));
+      setIsDeleting(false);
+      refetch();
+    }
+  }, [isDeleteSuccess]);
+
+  // Display error on unsuccessful deletion
+  useEffect(() => {
+    if (isDeleteError) {
+      setIsDeleting(false);
+      displayError(t("error-messages.screen-delete-error"), isDeleteError);
+    }
+  }, [isDeleteError]);
+
+  /** Starts the deletion process. */
+  function handleDelete() {
+    setIsDeleting(true);
+    setLoadingMessage(t("loading-messages.deleting-screen"));
+  }
+
+  // The columns for the table.
+  const columns = ScreenColumns({
+    handleDelete,
+    apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+    infoModalRedirect: "/group/edit",
+    infoModalTitle: t("info-modal.screen-in-groups"),
+  });
+
+  // Error with retrieving list of screen
+  useEffect(() => {
+    if (screensGetError) {
+      displayError(t("error-messages.screens-load-error"), screensGetError);
+    }
+  }, [screensGetError]);
 
   return (
     <>
       <ContentHeader
-        title={t("screens-list.header")}
-        newBtnTitle={t("screens-list.create-new-screen")}
+        title={t("header")}
+        newBtnTitle={t("create-new-screen")}
         newBtnLink="/screen/create"
-      />
-      <Col md="auto">
-        {view === "list" && (
-          <Button onClick={() => setView("calendar")}>
-            {t("screens-list.change-view-calendar")}
-          </Button>
-        )}
-        {view === "calendar" && (
-          <Button onClick={() => setView("list")}>
-            {t("screens-list.change-view-list")}
-          </Button>
-        )}
-      </Col>
+      >
+        <Col md="auto">
+          {view === "list" && (
+            <Button
+              style={{ width: "110px" }}
+              onClick={() => setView("calendar")}
+            >
+              <FontAwesomeIcon className="me-1" icon={faCalendar} />
+              {t("change-view-calendar")}
+            </Button>
+          )}
+          {view === "calendar" && (
+            <Button style={{ width: "110px" }} onClick={() => setView("list")}>
+              <FontAwesomeIcon className="me-1" icon={faList} />{" "}
+              {t("change-view-list")}
+            </Button>
+          )}
+        </Col>
+      </ContentHeader>
       <ContentBody>
         <>
-          {data && data["hydra:member"] && (
+          {listData && (
             <List
               columns={columns}
-              totalItems={data["hydra:totalItems"]}
-              currentPage={page}
-              handlePageChange={onChangePage}
-              selectedRows={selectedRows}
-              data={data["hydra:member"]}
-              clearSelectedRows={clearSelectedRows}
-              withChart={view === "calendar"}
-              handleDelete={openDeleteModal}
-              error={screensGetError || false}
-              isLoading={isLoading || isDeleting || false}
-              deleteSuccess={isDeleteSuccess || false}
-              handleSort={onChangeSort}
-              handleSearch={onSearch}
-            />
+              totalItems={listData["hydra:totalItems"]}
+              data={listData["hydra:member"]}
+              calendarViewPossible
+              handleDelete={handleDelete}
+              isLoading={isLoading || isDeleting}
+              loadingMessage={loadingMessage}
+            >
+              <ScreenCalendarCell />
+            </List>
           )}
         </>
       </ContentBody>
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={onCloseModal}
-        handleAccept={handleDelete}
-        selectedRows={selectedRows}
-      />
-      <InfoModal
-        show={showInfoModal}
-        apiCall={useGetV1ScreensByIdScreenGroupsQuery}
-        onClose={onCloseInfoModal}
-        dataStructureToDisplay={inGroups}
-        modalTitle={t("screens-list.info-modal.screen-in-groups")}
-      />
     </>
   );
 }

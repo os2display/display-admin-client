@@ -16,6 +16,7 @@ function RadioButtons({
   options,
   handleChange,
   labelScreenReaderOnly,
+  disabled,
 }) {
   /**
    * Transforms the target to something the form-components understand.
@@ -29,7 +30,7 @@ function RadioButtons({
   }
 
   return (
-    <div className="d-flex">
+    <div className="d-flex flex-column">
       <label
         className={labelScreenReaderOnly ? "mr-2 sr-only" : "mr-2"}
         htmlFor={`radios-${label}`}
@@ -38,12 +39,13 @@ function RadioButtons({
       </label>
       <div id={`radios-${label}`} className="d-flex">
         {options.map(({ id, label: radioLabel }) => (
-          <div className="form-check mr-2" key={id}>
+          <div className="form-check m-2" key={id}>
             <input
               className="form-check-input"
               type="radio"
               name={radioGroupName}
               id={id}
+              disabled={disabled}
               checked={selected === id}
               onChange={onCheckedRadio}
             />
@@ -57,6 +59,11 @@ function RadioButtons({
   );
 }
 
+RadioButtons.defaultProps = {
+  disabled: false,
+  labelScreenReaderOnly: false,
+};
+
 RadioButtons.propTypes = {
   radioGroupName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -67,8 +74,9 @@ RadioButtons.propTypes = {
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
+  disabled: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
-  labelScreenReaderOnly: PropTypes.bool.isRequired,
+  labelScreenReaderOnly: PropTypes.bool,
 };
 
 export default RadioButtons;

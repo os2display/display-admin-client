@@ -1,16 +1,13 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
-import Published from "../../slide/published";
+import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
-import TemplateLabelInList from "../../slide/template-label-in-list";
-import ListButton from "../list/list-button";
-import InfoModal from "../../info-modal/info-modal";
+import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import {
   useGetV1SlidesQuery,
   useGetV1PlaylistsByIdSlidesQuery,
+  useGetV1PlaylistsByIdQuery,
 } from "../../../redux/api/api.generated";
 
 /**
@@ -25,13 +22,14 @@ import {
 function SelectSlidesTable({ handleChange, name, slideId }) {
   const { t } = useTranslation("common");
   const [selectedData, setSelectedData] = useState();
-  const [onPlaylists, setOnPlaylists] = useState();
   const [searchText, setSearchText] = useState("");
-  const [showInfoModal, setShowInfoModal] = useState(false);
+
   const { data: slides } = useGetV1SlidesQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
+    order: { createdAt: "desc" },
   });
+
   const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
 
   /** Map loaded data. */
@@ -59,18 +57,6 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     });
   }
 
-  /** @param {Array} playlistArray The array of playlists. */
-  function openInfoModal(playlistArray) {
-    setOnPlaylists(playlistArray);
-    setShowInfoModal(true);
-  }
-
-  /** Closes the info modal. */
-  function onCloseInfoModal() {
-    setShowInfoModal(false);
-    setOnPlaylists();
-  }
-
   /**
    * Fetches data for the multi component
    *
@@ -90,7 +76,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -102,42 +88,13 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     handleChange({ target });
   }
   /* eslint-disable-next-line no-unused-vars */
-  const columns = [
-    {
-      path: "title",
-      label: t("slides-list.columns.name"),
-    },
-    {
-      content: (templateData) => TemplateLabelInList(templateData),
-      key: "template",
-      label: t("slides-list.columns.template"),
-    },
-    {
-      key: "playlists",
-      // eslint-disable-next-line react/prop-types
-      content: ({ onPlaylists: localOnPlaylists }) => (
-        <ListButton
-          callback={openInfoModal}
-          inputData={localOnPlaylists[0] || []}
-          apiCall={useGetV1PlaylistsByIdSlidesQuery}
-        />
-      ),
-      label: t("slides-list.columns.slide-on-playlists"),
-    },
-    {
-      key: "published",
-      content: (publishedData) => Published(publishedData),
-      label: t("slides-list.columns.published"),
-    },
-    {
-      key: "delete",
-      content: (slideData) => (
-        <Button variant="danger" onClick={() => removeFromList(slideData)}>
-          {t("select-slides-table.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = SelectSlideColumns({
+    handleDelete: removeFromList,
+    apiCall: useGetV1PlaylistsByIdQuery,
+    editTarget: "slide",
+    infoModalRedirect: "/playlist/edit",
+    infoModalTitle: t("select-slides-table.info-modal.slide-on-playlists"),
+  });
 
   return (
     <>
@@ -151,21 +108,16 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
             filterCallback={onFilter}
           />
           {selectedData?.length > 0 && (
-            <DragAndDropTable
-              columns={columns}
-              onDropped={handleAdd}
-              name={name}
-              data={selectedData}
-            />
+            <>
+              <DragAndDropTable
+                columns={columns}
+                onDropped={handleAdd}
+                name={name}
+                data={selectedData}
+              />
+              <small>{t("select-slides-table.edit-slides-help-text")}</small>
+            </>
           )}
-          <InfoModal
-            show={showInfoModal}
-            apiCall={useGetV1PlaylistsByIdSlidesQuery}
-            onClose={onCloseInfoModal}
-            dataStructureToDisplay={onPlaylists}
-            modalTitle={t("select-slides-table.info-modal.playlist-slides")}
-            dataKey="slide"
-          />
         </>
       )}
     </>

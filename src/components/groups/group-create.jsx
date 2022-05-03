@@ -1,9 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
 import GroupForm from "./group-form";
 import idFromUrl from "../util/helpers/id-from-url";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
 
 /**
  * The group edit component.
@@ -11,24 +15,19 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @returns {object} The group edit page.
  */
 function GroupCreate() {
-  const { t } = useTranslation("common");
-  const history = useHistory();
-  const headerText = t("group-create.create-new-group-header");
+  const { t } = useTranslation("common", { keyPrefix: "group-create" });
+  const navigate = useNavigate();
+  const headerText = t("create-new-group-header");
   const [formStateObject, setFormStateObject] = useState({
     title: "",
     description: "",
-    createdBy: "@TODO:",
-    modifiedBy: "@TODO:",
+    createdBy: "",
+    modifiedBy: "",
   });
 
   const [
     PostV1ScreenGroups,
-    {
-      data,
-      isLoading: isSavingGroup,
-      error: saveError,
-      isSuccess: isSaveSuccess,
-    },
+    { data, error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
   ] = usePostV1ScreenGroupsMutation();
 
   /**
@@ -37,9 +36,17 @@ function GroupCreate() {
    */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      history.push(`/group/edit/${idFromUrl(data["@id"])}`);
+      displaySuccess(t("success-messages.saved-group"));
+      navigate(`/group/edit/${idFromUrl(data["@id"])}`);
     }
   }, [isSaveSuccess]);
+
+  /** If the group is saved with error, display the error message */
+  useEffect(() => {
+    if (saveError) {
+      displayError(t("error-messages.save-group-error"), saveError);
+    }
+  }, [saveError]);
 
   /**
    * Set state on change in input field
@@ -61,6 +68,7 @@ function GroupCreate() {
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
     };
+
     PostV1ScreenGroups({
       screenGroupScreenGroupInput: JSON.stringify(saveData),
     });
@@ -72,10 +80,8 @@ function GroupCreate() {
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
-      isLoading={false}
-      isSaveSuccess={isSaveSuccess}
-      isSaving={isSavingGroup}
-      errors={saveError || false}
+      isLoading={isSaving}
+      loadingMessage={t("loading-messages.saving-group")}
     />
   );
 }

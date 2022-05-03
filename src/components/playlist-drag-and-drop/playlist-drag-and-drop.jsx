@@ -1,13 +1,14 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import Published from "../slide/published";
+import { SelectPlaylistColumns } from "../playlist/playlists-columns";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
+import FormCheckbox from "../util/forms/form-checkbox";
 import {
-  useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
+  useGetV1PlaylistsByIdSlidesQuery,
   useGetV1PlaylistsQuery,
+  useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -22,35 +23,39 @@ import {
  */
 function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const { t } = useTranslation("common");
+
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
+  const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
       regionId,
       page: 1,
+      itemsPerPage: 100,
     });
-  const { data: playlists } = useGetV1PlaylistsQuery({
+
+  // Get method
+  const { data } = useGetV1PlaylistsQuery({
+    isCampaign: false,
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
+    orderBy: "createdAt",
+    order: "asc",
+    sharedWithMe: onlySharedPlaylists,
   });
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    if (
-      selectedPlaylistsByRegion &&
-      selectedPlaylistsByRegion["hydra:member"].length > 0
-    ) {
-      const listOfPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
-        ({ playlist }) => {
+    if (selectedPlaylistsByRegion) {
+      setSelectedData(
+        selectedPlaylistsByRegion["hydra:member"].map(({ playlist }) => {
           return playlist;
-        }
+        })
       );
-      const target = { value: listOfPlaylists, id: name };
-      handleChange({ target });
-      setSelectedData(listOfPlaylists);
     }
   }, [selectedPlaylistsByRegion]);
+  /** Set loaded data into form state. */
 
   /**
    * Fetches data for the multi component
@@ -71,7 +76,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -94,48 +99,45 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     });
   }
 
-  // The columns of the list
-  const columns = [
-    {
-      path: "title",
-      label: t("playlist-drag-and-drop.columns.name"),
-    },
-    {
-      path: "published",
-      label: t("playlists-list.columns.published"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
-    },
-    {
-      key: "delete",
-      content: (playlistData) => (
-        <Button variant="danger" onClick={() => removeFromList(playlistData)}>
-          {t("playlist-drag-and-drop.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
+  const columns = SelectPlaylistColumns({
+    handleDelete: removeFromList,
+    apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    editTarget: "playlist",
+    infoModalRedirect: "/slide/edit",
+    dataKey: "slide",
+    infoModalTitle: t("select-playlists-table.info-modal.slides"),
+  });
 
   return (
     <>
-      {playlists && playlists["hydra:member"] && selectedData && (
+      {data && data["hydra:member"] && (
         <>
+          <FormCheckbox
+            label={t("playlist-drag-and-drop.show-only-shared")}
+            onChange={() => {
+              setOnlySharedPlaylists(!onlySharedPlaylists);
+            }}
+            value={onlySharedPlaylists}
+            name="show-only-shared"
+          />
           <div className="mb-3">
             <PlaylistsDropdown
               filterCallback={onFilter}
               name={name}
               handlePlaylistSelection={handleAdd}
               selected={selectedData}
-              data={playlists["hydra:member"]}
+              data={data["hydra:member"]}
             />
           </div>
           {selectedData.length > 0 && (
-            <DragAndDropTable
-              columns={columns}
-              onDropped={handleChange}
-              name={name}
-              data={selectedData}
-            />
+            <>
+              <DragAndDropTable
+                columns={columns}
+                onDropped={handleChange}
+                name={name}
+                data={selectedData}
+              />
+            </>
           )}
         </>
       )}

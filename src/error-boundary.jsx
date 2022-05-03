@@ -1,0 +1,51 @@
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import "./error-boundary.scss";
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  // Update state so the next render will show the fallback UI.
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    const { errorHandler } = this.props;
+
+    if (errorHandler) {
+      errorHandler(error, errorInfo);
+    }
+  }
+
+  render() {
+    const { hasError } = this.state;
+    const { errorText } = this.props;
+
+    if (hasError) {
+      return (
+        <div className="ErrorBoundary">
+          <div className="ErrorBoundaryLoader">{errorText}</div>
+        </div>
+      );
+    }
+
+    const { children } = this.props;
+    return <>{children}</>;
+  }
+}
+
+ErrorBoundary.defaultProps = {
+  errorHandler: null,
+};
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+  errorText: PropTypes.string.isRequired,
+  errorHandler: PropTypes.func,
+};
+
+export default ErrorBoundary;

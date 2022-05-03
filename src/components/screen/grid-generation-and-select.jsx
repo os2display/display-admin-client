@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
-import { Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab, Alert } from "react-bootstrap";
 import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
 import uniqWith from "lodash.uniqwith";
@@ -107,38 +107,47 @@ function GridGenerationAndSelect({
                       }
                       style={{ gridArea: createGridArea(data.gridArea) }}
                     >
-                      {data.name}
+                      {data.title}
                     </div>
                   ))}
               </div>
             </div>
           </div>
           <div className="col-md-12">
-            <h3 className="h5">{t("screen-form.screen-region-playlists")}</h3>
             {regions.length > 0 && (
-              <Tabs
-                defaultActiveKey={regions[0]["@id"]}
-                id="tabs"
-                onSelect={handleSelect}
-                className="mb-3"
-              >
-                {regions &&
-                  regions.map((data) => (
-                    <Tab
-                      eventKey={data["@id"]}
-                      key={data["@id"]}
-                      title={data.title}
-                    >
-                      <PlaylistDragAndDrop
-                        id="playlist_drag_and_drop"
-                        handleChange={handleChange}
-                        name={data["@id"]}
-                        screenId={screenId}
-                        regionId={idFromUrl(data["@id"])}
-                      />
-                    </Tab>
-                  ))}
-              </Tabs>
+              <>
+                <h3 className="h5">
+                  {t("screen-form.screen-region-playlists")}
+                </h3>
+                <Tabs
+                  defaultActiveKey={regions[0]["@id"]}
+                  id="tabs"
+                  onSelect={handleSelect}
+                  className="mb-3"
+                >
+                  {regions &&
+                    regions.map((data) => (
+                      <Tab
+                        eventKey={data["@id"]}
+                        key={data["@id"]}
+                        title={data.title}
+                      >
+                        <PlaylistDragAndDrop
+                          id="playlist_drag_and_drop"
+                          handleChange={handleChange}
+                          name={data["@id"]}
+                          screenId={screenId}
+                          regionId={idFromUrl(data["@id"])}
+                        />
+                        {data?.type === "touch-buttons" && (
+                          <Alert key="screen-form-touch-buttons" variant="info">
+                            {t("screen-form.touch-region-helptext")}
+                          </Alert>
+                        )}
+                      </Tab>
+                    ))}
+                </Tabs>
+              </>
             )}
           </div>
         </>

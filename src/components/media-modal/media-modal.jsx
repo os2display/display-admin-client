@@ -33,13 +33,15 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
   }
 
   return (
-    <Modal show={show} size="xl" id="media-modal" onHide={onClose}>
+    <Modal
+      animation={false}
+      show={show}
+      size="xl"
+      id="media-modal"
+      onHide={onClose}
+    >
       <ModalDialog
-        title={
-          multiple
-            ? t("media-modal.multiple-select-title")
-            : t("media-modal.single-select-title")
-        }
+        title={t("media-modal.multiple-select-title")}
         onClose={onClose}
         handleAccept={() => handleAccept(selectedImages)}
       >

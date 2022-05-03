@@ -4,6 +4,136 @@ export const api = createApi({
   baseQuery: extendedBaseQuery,
   tagTypes: [],
   endpoints: (build) => ({
+    getOidcAuthTokenItem: build.query<
+      GetOidcAuthTokenItemApiResponse,
+      GetOidcAuthTokenItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/oidc/token`,
+        params: { state: queryArg.state, id_token: queryArg.idToken },
+      }),
+    }),
+    getOidcAuthUrlsItem: build.query<
+      GetOidcAuthUrlsItemApiResponse,
+      GetOidcAuthUrlsItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/oidc/urls`,
+        params: { providerKey: queryArg.providerKey },
+      }),
+    }),
+    postLoginInfoScreen: build.mutation<
+      PostLoginInfoScreenApiResponse,
+      PostLoginInfoScreenApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/screen`,
+        method: "POST",
+        body: queryArg.screenLoginInput,
+      }),
+    }),
+    postCredentialsItem: build.mutation<
+      PostCredentialsItemApiResponse,
+      PostCredentialsItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/token`,
+        method: "POST",
+        body: queryArg.credentials,
+      }),
+    }),
+    postRefreshTokenItem: build.mutation<
+      PostRefreshTokenItemApiResponse,
+      PostRefreshTokenItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/authentication/token/refresh`,
+        method: "POST",
+        body: queryArg.refreshTokenRequest,
+      }),
+    }),
+    getV1CampaignsByIdScreenGroups: build.query<
+      GetV1CampaignsByIdScreenGroupsApiResponse,
+      GetV1CampaignsByIdScreenGroupsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/campaigns/${queryArg.id}/screen-groups`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1CampaignsByIdScreens: build.query<
+      GetV1CampaignsByIdScreensApiResponse,
+      GetV1CampaignsByIdScreensApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/campaigns/${queryArg.id}/screens`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1FeedSources: build.query<
+      GetV1FeedSourcesApiResponse,
+      GetV1FeedSourcesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/feed-sources`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          supportedFeedOutputType: queryArg.supportedFeedOutputType,
+          title: queryArg.title,
+          description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1FeedSourcesById: build.query<
+      GetV1FeedSourcesByIdApiResponse,
+      GetV1FeedSourcesByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feed-sources/${queryArg.id}` }),
+    }),
+    getV1FeedSourcesByIdConfigAndName: build.query<
+      GetV1FeedSourcesByIdConfigAndNameApiResponse,
+      GetV1FeedSourcesByIdConfigAndNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/feed_sources/${queryArg.id}/config/${queryArg.name}`,
+      }),
+    }),
+    getV1Feeds: build.query<GetV1FeedsApiResponse, GetV1FeedsApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/feeds`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1FeedsById: build.query<
+      GetV1FeedsByIdApiResponse,
+      GetV1FeedsByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}` }),
+    }),
+    getV1FeedsByIdData: build.query<
+      GetV1FeedsByIdDataApiResponse,
+      GetV1FeedsByIdDataApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}/data` }),
+    }),
     getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({
       query: (queryArg) => ({
         url: `/v1/layouts`,
@@ -24,6 +154,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -78,8 +210,12 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
+          isCampaign: queryArg.isCampaign,
           order: queryArg.order,
+          sharedWithMe: queryArg.sharedWithMe,
         },
       }),
     }),
@@ -118,19 +254,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getV1PlaylistsByIdScreens: build.query<
-      GetV1PlaylistsByIdScreensApiResponse,
-      GetV1PlaylistsByIdScreensApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/playlists/${queryArg.id}/screens`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          order: queryArg.order,
-        },
-      }),
-    }),
     getV1PlaylistsByIdSlides: build.query<
       GetV1PlaylistsByIdSlidesApiResponse,
       GetV1PlaylistsByIdSlidesApiArg
@@ -140,7 +263,10 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
+          order: queryArg.order,
         },
       }),
     }),
@@ -174,6 +300,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -186,6 +314,14 @@ export const api = createApi({
         url: `/v1/screen-groups`,
         method: "POST",
         body: queryArg.screenGroupScreenGroupInput,
+      }),
+    }),
+    getScreenGroupCampaignItem: build.query<
+      GetScreenGroupCampaignItemApiResponse,
+      GetScreenGroupCampaignItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups-campaigns/${queryArg.id}`,
       }),
     }),
     getV1ScreenGroupsById: build.query<
@@ -213,14 +349,59 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV1ScreenGroupsByIdCampaigns: build.query<
+      GetV1ScreenGroupsByIdCampaignsApiResponse,
+      GetV1ScreenGroupsByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/campaigns`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    putV1ScreenGroupsByIdCampaigns: build.mutation<
+      PutV1ScreenGroupsByIdCampaignsApiResponse,
+      PutV1ScreenGroupsByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/campaigns`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
+    deleteV1ScreenGroupsByIdCampaignsAndCampaignId: build.mutation<
+      DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiResponse,
+      DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/campaigns/${queryArg.campaignId}`,
+        method: "DELETE",
+      }),
+    }),
+    getV1ScreenGroupsByIdScreens: build.query<
+      GetV1ScreenGroupsByIdScreensApiResponse,
+      GetV1ScreenGroupsByIdScreensApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screen-groups/${queryArg.id}/screens`,
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+      }),
+    }),
     getV1Screens: build.query<GetV1ScreensApiResponse, GetV1ScreensApiArg>({
       query: (queryArg) => ({
         url: `/v1/screens`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
-          title: queryArg.title,
-          description: queryArg.description,
+          search: queryArg.search,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -260,13 +441,62 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    postScreenBindKey: build.mutation<
+      PostScreenBindKeyApiResponse,
+      PostScreenBindKeyApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/bind`,
+        method: "POST",
+        body: queryArg.screenBindObject,
+      }),
+    }),
+    getV1ScreensByIdCampaigns: build.query<
+      GetV1ScreensByIdCampaignsApiResponse,
+      GetV1ScreensByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/campaigns`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    putV1ScreensByIdCampaigns: build.mutation<
+      PutV1ScreensByIdCampaignsApiResponse,
+      PutV1ScreensByIdCampaignsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/campaigns`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
+    deleteV1ScreensByIdCampaignsAndCampaignId: build.mutation<
+      DeleteV1ScreensByIdCampaignsAndCampaignIdApiResponse,
+      DeleteV1ScreensByIdCampaignsAndCampaignIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/campaigns/${queryArg.campaignId}`,
+        method: "DELETE",
+      }),
+    }),
     getV1ScreensByIdRegionsAndRegionIdPlaylists: build.query<
       GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiResponse,
       GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg
     >({
       query: (queryArg) => ({
         url: `/v1/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          sharedWithMe: queryArg.sharedWithMe,
+        },
       }),
     }),
     putPlaylistScreenRegionItem: build.mutation<
@@ -320,6 +550,16 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    postScreenUnbind: build.mutation<
+      PostScreenUnbindApiResponse,
+      PostScreenUnbindApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/screens/${queryArg.id}/unbind`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
     getV1Slides: build.query<GetV1SlidesApiResponse, GetV1SlidesApiArg>({
       query: (queryArg) => ({
         url: `/v1/slides`,
@@ -328,6 +568,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
           order: queryArg.order,
         },
@@ -365,6 +607,32 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV1SlidesByIdPlaylists: build.query<
+      GetV1SlidesByIdPlaylistsApiResponse,
+      GetV1SlidesByIdPlaylistsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/slides/${queryArg.id}/playlists`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    putV1SlidesByIdPlaylists: build.mutation<
+      PutV1SlidesByIdPlaylistsApiResponse,
+      PutV1SlidesByIdPlaylistsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/slides/${queryArg.id}/playlists`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
     getV1Templates: build.query<
       GetV1TemplatesApiResponse,
       GetV1TemplatesApiArg
@@ -376,6 +644,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -386,6 +656,25 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/v1/templates/${queryArg.id}` }),
     }),
+    getV1Tenants: build.query<GetV1TenantsApiResponse, GetV1TenantsApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/tenants`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+        },
+      }),
+    }),
+    getV1TenantsById: build.query<
+      GetV1TenantsByIdApiResponse,
+      GetV1TenantsByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/tenants/${queryArg.id}` }),
+    }),
     getV1Themes: build.query<GetV1ThemesApiResponse, GetV1ThemesApiArg>({
       query: (queryArg) => ({
         url: `/v1/themes`,
@@ -394,6 +683,8 @@ export const api = createApi({
           itemsPerPage: queryArg.itemsPerPage,
           title: queryArg.title,
           description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
       }),
@@ -432,6 +723,116 @@ export const api = createApi({
     }),
   }),
 });
+export type GetOidcAuthTokenItemApiResponse =
+  /** status 200 Get JWT token from OIDC token */ Token;
+export type GetOidcAuthTokenItemApiArg = {
+  /** OIDC state */
+  state?: string;
+  /** OIDC id token */
+  idToken?: string;
+};
+export type GetOidcAuthUrlsItemApiResponse =
+  /** status 200 Get authentication and end session endpoints */ OidcEndpoints;
+export type GetOidcAuthUrlsItemApiArg = {
+  /** The key for the provider to use. Leave out to use the default provider */
+  providerKey?: string;
+};
+export type PostLoginInfoScreenApiResponse =
+  /** status 200 Login with bindKey to get JWT token for screen */ ScreenLoginOutput;
+export type PostLoginInfoScreenApiArg = {
+  /** Get login info with JWT token for given nonce */
+  screenLoginInput: ScreenLoginInput;
+};
+export type PostCredentialsItemApiResponse =
+  /** status 200 Get JWT token */ Token;
+export type PostCredentialsItemApiArg = {
+  /** Generate new JWT Token */
+  credentials: Credentials;
+};
+export type PostRefreshTokenItemApiResponse =
+  /** status 200 Refresh JWT token */ RefreshTokenResponse;
+export type PostRefreshTokenItemApiArg = {
+  /** Refresh JWT Token */
+  refreshTokenRequest: RefreshTokenRequest;
+};
+export type GetV1CampaignsByIdScreenGroupsApiResponse = unknown;
+export type GetV1CampaignsByIdScreenGroupsApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+  };
+};
+export type GetV1CampaignsByIdScreensApiResponse = unknown;
+export type GetV1CampaignsByIdScreensApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+  };
+};
+export type GetV1FeedSourcesApiResponse = unknown;
+export type GetV1FeedSourcesApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  supportedFeedOutputType?: {
+    ""?: string[];
+  };
+  title?: string;
+  description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+  };
+};
+export type GetV1FeedSourcesByIdApiResponse = unknown;
+export type GetV1FeedSourcesByIdApiArg = {
+  id: string;
+};
+export type GetV1FeedSourcesByIdConfigAndNameApiResponse = unknown;
+export type GetV1FeedSourcesByIdConfigAndNameApiArg = {
+  id: string;
+  name: string;
+};
+export type GetV1FeedsApiResponse = unknown;
+export type GetV1FeedsApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
+};
+export type GetV1FeedsByIdApiResponse = unknown;
+export type GetV1FeedsByIdApiArg = {
+  id: string;
+};
+export type GetV1FeedsByIdDataApiResponse = unknown;
+export type GetV1FeedsByIdDataApiArg = {
+  id: string;
+};
 export type GetV1LayoutsApiResponse = unknown;
 export type GetV1LayoutsApiArg = {
   page?: number;
@@ -449,11 +850,16 @@ export type GetV1MediaApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostMediaCollectionApiResponse = unknown;
@@ -462,8 +868,6 @@ export type PostMediaCollectionApiArg = {
     title: string;
     description: string;
     license: string;
-    modifiedBy?: string;
-    createdBy?: string;
     file: Blob;
   };
 };
@@ -487,7 +891,6 @@ export type GetV1MediaByIdSlidesApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1PlaylistsApiResponse = unknown;
@@ -497,14 +900,23 @@ export type GetV1PlaylistsApiArg = {
   itemsPerPage?: number;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
+  /** If true only campaigns will be shown */
+  isCampaign?: boolean;
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
+  /** If true only entities that are shared with me will be shown */
+  sharedWithMe?: boolean;
 };
 export type PostV1PlaylistsApiResponse = unknown;
 export type PostV1PlaylistsApiArg = {
@@ -525,27 +937,23 @@ export type DeleteV1PlaylistsByIdApiResponse = unknown;
 export type DeleteV1PlaylistsByIdApiArg = {
   id: string;
 };
-export type GetV1PlaylistsByIdScreensApiResponse = unknown;
-export type GetV1PlaylistsByIdScreensApiArg = {
-  id: string;
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
-  order?: {
-    title?: "asc" | "desc";
-    description?: "asc" | "desc";
-    createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
-  };
-};
 export type GetV1PlaylistsByIdSlidesApiResponse = unknown;
 export type GetV1PlaylistsByIdSlidesApiArg = {
   id: string;
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
 };
 export type PutV1PlaylistsByIdSlidesApiResponse = unknown;
 export type PutV1PlaylistsByIdSlidesApiArg = {
@@ -565,15 +973,27 @@ export type GetV1ScreenGroupsApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
   };
 };
 export type PostV1ScreenGroupsApiResponse = unknown;
 export type PostV1ScreenGroupsApiArg = {
   /** The new ScreenGroup resource */
   screenGroupScreenGroupInput: ScreenGroupScreenGroupInput;
+};
+export type GetScreenGroupCampaignItemApiResponse = unknown;
+export type GetScreenGroupCampaignItemApiArg = {
+  /** Resource identifier */
+  id: string;
 };
 export type GetV1ScreenGroupsByIdApiResponse = unknown;
 export type GetV1ScreenGroupsByIdApiArg = {
@@ -589,18 +1009,59 @@ export type DeleteV1ScreenGroupsByIdApiResponse = unknown;
 export type DeleteV1ScreenGroupsByIdApiArg = {
   id: string;
 };
+export type GetV1ScreenGroupsByIdCampaignsApiResponse = unknown;
+export type GetV1ScreenGroupsByIdCampaignsApiArg = {
+  id: string;
+  page: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
+};
+export type PutV1ScreenGroupsByIdCampaignsApiResponse = unknown;
+export type PutV1ScreenGroupsByIdCampaignsApiArg = {
+  /** Resource identifier */
+  id: string;
+  body: Blob;
+};
+export type DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiResponse = unknown;
+export type DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiArg = {
+  id: string;
+  campaignId: string;
+};
+export type GetV1ScreenGroupsByIdScreensApiResponse = unknown;
+export type GetV1ScreenGroupsByIdScreensApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+};
 export type GetV1ScreensApiResponse = unknown;
 export type GetV1ScreensApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  title?: string;
-  description?: string;
+  /** Search on both location and title */
+  search?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostV1ScreensApiResponse = unknown;
@@ -622,6 +1083,42 @@ export type DeleteV1ScreensByIdApiResponse = unknown;
 export type DeleteV1ScreensByIdApiArg = {
   id: string;
 };
+export type PostScreenBindKeyApiResponse = unknown;
+export type PostScreenBindKeyApiArg = {
+  /** The screen id */
+  id: string;
+  /** Bind the screen with the bind key */
+  screenBindObject: ScreenBindObject;
+};
+export type GetV1ScreensByIdCampaignsApiResponse = unknown;
+export type GetV1ScreensByIdCampaignsApiArg = {
+  id: string;
+  page: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
+};
+export type PutV1ScreensByIdCampaignsApiResponse = unknown;
+export type PutV1ScreensByIdCampaignsApiArg = {
+  /** Resource identifier */
+  id: string;
+  body: Blob;
+};
+export type DeleteV1ScreensByIdCampaignsAndCampaignIdApiResponse = unknown;
+export type DeleteV1ScreensByIdCampaignsAndCampaignIdApiArg = {
+  id: string;
+  campaignId: string;
+};
 export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiResponse = unknown;
 export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg = {
   id: string;
@@ -629,6 +1126,8 @@ export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  /** If true only entities that are shared with me will be shown */
+  sharedWithMe?: boolean;
 };
 export type PutPlaylistScreenRegionItemApiResponse = unknown;
 export type PutPlaylistScreenRegionItemApiArg = {
@@ -664,6 +1163,13 @@ export type DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiArg = {
   id: string;
   screenGroupId: string;
 };
+export type PostScreenUnbindApiResponse = unknown;
+export type PostScreenUnbindApiArg = {
+  /** The screen id */
+  id: string;
+  /** Unbind from machine */
+  body: string;
+};
 export type GetV1SlidesApiResponse = unknown;
 export type GetV1SlidesApiArg = {
   page?: number;
@@ -671,13 +1177,18 @@ export type GetV1SlidesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   /** If true only published content will be shown */
   published?: boolean;
   order?: {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostV1SlidesApiResponse = unknown;
@@ -699,6 +1210,29 @@ export type DeleteV1SlidesByIdApiResponse = unknown;
 export type DeleteV1SlidesByIdApiArg = {
   id: string;
 };
+export type GetV1SlidesByIdPlaylistsApiResponse = unknown;
+export type GetV1SlidesByIdPlaylistsApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
+};
+export type PutV1SlidesByIdPlaylistsApiResponse = unknown;
+export type PutV1SlidesByIdPlaylistsApiArg = {
+  id: string;
+  body: Blob;
+};
 export type GetV1TemplatesApiResponse = unknown;
 export type GetV1TemplatesApiArg = {
   page?: number;
@@ -706,13 +1240,36 @@ export type GetV1TemplatesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type GetV1TemplatesByIdApiResponse = unknown;
 export type GetV1TemplatesByIdApiArg = {
+  id: string;
+};
+export type GetV1TenantsApiResponse = unknown;
+export type GetV1TenantsApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+};
+export type GetV1TenantsByIdApiResponse = unknown;
+export type GetV1TenantsByIdApiArg = {
   id: string;
 };
 export type GetV1ThemesApiResponse = unknown;
@@ -722,9 +1279,16 @@ export type GetV1ThemesApiArg = {
   itemsPerPage?: string;
   title?: string;
   description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
   order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
-    updatedAt?: "asc" | "desc";
   };
 };
 export type PostV1ThemesApiResponse = unknown;
@@ -746,50 +1310,93 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
+export type Token = {
+  token?: string;
+  refresh_token?: string;
+  tenants?: {
+    tenantKey?: string;
+    title?: string;
+    description?: string;
+    roles?: string[];
+  }[];
+  user?: {
+    fullname?: string;
+    email?: string;
+  };
+};
+export type OidcEndpoints = {
+  authorizationUrl?: string;
+  endSessionUrl?: string;
+};
+export type ScreenLoginOutput = {
+  bindKey?: string;
+  token?: string;
+};
+export type ScreenLoginInput = object;
+export type Credentials = {
+  email?: string;
+  password?: string;
+};
+export type RefreshTokenResponse = {
+  token?: string;
+  refresh_token?: string;
+};
+export type RefreshTokenRequest = {
+  refresh_token?: string;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
-  schedule?: string;
-  modifiedBy?: string;
-  createdBy?: string;
+  schedules?: string[];
+  tenants?: string[];
+  isCampaign?: boolean;
   published?: string[];
 };
 export type ScreenGroupScreenGroupInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
 };
 export type ScreenScreenInput = {
   title?: string;
   description?: string;
   size?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   layout?: string;
   location?: string;
   dimensions?: string[];
 };
+export type ScreenBindObject = {
+  bindKey?: string;
+};
 export type SlideSlideInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   templateInfo?: string[];
   theme?: string;
   duration?: number | null;
   published?: string[];
+  feed?: string[] | null;
   media?: string[];
   content?: string[];
 };
 export type ThemeThemeInput = {
   title?: string;
   description?: string;
-  modifiedBy?: string;
-  createdBy?: string;
   css?: string;
 };
 export const {
+  useGetOidcAuthTokenItemQuery,
+  useGetOidcAuthUrlsItemQuery,
+  usePostLoginInfoScreenMutation,
+  usePostCredentialsItemMutation,
+  usePostRefreshTokenItemMutation,
+  useGetV1CampaignsByIdScreenGroupsQuery,
+  useGetV1CampaignsByIdScreensQuery,
+  useGetV1FeedSourcesQuery,
+  useGetV1FeedSourcesByIdQuery,
+  useGetV1FeedSourcesByIdConfigAndNameQuery,
+  useGetV1FeedsQuery,
+  useGetV1FeedsByIdQuery,
+  useGetV1FeedsByIdDataQuery,
   useGetV1LayoutsQuery,
   useGetV1LayoutsByIdQuery,
   useGetV1MediaQuery,
@@ -802,33 +1409,46 @@ export const {
   useGetV1PlaylistsByIdQuery,
   usePutV1PlaylistsByIdMutation,
   useDeleteV1PlaylistsByIdMutation,
-  useGetV1PlaylistsByIdScreensQuery,
   useGetV1PlaylistsByIdSlidesQuery,
   usePutV1PlaylistsByIdSlidesMutation,
   useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation,
   useGetV1ScreenGroupsQuery,
   usePostV1ScreenGroupsMutation,
+  useGetScreenGroupCampaignItemQuery,
   useGetV1ScreenGroupsByIdQuery,
   usePutV1ScreenGroupsByIdMutation,
   useDeleteV1ScreenGroupsByIdMutation,
+  useGetV1ScreenGroupsByIdCampaignsQuery,
+  usePutV1ScreenGroupsByIdCampaignsMutation,
+  useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation,
+  useGetV1ScreenGroupsByIdScreensQuery,
   useGetV1ScreensQuery,
   usePostV1ScreensMutation,
   useGetV1ScreensByIdQuery,
   usePutV1ScreensByIdMutation,
   useDeleteV1ScreensByIdMutation,
+  usePostScreenBindKeyMutation,
+  useGetV1ScreensByIdCampaignsQuery,
+  usePutV1ScreensByIdCampaignsMutation,
+  useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation,
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
   usePutPlaylistScreenRegionItemMutation,
   useDeletePlaylistScreenRegionItemMutation,
   useGetV1ScreensByIdScreenGroupsQuery,
   usePutV1ScreensByIdScreenGroupsMutation,
   useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation,
+  usePostScreenUnbindMutation,
   useGetV1SlidesQuery,
   usePostV1SlidesMutation,
   useGetV1SlidesByIdQuery,
   usePutV1SlidesByIdMutation,
   useDeleteV1SlidesByIdMutation,
+  useGetV1SlidesByIdPlaylistsQuery,
+  usePutV1SlidesByIdPlaylistsMutation,
   useGetV1TemplatesQuery,
   useGetV1TemplatesByIdQuery,
+  useGetV1TenantsQuery,
+  useGetV1TenantsByIdQuery,
   useGetV1ThemesQuery,
   usePostV1ThemesMutation,
   useGetV1ThemesByIdQuery,

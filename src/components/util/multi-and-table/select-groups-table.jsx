@@ -1,43 +1,41 @@
 import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
+import { SelectGroupColumns } from "../../groups/groups-columns";
 import {
   useGetV1ScreenGroupsQuery,
-  useGetV1ScreensByIdScreenGroupsQuery,
+  useGetV1ScreenGroupsByIdScreensQuery,
 } from "../../../redux/api/api.generated";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
+
 /**
  * A multiselect and table for groups.
  *
  * @param {string} props The props.
  * @param {string} props.name The name for the input
- * @returns {object} An input.
+ * @param {string} props.id The id used for the get.
+ * @param {string} props.getSelectedMethod Method that gets selected for dropdown
+ * @returns {object} Select groups table.
  */
-function SelectGroupsTable({ handleChange, name, groupId }) {
-  const { t } = useTranslation("common");
-  const [selectedData, setSelectedData] = useState();
+function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
+  const { t } = useTranslation("common", { keyPrefix: "select-groups-table" });
+  const [selectedData, setSelectedData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const { data: groups } = useGetV1ScreenGroupsQuery({
     title: searchText,
-    itemsPerPage: searchText ? 10 : 0,
+    itemsPerPage: 100,
+    orderBy: "createdAt",
+    order: "asc",
   });
-
-  const { data } = useGetV1ScreensByIdScreenGroupsQuery({
-    id: groupId,
+  const { data } = getSelectedMethod({
+    id,
   });
 
   /** Map loaded data. */
   useEffect(() => {
     if (data) {
       setSelectedData(data["hydra:member"]);
-      handleChange({
-        target: {
-          id: name,
-          value: data["hydra:member"].map((item) => item["@id"]),
-        },
-      });
     }
   }, [data]);
 
@@ -48,10 +46,10 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
    * @param {object} props.target - The target.
    */
   function handleAdd({ target }) {
-    const { value, id } = target;
+    const { value, id: localId } = target;
     setSelectedData(value);
     handleChange({
-      target: { id, value: value.map((item) => item["@id"]) },
+      target: { id: localId, value: value.map((item) => item["@id"]) },
     });
   }
 
@@ -74,7 +72,7 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
       .map((item) => {
         return item["@id"];
       })
-      .indexOf(removeItem["@id"]);
+      .indexOf(removeItem);
     const selectedDataCopy = [...selectedData];
     selectedDataCopy.splice(indexOfItemToRemove, 1);
     setSelectedData(selectedDataCopy);
@@ -85,22 +83,14 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
     };
     handleChange({ target });
   }
+  const columns = SelectGroupColumns({
+    handleDelete: removeFromList,
+    apiCall: useGetV1ScreenGroupsByIdScreensQuery,
+    editTarget: "group",
+    infoModalRedirect: "/screen/edit",
+    infoModalTitle: t("info-modal.screens"),
+  });
 
-  // The columns for the table.
-  const columns = [
-    {
-      path: "title",
-      label: t("select-groups-table.columns.name"),
-    },
-    {
-      key: "delete",
-      content: (screenData) => (
-        <Button variant="danger" onClick={() => removeFromList(screenData)}>
-          {t("select-groups-table.remove-from-list")}
-        </Button>
-      ),
-    },
-  ];
   return (
     <>
       {groups && groups["hydra:member"] && (
@@ -112,8 +102,11 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
             selected={selectedData}
             filterCallback={onFilter}
           />
-          {selectedData?.length > 0 && (
-            <Table columns={columns} data={selectedData} />
+          {selectedData.length > 0 && (
+            <>
+              <Table columns={columns} data={selectedData} />
+              <small>{t("edit-groups-help-text")}</small>
+            </>
           )}
         </>
       )}
@@ -122,13 +115,14 @@ function SelectGroupsTable({ handleChange, name, groupId }) {
 }
 
 SelectGroupsTable.defaultProps = {
-  groupId: "",
+  id: "",
 };
 
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  groupId: PropTypes.string,
+  id: PropTypes.string,
+  getSelectedMethod: PropTypes.func.isRequired,
 };
 
 export default SelectGroupsTable;
