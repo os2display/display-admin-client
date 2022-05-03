@@ -12,6 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: itkdev/os2display-admin-client
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -24,7 +30,7 @@ jobs:
           context: ./infrastructure/
           file: ./infrastructure/Dockerfile
           build-args: |
-            APP_VERSION=${{ env.GITHUB_REF_NAME }}
+            APP_VERSION=${{ GITHUB_REF_NAME }}
           push: true
-          tags: itkdev/os2display-admin-client:${{ env.GITHUB_REF_NAME }}
-
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
