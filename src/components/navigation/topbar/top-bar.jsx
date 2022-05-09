@@ -14,12 +14,12 @@ import {
   faSignOutAlt,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
 import NavItems from "../nav-items/nav-items";
 import UserContext from "../../../context/user-context";
 import localStorageKeys from "../../util/local-storage-keys";
 import { api } from "../../../redux/api/api.generated";
 import { displayError } from "../../util/list/toast-component/display-toast";
-import { useDispatch } from "react-redux";
 import "./top-bar.scss";
 
 /**
@@ -41,10 +41,7 @@ function TopBar() {
    * @param {object} props.target Event target
    */
   function onTenantChange({ target }) {
-
-    dispatch(
-      api.endpoints.tenantChangedClearCache.initiate()
-    )
+    dispatch(api.endpoints.tenantChangedClearCache.initiate());
     context.selectedTenant.set(
       context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
     );
@@ -121,7 +118,7 @@ function TopBar() {
                     style={{
                       color:
                         tenant.tenantKey ===
-                          context.selectedTenant.get.tenantKey
+                        context.selectedTenant.get.tenantKey
                           ? "#6c757d"
                           : "transparent",
                     }}

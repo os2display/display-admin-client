@@ -4,7 +4,7 @@ import { api as generatedApi } from "./api/api.generated";
 generatedApi.injectEndpoints({
   endpoints: (builder) => ({
     tenantChangedClearCache: builder.mutation({
-      query: () => ({ url: '/tenant-cache-clear' }),
+      query: () => ({ url: "/tenant-cache-clear" }),
     }),
   }),
 });
@@ -192,7 +192,16 @@ generatedApi.enhanceEndpoints({
       invalidatesTags: ["Theme"],
     },
     tenantChangedClearCache: {
-      invalidatesTags: ["Theme", "Screen", "ScreenGroup", "Slide", "Feed", "Playlist", "FeedSource", "Media"],
+      invalidatesTags: [
+        "Theme",
+        "Screen",
+        "ScreenGroup",
+        "Slide",
+        "Feed",
+        "Playlist",
+        "FeedSource",
+        "Media",
+      ],
     },
   },
 });
