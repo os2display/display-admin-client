@@ -6,6 +6,7 @@ server {
 
     # Any route containing a file extension (e.g. /devicesfile.js)
     location ~* ^{{ getenv "APP_ADMIN_CLIENT_PATH" "" }}/(.+\..+)$ {
+        rewrite ^{{ getenv "APP_ADMIN_CLIENT_PATH" "/" }}(.*) /$1 break;
         try_files $uri =404;
     }
 
