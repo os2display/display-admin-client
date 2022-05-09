@@ -28,6 +28,17 @@ function PosterSelector({
 }) {
   const { t } = useTranslation("common");
   const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
+  const tenantKey = JSON.parse(
+    localStorage.getItem(localStorageKeys.SELECTED_TENANT)
+  );
+
+  const headers = {
+    authorization: `Bearer ${apiToken ?? ""}`,
+  };
+
+  if (tenantKey) {
+    headers["Authorization-Tenant-Key"] = tenantKey.tenantKey;
+  }
 
   const [singleSearch, setSingleSearch] = useState("");
   const [singleSearchType, setSingleSearchType] = useState("title");
@@ -70,9 +81,7 @@ function PosterSelector({
 
       if (eventId !== null) {
         fetch(`${url}?path=${eventId}`, {
-          headers: {
-            authorization: `Bearer ${apiToken ?? ""}`,
-          },
+          headers,
         })
           .then((response) => response.json())
           .then((data) => {
@@ -85,9 +94,7 @@ function PosterSelector({
 
       if (occurrenceId !== null) {
         fetch(`${url}?path=${occurrenceId}`, {
-          headers: {
-            authorization: `Bearer ${apiToken ?? ""}`,
-          },
+          headers,
         })
           .then((response) => response.json())
           .then((data) => {
@@ -185,9 +192,7 @@ function PosterSelector({
     setLoadingResults(true);
 
     fetch(`${url}${query}`, {
-      headers: {
-        authorization: `Bearer ${apiToken ?? ""}`,
-      },
+      headers,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -243,9 +248,7 @@ function PosterSelector({
     setLoadingResults(true);
 
     fetch(`${url}${query}`, {
-      headers: {
-        authorization: `Bearer ${apiToken ?? ""}`,
-      },
+      headers,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -298,9 +301,7 @@ function PosterSelector({
 
     // TODO: Get this endpoint in a different way.
     fetch(`${url}${query}`, {
-      headers: {
-        authorization: `Bearer ${apiToken ?? ""}`,
-      },
+      headers,
     })
       .then((response) => response.json())
       .then((data) => {
