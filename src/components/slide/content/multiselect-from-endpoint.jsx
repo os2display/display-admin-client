@@ -30,7 +30,6 @@ function MultiselectFromEndpoint({
 
   useEffect(() => {
     if (optionsEndpoint) {
-      // @TODO: Handle this in service.
       const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
 
       const headers = {
