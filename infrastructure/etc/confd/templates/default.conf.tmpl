@@ -2,12 +2,17 @@ server {
     listen 80;
     server_name localhost;
     root /var/www/html;
+    index index.html index.htm;
+
+    # Any route containing a file extension (e.g. /devicesfile.js)
+    location ~* ^{{ getenv "APP_ADMIN_CLIENT_PATH" "/" }}(.+\..+)$ {
+        try_files $uri =404;
+    }
 
     location {{ getenv "APP_ADMIN_CLIENT_PATH" "/" }} {
         rewrite ^{{ getenv "APP_ADMIN_CLIENT_PATH" "/" }}(.*) /$1 break;
-        index index.html;
         autoindex off;
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ index.html;
     }
 
     location = {{ getenv "APP_ADMIN_CLIENT_PATH" "" }}/robots.txt {
