@@ -5,7 +5,7 @@ server {
     index index.html index.htm;
 
     # Any route containing a file extension (e.g. /devicesfile.js)
-    location ~* ^{{ getenv "APP_ADMIN_CLIENT_PATH" "/" }}(.+\..+)$ {
+    location ~* ^{{ getenv "APP_ADMIN_CLIENT_PATH" "" }}/(.+\..+)$ {
         try_files $uri =404;
     }
 
