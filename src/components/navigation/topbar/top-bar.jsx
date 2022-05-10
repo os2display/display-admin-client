@@ -14,11 +14,13 @@ import {
   faSignOutAlt,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
 import NavItems from "../nav-items/nav-items";
 import UserContext from "../../../context/user-context";
 import localStorageKeys from "../../util/local-storage-keys";
-import "./top-bar.scss";
+import { api } from "../../../redux/api/api.generated";
 import { displayError } from "../../util/list/toast-component/display-toast";
+import "./top-bar.scss";
 
 /**
  * The top bar navigation component.
@@ -29,6 +31,7 @@ function TopBar() {
   const { t } = useTranslation("common");
   const context = useContext(UserContext);
   const location = useLocation();
+  const dispatch = useDispatch();
   const [tenantChangeDisabled, setTenantChangeDisabled] = useState(false);
 
   /**
@@ -38,6 +41,7 @@ function TopBar() {
    * @param {object} props.target Event target
    */
   function onTenantChange({ target }) {
+    dispatch(api.endpoints.tenantChangedClearCache.initiate());
     context.selectedTenant.set(
       context.tenants.get.find((tenant) => tenant.tenantKey === target.id)
     );

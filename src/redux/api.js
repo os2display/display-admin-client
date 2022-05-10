@@ -1,7 +1,16 @@
 import { api as generatedApi } from "./api/api.generated";
 
+// Add cache clear mock-enpoint
+generatedApi.injectEndpoints({
+  endpoints: (builder) => ({
+    tenantChangedClearCache: builder.mutation({
+      query: () => ({ url: "/tenant-cache-clear" }),
+    }),
+  }),
+});
+
 /** Entry point for modifying api endpoints. */
-const api = generatedApi.enhanceEndpoints({
+generatedApi.enhanceEndpoints({
   addTagTypes: [
     "Slide",
     "Screen",
@@ -182,7 +191,21 @@ const api = generatedApi.enhanceEndpoints({
       providesTags: ["Theme"],
       invalidatesTags: ["Theme"],
     },
+    tenantChangedClearCache: {
+      invalidatesTags: [
+        "Theme",
+        "Screen",
+        "ScreenGroup",
+        "Slide",
+        "Feed",
+        "Playlist",
+        "FeedSource",
+        "Media",
+      ],
+    },
   },
 });
+
+const api = generatedApi;
 
 export default api;

@@ -21,7 +21,7 @@ RUN rm -rf public/fixtures
 ####
 ## Build main application image.
 ####
-FROM nginx:1.21.3-alpine
+FROM nginx:1.21.6-alpine
 LABEL maintainer="ITK Dev <itkdev@mkb.aarhus.dk>"
 
 ENV APP_PATH=/var/www/html
