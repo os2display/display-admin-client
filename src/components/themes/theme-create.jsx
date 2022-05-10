@@ -7,7 +7,6 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import { usePostV1ThemesMutation } from "../../redux/api/api.generated";
-import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The themes create component.

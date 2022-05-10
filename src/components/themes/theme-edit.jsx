@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ThemeForm from "./theme-form";
 import {
   displaySuccess,
   displayError,
 } from "../util/list/toast-component/display-toast";
-import { useNavigate } from "react-router-dom";
+
 import {
   usePutV1ThemesByIdMutation,
   useGetV1ThemesByIdQuery,

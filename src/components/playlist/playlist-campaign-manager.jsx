@@ -312,8 +312,8 @@ function PlaylistCampaignManager({
 
     const saveTenants = formStateObject.tenants
       ? formStateObject.tenants.map((tenant) => {
-        return idFromUrl(tenant["@id"]);
-      })
+          return idFromUrl(tenant["@id"]);
+        })
       : [];
 
     const saveData = {
@@ -366,8 +366,9 @@ function PlaylistCampaignManager({
         <PlaylistCampaignForm
           location={location}
           playlist={formStateObject}
-          headerText={`${headerText}: ${formStateObject && formStateObject.title
-            }`}
+          headerText={`${headerText}: ${
+            formStateObject && formStateObject.title
+          }`}
           isLoading={
             savingPlaylists ||
             savingSlides ||

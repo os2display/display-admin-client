@@ -291,7 +291,11 @@ function ScreenManager({
 
   /** Handle submitting is done. */
   useEffect(() => {
-    if ((isSaveSuccessPut || isSaveSuccessPost) && !savingPlaylists && !savingGroups) {
+    if (
+      (isSaveSuccessPut || isSaveSuccessPost) &&
+      !savingPlaylists &&
+      !savingGroups
+    ) {
       setSavingScreen(false);
       navigate("/screen/list");
     }
