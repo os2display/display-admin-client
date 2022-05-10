@@ -29,10 +29,6 @@ describe("Group pages work", () => {
     cy.get("#save_group").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
     cy.url().should("include", "group/list");
-
-    cy.get("#title")
-      .invoke("val")
-      .should("match", /^Grupper/);
   });
 
   it("It cancels create group", () => {

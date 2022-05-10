@@ -31,10 +31,6 @@ describe("Theme pages work", () => {
     cy.get("#save_theme").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
     cy.url().should("include", "themes/list");
-
-    cy.get("#title")
-      .invoke("val")
-      .should("match", /^Temaer/);
   });
 
   it("It display error toast on save error", () => {

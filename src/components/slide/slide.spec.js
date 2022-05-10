@@ -57,10 +57,6 @@ describe("Slide pages work", () => {
     cy.get("#save_slide").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
     cy.url().should("include", "slide/list");
-
-    cy.get("#title")
-      .invoke("val")
-      .should("match", /^Slides/);
   });
 
   it("It display error toast on save error", () => {
