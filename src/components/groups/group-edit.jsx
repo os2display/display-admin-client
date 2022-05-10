@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import {
   useGetV1ScreenGroupsByIdQuery,
   usePutV1ScreenGroupsByIdMutation,
@@ -18,6 +19,7 @@ import GroupForm from "./group-form";
  */
 function GroupEdit() {
   const { t } = useTranslation("common", { keyPrefix: "group-edit" });
+  const navigate = useNavigate();
   const headerText = t("edit-group-header");
   const [formStateObject, setFormStateObject] = useState();
   const [savingGroup, setSavingGroup] = useState(false);
@@ -46,6 +48,7 @@ function GroupEdit() {
     if (isSaveSuccess) {
       setSavingGroup(false);
       displaySuccess(t("success-messages.saved-group"));
+      navigate("/group/list");
     }
   }, [isSaveSuccess]);
 
@@ -104,9 +107,8 @@ function GroupEdit() {
       {formStateObject && (
         <GroupForm
           group={formStateObject}
-          headerText={`${headerText}: ${
-            formStateObject && formStateObject.title
-          }`}
+          headerText={`${headerText}: ${formStateObject && formStateObject.title
+            }`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
           isLoading={isLoading || savingGroup}

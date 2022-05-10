@@ -104,7 +104,7 @@ describe("Playlist pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_playlist").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-    cy.url().should("include", "playlist/edit/");
+    cy.url().should("include", "playlist/list/");
 
     cy.get("#title")
       .invoke("val")

@@ -6,6 +6,7 @@ import {
   displaySuccess,
   displayError,
 } from "../util/list/toast-component/display-toast";
+import { useNavigate } from "react-router-dom";
 import {
   usePutV1ThemesByIdMutation,
   useGetV1ThemesByIdQuery,
@@ -18,6 +19,7 @@ import {
  */
 function ThemeEdit() {
   const { t } = useTranslation("common", { keyPrefix: "theme-edit" });
+  const navigate = useNavigate();
   const headerText = t("edit-theme");
   const [formStateObject, setFormStateObject] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
@@ -54,6 +56,7 @@ function ThemeEdit() {
   useEffect(() => {
     if (isSaveSuccess) {
       displaySuccess(t("success-messages.saved-theme"));
+      navigate("/themes/list");
     }
   }, [isSaveSuccess]);
 

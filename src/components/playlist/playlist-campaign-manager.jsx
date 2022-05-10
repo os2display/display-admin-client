@@ -237,10 +237,11 @@ function PlaylistCampaignManager({
     }
   }, [loadingError]);
 
-  /** If the slide is saved, display the success message */
+  /** If the slide is saved, display the success message and navigate to list */
   useEffect(() => {
     if (isSaveSuccessPost || isSaveSuccessPut) {
       displaySuccess(t(`${location}.success-messages.saved`));
+      navigate(`/${location}/list`);
     }
   }, [isSaveSuccessPost, isSaveSuccessPut]);
 
@@ -251,12 +252,6 @@ function PlaylistCampaignManager({
       displayError(t(`${location}.error-messages.save-error`), saveError);
     }
   }, [saveErrorPut, saveErrorPost]);
-
-  useEffect(() => {
-    if (isSaveSuccessPost && data) {
-      navigate(`/${location}/edit/${idFromUrl(data["@id"])}`);
-    }
-  }, [isSaveSuccessPost]);
 
   /**
    * Set state on change in input field
@@ -317,8 +312,8 @@ function PlaylistCampaignManager({
 
     const saveTenants = formStateObject.tenants
       ? formStateObject.tenants.map((tenant) => {
-          return idFromUrl(tenant["@id"]);
-        })
+        return idFromUrl(tenant["@id"]);
+      })
       : [];
 
     const saveData = {
@@ -371,9 +366,8 @@ function PlaylistCampaignManager({
         <PlaylistCampaignForm
           location={location}
           playlist={formStateObject}
-          headerText={`${headerText}: ${
-            formStateObject && formStateObject.title
-          }`}
+          headerText={`${headerText}: ${formStateObject && formStateObject.title
+            }`}
           isLoading={
             savingPlaylists ||
             savingSlides ||

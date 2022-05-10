@@ -47,7 +47,7 @@ function ThemeCreate() {
   /** When the theme is saved, it redirects to edit theme. */
   useEffect(() => {
     if (isSaveSuccess && data) {
-      navigate(`/themes/edit/${idFromUrl(data["@id"])}`);
+      navigate("/themes/list");
     }
   }, [isSaveSuccess]);
 
