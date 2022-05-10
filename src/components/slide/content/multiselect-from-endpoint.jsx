@@ -30,12 +30,23 @@ function MultiselectFromEndpoint({
 
   useEffect(() => {
     if (optionsEndpoint) {
-      // @TODO: Handle this in service.
       const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
+
+      const headers = {
+        authorization: `Bearer ${apiToken ?? ""}`,
+      };
+
+      // Attach tenant key .
+      const tenantKey = JSON.parse(
+        localStorage.getItem(localStorageKeys.SELECTED_TENANT)
+      );
+
+      if (tenantKey) {
+        headers["Authorization-Tenant-Key"] = tenantKey.tenantKey;
+      }
+
       fetch(optionsEndpoint, {
-        headers: {
-          authorization: `Bearer ${apiToken ?? ""}`,
-        },
+        headers,
       })
         .then((response) => response.json())
         .then((data) => {

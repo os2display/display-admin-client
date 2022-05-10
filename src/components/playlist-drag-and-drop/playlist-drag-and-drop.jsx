@@ -40,8 +40,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     isCampaign: false,
     title: searchText,
     itemsPerPage: 100,
-    orderBy: "createdAt",
-    order: "asc",
+    order: { createdAt: "desc" },
     sharedWithMe: onlySharedPlaylists,
   });
 

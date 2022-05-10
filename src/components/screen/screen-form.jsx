@@ -20,8 +20,8 @@ import {
   useGetV1ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated";
 import { displayError } from "../util/list/toast-component/display-toast";
-import "./screen-form.scss";
 import FormCheckbox from "../util/forms/form-checkbox";
+import "./screen-form.scss";
 
 /**
  * The screen form component.

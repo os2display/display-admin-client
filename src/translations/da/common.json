@@ -127,8 +127,6 @@
     "playlist": {
       "header": "Spillelister",
       "create-new": "Opret ny spilleliste",
-      "columns": {
-      },
       "info-modal": {
         "slides": "Spillelisten indeholder følgende slides"
       },
@@ -147,8 +145,6 @@
     "campaign": {
       "header": "Kampagner",
       "create-new": "Opret ny kampagne",
-      "columns": {
-      },
       "info-modal": {
         "slides": "Kampagnen indeholder følgende slides"
       },
@@ -358,7 +354,6 @@
     "number-of-slides": "Slides tilknyttede"
   },
   "playlist-campaign-manager": {
-
     "campaign": {
       "edit-header": "Rediger følgende kampagne",
       "create-header": "Opret ny kampagne",
@@ -490,7 +485,7 @@
   "delete-modal": {
     "title": "Er du sikker på du vil slette følgende",
     "delete": "Slet",
-    "cancel":  "Annuller"
+    "cancel": "Annuller"
   },
   "info-modal": {
     "decline-text": "Luk dialog",
@@ -590,7 +585,7 @@
     "table-header-for-indicator": "Drag and drop indikator",
     "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
-  "link-for-list":{
+  "link-for-list": {
     "label": "Rediger"
   },
   "screen-manager": {
@@ -735,6 +730,7 @@
   "add-edit-contact": {
     "title": "Titel",
     "phone": "Telefonnummer",
+    "name": "Navn",
     "email": "E-mail",
     "add-contact": "Tilføj kontakt",
     "update-contact": "Opdater kontakt"
