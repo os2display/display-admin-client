@@ -97,7 +97,7 @@ describe("Campaign pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^Et consequatur voluptatibus dolore ut ut./);
+      .should("match", /^Kampagner/);
   });
 
   it("It display error toast on save error", () => {

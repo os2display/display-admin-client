@@ -108,7 +108,7 @@ describe("Playlist pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^Et consequatur voluptatibus dolore ut ut./);
+      .should("match", /^Spillelister/);
   });
 
   it("It display error toast on save error", () => {

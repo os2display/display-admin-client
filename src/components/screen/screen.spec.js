@@ -57,7 +57,7 @@ describe("Screen pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^Ab eos dolorum minima inventore./);
+      .should("match", /^Skærme/);
   });
 
   it("It display error toast on save error", () => {

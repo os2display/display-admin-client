@@ -34,7 +34,7 @@ describe("Theme pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^Hic minus et omnis porro./);
+      .should("match", /^Temaer/);
   });
 
   it("It display error toast on save error", () => {

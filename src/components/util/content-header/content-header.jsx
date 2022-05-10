@@ -23,7 +23,7 @@ function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
   return (
     <Row className="align-items-center justify-content-between my-3">
       <Col>
-        <h1>{title}</h1>
+        <h1 id="title">{title}</h1>
       </Col>
       {children}
       {newBtnTitle && (

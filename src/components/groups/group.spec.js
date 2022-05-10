@@ -32,7 +32,7 @@ describe("Group pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^A laudantium aspernatur qui./);
+      .should("match", /^Grupper/);
   });
 
   it("It cancels create group", () => {

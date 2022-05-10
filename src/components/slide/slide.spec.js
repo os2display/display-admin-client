@@ -60,7 +60,7 @@ describe("Slide pages work", () => {
 
     cy.get("#title")
       .invoke("val")
-      .should("match", /^Aut consequatur excepturi ut totam aspernatur./);
+      .should("match", /^Slides/);
   });
 
   it("It display error toast on save error", () => {
