@@ -56,7 +56,7 @@ describe("Slide pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_slide").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-    cy.url().should("include", "slide/list/");
+    cy.url().should("include", "slide/list");
 
     cy.get("#title")
       .invoke("val")

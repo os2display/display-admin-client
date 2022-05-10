@@ -28,7 +28,7 @@ describe("Group pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_group").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-    cy.url().should("include", "group/list/");
+    cy.url().should("include", "group/list");
 
     cy.get("#title")
       .invoke("val")
