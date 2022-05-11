@@ -53,11 +53,7 @@ describe("Screen pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_screen").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-    cy.url().should("include", "screen/edit/");
-
-    cy.get("#title")
-      .invoke("val")
-      .should("match", /^Ab eos dolorum minima inventore./);
+    cy.url().should("include", "screen/list");
   });
 
   it("It display error toast on save error", () => {
