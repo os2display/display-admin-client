@@ -30,7 +30,7 @@ jobs:
           context: ./infrastructure/
           file: ./infrastructure/Dockerfile
           build-args: |
-            APP_VERSION=${{ env.GITHUB_REF_NAME }}
+            APP_VERSION=${{ github.ref }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
