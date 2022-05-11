@@ -571,13 +571,11 @@ function SlideManager({
 
   /** Handle submitting is done. */
   useEffect(() => {
-    if (isSaveSuccessPost && postData) {
+    if (isSaveSuccessPost || isSaveSuccessPut) {
       setSubmitting(false);
-      navigate(`/slide/edit/${idFromUrl(postData["@id"])}`);
-    } else if (isSaveSuccessPut) {
-      setSubmitting(false);
+      navigate("/slide/list");
     }
-  }, [isSaveSuccessPut, isSaveSuccessPost, postData]);
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
 
   return (
     <>

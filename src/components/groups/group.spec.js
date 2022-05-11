@@ -28,11 +28,7 @@ describe("Group pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_group").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-    cy.url().should("include", "group/edit/");
-
-    cy.get("#title")
-      .invoke("val")
-      .should("match", /^A laudantium aspernatur qui./);
+    cy.url().should("include", "group/list");
   });
 
   it("It cancels create group", () => {

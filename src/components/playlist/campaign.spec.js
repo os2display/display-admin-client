@@ -94,10 +94,6 @@ describe("Campaign pages work", () => {
     cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
     cy.get("#save_playlist").click();
     cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-
-    cy.get("#title")
-      .invoke("val")
-      .should("match", /^Et consequatur voluptatibus dolore ut ut./);
   });
 
   it("It display error toast on save error", () => {

@@ -291,16 +291,17 @@ function ScreenManager({
 
   /** Handle submitting is done. */
   useEffect(() => {
-    if (isSaveSuccessPost && postData && !savingPlaylists && !savingGroups) {
+    if (
+      (isSaveSuccessPut || isSaveSuccessPost) &&
+      !savingPlaylists &&
+      !savingGroups
+    ) {
       setSavingScreen(false);
-      navigate(`/screen/edit/${idFromUrl(postData["@id"])}`);
-    } else if (isSaveSuccessPut) {
-      setSavingScreen(false);
+      navigate("/screen/list");
     }
   }, [
     isSaveSuccessPut,
     isSaveSuccessPost,
-    postData,
     isSavePlaylistSuccess,
     isSaveSuccessGroups,
     savingGroups,

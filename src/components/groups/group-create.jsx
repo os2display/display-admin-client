@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
 import GroupForm from "./group-form";
-import idFromUrl from "../util/helpers/id-from-url";
 import {
   displaySuccess,
   displayError,
@@ -27,17 +26,14 @@ function GroupCreate() {
 
   const [
     PostV1ScreenGroups,
-    { data, error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
+    { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
   ] = usePostV1ScreenGroupsMutation();
 
-  /**
-   * When the screen is saved, the group(s) will be saved. When saved, it
-   * redirects to edit screen.
-   */
+  /** Handle submitting is done. */
   useEffect(() => {
-    if (isSaveSuccess && data) {
+    if (isSaveSuccess) {
       displaySuccess(t("success-messages.saved-group"));
-      navigate(`/group/edit/${idFromUrl(data["@id"])}`);
+      navigate("/group/list");
     }
   }, [isSaveSuccess]);
 

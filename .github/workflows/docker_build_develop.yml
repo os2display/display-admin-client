@@ -9,7 +9,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     env:
-      VERSION: alpha
       APP_VERSION: develop
     steps:
       - name: Checkout
