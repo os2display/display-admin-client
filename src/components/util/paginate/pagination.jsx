@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactPaginate from "react-paginate";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * @param {object} props The props.
@@ -11,32 +14,54 @@ import { useTranslation } from "react-i18next";
  * @returns {object} The pagination.
  */
 function Pagination({ itemsCount, pageSize, onPageChange, currentPage }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "pagination" });
   const pageCount = Math.ceil(itemsCount / pageSize);
   // No need for pagination
   if (pageCount <= 1) return null;
 
-  // Array of numbers from 1 ... pagecount.
-  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
+  /**
+   * A function to align pagination data with the data we need, our pages are
+   * not 0-indexed.
+   *
+   * @param {object} props - The props.
+   * @param {Array} props.selected The selected page
+   */
+  function changePage({ selected }) {
+    onPageChange(selected + 1);
+  }
+
   return (
-    <nav aria-label={t("pagination.aria-label")}>
-      <ul className="pagination">
-        {pages.map((page) => (
-          <li
-            key={page}
-            className={page === currentPage ? "page-item active" : "page-item"}
-          >
-            <button
-              type="button"
-              onClick={() => onPageChange(page)}
-              className="page-link"
-            >
-              {page}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <ReactPaginate
+      breakLabel="..."
+      nextLabel={
+        <FontAwesomeIcon
+          aria-label={t("pagination-next")}
+          icon={faAngleRight}
+        />
+      }
+      pageCount={Math.ceil(itemsCount / pageSize)}
+      previousLabel={
+        <FontAwesomeIcon
+          aria-label={t("pagination-previous")}
+          icon={faAngleLeft}
+        />
+      }
+      renderOnZeroPageCount={null}
+      onPageChange={changePage}
+      pageClassName="page-item"
+      pageLinkClassName="page-link"
+      previousClassName="page-item"
+      previousLinkClassName="page-link"
+      nextClassName="page-item"
+      nextLinkClassName="page-link"
+      breakClassName="page-item"
+      breakLinkClassName="page-link"
+      containerClassName="pagination"
+      pageRangeDisplayed={3}
+      marginPagesDisplayed={2}
+      activeClassName="active"
+      forcePage={currentPage - 1}
+    />
   );
 }
 

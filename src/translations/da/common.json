@@ -475,7 +475,8 @@
     }
   },
   "pagination": {
-    "aria-label": "Paginering"
+    "pagination-previous": "Tidligere",
+    "pagination-next": "Næste"
   },
   "search-box": {
     "label": "Søg",
