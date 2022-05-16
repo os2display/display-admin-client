@@ -94,7 +94,6 @@ GroupForm.defaultProps = {
 GroupForm.propTypes = {
   group: PropTypes.shape({
     description: PropTypes.string.isRequired,
-
     title: PropTypes.string.isRequired,
   }),
   handleInput: PropTypes.func.isRequired,
