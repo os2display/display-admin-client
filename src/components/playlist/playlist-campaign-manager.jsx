@@ -259,11 +259,11 @@ function PlaylistCampaignManager({
    * @param {object} props - The props.
    * @param {object} props.target - Event target.
    */
-  function handleInput({ target }) {
+  const handleInput = ({ target }) => {
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   /** Sets slides to save. */
   function handleSaveSlides() {
@@ -299,7 +299,7 @@ function PlaylistCampaignManager({
   }
 
   /** Handles submit. */
-  function handleSubmit() {
+  const handleSubmit = () => {
     setLoadingMessage(t(`${location}.loading-messages.saving-playlist`));
 
     // Set published.
@@ -358,7 +358,7 @@ function PlaylistCampaignManager({
     if (Array.isArray(formStateObject.groups)) {
       handleSaveGroups();
     }
-  }
+  };
 
   return (
     <>
@@ -418,7 +418,11 @@ PlaylistCampaignManager.propTypes = {
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
-  loadingError: PropTypes.shape(PropTypes.any),
+  loadingError: PropTypes.shape({
+    data: PropTypes.shape({
+      status: PropTypes.number,
+    }),
+  }),
   slideId: PropTypes.string,
   location: PropTypes.string.isRequired,
 };

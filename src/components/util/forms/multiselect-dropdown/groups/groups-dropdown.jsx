@@ -55,7 +55,11 @@ GroupsDropdown.propTypes = {
   ),
   name: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
-  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default GroupsDropdown;

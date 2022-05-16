@@ -44,8 +44,15 @@ function CampaignForm({ campaign, handleInput }) {
     </>
   );
 }
+
+CampaignForm.defaultProps = {
+  campaign: null,
+};
+
 CampaignForm.propTypes = {
-  campaign: PropTypes.objectOf(PropTypes.any).isRequired,
+  campaign: PropTypes.objectOf({
+    "@id": PropTypes.string,
+  }),
   handleInput: PropTypes.func.isRequired,
 };
 

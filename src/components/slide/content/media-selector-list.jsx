@@ -46,18 +46,18 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   }, [mediaData]);
 
   /** @param {number} selectedPage - The selected page. */
-  function updateUrlAndChangePage(selectedPage) {
+  const updateUrlAndChangePage = (selectedPage) => {
     setPage(selectedPage);
-  }
+  };
 
   /**
    * Sets search text.
    *
    * @param {string} newSearchText Updates the search text state and url.
    */
-  function handleSearch(newSearchText) {
+  const handleSearch = (newSearchText) => {
     setTitle(newSearchText);
-  }
+  };
 
   return (
     <>

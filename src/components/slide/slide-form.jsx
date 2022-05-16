@@ -167,30 +167,30 @@ function SlideForm({
    * @param {object} props Props.
    * @param {boolean} props.target The returned value from the checkbox.
    */
-  function changeShowPreview({ target }) {
+  const changeShowPreview = ({ target }) => {
     const { value } = target;
     localStorage.setItem(localStorageKeys.PREVIEW, value);
 
     setShowPreview(value);
-  }
+  };
 
   /**
    * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
-  function onFilterTemplate(filter) {
+  const onFilterTemplate = (filter) => {
     setSearchTextTemplate(filter);
-  }
+  };
 
   /**
    * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
-  function onFilterTheme(filter) {
+  const onFilterTheme = (filter) => {
     setSearchTextTheme(filter);
-  }
+  };
 
   /**
    * Change preview layout.
@@ -198,10 +198,10 @@ function SlideForm({
    * @param {object} props The props.
    * @param {object} props.target Event target
    */
-  function onChangePreviewLayout({ target }) {
+  const onChangePreviewLayout = ({ target }) => {
     setPreviewLayout(target.value);
     localStorage.setItem(localStorageKeys.PREVIEW_LAYOUT, target.value);
-  }
+  };
 
   return (
     <>
@@ -484,10 +484,24 @@ SlideForm.defaultProps = {
   selectedTheme: [],
   isLoading: false,
   loadingMessage: "",
+  slide: null,
+  mediaData: null,
 };
 
 SlideForm.propTypes = {
-  slide: PropTypes.objectOf(PropTypes.any).isRequired,
+  slide: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.shape({ touchRegionButtonText: PropTypes.string }),
+    feed: PropTypes.shape({
+      feedSource: PropTypes.string,
+      configuration: PropTypes.shape({}),
+    }),
+    published: PropTypes.shape({
+      from: PropTypes.string,
+      to: PropTypes.string,
+    }),
+    "@id": PropTypes.string,
+  }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
@@ -507,7 +521,9 @@ SlideForm.propTypes = {
   loadingMessage: PropTypes.string,
   handleContent: PropTypes.func.isRequired,
   handleMedia: PropTypes.func.isRequired,
-  mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaData: PropTypes.shape({
+    "@id": PropTypes.string,
+  }),
 };
 
 export default SlideForm;

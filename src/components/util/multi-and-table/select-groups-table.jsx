@@ -45,29 +45,29 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  function handleAdd({ target }) {
+  const handleAdd = ({ target }) => {
     const { value, id: localId } = target;
     setSelectedData(value);
     handleChange({
       target: { id: localId, value: value.map((item) => item["@id"]) },
     });
-  }
+  };
 
   /**
    * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
-  function onFilter(filter) {
+  const onFilter = (filter) => {
     setSearchText(filter);
-  }
+  };
 
   /**
    * Removes playlist from list of groups.
    *
    * @param {object} removeItem The item to remove.
    */
-  function removeFromList(removeItem) {
+  const removeFromList = (removeItem) => {
     const indexOfItemToRemove = selectedData
       .map((item) => {
         return item["@id"];
@@ -82,7 +82,7 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
       id: name,
     };
     handleChange({ target });
-  }
+  };
   const columns = SelectGroupColumns({
     handleDelete: removeFromList,
     apiCall: useGetV1ScreenGroupsByIdScreensQuery,

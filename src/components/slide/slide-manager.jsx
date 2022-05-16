@@ -154,11 +154,11 @@ function SlideManager({
    * @param {object} props - The props.
    * @param {object} props.target - Event target.
    */
-  function handleInput({ target }) {
+  const handleInput = ({ target }) => {
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   /**
    * Select template.
@@ -204,14 +204,14 @@ function SlideManager({
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  function handleContent({ target }) {
+  const handleContent = ({ target }) => {
     // Convert numbers
     const value =
       target.type === "number" ? target.valueAsNumber : target.value;
     const localFormStateObject = { ...formStateObject };
     set(localFormStateObject.content, target.id, value);
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   useEffect(() => {
     // Load template if set, getTemplate because if not, it runs on every time formstateobject is changed
@@ -329,7 +329,7 @@ function SlideManager({
    *
    * @param {string} fieldName The field name.
    */
-  function handleMedia({ target }) {
+  const handleMedia = ({ target }) => {
     const fieldValue = target.value;
     const fieldId = target.id;
     const localFormStateObject = { ...formStateObject };
@@ -393,10 +393,10 @@ function SlideManager({
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
-  }
+  };
 
   /** Handles submit. */
-  function handleSubmit() {
+  const handleSubmit = () => {
     const newSubmittingMedia = [];
 
     // Setup submittingMedia list.
@@ -420,7 +420,7 @@ function SlideManager({
     setSubmitting(true);
     setSubmittingMedia(newSubmittingMedia);
     setLoadingMessage(t("loading-messages.saving-media"));
-  }
+  };
 
   /** When the group is saved, the slide will be saved. */
   useEffect(() => {
@@ -616,7 +616,11 @@ SlideManager.propTypes = {
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
-  loadingError: PropTypes.shape(PropTypes.any),
+  loadingError: PropTypes.shape({
+    data: PropTypes.shape({
+      status: PropTypes.number,
+    }),
+  }),
 };
 
 export default SlideManager;

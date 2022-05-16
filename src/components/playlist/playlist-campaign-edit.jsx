@@ -30,7 +30,7 @@ function PlaylistCampaignEdit({ location }) {
 
   return (
     <>
-      {slideId && (
+      {(slideId || loadingError) && (
         <PlaylistCampaignManager
           saveMethod="PUT"
           location={location}

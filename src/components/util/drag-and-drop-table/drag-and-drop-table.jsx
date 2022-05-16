@@ -61,7 +61,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
    * @param {object} result The result object of the drag and drop, has
    *   destination, source (startindex) and index (endindex).
    */
-  function onDragEnd(result) {
+  const onDragEnd = (result) => {
     // If dropped outside the list, return
     if (!result.destination) {
       return;
@@ -74,7 +74,7 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
     );
     const target = { value: reorderedListOfPlaylists, id: name };
     onDropped({ target });
-  }
+  };
 
   const getListStyle = (isDraggingOver) => ({
     background: isDraggingOver ? "lightgrey" : "white",

@@ -35,7 +35,7 @@ function ImageUploader({
   const [showMediaModal, setShowMediaModal] = useState(false);
 
   /** @param {object} image The image with change. */
-  function handleChange(image) {
+  const handleChange = (image) => {
     const localImages = [...images];
     const imageIndex = localImages.findIndex((img) => img.url === image.url);
     localImages[imageIndex] = image;
@@ -46,21 +46,21 @@ function ImageUploader({
 
     const target = { value: uniqueImages, id: name };
     handleImageUpload({ target });
-  }
+  };
 
   /** Sets the selected row in state. */
-  function onCloseMediaModal() {
+  const onCloseMediaModal = () => {
     setShowMediaModal(false);
-  }
+  };
   /**
    * Sets the selected row in state.
    *
    * @param {Array} selectedImages The selected images from the modal
    */
-  function onAcceptMediaModal(selectedImages) {
+  const onAcceptMediaModal = (selectedImages) => {
     setImages(selectedImages);
     setShowMediaModal(false);
-  }
+  };
 
   /** Load content from fixture. */
   useEffect(() => {

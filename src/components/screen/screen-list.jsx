@@ -110,10 +110,10 @@ function ScreenList() {
   }, [isDeleteError]);
 
   /** Starts the deletion process. */
-  function handleDelete() {
+  const handleDelete = () => {
     setIsDeleting(true);
     setLoadingMessage(t("loading-messages.deleting-screen"));
-  }
+  };
 
   // The columns for the table.
   const columns = ScreenColumns({

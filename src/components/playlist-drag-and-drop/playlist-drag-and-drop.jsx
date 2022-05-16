@@ -61,16 +61,16 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
    *
    * @param {string} filter - The filter.
    */
-  function onFilter(filter) {
+  const onFilter = (filter) => {
     setSearchText(filter);
-  }
+  };
 
   /**
    * Removes playlist from list of playlists, and closes modal.
    *
    * @param {object} removeItem - Item to remove
    */
-  function removeFromList(removeItem) {
+  const removeFromList = (removeItem) => {
     const indexOfItemToRemove = selectedData
       .map((item) => {
         return item["@id"];
@@ -82,7 +82,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
     const target = { value: selectedDataCopy, id: name };
     handleChange({ target });
-  }
+  };
 
   /**
    * Adds group to list of groups.
@@ -90,13 +90,13 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  function handleAdd({ target }) {
+  const handleAdd = ({ target }) => {
     const { value, id } = target;
     setSelectedData(value);
     handleChange({
       target: { id, value },
     });
-  }
+  };
 
   const columns = SelectPlaylistColumns({
     handleDelete: removeFromList,

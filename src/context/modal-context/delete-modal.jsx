@@ -23,11 +23,11 @@ function DeleteModal({ unSetModal, onAccept, selected, setSelected }) {
    * @param {object} props - The props.
    * @param {string} props.key - The key input.
    */
-  function downHandler({ key }) {
+  const downHandler = ({ key }) => {
     if (key === "Escape") {
       unSetModal();
     }
-  }
+  };
 
   // Add event listeners for keypress
   useEffect(() => {
@@ -39,16 +39,16 @@ function DeleteModal({ unSetModal, onAccept, selected, setSelected }) {
   }, []);
 
   /** If the user rejects deletion, the selected should be reset and the modal closed. */
-  function rejectDeletion() {
+  const rejectDeletion = () => {
     unSetModal();
     setSelected([]);
-  }
+  };
 
   /** If the user accepts deletion, the callback is called and the modal closed. */
-  function acceptDeletion() {
+  const acceptDeletion = () => {
     onAccept();
     unSetModal();
-  }
+  };
 
   return (
     <Modal
@@ -81,7 +81,12 @@ DeleteModal.propTypes = {
   unSetModal: PropTypes.func.isRequired,
   onAccept: PropTypes.func.isRequired,
   setSelected: PropTypes.func.isRequired,
-  selected: PropTypes.objectOf(PropTypes.any).isRequired,
+  selected: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default DeleteModal;

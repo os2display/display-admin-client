@@ -26,9 +26,9 @@ function Pagination({ itemsCount, pageSize, onPageChange, currentPage }) {
    * @param {object} props - The props.
    * @param {Array} props.selected The selected page
    */
-  function changePage({ selected }) {
+  const changePage = ({ selected }) => {
     onPageChange(selected + 1);
-  }
+  };
 
   return (
     <ReactPaginate

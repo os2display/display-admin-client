@@ -90,7 +90,11 @@ MediaForm.defaultProps = {
 };
 
 MediaForm.propTypes = {
-  media: PropTypes.objectOf(PropTypes.any).isRequired,
+  media: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string,
+    })
+  ).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
