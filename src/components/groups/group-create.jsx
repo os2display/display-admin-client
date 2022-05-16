@@ -50,14 +50,14 @@ function GroupCreate() {
    * @param {object} props The props.
    * @param {object} props.target Event target.
    */
-  function handleInput({ target }) {
+  const handleInput = ({ target }) => {
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   /** Handles submit. */
-  function handleSubmit() {
+  const handleSubmit = () => {
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -68,7 +68,7 @@ function GroupCreate() {
     PostV1ScreenGroups({
       screenGroupScreenGroupInput: JSON.stringify(saveData),
     });
-  }
+  };
 
   return (
     <GroupForm

@@ -29,21 +29,21 @@ function StationSelector({
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  function handleAdd({ target }) {
+  const handleAdd = ({ target }) => {
     const { value, id: localId } = target;
     onChange({
       target: { id: localId, value },
     });
-  }
+  };
 
   /**
    * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
-  function onFilter(filter) {
+  const onFilter = (filter) => {
     setSearchText(filter);
-  }
+  };
 
   useEffect(() => {
     fetch(
@@ -82,13 +82,21 @@ function StationSelector({
 
 StationSelector.defaultProps = {
   helpText: "",
+  value: null,
 };
 
 StationSelector.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.objectOf(PropTypes.any).isRequired,
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      x: PropTypes.string,
+      y: PropTypes.string,
+    })
+  ),
   helpText: PropTypes.string,
 };
 

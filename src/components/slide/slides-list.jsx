@@ -105,10 +105,10 @@ function SlidesList() {
   }, [isDeleteError]);
 
   /** Starts the deletion process. */
-  function handleDelete() {
+  const handleDelete = () => {
     setIsDeleting(true);
     setLoadingMessage(t("loading-messages.deleting-slide"));
-  }
+  };
 
   // The columns for the table.
   const columns = SlideColumns({

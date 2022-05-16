@@ -64,10 +64,37 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
 
 PlaylistForm.defaultProps = {
   highlightSharedSection: false,
+  playlist: null,
 };
 
 PlaylistForm.propTypes = {
-  playlist: PropTypes.objectOf(PropTypes.any).isRequired,
+  playlist: PropTypes.shape({
+    schedules: PropTypes.arrayOf(
+      PropTypes.shape({
+        duration: PropTypes.number,
+        id: PropTypes.string,
+        rrule: PropTypes.string,
+      })
+    ),
+    tenants: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string,
+        id: PropTypes.string,
+        modifiedAt: PropTypes.string,
+        modifiedBy: PropTypes.string,
+        tenantKey: PropTypes.string,
+        title: PropTypes.string,
+        userRoleTenants: PropTypes.arrayOf(
+          PropTypes.shape({
+            description: PropTypes.string,
+            roles: PropTypes.arrayOf(PropTypes.string),
+            tenantKey: PropTypes.string,
+            title: PropTypes.string,
+          })
+        ),
+      })
+    ),
+  }),
   handleInput: PropTypes.func.isRequired,
   highlightSharedSection: PropTypes.bool,
 };

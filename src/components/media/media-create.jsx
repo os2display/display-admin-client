@@ -31,11 +31,11 @@ function MediaCreate() {
    * @param {object} props The props.
    * @param {object} props.target Event target
    */
-  function handleInput({ target }) {
+  const handleInput = ({ target }) => {
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   /** Saves multiple pieces of media. */
   useEffect(() => {
@@ -66,7 +66,7 @@ function MediaCreate() {
   }, [isSaveSuccess]);
 
   /** Handles submit. */
-  function handleSubmit() {
+  const handleSubmit = () => {
     const localMediaToCreate = [];
     formStateObject.images.forEach((element) => {
       setLoadingMessage(
@@ -85,7 +85,7 @@ function MediaCreate() {
     });
 
     setMediaToCreate(localMediaToCreate);
-  }
+  };
 
   return (
     <MediaForm

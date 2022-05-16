@@ -37,11 +37,11 @@ function ThemeCreate() {
    * @param {object} props - The props.
    * @param {object} props.target - Event target.
    */
-  function handleInput({ target }) {
+  const handleInput = ({ target }) => {
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   /** When the theme is saved, it redirects to edit theme. */
   useEffect(() => {
@@ -51,7 +51,7 @@ function ThemeCreate() {
   }, [isSaveSuccess]);
 
   /** Handles submit. */
-  function handleSubmit() {
+  const handleSubmit = () => {
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -60,7 +60,7 @@ function ThemeCreate() {
       css: formStateObject.css,
     };
     postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
-  }
+  };
 
   /** If the theme is saved, display the success message */
   useEffect(() => {

@@ -112,17 +112,17 @@ function List({
    * @param {string} dataKey - Which data to delete/update
    * @param {object} value - The update value
    */
-  function updateUrlParams(dataKey, value) {
+  const updateUrlParams = (dataKey, value) => {
     const params = new URLSearchParams(search);
     params.delete(dataKey);
     params.append(dataKey, value);
     navigate({
       search: params.toString(),
     });
-  }
+  };
 
   /** @param {string} newSearchText Updates the search text state and url. */
-  function onSearch(newSearchText) {
+  const onSearch = (newSearchText) => {
     localStorage.setItem(localStorageKeys.SEARCH, newSearchText); // Search should persist
     const params = new URLSearchParams(search);
     params.delete("search");
@@ -132,30 +132,30 @@ function List({
     navigate({
       search: params.toString(),
     });
-  }
+  };
 
   /** @param {string} isPublished Updates the search text state and url. */
-  function onIsPublished({ target }) {
+  const onIsPublished = ({ target }) => {
     if (target.value) {
       updateUrlParams("published", target.id);
     } else {
       updateUrlParams("published", "all");
     }
-  }
+  };
 
   /** @param {string} createdBy Updates the search text state and url. */
-  function onIsCreatedByChange({ target }) {
+  const onIsCreatedByChange = ({ target }) => {
     if (target.value) {
       updateUrlParams("createdBy", target.id);
     } else {
       updateUrlParams("createdBy", "all");
     }
-  }
+  };
 
   /** @param {number} nextPage - The next page. */
-  function updateUrlAndChangePage(nextPage) {
+  const updateUrlAndChangePage = (nextPage) => {
     updateUrlParams("page", nextPage);
-  }
+  };
 
   /** Sets page from url using callback */
   useEffect(() => {

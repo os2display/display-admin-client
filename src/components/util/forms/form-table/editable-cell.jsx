@@ -38,8 +38,8 @@ const EditableCell = ({
 
 EditableCell.propTypes = {
   value: PropTypes.string.isRequired,
-  row: PropTypes.objectOf(PropTypes.any).isRequired,
-  column: PropTypes.objectOf(PropTypes.any).isRequired,
+  row: PropTypes.objectOf({ index: PropTypes.number }).isRequired,
+  column: PropTypes.objectOf({ id: PropTypes.string }).isRequired,
   updateTableData: PropTypes.func.isRequired,
 };
 

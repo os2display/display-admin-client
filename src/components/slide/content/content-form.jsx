@@ -268,7 +268,9 @@ ContentForm.propTypes = {
   formStateObject: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func,
   onFileChange: PropTypes.func.isRequired,
-  mediaData: PropTypes.objectOf(PropTypes.object),
+  mediaData: PropTypes.shape({
+    "@id": PropTypes.string,
+  }),
 };
 
 export default ContentForm;

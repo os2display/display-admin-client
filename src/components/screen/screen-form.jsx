@@ -80,13 +80,13 @@ function ScreenForm({
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  function handleAdd({ target }) {
+  const handleAdd = ({ target }) => {
     const { value, id } = target;
     setSelectedLayout(value);
     handleInput({
       target: { id, value: value.map((item) => item["@id"]).shift() },
     });
-  }
+  };
 
   const handleBindScreen = () => {
     if (bindKey) {
@@ -329,10 +329,25 @@ ScreenForm.defaultProps = {
   groupId: "",
   isLoading: false,
   loadingMessage: "",
+  screen: null,
 };
 
 ScreenForm.propTypes = {
-  screen: PropTypes.objectOf(PropTypes.any).isRequired,
+  screen: PropTypes.shape({
+    description: PropTypes.string,
+    dimensions: PropTypes.shape({
+      height: PropTypes.number,
+      width: PropTypes.number,
+    }),
+    "@id": PropTypes.string,
+    enableColorSchemeChange: PropTypes.bool,
+    layout: PropTypes.string,
+    location: PropTypes.string,
+    regions: PropTypes.arrayOf(PropTypes.string),
+    screenUser: PropTypes,
+    size: PropTypes.string,
+    title: PropTypes.string,
+  }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,

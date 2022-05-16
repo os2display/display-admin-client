@@ -1,4 +1,5 @@
 import { React, useContext } from "react";
+import PropTypes from "prop-types";
 import Login from "./components/user/login";
 import UserContext from "./context/user-context";
 
@@ -18,5 +19,9 @@ function AuthHandler({ children }) {
 
   return children;
 }
+
+AuthHandler.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default AuthHandler;

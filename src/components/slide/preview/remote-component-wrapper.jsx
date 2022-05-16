@@ -15,7 +15,6 @@ import "./remote-component-wrapper.scss";
  * @param {object} props.mediaData Object of loaded media.
  * @param {string} props.orientation Display orientation or horizontal.
  * @param {boolean} props.showPreview Whether to display the prevoew.
- * @param {object} props.style A style object
  * @param {boolean} props.closeButton Display close button on preview
  * @param {Function} props.closeCallback Close button callback on preview
  * @returns {object} The component.
@@ -26,7 +25,6 @@ function RemoteComponentWrapper({
   mediaData,
   showPreview,
   orientation,
-  style,
   closeButton,
   closeCallback,
 }) {
@@ -86,7 +84,7 @@ function RemoteComponentWrapper({
           </Button>
         )}
       </div>
-      <div className="remote-component-wrapper" style={style}>
+      <div className="remote-component-wrapper">
         <div className={`remote-component-content ${orientation}`}>
           <ErrorBoundary errorText="remote-component.error-boundary-text">
             {loading && <div />}
@@ -107,21 +105,22 @@ function RemoteComponentWrapper({
 
 RemoteComponentWrapper.defaultProps = {
   orientation: "",
-  style: {},
   closeButton: false,
   closeCallback: () => {},
+  mediaData: null,
 };
 
 RemoteComponentWrapper.propTypes = {
   slide: PropTypes.shape({ content: PropTypes.shape({}).isRequired })
     .isRequired,
   url: PropTypes.string.isRequired,
-  mediaData: PropTypes.objectOf(PropTypes.any).isRequired,
+  mediaData: PropTypes.shape({
+    "@id": PropTypes.string,
+  }),
   closeCallback: PropTypes.func,
   showPreview: PropTypes.bool.isRequired,
   closeButton: PropTypes.bool,
   orientation: PropTypes.string,
-  style: PropTypes.objectOf(PropTypes.any),
 };
 
 export default RemoteComponentWrapper;

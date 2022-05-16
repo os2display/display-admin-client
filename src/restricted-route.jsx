@@ -1,4 +1,5 @@
 import { React, useContext } from "react";
+import PropTypes from "prop-types";
 import UserContext from "./context/user-context";
 import NoAccess from "./components/no-access/no-access";
 
@@ -10,7 +11,7 @@ import NoAccess from "./components/no-access/no-access";
  * @param {Array} props.roles - The list of roles that have access to the route.
  * @returns {object} A no access component or the children.
  */
-export default function RestrictedRoute({ children, roles }) {
+function RestrictedRoute({ children, roles }) {
   const context = useContext(UserContext);
 
   // If the user has a role with access to children.
@@ -23,3 +24,10 @@ export default function RestrictedRoute({ children, roles }) {
 
   return children;
 }
+
+RestrictedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default RestrictedRoute;

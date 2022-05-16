@@ -145,12 +145,12 @@ function ScreenManager({
    * @param {object} props - The props.
    * @param {object} props.target - Event target.
    */
-  function handleInput({ target }) {
+  const handleInput = ({ target }) => {
     let localFormStateObject = { ...formStateObject };
     localFormStateObject = JSON.parse(JSON.stringify(localFormStateObject));
     set(localFormStateObject, target.id, target.value);
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -244,7 +244,7 @@ function ScreenManager({
   }
 
   /** Handles submit. */
-  function handleSubmit() {
+  const handleSubmit = () => {
     setSavingScreen(true);
     setLoadingMessage(t("loading-messages.saving-screen"));
     const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
@@ -287,7 +287,7 @@ function ScreenManager({
 
     saveGroups();
     savePlaylists();
-  }
+  };
 
   /** Handle submitting is done. */
   useEffect(() => {
@@ -336,11 +336,29 @@ ScreenManager.defaultProps = {
 };
 
 ScreenManager.propTypes = {
-  initialState: PropTypes.shape(PropTypes.any),
+  initialState: PropTypes.shape({
+    description: PropTypes.string,
+    dimensions: PropTypes.shape({
+      height: PropTypes.number,
+      width: PropTypes.number,
+    }),
+    "@id": PropTypes.string,
+    enableColorSchemeChange: PropTypes.bool,
+    layout: PropTypes.string,
+    location: PropTypes.string,
+    regions: PropTypes.arrayOf(PropTypes.string),
+    screenUser: PropTypes,
+    size: PropTypes.string,
+    title: PropTypes.string,
+  }),
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
-  loadingError: PropTypes.shape(PropTypes.any),
+  loadingError: PropTypes.shape({
+    data: PropTypes.shape({
+      status: PropTypes.number,
+    }),
+  }),
   groupId: PropTypes.string,
 };
 

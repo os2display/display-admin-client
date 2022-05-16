@@ -72,9 +72,9 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
    * @param {object} props The props.
    * @param {object} props.target Event target
    */
-  function changeDataSource({ target }) {
+  const changeDataSource = ({ target }) => {
     setDataSource(target.value);
-  }
+  };
 
   /**
    * Sets column name in state.
@@ -82,12 +82,12 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
    * @param {object} props The props.
    * @param {object} props.target Event target
    */
-  function columnNameChanged({ target }) {
+  const columnNameChanged = ({ target }) => {
     setColumnToAddName(target.value);
-  }
+  };
 
   /** Adds a row, adds data entry for each column. */
-  function addRow() {
+  const addRow = () => {
     const newDataObject = {};
     const dataCopy = [...data];
     columns.forEach((column) => {
@@ -96,10 +96,10 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
     });
     dataCopy.push(newDataObject);
     setData(dataCopy);
-  }
+  };
 
   /** Adds a column, adds data entry for each column. */
-  function addColumn() {
+  const addColumn = () => {
     const columnsCopy = [...columns];
     columnsCopy.push({
       Header: columnToAddName,
@@ -108,14 +108,14 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
     });
     setColumns(columnsCopy);
     setColumnToAddName("");
-  }
+  };
 
   /**
    * Removes a column, and removes the data in that column.
    *
    * @param {number} removeId Colums to remove
    */
-  function removeColumn(removeId) {
+  const removeColumn = (removeId) => {
     // remove column
     const columnsCopy = [...columns].filter(
       (column) => column.accessor !== removeId
@@ -136,7 +136,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
       delete element[removeAccessor];
     });
     setData(dataCopy);
-  }
+  };
 
   /**
    * Updates table data.
@@ -145,7 +145,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
    * @param {string} columnId The column id of the row to update.
    * @param {string} updateValue The value to update to.
    */
-  function updateTableData(rowIndex, columnId, updateValue) {
+  const updateTableData = (rowIndex, columnId, updateValue) => {
     setData((oldData) =>
       oldData.map((row, index) => {
         if (index === rowIndex) {
@@ -157,7 +157,7 @@ function FormTable({ name, value, onChange, formGroupClasses }) {
         return row;
       })
     );
-  }
+  };
 
   return (
     <Tabs
@@ -245,7 +245,18 @@ FormTable.defaultProps = {
 
 FormTable.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.objectOf(PropTypes.any),
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      columns: PropTypes.arrayOf(
+        PropTypes.shape({
+          Header: PropTypes.string,
+          accessor: PropTypes.string,
+          key: PropTypes.string,
+        })
+      ),
+      type: PropTypes.string,
+    })
+  ),
   formGroupClasses: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };

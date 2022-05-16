@@ -44,7 +44,7 @@ function PlaylistCampaignForm({
   const [publishedToError, setPublishedToError] = useState(false);
 
   /** Check if published is set */
-  function checkInputsHandleSubmit() {
+  const checkInputsHandleSubmit = () => {
     setPublishedToError(false);
     setPublishedFromError(false);
     let submit = true;
@@ -60,7 +60,7 @@ function PlaylistCampaignForm({
     if (submit) {
       handleSubmit();
     }
-  }
+  };
 
   return (
     <>
@@ -159,10 +159,20 @@ PlaylistCampaignForm.defaultProps = {
   isLoading: false,
   loadingMessage: "",
   isCampaign: false,
+  playlist: null,
 };
 
 PlaylistCampaignForm.propTypes = {
-  playlist: PropTypes.objectOf(PropTypes.any).isRequired,
+  playlist: PropTypes.shape({
+    description: PropTypes.string,
+
+    published: PropTypes.shape({
+      from: PropTypes.string,
+      to: PropTypes.string,
+    }),
+
+    title: PropTypes.string,
+  }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,

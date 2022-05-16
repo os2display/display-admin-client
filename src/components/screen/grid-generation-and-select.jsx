@@ -42,7 +42,7 @@ function GridGenerationAndSelect({
    * @param {object} props The props.
    * @param {object} props.target Event target
    */
-  function handleChange({ target }) {
+  const handleChange = ({ target }) => {
     // Map to add region id to incoming data.
     const localTarget = target.value.map((value) => {
       return {
@@ -82,12 +82,12 @@ function GridGenerationAndSelect({
     );
     setSelectedPlaylists(localSelectedPlaylists);
     handleInput({ target: { value: localSelectedPlaylists, id: "playlists" } });
-  }
+  };
 
   /** @param {string} id - The id of the selected tab */
-  function handleSelect(id) {
+  const handleSelect = (id) => {
     setKey(id);
-  }
+  };
 
   return (
     <>

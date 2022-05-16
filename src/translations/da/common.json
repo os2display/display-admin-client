@@ -224,9 +224,6 @@
       "save-media-error": "Der skete en fejl da mediet skulle gemmes:"
     }
   },
-  "media-edit": {
-    "edit-media": "Rediger"
-  },
   "media-form": {
     "save-button": "Gem medie",
     "cancel-button": "Annuller",
@@ -475,7 +472,8 @@
     }
   },
   "pagination": {
-    "aria-label": "Paginering"
+    "pagination-previous": "Tidligere",
+    "pagination-next": "Næste"
   },
   "search-box": {
     "label": "Søg",

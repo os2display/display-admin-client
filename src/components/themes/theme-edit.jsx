@@ -73,14 +73,14 @@ function ThemeEdit() {
    * @param {object} props - The props.
    * @param {object} props.target - Event target.
    */
-  function handleInput({ target }) {
+  const handleInput = ({ target }) => {
     const localFormStateObject = { ...formStateObject };
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
-  }
+  };
 
   /** Handles submit. */
-  function handleSubmit() {
+  const handleSubmit = () => {
     setLoadingMessage(t("loading-messages.saving-theme"));
     const saveData = {
       title: formStateObject.title,
@@ -90,7 +90,7 @@ function ThemeEdit() {
       css: formStateObject.css,
     };
     PutV1ThemesById({ themeThemeInput: JSON.stringify(saveData), id });
-  }
+  };
 
   return (
     <>
