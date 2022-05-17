@@ -324,6 +324,9 @@ function SlideForm({
                             url={selectedTemplate?.resources?.component}
                             slide={slide}
                             mediaData={mediaData}
+                            themeData={
+                              selectedTheme?.length > 0 ? selectedTheme[0] : 0
+                            }
                             showPreview={showPreview}
                             orientation=""
                             closeButton
@@ -417,6 +420,7 @@ function SlideForm({
                   slide={slide}
                   mediaData={mediaData}
                   showPreview={showPreview}
+                  themeData={selectedTheme?.length > 0 ? selectedTheme[0] : {}}
                   orientation={previewLayout}
                 />
               )}
