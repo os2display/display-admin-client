@@ -13,6 +13,7 @@ import "./remote-component-wrapper.scss";
  * @param {object} props.slide The slide.
  * @param {boolean} props.url The url for the remote component.
  * @param {object} props.mediaData Object of loaded media.
+ * @param {object} props.themeData Object of theme data.
  * @param {string} props.orientation Display orientation or horizontal.
  * @param {boolean} props.showPreview Whether to display the prevoew.
  * @param {boolean} props.closeButton Display close button on preview
@@ -23,6 +24,7 @@ function RemoteComponentWrapper({
   slide,
   url,
   mediaData,
+  themeData,
   showPreview,
   orientation,
   closeButton,
@@ -60,9 +62,11 @@ function RemoteComponentWrapper({
         newSlide.mediaData = mediaDataCopy;
       }
 
+      newSlide.themeData = themeData;
+
       setRemoteComponentSlide(newSlide);
     }
-  }, [slide, mediaData]);
+  }, [slide, mediaData, themeData]);
 
   useEffect(() => {
     if (showPreview) {
@@ -85,7 +89,10 @@ function RemoteComponentWrapper({
         )}
       </div>
       <div className="remote-component-wrapper">
-        <div className={`remote-component-content ${orientation}`}>
+        <div
+          className={`remote-component-content ${orientation}`}
+          id="EXE-ID-PREVIEW"
+        >
           <ErrorBoundary errorText="remote-component.error-boundary-text">
             {loading && <div />}
             {!loading && err == null && remoteComponentSlide && Component && (
@@ -94,6 +101,7 @@ function RemoteComponentWrapper({
                 content={remoteComponentSlide.content}
                 run={runId}
                 slideDone={() => {}}
+                executionId="EXE-ID-PREVIEW"
               />
             )}
           </ErrorBoundary>
@@ -108,6 +116,7 @@ RemoteComponentWrapper.defaultProps = {
   closeButton: false,
   closeCallback: () => {},
   mediaData: null,
+  themeData: {},
 };
 
 RemoteComponentWrapper.propTypes = {
@@ -116,6 +125,9 @@ RemoteComponentWrapper.propTypes = {
   url: PropTypes.string.isRequired,
   mediaData: PropTypes.shape({
     "@id": PropTypes.string,
+  }),
+  themeData: PropTypes.shape({
+    css: PropTypes.string,
   }),
   closeCallback: PropTypes.func,
   showPreview: PropTypes.bool.isRequired,
