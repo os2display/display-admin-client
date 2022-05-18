@@ -8,6 +8,7 @@ import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 import FileSelector from "./file-selector";
 import StationSelector from "./station/station-selector";
+import RadioButtons from "../../util/forms/radio-buttons";
 
 /**
  * Render form elements for content form.
@@ -145,6 +146,18 @@ function ContentForm({
             value={formStateObject[formData.name]}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
+          />
+        );
+
+        break;
+      case "radio":
+        returnElement = (
+          <RadioButtons
+            label={formData.label}
+            selected={formStateObject[formData.name]}
+            radioGroupName={formData.name}
+            options={formData.options}
+            handleChange={onChange}
           />
         );
 
