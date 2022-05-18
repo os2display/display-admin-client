@@ -85,10 +85,17 @@ function GroupForm({
 GroupForm.defaultProps = {
   isLoading: false,
   loadingMessage: "",
+  group: PropTypes.shape({
+    description: "",
+    title: "",
+  }),
 };
 
 GroupForm.propTypes = {
-  group: PropTypes.objectOf(PropTypes.any).isRequired,
+  group: PropTypes.shape({
+    description: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,

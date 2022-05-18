@@ -43,29 +43,29 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  function handleAdd({ target }) {
+  const handleAdd = ({ target }) => {
     const { value, id } = target;
     setSelectedData(value);
     handleChange({
       target: { id, value: value.map((item) => item["@id"]) },
     });
-  }
+  };
 
   /**
    * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
-  function onFilter(filter) {
+  const onFilter = (filter) => {
     setSearchText(filter);
-  }
+  };
 
   /**
    * Removes playlist from list of groups.
    *
    * @param {string} removeItem The item to remove.
    */
-  function removeFromList(removeItem) {
+  const removeFromList = (removeItem) => {
     const indexOfItemToRemove = selectedData
       .map((item) => {
         return item["@id"];
@@ -80,7 +80,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
       id: name,
     };
     handleChange({ target });
-  }
+  };
 
   // The columns for the table.
   const columns = SelectScreenColumns({

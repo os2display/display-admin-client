@@ -8,6 +8,7 @@ import RichText from "../../util/forms/rich-text/rich-text";
 import FormTable from "../../util/forms/form-table/form-table";
 import FileSelector from "./file-selector";
 import StationSelector from "./station/station-selector";
+import RadioButtons from "../../util/forms/radio-buttons";
 
 /**
  * Render form elements for content form.
@@ -149,6 +150,18 @@ function ContentForm({
         );
 
         break;
+      case "radio":
+        returnElement = (
+          <RadioButtons
+            label={formData.label}
+            selected={formStateObject[formData.name]}
+            radioGroupName={formData.name}
+            options={formData.options}
+            handleChange={onChange}
+          />
+        );
+
+        break;
       case "table":
         returnElement = (
           <FormTable
@@ -268,7 +281,9 @@ ContentForm.propTypes = {
   formStateObject: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func,
   onFileChange: PropTypes.func.isRequired,
-  mediaData: PropTypes.objectOf(PropTypes.object),
+  mediaData: PropTypes.shape({
+    "@id": PropTypes.string,
+  }),
 };
 
 export default ContentForm;

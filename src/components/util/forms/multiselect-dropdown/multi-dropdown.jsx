@@ -90,7 +90,7 @@ function MultiSelectComponent({
    * @param {string} filter The string to filter by
    * @returns {Array} Array of matching values
    */
-  function filterOptions(optionsToFilter, filter) {
+  const filterOptions = (optionsToFilter, filter) => {
     if (!filter) {
       return optionsToFilter;
     }
@@ -101,14 +101,14 @@ function MultiSelectComponent({
       ({ label: shadowLabel }) =>
         shadowLabel && shadowLabel.match(new RegExp(filter, "i"))
     );
-  }
+  };
 
   /**
    * A callback on changed data.
    *
    * @param {Array} data The data to call back with
    */
-  function changeData(data) {
+  const changeData = (data) => {
     let selectedOptions = [];
 
     if (data.length > 0) {
@@ -130,7 +130,7 @@ function MultiSelectComponent({
 
     const target = { value: selectedOptions, id: name };
     handleSelection({ target });
-  }
+  };
 
   /**
    * Renders the label in the multiselect.
@@ -138,11 +138,11 @@ function MultiSelectComponent({
    * @param {Array} valueSelected The value(s) selected to render label from.
    * @returns {string} The string to use as a label
    */
-  function customValueRenderer(valueSelected) {
+  const customValueRenderer = (valueSelected) => {
     return valueSelected.length
       ? contentString(valueSelected, t("multi-dropdown.and-string"))
       : nothingSelectedLabel;
-  }
+  };
 
   return (
     <>

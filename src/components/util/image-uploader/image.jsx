@@ -21,12 +21,12 @@ function Image({ inputImage, onImageRemove, handleChange, index }) {
    * @param {object} props The props
    * @param {object} props.target The onchange target.
    */
-  function onChange({ target }) {
+  const onChange = ({ target }) => {
     const localImage = image;
     localImage[target.id] = target.value;
     setImage(localImage);
     handleChange(image);
-  }
+  };
 
   const imageUrl = image.url ? image.url : image.assets?.uri;
   const disableInput = typeof image?.assets?.uri === "string";

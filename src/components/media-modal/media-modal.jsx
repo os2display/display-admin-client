@@ -25,12 +25,12 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
   const { t } = useTranslation("common");
 
   /** @param {Array} images The images that are selected in the dialog. */
-  function handleSelectedImages(images) {
+  const handleSelectedImages = (images) => {
     setSelectedImages(images);
     if (!multiple && images.length === 1) {
       handleAccept(images);
     }
-  }
+  };
 
   return (
     <Modal

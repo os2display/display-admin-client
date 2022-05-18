@@ -17,11 +17,7 @@ describe("Pagination loads", () => {
   });
 
   it("It works on themes", () => {
-    cy.get(".pagination")
-      .find("button")
-      .first()
-      .invoke("text")
-      .should("match", /^1/);
+    cy.get(".pagination").find("a").eq(1).invoke("text").should("match", /^1/);
     cy.get("tbody")
       .find("tr td")
       .eq(1)
@@ -32,7 +28,7 @@ describe("Pagination loads", () => {
         cy.intercept("GET", "**/themes*", {
           fixture: "themes/themes-second-page.json",
         }).as("themesData");
-        cy.get(".pagination").find(".page-link").eq(1).click();
+        cy.get(".pagination").find(".page-link").eq(2).click();
         cy.wait(["@themesData"]);
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(300);
@@ -53,7 +49,7 @@ describe("Pagination loads", () => {
 
     cy.get(".pagination")
       .find(".page-item")
-      .eq(1)
+      .eq(2)
       .should("have.class", "active");
   });
 });

@@ -34,7 +34,9 @@ function TemplateLabelInList({ templateInfo }) {
 }
 
 TemplateLabelInList.propTypes = {
-  templateInfo: PropTypes.objectOf(PropTypes.any).isRequired,
+  templateInfo: PropTypes.shape({
+    "@id": PropTypes.string,
+  }).isRequired,
 };
 
 export default TemplateLabelInList;

@@ -97,10 +97,16 @@ function ThemeForm({
 ThemeForm.defaultProps = {
   isLoading: false,
   loadingMessage: "",
+  theme: null,
 };
 
 ThemeForm.propTypes = {
-  theme: PropTypes.objectOf(PropTypes.any).isRequired,
+  theme: PropTypes.shape({
+    css: PropTypes.string,
+
+    description: PropTypes.string,
+    title: PropTypes.string,
+  }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,

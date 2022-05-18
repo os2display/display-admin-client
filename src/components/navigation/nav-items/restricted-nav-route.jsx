@@ -1,4 +1,5 @@
 import { React, useContext } from "react";
+import PropTypes from "prop-types";
 import UserContext from "../../../context/user-context";
 
 /**
@@ -23,5 +24,10 @@ function RestrictedNavRoute({ children, roles }) {
 
   return children;
 }
+
+RestrictedNavRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default RestrictedNavRoute;

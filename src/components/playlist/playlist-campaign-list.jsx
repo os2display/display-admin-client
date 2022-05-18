@@ -122,10 +122,10 @@ function PlaylistCampaignList({ location }) {
   }, [isDeleteError]);
 
   /** Starts the deletion process. */
-  function handleDelete() {
+  const handleDelete = () => {
     setIsDeleting(true);
     setLoadingMessage(t(`${location}.loading-messages.deleting`));
-  }
+  };
 
   // The columns for the table.
   const columns = PlaylistColumns({

@@ -76,7 +76,7 @@ function Login() {
    * @param {Array} selected - The multiform returns an array of selected
    *   values, this is a single select, so it will only have one entry
    */
-  function onSelectTenant(selected) {
+  const onSelectTenant = (selected) => {
     const { value } = selected[0];
 
     // set selected tenant in context
@@ -94,7 +94,7 @@ function Login() {
         context.tenants.get.find((tenant) => tenant.tenantKey === value)
       )
     );
-  }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();

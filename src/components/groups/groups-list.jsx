@@ -104,10 +104,10 @@ function GroupsList() {
   }, [isDeleteError]);
 
   /** Starts the deletion process. */
-  function handleDelete() {
+  const handleDelete = () => {
     setIsDeleting(true);
     setLoadingMessage(t("loading-messages.deleting-group"));
-  }
+  };
 
   // The columns for the table.
   const columns = GroupColumns({

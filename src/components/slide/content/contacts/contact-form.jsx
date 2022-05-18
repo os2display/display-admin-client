@@ -28,11 +28,11 @@ function ContactForm({
    * @param {object} props The props
    * @param {object} props.target Event target.
    */
-  function onInput({ target }) {
+  const onInput = ({ target }) => {
     const localContact = { ...contact };
     set(localContact, target.name, target.value);
     onChange(localContact);
-  }
+  };
 
   return (
     <>

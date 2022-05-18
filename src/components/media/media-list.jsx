@@ -93,13 +93,13 @@ function MediaList({ fromModal }) {
   }, [context.selectedTenant.get]);
 
   /** @param {number} nextPage - The next page. */
-  function updateUrlAndChangePage(nextPage) {
+  const updateUrlAndChangePage = (nextPage) => {
     const params = new URLSearchParams(search);
     params.delete("page");
     params.append("page", nextPage);
     navigate({ search: params.toString() });
     setPage(nextPage);
-  }
+  };
 
   /** Sets the url. */
   useEffect(() => {
@@ -118,10 +118,10 @@ function MediaList({ fromModal }) {
    *
    * @param {string} newSearchText Updates the search text state and url.
    */
-  function handleSearch(newSearchText) {
+  const handleSearch = (newSearchText) => {
     setPage(1);
     setSearchText(newSearchText);
-  }
+  };
 
   /** Deletes multiple pieces of media. */
   useEffect(() => {
@@ -151,10 +151,10 @@ function MediaList({ fromModal }) {
   }, [isDeleteError]);
 
   /** Deletes selected data, and closes modal. */
-  function handleDelete() {
+  const handleDelete = () => {
     setLoadingMessage(t("loading-messages.deleting-media"));
     setIsDeleting(true);
-  }
+  };
 
   useEffect(() => {
     if (mediaLoadError) {
