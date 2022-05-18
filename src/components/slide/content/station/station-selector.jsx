@@ -69,7 +69,7 @@ function StationSelector({
             singleSelect
             handleSelection={handleAdd}
             name={name}
-            selected={inputValue}
+            selected={inputValue || []}
             filterCallback={onFilter}
             label={label}
           />
