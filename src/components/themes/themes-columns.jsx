@@ -14,7 +14,7 @@ function getThemesColumns() {
     {
       key: "slides",
       // eslint-disable-next-line react/prop-types
-      content: ({ onSlides }) => <>{onSlides.length}</>,
+      content: ({ onNumberOfSlides }) => <>{onNumberOfSlides}</>,
       label: t("columns.number-of-slides"),
     },
   ];
