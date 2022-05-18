@@ -112,8 +112,8 @@ function ThemesList() {
   // The columns for the table.
   const columns = getThemesColumns({
     handleDelete,
-    disableCheckbox: ({ onSlides }) => onSlides.length > 0,
-    disableDelete: ({ onSlides }) => onSlides.length > 0,
+    disableCheckbox: ({ onNumberOfSlides }) => onNumberOfSlides > 0,
+    disableDelete: ({ onNumberOfSlides }) => onNumberOfSlides > 0,
   });
 
   // Error with retrieving list of themes
