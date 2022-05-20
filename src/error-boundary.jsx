@@ -27,8 +27,8 @@ class ErrorBoundary extends Component {
 
     if (hasError) {
       return (
-        <div className="ErrorBoundary">
-          <div className="ErrorBoundaryLoader">{errorText}</div>
+        <div className="error-boundary">
+          <div className="error-boundary-loader">{errorText}</div>
         </div>
       );
     }
