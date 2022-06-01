@@ -51,7 +51,7 @@ function StationSelector({
     )
       .then((response) => response.json())
       .then((rpData) => {
-        if (rpData && rpData.LocationList) {
+        if (rpData?.LocationList?.StopLocation) {
           setData(rpData.LocationList.StopLocation);
         }
       })
