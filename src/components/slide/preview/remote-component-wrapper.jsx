@@ -90,7 +90,7 @@ function RemoteComponentWrapper({
       </div>
       <div className="remote-component-wrapper">
         <div
-          className={`remote-component-content ${orientation}`}
+          className={`slide remote-component-content ${orientation}`}
           id="EXE-ID-PREVIEW"
         >
           <ErrorBoundary errorText="remote-component.error-boundary-text">
