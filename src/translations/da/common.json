@@ -9,28 +9,20 @@
   "remote-component-wrapper": {
     "close-preview": "Luk preview"
   },
-  "theme-create": {
+  "theme-manager": {
+    "edit-theme": "Rediger følgende tema",
     "create-new-theme": "Opret nyt tema",
     "loading-messages": {
-      "saving-theme": "Gemmer temaet"
-    },
-    "success-messages": {
-      "saved-theme": "Temaet er gemt"
-    },
-    "error-messages": {
-      "save-theme-error": "Der skete en fejl da temaet skulle gemmes:"
-    }
-  },
-  "theme-edit": {
-    "edit-theme": "Rediger følgende tema",
-    "loading-messages": {
+      "loading-theme": "Henter temaet",
       "saving-theme": "Gemmer temaet",
-      "loading-theme": "Henter temaet"
+      "saving-media": "Mediet bliver gemt"
     },
     "success-messages": {
+      "saved-media": "Mediet er gemt",
       "saved-theme": "Temaet er gemt"
     },
     "error-messages": {
+      "save-media-error": "Der skete en fejl da mediet skulle gemmes:",
       "save-theme-error": "Der skete en fejl da temaet skulle gemmes:",
       "load-theme-error": "Der skete en fejl da temaet med følgende id: {{id}} skulle hentes:"
     }

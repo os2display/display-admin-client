@@ -185,20 +185,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getV1MediaByIdSlides: build.query<
-      GetV1MediaByIdSlidesApiResponse,
-      GetV1MediaByIdSlidesApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/media/${queryArg.id}/slides`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          published: queryArg.published,
-          order: queryArg.order,
-        },
-      }),
-    }),
     getV1Playlists: build.query<
       GetV1PlaylistsApiResponse,
       GetV1PlaylistsApiArg
@@ -762,8 +748,6 @@ export type GetV1CampaignsByIdScreenGroupsApiArg = {
   /** The number of items per page */
   itemsPerPage?: string;
   order?: {
-    title?: "asc" | "desc";
-    description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
   };
 };
@@ -774,8 +758,6 @@ export type GetV1CampaignsByIdScreensApiArg = {
   /** The number of items per page */
   itemsPerPage?: string;
   order?: {
-    title?: "asc" | "desc";
-    description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
   };
 };
@@ -878,20 +860,6 @@ export type GetV1MediaByIdApiArg = {
 export type DeleteV1MediaByIdApiResponse = unknown;
 export type DeleteV1MediaByIdApiArg = {
   id: string;
-};
-export type GetV1MediaByIdSlidesApiResponse = unknown;
-export type GetV1MediaByIdSlidesApiArg = {
-  id: string;
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
-  /** If true only published content will be shown */
-  published?: boolean;
-  order?: {
-    title?: "asc" | "desc";
-    description?: "asc" | "desc";
-    createdAt?: "asc" | "desc";
-  };
 };
 export type GetV1PlaylistsApiResponse = unknown;
 export type GetV1PlaylistsApiArg = {
@@ -1363,6 +1331,7 @@ export type ScreenScreenInput = {
   layout?: string;
   location?: string;
   dimensions?: string[];
+  enableColorSchemeChange?: boolean | null;
 };
 export type ScreenBindObject = {
   bindKey?: string;
@@ -1381,6 +1350,7 @@ export type SlideSlideInput = {
 export type ThemeThemeInput = {
   title?: string;
   description?: string;
+  logo?: string;
   css?: string;
 };
 export const {
@@ -1403,7 +1373,6 @@ export const {
   usePostMediaCollectionMutation,
   useGetV1MediaByIdQuery,
   useDeleteV1MediaByIdMutation,
-  useGetV1MediaByIdSlidesQuery,
   useGetV1PlaylistsQuery,
   usePostV1PlaylistsMutation,
   useGetV1PlaylistsByIdQuery,

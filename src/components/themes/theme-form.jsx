@@ -9,6 +9,7 @@ import FormInputArea from "../util/forms/form-input-area";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
+import ImageUploader from "../util/image-uploader/image-uploader";
 
 /**
  * The theme form component.
@@ -67,6 +68,12 @@ function ThemeForm({
             onChange={handleInput}
           />
           <code>{theme.css}</code>
+          <ImageUploader
+            handleImageUpload={handleInput}
+            inputImage={theme.logo}
+            name="logo"
+            showLibraryButton
+          />
         </ContentBody>
         <ContentFooter>
           <Button
@@ -103,7 +110,7 @@ ThemeForm.defaultProps = {
 ThemeForm.propTypes = {
   theme: PropTypes.shape({
     css: PropTypes.string,
-
+    logo: PropTypes.string,
     description: PropTypes.string,
     title: PropTypes.string,
   }),

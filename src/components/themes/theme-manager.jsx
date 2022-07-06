@@ -1,0 +1,239 @@
+import { React, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import ThemeForm from "./theme-form";
+import idFromUrl from "../util/helpers/id-from-url";
+import {
+  api,
+  usePostV1ThemesMutation,
+  usePutV1ThemesByIdMutation,
+  usePostMediaCollectionMutation,
+} from "../../redux/api/api.generated";
+import {
+  displaySuccess,
+  displayError,
+} from "../util/list/toast-component/display-toast";
+
+/**
+ * The theme manager component.
+ *
+ * @param {object} props The props.
+ * @param {object} props.initialState Initial theme state.
+ * @param {string} props.saveMethod POST or PUT.
+ * @param {string | null} props.id Theme id.
+ * @param {boolean} props.isLoading Is the theme state loading?
+ * @param {object} props.loadingError Loading error.
+ * @returns {object} The theme form.
+ */
+function ThemeManager({
+  initialState,
+  saveMethod,
+  id,
+  isLoading,
+  loadingError,
+}) {
+  // Hooks
+  const { t } = useTranslation("common", { keyPrefix: "theme-manager" });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // State
+  const [headerText] = useState(
+    saveMethod === "PUT" ? t("edit-theme") : t("create-new-theme")
+  );
+
+  const [loadingMessage, setLoadingMessage] = useState(
+    t("loading-messages.loading-theme")
+  );
+
+  const [submitting, setSubmitting] = useState(false);
+  const [formStateObject, setFormStateObject] = useState({
+    title: "",
+    description: "",
+    modifiedBy: "",
+    createdBy: "",
+    css: "",
+  });
+
+  const [postV1Themes, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
+    usePostV1ThemesMutation();
+
+  const [
+    PutV1ThemesById,
+    { error: saveErrorPut, isSuccess: isSaveSuccessPut },
+  ] = usePutV1ThemesByIdMutation();
+
+  const [
+    PostV1MediaCollection,
+    {
+      data: savedMediaData,
+      isSuccess: isSaveMediaSuccess,
+      error: saveMediaError,
+    },
+  ] = usePostMediaCollectionMutation();
+
+  /** Set loaded data into form state. */
+  useEffect(() => {
+    if (initialState) {
+      if (initialState.logo) {
+        dispatch(
+          api.endpoints.getV1MediaById.initiate({
+            id: idFromUrl(initialState.logo),
+          })
+        )
+          .then(({ data }) => {
+            setFormStateObject({ ...initialState, logo: data });
+          })
+          .catch((err) => {
+            displayError(t("error-messages.save-media-error"), err);
+          });
+      } else {
+        setFormStateObject(initialState);
+      }
+    }
+  }, [initialState]);
+
+  /** @param {Array} logoData - LogoData is an array with an id of a media */
+  function saveTheme(logoData) {
+    setLoadingMessage(t("loading-messages.saving-theme"));
+
+    const saveData = {
+      title: formStateObject.title,
+      description: formStateObject.description,
+      modifiedBy: formStateObject.modifiedBy,
+      createdBy: formStateObject.createdBy,
+      css: formStateObject.css,
+    };
+
+    if (logoData) {
+      saveData.logo = logoData["@id"];
+    }
+
+    if (saveMethod === "POST") {
+      postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
+    } else if (saveMethod === "PUT") {
+      PutV1ThemesById({ themeThemeInput: JSON.stringify(saveData), id });
+    }
+  }
+
+  /**
+   * Set state on change in input field
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - Event target.
+   */
+  const handleInput = ({ target }) => {
+    const localFormStateObject = { ...formStateObject };
+    localFormStateObject[target.id] = target.value;
+    setFormStateObject(localFormStateObject);
+  };
+
+  /** If the theme is not loaded, display the error message */
+  useEffect(() => {
+    if (loadingError) {
+      displayError(t("error-messages.load-theme-error", { id }), loadingError);
+    }
+  }, [loadingError]);
+
+  // Media are not saved successfully, display a message
+  useEffect(() => {
+    if (saveMediaError) {
+      setSubmitting(false);
+      displayError(t("error-messages.save-media-error"), saveMediaError);
+    }
+  }, [saveMediaError]);
+
+  // Media is saved successfully, display a message
+  useEffect(() => {
+    if (isSaveMediaSuccess && savedMediaData) {
+      setSubmitting(false);
+      displaySuccess(t("success-messages.saved-media"));
+      saveTheme(savedMediaData);
+    }
+  }, [isSaveMediaSuccess]);
+
+  /** @param {object} media The media object to save */
+  function saveMedia(media) {
+    // Submit media.
+    const formData = new FormData();
+    formData.append("file", media.file);
+    formData.append("title", media.title);
+    formData.append("description", media.description);
+    formData.append("license", media.license);
+    // @TODO: Should these be optional in the API?
+    formData.append("modifiedBy", "");
+    formData.append("createdBy", "");
+
+    PostV1MediaCollection({ body: formData });
+  }
+
+  /** When the media is saved, the theme will be saved. */
+  useEffect(() => {
+    if (isSaveSuccessPost || isSaveSuccessPut) {
+      setSubmitting(false);
+      displaySuccess(t("success-messages.saved-theme"));
+      navigate("/themes/list");
+    }
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
+
+  /** Handles submit. */
+  const handleSubmit = () => {
+    setSubmitting(true);
+
+    if (formStateObject.logo) {
+      setLoadingMessage(t("loading-messages.saving-media"));
+      saveMedia(formStateObject.logo[0]);
+    } else {
+      saveTheme();
+    }
+  };
+
+  /** If the theme is saved with error, display the error message */
+  useEffect(() => {
+    if (saveErrorPut || saveErrorPost) {
+      const saveError = saveErrorPut || saveErrorPost;
+      setSubmitting(false);
+      displayError(t("error-messages.save-theme-error"), saveError);
+    }
+  }, [saveErrorPut, saveErrorPost]);
+
+  return (
+    <>
+      {formStateObject && (
+        <ThemeForm
+          theme={formStateObject}
+          headerText={`${headerText}: ${formStateObject?.title}`}
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading || submitting}
+          loadingMessage={loadingMessage}
+        />
+      )}
+    </>
+  );
+}
+
+ThemeManager.defaultProps = {
+  id: null,
+  isLoading: false,
+  loadingError: null,
+  initialState: null,
+};
+
+ThemeManager.propTypes = {
+  initialState: PropTypes.shape({
+    logo: PropTypes.string,
+  }),
+  saveMethod: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  isLoading: PropTypes.bool,
+  loadingError: PropTypes.shape({
+    data: PropTypes.shape({
+      status: PropTypes.number,
+    }),
+  }),
+};
+
+export default ThemeManager;
