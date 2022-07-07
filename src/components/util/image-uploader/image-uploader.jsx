@@ -98,7 +98,7 @@ function ImageUploader({
           dragProps,
         }) => (
           // write your building UI
-          <div className="upload__image-wrapper bg-light border p-3 pb-0 rounded my-3">
+          <div className="upload__image-wrapper bg-light border p-3 pb-0 rounded">
             {(imageList.length === 0 || multipleImages) && (
               <>
                 <Button

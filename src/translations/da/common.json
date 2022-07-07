@@ -294,6 +294,7 @@
     "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i."
   },
   "theme-form": {
+    "logo-title": "Tilføj logo til temaet",
     "theme-name-label": "Temaets navn",
     "theme-description-label": "Temaets beskrivelse",
     "css-header": "Temaets CSS",

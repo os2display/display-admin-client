@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Button } from "react-bootstrap";
+import { Button, FormLabel } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -68,6 +68,9 @@ function ThemeForm({
             onChange={handleInput}
           />
           <code>{theme.css}</code>
+          <FormLabel htmlFor="logo" className="mt-5">
+            {t("theme-form.logo-title")}
+          </FormLabel>
           <ImageUploader
             handleImageUpload={handleInput}
             inputImage={theme.logo}
