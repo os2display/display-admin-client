@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Button } from "react-bootstrap";
+import { Button, FormLabel } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -9,6 +9,7 @@ import FormInputArea from "../util/forms/form-input-area";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
+import ImageUploader from "../util/image-uploader/image-uploader";
 
 /**
  * The theme form component.
@@ -67,6 +68,15 @@ function ThemeForm({
             onChange={handleInput}
           />
           <code>{theme.css}</code>
+          <FormLabel htmlFor="logo" className="mt-5">
+            {t("theme-form.logo-title")}
+          </FormLabel>
+          <ImageUploader
+            handleImageUpload={handleInput}
+            inputImage={theme.logo}
+            name="logo"
+            showLibraryButton
+          />
         </ContentBody>
         <ContentFooter>
           <Button
@@ -103,7 +113,7 @@ ThemeForm.defaultProps = {
 ThemeForm.propTypes = {
   theme: PropTypes.shape({
     css: PropTypes.string,
-
+    logo: PropTypes.string,
     description: PropTypes.string,
     title: PropTypes.string,
   }),
