@@ -22,6 +22,7 @@ import {
 } from "../util/list/toast-component/display-toast";
 import idFromUrl from "../util/helpers/id-from-url";
 import localStorageKeys from "../util/local-storage-keys";
+import isoStringWithLocalTime from "../util/helpers/iso-string-with-local-time";
 
 /**
  * The slide manager component.
@@ -470,12 +471,8 @@ function SlideManager({
         // All media have been submitted. Submit slide.
 
         // Set published.
-        const from = formStateObject.published.from
-          ? new Date(formStateObject.published.from).toISOString()
-          : null;
-        const to = formStateObject.published.to
-          ? new Date(formStateObject.published.to).toISOString()
-          : null;
+        const from = isoStringWithLocalTime(formStateObject.published.from);
+        const to = isoStringWithLocalTime(formStateObject.published.to);
 
         // Sets theme in localstorage, to load it on create new slide
         if (formStateObject.theme) {

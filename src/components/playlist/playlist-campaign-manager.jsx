@@ -19,6 +19,7 @@ import {
   usePutV1ScreenGroupsByIdCampaignsMutation,
   usePostV1PlaylistsMutation,
 } from "../../redux/api/api.generated";
+import isoStringWithLocalTime from "../util/helpers/iso-string-with-local-time";
 
 /**
  * The shared manager component.
@@ -303,12 +304,8 @@ function PlaylistCampaignManager({
     setLoadingMessage(t(`${location}.loading-messages.saving-playlist`));
 
     // Set published.
-    const from = formStateObject.published.from
-      ? new Date(formStateObject.published.from).toISOString()
-      : null;
-    const to = formStateObject.published.to
-      ? new Date(formStateObject.published.to).toISOString()
-      : null;
+    const from = isoStringWithLocalTime(formStateObject.published.from);
+    const to = isoStringWithLocalTime(formStateObject.published.to);
 
     const saveTenants = formStateObject.tenants
       ? formStateObject.tenants.map((tenant) => {
