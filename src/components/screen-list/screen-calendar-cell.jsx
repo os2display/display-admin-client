@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import RRule from "rrule";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { Spinner } from "react-bootstrap";
 import Calendar from "./calendar";
 import idFromUrl from "../util/helpers/id-from-url";
 import { api } from "../../redux/api/api.generated";
@@ -17,7 +18,6 @@ function ScreenCalendarCell({ item: screen }) {
 
   useEffect(() => {
     if (screen) {
-      // Upload media already added to the slide.
       const promises = [];
 
       // Get the playlists per region.
@@ -45,7 +45,7 @@ function ScreenCalendarCell({ item: screen }) {
               const year = today.getFullYear();
               const month = today.getMonth();
               const day = today.getDate();
-              const inAYear = new Date(year + 1, month, day);
+              const inAYear = new Date(year, month + 1, day);
 
               region.data["hydra:member"].forEach(({ playlist }) => {
                 // If the playlist has scheduling, a playlist per scheduling will
@@ -104,14 +104,23 @@ function ScreenCalendarCell({ item: screen }) {
 
   return (
     <>
-      {dataForCalendar && (
-        <tr key={screen["@id"]}>
-          <td colSpan="100%">
+      <tr key={screen["@id"]}>
+        <td colSpan="100%">
+          <>
             <h2 className="h4">{screen.title}</h2>
-            <Calendar id={screen["@id"]} data={dataForCalendar} />
-          </td>
-        </tr>
-      )}
+            {dataForCalendar && (
+              <Calendar
+                id={screen["@id"]}
+                data={dataForCalendar}
+                component="playlist"
+              />
+            )}
+            {!dataForCalendar && (
+              <Spinner animation="border" className="loading-spinner" />
+            )}
+          </>
+        </td>
+      </tr>
     </>
   );
 }

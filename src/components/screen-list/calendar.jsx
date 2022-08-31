@@ -11,9 +11,10 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {object} props The props
  * @param {object} props.data The data to display.
  * @param {string} props.id The id of the chart
+ * @param {string} props.component The component to redirect to on click
  * @returns {object} The gantt chart.
  */
-function Calendar({ id, data }) {
+function Calendar({ id, data, component }) {
   const navigate = useNavigate();
   const chartId = `chart${id}`;
 
@@ -37,8 +38,8 @@ function Calendar({ id, data }) {
     // set max a year on the date axis
     const d = new Date();
     dateAxis.max = new Date(
-      d.getFullYear() + 1,
-      d.getMonth(),
+      d.getFullYear(),
+      d.getMonth() + 1,
       d.getDate()
     ).getTime();
 
@@ -54,7 +55,7 @@ function Calendar({ id, data }) {
     /** @param {object} ev The click event */
     function redirect(ev) {
       navigate(
-        `/playlist/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
+        `/${component}/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
       );
     }
 
@@ -103,6 +104,7 @@ Calendar.propTypes = {
     })
   ).isRequired,
   id: PropTypes.string.isRequired,
+  component: PropTypes.string.isRequired,
 };
 
 export default Calendar;

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { Spinner } from "react-bootstrap";
 import Calendar from "./calendar";
 import idFromUrl from "../util/helpers/id-from-url";
 import { api } from "../../redux/api/api.generated";
 
+<Spinner animation="border" className="loading-spinner" />;
 /**
  * @param {object} props The props.
  * @param {object} props.item The playlist.
@@ -25,11 +27,12 @@ function PlaylistCalendarCell({ item: playlist }) {
         // As playlists default to being published, if they have no values for
         // from / to, I here create today (from), and a year from today (to).
         const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth();
-        const day = today.getDate();
-        const inAYear = new Date(year + 1, month, day);
 
+        const inAYear = new Date(
+          today.getFullYear() + 1,
+          today.getMonth(),
+          today.getDate()
+        );
         slides = result.data["hydra:member"].map(({ slide }) => {
           return {
             title: slide.title,
@@ -50,14 +53,23 @@ function PlaylistCalendarCell({ item: playlist }) {
 
   return (
     <>
-      {dataForCalendar && (
-        <tr key={playlist["@id"]}>
-          <td colSpan="100%">
+      <tr key={playlist["@id"]}>
+        <td colSpan="100%">
+          <>
             <h2 className="h4">{playlist.title}</h2>
-            <Calendar id={playlist["@id"]} data={dataForCalendar} />
-          </td>
-        </tr>
-      )}
+            {dataForCalendar && (
+              <Calendar
+                id={playlist["@id"]}
+                data={dataForCalendar}
+                component="slide"
+              />
+            )}
+            {!dataForCalendar && (
+              <Spinner animation="border" className="loading-spinner" />
+            )}
+          </>
+        </td>
+      </tr>
     </>
   );
 }
