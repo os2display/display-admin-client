@@ -93,7 +93,7 @@ function ContentForm({
             value={
               formStateObject[formData.name]
                 ? Math.floor(formStateObject[formData.name] / 1000)
-                : 10
+                : 15
             }
             onChange={(value) => {
               const newValue = value.target.value;
