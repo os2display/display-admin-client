@@ -16,10 +16,8 @@ function ScreenCreate() {
     createdBy: "",
     layout: "",
     location: "",
-    dimensions: {
-      width: 0,
-      height: 0,
-    },
+    resolution: "",
+    orientation: "",
   };
 
   return <ScreenManager saveMethod="POST" initialState={data} />;

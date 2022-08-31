@@ -1,9 +1,7 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Col, Spinner, Alert } from "react-bootstrap";
+import { Button, Form, Spinner, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import ContentBody from "../util/content-body/content-body";
@@ -34,6 +32,8 @@ import "./screen-form.scss";
  * @param {string} props.groupId The group id.
  * @param {boolean} props.isLoading Indicator of whether the form is loading
  * @param {string} props.loadingMessage The loading message for the spinner
+ * @param {object} props.orientationOptions The options for the orientation dropdown
+ * @param {object} props.resolutionOptions The options for the resolution dropdown
  * @returns {object} The screen form.
  */
 function ScreenForm({
@@ -44,6 +44,8 @@ function ScreenForm({
   groupId,
   isLoading,
   loadingMessage,
+  orientationOptions,
+  resolutionOptions,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-form" });
   const navigate = useNavigate();
@@ -139,6 +141,13 @@ function ScreenForm({
     }
   };
 
+  const isVertical = () => {
+    if (screen.orientation) {
+      return screen.orientation[0].id === "vertical";
+    }
+    return false;
+  };
+
   return (
     <>
       {isLoading && (
@@ -226,39 +235,34 @@ function ScreenForm({
         </ContentBody>
         <ContentBody>
           <h2 className="h4">{t("screen-settings")}</h2>
-          <FormInput
-            name="size"
-            type="text"
-            label={t("screen-size-of-screen-label")}
-            helpText={t("screen-size-of-screen-placeholder")}
-            value={screen.size}
-            onChange={handleInput}
-          />
-          <div className="d-flex g-2">
-            <Col md>
-              <FormInput
-                name="dimensions.height"
-                type="number"
-                label={t("screen-resolution-height")}
-                placeholder={t(
-                  "screen-resolution-of-screen-height-placeholder"
-                )}
-                value={screen.dimensions.height}
-                onChange={handleInput}
-              />
-            </Col>
-            <FontAwesomeIcon className="resolution-plus-icon" icon={faTimes} />
-            <Col md>
-              <FormInput
-                name="dimensions.width"
-                type="number"
-                label={t("screen-resolution-width")}
-                placeholder={t("screen-resolution-of-screen-width-placeholder")}
-                value={screen.dimensions.width}
-                onChange={handleInput}
-              />
-            </Col>
+          <div className="mb-3">
+            <FormInput
+              name="size"
+              type="text"
+              label={t("screen-size-of-screen-label")}
+              helpText={t("screen-size-of-screen-placeholder")}
+              value={screen.size}
+              onChange={handleInput}
+            />
           </div>
+          <MultiSelectComponent
+            label={t("screen-resolution-label")}
+            noSelectedString={t("nothing-selected-resolution")}
+            handleSelection={handleInput}
+            options={resolutionOptions}
+            selected={screen.resolution}
+            name="resolution"
+            singleSelect
+          />
+          <MultiSelectComponent
+            label={t("screen-orientation-label")}
+            noSelectedString={t("nothing-selected-orientation")}
+            handleSelection={handleInput}
+            options={orientationOptions}
+            selected={screen.orientation}
+            name="orientation"
+            singleSelect
+          />
         </ContentBody>
         <ContentBody id="layout-section">
           <h2 className="h4">{t("screen-layout")}</h2>
@@ -267,7 +271,7 @@ function ScreenForm({
               <div className="col-md-8">
                 <MultiSelectComponent
                   label={t("screen-layout-label")}
-                  noSelectedString={t("nothing-selected")}
+                  noSelectedString={t("nothing-selected-layout")}
                   handleSelection={handleAdd}
                   options={layoutOptions}
                   helpText={t("search-to-se-possible-selections")}
@@ -277,16 +281,18 @@ function ScreenForm({
                 />
               </div>
             )}
-            {selectedLayout?.grid && (
-              <GridGenerationAndSelect
-                screenId={idFromUrl(screen["@id"])}
-                grid={selectedLayout?.grid}
-                vertical={screen.dimensions.height > screen.dimensions.width}
-                regions={selectedLayout.regions}
-                handleInput={handleInput}
-                selectedData={screen.layout}
-              />
-            )}
+            {selectedLayout &&
+              selectedLayout.grid &&
+              selectedLayout.regions && (
+                <GridGenerationAndSelect
+                  screenId={idFromUrl(screen["@id"])}
+                  grid={selectedLayout?.grid}
+                  vertical={isVertical()}
+                  regions={selectedLayout.regions}
+                  handleInput={handleInput}
+                  selectedData={screen.layout}
+                />
+              )}
           </div>
         </ContentBody>
         <ContentBody id="color-scheme-section">
@@ -334,12 +340,10 @@ ScreenForm.defaultProps = {
 
 ScreenForm.propTypes = {
   screen: PropTypes.shape({
-    description: PropTypes.string,
-    dimensions: PropTypes.shape({
-      height: PropTypes.number,
-      width: PropTypes.number,
-    }),
+    resolution: PropTypes.string,
     "@id": PropTypes.string,
+    description: PropTypes.string,
+    orientation: PropTypes.string,
     enableColorSchemeChange: PropTypes.bool,
     layout: PropTypes.string,
     location: PropTypes.string,
@@ -354,6 +358,12 @@ ScreenForm.propTypes = {
   groupId: PropTypes.string,
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,
+  orientationOptions: PropTypes.arrayOf(
+    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
+  ).isRequired,
+  resolutionOptions: PropTypes.arrayOf(
+    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
+  ).isRequired,
 };
 
 export default ScreenForm;

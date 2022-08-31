@@ -38,6 +38,14 @@ function ScreenManager({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-manager" });
   const navigate = useNavigate();
+  const [orientationOptions] = useState([
+    { title: "Vertikal", id: "vertical" },
+    { title: "Horisontal", id: "horizontal" },
+  ]);
+  const [resolutionOptions] = useState([
+    { title: "4K", id: "4K" },
+    { title: "HD", id: "HD" },
+  ]);
   const headerText =
     saveMethod === "PUT" ? t("edit-screen-header") : t("create-screen-header");
   const [loadingMessage, setLoadingMessage] = useState("");
@@ -156,6 +164,19 @@ function ScreenManager({
   useEffect(() => {
     if (initialState) {
       const localFormStateObject = JSON.parse(JSON.stringify(initialState));
+      if (localFormStateObject.orientation) {
+        localFormStateObject.orientation = orientationOptions.filter(
+          ({ id: localOrientationId }) =>
+            localOrientationId === localFormStateObject.orientation
+        );
+      }
+
+      if (localFormStateObject.resolution) {
+        localFormStateObject.resolution = resolutionOptions.filter(
+          ({ id: localResolutioId }) =>
+            localResolutioId === localFormStateObject.resolution
+        );
+      }
       setFormStateObject(localFormStateObject);
     }
   }, [initialState]);
@@ -248,14 +269,7 @@ function ScreenManager({
     setSavingScreen(true);
     setLoadingMessage(t("loading-messages.saving-screen"));
     const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
-    localFormStateObject.dimensions.width = parseInt(
-      localFormStateObject.dimensions.width,
-      10
-    );
-    localFormStateObject.dimensions.height = parseInt(
-      localFormStateObject.dimensions.height,
-      10
-    );
+
     const saveData = {
       screenScreenInput: JSON.stringify({
         title: localFormStateObject.title,
@@ -265,10 +279,12 @@ function ScreenManager({
         createdBy: localFormStateObject.createdBy,
         layout: localFormStateObject.layout,
         location: localFormStateObject.location,
-        dimensions: {
-          width: localFormStateObject.dimensions.width,
-          height: localFormStateObject.dimensions.height,
-        },
+        resolution: localFormStateObject.resolution
+          ? localFormStateObject.resolution[0].id
+          : "",
+        orientation: localFormStateObject.orientation
+          ? localFormStateObject.orientation[0].id
+          : "",
         enableColorSchemeChange: localFormStateObject.enableColorSchemeChange,
       }),
     };
@@ -313,6 +329,8 @@ function ScreenManager({
       {formStateObject && (
         <ScreenForm
           screen={formStateObject}
+          orientationOptions={orientationOptions}
+          resolutionOptions={resolutionOptions}
           headerText={headerText}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
@@ -337,11 +355,9 @@ ScreenManager.defaultProps = {
 
 ScreenManager.propTypes = {
   initialState: PropTypes.shape({
+    orientation: PropTypes.string,
+    resolution: PropTypes.string,
     description: PropTypes.string,
-    dimensions: PropTypes.shape({
-      height: PropTypes.number,
-      width: PropTypes.number,
-    }),
     "@id": PropTypes.string,
     enableColorSchemeChange: PropTypes.bool,
     layout: PropTypes.string,

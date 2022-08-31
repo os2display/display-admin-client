@@ -615,10 +615,10 @@
       "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles:",
       "error-unbinding": "Der skete en fejl ({{status}}) da skærmen skulle afkobles:"
     },
-    "nothing-selected": "Vælg en af skabelonerne",
+    "nothing-selected-layout": "Vælg en af skabelonerne",
+    "nothing-selected-resolution": "Vælg en opløsning",
+    "nothing-selected-orientation": "Vælg en orientering",
     "search-to-se-possible-selections": "Alle layouts er hentet og klar i listen, listen er stadig søgbar.",
-    "screen-resolution-height": "Højde",
-    "screen-resolution-width": "Bredde",
     "screen-region-playlists": "Spillelister tilknyttet regionen",
     "save-button": "Gem skærm",
     "cancel-button": "Annuller",
@@ -637,8 +637,8 @@
     "screen-location-placeholder": "Udfyld skærmens lokation",
     "screen-size-of-screen-label": "Størrelse på skærmen",
     "screen-size-of-screen-placeholder": "Angiv størrelsen på skærmen",
-    "screen-resolution-of-screen-width-placeholder": "Angiv skærmens bredde",
-    "screen-resolution-of-screen-height-placeholder": "Angiv skærmens højde"
+    "screen-resolution-label": "Skærmens opløsning",
+    "screen-orientation-label": "Skærmens orientering"
   },
   "nav-items": {
     "shared-playlists": "Delte spillelister",
