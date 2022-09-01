@@ -1,7 +1,4 @@
 import { React, useState, useEffect, useContext } from "react";
-import { Button, Col } from "react-bootstrap";
-import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import useModal from "../../context/modal-context/modal-context-hook";
@@ -11,7 +8,6 @@ import ListContext from "../../context/list-context";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
 import ContentBody from "../util/content-body/content-body";
-import PlaylistCalendarCell from "../screen-list/playlist-calendar-cell";
 import { PlaylistColumns } from "./playlists-columns";
 import {
   displayError,
@@ -40,7 +36,6 @@ function PlaylistCampaignList({ location }) {
   const {
     searchText: { get: searchText },
     page: { get: page },
-    listView: { get: view, set: setView },
     createdBy: { get: createdBy },
     isPublished: { get: isPublished },
   } = useContext(ListContext);
@@ -152,25 +147,7 @@ function PlaylistCampaignList({ location }) {
         title={t(`${location}.header`)}
         newBtnTitle={t(`${location}.create-new`)}
         newBtnLink={`/${location}/create`}
-      >
-        <Col md="auto">
-          {location === "playlist" && view === "list" && (
-            <Button
-              style={{ width: "110px" }}
-              onClick={() => setView("calendar")}
-            >
-              <FontAwesomeIcon className="me-1" icon={faCalendar} />
-              {t("change-view-calendar")}
-            </Button>
-          )}
-          {location === "playlist" && view === "calendar" && (
-            <Button style={{ width: "110px" }} onClick={() => setView("list")}>
-              <FontAwesomeIcon className="me-1" icon={faList} />
-              {t("change-view-list")}
-            </Button>
-          )}
-        </Col>
-      </ContentHeader>
+      />
       {listData && (
         <ContentBody>
           <List
@@ -181,11 +158,7 @@ function PlaylistCampaignList({ location }) {
             displayPublished
             isLoading={isLoading || isDeleting}
             loadingMessage={loadingMessage}
-          >
-            {location === "playlist" && view === "calendar" && (
-              <PlaylistCalendarCell />
-            )}
-          </List>
+          />
         </ContentBody>
       )}
     </>

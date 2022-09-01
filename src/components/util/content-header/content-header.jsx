@@ -14,10 +14,9 @@ import { useNavigate } from "react-router-dom";
  * @param {string} props.title The title
  * @param {string} props.newBtnTitle The button title
  * @param {string} props.newBtnLink The button link
- * @param {Array} props.children The children being passed from parent
  * @returns {object} The Content header.
  */
-function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
+function ContentHeader({ title, newBtnTitle, newBtnLink }) {
   const navigate = useNavigate();
 
   return (
@@ -25,7 +24,6 @@ function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
       <Col>
         <h1>{title}</h1>
       </Col>
-      {children}
       {newBtnTitle && (
         <Col xs="auto">
           <Button onClick={() => navigate(newBtnLink)}>
@@ -38,13 +36,8 @@ function ContentHeader({ title, newBtnTitle, newBtnLink, children }) {
   );
 }
 
-ContentHeader.defaultProps = {
-  children: <></>,
-};
-
 ContentHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.node,
   newBtnTitle: PropTypes.string.isRequired,
   newBtnLink: PropTypes.string.isRequired,
 };

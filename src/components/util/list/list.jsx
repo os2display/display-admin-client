@@ -10,7 +10,6 @@ import useModal from "../../../context/modal-context/modal-context-hook";
 import Pagination from "../paginate/pagination";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import ListLoading from "../loading-component/list-loading";
-import CalendarList from "../../screen-list/calendar-list";
 import localStorageKeys from "../local-storage-keys";
 import FormCheckbox from "../forms/form-checkbox";
 import ListContext from "../../../context/list-context";
@@ -24,7 +23,6 @@ import ListContext from "../../../context/list-context";
  *   element with success.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.showCreatedByFilter - Callback for created by filter.
- * @param {Array} props.children The children being passed from parent
  * @returns {object} The List.
  */
 function List({
@@ -34,7 +32,6 @@ function List({
   totalItems,
   handleDelete,
   showCreatedByFilter,
-  children,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
@@ -42,7 +39,6 @@ function List({
     searchText: { set: setSearchText },
     page: { set: setPage },
     createdBy: { set: setCreatedBy },
-    listView: { get: view },
     isPublished: { set: setIsPublished },
   } = useContext(ListContext);
   const {
@@ -265,12 +261,7 @@ function List({
         </Col>
       </Row>
       <Row />
-      <>
-        {view === "list" && <Table data={data} columns={columns} />}
-        {view === "calendar" && (
-          <CalendarList data={data}>{children}</CalendarList>
-        )}
-      </>
+      <Table data={data} columns={columns} />
       <Pagination
         itemsCount={totalItems}
         pageSize={pageSize}
@@ -285,7 +276,6 @@ List.defaultProps = {
   showCreatedByFilter: true,
   handleDelete: null,
   displayPublished: false,
-  children: <></>,
 };
 
 List.propTypes = {
@@ -297,7 +287,6 @@ List.propTypes = {
   totalItems: PropTypes.number.isRequired,
   displayPublished: PropTypes.bool,
   showCreatedByFilter: PropTypes.bool,
-  children: PropTypes.node,
 };
 
 export default ListLoading(List);

@@ -25,7 +25,7 @@ function NavItems() {
   const { t } = useTranslation("common");
   const { setSelected } = useModal();
   const context = useContext(UserContext);
-  const { page, createdBy, listView, isPublished } = useContext(ListContext);
+  const { page, createdBy, isPublished } = useContext(ListContext);
   const { pathname } = useLocation();
 
   // Reset list context and selected on page change.
@@ -36,9 +36,6 @@ function NavItems() {
     }
     if (createdBy) {
       createdBy.set("all");
-    }
-    if (listView) {
-      listView.set("list");
     }
     if (isPublished) {
       isPublished.set(undefined);

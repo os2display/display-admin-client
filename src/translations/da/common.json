@@ -836,5 +836,11 @@
   },
   "station-selector": {
     "get-error": "Der var en fejl da vi skulle hente stoppested fra rejseplanen"
+  },
+  "screen-gantt-chart":{
+    "show-gantt": "Vis en visualisering af planlægningen"
+  },
+  "playlist-gantt-chart":{
+    "show-gantt": "Vis en visualisering af planlægningen"
   }
 }

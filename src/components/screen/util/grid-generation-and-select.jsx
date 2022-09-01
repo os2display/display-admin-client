@@ -4,8 +4,8 @@ import { Tabs, Tab, Alert } from "react-bootstrap";
 import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
 import uniqWith from "lodash.uniqwith";
-import idFromUrl from "../util/helpers/id-from-url";
-import PlaylistDragAndDrop from "../playlist-drag-and-drop/playlist-drag-and-drop";
+import idFromUrl from "../../util/helpers/id-from-url";
+import PlaylistDragAndDrop from "../../playlist-drag-and-drop/playlist-drag-and-drop";
 import "./grid.scss";
 /**
  * The grid generator component.

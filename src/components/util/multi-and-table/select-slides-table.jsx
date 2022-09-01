@@ -9,6 +9,7 @@ import {
   useGetV1PlaylistsByIdSlidesQuery,
   useGetV1PlaylistsByIdQuery,
 } from "../../../redux/api/api.generated";
+import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
 
 /**
  * A multiselect and table for slides.
@@ -116,6 +117,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
                 data={selectedData}
               />
               <small>{t("select-slides-table.edit-slides-help-text")}</small>
+              <PlaylistGanttChart slides={selectedData} />
             </>
           )}
         </>

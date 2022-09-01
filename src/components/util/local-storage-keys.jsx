@@ -5,6 +5,8 @@ const localStorageKeys = {
   TENANTS: "tenants",
   THEME: "prev-used-theme-id",
   PREVIEW: "preview-slide",
+  VIEW_GANT_SCREEN: "view-gantt-screen",
+  VIEW_GANT_PLAYLIST: "view-gantt-playlist",
   PREVIEW_LAYOUT: "preview-slide-layout",
   SORT: "sort",
   SEARCH: "search",
