@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
-import { SelectScreenColumns } from "../../screen/screen-columns";
+import { SelectScreenColumns } from "../../screen/util/screen-columns";
 import {
   useGetV1ScreensQuery,
   useGetV1ScreensByIdScreenGroupsQuery,

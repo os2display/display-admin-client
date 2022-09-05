@@ -1,12 +1,8 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Button, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserContext from "../../context/user-context";
-import ScreenCalendarCell from "../screen-list/screen-calendar-cell";
 import List from "../util/list/list";
-import { ScreenColumns } from "./screen-columns";
+import { ScreenColumns } from "./util/screen-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -34,7 +30,6 @@ function ScreenList() {
   const {
     searchText: { get: searchText },
     page: { get: page },
-    listView: { get: view, set: setView },
     createdBy: { get: createdBy },
   } = useContext(ListContext);
   const { selected, setSelected } = useModal();
@@ -136,25 +131,7 @@ function ScreenList() {
         title={t("header")}
         newBtnTitle={t("create-new-screen")}
         newBtnLink="/screen/create"
-      >
-        <Col md="auto">
-          {view === "list" && (
-            <Button
-              style={{ width: "110px" }}
-              onClick={() => setView("calendar")}
-            >
-              <FontAwesomeIcon className="me-1" icon={faCalendar} />
-              {t("change-view-calendar")}
-            </Button>
-          )}
-          {view === "calendar" && (
-            <Button style={{ width: "110px" }} onClick={() => setView("list")}>
-              <FontAwesomeIcon className="me-1" icon={faList} />{" "}
-              {t("change-view-list")}
-            </Button>
-          )}
-        </Col>
-      </ContentHeader>
+      />
       <ContentBody>
         <>
           {listData && (
@@ -166,9 +143,7 @@ function ScreenList() {
               handleDelete={handleDelete}
               isLoading={isLoading || isDeleting}
               loadingMessage={loadingMessage}
-            >
-              <ScreenCalendarCell />
-            </List>
+            />
           )}
         </>
       </ContentBody>

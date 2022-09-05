@@ -1,10 +1,10 @@
 import { React } from "react";
 import { useTranslation } from "react-i18next";
-import ListButton from "../util/list/list-button";
-import CampaignIcon from "../screen-list/campaign-icon";
-import SelectColumnHoc from "../util/select-column-hoc";
-import ColumnHoc from "../util/column-hoc";
-import idFromUrl from "../util/helpers/id-from-url";
+import ListButton from "../../util/list/list-button";
+import CampaignIcon from "../../screen-list/campaign-icon";
+import SelectColumnHoc from "../../util/select-column-hoc";
+import ColumnHoc from "../../util/column-hoc";
+import idFromUrl from "../../util/helpers/id-from-url";
 
 /**
  * Columns for screens lists.

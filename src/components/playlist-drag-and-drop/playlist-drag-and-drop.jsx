@@ -10,6 +10,7 @@ import {
   useGetV1PlaylistsQuery,
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
 } from "../../redux/api/api.generated";
+import ScreenGanttChart from "../screen/util/screen-gantt-chart";
 
 /**
  * A drag and drop component for playlists.
@@ -54,7 +55,6 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       );
     }
   }, [selectedPlaylistsByRegion]);
-  /** Set loaded data into form state. */
 
   /**
    * Fetches data for the multi component
@@ -137,6 +137,9 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
                 data={selectedData}
               />
             </>
+          )}
+          {selectedData?.length && (
+            <ScreenGanttChart playlists={selectedData} id={regionId} />
           )}
         </>
       )}

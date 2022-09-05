@@ -3,17 +3,18 @@ import PropTypes from "prop-types";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import { useNavigate } from "react-router-dom";
-import idFromUrl from "../util/helpers/id-from-url";
+import idFromUrl from "./helpers/id-from-url";
 
 /**
- * A calendar view for lists.
+ * A gantt chart.
  *
  * @param {object} props The props
  * @param {object} props.data The data to display.
  * @param {string} props.id The id of the chart
+ * @param {string} props.component The component to redirect to on click
  * @returns {object} The gantt chart.
  */
-function Calendar({ id, data }) {
+function GanttChart({ id, data, component }) {
   const navigate = useNavigate();
   const chartId = `chart${id}`;
 
@@ -54,7 +55,7 @@ function Calendar({ id, data }) {
     /** @param {object} ev The click event */
     function redirect(ev) {
       navigate(
-        `/playlist/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
+        `/${component}/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
       );
     }
 
@@ -89,12 +90,12 @@ function Calendar({ id, data }) {
 
   return (
     <div className="charts">
-      <div id={chartId} className="calendar-chart" />
+      <div id={chartId} className="gantt-chart-chart" />
     </div>
   );
 }
 
-Calendar.propTypes = {
+GanttChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       regions: PropTypes.arrayOf(PropTypes.string),
@@ -103,6 +104,7 @@ Calendar.propTypes = {
     })
   ).isRequired,
   id: PropTypes.string.isRequired,
+  component: PropTypes.string.isRequired,
 };
 
-export default Calendar;
+export default GanttChart;

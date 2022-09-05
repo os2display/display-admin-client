@@ -9,7 +9,7 @@ import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
 import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
-import GridGenerationAndSelect from "./grid-generation-and-select";
+import GridGenerationAndSelect from "./util/grid-generation-and-select";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
@@ -351,6 +351,9 @@ ScreenForm.propTypes = {
     screenUser: PropTypes,
     size: PropTypes.string,
     title: PropTypes.string,
+    playlists: PropTypes.arrayOf(
+      PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+    ),
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

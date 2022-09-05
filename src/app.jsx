@@ -52,7 +52,6 @@ function App() {
   const [email, setEmail] = useState("");
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
-  const [listView, setListView] = useState("list");
   const [createdBy, setCreatedBy] = useState("all");
   const [isPublished, setIsPublished] = useState("all");
 
@@ -67,7 +66,6 @@ function App() {
   const listConfig = {
     searchText: { get: searchText, set: setSearchText },
     page: { get: page, set: setPage },
-    listView: { get: listView, set: setListView },
     createdBy: { get: createdBy, set: setCreatedBy },
     isPublished: { get: isPublished, set: setIsPublished },
   };
