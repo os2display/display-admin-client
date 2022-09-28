@@ -8,6 +8,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@hello-pangea/dnd": "^16.0.0",
     "@paciolan/remote-component": "^2.11.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.11.4",
@@ -27,7 +28,6 @@
     "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-app-rewired": "^2.1.8",
-    "react-beautiful-dnd": "^13.1.0",
     "react-bootstrap": "^1.6.1",
     "react-color-palette": "^6.1.0",
     "react-dayjs": "^0.3.2",
@@ -91,12 +91,12 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "2.3.2",
     "prettier-plugin-jsdoc": "^0.3.24",
+    "react-scripts": "4.0.3",
     "sass": "^1.35.2",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recommended-scss": "^4.3.0",
     "stylelint-prettier": "^1.2.0",
-    "stylelint-scss": "^3.19.0",
-    "react-scripts": "4.0.3"
+    "stylelint-scss": "^3.19.0"
   }
 }
