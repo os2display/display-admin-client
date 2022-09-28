@@ -9,7 +9,7 @@ import TableHeader from "../table/table-header";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import "./drag-and-drop-table.scss";
 
-// Drag and drop component (react-beautiful-dnd) is replaced with hello-pangea/dnd, 
+// Drag and drop component (react-beautiful-dnd) is replaced with hello-pangea/dnd,
 // because the drag and drop component does not work with react 18
 // https://github.com/atlassian/react-beautiful-dnd/issues/2350
 // If it some day works with react, we should consider changing it back
