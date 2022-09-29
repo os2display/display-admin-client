@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,10 @@ import TableHeader from "../table/table-header";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 import "./drag-and-drop-table.scss";
 
+// Drag and drop component (react-beautiful-dnd) is replaced with hello-pangea/dnd,
+// because the drag and drop component does not work with react 18
+// https://github.com/atlassian/react-beautiful-dnd/issues/2350
+// If it some day works with react, we should consider changing it back
 /**
  * @param {object} props The props.
  * @param {Array} props.columns The columns for the table.
