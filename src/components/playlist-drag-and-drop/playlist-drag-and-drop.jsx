@@ -138,7 +138,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
               />
             </>
           )}
-          {selectedData?.length && (
+          {selectedData?.length > 0 && (
             <ScreenGanttChart playlists={selectedData} id={regionId} />
           )}
         </>
