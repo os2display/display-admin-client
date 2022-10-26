@@ -32,7 +32,7 @@ describe("Screen list loads", () => {
 
   it("It opens delete modal (screens list)", () => {
     cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr td button").eq(2).click();
+    cy.get("tbody").find("tr td button").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });
 
