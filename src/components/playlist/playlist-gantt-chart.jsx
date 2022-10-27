@@ -76,7 +76,7 @@ function PlaylistGanttChart({ slides }) {
         <GanttChart
           id="slides-chart"
           data={dataForGanttChart}
-          component="slides"
+          component="slide"
         />
       )}
     </>
