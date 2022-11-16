@@ -47,8 +47,9 @@ RUN chmod +x /docker-entrypoint.sh \
 
 USER $UID
 
+WORKDIR ${APP_PATH}
+
 EXPOSE 8080
 
-ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD [ "/docker-entrypoint.sh", "nginx", "-g daemon off;" ]
 
-CMD ["nginx", "-g", "daemon off;"]
