@@ -2,6 +2,8 @@ FROM node:16 AS APP_BUILDER
 LABEL maintainer="ITK Dev <itkdev@mkb.aarhus.dk>"
 
 ARG APP_VERSION="develop"
+ARG UID=101
+ARG GID=101
 ENV APP_PATH=/app
 
 ADD https://github.com/os2display/display-admin-client/archive/${APP_VERSION}.tar.gz /tmp/app.tar
@@ -21,10 +23,12 @@ RUN rm -rf public/fixtures
 ####
 ## Build main application image.
 ####
-FROM nginx:1.21.6-alpine
+FROM nginxinc/nginx-unprivileged:alpine
 LABEL maintainer="ITK Dev <itkdev@mkb.aarhus.dk>"
 
 ENV APP_PATH=/var/www/html
+
+USER root
 
 # Install the application.
 COPY --from=APP_BUILDER /app/build ${APP_PATH}
@@ -36,9 +40,16 @@ COPY etc/ /etc/
 ADD https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64 /usr/local/bin/confd
 RUN chmod +x /usr/local/bin/confd
 
-COPY  docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh \
+    && chown -R $UID:0 ${APP_PATH} \
+    && chmod -R g+w ${APP_PATH}
+
+USER $UID
 
 WORKDIR ${APP_PATH}
 
-CMD [ "docker-entrypoint.sh" ]
+EXPOSE 8080
+
+CMD [ "/docker-entrypoint.sh", "nginx", "-g daemon off;" ]
+
