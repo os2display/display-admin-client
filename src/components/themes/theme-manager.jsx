@@ -54,7 +54,7 @@ function ThemeManager({
     description: "",
     modifiedBy: "",
     createdBy: "",
-    css: "",
+    cssStyles: "",
   });
 
   const [postV1Themes, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
@@ -104,7 +104,7 @@ function ThemeManager({
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
-      css: formStateObject.css,
+      cssStyles: formStateObject.cssStyles,
     };
 
     if (logoData) {
@@ -182,7 +182,7 @@ function ThemeManager({
   const handleSubmit = () => {
     setSubmitting(true);
 
-    if (formStateObject.logo) {
+    if (formStateObject.logo?.length > 0) {
       setLoadingMessage(t("loading-messages.saving-media"));
       saveMedia(formStateObject.logo[0]);
     } else {

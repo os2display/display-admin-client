@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import RRule from "rrule";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import GanttChart from "../../util/gantt-chart";
 import localStorageKeys from "../../util/local-storage-keys";
 import FormCheckbox from "../../util/forms/form-checkbox";
+import UserContext from "../../../context/user-context";
+import PlaylistCampaignList from "../../playlist/playlist-campaign-list";
 
 /**
  * @param {object} props The props.
@@ -14,6 +16,7 @@ import FormCheckbox from "../../util/forms/form-checkbox";
  */
 function ScreenGanttChart({ playlists, id }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-gantt-chart" });
+  const context = useContext(UserContext);
   const [dataForGanttChart, setdataForGanttChart] = useState();
   const [showGantt, setShowGantt] = useState(false);
 
@@ -36,6 +39,13 @@ function ScreenGanttChart({ playlists, id }) {
     const inAYear = new Date(year + 1, month, day);
 
     playlists.forEach((playlist) => {
+      const { tenants } = playlist;
+      const redirectPossible =
+        tenants?.length === 0 ||
+        !tenants.find(
+          (tenant) => tenant.tenantKey === context.selectedTenant.get.tenantKey
+        );
+
       // If the playlist has scheduling, a playlist per scheduling will
       // be added to the gantt chart data.
       if (playlist.schedules?.length > 0) {
@@ -59,12 +69,12 @@ function ScreenGanttChart({ playlists, id }) {
             playlistWithPublished.published = {};
             playlistWithPublished.published.from = startDateTime;
             playlistWithPublished.published.to = endDateTime;
-            playlistData.push(playlistWithPublished);
+            playlistData.push({ ...playlistWithPublished, redirectPossible });
           });
         });
       } else {
         // If there is no schedule, we just add the playlist and go by published
-        playlistData.push(playlist);
+        playlistData.push({ ...playlist, redirectPossible });
       }
     });
 
@@ -72,12 +82,13 @@ function ScreenGanttChart({ playlists, id }) {
     const regionData = playlistData.map((playlist) => {
       return {
         category: playlist["@id"],
-        categoryTitle: playlist.title,
         from: playlist.published?.from || today,
         to: playlist.published?.to || inAYear,
         id: playlist["@id"],
-        color: "lightblue",
-        black: "#000",
+        title: playlist.title,
+        color: playlist.redirectPossible ? "lightblue" : "grey",
+        stroke: playlist.redirectPossible ? "black" : "grey",
+        redirectPossible: playlist.redirectPossible,
       };
     });
 

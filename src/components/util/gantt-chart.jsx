@@ -26,9 +26,9 @@ function GanttChart({ id, data, component }) {
 
     // Create vertical axis
     const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-    // Category/categoryTitle refers to the category/categoryTitle in the mapped data.
+    // Category refers to the category in the mapped data.
     categoryAxis.dataFields.category = "category";
-    categoryAxis.dataFields.text = "categoryTitle";
+    categoryAxis.dataFields.text = "title";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.inversed = true;
 
@@ -50,35 +50,36 @@ function GanttChart({ id, data, component }) {
     dateAxis.renderer.tooltipLocation = 0;
 
     // Create the "gantt boxes".
-    const series1 = chart.series.push(new am4charts.ColumnSeries());
+    const series = chart.series.push(new am4charts.ColumnSeries());
 
     /** @param {object} ev The click event */
     function redirect(ev) {
-      navigate(
-        `/${component}/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
-      );
+      if (ev.target.dataItem.dataContext.redirectPossible) {
+        navigate(
+          `/${component}/edit/${idFromUrl(ev.target.dataItem.dataContext.id)}`
+        );
+      }
     }
 
     // Redirect on click
-    series1.columns.template.events.on("hit", redirect);
-
-    series1.columns.template.width = am4core.percent(80);
+    series.columns.template.events.on("hit", redirect);
+    
+    series.columns.template.width = am4core.percent(80);
     // Add a tooltip with the dates, as this can be difficult to read in the visualization.
-    series1.columns.template.tooltipText = "{title}: {openDateX} - {dateX}";
-    series1.dataFields.openDateX = "from";
-    series1.dataFields.dateX = "to";
-    series1.dataFields.categoryY = "category";
+    series.columns.template.tooltipText = "{title}: {openDateX} - {dateX}";
+    series.dataFields.openDateX = "from";
+    series.dataFields.dateX = "to";
+    series.dataFields.categoryY = "category";
 
-    series1.columns.template.propertyFields.fill = "color";
-    series1.columns.template.propertyFields.stroke = "black";
-    series1.columns.template.height = am4core.percent(50);
-    series1.columns.template.propertyFields.pixelHeight = "10";
-    series1.columns.template.strokeOpacity = 1;
-    series1.columns.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;
+    series.columns.template.propertyFields.fill = "color";
+    series.columns.template.propertyFields.stroke = "stroke";
+    series.columns.template.propertyFields.focusable = "redirectPossible";
+    series.columns.template.height = am4core.percent(50);
+    series.columns.template.propertyFields.pixelHeight = "10";
+    series.columns.template.strokeOpacity = 1;
 
     // Add labels
-    const valueLabel = series1.bullets.push(new am4charts.LabelBullet());
-    valueLabel.label.text = "{title}";
+    const valueLabel = series.bullets.push(new am4charts.LabelBullet());
     valueLabel.label.fontSize = 20;
 
     chart.scrollbarX = new am4core.Scrollbar();
