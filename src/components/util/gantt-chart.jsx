@@ -63,7 +63,7 @@ function GanttChart({ id, data, component }) {
 
     // Redirect on click
     series.columns.template.events.on("hit", redirect);
-    
+
     series.columns.template.width = am4core.percent(80);
     // Add a tooltip with the dates, as this can be difficult to read in the visualization.
     series.columns.template.tooltipText = "{title}: {openDateX} - {dateX}";

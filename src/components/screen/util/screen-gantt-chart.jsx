@@ -6,7 +6,6 @@ import GanttChart from "../../util/gantt-chart";
 import localStorageKeys from "../../util/local-storage-keys";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import UserContext from "../../../context/user-context";
-import PlaylistCampaignList from "../../playlist/playlist-campaign-list";
 
 /**
  * @param {object} props The props.

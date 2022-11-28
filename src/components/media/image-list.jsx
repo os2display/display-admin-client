@@ -11,12 +11,17 @@ import ListLoading from "../util/loading-component/list-loading";
  *
  * @param {object} props Props.
  * @param {Array} props.media List of media elements
- * @param {Array} props.handleSelected Handle selected callback
+ * @param {Function} props.handleSelected Handle selected callback
  * @returns {object} The image list page.
  */
 function ImageList({ media, handleSelected }) {
   const { selected, setSelected } = useModal();
 
+  /**
+   * Select image function
+   *
+   * @param {Array} data - The image/images.
+   */
   function selectImage(data) {
     setSelected(selectedHelper(data, [...selected]));
     handleSelected(selectedHelper(data, [...selected]));
