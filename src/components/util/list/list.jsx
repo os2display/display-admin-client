@@ -153,6 +153,11 @@ function List({
     updateUrlParams("page", nextPage);
   };
 
+  const deleteHandler = () => {
+    updateUrlAndChangePage(1);
+    handleDelete();
+  };
+
   /** Sets page from url using callback */
   useEffect(() => {
     if (pageParams) {
@@ -239,7 +244,7 @@ function List({
                 onClick={() =>
                   setModal({
                     delete: true,
-                    accept: handleDelete,
+                    accept: deleteHandler,
                   })
                 }
                 className="me-3"
