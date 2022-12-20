@@ -24,6 +24,7 @@ function TenantsDropdown({
     <MultiSelectComponent
       handleSelection={handleTenantSelection}
       options={data}
+      disableSearch
       label={t("tenants-dropdown.label")}
       noSelectedString={t("tenants-dropdown.nothing-selected")}
       selected={selected}
