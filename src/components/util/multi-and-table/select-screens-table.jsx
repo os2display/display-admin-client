@@ -24,7 +24,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   const [selectedData, setSelectedData] = useState();
   const [searchText, setSearchText] = useState("");
   const { data: screens } = useGetV1ScreensQuery({
-    title: searchText,
+    search: searchText,
     itemsPerPage: 100,
     order: { createdAt: "desc" },
   });
