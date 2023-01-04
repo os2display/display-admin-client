@@ -57,8 +57,8 @@ function CampaignIcon({ id }) {
 
   useEffect(() => {
     if (allCampaigns.length > 0 && !isOverriddenByCampaign) {
-      allCampaigns.forEach(({ published }) => {
-        if (calculateIsPublished(published)) {
+      allCampaigns.forEach(({ publishedFrom, publishedTo }) => {
+        if (calculateIsPublished({from: publishedFrom, to: publishedTo})) {
           setIsOverriddenByCampaign(true);
         }
       });
