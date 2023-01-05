@@ -38,12 +38,12 @@ function PlaylistGanttChart({ slides }) {
         slides.map((slide) => {
           return {
             category: slide["@id"],
-            categoryTitle: slide.title,
             from: slide.published?.from || today,
             to: slide.published?.to || inAYear,
             id: slide["@id"],
             color: "lightblue",
-            black: "#000",
+            stroke: "black",
+            title: slide.title,
           };
         })
       );
@@ -76,7 +76,7 @@ function PlaylistGanttChart({ slides }) {
         <GanttChart
           id="slides-chart"
           data={dataForGanttChart}
-          component="slides"
+          component="slide"
         />
       )}
     </>

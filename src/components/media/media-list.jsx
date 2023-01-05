@@ -26,9 +26,10 @@ import "./media-list.scss";
  * @param {object} props The props.
  * @param {boolean} props.fromModal Whether it is opened from the modal, if it
  *   is, the upload and delete function should not be accesible.
+ * @param {Array} props.handleSelected Handle selected callback
  * @returns {object} The media list.
  */
-function MediaList({ fromModal }) {
+function MediaList({ fromModal, handleSelected }) {
   // Translations
   const { t } = useTranslation("common", { keyPrefix: "media-list" });
 
@@ -202,6 +203,7 @@ function MediaList({ fromModal }) {
           </Col>
         </Row>
         <ImageList
+          handleSelected={handleSelected}
           media={media}
           isLoading={isLoading || isDeleting}
           loadingMessage={loadingMessage}
@@ -223,6 +225,7 @@ MediaList.defaultProps = {
 
 MediaList.propTypes = {
   fromModal: PropTypes.bool,
+  handleSelected: PropTypes.func.isRequired,
 };
 
 export default MediaList;
