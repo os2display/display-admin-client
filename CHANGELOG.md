@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- [#173](https://github.com/os2display/display-admin-client/pull/173)
+- [#174](https://github.com/os2display/display-admin-client/pull/174)
 Added changelog.
 Added github action to enforce that PRs should always include an update of the changelog.
 - [#172](https://github.com/os2display/display-admin-client/pull/172)
