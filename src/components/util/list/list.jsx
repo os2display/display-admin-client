@@ -285,7 +285,7 @@ List.defaultProps = {
 
 List.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+    PropTypes.shape({ name: PropTypes.string, id: PropTypes.string })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   handleDelete: PropTypes.func,
