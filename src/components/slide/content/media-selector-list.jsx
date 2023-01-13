@@ -82,7 +82,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
               aria-hidden="true"
               className="m-1"
             />
-            {t("media-list.loading")}
+            {t("media-list.loading-messages.loading-media")}
           </>
         )}
         {!isLoading && (

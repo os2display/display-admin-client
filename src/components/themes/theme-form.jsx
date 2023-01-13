@@ -61,10 +61,10 @@ function ThemeForm({
         <ContentBody>
           <h2 className="h4">{t("theme-form.css-header")}</h2>
           <FormInputArea
-            name="cssStyles"
+            name="css"
             type="text"
             label={t("theme-form.theme-css-label")}
-            value={theme.cssStyles}
+            value={theme.css}
             onChange={handleInput}
           />
           <FormLabel htmlFor="logo" className="mt-5">
@@ -111,7 +111,7 @@ ThemeForm.defaultProps = {
 
 ThemeForm.propTypes = {
   theme: PropTypes.shape({
-    cssStyles: PropTypes.string,
+    css: PropTypes.string,
     logo: PropTypes.string,
     description: PropTypes.string,
     title: PropTypes.string,

@@ -50,7 +50,7 @@ CampaignForm.defaultProps = {
 };
 
 CampaignForm.propTypes = {
-  campaign: PropTypes.objectOf({
+  campaign: PropTypes.shape({
     "@id": PropTypes.string,
   }),
   handleInput: PropTypes.func.isRequired,

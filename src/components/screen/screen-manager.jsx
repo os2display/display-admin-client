@@ -269,7 +269,11 @@ function ScreenManager({
     setSavingScreen(true);
     setLoadingMessage(t("loading-messages.saving-screen"));
     const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
-
+    const resolution =
+      localFormStateObject.resolution &&
+      localFormStateObject.resolution.length > 0
+        ? localFormStateObject.resolution[0].id
+        : "";
     const saveData = {
       screenScreenInput: JSON.stringify({
         title: localFormStateObject.title,
@@ -279,9 +283,7 @@ function ScreenManager({
         createdBy: localFormStateObject.createdBy,
         layout: localFormStateObject.layout,
         location: localFormStateObject.location,
-        resolution: localFormStateObject.resolution
-          ? localFormStateObject.resolution[0].id
-          : "",
+        resolution,
         orientation: localFormStateObject.orientation
           ? localFormStateObject.orientation[0].id
           : "",
@@ -363,7 +365,7 @@ ScreenManager.propTypes = {
     layout: PropTypes.string,
     location: PropTypes.string,
     regions: PropTypes.arrayOf(PropTypes.string),
-    screenUser: PropTypes,
+    screenUser: PropTypes.string,
     size: PropTypes.string,
     title: PropTypes.string,
   }),
