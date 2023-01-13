@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - [#178](https://github.com/os2display/display-admin-client/pull/178)
 add 8080 to port to make cypresstests run
+- [#177](https://github.com/os2display/display-admin-client/pull/177)
+css in name to cssstyles
+- [#176](https://github.com/os2display/display-admin-client/pull/176)
+css -> cssstyles in all places but not the request body
 - [#175](https://github.com/os2display/display-admin-client/pull/175)
 update proptypes
 rename cssstyles to css
