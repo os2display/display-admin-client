@@ -11,7 +11,7 @@ import "./grid.scss";
  * The grid generator component.
  *
  * @param {object} props Props.
- * @param {object} props.grid The grid to generate. // * @param {Function}
+ * @param {object} props.grid The grid to generate.
  * @param {object} props.selectedData The selected data for the multidropdown.
  * @param {object} props.regions The regions in the grid.
  * @param {boolean} props.vertical True if the screen is vertical
@@ -163,9 +163,7 @@ GridGenerationAndSelect.defaultProps = {
 GridGenerationAndSelect.propTypes = {
   grid: PropTypes.shape({ columns: PropTypes.number, rows: PropTypes.number })
     .isRequired,
-  selectedData: PropTypes.arrayOf(
-    PropTypes.shape({ value: PropTypes.number, label: PropTypes.string })
-  ).isRequired,
+  selectedData: PropTypes.string.isRequired,
   screenId: PropTypes.string.isRequired,
   vertical: PropTypes.bool.isRequired,
   handleInput: PropTypes.func.isRequired,

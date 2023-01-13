@@ -221,11 +221,12 @@ function MediaList({ fromModal, handleSelected }) {
 
 MediaList.defaultProps = {
   fromModal: false,
+  handleSelected: () => {},
 };
 
 MediaList.propTypes = {
   fromModal: PropTypes.bool,
-  handleSelected: PropTypes.func.isRequired,
+  handleSelected: PropTypes.func,
 };
 
 export default MediaList;

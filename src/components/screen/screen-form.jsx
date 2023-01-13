@@ -250,7 +250,7 @@ function ScreenForm({
             noSelectedString={t("nothing-selected-resolution")}
             handleSelection={handleInput}
             options={resolutionOptions}
-            selected={screen.resolution}
+            selected={screen.resolution || ""}
             name="resolution"
             singleSelect
           />
@@ -259,7 +259,7 @@ function ScreenForm({
             noSelectedString={t("nothing-selected-orientation")}
             handleSelection={handleInput}
             options={orientationOptions}
-            selected={screen.orientation}
+            selected={screen.orientation || ""}
             name="orientation"
             singleSelect
           />
@@ -348,7 +348,7 @@ ScreenForm.propTypes = {
     layout: PropTypes.string,
     location: PropTypes.string,
     regions: PropTypes.arrayOf(PropTypes.string),
-    screenUser: PropTypes,
+    screenUser: PropTypes.string,
     size: PropTypes.string,
     title: PropTypes.string,
     playlists: PropTypes.arrayOf(

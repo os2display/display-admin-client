@@ -54,7 +54,7 @@ function ThemeManager({
     description: "",
     modifiedBy: "",
     createdBy: "",
-    cssStyles: "",
+    css: "",
   });
 
   const [postV1Themes, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
@@ -104,7 +104,7 @@ function ThemeManager({
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
-      cssStyles: formStateObject.cssStyles,
+      css: formStateObject.cssStyles,
     };
 
     if (logoData) {
