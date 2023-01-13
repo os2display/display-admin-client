@@ -61,7 +61,7 @@ function ThemeForm({
         <ContentBody>
           <h2 className="h4">{t("theme-form.css-header")}</h2>
           <FormInputArea
-            name="css"
+            name="cssStyles"
             type="text"
             label={t("theme-form.theme-css-label")}
             value={theme.cssStyles}
