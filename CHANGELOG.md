@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2.0] - 2023-01-05
 
+- [#176](https://github.com/os2display/display-admin-client/pull/176)
+css -> cssstyles in all places but not the request body
 - [#175](https://github.com/os2display/display-admin-client/pull/175)
 update proptypes
 rename cssstyles to css

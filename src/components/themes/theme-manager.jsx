@@ -104,7 +104,7 @@ function ThemeManager({
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
-      css: formStateObject.css,
+      css: formStateObject.cssStyles,
     };
 
     if (logoData) {

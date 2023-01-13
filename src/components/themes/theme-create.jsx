@@ -13,7 +13,7 @@ function ThemeCreate() {
     description: "",
     modifiedBy: "",
     createdBy: "",
-    css: "",
+    cssStyles: "",
     media: [],
   };
 
