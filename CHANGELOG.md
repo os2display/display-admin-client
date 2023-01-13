@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2.0] - 2023-01-05
 
+- [#175](https://github.com/os2display/display-admin-client/pull/175)
+update proptypes
+rename cssstyles to css
+give resolution a default value
 - [#174](https://github.com/os2display/display-admin-client/pull/174)
 Added changelog.
 Added github action to enforce that PRs should always include an update of the changelog.
