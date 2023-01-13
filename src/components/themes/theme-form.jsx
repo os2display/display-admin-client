@@ -64,7 +64,7 @@ function ThemeForm({
             name="css"
             type="text"
             label={t("theme-form.theme-css-label")}
-            value={theme.css}
+            value={theme.cssStyles}
             onChange={handleInput}
           />
           <FormLabel htmlFor="logo" className="mt-5">
@@ -82,7 +82,7 @@ function ThemeForm({
             variant="secondary"
             type="button"
             id="cancel_theme"
-            onClick={() => navigate("/theme/list")}
+            onClick={() => navigate("/themes/list")}
             size="lg"
             className="me-3"
           >
@@ -111,7 +111,7 @@ ThemeForm.defaultProps = {
 
 ThemeForm.propTypes = {
   theme: PropTypes.shape({
-    css: PropTypes.string,
+    cssStyles: PropTypes.string,
     logo: PropTypes.string,
     description: PropTypes.string,
     title: PropTypes.string,
