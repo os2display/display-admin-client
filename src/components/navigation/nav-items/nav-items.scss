@@ -5,12 +5,17 @@
   .nav-link {
     padding-top: $spacer;
     padding-bottom: $spacer;
+
+    &.disabled {
+      font-weight: bold;
+    }
   }
 }
 
 .nav-second-level {
   font-size: 0.9rem;
   opacity: 0.8;
+  
   .nav-link {
     padding-left: $spacer * 3;
     $padding: math.div($spacer, 2);
