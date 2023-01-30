@@ -187,6 +187,7 @@
     "create-new-theme": "Opret nyt tema"
   },
   "media-list": {
+    "checkbox-label-sort-desc": "Vis nyeste først",
     "delete-button": "Slet",
     "checkbox-form-aria-label": "Vælg dette medie til massehandling",
     "header": "Medier",
