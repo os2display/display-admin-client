@@ -18,6 +18,7 @@ import {
   useGetV1MediaQuery,
   useDeleteV1MediaByIdMutation,
 } from "../../redux/api/api.generated";
+import FormCheckbox from "../util/forms/form-checkbox";
 import "./media-list.scss";
 
 /**
@@ -32,7 +33,6 @@ import "./media-list.scss";
 function MediaList({ fromModal, handleSelected }) {
   // Translations
   const { t } = useTranslation("common", { keyPrefix: "media-list" });
-
   // Selected data
   const { selected, setSelected, setModal } = useModal();
 
@@ -49,6 +49,7 @@ function MediaList({ fromModal, handleSelected }) {
   const pageSize = 10;
 
   // State
+  const [sortDesc, setSortDesc] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [media, setMedia] = useState([]);
@@ -68,9 +69,14 @@ function MediaList({ fromModal, handleSelected }) {
   const {
     data: mediaData,
     error: mediaLoadError,
+
     isLoading,
     refetch,
-  } = useGetV1MediaQuery({ page, title: searchText });
+  } = useGetV1MediaQuery({
+    page,
+    title: searchText,
+    order: { createdAt: sortDesc ? "desc" : "asc" },
+  });
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -163,6 +169,10 @@ function MediaList({ fromModal, handleSelected }) {
     }
   }, [mediaLoadError]);
 
+  const changeSort = ({ target }) => {
+    setSortDesc(target.value);
+  };
+
   return (
     <>
       <Row className="align-items-center justify-content-between mt-2">
@@ -200,6 +210,13 @@ function MediaList({ fromModal, handleSelected }) {
         <Row className="mt-2 mb-2">
           <Col sm={12} md={6}>
             <SearchBox value={searchText} onChange={handleSearch} />
+          </Col>
+          <Col>
+            <FormCheckbox
+              value={sortDesc}
+              label={t("checkbox-label-sort-desc")}
+              onChange={changeSort}
+            />
           </Col>
         </Row>
         <ImageList

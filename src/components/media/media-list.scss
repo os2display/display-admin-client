@@ -47,3 +47,15 @@
     pointer-events: none;
   }
 }
+
+.slide-media-modal {
+  height: 100vh;
+  
+  .modal-content {
+    height: 100vh;
+  }
+
+  .modal-body {
+    overflow: scroll;
+  }
+}

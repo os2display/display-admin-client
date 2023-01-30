@@ -21,9 +21,9 @@ import FeedSelector from "./content/feed-selector";
 import RadioButtons from "../util/forms/radio-buttons";
 import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
 import localStorageKeys from "../util/local-storage-keys";
-import "./slide-form.scss";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
+import "./slide-form.scss";
 
 /**
  * The slide form component.
@@ -353,7 +353,6 @@ function SlideForm({
             {config?.touchButtonRegions && (
               <ContentBody>
                 <h2 className="h4">{t("slide-form.touch-region")}</h2>
-
                 <FormInput
                   name="touchRegionButtonText"
                   type="text"
@@ -361,7 +360,6 @@ function SlideForm({
                   value={slide.content.touchRegionButtonText}
                   onChange={handleContent}
                 />
-
                 <small>
                   {t("slide-form.touch-region-button-text-helptext")}
                 </small>
