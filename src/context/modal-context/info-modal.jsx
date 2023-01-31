@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import ModalDialog from "../../components/util/modal/modal-dialog";
 import TitleFetcher from "./title-fetcher";
 import idFromUrl from "../../components/util/helpers/id-from-url";
