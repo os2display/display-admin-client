@@ -6,8 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2.0] - 2023-01-05
 
+- [#182](https://github.com/os2display/display-admin-client/pull/182)
 - [#181](https://github.com/os2display/display-admin-client/pull/181)
 disable selected menu link
+make cypress tests run 3 times in GA, and set defaultCommandTimeout to 10000 
 - [#178](https://github.com/os2display/display-admin-client/pull/178)
 add 8080 to port to make cypresstests run
 - [#177](https://github.com/os2display/display-admin-client/pull/177)

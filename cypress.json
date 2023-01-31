@@ -4,8 +4,9 @@
   "pluginsFile": false,
   "supportFile": false,
   "viewportHeight": 4000,
+  "defaultCommandTimeout": 10000,
   "retries": {
-    "runMode": 2,
+    "runMode": 3,
     "openMode": 0
   }
 }
