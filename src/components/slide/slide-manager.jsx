@@ -334,12 +334,14 @@ function SlideManager({
     const fieldId = target.id;
     const localFormStateObject = { ...formStateObject };
     const localMediaData = { ...mediaData };
-
     // Set field as a field to look into for new references.
     setMediaFields([...new Set([...mediaFields, fieldId])]);
 
     const newField = [];
 
+    if (Array.isArray(fieldValue) && fieldValue.length === 0) {
+      localFormStateObject.media = [];
+    }
     // Handle each entry in field.
     if (Array.isArray(fieldValue)) {
       fieldValue.forEach((entry) => {
@@ -499,7 +501,6 @@ function SlideManager({
             );
           }
         }
-
         // Construct data for submitting.
         const saveData = {
           slideSlideInput: JSON.stringify({

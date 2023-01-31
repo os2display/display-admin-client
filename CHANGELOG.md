@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#180](https://github.com/os2display/display-admin-client/pull/180)
+Make it possible to delete media from slide
 - [#182](https://github.com/os2display/display-admin-client/pull/182)
 make cypress tests run 3 times in GA, and set defaultCommandTimeout to 10000 
 - [#181](https://github.com/os2display/display-admin-client/pull/181)
