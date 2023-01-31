@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 Make cypress tests run 3 times in GA, and set defaultCommandTimeout to 10000 
 - [#181](https://github.com/os2display/display-admin-client/pull/181)
 Disable selected menu link
+- [#180](https://github.com/os2display/display-admin-client/pull/180)
+Make it possible to delete media from slide
 - [#179](https://github.com/os2display/display-admin-client/pull/179)
 Simplify info modal, remove pagination
 
