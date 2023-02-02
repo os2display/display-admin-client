@@ -126,7 +126,6 @@ function ThemeManager({
     if (logo) {
       saveData.logo = logo;
     }
-    console.log(saveData);
     if (saveMethod === "POST") {
       postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
     } else if (saveMethod === "PUT") {
