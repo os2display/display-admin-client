@@ -95,7 +95,11 @@ function ThemeManager({
     }
   }, [initialState]);
 
-  /** Get logo for savedata */
+  /**
+   * Get logo for savedata
+   *
+   * @returns {object} The logo.
+   */
   function getLogo() {
     if (savedMediaData) {
       return savedMediaData["@id"];
