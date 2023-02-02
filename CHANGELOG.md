@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#183](https://github.com/os2display/display-admin-client/pull/183)
+Adds information about max file sizes.
 - [#180](https://github.com/os2display/display-admin-client/pull/180)
 Make it possible to delete media from slide
 - [#182](https://github.com/os2display/display-admin-client/pull/182)
