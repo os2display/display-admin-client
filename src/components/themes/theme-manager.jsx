@@ -95,10 +95,27 @@ function ThemeManager({
     }
   }, [initialState]);
 
-  /** @param {Array} logoData - LogoData is an array with an id of a media */
-  function saveTheme(logoData) {
-    setLoadingMessage(t("loading-messages.saving-theme"));
+  /** Get logo for savedata */
+  function getLogo() {
+    if (savedMediaData) {
+      return savedMediaData["@id"];
+    }
+    if (
+      Array.isArray(formStateObject.logo) &&
+      formStateObject.logo.length > 0
+    ) {
+      return formStateObject.logo[0]["@id"];
+    }
+    if (formStateObject.logo) {
+      return formStateObject.logo["@id"];
+    }
+    return null;
+  }
 
+  /** Save theme. */
+  function saveTheme() {
+    setLoadingMessage(t("loading-messages.saving-theme"));
+    const logo = getLogo();
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
@@ -106,11 +123,10 @@ function ThemeManager({
       createdBy: formStateObject.createdBy,
       css: formStateObject.cssStyles,
     };
-
-    if (logoData) {
-      saveData.logo = logoData["@id"];
+    if (logo) {
+      saveData.logo = logo;
     }
-
+    console.log(saveData);
     if (saveMethod === "POST") {
       postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
     } else if (saveMethod === "PUT") {
@@ -150,7 +166,7 @@ function ThemeManager({
     if (isSaveMediaSuccess && savedMediaData) {
       setSubmitting(false);
       displaySuccess(t("success-messages.saved-media"));
-      saveTheme(savedMediaData);
+      saveTheme();
     }
   }, [isSaveMediaSuccess]);
 
@@ -181,8 +197,7 @@ function ThemeManager({
   /** Handles submit. */
   const handleSubmit = () => {
     setSubmitting(true);
-
-    if (formStateObject.logo?.length > 0) {
+    if (formStateObject.logo?.length > 0 && formStateObject.logo[0].url) {
       setLoadingMessage(t("loading-messages.saving-media"));
       saveMedia(formStateObject.logo[0]);
     } else {
