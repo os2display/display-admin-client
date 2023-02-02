@@ -106,7 +106,6 @@ function FileSelector({
         onFilesAdded={filesAdded}
         acceptedMimetypes={acceptedMimetypes}
       />
-
       {enableMediaLibrary && (
         <>
           <Button
@@ -116,6 +115,13 @@ function FileSelector({
           >
             {t("file-selector.open-media-library")}
           </Button>
+          {/*
+              TODO: Make this configurable. It should always align with sizes in
+              https://github.com/os2display/display-api-service/blob/develop/src/Entity/Tenant/Media.php
+          */}
+          <div className="small mt-3">
+            {t("file-selector.max-size")}: 200 MB
+          </div>
           <MediaSelectorModal
             selectedMedia={files}
             multiple={multiple}
