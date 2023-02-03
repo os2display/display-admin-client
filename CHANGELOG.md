@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#184](https://github.com/os2display/display-admin-client/pull/184)
+Fix logo upload, and change image uploader to use hook selected
 - [#182](https://github.com/os2display/display-admin-client/pull/182)
 Make cypress tests run 3 times in GA, and set defaultCommandTimeout to 10000 
 - [#181](https://github.com/os2display/display-admin-client/pull/181)
