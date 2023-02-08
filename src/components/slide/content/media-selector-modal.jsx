@@ -94,6 +94,7 @@ function MediaSelectorModal({
       animation={false}
       show={show}
       size="xl"
+      className="slide-media-modal"
       id="slide-media-modal"
       onHide={onClose}
     >

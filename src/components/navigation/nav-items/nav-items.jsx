@@ -49,7 +49,9 @@ function NavItems() {
           <Nav.Item>
             <NavLink
               id="nav-items_content_slides"
-              className="nav-link"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "disabled" : ""}`
+              }
               to="/slide/list"
             >
               <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
@@ -62,7 +64,9 @@ function NavItems() {
           <Nav.Item className="nav-second-level">
             <NavLink
               id="nav-items_content_media"
-              className="nav-link"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "disabled" : ""}`
+              }
               to="/media/list"
             >
               {t("nav-items.content-media")}
@@ -71,7 +75,9 @@ function NavItems() {
           <Nav.Item>
             <NavLink
               id="nav-items_playlists_playlists"
-              className="nav-link"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "disabled" : ""}`
+              }
               to="/playlist/list"
             >
               <FontAwesomeIcon className="me-2" icon={faStream} />
@@ -85,7 +91,9 @@ function NavItems() {
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_content_media"
-                className="nav-link"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
                 to="/campaign/list"
               >
                 {t("nav-items.playlists-campaigns")}
@@ -96,7 +104,9 @@ function NavItems() {
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_content_shared_playlists"
-                className="nav-link"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
                 to="/shared/list"
               >
                 {t("nav-items.shared-playlists")}
@@ -107,7 +117,9 @@ function NavItems() {
             <Nav.Item>
               <NavLink
                 id="nav-items_screens_screens"
-                className="nav-link"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
                 to="/screen/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faDesktop} />
@@ -122,7 +134,9 @@ function NavItems() {
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_screens_groups"
-                className="nav-link"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
                 to="/group/list"
               >
                 {t("nav-items.screens-groups")}
@@ -133,7 +147,9 @@ function NavItems() {
             <Nav.Item>
               <NavLink
                 id="nav-items_settings"
-                className="nav-link"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
                 to="/themes/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faCog} />
@@ -145,7 +161,9 @@ function NavItems() {
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_configuration_themes"
-                className="nav-link"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
                 to="/themes/list"
               >
                 {t("nav-items.configuration-themes")}

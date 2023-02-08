@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import ModalDialog from "../../components/util/modal/modal-dialog";
 import TitleFetcher from "./title-fetcher";
 import idFromUrl from "../../components/util/helpers/id-from-url";
@@ -29,52 +28,25 @@ function InfoModal({
   redirectTo,
 }) {
   const { t } = useTranslation("common");
-  const paginationVariables = 5;
-  const [totalItems, setTotalItems] = useState(displayData.length);
-  const [paginatedDataStructure, setPaginatedDataStructure] = useState();
-  const [fetchedData, setFetchedData] = useState();
-  const [page, setPage] = useState(1);
+  const [fetchedData, setFetchedData] = useState([]);
   let data;
   if (!Array.isArray(displayData)) {
     data = apiCall({
       id: idFromUrl(displayData),
-      page,
-      itemsPerPage: 5,
+      itemsPerPage: 100,
     });
   }
-
-  useEffect(() => {
-    if (Array.isArray(displayData)) {
-      setPaginatedDataStructure(
-        displayData.slice(0, page * paginationVariables)
-      );
-      setTotalItems(displayData.length);
-    }
-  }, []);
 
   /** Set loaded data into form state. */
   useEffect(() => {
     if (data?.data) {
-      const mappedData = [
-        ...(fetchedData || []),
-        ...data.data["hydra:member"].map((item) => {
-          return dataKey ? item[dataKey] : item;
-        }),
-      ];
+      const mappedData = data.data["hydra:member"].map((item) => {
+        return dataKey ? item[dataKey] : item;
+      });
+
       setFetchedData(mappedData);
-      setTotalItems(data.data["hydra:totalItems"]);
     }
   }, [data]);
-
-  /** Displays more list entries. */
-  function displayMore() {
-    setPage(page + 1);
-    if (Array.isArray(displayData)) {
-      let displayDataCopy = displayData;
-      displayDataCopy = displayDataCopy.slice(0, page * paginationVariables);
-      setPaginatedDataStructure(displayDataCopy);
-    }
-  }
 
   return (
     <Modal animation={false} show size="m" onHide={unSetModal} id="info-modal">
@@ -86,33 +58,27 @@ function InfoModal({
       >
         <ul>
           <>
-            {paginatedDataStructure &&
-              paginatedDataStructure.map((item) => (
+            {Array.isArray(displayData) &&
+              displayData.map((displayItem) => (
                 <TitleFetcher
                   redirectTo={redirectTo}
                   apiCall={apiCall}
-                  dataUrl={item}
-                  key={item}
+                  dataUrl={displayItem}
+                  key={displayItem}
                 />
               ))}
-            {fetchedData &&
-              fetchedData.map((item) => (
-                <li key={item["@id"]}>
-                  <Link
-                    to={`${redirectTo}/${idFromUrl(item["@id"])}`}
-                    target="_blank"
-                  >
-                    {item.title}
-                  </Link>
-                </li>
-              ))}
+            {fetchedData.map((item) => (
+              <li key={item["@id"]}>
+                <Link
+                  to={`${redirectTo}/${idFromUrl(item["@id"])}`}
+                  target="_blank"
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
           </>
         </ul>
-        {page * paginationVariables < totalItems && (
-          <Button variant="primary" onClick={() => displayMore()}>
-            {t("info-modal.show-more-elements")}
-          </Button>
-        )}
       </ModalDialog>
     </Modal>
   );
@@ -123,7 +89,10 @@ InfoModal.defaultProps = {
 };
 
 InfoModal.propTypes = {
-  displayData: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string]),
+  displayData: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]),
   apiCall: PropTypes.func.isRequired,
   modalTitle: PropTypes.string.isRequired,
   dataKey: PropTypes.string,

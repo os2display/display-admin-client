@@ -54,7 +54,7 @@ services:
       - nginx
     environment:
       - CYPRESS_VIDEO=false
-      - CYPRESS_baseUrl=http://nginx/admin
+      - CYPRESS_baseUrl=http://nginx:8080/admin
     volumes:
       - .:/e2e
       - /tmp/.X11-unix:/tmp/.X11-unix

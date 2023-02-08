@@ -1,10 +1,10 @@
-import { React, useState } from "react";
+import { React, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../util/modal/modal-dialog";
 import MediaList from "../media/media-list";
-
+import useModal from "../../context/modal-context/modal-context-hook";
 /**
  * Media modal component.
  *
@@ -17,20 +17,18 @@ import MediaList from "../media/media-list";
  * @returns {object} The modal.
  */
 function MediaModal({ show, onClose, handleAccept, multiple }) {
+  const { t } = useTranslation("common");
+  const { selected } = useModal();
+
   if (!show) {
     return <></>;
   }
 
-  const [selectedImages, setSelectedImages] = useState([]);
-  const { t } = useTranslation("common");
-
-  /** @param {Array} images The images that are selected in the dialog. */
-  const handleSelectedImages = (images) => {
-    setSelectedImages(images);
-    if (!multiple && images.length === 1) {
-      handleAccept(images);
+  useEffect(() => {
+    if (selected && selected.length > 0) {
+      handleAccept(selected);
     }
-  };
+  }, [selected]);
 
   return (
     <Modal
@@ -43,9 +41,9 @@ function MediaModal({ show, onClose, handleAccept, multiple }) {
       <ModalDialog
         title={t("media-modal.multiple-select-title")}
         onClose={onClose}
-        handleAccept={() => handleAccept(selectedImages)}
+        handleAccept={() => handleAccept(selected)}
       >
-        <MediaList fromModal handleSelected={handleSelectedImages} />
+        <MediaList fromModal multiple={multiple} />
       </ModalDialog>
     </Modal>
   );

@@ -69,7 +69,7 @@ function DeleteModal({ unSetModal, onAccept, selected, setSelected }) {
         <ul>
           {/* eslint-disable-next-line react/prop-types */}
           {selected.map(({ title }) => (
-            <li>{title}</li>
+            <li key={title}>{title}</li>
           ))}
         </ul>
       </ModalDialog>

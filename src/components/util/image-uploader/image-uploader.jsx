@@ -8,6 +8,7 @@ import "./image-uploader.scss";
 import { useTranslation } from "react-i18next";
 import Image from "./image";
 import MediaModal from "../../media-modal/media-modal";
+import useModal from "../../../context/modal-context/modal-context-hook";
 
 /**
  * @param {object} props The props.
@@ -29,6 +30,7 @@ function ImageUploader({
   showLibraryButton,
 }) {
   const { t } = useTranslation("common");
+  const { setSelected } = useModal();
   const [images, setImages] = useState([]);
   const [error] = useState(false);
   const invalidInputText = invalidText || t("image-uploader.validation-text");
@@ -41,7 +43,6 @@ function ImageUploader({
     localImages[imageIndex] = image;
 
     const uniqueImages = [...new Set(localImages)];
-
     setImages(uniqueImages);
 
     const target = { value: uniqueImages, id: name };
@@ -59,6 +60,11 @@ function ImageUploader({
    */
   const onAcceptMediaModal = (selectedImages) => {
     setImages(selectedImages);
+    const returnImages = selectedImages.map((image) => {
+      return { "@id": image.id, ...image };
+    });
+    const target = { value: returnImages, id: name };
+    handleImageUpload({ target });
     setShowMediaModal(false);
   };
 
@@ -74,7 +80,6 @@ function ImageUploader({
     const uniqueImages = [
       ...new Map(imageList.map((item) => [item.url, item])).values(),
     ];
-
     setImages(uniqueImages);
     const target = { value: imageList, id: name };
     handleImageUpload({ target });
@@ -121,21 +126,21 @@ function ImageUploader({
                     {t("image-uploader.media-library")}
                   </Button>
                 )}
-                <div
+                <button
+                  type="button"
                   className={
                     isDragging
                       ? "drag-drop-area drag-drop-area-active"
                       : "drag-drop-area"
                   }
-                  // @TODO: error handling
-                  style={error ? { borderColor: "red" } : {}}
+                  onClick={onImageUpload}
                   onDrop={dragProps.onDrop}
                   onDragEnter={dragProps.onDragEnter}
                   onDragLeave={dragProps.onDragLeave}
                   onDragOver={dragProps.onDragOver}
                 >
                   <FontAwesomeIcon icon={faImage} />
-                </div>
+                </button>
 
                 <small
                   id="aria-label-for-drag-and-drop"
@@ -152,7 +157,10 @@ function ImageUploader({
                   inputImage={image}
                   handleChange={handleChange}
                   onImageUpdate={onImageUpdate}
-                  onImageRemove={onImageRemove}
+                  onImageRemove={() => {
+                    onImageRemove();
+                    setSelected([]);
+                  }}
                   index={index}
                   key={`image-${key}`}
                 />
@@ -167,12 +175,15 @@ function ImageUploader({
           {invalidInputText}
         </div>
       )}
-      <MediaModal
-        show={showMediaModal}
-        onClose={onCloseMediaModal}
-        handleAccept={onAcceptMediaModal}
-        multiple={multipleImages}
-      />
+      {showMediaModal && (
+        <MediaModal
+          images={images}
+          show={showMediaModal}
+          onClose={onCloseMediaModal}
+          handleAccept={onAcceptMediaModal}
+          multiple={multipleImages}
+        />
+      )}
     </div>
   );
 }

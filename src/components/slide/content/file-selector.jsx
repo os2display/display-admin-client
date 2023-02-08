@@ -82,7 +82,6 @@ function FileSelector({
       }
       return true;
     });
-
     onFilesChange({ target: { id: name, value: newFiles } });
   };
 
