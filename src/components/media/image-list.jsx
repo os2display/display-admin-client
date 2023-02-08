@@ -11,10 +11,10 @@ import ListLoading from "../util/loading-component/list-loading";
  *
  * @param {object} props Props.
  * @param {Array} props.media List of media elements
- * @param {Function} props.handleSelected Handle selected callback
+ * @param {boolean} props.multiple Whether the image list allows for multiselect
  * @returns {object} The image list page.
  */
-function ImageList({ media, handleSelected }) {
+function ImageList({ media, multiple }) {
   const { selected, setSelected } = useModal();
 
   /**
@@ -23,8 +23,12 @@ function ImageList({ media, handleSelected }) {
    * @param {Array} data - The image/images.
    */
   function selectImage(data) {
-    setSelected(selectedHelper(data, [...selected]));
-    handleSelected(selectedHelper(data, [...selected]));
+    const selectedImages = selectedHelper(data, [...selected]);
+    if (multiple) {
+      setSelected(selectedImages);
+    } else {
+      setSelected([selectedImages[0]]);
+    }
   }
 
   // Translations
@@ -82,11 +86,10 @@ function ImageList({ media, handleSelected }) {
 
 ImageList.defaultProps = {
   media: [],
-  handleSelected: () => {},
 };
 
 ImageList.propTypes = {
-  handleSelected: PropTypes.func,
+  multiple: PropTypes.bool.isRequired,
   media: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,

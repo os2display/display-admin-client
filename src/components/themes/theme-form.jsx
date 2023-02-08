@@ -71,6 +71,7 @@ function ThemeForm({
             {t("theme-form.logo-title")}
           </FormLabel>
           <ImageUploader
+            multipleImages={false}
             handleImageUpload={handleInput}
             inputImage={theme.logo}
             name="logo"
