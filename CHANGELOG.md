@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#183](https://github.com/os2display/display-admin-client/pull/183)
+Adds information about max file sizes.
+
 ## [1.2.2] - 2023-02-08
 
 - [#184](https://github.com/os2display/display-admin-client/pull/184)
