@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.2] - 2023-02-08
+
 - [#184](https://github.com/os2display/display-admin-client/pull/184)
 Fix logo upload, and change image uploader to use hook selected
 - [#182](https://github.com/os2display/display-admin-client/pull/182)
@@ -15,7 +17,7 @@ Make it possible to delete media from slide
 - [#179](https://github.com/os2display/display-admin-client/pull/179)
 Simplify info modal, remove pagination
 
-## [1.2.0] - 2023-01-05
+## [1.2.1] - 2023-01-13
 
 - [#178](https://github.com/os2display/display-admin-client/pull/178)
 add 8080 to port to make cypresstests run
@@ -27,6 +29,9 @@ css -> cssstyles in all places but not the request body
 update proptypes
 rename cssstyles to css
 give resolution a default value
+
+## [1.2.0] - 2023-01-05
+
 - [#174](https://github.com/os2display/display-admin-client/pull/174)
 Added changelog.
 Added github action to enforce that PRs should always include an update of the changelog.
