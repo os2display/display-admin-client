@@ -44,16 +44,33 @@ function RichText({
     onChange({ target: returnTarget });
   };
 
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}],
+      ['clean']
+    ],
+  };
+
+  const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet',
+  ];
+
   return (
-    <div>
+    <div className="text-editor">
       <FormGroup className={formGroupClasses}>
         <FormLabel htmlFor={name}>
           {label}
           {required && " *"}
         </FormLabel>
         <ReactQuill
-          value={value}
+          defaultValue={value}
           name={name}
+          modules={modules}
+          formats={formats}
           onChange={onRichTextChange}
           theme="snow"
         />
