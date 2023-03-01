@@ -46,17 +46,22 @@ function RichText({
 
   const modules = {
     toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}],
-      ['clean']
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["clean"],
     ],
   };
 
   const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet',
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
   ];
 
   return (
