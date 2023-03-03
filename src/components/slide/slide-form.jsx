@@ -137,7 +137,18 @@ function SlideForm({
   /** Set loaded data into form state. */
   useEffect(() => {
     if (templates) {
-      const localTemplateOptions = [...templates["hydra:member"]];
+      const localTemplateOptions = [...templates["hydra:member"]].sort(
+        (a, b) => {
+          const textA = a.title.toLowerCase();
+          const textB = b.title.toLowerCase();
+
+          if (textA < textB) {
+            return -1;
+          }
+
+          return textA > textB ? 1 : 0;
+        }
+      );
       setTemplateOptions(localTemplateOptions);
     }
   }, [templates]);

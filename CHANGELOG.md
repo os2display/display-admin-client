@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#186](https://github.com/os2display/display-admin-client/pull/186)
+Added sorting of template selection list.
 - [#185](https://github.com/os2display/display-admin-client/pull/185)
 Changed rich text defaultValue to avoid update loops.
 Cleaned up rich text toolbar options.
