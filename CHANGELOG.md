@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#185](https://github.com/os2display/display-admin-client/pull/185)
+Changed rich text defaultValue to avoid update loops.
+Cleaned up rich text toolbar options.
 - [#183](https://github.com/os2display/display-admin-client/pull/183)
 Adds information about max file sizes.
 
