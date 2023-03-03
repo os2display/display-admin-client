@@ -103,7 +103,7 @@ function App() {
       // Get the user name for displaying in top bar.
       setUserName(localStorage.getItem(localStorageKeys.USER_NAME));
 
-      // Get the user name for displaying in top bar.
+      // Get the user email for displaying in top bar.
       setEmail(localStorage.getItem(localStorageKeys.EMAIL));
     } else {
       setAuthenticated(false);
