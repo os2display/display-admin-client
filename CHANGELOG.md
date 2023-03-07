@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.3] - 2023-03-07
+
 - [#188](https://github.com/os2display/display-admin-client/pull/188)
 Fixed template sorting.
 Removed option to change template after creation
