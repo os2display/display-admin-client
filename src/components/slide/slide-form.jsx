@@ -77,7 +77,7 @@ function SlideForm({
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
       itemsPerPage: 300,
-      order: { createdAt: "desc" },
+      order: "title",
     });
 
   // Load themes.
@@ -220,21 +220,39 @@ function SlideForm({
                 onChange={handleInput}
               />
             </ContentBody>
-            {templateOptions && (
-              <ContentBody id="template-section">
-                <MultiSelectComponent
-                  isLoading={loadingTemplates}
-                  label={t("slide-form.slide-template-label")}
-                  helpText={t("slide-form.slide-template-help-text")}
-                  handleSelection={selectTemplate}
-                  options={templateOptions}
-                  selected={selectedTemplates}
-                  name="templateInfo"
-                  filterCallback={onFilterTemplate}
-                  singleSelect
-                />
-              </ContentBody>
-            )}
+            <ContentBody id="template-section">
+              {/* Template can only be change on create */}
+              {!Object.prototype.hasOwnProperty.call(slide, "@id") &&
+                templateOptions && (
+                  <MultiSelectComponent
+                    isLoading={loadingTemplates}
+                    label={t("slide-form.slide-template-label")}
+                    helpText={t("slide-form.slide-template-help-text")}
+                    handleSelection={selectTemplate}
+                    options={templateOptions}
+                    selected={selectedTemplates}
+                    name="templateInfo"
+                    filterCallback={onFilterTemplate}
+                    singleSelect
+                  />
+                )}
+              {Object.prototype.hasOwnProperty.call(slide, "@id") && (
+                <>
+                  <FormInput
+                    name="selectedTemplate"
+                    type="text"
+                    disabled
+                    label={t("slide-form.slide-template-selected")}
+                    value={
+                      selectedTemplates?.length > 0
+                        ? selectedTemplates[0].title
+                        : ""
+                    }
+                    onChange={() => {}}
+                  />
+                </>
+              )}
+            </ContentBody>
             {selectedTemplate && contentFormElements && (
               <>
                 <ContentBody>
