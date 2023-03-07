@@ -77,7 +77,7 @@ function SlideForm({
     useGetV1TemplatesQuery({
       title: searchTextTemplate,
       itemsPerPage: 300,
-      order: 'title',
+      order: "title",
     });
 
   // Load themes.
