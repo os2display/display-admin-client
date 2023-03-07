@@ -269,6 +269,7 @@
     }
   },
   "slide-form": {
+    "slide-template-selected": "Skabelon",
     "template-error": "Der skete en fejl da skabelonen skulle hentes:",
     "touch-region": "Touch region",
     "touch-region-button-text-label": "Knaptekst i touch region",
@@ -755,7 +756,8 @@
     "tenant-help-text": "Tilhørselsforhold kan blive ændret igen når du er logget ind"
   },
   "file-dropzone": {
-    "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten"
+    "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten",
+    "larger-than-allowed-size": "er større end den tilladte størrelse"
   },
   "file-form-element": {
     "remove": "Fjern fil",
@@ -773,7 +775,8 @@
     "not-supported": "Preview ikke understøttet"
   },
   "file-selector": {
-    "open-media-library": "Vælg fra mediearkiv"
+    "open-media-library": "Vælg fra mediearkiv",
+    "max-size": "Maksimal størrelse på filer"
   },
   "poster-selector": {
     "preview-of-events": "Forhåndsvisning af begivenheder udfra valg",

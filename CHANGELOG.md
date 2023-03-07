@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.3] - 2023-03-07
+
+- [#188](https://github.com/os2display/display-admin-client/pull/188)
+Fixed template sorting.
+Removed option to change template after creation
+- [#187](https://github.com/os2display/display-admin-client/pull/187)
+Added license.
+- [#185](https://github.com/os2display/display-admin-client/pull/185)
+Changed rich text defaultValue to avoid update loops.
+Cleaned up rich text toolbar options.
+- [#183](https://github.com/os2display/display-admin-client/pull/183)
+Adds information about max file sizes.
+
 ## [1.2.2] - 2023-02-08
 
 - [#184](https://github.com/os2display/display-admin-client/pull/184)
