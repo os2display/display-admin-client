@@ -269,6 +269,7 @@
     }
   },
   "slide-form": {
+    "slide-template-selected": "Skabelon",
     "template-error": "Der skete en fejl da skabelonen skulle hentes:",
     "touch-region": "Touch region",
     "touch-region-button-text-label": "Knaptekst i touch region",
