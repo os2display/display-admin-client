@@ -454,7 +454,10 @@
       "published": "Udgivet"
     },
     "edit-slides-help-text": "Hvis du vil redigere et slide, åbnes dette i en ny fane.",
-    "remove-from-list": "Fjern fra liste"
+    "remove-from-list": "Fjern fra liste",
+    "error-messages": {
+      "load-selected-slides-error": "Fejl da valgte slides skulle loades"
+    }
   },
   "select-screens-table": {
     "columns": {
@@ -840,10 +843,10 @@
   "station-selector": {
     "get-error": "Der var en fejl da vi skulle hente stoppested fra rejseplanen"
   },
-  "screen-gantt-chart":{
+  "screen-gantt-chart": {
     "show-gantt": "Vis en visualisering af planlægningen"
   },
-  "playlist-gantt-chart":{
+  "playlist-gantt-chart": {
     "show-gantt": "Vis en visualisering af planlægningen"
   }
 }

@@ -9,7 +9,7 @@ import LinkForList from "./list/link-for-list";
  * Hoc that wraps arrays in checkbox and delete button
  *
  * @param {Array} columns - The array to wrap
- * @returns {Array} Array of columns for lists.
+ * @returns {Function} Function of columns for lists.
  */
 function SelectColumnHoc(columns) {
   return function WithSelectColumnHoc({
