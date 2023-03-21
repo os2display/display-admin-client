@@ -63,7 +63,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   };
 
   useEffect(() => {
-    getPlaylistSlides([], 1, 5);
+    getPlaylistSlides([], 1, 30);
   }, []);
 
   /**
