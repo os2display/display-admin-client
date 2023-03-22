@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#190](https://github.com/os2display/display-admin-client/pull/190)
+  Changed config loader to avoid competing promises.
 - [#189](https://github.com/os2display/display-admin-client/pull/189)
   Fixed issue where playlist showed a maximum of 10 selected slides.
 
