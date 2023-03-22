@@ -1,15 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import {
-  useGetV1SlidesQuery,
-  useGetV1PlaylistsByIdSlidesQuery,
+  api,
   useGetV1PlaylistsByIdQuery,
+  useGetV1SlidesQuery,
 } from "../../../redux/api/api.generated";
 import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
+import { displayError } from "../list/toast-component/display-toast";
 
 /**
  * A multiselect and table for slides.
@@ -21,28 +23,48 @@ import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
  * @returns {object} - A select slides table.
  */
 function SelectSlidesTable({ handleChange, name, slideId }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "select-slides-table" });
+  const dispatch = useDispatch();
   const [selectedData, setSelectedData] = useState();
   const [searchText, setSearchText] = useState("");
 
   const { data: slides } = useGetV1SlidesQuery({
     title: searchText,
-    itemsPerPage: 100,
+    itemsPerPage: 30,
     order: { createdAt: "desc" },
   });
 
-  const { data } = useGetV1PlaylistsByIdSlidesQuery({ id: slideId });
+  const resultCompleteCallback = (data) => {
+    setSelectedData(data.map(({ slide }) => slide));
+  };
 
-  /** Map loaded data. */
+  const getPlaylistSlides = (data, page, itemsPerPage) => {
+    dispatch(
+      api.endpoints.getV1PlaylistsByIdSlides.initiate({
+        id: slideId,
+        itemsPerPage,
+        page,
+      })
+    )
+      .then((result) => {
+        if (result.isSuccess) {
+          const newData = [...data, ...result.data["hydra:member"]];
+
+          if (page * itemsPerPage < result.data["hydra:totalItems"]) {
+            getPlaylistSlides(newData, page + 1, itemsPerPage);
+          } else {
+            resultCompleteCallback(newData);
+          }
+        }
+      })
+      .catch((error) => {
+        displayError(t("error-messages.load-selected-slides-error"), error);
+      });
+  };
+
   useEffect(() => {
-    if (data) {
-      setSelectedData(
-        data["hydra:member"].map(({ slide }) => {
-          return slide;
-        })
-      );
-    }
-  }, [data]);
+    getPlaylistSlides([], 1, 30);
+  }, []);
 
   /**
    * Adds group to list of groups.
@@ -88,13 +110,14 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     };
     handleChange({ target });
   };
+
   /* eslint-disable-next-line no-unused-vars */
   const columns = SelectSlideColumns({
     handleDelete: removeFromList,
     apiCall: useGetV1PlaylistsByIdQuery,
     editTarget: "slide",
     infoModalRedirect: "/playlist/edit",
-    infoModalTitle: t("select-slides-table.info-modal.slide-on-playlists"),
+    infoModalTitle: t("info-modal.slide-on-playlists"),
   });
 
   return (
@@ -116,7 +139,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
                 name={name}
                 data={selectedData}
               />
-              <small>{t("select-slides-table.edit-slides-help-text")}</small>
+              <small>{t("edit-slides-help-text")}</small>
               <PlaylistGanttChart slides={selectedData} />
             </>
           )}
