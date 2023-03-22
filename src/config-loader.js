@@ -1,12 +1,4 @@
-// Only fetch new config if more than 5 minutes have passed.
-const configFetchInterval = 5 * 60 * 1000;
-
-// Defaults.
 let configData = null;
-
-// Last time the config was fetched.
-let latestFetchTimestamp = 0;
-
 let activePromise = null;
 
 const ConfigLoader = {
@@ -16,15 +8,12 @@ const ConfigLoader = {
     }
 
     activePromise = new Promise((resolve) => {
-      const nowTimestamp = new Date().getTime();
-
-      if (latestFetchTimestamp + configFetchInterval >= nowTimestamp) {
+      if (configData !== null) {
         resolve(configData);
       } else {
         fetch("/admin/config.json")
           .then((response) => response.json())
           .then((data) => {
-            latestFetchTimestamp = nowTimestamp;
             configData = data;
             resolve(configData);
           })
