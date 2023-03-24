@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.4] - 2023-03-24
+
 - [#190](https://github.com/os2display/display-admin-client/pull/190)
   Changed config loader to avoid competing promises.
 - [#189](https://github.com/os2display/display-admin-client/pull/189)
