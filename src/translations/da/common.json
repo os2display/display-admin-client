@@ -240,7 +240,9 @@
       "save-playlist-error": "Der skete en fejl da spillelisten skulle gemmes:",
       "save-slide-error": "Der skete en fejl da slidet skulle gemmes:",
       "save-media-error": "Der skete en fejl da mediet skulle tilknyttes til slidet:",
-      "load-slide-error": "Der skete en fejl da slidet skulle hentes:"
+      "load-slide-error": "Der skete en fejl da slidet skulle hentes:",
+      "load-slide-theme-error": "Der skete en fejl da temaet skulle hentes:",
+      "load-slide-template-error": "Der skete en fejl da skabelonen skal hentes:"
     }
   },
   "slide-media-modal": {

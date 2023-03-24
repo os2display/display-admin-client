@@ -5,6 +5,9 @@ import { useTranslation } from "react-i18next";
 import { useRemoteComponent } from "./remote-component-helper";
 import ErrorBoundary from "../../../error-boundary";
 import "./remote-component-wrapper.scss";
+import { api } from "../../../redux/api/api.generated";
+import { useDispatch } from "react-redux";
+import idFromUrl from "../../util/helpers/id-from-url";
 
 /**
  * A remote component wrapper
@@ -34,6 +37,8 @@ function RemoteComponentWrapper({
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
   const [loading, err, Component] = useRemoteComponent(url);
   const [runId, setRunId] = useState("");
+  const dispatch = useDispatch();
+  const [loadedLogos, setLoadedLogos] = useState({});
 
   /** Create remoteComponentSlide from slide and mediaData */
   useEffect(() => {
@@ -64,9 +69,36 @@ function RemoteComponentWrapper({
 
       newSlide.themeData = themeData;
 
+      // Load theme logo.
+      if (newSlide?.themeData?.logo) {
+        if (
+          Object.prototype.hasOwnProperty.call(
+            loadedLogos,
+            newSlide.themeData.logo
+          )
+        ) {
+          newSlide.mediaData[newSlide.themeData.logo] =
+            loadedLogos[newSlide.themeData.logo];
+        } else {
+          const key = newSlide.themeData.logo;
+
+          dispatch(
+            api.endpoints.getV1MediaById.initiate({
+              id: idFromUrl(newSlide.themeData.logo),
+            })
+          ).then((resp) => {
+            if (resp.isSuccess) {
+              const newLoadedLogos = { ...loadedLogos };
+              newLoadedLogos[key] = resp.data;
+              setLoadedLogos(newLoadedLogos);
+            }
+          });
+        }
+      }
+
       setRemoteComponentSlide(newSlide);
     }
-  }, [slide, mediaData, themeData]);
+  }, [slide, mediaData, themeData, loadedLogos]);
 
   useEffect(() => {
     if (showPreview) {
