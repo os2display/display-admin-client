@@ -2,11 +2,11 @@ import { React, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import { useRemoteComponent } from "./remote-component-helper";
 import ErrorBoundary from "../../../error-boundary";
 import "./remote-component-wrapper.scss";
 import { api } from "../../../redux/api/api.generated";
-import { useDispatch } from "react-redux";
 import idFromUrl from "../../util/helpers/id-from-url";
 
 /**
