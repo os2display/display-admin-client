@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - [#191](https://github.com/os2display/display-admin-client/pull/191)
   Fixed theme logo loading in slide preview.
-  Fixed error messages in slide manager.$
+  Fixed error messages in slide manager.
 
 ## [1.2.4] - 2023-03-24
 
