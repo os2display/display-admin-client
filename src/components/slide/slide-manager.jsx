@@ -78,7 +78,6 @@ function SlideManager({
     { data: postData, error: saveErrorPost, isSuccess: isSaveSuccessPost },
   ] = usePostV1SlidesMutation();
 
-  // @TODO: Handle errors.
   const [
     PostV1MediaCollection,
     {
@@ -233,10 +232,11 @@ function SlideManager({
           setGetTemplate(false);
           setSelectedTemplate(template);
         })
-        .catch(() => {
-          // @TODO: Handle error.
+        .catch((err) => {
+          displayError(t("error-messages.load-slide-template-error"), err);
         });
     }
+
     // Load theme if set, getTheme because if not, it runs on every time formstateobject is changed
     if (formStateObject?.theme && getTheme) {
       dispatch(
@@ -247,6 +247,7 @@ function SlideManager({
         .then((result) => {
           // To only get the theme once.
           setGetTheme(false);
+
           // If the theme exists, it will be used.
           if (result.data) {
             const theme = result.data;
@@ -256,8 +257,8 @@ function SlideManager({
             formStateObject.theme = "";
           }
         })
-        .catch(() => {
-          // @TODO: Handle error.
+        .catch((err) => {
+          displayError(t("error-messages.load-slide-theme-error"), err);
         });
     }
   }, [formStateObject]);
