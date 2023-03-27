@@ -1,6 +1,6 @@
 describe("Campaign pages work", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/admin/campaign/list");
+    cy.visit("/campaign/list");
     cy.intercept("POST", "**/token", {
       statusCode: 201,
       fixture: "token.json",
@@ -8,7 +8,7 @@ describe("Campaign pages work", () => {
     cy.intercept("GET", "**/slides*", {
       fixture: "playlists/playlist-slide.json",
     }).as("slides");
-    cy.visit("http://localhost:3000/admin/campaign/create");
+    cy.visit("/campaign/create");
     cy.get("#login").click();
     cy.wait(["@slides", "@token"]);
   });
@@ -94,7 +94,7 @@ describe("Campaign pages work", () => {
   //     fixture: "playlists/playlist-successful.json",
   //   });
 
-  //   cy.visit("http://localhost:3000/admin/campaign/edit/123");
+  //   cy.visit("/campaign/edit/123");
 
   //   // Displays success toast and redirects
   //   cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
@@ -113,7 +113,7 @@ describe("Campaign pages work", () => {
   //     fixture: "playlists/playlist-successful.json",
   //   });
 
-  //   cy.visit("http://localhost:3000/admin/campaign/edit/123");
+  //   cy.visit("/campaign/edit/123");
 
   //   // Displays error toast and stays on page
   //   cy.get(".Toastify").find(".Toastify__toast--error").should("not.exist");
