@@ -35,7 +35,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   });
 
   const resultCompleteCallback = (data) => {
-    setSelectedData(data.map(({ slide }) => slide));
+    setSelectedData(data);
   };
 
   const getPlaylistSlides = (data, page, itemsPerPage) => {
