@@ -13,9 +13,9 @@ describe("Campaign pages work", () => {
     cy.wait(["@slides", "@token"]);
   });
 
-  // it("It loads create campaign page", () => {
-  //   cy.get("#save_playlist").should("exist");
-  // });
+  it("It loads create campaign page", () => {
+    cy.get("#save_playlist").should("exist");
+  });
 
   it("It drags and drops slide", () => {
     // Intercept slides in dropdown
