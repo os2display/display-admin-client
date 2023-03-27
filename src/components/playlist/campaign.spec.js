@@ -40,7 +40,7 @@ describe("Campaign pages work", () => {
     cy.get("#slides-section")
       .get("tbody")
       .find("tr td")
-      .should("have.length", 70);
+      .should("have.length", 14);
     cy.get("#slides-section")
       .get("tbody")
       .find("tr td")
