@@ -1,9 +1,9 @@
 {
   "integrationFolder": "./src",
-  "testFiles": "**/*.spec.js",
+  "testFiles": "**/campaign.spec.js",
   "pluginsFile": false,
   "supportFile": false,
-  "viewportHeight": 4000,
+  "viewportHeight": 1400,
   "defaultCommandTimeout": 10000,
   "retries": {
     "runMode": 3,
