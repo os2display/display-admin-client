@@ -23,66 +23,64 @@ describe("Playlist pages work", () => {
     cy.get("#save_playlist").should("exist");
   });
 
-  // TODO: Fix tests.
-  //
-  // it("It drags and drops slide", () => {
-  //   // Intercept slides in dropdown
-  //   cy.intercept("GET", "**/slides?**", {
-  //     fixture: "playlists/slides.json",
-  //   });
-  //
-  //   // Select the top two slides
-  //   cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
-  //   cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
-  //   cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
-  //   cy.get("#slides-section").find('[type="checkbox"]').eq(0).check();
-  //   cy.get("#slides-section").find(".dropdown-container").eq(0).click();
-  //
-  //   // Test that it sorts on dropdown with keyboard
-  //   cy.get("#slides-section")
-  //     .get("tbody")
-  //     .find("tr td")
-  //     .should("have.length", 14);
-  //   cy.get("#slides-section")
-  //     .get("tbody")
-  //     .find("tr td")
-  //     .eq(1)
-  //     .invoke("text")
-  //     .then((firstElementText) => {
-  //       cy.get("#slides-section")
-  //         .get("tbody")
-  //         .find("tr")
-  //         .eq(0)
-  //         .type(" {downarrow} ", { force: true });
-  //       cy.get("#slides-section")
-  //         .get("tbody")
-  //         .find("tr td")
-  //         .eq(8)
-  //         .invoke("text")
-  //         .should("eq", firstElementText);
-  //     });
-  // });
-  //
-  // it("It removes slide", () => {
-  //   // Intercept slides in dropdown
-  //   cy.intercept("GET", "**/slides?**", {
-  //     fixture: "playlists/slides.json",
-  //   }).as("slides");
-  //
-  //   // Pick slide
-  //   cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
-  //   cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
-  //   cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
-  //   cy.get("#slides-section").find(".dropdown-container").eq(0).click();
-  //   cy.get("#slides-section")
-  //     .find("tbody")
-  //     .find("tr td")
-  //     .should("have.length", 7);
-  //
-  //   // Remove slide
-  //   cy.get("#slides-section").find("tbody").find(".remove-from-list").click();
-  //   cy.get("#slides-section").find("tbody").should("not.exist");
-  // });
+  it("It drags and drops slide", () => {
+    // Intercept slides in dropdown
+    cy.intercept("GET", "**/slides?**", {
+      fixture: "playlists/slides.json",
+    });
+
+    // Select the top two slides
+    cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
+    cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
+    cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
+    cy.get("#slides-section").find('[type="checkbox"]').eq(0).check();
+    cy.get("#slides-section").find(".dropdown-container").eq(0).click();
+
+    // Test that it sorts on dropdown with keyboard
+    cy.get("#slides-section")
+      .get("tbody")
+      .find("tr td")
+      .should("have.length", 14);
+    cy.get("#slides-section")
+      .get("tbody")
+      .find("tr td")
+      .eq(1)
+      .invoke("text")
+      .then((firstElementText) => {
+        cy.get("#slides-section")
+          .get("tbody")
+          .find("tr")
+          .eq(0)
+          .type(" {downarrow} ", { force: true });
+        cy.get("#slides-section")
+          .get("tbody")
+          .find("tr td")
+          .eq(8)
+          .invoke("text")
+          .should("eq", firstElementText);
+      });
+  });
+
+  it("It removes slide", () => {
+    // Intercept slides in dropdown
+    cy.intercept("GET", "**/slides?**", {
+      fixture: "playlists/slides.json",
+    }).as("slides");
+
+    // Pick slide
+    cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
+    cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
+    cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
+    cy.get("#slides-section").find(".dropdown-container").eq(0).click();
+    cy.get("#slides-section")
+      .find("tbody")
+      .find("tr td")
+      .should("have.length", 7);
+
+    // Remove slide
+    cy.get("#slides-section").find("tbody").find(".remove-from-list").click();
+    cy.get("#slides-section").find("tbody").should("not.exist");
+  });
 
   it("It redirects on save", () => {
     // Mock successful response on post

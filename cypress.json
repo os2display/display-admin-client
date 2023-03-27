@@ -1,6 +1,6 @@
 {
   "integrationFolder": "./src",
-  "testFiles": "**/campaign.spec.js",
+  "testFiles": "**/playlist.spec.js",
   "pluginsFile": false,
   "supportFile": false,
   "viewportHeight": 1400,
