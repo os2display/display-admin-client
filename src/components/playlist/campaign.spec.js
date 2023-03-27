@@ -61,72 +61,72 @@ describe("Campaign pages work", () => {
       });
   });
 
-  // it("It removes slide", () => {
-  //   // Intercept slides in dropdown
-  //   cy.intercept("GET", "**/slides?**", {
-  //     fixture: "playlists/slides.json",
-  //   }).as("slides");
+  it("It removes slide", () => {
+    // Intercept slides in dropdown
+    cy.intercept("GET", "**/slides?**", {
+      fixture: "playlists/slides.json",
+    }).as("slides");
 
-  //   // Pick slide
-  //   cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
-  //   cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
-  //   cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
-  //   cy.get("#slides-section").find(".dropdown-container").eq(0).click();
-  //   cy.get("#slides-section")
-  //     .find("tbody")
-  //     .find("tr td")
-  //     .should("have.length", 7);
+    // Pick slide
+    cy.get("#slides-section").find(".dropdown-container").eq(0).type("{enter}");
+    cy.get("#slides-section").find(".search").find('[type="text"]').type("d");
+    cy.get("#slides-section").find('[type="checkbox"]').eq(1).check();
+    cy.get("#slides-section").find(".dropdown-container").eq(0).click();
+    cy.get("#slides-section")
+      .find("tbody")
+      .find("tr td")
+      .should("have.length", 7);
 
-  //   // Remove slide
-  //   cy.get("#slides-section").find("tbody").find(".remove-from-list").click();
-  //   cy.get("#slides-section").find("tbody").should("not.exist");
-  // });
+    // Remove slide
+    cy.get("#slides-section").find("tbody").find(".remove-from-list").click();
+    cy.get("#slides-section").find("tbody").should("not.exist");
+  });
 
-  // it("It displays success toast on save", () => {
-  //   // Mock successful response on post
-  //   cy.intercept("PUT", "**/playlists/*", {
-  //     statusCode: 201,
-  //     fixture: "playlists/playlist-successful.json",
-  //   });
+  it("It displays success toast on save", () => {
+    // Mock successful response on post
+    cy.intercept("PUT", "**/playlists/*", {
+      statusCode: 201,
+      fixture: "playlists/playlist-successful.json",
+    });
 
-  //   // Mock successful response on get
-  //   cy.intercept("GET", "**/playlists/*", {
-  //     fixture: "playlists/playlist-successful.json",
-  //   });
+    // Mock successful response on get
+    cy.intercept("GET", "**/playlists/*", {
+      fixture: "playlists/playlist-successful.json",
+    });
 
-  //   cy.visit("/campaign/edit/123");
+    cy.visit("/campaign/edit/123");
 
-  //   // Displays success toast and redirects
-  //   cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
-  //   cy.get("#save_playlist").click();
-  //   cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-  // });
+    // Displays success toast and redirects
+    cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
+    cy.get("#save_playlist").click();
+    cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
+  });
 
-  // it("It display error toast on save error", () => {
-  //   // Mock error response on post
-  //   cy.intercept("PUT", "**/playlists/*", {
-  //     statusCode: 500,
-  //     fixture: "error.json",
-  //   });
+  it("It display error toast on save error", () => {
+    // Mock error response on post
+    cy.intercept("PUT", "**/playlists/*", {
+      statusCode: 500,
+      fixture: "error.json",
+    });
 
-  //   cy.intercept("GET", "**/playlists/*", {
-  //     fixture: "playlists/playlist-successful.json",
-  //   });
+    cy.intercept("GET", "**/playlists/*", {
+      fixture: "playlists/playlist-successful.json",
+    });
 
-  //   cy.visit("/campaign/edit/123");
+    cy.visit("/campaign/edit/123");
 
-  //   // Displays error toast and stays on page
-  //   cy.get(".Toastify").find(".Toastify__toast--error").should("not.exist");
-  //   cy.get("#save_playlist").click();
-  //   cy.get(".Toastify").find(".Toastify__toast--error").should("exist");
-  //   cy.get(".Toastify")
-  //     .find(".Toastify__toast--error")
-  //     .contains("An error occurred");
-  // });
+    // Displays error toast and stays on page
+    cy.get(".Toastify").find(".Toastify__toast--error").should("not.exist");
+    cy.get("#save_playlist").click();
+    cy.get(".Toastify").find(".Toastify__toast--error").should("exist");
+    cy.get(".Toastify")
+      .find(".Toastify__toast--error")
+      .contains("An error occurred");
+  });
 
-  // it("It cancels create campaign", () => {
-  //   cy.get("#cancel_playlist").should("exist");
-  //   cy.get("#cancel_playlist").click();
-  //   cy.get("#cancel_playlist").should("not.exist");
-  // });
+  it("It cancels create campaign", () => {
+    cy.get("#cancel_playlist").should("exist");
+    cy.get("#cancel_playlist").click();
+    cy.get("#cancel_playlist").should("not.exist");
+  });
 });
