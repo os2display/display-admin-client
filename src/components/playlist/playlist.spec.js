@@ -40,7 +40,7 @@ describe("Playlist pages work", () => {
     cy.get("#slides-section")
       .get("tbody")
       .find("tr td")
-      .should("have.length", 14);
+      .should("have.length", 70);
     cy.get("#slides-section")
       .get("tbody")
       .find("tr td")
@@ -75,7 +75,7 @@ describe("Playlist pages work", () => {
     cy.get("#slides-section")
       .find("tbody")
       .find("tr td")
-      .should("have.length", 7);
+      .should("have.length", 70);
 
     // Remove slide
     cy.get("#slides-section").find("tbody").find(".remove-from-list").click();
