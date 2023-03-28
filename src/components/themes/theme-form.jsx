@@ -85,7 +85,7 @@ function ThemeForm({
             id="cancel_theme"
             onClick={() => navigate("/themes/list")}
             size="lg"
-            className="me-3"
+            className="margin-right-button"
           >
             {t("theme-form.cancel-button")}
           </Button>

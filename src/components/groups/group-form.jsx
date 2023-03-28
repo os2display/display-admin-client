@@ -61,7 +61,7 @@ function GroupForm({
             type="button"
             id="cancel_group"
             onClick={() => navigate("/group/list/")}
-            className="me-md-3 col"
+            className="margin-right-button"
             size="lg"
           >
             {t("group-form.cancel-button")}
