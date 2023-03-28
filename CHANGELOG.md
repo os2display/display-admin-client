@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#192](https://github.com/os2display/display-admin-client/pull/193)
+Readd and fix cypress tests.
 
 ## [1.2.5] - 2023-03-24
 
