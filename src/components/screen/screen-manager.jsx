@@ -53,7 +53,7 @@ function ScreenManager({
   const [savingGroups, setSavingGroups] = useState(false);
   const [savingPlaylists, setSavingPlaylists] = useState(false);
   const [groupsToAdd, setGroupsToAdd] = useState();
-  const [playlistsToAdd, setPlaylistsToAdd] = useState();
+  const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
 
   // Initialize to empty screen object.
   const [formStateObject, setFormStateObject] = useState(null);
@@ -91,7 +91,7 @@ function ScreenManager({
 
   // Playlists are saved successfully, display a message
   useEffect(() => {
-    if (isSavePlaylistSuccess) {
+    if (isSavePlaylistSuccess && playlistsToAdd.length === 0) {
       setSavingPlaylists(false);
       displaySuccess(t("success-messages.saved-playlists"));
     }
