@@ -145,30 +145,19 @@ function Schedule({ schedules, onChange }) {
   };
 
   /**
-   * Converts UTC time values to local time.
+   * Creates string og hour/minutes that is padded to 00:00 format.
    *
    * @param {number | null} hour - The UTC hour.
-   * @param {number | null} minute - The UTC minute.
+   * @param {number | null} minutes - The UTC minute.
    * @returns {string} - Time values as a string of format HH:mm.
    */
-  const getTimeValue = (hour, minute) => {
-    if (hour === undefined || minute === undefined) return "";
+  const getTimeValue = (hour, minutes) => {
+    if (hour === undefined || minutes === undefined) return "";
 
-    const newDate = new Date();
-    const date = new Date(
-      Date.UTC(
-        newDate.getUTCFullYear(),
-        newDate.getUTCMonth(),
-        newDate.getUTCDate(),
-        hour,
-        minute
-      )
-    );
+    const paddedHours = `${hour}`.padStart(2, "0");
+    const paddedMinutes = `${minutes}`.padStart(2, "0");
 
-    return `${date.getHours().toString().padStart(2, "0")}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
+    return `${paddedHours}:${paddedMinutes}`;
   };
 
   /**
@@ -181,12 +170,8 @@ function Schedule({ schedules, onChange }) {
     const { value } = target;
     const split = value.split(":");
 
-    const date = new Date();
-    date.setHours(parseInt(split[0], 10));
-    date.setMinutes(parseInt(split[1], 10));
-
-    changeSchedule(scheduleId, "byhour", date.getUTCHours());
-    changeSchedule(scheduleId, "byminute", date.getUTCMinutes());
+    changeSchedule(scheduleId, "byhour", parseInt(split[0], 10));
+    changeSchedule(scheduleId, "byminute", parseInt(split[1], 10));
   };
 
   return (
