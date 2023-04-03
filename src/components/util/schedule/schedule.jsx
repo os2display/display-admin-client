@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { MultiSelect } from "react-multi-select-component";
 import { Button, FormGroup } from "react-bootstrap";
 import dayjs from "dayjs";
-import RRule from "rrule";
+import { RRule } from "rrule";
+import utc from "dayjs/plugin/utc";
 import FormInput from "../forms/form-input";
 import Select from "../forms/select";
 import {
@@ -17,6 +18,8 @@ import {
   getRruleString,
 } from "./schedule-util";
 import Duration from "./duration";
+
+dayjs.extend(utc);
 
 /**
  * Schedule component.
@@ -75,6 +78,7 @@ function Schedule({ schedules, onChange }) {
     );
     newLocalSchedules[index][targetId] = value;
     newLocalSchedules[index].rrule = getRruleString(newLocalSchedules[index]);
+
     onChange(newLocalSchedules);
   };
 
@@ -115,9 +119,19 @@ function Schedule({ schedules, onChange }) {
    * @param {object} target - Input target.
    */
   const setDateValue = (scheduleId, target) => {
-    const timestamp = new Date(target.value).getTime();
+    const date = new Date(target.value);
 
-    changeSchedule(scheduleId, target.id, new Date(timestamp));
+    const scheduleDate = new Date(
+      Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes()
+      )
+    );
+
+    changeSchedule(scheduleId, target.id, scheduleDate);
   };
 
   /**
@@ -127,7 +141,7 @@ function Schedule({ schedules, onChange }) {
    * @returns {string} - The date formatted for datetime-local.
    */
   const getDateValue = (date) => {
-    return date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : "";
+    return date ? dayjs(date).utc().format("YYYY-MM-DDTHH:mm") : "";
   };
 
   /**
