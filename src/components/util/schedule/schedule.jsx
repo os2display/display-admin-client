@@ -145,7 +145,7 @@ function Schedule({ schedules, onChange }) {
   };
 
   /**
-   * Creates string og hour/minutes that is padded to 00:00 format.
+   * Creates string of hour/minutes that is padded to 00:00 format.
    *
    * @param {number | null} hour - The UTC hour.
    * @param {number | null} minutes - The UTC minute.
