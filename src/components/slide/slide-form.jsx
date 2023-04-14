@@ -479,7 +479,7 @@ function SlideForm({
             id="cancel_slide"
             onClick={() => navigate("/slide/list")}
             size="lg"
-            className="me-3"
+            className="margin-right-button"
           >
             {t("slide-form.cancel-button")}
           </Button>

@@ -80,3 +80,9 @@ body,
     }
   }
 }
+
+.margin-right-button {
+  @include media-breakpoint-up(lg) {
+    margin-right: 1rem;
+  }
+}
