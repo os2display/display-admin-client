@@ -57,7 +57,7 @@ function MediaForm({
             variant="secondary"
             type="button"
             id="media_cancel"
-            className="m-1"
+            className="margin-right-button"
             onClick={() => navigate("/media/list/")}
           >
             {t("media-form.cancel-button")}
@@ -66,14 +66,14 @@ function MediaForm({
             variant="primary"
             onClick={handleSubmit}
             id="save_media"
-            className="m-1"
+            className="margin-right-button"
           >
             {t("media-form.save-button")}
           </Button>
           <Button
             variant="secondary"
             id="back_to_list"
-            className="m-1"
+            className="margin-right-button"
             onClick={() => navigate("/media/list")}
           >
             {t("media-form.back-to-list")}
