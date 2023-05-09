@@ -33,6 +33,7 @@ function CampaignForm({ campaign, handleInput }) {
           <ContentBody>
             <h2 className="h4">{t("campaign-form.title-campaign-groups")}</h2>
             <SelectGroupsTable
+              mappingId="screenGroup"
               handleChange={handleInput}
               name="groups"
               getSelectedMethod={useGetV1CampaignsByIdScreenGroupsQuery}

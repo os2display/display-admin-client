@@ -33,7 +33,7 @@ function InfoModal({
   if (!Array.isArray(displayData)) {
     data = apiCall({
       id: idFromUrl(displayData),
-      itemsPerPage: 100,
+      itemsPerPage: 30,
     });
   }
 

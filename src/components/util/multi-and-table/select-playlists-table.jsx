@@ -9,6 +9,7 @@ import {
 } from "../../../redux/api/api.generated";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
+import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
 
 /**
  * A multiselect and table for groups.
@@ -20,24 +21,42 @@ import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
  * @returns {object} Select groups table.
  */
 function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", {
+    keyPrefix: "select-playlists-table",
+  });
   const [selectedData, setSelectedData] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
+
+  // Get 30 playlists for dropdown, and when search is changed more will be fetched.
   const { data: playlists } = useGetV1PlaylistsQuery({
     title: searchText,
-    itemsPerPage: 100,
+    itemsPerPage: 30,
     isCampaign: false,
     sharedWithMe: false,
     order: { createdAt: "desc" },
   });
-  const { data } = useGetV1SlidesByIdPlaylistsQuery({ id });
+
+  // Get 10 of the selected playlists for table below dropdown, table is paginated so on page change more is fetched.
+  const { data: alreadySelectedPlaylists } = useGetV1SlidesByIdPlaylistsQuery({
+    itemsPerPage: 10,
+    page,
+    id,
+  });
 
   /** Map loaded data. */
   useEffect(() => {
-    if (data) {
-      setSelectedData(data["hydra:member"].map(({ playlist }) => playlist));
+    if (alreadySelectedPlaylists) {
+      setTotalItems(alreadySelectedPlaylists["hydra:totalItems"]);
+      const newPlaylists = alreadySelectedPlaylists["hydra:member"].map(
+        ({ playlist }) => {
+          return playlist;
+        }
+      );
+      setSelectedData([...selectedData, ...newPlaylists]);
     }
-  }, [data]);
+  }, [alreadySelectedPlaylists]);
 
   /**
    * Adds group to list of groups.
@@ -91,7 +110,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
     editTarget: "playlist",
     infoModalRedirect: "/slide/edit",
     dataKey: "slide",
-    infoModalTitle: t("select-playlists-table.info-modal.slides"),
+    infoModalTitle: t("info-modal.slides"),
   });
 
   return (
@@ -107,9 +126,13 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
             helpText={helpText}
           />
           {selectedData.length > 0 && (
-            <>
-              <Table columns={columns} data={selectedData} />
-            </>
+            <Table
+              columns={columns}
+              data={selectedData}
+              callback={() => setPage(page + 1)}
+              label={t("more-playlists")}
+              totalItems={totalItems}
+            />
           )}
         </>
       )}

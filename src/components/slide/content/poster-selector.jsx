@@ -554,7 +554,7 @@ function PosterSelector({
                           />
                         </Col>
                       )}
-                      <Col>
+                      <Col className="d-flex align-items-end">
                         <Button
                           onClick={singleSearchFetch}
                           className="mt-3"
@@ -626,7 +626,11 @@ function PosterSelector({
                           </table>
                         </Col>
                       )}
-                      {loadingResults && <Spinner animation="border" />}
+                      {loadingResults && (
+                        <Col>
+                          <Spinner className="mt-3" animation="border" />
+                        </Col>
+                      )}
 
                       {singleSelectedEvent !== null && (
                         <Col>
