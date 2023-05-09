@@ -11,7 +11,6 @@ import {
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
 } from "../../redux/api/api.generated";
 import ScreenGanttChart from "../screen/util/screen-gantt-chart";
-import PaginationButton from "../util/forms/multiselect-dropdown/pagination-button";
 
 /**
  * A drag and drop component for playlists.

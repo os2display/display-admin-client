@@ -9,7 +9,6 @@ import {
 } from "../../../redux/api/api.generated";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
-import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
 
 /**
  * A multiselect and table for groups.
