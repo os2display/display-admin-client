@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#197](https://github.com/os2display/display-admin-client/pull/197)
+Add pagination to tables below multiselect dropdowns.
 - [#196](https://github.com/os2display/display-admin-client/pull/196)
   Changed to handling rrule dates as UTC.
 - [#194](https://github.com/os2display/display-admin-client/pull/195)

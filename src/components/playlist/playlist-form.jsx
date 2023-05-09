@@ -23,7 +23,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   const context = useContext(UserContext);
 
   const { data: tenants } = useGetV1TenantsQuery({
-    itemsPerPage: 100,
+    itemsPerPage: 30,
   });
 
   return (

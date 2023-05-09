@@ -20,22 +20,35 @@ import {
  * @returns {object} - A select screens table.
  */
 function SelectScreensTable({ handleChange, name, campaignId }) {
-  const { t } = useTranslation("common");
-  const [selectedData, setSelectedData] = useState();
+  const { t } = useTranslation("common", { keyPrefix: "select-screens-table" });
+  const [selectedData, setSelectedData] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
+
+  // Get 30 screens for dropdown, and when search is changed more will be fetched.
   const { data: screens } = useGetV1ScreensQuery({
     search: searchText,
-    itemsPerPage: 100,
+    itemsPerPage: 30,
     order: { createdAt: "desc" },
   });
-  const { data } = useGetV1CampaignsByIdScreensQuery({ id: campaignId });
 
-  /** Map loaded data. */
+  // Get 10 of the selected screens for table below dropdown, table is paginated so on page change more is fetched.
+  const { data: alreadySelectedScreens } = useGetV1CampaignsByIdScreensQuery({
+    id: campaignId,
+    itemsPerPage: 10,
+    page,
+  });
+
   useEffect(() => {
-    if (data) {
-      setSelectedData(data["hydra:member"].map(({ screen }) => screen));
+    if (alreadySelectedScreens) {
+      setTotalItems(alreadySelectedScreens["hydra:totalItems"]);
+      const newScreens = alreadySelectedScreens["hydra:member"].map(
+        ({ screen }) => screen
+      );
+      setSelectedData([...selectedData, ...newScreens]);
     }
-  }, [data]);
+  }, [alreadySelectedScreens]);
 
   /**
    * Adds group to list of groups.
@@ -88,7 +101,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
     apiCall: useGetV1ScreensByIdScreenGroupsQuery,
     editTarget: "screen",
     infoModalRedirect: "/group/edit",
-    infoModalTitle: t("select-screens-table.info-modal.screen-in-groups"),
+    infoModalTitle: t("info-modal.screen-in-groups"),
   });
 
   return (
@@ -104,8 +117,14 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
           />
           {selectedData?.length > 0 && (
             <>
-              <Table columns={columns} data={selectedData} />
-              <small>{t("select-screens-table.edit-screens-help-text")}</small>
+              <Table
+                columns={columns}
+                data={selectedData}
+                callback={() => setPage(page + 1)}
+                label={t("more-screens")}
+                totalItems={totalItems}
+              />
+              <small>{t("edit-screens-help-text")}</small>
             </>
           )}
         </>

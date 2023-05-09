@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Table } from "react-bootstrap";
+import { Row, Table, Col } from "react-bootstrap";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGripVertical } from "@fortawesome/free-solid-svg-icons";
 import TableHeader from "../table/table-header";
 import ColumnProptypes from "../../proptypes/column-proptypes";
+import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
 import "./drag-and-drop-table.scss";
 
 // Drag and drop component (react-beautiful-dnd) is replaced with hello-pangea/dnd,
@@ -20,9 +21,20 @@ import "./drag-and-drop-table.scss";
  * @param {string} props.name The id of the form element
  * @param {Function} props.onDropped Callback for when an items is dropped and
  *   the list is reordered.
+ * @param {Function} props.callback - The callback.
+ * @param {string} props.label - The label.
+ * @param {number} props.totalItems - Total data items.
  * @returns {object} The drag and drop table.
  */
-function DragAndDropTable({ columns, data, name, onDropped }) {
+function DragAndDropTable({
+  columns,
+  data,
+  name,
+  onDropped,
+  label,
+  callback,
+  totalItems,
+}) {
   const { t } = useTranslation("common", {
     keyPrefix: "drag-and-drop-table",
   });
@@ -149,6 +161,13 @@ function DragAndDropTable({ columns, data, name, onDropped }) {
           </Droppable>
         </DragDropContext>
       </Table>
+      <Row>
+        <Col>
+          {totalItems > data.length && (
+            <PaginationButton label={label} callback={callback} />
+          )}
+        </Col>
+      </Row>
       <small id="aria-label-for-drag-and-drop">{t("help-text")}</small>
     </div>
   );
@@ -161,5 +180,8 @@ DragAndDropTable.propTypes = {
   columns: ColumnProptypes.isRequired,
   name: PropTypes.string.isRequired,
   onDropped: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  callback: PropTypes.func.isRequired,
+  totalItems: PropTypes.number.isRequired,
 };
 export default DragAndDropTable;

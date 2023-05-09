@@ -16,28 +16,50 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
  * @param {string} props.name The name for the input
  * @param {string} props.id The id used for the get.
  * @param {string} props.getSelectedMethod Method that gets selected for dropdown
+ * @param {string} props.mappingId For mapping selected data
  * @returns {object} Select groups table.
  */
-function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
+function SelectGroupsTable({
+  handleChange,
+  name,
+  id,
+  getSelectedMethod,
+  mappingId,
+}) {
   const { t } = useTranslation("common", { keyPrefix: "select-groups-table" });
   const [selectedData, setSelectedData] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
+
+  // Get 30 groups for dropdown, and when search is changed more will be fetched.
   const { data: groups } = useGetV1ScreenGroupsQuery({
     title: searchText,
-    itemsPerPage: 100,
+    itemsPerPage: 30,
     orderBy: "createdAt",
     order: "asc",
   });
-  const { data } = getSelectedMethod({
+
+  // Get 10 of the selected groups for table below dropdown, table is paginated so on page change more is fetched.
+  const { data: alreadySelectedGroups } = getSelectedMethod({
+    itemsPerPage: 10,
+    page,
     id,
   });
 
   /** Map loaded data. */
   useEffect(() => {
-    if (data) {
-      setSelectedData(data["hydra:member"]);
+    if (alreadySelectedGroups) {
+      let newGroups = alreadySelectedGroups["hydra:member"];
+      if (mappingId) {
+        newGroups = alreadySelectedGroups["hydra:member"].map((sdf) => {
+          return sdf[mappingId];
+        });
+      }
+      setTotalItems(alreadySelectedGroups["hydra:totalItems"]);
+      setSelectedData([...selectedData, ...newGroups]);
     }
-  }, [data]);
+  }, [alreadySelectedGroups]);
 
   /**
    * Adds group to list of groups.
@@ -83,6 +105,7 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
     };
     handleChange({ target });
   };
+
   const columns = SelectGroupColumns({
     handleDelete: removeFromList,
     apiCall: useGetV1ScreenGroupsByIdScreensQuery,
@@ -104,7 +127,13 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
           />
           {selectedData.length > 0 && (
             <>
-              <Table columns={columns} data={selectedData} />
+              <Table
+                columns={columns}
+                data={selectedData}
+                callback={() => setPage(page + 1)}
+                label={t("more-groups")}
+                totalItems={totalItems}
+              />
               <small>{t("edit-groups-help-text")}</small>
             </>
           )}
@@ -116,12 +145,14 @@ function SelectGroupsTable({ handleChange, name, id, getSelectedMethod }) {
 
 SelectGroupsTable.defaultProps = {
   id: "",
+  mappingId: null,
 };
 
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   id: PropTypes.string,
+  mappingId: PropTypes.string,
   getSelectedMethod: PropTypes.func.isRequired,
 };
 
