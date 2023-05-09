@@ -10,7 +10,6 @@ import {
   useGetV1PlaylistsByIdQuery,
 } from "../../../redux/api/api.generated";
 import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
-import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
 
 /**
  * A multiselect and table for slides.
