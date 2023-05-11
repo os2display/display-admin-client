@@ -23,24 +23,28 @@ import ScreenGanttChart from "../screen/util/screen-gantt-chart";
  * @returns {object} A drag and drop component
  */
 function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", {
+    keyPrefix: "playlist-drag-and-drop",
+  });
 
   const [searchText, setSearchText] = useState();
   const [selectedData, setSelectedData] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [page, setPage] = useState(1);
   const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
   const { data: selectedPlaylistsByRegion } =
     useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
       regionId,
-      page: 1,
-      itemsPerPage: 100,
+      page,
+      itemsPerPage: 10,
     });
 
   // Get method
   const { data } = useGetV1PlaylistsQuery({
     isCampaign: false,
     title: searchText,
-    itemsPerPage: 100,
+    itemsPerPage: 30,
     order: { createdAt: "desc" },
     sharedWithMe: onlySharedPlaylists,
   });
@@ -48,11 +52,13 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   /** Set loaded data into form state. */
   useEffect(() => {
     if (selectedPlaylistsByRegion) {
-      setSelectedData(
-        selectedPlaylistsByRegion["hydra:member"].map(({ playlist }) => {
+      setTotalItems(selectedPlaylistsByRegion["hydra:totalItems"]);
+      const newPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
+        ({ playlist }) => {
           return playlist;
-        })
+        }
       );
+      setSelectedData([...selectedData, ...newPlaylists]);
     }
   }, [selectedPlaylistsByRegion]);
 
@@ -112,7 +118,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
       {data && data["hydra:member"] && (
         <>
           <FormCheckbox
-            label={t("playlist-drag-and-drop.show-only-shared")}
+            label={t("show-only-shared")}
             onChange={() => {
               setOnlySharedPlaylists(!onlySharedPlaylists);
             }}
@@ -129,14 +135,15 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
             />
           </div>
           {selectedData.length > 0 && (
-            <>
-              <DragAndDropTable
-                columns={columns}
-                onDropped={handleChange}
-                name={name}
-                data={selectedData}
-              />
-            </>
+            <DragAndDropTable
+              columns={columns}
+              onDropped={handleChange}
+              name={name}
+              data={selectedData}
+              callback={() => setPage(page + 1)}
+              label={t("more-playlists")}
+              totalItems={totalItems}
+            />
           )}
           {selectedData?.length > 0 && (
             <ScreenGanttChart playlists={selectedData} id={regionId} />
