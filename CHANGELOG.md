@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [1.2.7] - 2023-05-25
+
 - [#197](https://github.com/os2display/display-admin-client/pull/197)
 Add pagination to tables below multiselect dropdowns.
 - [#196](https://github.com/os2display/display-admin-client/pull/196)
