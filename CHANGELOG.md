@@ -3,7 +3,16 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-
+- [#197](https://github.com/os2display/display-admin-client/pull/197)
+Add pagination to tables below multiselect dropdowns.
+- [#196](https://github.com/os2display/display-admin-client/pull/196)
+  Changed to handling rrule dates as UTC.
+- [#194](https://github.com/os2display/display-admin-client/pull/195)
+  Fix button margin on mobile view.
+- [#193](https://github.com/os2display/display-admin-client/pull/194)
+  Prevent screen-manager.js from redirecting before everything is saved.
+- [#192](https://github.com/os2display/display-admin-client/pull/193)
+  Readd and fix cypress tests.
 ## [1.2.6] - 2023-05-11
 
 - [#197](https://github.com/os2display/display-admin-client/pull/197)

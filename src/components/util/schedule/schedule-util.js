@@ -1,9 +1,11 @@
-import RRule, { Weekday } from "rrule";
+import { RRule, Weekday } from "rrule";
 import { ulid } from "ulid";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import "dayjs/locale/da";
+import utc from "dayjs/plugin/utc";
 
+dayjs.extend(utc);
 dayjs.extend(localizedFormat);
 
 /**
@@ -47,13 +49,22 @@ const getRruleString = (schedule) => {
  * @returns {object} - The new schedule.
  */
 const createNewSchedule = () => {
-  const nowTimestamp = new Date().getTime();
+  const now = new Date();
+  const nowTimestamp = now.getTime();
 
   const newSchedule = {
     id: ulid(nowTimestamp),
     duration: 60 * 60 * 24, // Default one day.
     freq: RRule.WEEKLY,
-    dtstart: new Date(nowTimestamp),
+    dtstart: new Date(
+      Date.UTC(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        now.getHours(),
+        now.getMinutes()
+      )
+    ),
     until: null,
     wkst: RRule.MO,
     byhour: null,
@@ -116,10 +127,11 @@ const getNextOccurrences = (rrule, count = 5) => {
   newRrule.all((d) => {
     occurrences.push({
       key: `occurrence${occurrences.length}`,
-      text: dayjs(d).locale("da").format("LLLL"),
+      text: dayjs(d).utc().locale("da").format("LLLL"),
     });
     return true;
   });
+
   return occurrences;
 };
 

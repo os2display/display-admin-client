@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import RRule from "rrule";
+import { RRule } from "rrule";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import GanttChart from "../../util/gantt-chart";

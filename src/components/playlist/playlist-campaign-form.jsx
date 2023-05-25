@@ -135,7 +135,7 @@ function PlaylistCampaignForm({
             id="cancel_playlist"
             onClick={() => navigate(`/${location}/list`)}
             size="lg"
-            className="me-3"
+            className="margin-right-button"
           >
             {t("playlist-campaign-form.cancel-button")}
           </Button>

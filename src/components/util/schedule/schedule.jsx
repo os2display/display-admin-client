@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { MultiSelect } from "react-multi-select-component";
 import { Button, FormGroup } from "react-bootstrap";
 import dayjs from "dayjs";
-import RRule from "rrule";
+import { RRule } from "rrule";
+import utc from "dayjs/plugin/utc";
 import FormInput from "../forms/form-input";
 import Select from "../forms/select";
 import {
@@ -17,6 +18,8 @@ import {
   getRruleString,
 } from "./schedule-util";
 import Duration from "./duration";
+
+dayjs.extend(utc);
 
 /**
  * Schedule component.
@@ -75,6 +78,7 @@ function Schedule({ schedules, onChange }) {
     );
     newLocalSchedules[index][targetId] = value;
     newLocalSchedules[index].rrule = getRruleString(newLocalSchedules[index]);
+
     onChange(newLocalSchedules);
   };
 
@@ -115,9 +119,19 @@ function Schedule({ schedules, onChange }) {
    * @param {object} target - Input target.
    */
   const setDateValue = (scheduleId, target) => {
-    const timestamp = new Date(target.value).getTime();
+    const date = new Date(target.value);
 
-    changeSchedule(scheduleId, target.id, new Date(timestamp));
+    const scheduleDate = new Date(
+      Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes()
+      )
+    );
+
+    changeSchedule(scheduleId, target.id, scheduleDate);
   };
 
   /**
@@ -127,34 +141,23 @@ function Schedule({ schedules, onChange }) {
    * @returns {string} - The date formatted for datetime-local.
    */
   const getDateValue = (date) => {
-    return date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : "";
+    return date ? dayjs(date).utc().format("YYYY-MM-DDTHH:mm") : "";
   };
 
   /**
-   * Converts UTC time values to local time.
+   * Creates string of hour/minutes that is padded to 00:00 format.
    *
    * @param {number | null} hour - The UTC hour.
-   * @param {number | null} minute - The UTC minute.
+   * @param {number | null} minutes - The UTC minute.
    * @returns {string} - Time values as a string of format HH:mm.
    */
-  const getTimeValue = (hour, minute) => {
-    if (hour === undefined || minute === undefined) return "";
+  const getTimeValue = (hour, minutes) => {
+    if (hour === undefined || minutes === undefined) return "";
 
-    const newDate = new Date();
-    const date = new Date(
-      Date.UTC(
-        newDate.getUTCFullYear(),
-        newDate.getUTCMonth(),
-        newDate.getUTCDate(),
-        hour,
-        minute
-      )
-    );
+    const paddedHours = `${hour}`.padStart(2, "0");
+    const paddedMinutes = `${minutes}`.padStart(2, "0");
 
-    return `${date.getHours().toString().padStart(2, "0")}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
+    return `${paddedHours}:${paddedMinutes}`;
   };
 
   /**
@@ -167,12 +170,8 @@ function Schedule({ schedules, onChange }) {
     const { value } = target;
     const split = value.split(":");
 
-    const date = new Date();
-    date.setHours(parseInt(split[0], 10));
-    date.setMinutes(parseInt(split[1], 10));
-
-    changeSchedule(scheduleId, "byhour", date.getUTCHours());
-    changeSchedule(scheduleId, "byminute", date.getUTCMinutes());
+    changeSchedule(scheduleId, "byhour", parseInt(split[0], 10));
+    changeSchedule(scheduleId, "byminute", parseInt(split[1], 10));
   };
 
   return (
