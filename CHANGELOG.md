@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#200](https://github.com/os2display/display-admin-client/pull/200)
+  Update docker build to publish to "os2display" org on docker hup.
+  Update github workflow to latest actions.
+  Add github workflow to build and create release.
+  Change `example_config.json` to use relative paths.
 
 ## [1.2.7] - 2023-05-25
 
