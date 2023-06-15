@@ -42,6 +42,13 @@ function FeedSelector({ value, onChange, formElement }) {
 
   useEffect(() => {
     if (feedSourcesData) {
+      if (feedSourcesData["hydra:member"].length === 1) {
+        // If there's only one feed source option select it.
+        const feedSource = feedSourcesData["hydra:member"][0]['@id'];
+        const configuration = value?.configuration ?? {};
+        const newValue = { ...value, feedSource, configuration };
+        onChange(newValue);
+      }
       setFeedSourceOptions(
         feedSourcesData["hydra:member"].map((source) => {
           return {
