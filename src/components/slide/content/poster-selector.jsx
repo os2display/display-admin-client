@@ -594,7 +594,7 @@ function PosterSelector({
                                   style={{ cursor: "pointer" }}
                                   key={searchEvent["@id"]}
                                   onClick={() =>
-                                      handleSelectEvent(searchEvent)
+                                    handleSelectEvent(searchEvent)
                                   }
                                 >
                                   <td>
