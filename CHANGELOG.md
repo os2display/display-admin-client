@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#202](https://github.com/os2display/display-admin-client/pull/202)
+  Remove zeroes when pagination button is not visible.
+  Save campaign before redirect.
 - [#201](https://github.com/os2display/display-admin-client/pull/201)
   Updated poster and feed selection.
 
