@@ -218,6 +218,13 @@ function PosterSelector({
     subscriptionNumberValue,
   ]);
 
+  const handleSelectEvent = (singleEvent) => {
+    setSingleSelectedEvent(singleEvent);
+    if (singleEvent.occurrences?.length === 1) {
+      setSingleSelectedOccurrence(singleEvent.occurrences[0]);
+    }
+  };
+
   const singleSearchFetch = () => {
     const url = feedSource.admin[0].endpointSearch;
     let query = `?type=events`;
@@ -586,9 +593,7 @@ function PosterSelector({
                                 <tr
                                   style={{ cursor: "pointer" }}
                                   key={searchEvent["@id"]}
-                                  onClick={() =>
-                                    setSingleSelectedEvent(searchEvent)
-                                  }
+                                  onClick={() => handleSelectEvent(searchEvent)}
                                 >
                                   <td>
                                     {searchEvent?.images?.small && (
@@ -646,22 +651,28 @@ function PosterSelector({
                                     <th scope="col">
                                       {t("poster-selector.table-price")}
                                     </th>
+                                    <th scope="col"> </th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   {singleSelectedEvent?.occurrences?.map(
                                     (occurrence) => (
-                                      <tr
-                                        style={{ cursor: "pointer" }}
-                                        key={occurrence["@id"]}
-                                        onClick={() =>
-                                          setSingleSelectedOccurrence(
-                                            occurrence
-                                          )
-                                        }
-                                      >
+                                      <tr>
                                         <td>{occurrence.startDate}</td>
                                         <td>{occurrence.ticketPriceRange}</td>
+                                        <td>
+                                          <Button
+                                            onClick={() =>
+                                              setSingleSelectedOccurrence(
+                                                occurrence
+                                              )
+                                            }
+                                          >
+                                            {t(
+                                              "poster-selector.choose-occurrence"
+                                            )}
+                                          </Button>
+                                        </td>
                                       </tr>
                                     )
                                   )}
