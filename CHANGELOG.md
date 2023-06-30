@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.2.7] - 2023-05-25
+
 - [#197](https://github.com/os2display/display-admin-client/pull/197)
 Add pagination to tables below multiselect dropdowns.
 - [#196](https://github.com/os2display/display-admin-client/pull/196)
@@ -14,6 +16,10 @@ Add pagination to tables below multiselect dropdowns.
   Prevent screen-manager.js from redirecting before everything is saved.
 - [#192](https://github.com/os2display/display-admin-client/pull/193)
   Readd and fix cypress tests.
+## [1.2.6] - 2023-05-11
+
+- [#197](https://github.com/os2display/display-admin-client/pull/197)
+Add pagination to tables below multiselect dropdowns.
 
 ## [1.2.5] - 2023-03-24
 
