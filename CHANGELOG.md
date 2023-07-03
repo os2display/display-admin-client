@@ -9,10 +9,16 @@ All notable changes to this project will be documented in this file.
   Add github workflow to build and create release.
   Change `example_config.json` to use relative paths.
 
+- [#202](https://github.com/os2display/display-admin-client/pull/202)
+  Remove zeroes when pagination button is not visible.
+  Save campaign before redirect.
+- [#201](https://github.com/os2display/display-admin-client/pull/201)
+  Updated poster and feed selection.
+
 ## [1.2.7] - 2023-05-25
 
 - [#197](https://github.com/os2display/display-admin-client/pull/197)
-Add pagination to tables below multiselect dropdowns.
+  Add pagination to tables below multiselect dropdowns.
 - [#196](https://github.com/os2display/display-admin-client/pull/196)
   Changed to handling rrule dates as UTC.
 - [#194](https://github.com/os2display/display-admin-client/pull/195)
