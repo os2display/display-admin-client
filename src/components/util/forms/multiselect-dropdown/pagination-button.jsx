@@ -22,6 +22,7 @@ const PaginationButton = ({ callback, label, showButton }) => {
 
 PaginationButton.propTypes = {
   label: PropTypes.string.isRequired,
+  showButton: PropTypes.bool.isRequired,
   callback: PropTypes.func.isRequired,
 };
 
