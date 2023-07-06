@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: os2display/os2display-admin-client
+          images: os2display/admin-client
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
