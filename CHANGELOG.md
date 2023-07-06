@@ -3,12 +3,15 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#204](https://github.com/os2display/display-admin-client/pull/204)
+  Change docker image name from `os2display/os2display-admin-client` 
+  to `os2display/display-admin-client` to match image name and 
+  repository name
 - [#200](https://github.com/os2display/display-admin-client/pull/200)
   Update docker build to publish to "os2display" org on docker hup.
   Update github workflow to latest actions.
   Add github workflow to build and create release.
   Change `example_config.json` to use relative paths.
-
 - [#202](https://github.com/os2display/display-admin-client/pull/202)
   Remove zeroes when pagination button is not visible.
   Save campaign before redirect.
