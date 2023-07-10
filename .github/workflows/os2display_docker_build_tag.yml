@@ -1,16 +1,15 @@
 ---
 on:
   push:
-    branches:
-      - 'develop'
-name: Build docker image (develop)
+    tags:
+      - '*'
+
+# This Action builds to os2display/* using ./infrastructure/os2display/*
+name: OS2display - Build docker image (tag)
 
 jobs:
   docker:
     runs-on: ubuntu-latest
-    env:
-      APP_VERSION: develop
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,10 +32,10 @@ jobs:
       - name: Build and push (API)
         uses: docker/build-push-action@v4
         with:
-          context: ./infrastructure/
-          file: ./infrastructure/Dockerfile
+          context: ./infrastructure/os2display/
+          file: ./infrastructure/os2display/Dockerfile
           build-args: |
-            APP_VERSION=${{ env.APP_VERSION }}
+            APP_VERSION=${{ github.ref }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
