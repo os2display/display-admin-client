@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#205](https://github.com/os2display/display-admin-client/pull/205)
+  Setup separate image builds for itkdev and os2display
 - [#204](https://github.com/os2display/display-admin-client/pull/204)
   Change docker image name from `os2display/os2display-admin-client` 
   to `os2display/display-admin-client` to match image name and 
