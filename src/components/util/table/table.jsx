@@ -15,15 +15,19 @@ import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
  * @returns {object} The table.
  */
 function Table({ columns, data, label, callback, totalItems }) {
+  const showButton = totalItems && totalItems > data.length;
+
   return (
     <div className="table-responsive">
       <table className="table table-hover">
         <TableHeader columns={columns} />
         <TableBody columns={columns} data={data} />
       </table>
-      {totalItems && totalItems > data.length && (
-        <PaginationButton label={label} callback={callback} />
-      )}
+      <PaginationButton
+        showButton={showButton}
+        label={label}
+        callback={callback}
+      />
     </div>
   );
 }

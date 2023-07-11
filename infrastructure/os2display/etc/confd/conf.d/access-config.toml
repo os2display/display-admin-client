@@ -1,0 +1,7 @@
+[template]
+src = "access-config.tmpl"
+dest = "/var/www/html/access-config.json"
+mode = "0644"
+keys = [
+    "/app-config"
+]

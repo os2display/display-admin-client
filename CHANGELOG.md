@@ -4,10 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.0] - 2023-07-11
+- [#205](https://github.com/os2display/display-admin-client/pull/205)
+  Setup separate image builds for itkdev and os2display
+- [#204](https://github.com/os2display/display-admin-client/pull/204)
+  Change docker image name from `os2display/os2display-admin-client` 
+  to `os2display/display-admin-client` to match image name and 
+  repository name
+- [#200](https://github.com/os2display/display-admin-client/pull/200)
+  Update docker build to publish to "os2display" org on docker hub.
+  Update github workflow to latest actions.
+  Add github workflow to build and create release.
+  Change `example_config.json` to use relative paths.
+- [#202](https://github.com/os2display/display-admin-client/pull/202)
+  Remove zeroes when pagination button is not visible.
+  Save campaign before redirect.
+- [#201](https://github.com/os2display/display-admin-client/pull/201)
+  Updated poster and feed selection.
+
 ## [1.2.7] - 2023-05-25
 
 - [#197](https://github.com/os2display/display-admin-client/pull/197)
-Add pagination to tables below multiselect dropdowns.
+  Add pagination to tables below multiselect dropdowns.
 - [#196](https://github.com/os2display/display-admin-client/pull/196)
   Changed to handling rrule dates as UTC.
 - [#194](https://github.com/os2display/display-admin-client/pull/195)

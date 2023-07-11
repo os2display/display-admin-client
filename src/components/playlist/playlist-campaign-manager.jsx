@@ -136,6 +136,7 @@ function PlaylistCampaignManager({
   // Slides are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessSlides) {
+      setSlidesToAdd([]);
       displaySuccess(t(`${location}.success-messages.saved-slides`));
     }
   }, [isSaveSuccessSlides]);
@@ -143,6 +144,7 @@ function PlaylistCampaignManager({
   // Screens are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessScreens) {
+      setScreensToAdd([]);
       displaySuccess(t(`${location}.success-messages.saved-screens`));
     }
   }, [isSaveSuccessScreens]);
@@ -150,17 +152,22 @@ function PlaylistCampaignManager({
   // Groups are saved successfully, display a message
   useEffect(() => {
     if (isSaveSuccessGroups) {
+      setGroupsToAdd([]);
       displaySuccess(t(`${location}.success-messages.saved-groups`));
     }
   }, [isSaveSuccessGroups]);
 
+  /**
+   * @param {Array} list - The list to save.
+   * @returns {Array} - If a list is ready to be saved.
+   */
+  function readyToSave(list) {
+    return list && list.length > 0;
+  }
+
   /** When the screen is saved, the slide will be saved. */
   useEffect(() => {
-    if (
-      (isSaveSuccessPost || isSaveSuccessPut) &&
-      screensToAdd &&
-      formStateObject.screens
-    ) {
+    if (readyToSave(screensToAdd)) {
       setLoadingMessage(t(`${location}.loading-messages.saving-screens`));
 
       PutV1ScreensByIdCampaigns({
@@ -172,11 +179,7 @@ function PlaylistCampaignManager({
 
   /** When the group is saved, the slide will be saved. */
   useEffect(() => {
-    if (
-      (isSaveSuccessPost || isSaveSuccessPut) &&
-      groupsToAdd &&
-      formStateObject.groups
-    ) {
+    if (readyToSave(groupsToAdd)) {
       setLoadingMessage(t(`${location}.loading-messages.saving-groups`));
       PutV1ScreenGroupsByIdCampaigns({
         id: id || idFromUrl(data["@id"]),
@@ -187,11 +190,7 @@ function PlaylistCampaignManager({
 
   /** When the playlist is saved, the slide will be saved. */
   useEffect(() => {
-    if (
-      (isSaveSuccessPost || isSaveSuccessPut) &&
-      slidesToAdd &&
-      Array.isArray(formStateObject.slides)
-    ) {
+    if (readyToSave(slidesToAdd)) {
       setLoadingMessage(t(`${location}.loading-messages.saving-slides`));
       PutV1PlaylistsByIdSlides({
         id: id || idFromUrl(data["@id"]),
@@ -239,11 +238,22 @@ function PlaylistCampaignManager({
 
   /** If the slide is saved, display the success message and navigate to list */
   useEffect(() => {
-    if (isSaveSuccessPost || isSaveSuccessPut) {
+    if (
+      (isSaveSuccessPost || isSaveSuccessPut) &&
+      slidesToAdd.length === 0 &&
+      groupsToAdd.length === 0 &&
+      screensToAdd.length === 0
+    ) {
       displaySuccess(t(`${location}.success-messages.saved`));
       navigate(`/${location}/list`);
     }
-  }, [isSaveSuccessPost, isSaveSuccessPut]);
+  }, [
+    isSaveSuccessPost,
+    isSaveSuccessPut,
+    slidesToAdd,
+    groupsToAdd,
+    screensToAdd,
+  ]);
 
   /** If the slide is saved with error, display the error message */
   useEffect(() => {
@@ -268,34 +278,38 @@ function PlaylistCampaignManager({
   /** Sets slides to save. */
   function handleSaveSlides() {
     const { slides } = formStateObject;
-
-    setSlidesToAdd(
-      slides.map((slide, index) => {
-        return { slide: idFromUrl(slide), weight: index };
-      })
-    );
+    if (Array.isArray(slides)) {
+      setSlidesToAdd(
+        slides.map((slide, index) => {
+          return { slide: idFromUrl(slide), weight: index };
+        })
+      );
+    }
   }
 
   /** Sets screens to save. */
   function handleSaveScreens() {
     const { screens } = formStateObject;
 
-    setScreensToAdd(
-      screens.map((screen) => {
-        return { screen: idFromUrl(screen) };
-      })
-    );
+    if (Array.isArray(screens)) {
+      setScreensToAdd(
+        screens.map((screen) => {
+          return { screen: idFromUrl(screen) };
+        })
+      );
+    }
   }
 
   /** Sets groups to save. */
   function handleSaveGroups() {
     const { groups } = formStateObject;
-
-    setGroupsToAdd(
-      groups.map((group) => {
-        return { screengroup: idFromUrl(group) };
-      })
-    );
+    if (Array.isArray(groups)) {
+      setGroupsToAdd(
+        groups.map((group) => {
+          return { screengroup: idFromUrl(group) };
+        })
+      );
+    }
   }
 
   /** Handles submit. */
