@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.1] - 2023-07-11
+
+- [#206](https://github.com/os2display/display-admin-client/pull/206)
+  Added example_release.json file
+
 ## [1.3.0] - 2023-07-11
+
 - [#205](https://github.com/os2display/display-admin-client/pull/205)
   Setup separate image builds for itkdev and os2display
 - [#204](https://github.com/os2display/display-admin-client/pull/204)
@@ -34,6 +40,7 @@ All notable changes to this project will be documented in this file.
   Prevent screen-manager.js from redirecting before everything is saved.
 - [#192](https://github.com/os2display/display-admin-client/pull/193)
   Readd and fix cypress tests.
+- 
 ## [1.2.6] - 2023-05-11
 
 - [#197](https://github.com/os2display/display-admin-client/pull/197)
