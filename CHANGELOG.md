@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - [#206](https://github.com/os2display/display-admin-client/pull/206)
   Added example_release.json file
-- 
+
 ## [1.3.0] - 2023-07-11
 
 - [#205](https://github.com/os2display/display-admin-client/pull/205)
