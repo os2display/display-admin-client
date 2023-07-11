@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.3] - 2023-07-11
+
+- [#208](https://github.com/os2display/display-admin-client/pull/208)
+  Fix version not set in release.json
+
 ## [1.3.2] - 2023-07-11
 
 - [#207](https://github.com/os2display/display-admin-client/pull/207)
