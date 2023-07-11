@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.2] - 2023-07-11
+
+- [#207](https://github.com/os2display/display-admin-client/pull/207)
+  Fix incorrect values in auto build release.json in images
+
 ## [1.3.1] - 2023-07-11
 
 - [#206](https://github.com/os2display/display-admin-client/pull/206)
