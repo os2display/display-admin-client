@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#209](https://github.com/os2display/display-admin-client/pull/209)
+- change font on body tag
+- add playing component for list column 
+- restyle published column
+- fix proptypes errors in console from paginationbutton
 
 ## [2.0.2] - 2024-04-25
 
