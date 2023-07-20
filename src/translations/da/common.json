@@ -28,7 +28,8 @@
     "columns": {
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "published": "Udgivet"
+      "published": "Udgivet",
+      "playing": "Afspilningsstatus"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
@@ -405,6 +406,7 @@
     "created-by": "Oprettet af",
     "delete-button": "Slet",
     "published": "Udgivet",
+    "playing": "Afspilningsstatus",
     "number-of-slides": "Slides tilknyttede"
   },
   "playlist-campaign-manager": {
@@ -557,6 +559,11 @@
     "no": "Nej",
     "from": "Fra",
     "to": "Til"
+  },
+  "playing": {
+    "playing": "Afspilles",
+    "not-playing": "Afspillet",
+    "played-in-the-future": "Fremtidig"
   },
   "modal-dialog": {
     "cancel": "Annuller",

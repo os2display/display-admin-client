@@ -4,7 +4,7 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import idFromUrl from "../util/helpers/id-from-url";
-import calculateIsPublished from "../util/helpers/calculate-is-published";
+import { calculateIsPublished } from "../util/helpers/published-helper";
 import {
   api,
   useGetV2ScreensByIdCampaignsQuery,
