@@ -55,7 +55,7 @@ describe("Playlists list tests", () => {
   });
 
   it("The correct amount of column headers loaded (playlist list)", () => {
-    cy.get("thead").find("th").should("have.length", 6);
+    cy.get("thead").find("th").should("have.length", 7);
   });
 
   it("It removes all selected", () => {
@@ -89,12 +89,32 @@ describe("Playlists list tests", () => {
       );
     cy.get("tbody")
       .find("tr td")
-      .eq(9)
+      .eq(10)
       .should("have.text", "Fra: fredag d. 18. marts 2022 kl. 16:04Til: -");
     cy.get("tbody")
       .find("tr td")
-      .eq(15)
+      .eq(16)
       .should("have.text", "Fra: -Til: lørdag d. 26. marts 2022 kl. 15:25");
     cy.get("tbody").find("tr td").eq(21).should("have.text", "Ja");
+  });
+
+  it("Playing dates", () => {
+    const twentyNinthOfMarch = new Date("2022-03-29T12:30:00.000Z");
+
+    // Sets time to a specific date, in this case 2022-03-24
+    cy.clock(twentyNinthOfMarch);
+
+    cy.intercept("GET", "**/playlists*", {
+      fixture: "published/played-in-playlist.json",
+    }).as("played-in-playlist");
+
+    cy.intercept("GET", "**/slides*", {
+      fixture: "playlists/playlist-slide.json",
+    }).as("slides");
+
+    cy.visit("/playlist/list");
+    cy.get("tbody").find("tr td").eq(4).should("have.text", "Afspilles");
+    cy.get("tbody").find("tr td").eq(11).should("have.text", "Afspillet");
+    cy.get("tbody").find("tr td").eq(18).should("have.text", "Fremtidig");
   });
 });
