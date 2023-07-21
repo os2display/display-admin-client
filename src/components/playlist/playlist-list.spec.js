@@ -95,7 +95,7 @@ describe("Playlists list tests", () => {
       .find("tr td")
       .eq(17)
       .should("have.text", "Fra: -Til: lørdag d. 26. marts 2022 kl. 15:25");
-    cy.get("tbody").find("tr td").eq(22).should("have.text", "Ja");
+    cy.get("tbody").find("tr td").eq(23).should("have.text", "Ja");
   });
 
   it("Playing dates", () => {
