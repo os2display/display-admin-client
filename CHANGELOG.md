@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - add playing component for list column 
 - restyle published column
 - fix proptypes errors in console from paginationbutton
+- speed up cypress in GA and add tests of playing-component
 
 ## [2.0.2] - 2024-04-25
 
