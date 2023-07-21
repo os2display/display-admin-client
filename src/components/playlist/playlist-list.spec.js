@@ -93,7 +93,7 @@ describe("Playlists list tests", () => {
       .should("have.text", "Fra: fredag d. 18. marts 2022 kl. 16:04Til: -");
     cy.get("tbody")
       .find("tr td")
-      .eq(16)
+      .eq(17)
       .should("have.text", "Fra: -Til: lørdag d. 26. marts 2022 kl. 15:25");
     cy.get("tbody").find("tr td").eq(21).should("have.text", "Ja");
   });

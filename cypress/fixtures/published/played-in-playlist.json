@@ -1,0 +1,156 @@
+{
+  "@id": "/v1/playlists",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@type": "Playlist",
+      "@id": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH",
+      "title": "asdf",
+      "description": "",
+      "schedules": [],
+      "created": "2022-03-25T16:31:52.000Z",
+      "modified": "2022-03-25T17:04:24.000Z",
+      "modifiedBy": "johndoe@example.com",
+      "createdBy": "johndoe@example.com",
+      "slides": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH/slides",
+      "campaignScreens": [],
+      "campaignScreenGroups": [],
+      "tenants": [],
+      "isCampaign": false,
+      "published": {
+        "from": "2022-03-24T17:31:00.000Z",
+        "to": "2022-04-01T14:31:00.000Z"
+      }
+    },
+    {
+      "@type": "Playlist",
+      "@id": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH",
+      "title": "asdf",
+      "description": "",
+      "schedules": [],
+      "created": "2022-03-25T16:31:52.000Z",
+      "modified": "2022-03-25T17:04:24.000Z",
+      "modifiedBy": "johndoe@example.com",
+      "createdBy": "johndoe@example.com",
+      "slides": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH/slides",
+      "campaignScreens": [],
+      "campaignScreenGroups": [],
+      "tenants": [],
+      "isCampaign": false,
+      "published": {
+        "from": "2022-03-20T17:31:00.000Z",
+        "to": "2022-03-28T14:31:00.000Z"
+      }
+    },
+    {
+      "@type": "Playlist",
+      "@id": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH",
+      "title": "asdf",
+      "description": "",
+      "schedules": [],
+      "created": "2022-03-25T16:31:52.000Z",
+      "modified": "2022-03-25T17:04:24.000Z",
+      "modifiedBy": "johndoe@example.com",
+      "createdBy": "johndoe@example.com",
+      "slides": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH/slides",
+      "campaignScreens": [],
+      "campaignScreenGroups": [],
+      "tenants": [],
+      "isCampaign": false,
+      "published": {
+        "from": "2022-03-30T17:31:00.000Z",
+        "to": "2022-03-28T14:31:00.000Z"
+      }
+    }
+  ],
+  "hydra:totalItems": 4,
+  "hydra:view": {
+    "@id": "/v1/playlists?title=\u0026isCampaign=false\u0026order%5BcreatedAt%5D=desc",
+    "@type": "hydra:PartialCollectionView"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/v1/playlists{?title,description,createdBy,createdBy[],modifiedBy,modifiedBy[],published,isCampaign,order[title],order[description],order[createdAt],tenants.tenantKey,tenants.tenantKey[]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "title",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "description",
+        "property": "description",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "createdBy",
+        "property": "createdBy",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "createdBy[]",
+        "property": "createdBy",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "modifiedBy",
+        "property": "modifiedBy",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "modifiedBy[]",
+        "property": "modifiedBy",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "published",
+        "property": "published",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "isCampaign",
+        "property": "isCampaign",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[title]",
+        "property": "title",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[description]",
+        "property": "description",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[createdAt]",
+        "property": "createdAt",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "tenants.tenantKey",
+        "property": "tenants.tenantKey",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "tenants.tenantKey[]",
+        "property": "tenants.tenantKey",
+        "required": false
+      }
+    ]
+  }
+}
