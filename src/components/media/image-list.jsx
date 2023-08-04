@@ -52,7 +52,7 @@ function ImageList({ media, multiple }) {
               onClick={() => selectImage(data)}
             >
               <img
-                src={data.assets.uri}
+                src={data.thumbnail ?? data.assets.uri}
                 className="card-img-top"
                 alt={data.description}
               />
