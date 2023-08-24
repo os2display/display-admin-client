@@ -43,6 +43,7 @@ function MediaSelectorModal({
   };
 
   const handleClick = (data) => {
+    debugger;
     if (!multiple) {
       selectMedia({ target: { id: fieldName, value: [data] } });
       onClose();

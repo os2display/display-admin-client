@@ -1,11 +1,4 @@
 {
-  "user-list": {
-    "columns": {
-      "created-by": "Oprettet af"
-    },
-    "header": "Brugere",
-    "create-new-user": "Opret ny bruger"
-  },
   "remote-component-wrapper": {
     "close-preview": "Luk preview"
   },
@@ -26,6 +19,10 @@
       "save-theme-error": "Der skete en fejl da temaet skulle gemmes:",
       "load-theme-error": "Der skete en fejl da temaet med følgende id: {{id}} skulle hentes:"
     }
+  },
+  "login-sidebar": {
+    "AD-info-text": "Er du <strong>medarbejder</strong> i skal du benytte AD login.",
+    "MitID-info-text": "Er du <strong>borger</strong> skal du benytte MitID"
   },
   "slides-list": {
     "columns": {
@@ -189,7 +186,7 @@
   "media-list": {
     "checkbox-label-sort-desc": "Vis nyeste først",
     "delete-button": "Slet",
-    "checkbox-form-aria-label": "Vælg dette medie til massehandling",
+    "checkbox-form-aria-label": "Vælg {{this}}",
     "header": "Medier",
     "upload-new-media": "Upload",
     "loading-messages": {
@@ -249,15 +246,6 @@
     "multiple-select-title": "Mediebibliotek",
     "accept": "Ok",
     "cancel": "Annullér"
-  },
-  "slide-preview": {
-    "error-messages": {
-      "loading-template-error": "Der skete en fejl da slidets skabelon skulle hentes:",
-      "loading-content-error": "Der skete en fejl da slidets indhold skulle hentes:"
-    },
-    "loading-messages": {
-      "loading": "Henter template og indhold til slide"
-    }
   },
   "select-playlists-table": {
     "columns": {
@@ -480,6 +468,7 @@
     "pagination-next": "Næste"
   },
   "search-box": {
+    "search-box-aria-label": "Søg",
     "label": "Søg",
     "placeholder": "Indtast søgning her",
     "delete-search": "Slet søgning"
@@ -504,10 +493,6 @@
   },
   "form-input": {
     "validation-text": "Dette felt skal udfyldes"
-  },
-  "render-form-element": {
-    "image-invalid": "Der skal uploades et billede til denne template",
-    "images-invalid": "Der skal uploades et eller flere billeder til denne template"
   },
   "multi-dropdown": {
     "validation-text": "Dette felt skal udfyldes",
@@ -562,7 +547,7 @@
     "single-select-title": "Vælg et af følgende medier"
   },
   "checkbox-for-list": {
-    "checkbox-form-aria-label": "Vælg dette medie til massehandling"
+    "checkbox-form-aria-label": "Vælg {{this}} til sletning"
   },
   "list": {
     "my-content": "Mit indhold",
@@ -656,6 +641,9 @@
     "dashboard": "Oversigt",
     "content-media": "Medier",
     "content-slides": "Slides",
+    "add-new-slide-aria-label": "Tilføj nyt slide",
+    "add-new-playlist-aria-label": "Tilføj ny spilleliste",
+    "add-new-screen-aria-label": "Tilføj ny skærm",
     "screens-screens": "Skærme",
     "screens-groups": "Grupper",
     "playlists-campaigns": "Kampagner",
@@ -675,9 +663,6 @@
     "error-messages": {
       "tenant-change-disabled": "Man kan ikke skifte konto når man er i gang med at redigere eller oprette indhold."
     }
-  },
-  "sidebar": {
-    "brand": "OS2Display"
   },
   "schedule": {
     "plan": "Planlægning",
@@ -760,14 +745,22 @@
     "submit": "Log ind",
     "error-oidc-login": "Log ind med AD fejlede",
     "error-fetching-oidc-urls": "Opsætning af AD login fejlede",
-    "login-with-oidc": "Log ind med AD",
+    "login-with-oidc": "AD",
+    "login-with-mitid-aria-label": "Log ind med mitid",
+    "oidc-mit-id-header": "Adgangsservice",
+    "os2-display-user-header": "OS2displaybruger",
+    "login-header": "Log ind",
+    "login-with-oidc-aria-label": "Log ind med AD",
     "login-with-username-password": "Log ind med email og kodeord",
-    "select-tenant-label": "Vælg tilhørselsforhold",
-    "tenant-help-text": "Tilhørselsforhold kan blive ændret igen når du er logget ind"
+    "select-tenant-label": "Vælg lokation",
+    "tenant-help-text": "Du er tilknyttet flere lokationer, og lokationen kan blive ændret igen når du er logget ind"
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten",
     "larger-than-allowed-size": "er større end den tilladte størrelse"
+  },
+  "file": {
+    "image-preview": "Uploadet billede"
   },
   "file-form-element": {
     "remove": "Fjern fil",
@@ -841,9 +834,6 @@
   "no-access": {
     "you-dont-have-access": "Du har ikke adgang til denne side",
     "go-back": "Gå tilbage"
-  },
-  "auth-handler": {
-    "please-wait": "Vent venligst..."
   },
   "multiselect-from-endpoint": {
     "error-fetching": "Der opstod en fejl da konfigurationsmulighederne skulle hentes. Datakilden er måske forkert konfigureret."

@@ -22,13 +22,12 @@ function FilePreview({ fileEntry, enableVideoControls = false }) {
   const renderPreview = (fileEntryToRender) => {
     /* eslint-disable jsx-a11y/media-has-caption */
     if (fileEntryToRender?.assets) {
-      const { assets } = fileEntryToRender;
+      const { assets, title } = fileEntryToRender;
 
       if (assets.type?.indexOf("image/") === 0) {
-        return (
-          <img src={assets.uri} alt={t("file.image-preview")} width="100%" />
-        );
+        return <img src={assets.uri} alt={title} width="100%" />;
       }
+
       if (assets.type?.indexOf("video/") === 0) {
         return (
           <video
@@ -59,7 +58,6 @@ function FilePreview({ fileEntry, enableVideoControls = false }) {
     }
 
     return t("file-preview.not-supported");
-    /* eslint-enable jsx-a11y/media-has-caption */
   };
 
   return renderPreview(fileEntry);

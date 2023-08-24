@@ -51,7 +51,9 @@ function ModalDialog({
   return (
     <>
       <Modal.Header>
-        <Modal.Title>{title}</Modal.Title>
+        <Modal.Title>
+          <h1>{title}</h1>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>

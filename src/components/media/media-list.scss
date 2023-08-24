@@ -1,12 +1,6 @@
 @import "~bootstrap/scss/bootstrap/";
 
 .media-item {
-  &-button {
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    display: flex;
-
     img {
       height: 150px;
       @include media-breakpoint-up(md) {
@@ -24,13 +18,7 @@
       transition: opacity 0.1s ease-out;
     }
 
-    &:hover {
-      img {
-        opacity: 0.6;
-        transition: opacity 0.2s ease-in;
-      }
-    }
-  }
+
 
   &.selected {
     border-color: $primary;
@@ -44,7 +32,14 @@
     position: absolute;
     top: $spacer * 0.5;
     right: $spacer * 0.5;
-    pointer-events: none;
+
+    input {
+      &:focus {
+        // override bootstrap to make focus more visible on images.
+        border: 3px solid #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.65);
+      }
+    }
   }
 }
 

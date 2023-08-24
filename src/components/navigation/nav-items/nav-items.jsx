@@ -22,7 +22,7 @@ import "./nav-items.scss";
  * @returns {object} Nav items
  */
 function NavItems() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "nav-items" });
   const { setSelected } = useModal();
   const context = useContext(UserContext);
   const { page, createdBy, isPublished } = useContext(ListContext);
@@ -55,9 +55,13 @@ function NavItems() {
               to="/slide/list"
             >
               <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
-              {t("nav-items.content-slides")}
+              {t("content-slides")}
             </NavLink>
-            <Link className="nav-add-new" to="/slide/create">
+            <Link
+              className="nav-add-new"
+              aria-label={t("add-new-slide-aria-label")}
+              to="/slide/create"
+            >
               <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
             </Link>
           </Nav.Item>
@@ -69,7 +73,7 @@ function NavItems() {
               }
               to="/media/list"
             >
-              {t("nav-items.content-media")}
+              {t("content-media")}
             </NavLink>
           </Nav.Item>
           <Nav.Item>
@@ -81,9 +85,13 @@ function NavItems() {
               to="/playlist/list"
             >
               <FontAwesomeIcon className="me-2" icon={faStream} />
-              {t("nav-items.playlists-playlists")}
+              {t("playlists-playlists")}
             </NavLink>
-            <Link className="nav-add-new" to="/playlist/create">
+            <Link
+              aria-label={t("add-new-playlist-aria-label")}
+              className="nav-add-new"
+              to="/playlist/create"
+            >
               <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
             </Link>
           </Nav.Item>
@@ -96,7 +104,7 @@ function NavItems() {
                 }
                 to="/campaign/list"
               >
-                {t("nav-items.playlists-campaigns")}
+                {t("playlists-campaigns")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
@@ -109,7 +117,7 @@ function NavItems() {
                 }
                 to="/shared/list"
               >
-                {t("nav-items.shared-playlists")}
+                {t("shared-playlists")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
@@ -123,9 +131,13 @@ function NavItems() {
                 to="/screen/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faDesktop} />
-                {t("nav-items.screens-screens")}
+                {t("screens-screens")}
               </NavLink>
-              <Link className="nav-add-new" to="/screen/create">
+              <Link
+                aria-label={t("add-new-screen-aria-label")}
+                className="nav-add-new"
+                to="/screen/create"
+              >
                 <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
               </Link>
             </Nav.Item>
@@ -139,7 +151,7 @@ function NavItems() {
                 }
                 to="/group/list"
               >
-                {t("nav-items.screens-groups")}
+                {t("screens-groups")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
@@ -153,7 +165,7 @@ function NavItems() {
                 to="/themes/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faCog} />
-                {t("nav-items.configuration")}
+                {t("configuration")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
@@ -166,7 +178,7 @@ function NavItems() {
                 }
                 to="/themes/list"
               >
-                {t("nav-items.configuration-themes")}
+                {t("configuration-themes")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>

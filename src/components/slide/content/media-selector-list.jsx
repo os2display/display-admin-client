@@ -21,7 +21,7 @@ import FilePreview from "./file-preview";
  */
 function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   // Translations
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "media-list" });
 
   const pageSize = 10;
 
@@ -68,7 +68,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
               showLabel
               value={title}
               onChange={handleSearch}
-              helpText={t("media-list.search-help-text")}
+              helpText={t("search-help-text")}
             />
           </Col>
         </Row>
@@ -82,35 +82,29 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
               aria-hidden="true"
               className="m-1"
             />
-            {t("media-list.loading-messages.loading-media")}
+            {t("loading-messages.loading-media")}
           </>
         )}
         {!isLoading && (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5 media-list">
             {media.map((data) => {
               const selected = selectedMediaIds.includes(data["@id"]);
-
               return (
                 <div key={data["@id"]} className="col mb-3">
                   <div
                     className={`card bg-light h-100 media-item +
                   ${selected ? " selected" : ""}`}
                   >
-                    <button
-                      type="button"
-                      className="media-item-button"
-                      onClick={() => onItemClick(data)}
-                    >
-                      <FilePreview fileEntry={data} />
-                    </button>
-
+                    <FilePreview fileEntry={data} />
                     {multiple && (
                       <Form.Check
+                        className="d-flex justify-content-end"
                         type="checkbox"
                         checked={selected}
-                        tabIndex={-1}
-                        aria-label={t("media-list.checkbox-form-aria-label")}
-                        readOnly
+                        onClick={() => onItemClick(data)}
+                        aria-label={t("checkbox-form-aria-label", {
+                          this: data.title,
+                        })}
                       />
                     )}
 
