@@ -1,8 +1,8 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Alert, Button, Card, Form, Row } from "react-bootstrap";
+import { Alert, Button, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
@@ -13,7 +13,9 @@ import { api } from "../../redux/api/api.generated";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";
-
+import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
+import AarhusLogo from "./aarhus-logo.svg";
+import MitIdLogo from "./mitid-logo.svg";
 /**
  * Login component
  *
@@ -32,7 +34,7 @@ function Login() {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [oidcAuthUrls, setOidcAuthUrls] = useState("");
+  const [oidcAuthUrls, setOidcAuthUrls] = useState({ authorizationUrl: "sf" });
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
   const [ready, setReady] = useState(false);
 
@@ -199,29 +201,54 @@ function Login() {
   return (
     <>
       {ready && (
-        <Card className="m-5 bg-light">
-          <Form onSubmit={onSubmit} className="m-3">
-            <Row>
-              <Col md>
-                <h3 className="mb-3">{t("login-with-oidc")}</h3>
-                {oidcAuthUrls && (
+        <>
+          <Row className="row-full-height">
+            <Col
+              md="4"
+              className="bg-dark p-4 col justify-content-between col-md-4 d-flex flex-column"
+            >
+              <LoginSidebar />
+            </Col>
+            <Col>
+              <Form onSubmit={onSubmit} className="m-3 mx-5 px-5 my-5">
+                <h1>{t("login-header")}</h1>
+                <h2 className="h4 mt-5 mb-3 fw-light">
+                  {t("oidc-mit-id-header")}
+                </h2>
+                <div className="d-flex">
                   <Button
-                    className="btn btn-primary"
+                    variant="primary"
                     type="button"
-                    href={oidcAuthUrls.authorizationUrl}
+                    onClick={() => console.log("todo")}
+                    className="margin-right-button"
+                    size="lg"
+                    aria-label={t("login-with-mitid-aria-label")}
                   >
-                    {t("login-with-oidc")}
+                    <img width="56" className="me-2" src={MitIdLogo} alt="" />
                   </Button>
-                )}
-                {oidcAuthLoadingError && (
-                  <Alert variant="danger">{oidcAuthLoadingError}</Alert>
-                )}
-              </Col>
-              <Col md>
+
+                  {oidcAuthLoadingError && (
+                    <Alert variant="danger">{oidcAuthLoadingError}</Alert>
+                  )}
+
+                  <Link
+                    className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
+                    aria-label={t("login-with-oidc-aria-label")}
+                    to={oidcAuthUrls.authorizationUrl}
+                  >
+                    <img width="16" className="me-2" src={AarhusLogo} alt="" />
+                    {t("login-with-oidc")}
+                  </Link>
+                  {oidcAuthLoadingError && (
+                    <Alert variant="danger">{oidcAuthLoadingError}</Alert>
+                  )}
+                </div>
+                <h2 className="h4 mt-5 mb-3 fw-light">
+                  {t("os2-display-user-header")}
+                </h2>
                 <>
                   {!context.tenants.get && (
                     <>
-                      <h3>{t("login-with-username-password")}</h3>
                       <FormInput
                         className={
                           error ? "form-control is-invalid" : "form-control"
@@ -276,10 +303,10 @@ function Login() {
                       </div>
                     )}
                 </>
-              </Col>
-            </Row>
-          </Form>
-        </Card>
+              </Form>
+            </Col>
+          </Row>
+        </>
       )}
       {!ready && (
         <LoadingComponent isLoading loadingMessage={t("please-wait")} />
