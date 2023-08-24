@@ -69,7 +69,7 @@ function TopBar() {
       className="border-bottom shadow-sm"
     >
       <Navbar.Brand
-        href="/"
+        href="/admin"
         id="top-bar-brand"
         className="col-lg-2 d-lg-none ms-3"
       >
