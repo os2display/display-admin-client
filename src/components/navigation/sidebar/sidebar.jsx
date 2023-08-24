@@ -2,7 +2,6 @@ import { React, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Col from "react-bootstrap/Col";
-import { useTranslation } from "react-i18next";
 import NavItems from "../nav-items/nav-items";
 import "./sidebar.scss";
 import Logo from "../logo";
@@ -13,7 +12,6 @@ import Logo from "../logo";
  * @returns {object} The SideBar
  */
 function SideBar() {
-  const [t] = useTranslation("common");
   const [active, setActive] = useState();
 
   return (
