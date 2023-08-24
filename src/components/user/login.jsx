@@ -219,7 +219,8 @@ function Login() {
                   <Button
                     variant="primary"
                     type="button"
-                    onClick={() => console.log("todo")}
+                    // todo, make mitid login work
+                    onClick={() => {}}
                     className="margin-right-button"
                     size="lg"
                     aria-label={t("login-with-mitid-aria-label")}
