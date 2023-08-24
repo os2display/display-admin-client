@@ -227,23 +227,25 @@ function Login() {
                   >
                     <img width="56" className="me-2" src={MitIdLogo} alt="" />
                   </Button>
-
-                  {oidcAuthLoadingError && (
-                    <Alert variant="danger">{oidcAuthLoadingError}</Alert>
-                  )}
-
-                  <Link
-                    className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
-                    aria-label={t("login-with-oidc-aria-label")}
-                    to={oidcAuthUrls.authorizationUrl}
-                  >
-                    <img width="16" className="me-2" src={AarhusLogo} alt="" />
-                    {t("login-with-oidc")}
-                  </Link>
-                  {oidcAuthLoadingError && (
-                    <Alert variant="danger">{oidcAuthLoadingError}</Alert>
+                  {oidcAuthUrls.authorizationUrl && (
+                    <Link
+                      className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
+                      aria-label={t("login-with-oidc-aria-label")}
+                      to={oidcAuthUrls.authorizationUrl}
+                    >
+                      <img
+                        width="16"
+                        className="me-2"
+                        src={AarhusLogo}
+                        alt=""
+                      />
+                      {t("login-with-oidc")}
+                    </Link>
                   )}
                 </div>
+                {oidcAuthLoadingError && (
+                  <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
+                )}
                 <h2 className="h4 mt-5 mb-3 fw-light">
                   {t("os2-display-user-header")}
                 </h2>
