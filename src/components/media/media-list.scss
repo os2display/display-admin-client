@@ -1,24 +1,22 @@
 @import "~bootstrap/scss/bootstrap/";
 
 .media-item {
-    img {
-      height: 150px;
-      @include media-breakpoint-up(md) {
-        height: 200px;
-      }
-      @include media-breakpoint-up(lg) {
-        height: 150px;
-      }
-      @include media-breakpoint-up(xxl) {
-        height: 200px;
-      }
-      width: 100%;
-      object-fit: cover;
-      vertical-align: baseline;
-      transition: opacity 0.1s ease-out;
+  img {
+    height: 150px;
+    @include media-breakpoint-up(md) {
+      height: 200px;
     }
-
-
+    @include media-breakpoint-up(lg) {
+      height: 150px;
+    }
+    @include media-breakpoint-up(xxl) {
+      height: 200px;
+    }
+    width: 100%;
+    object-fit: cover;
+    vertical-align: baseline;
+    transition: opacity 0.1s ease-out;
+  }
 
   &.selected {
     border-color: $primary;
