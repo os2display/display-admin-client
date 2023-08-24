@@ -34,7 +34,7 @@ function Login() {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [oidcAuthUrls, setOidcAuthUrls] = useState({ authorizationUrl: "sf" });
+  const [oidcAuthUrls, setOidcAuthUrls] = useState("");
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
   const [ready, setReady] = useState(false);
 
