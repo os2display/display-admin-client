@@ -26,7 +26,7 @@ describe("media list tests", () => {
 
   it("It opens delete modal (media-list)", () => {
     cy.get("#delete-modal").should("not.exist");
-    cy.get(".media-list").find("button").eq(0).click();
+    cy.get(".media-list").find("input").eq(0).click();
     cy.get("#delete_media_button").click();
     cy.get("#delete-modal").should("exist");
   });
