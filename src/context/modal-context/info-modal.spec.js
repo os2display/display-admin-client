@@ -35,8 +35,8 @@ describe("Info modal tests", () => {
     cy.intercept("GET", "**/slides*", {
       fixture: "info-modal/slide.json",
     }).as("slide");
-    cy.get("tbody").find("tr td button").eq(1).click();
-
+    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.wait("@slide");
     cy.get("#info-modal").should("exist");
     cy.get("#info-modal")
       .find("a")
