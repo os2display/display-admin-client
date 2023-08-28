@@ -14,7 +14,6 @@ import {
 } from "../util/list/toast-component/display-toast";
 import {
   useGetV1ScreenGroupsQuery,
-  useGetV1ScreenGroupsByIdScreensQuery,
   useDeleteV1ScreenGroupsByIdMutation,
 } from "../../redux/api/api.generated";
 
@@ -41,12 +40,14 @@ function UsersList() {
   );
 
   // Delete call
+  // todo change delete from groups to users
   const [
     DeleteV1ScreenGroups,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
   ] = useDeleteV1ScreenGroupsByIdMutation();
 
   // Get method
+  // todo change get from groups to users
   const {
     data,
     error: usersGetError,
