@@ -86,6 +86,26 @@
     "change-view-list": "Liste",
     "change-view-calendar": "Kalender"
   },
+  "users-list": {
+    "columns": {
+      "activated": "Aktiv"
+    },
+    "loading-messages": {
+      "loading-users": "Henter brugere",
+      "deleting-user": "Sletter bruger(e)"
+    },
+    "error-messages": {
+      "user-delete-error": "Der skete en fejl da brugeren skulle slettes:",
+      "users-load-error": "Der skete en fejl da brugerne skulle hentes:"
+    },
+    "success-messages": {
+      "user-delete": "Brugeren er blevet slettet"
+    },
+    "header": "Brugere",
+    "create-new-user": "Opret ny bruger",
+    "change-view-list": "Liste",
+    "change-view-calendar": "Kalender"
+  },
   "groups-columns": {
     "screens": "Skærme i gruppen"
   },
@@ -303,6 +323,12 @@
     "group-description-label": "Gruppens beskrivelse",
     "group-description-placeholder": "Udfyld gruppens beskrivelse"
   },
+  "user-form": {
+    "save-button": "Gem brugeren",
+    "cancel-button": "Annuller",
+    "user-title-label": "Brugerens navn",
+    "user-title-placeholder": "Udfyld brugerens navn"
+  },
   "group-create": {
     "create-new-group-header": "Opret ny gruppe",
     "loading-messages": {
@@ -327,6 +353,20 @@
     "error-messages": {
       "save-group-error": "Der skete en fejl da gruppen skulle gemmes:",
       "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes:"
+    }
+  },
+  "user-edit": {
+    "edit-user-header": "Rediger følgende bruger",
+    "loading-messages": {
+      "saving-group": "Gemmer brugeren",
+      "loading-group": "Henter brugeren"
+    },
+    "success-messages": {
+      "saved-group": "Brugeren er gemt"
+    },
+    "error-messages": {
+      "save-group-error": "Der skete en fejl da brugeren skulle gemmes:",
+      "load-group-error": "Der skete en fejl da brugeren med følgende id: {{id}} skulle hentes:"
     }
   },
   "playlists-columns": {
@@ -644,7 +684,9 @@
     "add-new-slide-aria-label": "Tilføj nyt slide",
     "add-new-playlist-aria-label": "Tilføj ny spilleliste",
     "add-new-screen-aria-label": "Tilføj ny skærm",
+    "add-new-external-user-aria-label": "Tilføj ny bruger",
     "screens-screens": "Skærme",
+    "external-users": "Eksterne brugere",
     "screens-groups": "Grupper",
     "playlists-campaigns": "Kampagner",
     "playlists-playlists": "Spillelister",
