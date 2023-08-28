@@ -36,13 +36,14 @@ describe("Info modal tests", () => {
       fixture: "info-modal/slide.json",
     }).as("slide");
     cy.get("tbody").find("tr td button").eq(1).click();
-    cy.wait("@slide");
+
     cy.get("#info-modal").should("exist");
     cy.get("#info-modal")
       .find("a")
       .should("have.attr", "href")
       .and("include", "/slide/edit/01FYZYHVMWMB575NPNAX55TK7G");
   });
+
   it("It opens info modal and goes to link (slides list)", () => {
     cy.intercept("POST", "**/token", {
       statusCode: 201,
