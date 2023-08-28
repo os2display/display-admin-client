@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
 import {
   useGetV1ScreenGroupsByIdQuery,
   usePutV1ScreenGroupsByIdMutation,
@@ -27,9 +26,12 @@ function UserEdit() {
     t("loading-messages.loading-user")
   );
   const { id } = useParams();
+
+  // Todo change put from group to user
   const [PutV1ScreenGroup, { error: saveError, isSuccess: isSaveSuccess }] =
     usePutV1ScreenGroupsByIdMutation();
 
+  // Todo change get from group to user
   const {
     data,
     error: loadError,

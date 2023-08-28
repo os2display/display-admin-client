@@ -9,9 +9,9 @@ import {
 } from "../util/list/toast-component/display-toast";
 
 /**
- * The group edit component.
+ * The user create component.
  *
- * @returns {object} The group edit page.
+ * @returns {object} The user create page.
  */
 function UserCreate() {
   const { t } = useTranslation("common", { keyPrefix: "user-create" });
@@ -24,6 +24,7 @@ function UserCreate() {
     modifiedBy: "",
   });
 
+  // Todo change post from group to user
   const [
     PostV1ScreenGroups,
     { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
