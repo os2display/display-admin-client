@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDesktop,
+  faUsers,
   faStream,
   faPhotoVideo,
   faPlusCircle,
@@ -153,6 +154,29 @@ function NavItems() {
               >
                 {t("screens-groups")}
               </NavLink>
+            </Nav.Item>
+          </RestrictedNavRoute>
+          <RestrictedNavRoute
+            roles={context.accessConfig.get.externalUsers.roles}
+          >
+            <Nav.Item>
+              <NavLink
+                id="nav-items_external_sers"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
+                to="/users/list"
+              >
+                <FontAwesomeIcon className="me-2" icon={faUsers} />
+                {t("external-users")}
+              </NavLink>
+              <Link
+                aria-label={t("add-new-external-user-aria-label")}
+                className="nav-add-new"
+                to="/users/create"
+              >
+                <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+              </Link>
             </Nav.Item>
           </RestrictedNavRoute>
           <RestrictedNavRoute roles={context.accessConfig.get.settings.roles}>
