@@ -7,7 +7,7 @@ import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCity } from "@fortawesome/free-solid-svg-icons";
+import { daCity } from "@fortawesome/free-solid-svg-icons";
 import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
@@ -36,9 +36,7 @@ function Login() {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [oidcAuthUrls, setOidcAuthUrls] = useState({
-    oidcAuthUrls: { authorizationUrl: "xdf" },
-  });
+  const [oidcAuthUrls, setOidcAuthUrls] = useState("");
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
   const [ready, setReady] = useState(false);
 
@@ -231,14 +229,16 @@ function Login() {
                   >
                     <img width="56" className="me-2" src={MitIdLogo} alt="" />
                   </Button>
-                  <Link
-                    className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
-                    aria-label={t("login-with-oidc-aria-label")}
-                    to="www.google.com"
-                  >
-                    <FontAwesomeIcon className="me-2" icon={faCity} />
-                    {t("login-with-oidc")}
-                  </Link>
+                  {oidcAuthUrls.authorizationUrl && (
+                    <Link
+                      className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
+                      aria-label={t("login-with-oidc-aria-label")}
+                      to={oidcAuthUrls.authorizationUrl}
+                    >
+                      <FontAwesomeIcon className="me-2" icon={daCity} />
+                      {t("login-with-oidc")}
+                    </Link>
+                  )}
                 </div>
                 {oidcAuthLoadingError && (
                   <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
