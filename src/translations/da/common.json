@@ -21,7 +21,7 @@
     }
   },
   "login-sidebar": {
-    "AD-info-text": "Er du <strong>medarbejder</strong> i skal du benytte AD login.",
+    "AD-info-text": "Er du <strong>medarbejder</strong> skal du benytte AD login.",
     "MitID-info-text": "Er du <strong>borger</strong> skal du benytte MitID"
   },
   "slides-list": {

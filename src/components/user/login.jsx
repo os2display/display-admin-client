@@ -6,6 +6,8 @@ import { Link, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCity } from "@fortawesome/free-solid-svg-icons";
 import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
@@ -14,8 +16,8 @@ import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";
 import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
-import AarhusLogo from "./aarhus-logo.svg";
 import MitIdLogo from "./mitid-logo.svg";
+
 /**
  * Login component
  *
@@ -34,7 +36,9 @@ function Login() {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [oidcAuthUrls, setOidcAuthUrls] = useState("");
+  const [oidcAuthUrls, setOidcAuthUrls] = useState({
+    oidcAuthUrls: { authorizationUrl: "xdf" },
+  });
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
   const [ready, setReady] = useState(false);
 
@@ -227,21 +231,14 @@ function Login() {
                   >
                     <img width="56" className="me-2" src={MitIdLogo} alt="" />
                   </Button>
-                  {oidcAuthUrls.authorizationUrl && (
-                    <Link
-                      className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
-                      aria-label={t("login-with-oidc-aria-label")}
-                      to={oidcAuthUrls.authorizationUrl}
-                    >
-                      <img
-                        width="16"
-                        className="me-2"
-                        src={AarhusLogo}
-                        alt=""
-                      />
-                      {t("login-with-oidc")}
-                    </Link>
-                  )}
+                  <Link
+                    className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
+                    aria-label={t("login-with-oidc-aria-label")}
+                    to="www.google.com"
+                  >
+                    <FontAwesomeIcon className="me-2" icon={faCity} />
+                    {t("login-with-oidc")}
+                  </Link>
                 </div>
                 {oidcAuthLoadingError && (
                   <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
