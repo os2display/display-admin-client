@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#212](https://github.com/os2display/display-admin-client/pull/212)
+  update color of login background
 - [#211](https://github.com/os2display/display-admin-client/pull/211)
   update login page
   add todo for button with mitid
