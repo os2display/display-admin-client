@@ -212,7 +212,7 @@ function Login() {
             >
               <LoginSidebar />
             </Col>
-            <Col>
+            <Col className="bg-white">
               <Form
                 onSubmit={onSubmit}
                 className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5"
