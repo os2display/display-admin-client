@@ -17,6 +17,7 @@ import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";
 import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
 import MitIdLogo from "./mitid-logo.svg";
+import "./login.scss";
 
 /**
  * Login component
@@ -203,16 +204,19 @@ function Login() {
   return (
     <>
       {ready && (
-        <>
-          <Row className="row-full-height">
+        <div className="login-container">
+          <Row className="login-box-shadow">
             <Col
               md="4"
-              className="bg-dark p-4 col justify-content-between col-md-4 d-flex flex-column"
+              className="bg-dark col justify-content-between d-flex flex-column"
             >
               <LoginSidebar />
             </Col>
             <Col>
-              <Form onSubmit={onSubmit} className="m-3 mx-5 px-5 my-5">
+              <Form
+                onSubmit={onSubmit}
+                className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5"
+              >
                 <h1>{t("login-header")}</h1>
                 <h2 className="h4 mt-5 mb-3 fw-light">
                   {t("oidc-mit-id-header")}
@@ -225,6 +229,7 @@ function Login() {
                     onClick={() => {}}
                     className="margin-right-button"
                     size="lg"
+                    aria-describedby="mitid-explanation"
                     aria-label={t("login-with-mitid-aria-label")}
                   >
                     <img width="56" className="me-2" src={MitIdLogo} alt="" />
@@ -234,6 +239,7 @@ function Login() {
                       className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
                       aria-label={t("login-with-oidc-aria-label")}
                       to={oidcAuthUrls.authorizationUrl}
+                      aria-describedby="ad-explanation"
                     >
                       <FontAwesomeIcon className="me-2" icon={faCity} />
                       {t("login-with-oidc")}
@@ -306,7 +312,7 @@ function Login() {
               </Form>
             </Col>
           </Row>
-        </>
+        </div>
       )}
       {!ready && (
         <LoadingComponent isLoading loadingMessage={t("please-wait")} />
