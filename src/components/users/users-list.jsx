@@ -125,7 +125,7 @@ function UsersList() {
       <ContentHeader
         title={t("header")}
         newBtnTitle={t("create-new-user")}
-        newBtnLink="/user/user"
+        newBtnLink="/users/create"
       />
       <ContentBody>
         <>

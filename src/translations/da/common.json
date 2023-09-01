@@ -341,6 +341,18 @@
       "save-group-error": "Der skete en fejl da gruppen skulle gemmes:"
     }
   },
+  "user-create": {
+    "create-new-user-header": "Opret ny bruger",
+    "loading-messages": {
+      "saving-user": "Gemmer bruger"
+    },
+    "success-messages": {
+      "saved-user": "Brugeren er gemt"
+    },
+    "error-messages": {
+      "save-user-error": "Der skete en fejl da brugeren skulle gemmes:"
+    }
+  },
   "group-edit": {
     "edit-group-header": "Rediger følgende gruppe",
     "loading-messages": {
