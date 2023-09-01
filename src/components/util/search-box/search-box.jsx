@@ -15,21 +15,22 @@ import { useTranslation } from "react-i18next";
  * @returns {object} The search box.
  */
 function SearchBox({ value, onChange, showLabel }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "search-box" });
 
   return (
     <Form>
       {showLabel && (
-        <Form.Label htmlFor="search-field">{t("search-box.label")}</Form.Label>
+        <Form.Label htmlFor="search-field">{t("label")}</Form.Label>
       )}
       <InputGroup>
-        <InputGroup.Text id="basic-addon1">
+        <InputGroup.Text>
           <FontAwesomeIcon icon={faSearch} />
         </InputGroup.Text>
         <FormControl
           autoFocus
-          placeholder={t("search-box.placeholder")}
+          placeholder={t("placeholder")}
           id="search-field"
+          aria-label="search-box-aria-label"
           role="search"
           name="search"
           value={value ?? ""}
@@ -42,7 +43,7 @@ function SearchBox({ value, onChange, showLabel }) {
             type="button"
             onClick={() => onChange("")}
           >
-            {t("search-box.delete-search")}
+            {t("delete-search")}
           </button>
         </div>
       </InputGroup>

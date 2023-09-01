@@ -44,6 +44,7 @@ function ColumnHoc(columns) {
           <CheckboxForList
             onSelected={() => setSelected(selectedHelper(d, [...selected]))}
             disabled={disableCheckbox(d)}
+            title={d.title}
             selected={selected.find((item) => item.id === d["@id"])}
           />
         ),

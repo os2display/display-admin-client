@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#211](https://github.com/os2display/display-admin-client/pull/211)
+  update login page
+  add todo for button with mitid
+  clean up translations a bit
+  fix some WCAG2.1 issues
+  add os2display logo
 - [#210](https://github.com/os2display/display-admin-client/pull/210)
   Use thumbnails for media list if they are set
 

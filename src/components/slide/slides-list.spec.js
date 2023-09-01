@@ -35,7 +35,7 @@ describe("Slides list tests", () => {
   });
 
   it("It removes all selected", () => {
-    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr td input").eq(0).click();
     cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");

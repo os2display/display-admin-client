@@ -1,11 +1,13 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Alert, Button, Card, Form, Row } from "react-bootstrap";
+import { Alert, Button, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCity } from "@fortawesome/free-solid-svg-icons";
 import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
@@ -13,6 +15,9 @@ import { api } from "../../redux/api/api.generated";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";
+import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
+import MitIdLogo from "./mitid-logo.svg";
+import "./login.scss";
 
 /**
  * Login component
@@ -199,29 +204,57 @@ function Login() {
   return (
     <>
       {ready && (
-        <Card className="m-5 bg-light">
-          <Form onSubmit={onSubmit} className="m-3">
-            <Row>
-              <Col md>
-                <h3 className="mb-3">{t("login-with-oidc")}</h3>
-                {oidcAuthUrls && (
+        <div className="login-container">
+          <Row className="login-box-shadow">
+            <Col
+              md="4"
+              className="bg-dark col justify-content-between d-flex flex-column"
+            >
+              <LoginSidebar />
+            </Col>
+            <Col>
+              <Form
+                onSubmit={onSubmit}
+                className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5"
+              >
+                <h1>{t("login-header")}</h1>
+                <h2 className="h4 mt-5 mb-3 fw-light">
+                  {t("oidc-mit-id-header")}
+                </h2>
+                <div className="d-flex">
                   <Button
-                    className="btn btn-primary"
+                    variant="primary"
                     type="button"
-                    href={oidcAuthUrls.authorizationUrl}
+                    // todo, make mitid login work
+                    onClick={() => {}}
+                    className="margin-right-button"
+                    size="lg"
+                    aria-describedby="mitid-explanation"
+                    aria-label={t("login-with-mitid-aria-label")}
                   >
-                    {t("login-with-oidc")}
+                    <img width="56" className="me-2" src={MitIdLogo} alt="" />
                   </Button>
-                )}
+                  {oidcAuthUrls.authorizationUrl && (
+                    <Link
+                      className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
+                      aria-label={t("login-with-oidc-aria-label")}
+                      to={oidcAuthUrls.authorizationUrl}
+                      aria-describedby="ad-explanation"
+                    >
+                      <FontAwesomeIcon className="me-2" icon={faCity} />
+                      {t("login-with-oidc")}
+                    </Link>
+                  )}
+                </div>
                 {oidcAuthLoadingError && (
-                  <Alert variant="danger">{oidcAuthLoadingError}</Alert>
+                  <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
                 )}
-              </Col>
-              <Col md>
+                <h2 className="h4 mt-5 mb-3 fw-light">
+                  {t("os2-display-user-header")}
+                </h2>
                 <>
                   {!context.tenants.get && (
                     <>
-                      <h3>{t("login-with-username-password")}</h3>
                       <FormInput
                         className={
                           error ? "form-control is-invalid" : "form-control"
@@ -276,10 +309,10 @@ function Login() {
                       </div>
                     )}
                 </>
-              </Col>
-            </Row>
-          </Form>
-        </Card>
+              </Form>
+            </Col>
+          </Row>
+        </div>
       )}
       {!ready && (
         <LoadingComponent isLoading loadingMessage={t("please-wait")} />
