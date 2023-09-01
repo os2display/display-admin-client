@@ -7,7 +7,7 @@ import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { daCity } from "@fortawesome/free-solid-svg-icons";
+import { faCity } from "@fortawesome/free-solid-svg-icons";
 import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
@@ -235,7 +235,7 @@ function Login() {
                       aria-label={t("login-with-oidc-aria-label")}
                       to={oidcAuthUrls.authorizationUrl}
                     >
-                      <FontAwesomeIcon className="me-2" icon={daCity} />
+                      <FontAwesomeIcon className="me-2" icon={faCity} />
                       {t("login-with-oidc")}
                     </Link>
                   )}
