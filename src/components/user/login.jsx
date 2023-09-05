@@ -37,28 +37,31 @@ function Login() {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   /**
    * Login, both called from oidc login and manuel login.
    *
    * @param {object} data - Login data
    */
-  function login(data) {
+  const login = (data) => {
     // Set token in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
     context.userName.set(data.user?.fullname);
     context.email.set(data.user?.email);
     localStorage.setItem(localStorageKeys.USER_NAME, data.user?.fullname);
     localStorage.setItem(localStorageKeys.EMAIL, data.user?.email);
+
     // If there are more than one tenant, the user should pick a tenant
-    if (data.tenants?.length > 1) {
+    if ((data.tenants?.length ?? 0) > 1) {
       // Save tenants
       localStorage.setItem(
         localStorageKeys.TENANTS,
         JSON.stringify(data.tenants)
       );
       context.tenants.set(data.tenants);
-    } else if (data.tenants?.length > 0) {
+    } else if ((data.tenants?.length ?? 0) > 0) {
       // authenticated, and use the only received tenant.
       context.authenticated.set(true);
       localStorage.setItem(
@@ -70,7 +73,9 @@ function Login() {
       setError(true);
       displayError(t("missing-tenants"));
     }
-  }
+
+    setLoggedIn(true);
+  };
 
   /**
    * Select tenant function
@@ -132,36 +137,41 @@ function Login() {
 
   useEffect(() => {
     let isMounted = true;
-    let idToken = null;
+    let code = null;
     let state = null;
 
     if (search) {
       const query = queryString.parse(search);
 
-      idToken = query.id_token;
+      code = query.code;
       state = query.state;
-    }
 
-    ConfigLoader.loadConfig().then((config) => {
-      if (state && idToken) {
-        fetch(
-          `${config.api}v1/authentication/oidc/token?state=${state}&id_token=${idToken}`,
-          {
+      if (state && code) {
+        ConfigLoader.loadConfig().then((config) => {
+          const searchParams = new URLSearchParams({
+            state,
+            code,
+          });
+
+          fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
             credentials: "include",
-          }
-        )
-          .then((resp) => resp.json())
-          .then((data) => {
-            if (isMounted) {
-              if (data?.token) {
-                login(data);
-              }
-            }
           })
-          .catch(() => {});
+            .then((resp) => resp.json())
+            .then((data) => {
+              if (data.code !== 200) {
+                setErrorMessage(data.message);
+              }
+
+              if (isMounted) {
+                if (data?.token) {
+                  login(data);
+                }
+              }
+            });
+        });
       }
-    });
+    }
 
     return () => {
       isMounted = false;
@@ -178,93 +188,107 @@ function Login() {
           >
             <LoginSidebar />
           </Col>
-          <Col className="bg-white">
-            <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
-              <h1>{t("login-header")}</h1>
 
-              <h2 className="h4 mt-5 mb-3 fw-light">
-                {t("oidc-mit-id-header")}
-              </h2>
+          {errorMessage !== "" && <div>123123{errorMessage}</div>}
 
-              <div className="d-flex">
-                <OIDCLogin
-                  providerKey="ad"
-                  text={t("login-with-ad")}
-                  icon={<FontAwesomeIcon className="me-2" icon={faCity} />}
-                />
-                <OIDCLogin
-                  providerKey="external"
-                  text={t("login-with-external")}
-                  icon={
-                    <img width="56" className="me-2" src={MitIdLogo} alt="" />
-                  }
-                />
-              </div>
+          {loggedIn && (
+            <>
+              {!context.selectedTenant.get &&
+                (context.tenants.get.length ?? 0) > 1 && (
+                  <Col className="bg-white">
+                    <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
+                      <h1>{t("logged-in-select-tenant")}</h1>
 
-              <h2 className="h4 mt-5 mb-3 fw-light">
-                {t("os2-display-user-header")}
-              </h2>
+                      <div id="tenant-picker-section">
+                        <Form.Label htmlFor="tenant">
+                          {t("select-tenant-label")}
+                        </Form.Label>
 
-              <Form onSubmit={onSubmit}>
-                {!context.tenants.get && (
-                  <>
-                    <FormInput
-                      className={
-                        error ? "form-control is-invalid" : "form-control"
-                      }
-                      onChange={(ev) => setEmail(ev.target.value)}
-                      value={email}
-                      name="email"
-                      label={t("email")}
-                      required
-                    />
-                    <FormInput
-                      className={
-                        error ? "form-control is-invalid" : "form-control"
-                      }
-                      onChange={(ev) => setPassword(ev.target.value)}
-                      value={password}
-                      name="password"
-                      label={t("password")}
-                      type="password"
-                      required
-                    />
-                    <Button type="submit" className="mt-3" id="login">
-                      {t("submit")}
-                    </Button>
-                  </>
-                )}
-
-                {!context.selectedTenant.get &&
-                  context.tenants.get?.length > 1 && (
-                    <div id="tenant-picker-section">
-                      <Form.Label htmlFor="tenant">
-                        {t("select-tenant-label")}
-                      </Form.Label>
-                      <MultiSelect
-                        overrideStrings={{
-                          selectSomeItems: t("select-some-options"),
-                        }}
-                        disableSearch
-                        options={
-                          context.tenants.get.map((item) => {
-                            return {
-                              label: item.title,
-                              value: item.tenantKey,
-                            };
-                          }) || []
-                        }
-                        hasSelectAll={false}
-                        onChange={onSelectTenant}
-                        className="single-select"
-                        labelledBy="tenant"
-                      />
-                      <small>{t("tenant-help-text")}</small>
+                        <MultiSelect
+                          overrideStrings={{
+                            selectSomeItems: t("select-some-options"),
+                          }}
+                          disableSearch
+                          options={
+                            context.tenants.get.map((item) => {
+                              return {
+                                label: item.title,
+                                value: item.tenantKey,
+                              };
+                            }) || []
+                          }
+                          hasSelectAll={false}
+                          onChange={onSelectTenant}
+                          className="single-select"
+                          labelledBy="tenant"
+                        />
+                        <small>{t("tenant-help-text")}</small>
+                      </div>
                     </div>
-                  )}
-              </Form>
-            </div>
-          </Col>
+                  </Col>
+                )}
+            </>
+          )}
+
+          {!loggedIn && (
+            <Col className="bg-white">
+              <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
+                <h1>{t("login-header")}</h1>
+
+                <h2 className="h4 mt-5 mb-3 fw-light">
+                  {t("oidc-mit-id-header")}
+                </h2>
+
+                <div className="d-flex">
+                  <OIDCLogin
+                    providerKey="ad"
+                    text={t("login-with-ad")}
+                    icon={<FontAwesomeIcon className="me-2" icon={faCity} />}
+                  />
+                  <OIDCLogin
+                    providerKey="external"
+                    text={t("login-with-external")}
+                    icon={
+                      <img width="56" className="me-2" src={MitIdLogo} alt="" />
+                    }
+                  />
+                </div>
+
+                <h2 className="h4 mt-5 mb-3 fw-light">
+                  {t("os2-display-user-header")}
+                </h2>
+
+                <Form onSubmit={onSubmit}>
+                  <FormInput
+                    className={
+                      error ? "form-control is-invalid" : "form-control"
+                    }
+                    onChange={(ev) => setEmail(ev.target.value)}
+                    value={email}
+                    name="email"
+                    label={t("email")}
+                    required
+                  />
+
+                  <FormInput
+                    className={
+                      error ? "form-control is-invalid" : "form-control"
+                    }
+                    onChange={(ev) => setPassword(ev.target.value)}
+                    value={password}
+                    name="password"
+                    label={t("password")}
+                    type="password"
+                    required
+                  />
+
+                  <Button type="submit" className="mt-3" id="login">
+                    {t("submit")}
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          )}
         </Row>
       </div>
     </>

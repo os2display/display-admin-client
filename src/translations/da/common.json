@@ -747,14 +747,15 @@
     "error-fetching-oidc-urls": "Opsætning af AD login fejlede",
     "login-with-mitid-aria-label": "Log ind med mitid",
     "oidc-mit-id-header": "Adgangsservice",
-    "os2-display-user-header": "OS2displaybruger",
+    "os2-display-user-header": "OS2display-bruger",
     "login-header": "Log ind",
     "login-with-oidc-aria-label": "Log ind med AD",
     "login-with-username-password": "Log ind med email og kodeord",
     "select-tenant-label": "Vælg lokation",
     "tenant-help-text": "Du er tilknyttet flere lokationer, og lokationen kan blive ændret igen når du er logget ind",
     "login-with-ad": "AD login",
-    "login-with-external": " login"
+    "login-with-external": " login",
+    "logged-in-select-tenant": "Vælg lokation."
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten",
