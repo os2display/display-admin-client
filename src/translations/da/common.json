@@ -22,7 +22,7 @@
   },
   "login-sidebar": {
     "AD-info-text": "Er du <strong>medarbejder</strong> skal du benytte AD login.",
-    "MitID-info-text": "Er du <strong>borger</strong> skal du benytte MitID"
+    "MitID-info-text": "Er du <strong>borger</strong> skal du benytte MitID login."
   },
   "slides-list": {
     "columns": {
@@ -745,7 +745,6 @@
     "submit": "Log ind",
     "error-oidc-login": "Log ind med AD fejlede",
     "error-fetching-oidc-urls": "Opsætning af AD login fejlede",
-    "login-with-oidc": "AD",
     "login-with-mitid-aria-label": "Log ind med mitid",
     "oidc-mit-id-header": "Adgangsservice",
     "os2-display-user-header": "OS2displaybruger",
@@ -753,7 +752,9 @@
     "login-with-oidc-aria-label": "Log ind med AD",
     "login-with-username-password": "Log ind med email og kodeord",
     "select-tenant-label": "Vælg lokation",
-    "tenant-help-text": "Du er tilknyttet flere lokationer, og lokationen kan blive ændret igen når du er logget ind"
+    "tenant-help-text": "Du er tilknyttet flere lokationer, og lokationen kan blive ændret igen når du er logget ind",
+    "login-with-ad": "AD login",
+    "login-with-external": " login"
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten",

@@ -4,14 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#213](https://github.com/os2display/display-admin-client/pull/213)
+  Fixed OIDC login buttons.
 - [#212](https://github.com/os2display/display-admin-client/pull/212)
-  update color of login background
+  Updated color of login background
 - [#211](https://github.com/os2display/display-admin-client/pull/211)
-  update login page
-  add todo for button with mitid
-  clean up translations a bit
-  fix some WCAG2.1 issues
-  add os2display logo
+  Updated login page
+  Added todo for button with mitid
+  Cleaned up translations a bit
+  Fixed some WCAG2.1 issues
+  Added os2display logo
 - [#210](https://github.com/os2display/display-admin-client/pull/210)
   Use thumbnails for media list if they are set
 

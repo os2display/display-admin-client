@@ -1,14 +1,13 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Alert, Button, Form, Row } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCity } from "@fortawesome/free-solid-svg-icons";
-import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
@@ -18,6 +17,7 @@ import localStorageKeys from "../util/local-storage-keys";
 import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
 import MitIdLogo from "./mitid-logo.svg";
 import "./login.scss";
+import OIDCLogin from "./oidc-login";
 
 /**
  * Login component
@@ -37,9 +37,6 @@ function Login() {
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [oidcAuthUrls, setOidcAuthUrls] = useState("");
-  const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
-  const [ready, setReady] = useState(false);
 
   /**
    * Login, both called from oidc login and manuel login.
@@ -140,6 +137,7 @@ function Login() {
 
     if (search) {
       const query = queryString.parse(search);
+
       idToken = query.id_token;
       state = query.state;
     }
@@ -161,38 +159,7 @@ function Login() {
               }
             }
           })
-          .catch(() => {
-            if (isMounted) {
-              setOidcAuthLoadingError(t("error-oidc-login"));
-            }
-          })
-          .finally(() => {
-            if (isMounted) {
-              setReady(true);
-            }
-          });
-      } else {
-        fetch(`${config.api}v1/authentication/oidc/urls?providerKey=oidc`, {
-          mode: "cors",
-          credentials: "include",
-        })
-          .then((resp) => {
-            resp.json().then((data) => {
-              if (isMounted) {
-                setOidcAuthUrls(data);
-              }
-            });
-          })
-          .catch(() => {
-            if (isMounted) {
-              setOidcAuthLoadingError(t("error-fetching-oidc-urls"));
-            }
-          })
-          .finally(() => {
-            if (isMounted) {
-              setReady(true);
-            }
-          });
+          .catch(() => {});
       }
     });
 
@@ -203,120 +170,103 @@ function Login() {
 
   return (
     <>
-      {ready && (
-        <div className="login-container">
-          <Row className="login-box-shadow">
-            <Col
-              md="4"
-              className="bg-dark col justify-content-between d-flex flex-column"
-            >
-              <LoginSidebar />
-            </Col>
-            <Col className="bg-white">
-              <Form
-                onSubmit={onSubmit}
-                className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5"
-              >
-                <h1>{t("login-header")}</h1>
-                <h2 className="h4 mt-5 mb-3 fw-light">
-                  {t("oidc-mit-id-header")}
-                </h2>
-                <div className="d-flex">
-                  <Button
-                    variant="primary"
-                    type="button"
-                    // todo, make mitid login work
-                    onClick={() => {}}
-                    className="margin-right-button"
-                    size="lg"
-                    aria-describedby="mitid-explanation"
-                    aria-label={t("login-with-mitid-aria-label")}
-                  >
+      <div className="login-container">
+        <Row className="login-box-shadow">
+          <Col
+            md="4"
+            className="bg-dark col justify-content-between d-flex flex-column"
+          >
+            <LoginSidebar />
+          </Col>
+          <Col className="bg-white">
+            <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
+              <h1>{t("login-header")}</h1>
+
+              <h2 className="h4 mt-5 mb-3 fw-light">
+                {t("oidc-mit-id-header")}
+              </h2>
+
+              <div className="d-flex">
+                <OIDCLogin
+                  providerKey="ad"
+                  text={t("login-with-ad")}
+                  icon={<FontAwesomeIcon className="me-2" icon={faCity} />}
+                />
+                <OIDCLogin
+                  providerKey="external"
+                  text={t("login-with-external")}
+                  icon={
                     <img width="56" className="me-2" src={MitIdLogo} alt="" />
-                  </Button>
-                  {oidcAuthUrls.authorizationUrl && (
-                    <Link
-                      className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
-                      aria-label={t("login-with-oidc-aria-label")}
-                      to={oidcAuthUrls.authorizationUrl}
-                      aria-describedby="ad-explanation"
-                    >
-                      <FontAwesomeIcon className="me-2" icon={faCity} />
-                      {t("login-with-oidc")}
-                    </Link>
-                  )}
-                </div>
-                {oidcAuthLoadingError && (
-                  <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
+                  }
+                />
+              </div>
+
+              <h2 className="h4 mt-5 mb-3 fw-light">
+                {t("os2-display-user-header")}
+              </h2>
+
+              <Form onSubmit={onSubmit}>
+                {!context.tenants.get && (
+                  <>
+                    <FormInput
+                      className={
+                        error ? "form-control is-invalid" : "form-control"
+                      }
+                      onChange={(ev) => setEmail(ev.target.value)}
+                      value={email}
+                      name="email"
+                      label={t("email")}
+                      required
+                    />
+                    <FormInput
+                      className={
+                        error ? "form-control is-invalid" : "form-control"
+                      }
+                      onChange={(ev) => setPassword(ev.target.value)}
+                      value={password}
+                      name="password"
+                      label={t("password")}
+                      type="password"
+                      required
+                    />
+                    <Button type="submit" className="mt-3" id="login">
+                      {t("submit")}
+                    </Button>
+                  </>
                 )}
-                <h2 className="h4 mt-5 mb-3 fw-light">
-                  {t("os2-display-user-header")}
-                </h2>
-                <>
-                  {!context.tenants.get && (
-                    <>
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
+
+                {!context.selectedTenant.get &&
+                  context.tenants.get?.length > 1 && (
+                    <div id="tenant-picker-section">
+                      <Form.Label htmlFor="tenant">
+                        {t("select-tenant-label")}
+                      </Form.Label>
+                      <MultiSelect
+                        overrideStrings={{
+                          selectSomeItems: t("select-some-options"),
+                        }}
+                        disableSearch
+                        options={
+                          context.tenants.get.map((item) => {
+                            return {
+                              label: item.title,
+                              value: item.tenantKey,
+                            };
+                          }) || []
                         }
-                        onChange={(ev) => setEmail(ev.target.value)}
-                        value={email}
-                        name="email"
-                        label={t("email")}
-                        required
+                        hasSelectAll={false}
+                        onChange={onSelectTenant}
+                        className="single-select"
+                        labelledBy="tenant"
                       />
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setPassword(ev.target.value)}
-                        value={password}
-                        name="password"
-                        label={t("password")}
-                        type="password"
-                        required
-                      />
-                      <Button type="submit" className="mt-3" id="login">
-                        {t("submit")}
-                      </Button>
-                    </>
+                      <small>{t("tenant-help-text")}</small>
+                    </div>
                   )}
-                  {!context.selectedTenant.get &&
-                    context.tenants.get?.length > 1 && (
-                      <div id="tenant-picker-section">
-                        <Form.Label htmlFor="tenant">
-                          {t("select-tenant-label")}
-                        </Form.Label>
-                        <MultiSelect
-                          overrideStrings={{
-                            selectSomeItems: t("select-some-options"),
-                          }}
-                          disableSearch
-                          options={
-                            context.tenants.get.map((item) => {
-                              return {
-                                label: item.title,
-                                value: item.tenantKey,
-                              };
-                            }) || []
-                          }
-                          hasSelectAll={false}
-                          onChange={onSelectTenant}
-                          className="single-select"
-                          labelledBy="tenant"
-                        />
-                        <small>{t("tenant-help-text")}</small>
-                      </div>
-                    )}
-                </>
               </Form>
-            </Col>
-          </Row>
-        </div>
-      )}
-      {!ready && (
-        <LoadingComponent isLoading loadingMessage={t("please-wait")} />
-      )}
+            </div>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 }
