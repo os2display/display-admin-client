@@ -130,19 +130,19 @@ function Login() {
 
   useEffect(() => {
     let isMounted = true;
-    let idToken = null;
+    let code = null;
     let state = null;
 
     if (search) {
       const query = queryString.parse(search);
-      idToken = query.id_token;
+      code = query.code;
       state = query.state;
     }
 
     ConfigLoader.loadConfig().then((config) => {
-      if (state && idToken) {
+      if (state && code) {
         fetch(
-          `${config.api}v1/authentication/oidc/token?state=${state}&id_token=${idToken}`,
+          `${config.api}v1/authentication/oidc/token?state=${state}&code=${code}`,
           {
             mode: "cors",
             credentials: "include",
