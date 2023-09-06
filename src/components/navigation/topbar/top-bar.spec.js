@@ -88,7 +88,7 @@ describe("Nav items loads", () => {
     cy.get("#basic-navbar-nav-burger").click();
     cy.get("#basic-navbar-nav").should("exist");
     cy.get("#basic-navbar-nav").find(".nav-item").should("have.length", 12);
-    cy.get("#basic-navbar-nav").find(".nav-add-new").should("have.length", 3);
+    cy.get("#basic-navbar-nav").find(".nav-add-new").should("have.length", 4);
     cy.get("#basic-navbar-nav").find("#topbar_signout").should("be.visible");
   });
 });
