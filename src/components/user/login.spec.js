@@ -104,6 +104,6 @@ describe("Login works", () => {
     cy.get("#login").click();
     cy.wait(["@token"]);
     cy.get(".name").should("have.text", "John Doe (ABC Tenant)");
-    cy.get(".sidebar-nav").find(".nav-item").should("have.length", 9);
+    cy.get(".sidebar-nav").find(".nav-item").should("have.length", 10);
   });
 });

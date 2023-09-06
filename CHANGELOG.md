@@ -4,8 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- [#213](https://github.com/os2display/display-admin-client/pull/213)
+- [#215](https://github.com/os2display/display-admin-client/pull/215)
   Fixed OIDC login buttons.
+- [#213](https://github.com/os2display/display-admin-client/pull/213)
+  Added focus trap, to trap the keyboard focus in our modals
+  Added user list
+  Added user create
+  Added user edit
+  Added a bunch of todos
 - [#212](https://github.com/os2display/display-admin-client/pull/212)
   Updated color of login background
 - [#211](https://github.com/os2display/display-admin-client/pull/211)

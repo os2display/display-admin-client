@@ -19,7 +19,7 @@ function CheckboxForList({ selected, onSelected, disabled, title }) {
 
   return (
     <Form>
-      <Form.Group controlId="formBasicCheckbox">
+      <Form.Group>
         <Form.Check
           checked={selected}
           onClick={disabled ? () => {} : onSelected}
