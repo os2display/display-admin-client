@@ -142,6 +142,9 @@ function App() {
           shared: {
             roles: ["ROLE_ADMIN"],
           },
+          externalUsers: {
+            roles: ["ROLE_ADMIN"],
+          },
         });
       });
   }, []);
