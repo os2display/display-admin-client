@@ -1,14 +1,13 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Alert, Button, Form, Row } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCity } from "@fortawesome/free-solid-svg-icons";
-import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
@@ -18,6 +17,8 @@ import localStorageKeys from "../util/local-storage-keys";
 import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
 import MitIdLogo from "./mitid-logo.svg";
 import "./login.scss";
+import OIDCLogin from "./oidc-login";
+import LoadingComponent from "../util/loading-component/loading-component";
 
 /**
  * Login component
@@ -34,34 +35,35 @@ function Login() {
   const context = useContext(UserContext);
 
   // Local stage
+  const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [oidcAuthUrls, setOidcAuthUrls] = useState("");
-  const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
-  const [ready, setReady] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   /**
    * Login, both called from oidc login and manuel login.
    *
    * @param {object} data - Login data
    */
-  function login(data) {
+  const login = (data) => {
     // Set token in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
     context.userName.set(data.user?.fullname);
     context.email.set(data.user?.email);
     localStorage.setItem(localStorageKeys.USER_NAME, data.user?.fullname);
     localStorage.setItem(localStorageKeys.EMAIL, data.user?.email);
+
     // If there are more than one tenant, the user should pick a tenant
-    if (data.tenants?.length > 1) {
+    if ((data.tenants?.length ?? 0) > 1) {
       // Save tenants
       localStorage.setItem(
         localStorageKeys.TENANTS,
         JSON.stringify(data.tenants)
       );
       context.tenants.set(data.tenants);
-    } else if (data.tenants?.length > 0) {
+    } else if ((data.tenants?.length ?? 0) > 0) {
       // authenticated, and use the only received tenant.
       context.authenticated.set(true);
       localStorage.setItem(
@@ -73,7 +75,9 @@ function Login() {
       setError(true);
       displayError(t("missing-tenants"));
     }
-  }
+
+    setLoggedIn(true);
+  };
 
   /**
    * Select tenant function
@@ -135,66 +139,48 @@ function Login() {
 
   useEffect(() => {
     let isMounted = true;
-    let idToken = null;
+    let code = null;
     let state = null;
 
     if (search) {
       const query = queryString.parse(search);
-      idToken = query.id_token;
-      state = query.state;
-    }
 
-    ConfigLoader.loadConfig().then((config) => {
-      if (state && idToken) {
-        fetch(
-          `${config.api}v1/authentication/oidc/token?state=${state}&id_token=${idToken}`,
-          {
+      code = query.code;
+      state = query.state;
+
+      if (state && code) {
+        ConfigLoader.loadConfig().then((config) => {
+          const searchParams = new URLSearchParams({
+            state,
+            code,
+          });
+
+          fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
             credentials: "include",
-          }
-        )
-          .then((resp) => resp.json())
-          .then((data) => {
-            if (isMounted) {
-              if (data?.token) {
-                login(data);
+          })
+            .then((resp) => resp.json())
+            .then((data) => {
+              if (data.code !== 200) {
+                setErrorMessage(data.message);
               }
-            }
-          })
-          .catch(() => {
-            if (isMounted) {
-              setOidcAuthLoadingError(t("error-oidc-login"));
-            }
-          })
-          .finally(() => {
-            if (isMounted) {
-              setReady(true);
-            }
-          });
-      } else {
-        fetch(`${config.api}v1/authentication/oidc/urls?providerKey=oidc`, {
-          mode: "cors",
-          credentials: "include",
-        })
-          .then((resp) => {
-            resp.json().then((data) => {
+
               if (isMounted) {
-                setOidcAuthUrls(data);
+                if (data?.token) {
+                  login(data);
+                }
               }
-            });
-          })
-          .catch(() => {
-            if (isMounted) {
-              setOidcAuthLoadingError(t("error-fetching-oidc-urls"));
-            }
-          })
-          .finally(() => {
-            if (isMounted) {
+            })
+            .finally(() => {
               setReady(true);
-            }
-          });
+            });
+        });
+      } else {
+        setReady(true);
       }
-    });
+    } else {
+      setReady(true);
+    }
 
     return () => {
       isMounted = false;
@@ -212,81 +198,26 @@ function Login() {
             >
               <LoginSidebar />
             </Col>
+
             <Col className="bg-white">
-              <Form
-                onSubmit={onSubmit}
-                className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5"
-              >
-                <h1>{t("login-header")}</h1>
-                <h2 className="h4 mt-5 mb-3 fw-light">
-                  {t("oidc-mit-id-header")}
-                </h2>
-                <div className="d-flex">
-                  <Button
-                    variant="primary"
-                    type="button"
-                    // todo, make mitid login work
-                    onClick={() => {}}
-                    className="margin-right-button"
-                    size="lg"
-                    aria-describedby="mitid-explanation"
-                    aria-label={t("login-with-mitid-aria-label")}
-                  >
-                    <img width="56" className="me-2" src={MitIdLogo} alt="" />
-                  </Button>
-                  {oidcAuthUrls.authorizationUrl && (
-                    <Link
-                      className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
-                      aria-label={t("login-with-oidc-aria-label")}
-                      to={oidcAuthUrls.authorizationUrl}
-                      aria-describedby="ad-explanation"
-                    >
-                      <FontAwesomeIcon className="me-2" icon={faCity} />
-                      {t("login-with-oidc")}
-                    </Link>
-                  )}
-                </div>
-                {oidcAuthLoadingError && (
-                  <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
+              <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
+                {errorMessage && errorMessage !== "" && (
+                  <div className="alert-danger p-2 mt-3 mb-3">
+                    {errorMessage}
+                  </div>
                 )}
-                <h2 className="h4 mt-5 mb-3 fw-light">
-                  {t("os2-display-user-header")}
-                </h2>
-                <>
-                  {!context.tenants.get && (
+
+                {loggedIn &&
+                  !context.selectedTenant.get &&
+                  (context.tenants.get.length ?? 0) > 1 && (
                     <>
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setEmail(ev.target.value)}
-                        value={email}
-                        name="email"
-                        label={t("email")}
-                        required
-                      />
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setPassword(ev.target.value)}
-                        value={password}
-                        name="password"
-                        label={t("password")}
-                        type="password"
-                        required
-                      />
-                      <Button type="submit" className="mt-3" id="login">
-                        {t("submit")}
-                      </Button>
-                    </>
-                  )}
-                  {!context.selectedTenant.get &&
-                    context.tenants.get?.length > 1 && (
+                      <h1>{t("logged-in-select-tenant")}</h1>
+
                       <div id="tenant-picker-section">
                         <Form.Label htmlFor="tenant">
                           {t("select-tenant-label")}
                         </Form.Label>
+
                         <MultiSelect
                           overrideStrings={{
                             selectSomeItems: t("select-some-options"),
@@ -307,13 +238,79 @@ function Login() {
                         />
                         <small>{t("tenant-help-text")}</small>
                       </div>
-                    )}
-                </>
-              </Form>
+                    </>
+                  )}
+
+                {!loggedIn && (
+                  <>
+                    <h1>{t("login-header")}</h1>
+
+                    <h2 className="h4 mt-5 mb-3 fw-light">
+                      {t("oidc-mit-id-header")}
+                    </h2>
+
+                    <div className="d-flex">
+                      <OIDCLogin
+                        providerKey="ad"
+                        text={t("login-with-ad")}
+                        icon={
+                          <FontAwesomeIcon className="me-2" icon={faCity} />
+                        }
+                      />
+                      <OIDCLogin
+                        providerKey="external"
+                        text={t("login-with-external")}
+                        icon={
+                          <img
+                            width="56"
+                            className="me-2"
+                            src={MitIdLogo}
+                            alt=""
+                          />
+                        }
+                      />
+                    </div>
+
+                    <h2 className="h4 mt-5 mb-3 fw-light">
+                      {t("os2-display-user-header")}
+                    </h2>
+
+                    <Form onSubmit={onSubmit}>
+                      <FormInput
+                        className={
+                          error ? "form-control is-invalid" : "form-control"
+                        }
+                        onChange={(ev) => setEmail(ev.target.value)}
+                        value={email}
+                        name="email"
+                        label={t("email")}
+                        required
+                      />
+
+                      <FormInput
+                        className={
+                          error ? "form-control is-invalid" : "form-control"
+                        }
+                        onChange={(ev) => setPassword(ev.target.value)}
+                        value={password}
+                        name="password"
+                        label={t("password")}
+                        type="password"
+                        required
+                      />
+
+                      <Button type="submit" className="mt-3" id="login">
+                        {t("submit")}
+                      </Button>
+                    </Form>
+                  </>
+                )}
+              </div>
             </Col>
           </Row>
         </div>
       )}
+
       {!ready && (
         <LoadingComponent isLoading loadingMessage={t("please-wait")} />
       )}

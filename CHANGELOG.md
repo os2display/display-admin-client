@@ -4,20 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#215](https://github.com/os2display/display-admin-client/pull/215)
+  Fixed OIDC login buttons.
 - [#213](https://github.com/os2display/display-admin-client/pull/213)
-  add focus trap, to trap the keyboard focus in our modals
-  add user list
-  add user create
-  add user edit
-  add a bunch of todos
+  Added focus trap, to trap the keyboard focus in our modals
+  Added user list
+  Added user create
+  Added user edit
+  Added a bunch of todos
 - [#212](https://github.com/os2display/display-admin-client/pull/212)
-  update color of login background
+  Updated color of login background
 - [#211](https://github.com/os2display/display-admin-client/pull/211)
-  update login page
-  add todo for button with mitid
-  clean up translations a bit
-  fix some WCAG2.1 issues
-  add os2display logo
+  Updated login page
+  Added todo for button with mitid
+  Cleaned up translations a bit
+  Fixed some WCAG2.1 issues
+  Added os2display logo
 - [#210](https://github.com/os2display/display-admin-client/pull/210)
   Use thumbnails for media list if they are set
 
