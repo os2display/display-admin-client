@@ -1,5 +1,5 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Alert, Button, Form, Row } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -18,6 +18,7 @@ import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
 import MitIdLogo from "./mitid-logo.svg";
 import "./login.scss";
 import OIDCLogin from "./oidc-login";
+import LoadingComponent from "../util/loading-component/loading-component";
 
 /**
  * Login component
@@ -34,6 +35,7 @@ function Login() {
   const context = useContext(UserContext);
 
   // Local stage
+  const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -111,8 +113,8 @@ function Login() {
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
           email,
-          password
-        })
+          password,
+        }),
       })
     )
       .then((response) => {
@@ -150,12 +152,12 @@ function Login() {
         ConfigLoader.loadConfig().then((config) => {
           const searchParams = new URLSearchParams({
             state,
-            code
+            code,
           });
 
           fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
-            credentials: "include"
+            credentials: "include",
           })
             .then((resp) => resp.json())
             .then((data) => {
@@ -168,9 +170,16 @@ function Login() {
                   login(data);
                 }
               }
+            })
+            .finally(() => {
+              setReady(true);
             });
         });
+      } else {
+        setReady(true);
       }
+    } else {
+      setReady(true);
     }
 
     return () => {
@@ -180,118 +189,131 @@ function Login() {
 
   return (
     <>
-      <div className="login-container">
-        <Row className="login-box-shadow">
-          <Col
-            md="4"
-            className="bg-dark col justify-content-between d-flex flex-column"
-          >
-            <LoginSidebar />
-          </Col>
+      {ready && (
+        <div className="login-container">
+          <Row className="login-box-shadow">
+            <Col
+              md="4"
+              className="bg-dark col justify-content-between d-flex flex-column"
+            >
+              <LoginSidebar />
+            </Col>
 
-          <Col className="bg-white">
-            <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
-
-              {errorMessage && errorMessage !== "" && (
-                <div className="alert-danger p-2 mt-3 mb-3">
-                  {errorMessage}
-                </div>
-              )}
-
-              {loggedIn &&
-                !context.selectedTenant.get &&
-                (context.tenants.get.length ?? 0) > 1 && (
-                  <>
-                    <h1>{t("logged-in-select-tenant")}</h1>
-
-                    <div id="tenant-picker-section">
-                      <Form.Label htmlFor="tenant">
-                        {t("select-tenant-label")}
-                      </Form.Label>
-
-                      <MultiSelect
-                        overrideStrings={{
-                          selectSomeItems: t("select-some-options")
-                        }}
-                        disableSearch
-                        options={
-                          context.tenants.get.map((item) => {
-                            return {
-                              label: item.title,
-                              value: item.tenantKey
-                            };
-                          }) || []
-                        }
-                        hasSelectAll={false}
-                        onChange={onSelectTenant}
-                        className="single-select"
-                        labelledBy="tenant"
-                      />
-                      <small>{t("tenant-help-text")}</small>
-                    </div>
-                  </>
+            <Col className="bg-white">
+              <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
+                {errorMessage && errorMessage !== "" && (
+                  <div className="alert-danger p-2 mt-3 mb-3">
+                    {errorMessage}
+                  </div>
                 )}
 
-              {!loggedIn && (<>
-                  <h1>{t("login-header")}</h1>
+                {loggedIn &&
+                  !context.selectedTenant.get &&
+                  (context.tenants.get.length ?? 0) > 1 && (
+                    <>
+                      <h1>{t("logged-in-select-tenant")}</h1>
 
-                  <h2 className="h4 mt-5 mb-3 fw-light">
-                    {t("oidc-mit-id-header")}
-                  </h2>
+                      <div id="tenant-picker-section">
+                        <Form.Label htmlFor="tenant">
+                          {t("select-tenant-label")}
+                        </Form.Label>
 
-                  <div className="d-flex">
-                    <OIDCLogin
-                      providerKey="ad"
-                      text={t("login-with-ad")}
-                      icon={<FontAwesomeIcon className="me-2" icon={faCity} />}
-                    />
-                    <OIDCLogin
-                      providerKey="external"
-                      text={t("login-with-external")}
-                      icon={
-                        <img width="56" className="me-2" src={MitIdLogo} alt="" />
-                      }
-                    />
-                  </div>
+                        <MultiSelect
+                          overrideStrings={{
+                            selectSomeItems: t("select-some-options"),
+                          }}
+                          disableSearch
+                          options={
+                            context.tenants.get.map((item) => {
+                              return {
+                                label: item.title,
+                                value: item.tenantKey,
+                              };
+                            }) || []
+                          }
+                          hasSelectAll={false}
+                          onChange={onSelectTenant}
+                          className="single-select"
+                          labelledBy="tenant"
+                        />
+                        <small>{t("tenant-help-text")}</small>
+                      </div>
+                    </>
+                  )}
 
-                  <h2 className="h4 mt-5 mb-3 fw-light">
-                    {t("os2-display-user-header")}
-                  </h2>
+                {!loggedIn && (
+                  <>
+                    <h1>{t("login-header")}</h1>
 
-                  <Form onSubmit={onSubmit}>
-                    <FormInput
-                      className={
-                        error ? "form-control is-invalid" : "form-control"
-                      }
-                      onChange={(ev) => setEmail(ev.target.value)}
-                      value={email}
-                      name="email"
-                      label={t("email")}
-                      required
-                    />
+                    <h2 className="h4 mt-5 mb-3 fw-light">
+                      {t("oidc-mit-id-header")}
+                    </h2>
 
-                    <FormInput
-                      className={
-                        error ? "form-control is-invalid" : "form-control"
-                      }
-                      onChange={(ev) => setPassword(ev.target.value)}
-                      value={password}
-                      name="password"
-                      label={t("password")}
-                      type="password"
-                      required
-                    />
+                    <div className="d-flex">
+                      <OIDCLogin
+                        providerKey="ad"
+                        text={t("login-with-ad")}
+                        icon={
+                          <FontAwesomeIcon className="me-2" icon={faCity} />
+                        }
+                      />
+                      <OIDCLogin
+                        providerKey="external"
+                        text={t("login-with-external")}
+                        icon={
+                          <img
+                            width="56"
+                            className="me-2"
+                            src={MitIdLogo}
+                            alt=""
+                          />
+                        }
+                      />
+                    </div>
 
-                    <Button type="submit" className="mt-3" id="login">
-                      {t("submit")}
-                    </Button>
-                  </Form>
-                </>
-              )}
-            </div>
-          </Col>
-        </Row>
-      </div>
+                    <h2 className="h4 mt-5 mb-3 fw-light">
+                      {t("os2-display-user-header")}
+                    </h2>
+
+                    <Form onSubmit={onSubmit}>
+                      <FormInput
+                        className={
+                          error ? "form-control is-invalid" : "form-control"
+                        }
+                        onChange={(ev) => setEmail(ev.target.value)}
+                        value={email}
+                        name="email"
+                        label={t("email")}
+                        required
+                      />
+
+                      <FormInput
+                        className={
+                          error ? "form-control is-invalid" : "form-control"
+                        }
+                        onChange={(ev) => setPassword(ev.target.value)}
+                        value={password}
+                        name="password"
+                        label={t("password")}
+                        type="password"
+                        required
+                      />
+
+                      <Button type="submit" className="mt-3" id="login">
+                        {t("submit")}
+                      </Button>
+                    </Form>
+                  </>
+                )}
+              </div>
+            </Col>
+          </Row>
+        </div>
+      )}
+
+      {!ready && (
+        <LoadingComponent isLoading loadingMessage={t("please-wait")} />
+      )}
     </>
   );
 }

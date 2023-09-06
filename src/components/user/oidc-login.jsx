@@ -47,7 +47,7 @@ function OIDCLogin({ providerKey, text, icon }) {
   return (
     <>
       {!oidcAuthUrl && (
-        <Spinner animation="border" className="margin-right-button" />
+        <Spinner animation="grow" className="margin-right-button" />
       )}
       {oidcAuthUrl !== "" && (
         <a
