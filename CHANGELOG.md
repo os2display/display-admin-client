@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#215](https://github.com/os2display/display-admin-client/pull/217)
+  Move tenant dropdown.
 - [#215](https://github.com/os2display/display-admin-client/pull/215)
   Fixed OIDC login buttons.
 - [#213](https://github.com/os2display/display-admin-client/pull/213)
