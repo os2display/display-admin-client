@@ -42,13 +42,13 @@ describe("Login works", () => {
 
     cy.wait(["@token"]);
 
-    cy.get(".topbar")
+    cy.get("#topbar")
       .find(".name")
       .should("have.text", "John Doe (ABC Tenant)");
     cy.get(".sidebar-nav").find(".dropdown-toggle").click();
     cy.get("#DEF").click();
     cy.wait(["@groups-two"]);
-    cy.get(".topbar")
+    cy.get("#topbar")
       .find(".name")
       .should("have.text", "John Doe (DEF Tenant)");
   });
