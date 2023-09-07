@@ -75,6 +75,48 @@ function NavItems() {
     <>
       {accessConfig && (
         <>
+          <RestrictedNavRoute roles={accessConfig.locations.roles}>
+            <Nav.Item className="d-flex">
+              <NavLink
+                id="nav-items_locations"
+                className={({ isActive }) =>
+                  `nav-link d-flex ${isActive ? "disabled" : ""}`
+                }
+                to="/locations/list"
+              >
+                <FontAwesomeIcon className="me-2" icon={faHome} />
+                {t("locations")}
+              </NavLink>
+              {tenants && tenants.length > 1 && (
+                <NavDropdown
+                  className="location-dropdown"
+                  menuVariant="dark"
+                  aria-label={t("change-location-aria-label")}
+                >
+                  {tenants.map(({ tenantKey, title }) => (
+                    <NavDropdown.Item
+                      onClick={(target) => onTenantChange(target)}
+                      disabled={tenantDropdownDisabled}
+                      id={tenantKey}
+                      key={tenantKey}
+                    >
+                      <FontAwesomeIcon
+                        className="me-1 nav-add-new"
+                        style={{
+                          color:
+                            tenantKey === selectedTenant.tenantKey
+                              ? "#6c757d"
+                              : "transparent",
+                        }}
+                        icon={faCheck}
+                      />
+                      {title}
+                    </NavDropdown.Item>
+                  ))}
+                </NavDropdown>
+              )}
+            </Nav.Item>
+          </RestrictedNavRoute>
           <Nav.Item>
             <NavLink
               id="nav-items_content_slides"
@@ -203,48 +245,6 @@ function NavItems() {
               >
                 <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
               </Link>
-            </Nav.Item>
-          </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.locations.roles}>
-            <Nav.Item className="d-flex">
-              <NavLink
-                id="nav-items_locations"
-                className={({ isActive }) =>
-                  `nav-link d-flex ${isActive ? "disabled" : ""}`
-                }
-                to="/locations/list"
-              >
-                <FontAwesomeIcon className="me-2" icon={faHome} />
-                {t("locations")}
-              </NavLink>
-              {tenants && tenants.length > 1 && (
-                <NavDropdown
-                  className="location-dropdown"
-                  menuVariant="dark"
-                  aria-label={t("change-location-aria-label")}
-                >
-                  {tenants.map(({ tenantKey, title }) => (
-                    <NavDropdown.Item
-                      onClick={(target) => onTenantChange(target)}
-                      disabled={tenantDropdownDisabled}
-                      id={tenantKey}
-                      key={tenantKey}
-                    >
-                      <FontAwesomeIcon
-                        className="me-1"
-                        style={{
-                          color:
-                            tenantKey === selectedTenant.tenantKey
-                              ? "#6c757d"
-                              : "transparent",
-                        }}
-                        icon={faCheck}
-                      />
-                      {title}
-                    </NavDropdown.Item>
-                  ))}
-                </NavDropdown>
-              )}
             </Nav.Item>
           </RestrictedNavRoute>
           <RestrictedNavRoute roles={accessConfig.settings.roles}>
