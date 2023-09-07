@@ -10,6 +10,17 @@
       font-weight: bold;
     }
   }
+
+  .location-dropdown {
+    height: 40px;
+    width: 40px !important;
+    display: flex;
+    position: absolute !important;
+    top: 1px;
+    align-items: center;
+    right: 1px;
+    margin-top: 5px !important;
+  }
 }
 
 .nav-second-level {
