@@ -42,11 +42,15 @@ describe("Login works", () => {
 
     cy.wait(["@token"]);
 
-    cy.get(".user-dropdown-name").should("have.text", "John Doe (ABC Tenant)");
-    cy.get(".user-dropdown").get("#topbar_user").click();
+    cy.get(".topbar")
+      .find(".name")
+      .should("have.text", "John Doe (ABC Tenant)");
+    cy.get(".dropdown-toggle").find(".dropdown-toggle").click();
     cy.get("#DEF").click();
     cy.wait(["@groups-two"]);
-    cy.get(".user-dropdown-name").should("have.text", "John Doe (DEF Tenant)");
+    cy.get(".topbar")
+      .find(".name")
+      .should("have.text", "John Doe (DEF Tenant)");
   });
 
   it("Login with tenant that has role editor", () => {
