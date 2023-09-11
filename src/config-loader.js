@@ -30,6 +30,11 @@ const ConfigLoader = {
               resolve({
                 api: "/api/",
                 touchButtonRegions: false,
+                login: {
+                  ad: true,
+                  external: true,
+                  usernamePassword: true
+                }
               });
             }
           })

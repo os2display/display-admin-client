@@ -1,4 +1,9 @@
 {
   "api": "/",
-  "touchButtonRegions": false
+  "touchButtonRegions": false,
+  "login": {
+    "ad": true,
+    "external": true,
+    "usernamePassword": true
+  }
 }

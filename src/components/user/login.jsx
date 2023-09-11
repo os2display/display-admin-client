@@ -34,13 +34,14 @@ function Login() {
   // Context
   const context = useContext(UserContext);
 
-  // Local stage
+  // Local state
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [enabledLogins, setEnabledLogins] = useState(null);
 
   /**
    * Login, both called from oidc login and manuel login.
@@ -113,8 +114,8 @@ function Login() {
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
           email,
-          password,
-        }),
+          password
+        })
       })
     )
       .then((response) => {
@@ -138,6 +139,17 @@ function Login() {
   };
 
   useEffect(() => {
+    ConfigLoader.loadConfig().then((config) => {
+      // Defaults to all enabled.
+      setEnabledLogins(config.login ?? {
+        "ad": true,
+        "external": true,
+        "usernamePassword": true
+      });
+    });
+  }, []);
+
+  useEffect(() => {
     let isMounted = true;
     let code = null;
     let state = null;
@@ -152,12 +164,12 @@ function Login() {
         ConfigLoader.loadConfig().then((config) => {
           const searchParams = new URLSearchParams({
             state,
-            code,
+            code
           });
 
           fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
-            credentials: "include",
+            credentials: "include"
           })
             .then((resp) => resp.json())
             .then((data) => {
@@ -220,14 +232,14 @@ function Login() {
 
                         <MultiSelect
                           overrideStrings={{
-                            selectSomeItems: t("select-some-options"),
+                            selectSomeItems: t("select-some-options")
                           }}
                           disableSearch
                           options={
                             context.tenants.get.map((item) => {
                               return {
                                 label: item.title,
-                                value: item.tenantKey,
+                                value: item.tenantKey
                               };
                             }) || []
                           }
@@ -245,64 +257,76 @@ function Login() {
                   <>
                     <h1>{t("login-header")}</h1>
 
-                    <h2 className="h4 mt-5 mb-3 fw-light">
-                      {t("oidc-mit-id-header")}
-                    </h2>
+                    {(enabledLogins?.ad || enabledLogins?.external) && (
+                      <>
+                        <h2 className="h4 mt-5 mb-3 fw-light">
+                          {t("oidc-mit-id-header")}
+                        </h2>
 
-                    <div className="d-flex">
-                      <OIDCLogin
-                        providerKey="ad"
-                        text={t("login-with-ad")}
-                        icon={
-                          <FontAwesomeIcon className="me-2" icon={faCity} />
-                        }
-                      />
-                      <OIDCLogin
-                        providerKey="external"
-                        text={t("login-with-external")}
-                        icon={
-                          <img
-                            width="56"
-                            className="me-2"
-                            src={MitIdLogo}
-                            alt=""
+                        <div className="d-flex">
+                          {enabledLogins?.ad && (
+                            <OIDCLogin
+                              providerKey="ad"
+                              text={t("login-with-ad")}
+                              icon={
+                                <FontAwesomeIcon className="me-2" icon={faCity} />
+                              }
+                            />
+                          )}
+
+                          {enabledLogins?.external && (
+                            <OIDCLogin
+                              providerKey="external"
+                              text={t("login-with-external")}
+                              icon={
+                                <img
+                                  width="56"
+                                  className="me-2"
+                                  src={MitIdLogo}
+                                  alt=""
+                                />
+                              }
+                            />
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    {enabledLogins?.usernamePassword && (
+                      <>
+                        <h2 className="h4 mt-5 mb-3 fw-light">
+                          {t("os2-display-user-header")}
+                        </h2>
+
+                        <Form onSubmit={onSubmit}>
+                          <FormInput
+                            className={
+                              error ? "form-control is-invalid" : "form-control"
+                            }
+                            onChange={(ev) => setEmail(ev.target.value)}
+                            value={email}
+                            name="email"
+                            label={t("email")}
+                            required
                           />
-                        }
-                      />
-                    </div>
 
-                    <h2 className="h4 mt-5 mb-3 fw-light">
-                      {t("os2-display-user-header")}
-                    </h2>
+                          <FormInput
+                            className={
+                              error ? "form-control is-invalid" : "form-control"
+                            }
+                            onChange={(ev) => setPassword(ev.target.value)}
+                            value={password}
+                            name="password"
+                            label={t("password")}
+                            type="password"
+                            required
+                          />
 
-                    <Form onSubmit={onSubmit}>
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setEmail(ev.target.value)}
-                        value={email}
-                        name="email"
-                        label={t("email")}
-                        required
-                      />
-
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setPassword(ev.target.value)}
-                        value={password}
-                        name="password"
-                        label={t("password")}
-                        type="password"
-                        required
-                      />
-
-                      <Button type="submit" className="mt-3" id="login">
-                        {t("submit")}
-                      </Button>
-                    </Form>
+                          <Button type="submit" className="mt-3" id="login">
+                            {t("submit")}
+                          </Button>
+                        </Form>
+                      </>)}
                   </>
                 )}
               </div>

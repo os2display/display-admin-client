@@ -1,4 +1,9 @@
 {
   "api": "{{ getenv "API_PATH" "/" }}",
-  "touchButtonRegions": "{{ getenv "APP_TOUCH_BUTTON_REGIONS" "false"}}"
+  "touchButtonRegions": "{{ getenv "APP_TOUCH_BUTTON_REGIONS" "false"}}",
+  "login": {
+    "ad": "{{ getenv "APP_ENABLE_AD_LOGIN" "true"}}",
+    "external": "{{ getenv "APP_ENABLE_EXTERNAL_LOGIN" "true"}}",
+    "usernamePassword": "{{ getenv "APP_ENABLE_USERNAME_PASSWORD_LOGIN" "true"}}"
+  }
 }
