@@ -12,5 +12,6 @@ const localStorageKeys = {
   SEARCH: "search",
   ORDER: "order",
   USER_NAME: "user-name",
+  USER_TYPE: "user-type"
 };
 export default localStorageKeys;
