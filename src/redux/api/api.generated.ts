@@ -78,6 +78,100 @@ export const api = createApi({
         },
       }),
     }),
+    getExternalUserActivationCodeCollection: build.query<
+      GetExternalUserActivationCodeCollectionApiResponse,
+      GetExternalUserActivationCodeCollectionApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-user-activation-codes`,
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+      }),
+    }),
+    postV1ExternalUserActivationCodes: build.mutation<
+      PostV1ExternalUserActivationCodesApiResponse,
+      PostV1ExternalUserActivationCodesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-user-activation-codes`,
+        method: "POST",
+        body: queryArg.externalUserActivationCodeExternalUserActivationCodeInput,
+      }),
+    }),
+    postV1ExternalUserActivationCodesActivate: build.mutation<
+      PostV1ExternalUserActivationCodesActivateApiResponse,
+      PostV1ExternalUserActivationCodesActivateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-user-activation-codes/activate`,
+        method: "POST",
+        body: queryArg.externalUserActivationCodeExternalUserActivateInput,
+      }),
+    }),
+    getExternalUserActivationCodeItem: build.query<
+      GetExternalUserActivationCodeItemApiResponse,
+      GetExternalUserActivationCodeItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-user-activation-codes/${queryArg.id}`,
+      }),
+    }),
+    deleteExternalUserActivationCodeItem: build.mutation<
+      DeleteExternalUserActivationCodeItemApiResponse,
+      DeleteExternalUserActivationCodeItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-user-activation-codes/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getV1ExternalUserActivationCodesByIdRefreshCode: build.query<
+      GetV1ExternalUserActivationCodesByIdRefreshCodeApiResponse,
+      GetV1ExternalUserActivationCodesByIdRefreshCodeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-user-activation-codes/${queryArg.id}/refresh-code`,
+      }),
+    }),
+    getV1ExternalUsers: build.query<
+      GetV1ExternalUsersApiResponse,
+      GetV1ExternalUsersApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-users`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    getV1ExternalUsersById: build.query<
+      GetV1ExternalUsersByIdApiResponse,
+      GetV1ExternalUsersByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/external-users/${queryArg.id}` }),
+    }),
+    putV1ExternalUsersById: build.mutation<
+      PutV1ExternalUsersByIdApiResponse,
+      PutV1ExternalUsersByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-users/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.userExternalUserInput,
+      }),
+    }),
+    deleteV1ExternalUsersById: build.mutation<
+      DeleteV1ExternalUsersByIdApiResponse,
+      DeleteV1ExternalUsersByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/external-users/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
     getV1FeedSources: build.query<
       GetV1FeedSourcesApiResponse,
       GetV1FeedSourcesApiArg
@@ -761,6 +855,68 @@ export type GetV1CampaignsByIdScreensApiArg = {
     createdAt?: "asc" | "desc";
   };
 };
+export type GetExternalUserActivationCodeCollectionApiResponse = unknown;
+export type GetExternalUserActivationCodeCollectionApiArg = {
+  /** The collection page number */
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: number;
+};
+export type PostV1ExternalUserActivationCodesApiResponse = unknown;
+export type PostV1ExternalUserActivationCodesApiArg = {
+  /** The new ExternalUserActivationCode resource */
+  externalUserActivationCodeExternalUserActivationCodeInput: ExternalUserActivationCodeExternalUserActivationCodeInput;
+};
+export type PostV1ExternalUserActivationCodesActivateApiResponse = unknown;
+export type PostV1ExternalUserActivationCodesActivateApiArg = {
+  id: string;
+  /** The new ExternalUserActivationCode resource */
+  externalUserActivationCodeExternalUserActivateInput: ExternalUserActivationCodeExternalUserActivateInput;
+};
+export type GetExternalUserActivationCodeItemApiResponse = unknown;
+export type GetExternalUserActivationCodeItemApiArg = {
+  /** Resource identifier */
+  id: string;
+};
+export type DeleteExternalUserActivationCodeItemApiResponse = unknown;
+export type DeleteExternalUserActivationCodeItemApiArg = {
+  /** Resource identifier */
+  id: string;
+};
+export type GetV1ExternalUserActivationCodesByIdRefreshCodeApiResponse =
+  unknown;
+export type GetV1ExternalUserActivationCodesByIdRefreshCodeApiArg = {
+  id: string;
+};
+export type GetV1ExternalUsersApiResponse = unknown;
+export type GetV1ExternalUsersApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
+};
+export type GetV1ExternalUsersByIdApiResponse = unknown;
+export type GetV1ExternalUsersByIdApiArg = {
+  id: string;
+};
+export type PutV1ExternalUsersByIdApiResponse = unknown;
+export type PutV1ExternalUsersByIdApiArg = {
+  id: string;
+  /** The updated User resource */
+  userExternalUserInput: UserExternalUserInput;
+};
+export type DeleteV1ExternalUsersByIdApiResponse = unknown;
+export type DeleteV1ExternalUsersByIdApiArg = {
+  id: string;
+};
 export type GetV1FeedSourcesApiResponse = unknown;
 export type GetV1FeedSourcesApiArg = {
   page?: number;
@@ -1281,6 +1437,7 @@ export type DeleteV1ThemesByIdApiArg = {
 export type Token = {
   token?: string;
   refresh_token?: string;
+  refresh_token_expiration?: any;
   tenants?: {
     tenantKey?: string;
     title?: string;
@@ -1312,6 +1469,16 @@ export type RefreshTokenResponse = {
 export type RefreshTokenRequest = {
   refresh_token?: string;
 };
+export type ExternalUserActivationCodeExternalUserActivationCodeInput = {
+  displayName?: string;
+  roles?: string[];
+};
+export type ExternalUserActivationCodeExternalUserActivateInput = {
+  activationCode?: string;
+};
+export type UserExternalUserInput = {
+  fullName?: string | null;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
@@ -1330,7 +1497,8 @@ export type ScreenScreenInput = {
   size?: string;
   layout?: string;
   location?: string;
-  dimensions?: string[];
+  resolution?: string;
+  orientation?: string;
   enableColorSchemeChange?: boolean | null;
 };
 export type ScreenBindObject = {
@@ -1361,6 +1529,16 @@ export const {
   usePostRefreshTokenItemMutation,
   useGetV1CampaignsByIdScreenGroupsQuery,
   useGetV1CampaignsByIdScreensQuery,
+  useGetExternalUserActivationCodeCollectionQuery,
+  usePostV1ExternalUserActivationCodesMutation,
+  usePostV1ExternalUserActivationCodesActivateMutation,
+  useGetExternalUserActivationCodeItemQuery,
+  useDeleteExternalUserActivationCodeItemMutation,
+  useGetV1ExternalUserActivationCodesByIdRefreshCodeQuery,
+  useGetV1ExternalUsersQuery,
+  useGetV1ExternalUsersByIdQuery,
+  usePutV1ExternalUsersByIdMutation,
+  useDeleteV1ExternalUsersByIdMutation,
   useGetV1FeedSourcesQuery,
   useGetV1FeedSourcesByIdQuery,
   useGetV1FeedSourcesByIdConfigAndNameQuery,
