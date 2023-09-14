@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.4.0] - 2023-09-14
+
+- [#210](https://github.com/os2display/display-admin-client/pull/210)
+  Use thumbnails for media list if they are set
+
 ## [1.3.3] - 2023-07-11
 
 - [#208](https://github.com/os2display/display-admin-client/pull/208)
