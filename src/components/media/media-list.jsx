@@ -213,6 +213,7 @@ function MediaList({ fromModal, multiple }) {
           </Col>
           <Col>
             <FormCheckbox
+              name="form-checkbox-media-list-sort-desc"
               value={sortDesc}
               label={t("checkbox-label-sort-desc")}
               onChange={changeSort}
