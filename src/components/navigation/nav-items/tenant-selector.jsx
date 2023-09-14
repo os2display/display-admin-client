@@ -36,7 +36,7 @@ function TenantSelector() {
 
   return (
     <>
-      {accessConfig?.locations && (
+      {accessConfig?.locations?.roles && (
         <RestrictedNavRoute roles={accessConfig?.locations?.roles ?? []}>
           <Nav.Item className="text-white mb-2 mt-2">
             <div className="ps-3 text-white-50">{t("tenant")}</div>
