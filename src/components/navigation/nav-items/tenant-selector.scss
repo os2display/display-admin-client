@@ -1,0 +1,26 @@
+.tenant-dropdown .dropdown-toggle::after {
+  float: right;
+  margin-top: 0.75em;
+}
+
+.tenant-dropdown.nav-item.dropdown {
+  border: 1px solid white;
+  border-radius: 5px;
+  margin-top: 5px;
+  width: 95%;
+}
+
+.tenant-dropdown .dropdown-toggle.nav-link {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.tenant-selector-one-tenant {
+  margin-left: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.tenant-dropdown .dropdown-menu.show {
+  width: 100%;
+}

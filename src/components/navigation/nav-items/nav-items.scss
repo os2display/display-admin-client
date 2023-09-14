@@ -10,25 +10,6 @@
       font-weight: bold;
     }
   }
-
-  .location-dropdown {
-    height: 40px;
-    width: 40px !important;
-    display: flex;
-    position: absolute !important;
-    top: 1px;
-    align-items: center;
-    right: 1px;
-    margin-top: 8px !important;
-
-    @media (max-width: 990px) {
-      a {
-        color: #0d6efd !important;
-      }
-      padding-left: 10px;
-      position: relative !important;
-    }
-  }
 }
 
 .nav-second-level {

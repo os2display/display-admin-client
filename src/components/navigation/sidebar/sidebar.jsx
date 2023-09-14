@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import NavItems from "../nav-items/nav-items";
 import "./sidebar.scss";
 import Logo from "../logo";
+import TenantSelector from "../nav-items/tenant-selector";
 
 /**
  * The sidebar component.
@@ -15,7 +16,7 @@ function SideBar() {
   const [active, setActive] = useState();
 
   return (
-    <Col className="bg-dark border-end d-none d-lg-block">
+    <Col className="bg-black border-end d-none d-lg-block">
       <Nav
         variant="dark"
         id="sidebar"
@@ -29,7 +30,10 @@ function SideBar() {
         >
           <Logo />
         </Navbar.Brand>
-        <NavItems />
+        <TenantSelector />
+        <div className="bg-dark">
+          <NavItems />
+        </div>
       </Nav>
     </Col>
   );

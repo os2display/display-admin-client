@@ -1,5 +1,5 @@
-import { React, useContext, useEffect, useState } from "react";
-import { Nav, NavDropdown } from "react-bootstrap";
+import { React, useContext, useEffect } from "react";
+import { Nav } from "react-bootstrap";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,16 +10,11 @@ import {
   faPhotoVideo,
   faPlusCircle,
   faCog,
-  faHome,
-  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
 import ListContext from "../../../context/list-context";
 import UserContext from "../../../context/user-context";
 import useModal from "../../../context/modal-context/modal-context-hook";
 import RestrictedNavRoute from "./restricted-nav-route";
-import localStorageKeys from "../../util/local-storage-keys";
-import { api } from "../../../redux/api/api.generated";
 import "./nav-items.scss";
 
 /**
@@ -28,37 +23,16 @@ import "./nav-items.scss";
  * @returns {object} Nav items
  */
 function NavItems() {
-  const { SELECTED_TENANT } = localStorageKeys;
-  const [tenantDropdownDisabled, setTenantDropdownDisabled] = useState(false);
   const { t } = useTranslation("common", { keyPrefix: "nav-items" });
   const { setSelected } = useModal();
   const { page, createdBy, isPublished } = useContext(ListContext);
   const { pathname } = useLocation();
   const {
-    tenants: { get: tenants },
-    selectedTenant: { set: setSelectedTenant, get: selectedTenant },
     accessConfig: { get: accessConfig },
   } = useContext(UserContext);
 
-  const dispatch = useDispatch();
-
-  /**
-   * Change tenant on select tenant
-   *
-   * @param {object} props - The props.
-   * @param {object} props.target Event target
-   */
-  function onTenantChange({ target }) {
-    dispatch(api.endpoints.tenantChangedClearCache.initiate());
-    const newTenant = tenants.find(({ tenantKey }) => tenantKey === target.id);
-    setSelectedTenant(newTenant);
-    localStorage.setItem(SELECTED_TENANT, JSON.stringify(newTenant));
-  }
-
   // Reset list context and selected on page change.
   useEffect(() => {
-    const matches = pathname.match(/(\/edit|\/create)/i);
-    setTenantDropdownDisabled(matches !== null);
     setSelected([]);
     if (page) {
       page.set(1);
@@ -73,50 +47,8 @@ function NavItems() {
 
   return (
     <>
-      {accessConfig && (
+      {accessConfig !== undefined && (
         <>
-          <RestrictedNavRoute roles={accessConfig.locations.roles}>
-            <Nav.Item className="d-flex">
-              <NavLink
-                id="nav-items_locations"
-                className={({ isActive }) =>
-                  `nav-link d-flex ${isActive ? "disabled" : ""}`
-                }
-                to="/locations/list"
-              >
-                <FontAwesomeIcon className="me-2" icon={faHome} />
-                {t("locations")}
-              </NavLink>
-              {tenants && tenants.length > 1 && (
-                <NavDropdown
-                  className="location-dropdown"
-                  menuVariant="dark"
-                  aria-label={t("change-location-aria-label")}
-                >
-                  {tenants.map(({ tenantKey, title }) => (
-                    <NavDropdown.Item
-                      onClick={(target) => onTenantChange(target)}
-                      disabled={tenantDropdownDisabled}
-                      id={tenantKey}
-                      key={tenantKey}
-                    >
-                      <FontAwesomeIcon
-                        className="me-1 nav-add-new"
-                        style={{
-                          color:
-                            tenantKey === selectedTenant.tenantKey
-                              ? "#6c757d"
-                              : "transparent",
-                        }}
-                        icon={faCheck}
-                      />
-                      {title}
-                    </NavDropdown.Item>
-                  ))}
-                </NavDropdown>
-              )}
-            </Nav.Item>
-          </RestrictedNavRoute>
           <Nav.Item>
             <NavLink
               id="nav-items_content_slides"
@@ -166,7 +98,7 @@ function NavItems() {
               <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
             </Link>
           </Nav.Item>
-          <RestrictedNavRoute roles={accessConfig.campaign.roles}>
+          <RestrictedNavRoute roles={accessConfig?.campaign?.roles ?? []}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_content_media"
@@ -179,7 +111,7 @@ function NavItems() {
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.shared.roles}>
+          <RestrictedNavRoute roles={accessConfig?.shared?.roles ?? []}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_content_shared_playlists"
@@ -192,7 +124,7 @@ function NavItems() {
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.campaign.roles}>
+          <RestrictedNavRoute roles={accessConfig?.campaign?.roles ?? []}>
             <Nav.Item>
               <NavLink
                 id="nav-items_screens_screens"
@@ -213,7 +145,7 @@ function NavItems() {
               </Link>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.groups.roles}>
+          <RestrictedNavRoute roles={accessConfig?.groups?.roles ?? []}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_screens_groups"
@@ -226,7 +158,7 @@ function NavItems() {
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.externalUsers.roles}>
+          <RestrictedNavRoute roles={accessConfig?.externalUsers?.roles ?? []}>
             <Nav.Item>
               <NavLink
                 id="nav-items_external_users"
@@ -247,7 +179,7 @@ function NavItems() {
               </Link>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.settings.roles}>
+          <RestrictedNavRoute roles={accessConfig?.settings?.roles ?? []}>
             <Nav.Item>
               <NavLink
                 id="nav-items_settings"
@@ -261,7 +193,7 @@ function NavItems() {
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.settings.roles}>
+          <RestrictedNavRoute roles={accessConfig?.settings?.roles ?? []}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_configuration_themes"

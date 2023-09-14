@@ -41,9 +41,7 @@ function TopBar() {
       >
         {t("topbar.brand")}
       </Navbar.Brand>
-      <div className="name ms-3">
-        {context.userName.get} ({context.selectedTenant.get?.title})
-      </div>
+      <div className="name ms-3">{context.userName.get}</div>
       <Navbar.Toggle
         aria-controls="basic-navbar-nav"
         id="basic-navbar-nav-burger"

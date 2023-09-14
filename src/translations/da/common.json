@@ -904,5 +904,8 @@
   },
   "playlist-gantt-chart": {
     "show-gantt": "Vis en visualisering af planlægningen"
+  },
+  "tenant-selector": {
+    "tenant": "Instans"
   }
 }
