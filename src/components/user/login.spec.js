@@ -14,7 +14,7 @@ describe("Login works", () => {
 
     cy.get("#login").click();
     cy.wait(["@token"]);
-    cy.get(".name").should("have.text", "John Doe (ABC Tenant)");
+    cy.get(".name").should("have.text", "John Doe");
   });
 
   it("Login three tenant works", () => {
@@ -44,13 +44,13 @@ describe("Login works", () => {
 
     cy.get("#topbar")
       .find(".name")
-      .should("have.text", "John Doe (ABC Tenant)");
+      .should("have.text", "John Doe");
     cy.get(".sidebar-nav").find(".dropdown-toggle").click();
     cy.get("#DEF").click();
     cy.wait(["@groups-two"]);
     cy.get("#topbar")
       .find(".name")
-      .should("have.text", "John Doe (DEF Tenant)");
+      .should("have.text", "John Doe");
   });
 
   it("Login with tenant that has role editor", () => {
@@ -68,7 +68,7 @@ describe("Login works", () => {
 
     cy.get("#login").click();
     cy.wait(["@token"]);
-    cy.get(".name").should("have.text", "John Doe (ABC Tenant)");
+    cy.get(".name").should("have.text", "John Doe");
     cy.get(".sidebar-nav").find(".nav-item").should("have.length", 3);
   });
 
@@ -107,7 +107,7 @@ describe("Login works", () => {
 
     cy.get("#login").click();
     cy.wait(["@token"]);
-    cy.get(".name").should("have.text", "John Doe (ABC Tenant)");
+    cy.get(".name").should("have.text", "John Doe");
     cy.get(".sidebar-nav").find(".nav-item").should("have.length", 11);
   });
 });
