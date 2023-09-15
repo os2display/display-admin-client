@@ -144,10 +144,7 @@ function App() {
           },
           externalUsers: {
             roles: ["ROLE_ADMIN"],
-          },
-          locations: {
-            roles: ["ROLE_ADMIN"],
-          },
+          }
         });
       });
   }, []);
