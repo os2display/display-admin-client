@@ -697,6 +697,7 @@
     "add-new-playlist-aria-label": "Tilføj ny spilleliste",
     "add-new-screen-aria-label": "Tilføj ny skærm",
     "add-new-external-user-aria-label": "Tilføj ny bruger",
+    "change-tenant-aria-label": "Her kan du ændre din instans",
     "screens-screens": "Skærme",
     "external-users": "Eksterne brugere",
     "screens-groups": "Grupper",
@@ -902,5 +903,8 @@
   },
   "playlist-gantt-chart": {
     "show-gantt": "Vis en visualisering af planlægningen"
+  },
+  "tenant-selector": {
+    "tenant": "Instans"
   }
 }
