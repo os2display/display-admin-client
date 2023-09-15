@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import Brand from "react-bootstrap/NavbarBrand";
 import Col from "react-bootstrap/Col";
 import NavItems from "../nav-items/nav-items";
 import "./sidebar.scss";
@@ -16,7 +16,7 @@ function SideBar() {
   const [active, setActive] = useState();
 
   return (
-    <Col className="bg-black border-end d-none d-lg-block">
+    <Col className="bg-dark border-end d-none d-lg-block">
       <Nav
         variant="dark"
         id="sidebar"
@@ -24,16 +24,18 @@ function SideBar() {
         activeKey={active}
         onSelect={(selectedKey) => setActive(selectedKey)}
       >
-        <Navbar.Brand
-          href="/admin"
-          className="text-white mb-2 mt-2 ms-3 d-none d-md-block"
-        >
-          <Logo />
-        </Navbar.Brand>
-        <TenantSelector />
-        <div className="bg-dark">
-          <NavItems />
+        <div className="bg-black pb-3">
+          <Brand
+            href="/admin"
+            className="text-white mb-2 mt-2 d-none d-md-block"
+          >
+            <Logo />
+          </Brand>
+          <div className="ms-3">
+            <TenantSelector />
+          </div>
         </div>
+        <NavItems />
       </Nav>
     </Col>
   );

@@ -34,9 +34,9 @@ function TenantSelector() {
   }
 
   return (
-    <Nav.Item className="text-white mb-2 mt-2">
-      <div className="ps-3 text-white-50">{t("tenant")}</div>
-      <div className="ps-2 text-white fw-bold">
+    <Nav.Item className="text-white mb-2 mt-4">
+      <div className="text-white">{t("tenant")}</div>
+      <div className="text-white fw-bold">
         {tenants && (
           <>
             {tenants.length === 1 && (
