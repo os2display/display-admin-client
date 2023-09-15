@@ -9,9 +9,9 @@ import PropTypes from "prop-types";
  * @param {Function} props.callback - The callback.
  * @param {string} props.label - The label.
  * @param {boolean} props.showButton - Show button.
- * @returns {object} A paginationbutton.
+ * @returns {object} A pagination button.
  */
-const PaginationButton = ({ callback, label, showButton }) => {
+const PaginationButton = ({ callback = () => {}, label = "", showButton = false }) => {
   if (!showButton) return null;
   return (
     <Button variant="primary" className="mb-3" onClick={() => callback()}>
@@ -21,9 +21,9 @@ const PaginationButton = ({ callback, label, showButton }) => {
 };
 
 PaginationButton.propTypes = {
-  label: PropTypes.string.isRequired,
-  showButton: PropTypes.bool.isRequired,
-  callback: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  showButton: PropTypes.bool,
+  callback: PropTypes.func,
 };
 
 export default PaginationButton;

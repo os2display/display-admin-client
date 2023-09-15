@@ -2,6 +2,7 @@ import { React, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import FocusTrap from "focus-trap-react";
 
 /**
  * @param {object} props The props.
@@ -49,24 +50,26 @@ function ModalDialog({
   }, []);
 
   return (
-    <>
-      <Modal.Header>
-        <Modal.Title>
-          <h1>{title}</h1>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>{children}</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" type="button" onClick={onClose}>
-          {declineText || t("modal-dialog.cancel")}
-        </Button>
-        {showAcceptButton && (
-          <Button variant={btnVariant} type="submit" onClick={handleAccept}>
-            {acceptText || t("modal-dialog.remove")}
+    <FocusTrap>
+      <div>
+        <Modal.Header>
+          <Modal.Title>
+            <h1>{title}</h1>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{children}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" type="button" onClick={onClose}>
+            {declineText || t("modal-dialog.cancel")}
           </Button>
-        )}
-      </Modal.Footer>
-    </>
+          {showAcceptButton && (
+            <Button variant={btnVariant} type="submit" onClick={handleAccept}>
+              {acceptText || t("modal-dialog.remove")}
+            </Button>
+          )}
+        </Modal.Footer>
+      </div>
+    </FocusTrap>
   );
 }
 

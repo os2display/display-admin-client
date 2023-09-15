@@ -35,6 +35,9 @@ import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
 import ModalProvider from "./context/modal-context/modal-provider";
+import UsersList from "./components/users/users-list";
+import UserEdit from "./components/users/user-edit";
+import UserCreate from "./components/users/user-create";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
@@ -149,6 +152,9 @@ function App() {
           shared: {
             roles: ["ROLE_ADMIN"],
           },
+          externalUsers: {
+            roles: ["ROLE_ADMIN"],
+          }
         });
       });
   }, []);
@@ -340,6 +346,11 @@ function App() {
                                   path="create"
                                   element={<MediaCreate />}
                                 />
+                              </Route>
+                              <Route path="users">
+                                <Route path="list" element={<UsersList />} />
+                                <Route path="create" element={<UserCreate />} />
+                                <Route path="edit/:id" element={<UserEdit />} />
                               </Route>
                               <Route path="themes">
                                 <Route
