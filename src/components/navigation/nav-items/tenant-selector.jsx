@@ -2,7 +2,6 @@ import { React, useContext } from "react";
 import { Nav, NavDropdown } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import UserContext from "../../../context/user-context";
-import RestrictedNavRoute from "./restricted-nav-route";
 import localStorageKeys from "../../util/local-storage-keys";
 import "./tenant-selector.scss";
 
@@ -40,7 +39,7 @@ function TenantSelector() {
         {tenants && (
           <>
             {tenants.length === 1 && (
-              <div className="tenant-selector-one-tenant">
+              <div className="mt-1 mb-1">
                 {selectedTenant.title}
               </div>
             )}
@@ -49,7 +48,7 @@ function TenantSelector() {
                 title={selectedTenant.title}
                 menuvariant="dark"
                 className="tenant-dropdown"
-                aria-label={t("change-location-aria-label")}
+                aria-label={t("change-tenant-aria-label")}
                 id="tenant-dropdown"
               >
                 {tenants.map(({ tenantKey, title }) => (
