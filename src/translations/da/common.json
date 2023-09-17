@@ -810,7 +810,9 @@
     "tenant-help-text": "Du er tilknyttet flere lokationer, og lokationen kan blive ændret igen når du er logget ind",
     "login-with-ad": "AD login",
     "login-with-external": " login",
-    "logged-in-select-tenant": "Vælg lokation."
+    "logged-in-select-tenant": "Vælg lokation.",
+    "activation-code": "Indtast aktiveringskode for at blive koblet på en instans.",
+    "error-activating-code": ""
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten",

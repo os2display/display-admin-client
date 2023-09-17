@@ -33,8 +33,8 @@ const ConfigLoader = {
                 login: {
                   ad: true,
                   external: true,
-                  usernamePassword: true
-                }
+                  usernamePassword: true,
+                },
               });
             }
           })

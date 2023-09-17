@@ -50,8 +50,8 @@ function Login() {
    * @param {object} data - Login data
    */
   const login = (data) => {
-    const user = data.user;
-    const tenants = data.tenants;
+    const { user } = data;
+    const { tenants } = data;
 
     if (!tenants) {
       setError(true);
@@ -116,16 +116,16 @@ function Login() {
     dispatch(
       api.endpoints.postV1ExternalUserActivationCodesActivate.initiate({
         externalUserActivationCodeExternalUserActivateInput: JSON.stringify({
-          activationCode
-        })
+          activationCode,
+        }),
       })
     )
-      .then((response) => {
-        window.href.replace('/');
+      .then(() => {
+        window.href = "/admin";
       })
       .catch((err) => {
         setError(true);
-        displayError(t("error"), err);
+        displayError(t("error-activating-code"), err);
       });
   };
 
@@ -137,8 +137,8 @@ function Login() {
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
           email,
-          password
-        })
+          password,
+        }),
       })
     )
       .then((response) => {
@@ -164,11 +164,13 @@ function Login() {
   useEffect(() => {
     ConfigLoader.loadConfig().then((config) => {
       // Defaults to all enabled.
-      setEnabledLogins(config.login ?? {
-        "ad": true,
-        "external": true,
-        "usernamePassword": true
-      });
+      setEnabledLogins(
+        config.login ?? {
+          ad: true,
+          external: true,
+          usernamePassword: true,
+        }
+      );
     });
   }, []);
 
@@ -187,12 +189,12 @@ function Login() {
         ConfigLoader.loadConfig().then((config) => {
           const searchParams = new URLSearchParams({
             state,
-            code
+            code,
           });
 
           fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
-            credentials: "include"
+            credentials: "include",
           })
             .then((resp) => resp.json())
             .then((data) => {
@@ -245,26 +247,30 @@ function Login() {
                 {loggedIn &&
                   !context.selectedTenant.get &&
                   (context.tenants.get.length ?? 0) === 0 &&
-                  context.userType.get === 'oidc-external' && (
-                  <>
-                    <Form onSubmit={onActivationCodeSubmit}>
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setActivationCode(ev.target.value)}
-                        value={activationCode}
-                        name="activationCode"
-                        label={t("activation-code")}
-                        required
-                      />
+                  context.userType.get === "oidc-external" && (
+                    <>
+                      <Form onSubmit={onActivationCodeSubmit}>
+                        <FormInput
+                          className={
+                            error ? "form-control is-invalid" : "form-control"
+                          }
+                          onChange={(ev) => setActivationCode(ev.target.value)}
+                          value={activationCode}
+                          name="activationCode"
+                          label={t("activation-code")}
+                          required
+                        />
 
-                      <Button type="submit" className="mt-3" id="activation-code-submit">
-                        {t("submit")}
-                      </Button>
-                    </Form>
-                  </>
-                )}
+                        <Button
+                          type="submit"
+                          className="mt-3"
+                          id="activation-code-submit"
+                        >
+                          {t("submit")}
+                        </Button>
+                      </Form>
+                    </>
+                  )}
 
                 {loggedIn &&
                   !context.selectedTenant.get &&
@@ -279,14 +285,14 @@ function Login() {
 
                         <MultiSelect
                           overrideStrings={{
-                            selectSomeItems: t("select-some-options")
+                            selectSomeItems: t("select-some-options"),
                           }}
                           disableSearch
                           options={
                             context.tenants.get.map((item) => {
                               return {
                                 label: item.title,
-                                value: item.tenantKey
+                                value: item.tenantKey,
                               };
                             }) || []
                           }
@@ -316,7 +322,10 @@ function Login() {
                               providerKey="ad"
                               text={t("login-with-ad")}
                               icon={
-                                <FontAwesomeIcon className="me-2" icon={faCity} />
+                                <FontAwesomeIcon
+                                  className="me-2"
+                                  icon={faCity}
+                                />
                               }
                             />
                           )}
@@ -373,7 +382,8 @@ function Login() {
                             {t("submit")}
                           </Button>
                         </Form>
-                      </>)}
+                      </>
+                    )}
                   </>
                 )}
               </div>

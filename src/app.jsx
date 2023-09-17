@@ -154,7 +154,7 @@ function App() {
           },
           externalUsers: {
             roles: ["ROLE_ADMIN"],
-          }
+          },
         });
       });
   }, []);

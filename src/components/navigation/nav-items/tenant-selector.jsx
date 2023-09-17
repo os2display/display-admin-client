@@ -39,9 +39,7 @@ function TenantSelector() {
         {tenants && (
           <>
             {tenants.length === 1 && (
-              <div className="mt-1 mb-1">
-                {selectedTenant.title}
-              </div>
+              <div className="mt-1 mb-1">{selectedTenant.title}</div>
             )}
             {tenants.length > 1 && (
               <NavDropdown
