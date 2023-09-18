@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 - [#214](https://github.com/os2display/display-admin-client/pull/214)
   Use OIDC Code authorization flow and remove React StrictMode.
+
+## [1.4.0] - 2023-09-14
+
 - [#210](https://github.com/os2display/display-admin-client/pull/210)
   Use thumbnails for media list if they are set
 
