@@ -34,13 +34,15 @@ function Login() {
   // Context
   const context = useContext(UserContext);
 
-  // Local stage
+  // Local state
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
+  const [activationCode, setActivationCode] = useState("");
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [enabledLogins, setEnabledLogins] = useState(null);
 
   /**
    * Login, both called from oidc login and manuel login.
@@ -48,32 +50,34 @@ function Login() {
    * @param {object} data - Login data
    */
   const login = (data) => {
-    // Set token in local storage, to persist login on refresh
+    const { user } = data;
+    const { tenants } = data;
+
+    if (!tenants) {
+      setError(true);
+      displayError(t("missing-tenants"));
+    }
+
+    // Set data in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
-    context.userName.set(data.user?.fullname);
-    context.email.set(data.user?.email);
-    localStorage.setItem(localStorageKeys.USER_NAME, data.user?.fullname);
-    localStorage.setItem(localStorageKeys.EMAIL, data.user?.email);
+    localStorage.setItem(localStorageKeys.USER_NAME, user?.fullname);
+    localStorage.setItem(localStorageKeys.EMAIL, user?.email);
+    localStorage.setItem(localStorageKeys.TENANTS, JSON.stringify(tenants));
+
+    context.userName.set(user?.fullname);
+    context.email.set(user?.email);
+    context.tenants.set(tenants);
+    context.userType.set(user?.type);
 
     // If there are more than one tenant, the user should pick a tenant
-    if ((data.tenants?.length ?? 0) > 1) {
-      // Save tenants
-      localStorage.setItem(
-        localStorageKeys.TENANTS,
-        JSON.stringify(data.tenants)
-      );
-      context.tenants.set(data.tenants);
-    } else if ((data.tenants?.length ?? 0) > 0) {
-      // authenticated, and use the only received tenant.
+    if (tenants.length === 1) {
+      // authenticated, and use the only tenant.
       context.authenticated.set(true);
       localStorage.setItem(
         localStorageKeys.SELECTED_TENANT,
-        JSON.stringify(data.tenants[0])
+        JSON.stringify(tenants[0])
       );
-      context.selectedTenant.set(data.tenants[0]);
-    } else {
-      setError(true);
-      displayError(t("missing-tenants"));
+      context.selectedTenant.set(tenants[0]);
     }
 
     setLoggedIn(true);
@@ -103,6 +107,26 @@ function Login() {
         context.tenants.get.find((tenant) => tenant.tenantKey === value)
       )
     );
+  };
+
+  const onActivationCodeSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    dispatch(
+      api.endpoints.postV1ExternalUserActivationCodesActivate.initiate({
+        externalUserActivationCodeExternalUserActivateInput: JSON.stringify({
+          activationCode,
+        }),
+      })
+    )
+      .then(() => {
+        window.href = "/admin";
+      })
+      .catch((err) => {
+        setError(true);
+        displayError(t("error-activating-code"), err);
+      });
   };
 
   const onSubmit = (e) => {
@@ -136,6 +160,19 @@ function Login() {
         displayError(t("error"), err);
       });
   };
+
+  useEffect(() => {
+    ConfigLoader.loadConfig().then((config) => {
+      // Defaults to all enabled.
+      setEnabledLogins(
+        config.login ?? {
+          ad: true,
+          external: true,
+          usernamePassword: true,
+        }
+      );
+    });
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -209,6 +246,34 @@ function Login() {
 
                 {loggedIn &&
                   !context.selectedTenant.get &&
+                  (context.tenants.get.length ?? 0) === 0 &&
+                  context.userType.get === "oidc-external" && (
+                    <>
+                      <Form onSubmit={onActivationCodeSubmit}>
+                        <FormInput
+                          className={
+                            error ? "form-control is-invalid" : "form-control"
+                          }
+                          onChange={(ev) => setActivationCode(ev.target.value)}
+                          value={activationCode}
+                          name="activationCode"
+                          label={t("activation-code")}
+                          required
+                        />
+
+                        <Button
+                          type="submit"
+                          className="mt-3"
+                          id="activation-code-submit"
+                        >
+                          {t("submit")}
+                        </Button>
+                      </Form>
+                    </>
+                  )}
+
+                {loggedIn &&
+                  !context.selectedTenant.get &&
                   (context.tenants.get.length ?? 0) > 1 && (
                     <>
                       <h1>{t("logged-in-select-tenant")}</h1>
@@ -245,64 +310,80 @@ function Login() {
                   <>
                     <h1>{t("login-header")}</h1>
 
-                    <h2 className="h4 mt-5 mb-3 fw-light">
-                      {t("oidc-mit-id-header")}
-                    </h2>
+                    {(enabledLogins?.ad || enabledLogins?.external) && (
+                      <>
+                        <h2 className="h4 mt-5 mb-3 fw-light">
+                          {t("oidc-mit-id-header")}
+                        </h2>
 
-                    <div className="d-flex">
-                      <OIDCLogin
-                        providerKey="ad"
-                        text={t("login-with-ad")}
-                        icon={
-                          <FontAwesomeIcon className="me-2" icon={faCity} />
-                        }
-                      />
-                      <OIDCLogin
-                        providerKey="external"
-                        text={t("login-with-external")}
-                        icon={
-                          <img
-                            width="56"
-                            className="me-2"
-                            src={MitIdLogo}
-                            alt=""
+                        <div className="d-flex">
+                          {enabledLogins?.ad && (
+                            <OIDCLogin
+                              providerKey="ad"
+                              text={t("login-with-ad")}
+                              icon={
+                                <FontAwesomeIcon
+                                  className="me-2"
+                                  icon={faCity}
+                                />
+                              }
+                            />
+                          )}
+
+                          {enabledLogins?.external && (
+                            <OIDCLogin
+                              providerKey="external"
+                              text={t("login-with-external")}
+                              icon={
+                                <img
+                                  width="56"
+                                  className="me-2"
+                                  src={MitIdLogo}
+                                  alt=""
+                                />
+                              }
+                            />
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    {enabledLogins?.usernamePassword && (
+                      <>
+                        <h2 className="h4 mt-5 mb-3 fw-light">
+                          {t("os2-display-user-header")}
+                        </h2>
+
+                        <Form onSubmit={onSubmit}>
+                          <FormInput
+                            className={
+                              error ? "form-control is-invalid" : "form-control"
+                            }
+                            onChange={(ev) => setEmail(ev.target.value)}
+                            value={email}
+                            name="email"
+                            label={t("email")}
+                            required
                           />
-                        }
-                      />
-                    </div>
 
-                    <h2 className="h4 mt-5 mb-3 fw-light">
-                      {t("os2-display-user-header")}
-                    </h2>
+                          <FormInput
+                            className={
+                              error ? "form-control is-invalid" : "form-control"
+                            }
+                            onChange={(ev) => setPassword(ev.target.value)}
+                            value={password}
+                            name="password"
+                            label={t("password")}
+                            type="password"
+                            required
+                          />
 
-                    <Form onSubmit={onSubmit}>
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setEmail(ev.target.value)}
-                        value={email}
-                        name="email"
-                        label={t("email")}
-                        required
-                      />
-
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setPassword(ev.target.value)}
-                        value={password}
-                        name="password"
-                        label={t("password")}
-                        type="password"
-                        required
-                      />
-
-                      <Button type="submit" className="mt-3" id="login">
-                        {t("submit")}
-                      </Button>
-                    </Form>
+                          <Button type="submit" className="mt-3" id="login">
+                            {t("submit")}
+                          </Button>
+                        </Form>
+                      </>
+                    )}
                   </>
                 )}
               </div>

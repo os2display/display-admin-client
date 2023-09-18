@@ -52,6 +52,7 @@ function App() {
   const [accessConfig, setAccessConfig] = useState();
   const [tenants, setTenants] = useState();
   const [userName, setUserName] = useState("");
+  const [userType, setUserType] = useState("");
   const [email, setEmail] = useState("");
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
@@ -64,6 +65,7 @@ function App() {
     tenants: { get: tenants, set: setTenants },
     selectedTenant: { get: selectedTenant, set: setSelectedTenant },
     userName: { get: userName, set: setUserName },
+    userType: { get: userType, set: setUserType },
     email: { get: email, set: setEmail },
   };
   const listConfig = {
@@ -77,10 +79,15 @@ function App() {
     localStorage.removeItem(localStorageKeys.API_TOKEN);
     localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
     localStorage.removeItem(localStorageKeys.TENANTS);
+    localStorage.removeItem(localStorageKeys.USER_NAME);
+    localStorage.removeItem(localStorageKeys.EMAIL);
+    localStorage.removeItem(localStorageKeys.USER_TYPE);
 
     setSelectedTenant(null);
     setTenants(null);
     setUserName("");
+    setEmail("");
+    setUserType("");
     setAuthenticated(false);
   };
 
@@ -108,6 +115,9 @@ function App() {
 
       // Get the user email for displaying in top bar.
       setEmail(localStorage.getItem(localStorageKeys.EMAIL));
+
+      // Set the user type from local storage.
+      setUserType(localStorage.getItem(localStorageKeys.USER_TYPE));
     } else {
       setAuthenticated(false);
     }
@@ -144,7 +154,7 @@ function App() {
           },
           externalUsers: {
             roles: ["ROLE_ADMIN"],
-          }
+          },
         });
       });
   }, []);

@@ -577,6 +577,746 @@
             },
             "parameters": []
         },
+        "/v1/external-user-activation-codes": {
+            "get": {
+                "operationId": "getExternalUserActivationCodeCollection",
+                "tags": [
+                    "ExternalUserActivationCode"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ExternalUserActivationCode collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ExternalUserActivationCode.jsonld"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                    }
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Retrieves the collection of ExternalUserActivationCode resources.",
+                "description": "Retrieves the collection of ExternalUserActivationCode resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "minimum": 0,
+                            "maximum": 30
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "post": {
+                "operationId": "post-v1-create-external-user-activation-code",
+                "tags": [
+                    "ExternalUserActivationCode"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ExternalUserActivationCode resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetExternalUserActivationCodeItem": {
+                                "operationId": "getExternalUserActivationCodeItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/external-user-activation-codes/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Create an external user activation code.",
+                "description": "Create an external user activation code",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new ExternalUserActivationCode resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode.ExternalUserActivationCodeInput.jsonld"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode.ExternalUserActivationCodeInput"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode.ExternalUserActivationCodeInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/external-user-activation-codes/activate": {
+            "post": {
+                "operationId": "post-v1-activate-external-user-activation-code",
+                "tags": [
+                    "ExternalUserActivationCode"
+                ],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "204": {
+                        "description": "Activation code was accepted",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Use an external user activation code.",
+                "description": "Use an external user activation code.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The new ExternalUserActivationCode resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode.ExternalUserActivateInput.jsonld"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode.ExternalUserActivateInput"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode.ExternalUserActivateInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/external-user-activation-codes/{id}": {
+            "get": {
+                "operationId": "getExternalUserActivationCodeItem",
+                "tags": [
+                    "ExternalUserActivationCode"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ExternalUserActivationCode resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a ExternalUserActivationCode resource.",
+                "description": "Retrieves a ExternalUserActivationCode resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "deleteExternalUserActivationCodeItem",
+                "tags": [
+                    "ExternalUserActivationCode"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ExternalUserActivationCode resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Removes the ExternalUserActivationCode resource.",
+                "description": "Removes the ExternalUserActivationCode resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/external-user-activation-codes/{id}/refresh-code": {
+            "get": {
+                "operationId": "post-v1-refresh-external-user-activation-code",
+                "tags": [
+                    "ExternalUserActivationCode"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ExternalUserActivationCode resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    },
+                    "201": {
+                        "description": ""
+                    },
+                    "204": {
+                        "description": "Activation code was refreshed",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Refresh an external user activation code.",
+                "description": "Refresh an external user activation code.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/external-users": {
+            "get": {
+                "operationId": "get-v1-external-users",
+                "tags": [
+                    "ExternalUsers"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    }
+                },
+                "summary": "Retrieve a collection of External User resources.",
+                "description": "Retrieve a collection of External User resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "10"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "modifiedBy[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[createdAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/external-users/{id}": {
+            "get": {
+                "operationId": "get-v1-external-user-id",
+                "tags": [
+                    "ExternalUsers"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/ld+json": {
+                                "examples": null
+                            }
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieve an External User resource.",
+                "description": "Retrieves an External User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "put-v1-external-user-id",
+                "tags": [
+                    "ExternalUsers"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.ExternalUserOutput.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.ExternalUserOutput"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.ExternalUserOutput"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Update an External User resource.",
+                "description": "Update an External User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated User resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User.ExternalUserInput.jsonld"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User.ExternalUserInput"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User.ExternalUserInput"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "delete-v1-external-user-id",
+                "tags": [
+                    "ExternalUsers"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Delete an External User resource.",
+                "description": "Delete an External User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
         "/v1/feed-sources": {
             "get": {
                 "operationId": "get-v1-feed-sources",
@@ -6563,6 +7303,255 @@
                     }
                 }
             },
+            "ExternalUserActivationCode": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "tenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "codeExpire": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ExternalUserActivationCode.ExternalUserActivateInput": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "activationCode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ExternalUserActivationCode.ExternalUserActivateInput.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "activationCode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ExternalUserActivationCode.ExternalUserActivationCodeInput": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ExternalUserActivationCode.ExternalUserActivationCodeInput.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ExternalUserActivationCode.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "tenant": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "codeExpire": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
+            },
             "Feed.Feed": {
                 "type": "object",
                 "description": "",
@@ -6817,43 +7806,6 @@
                     }
                 }
             },
-            "Media": {
-                "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "license": {
-                        "type": "string"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "media": {
-                        "$ref": "#/components/schemas/Collection"
-                    },
-                    "assets": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
             "Media.Media": {
                 "type": "object",
                 "description": "",
@@ -6889,6 +7841,10 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "thumbnail": {
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },
@@ -6962,78 +7918,10 @@
                         "items": {
                             "type": "string"
                         }
-                    }
-                }
-            },
-            "Media.jsonld": {
-                "type": "object",
-                "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
                     },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "license": {
-                        "type": "string"
-                    },
-                    "created": {
+                    "thumbnail": {
                         "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "media": {
-                        "$ref": "#/components/schemas/Collection.jsonld"
-                    },
-                    "assets": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "nullable": true
                     }
                 }
             },
@@ -7474,6 +8362,12 @@
                     "layout": {
                         "type": "string"
                     },
+                    "orientation": {
+                        "type": "string"
+                    },
+                    "resolution": {
+                        "type": "string"
+                    },
                     "location": {
                         "type": "string"
                     },
@@ -7487,20 +8381,6 @@
                         "default": "/v1/screens/{id}/groups",
                         "example": "/v1/screens/{id}/groups",
                         "type": "string"
-                    },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
                     },
                     "screenUser": {
                         "type": "string",
@@ -7580,6 +8460,12 @@
                     "layout": {
                         "type": "string"
                     },
+                    "orientation": {
+                        "type": "string"
+                    },
+                    "resolution": {
+                        "type": "string"
+                    },
                     "location": {
                         "type": "string"
                     },
@@ -7593,20 +8479,6 @@
                         "default": "/v1/screens/{id}/groups",
                         "example": "/v1/screens/{id}/groups",
                         "type": "string"
-                    },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
                     },
                     "screenUser": {
                         "type": "string",
@@ -7637,19 +8509,11 @@
                     "location": {
                         "type": "string"
                     },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                    "resolution": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
                     },
                     "enableColorSchemeChange": {
                         "type": "boolean",
@@ -7711,19 +8575,11 @@
                     "location": {
                         "type": "string"
                     },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                    "resolution": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
                     },
                     "enableColorSchemeChange": {
                         "type": "boolean",
@@ -8645,6 +9501,13 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "externalUserActivationCodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "iri-reference"
+                        }
+                    },
                     "title": {
                         "type": "string"
                     },
@@ -8727,6 +9590,13 @@
                         "type": "string",
                         "nullable": true
                     },
+                    "externalUserActivationCodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "iri-reference"
+                        }
+                    },
                     "title": {
                         "type": "string"
                     },
@@ -8785,12 +9655,7 @@
                         "type": "string"
                     },
                     "logo": {
-                        "nullable": true,
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Media"
-                            }
-                        ]
+                        "type": "string"
                     },
                     "css": {
                         "type": "string"
@@ -8860,12 +9725,7 @@
                         "type": "string"
                     },
                     "logo": {
-                        "nullable": true,
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Media.jsonld"
-                            }
-                        ]
+                        "type": "string"
                     },
                     "css": {
                         "type": "string"
@@ -8943,105 +9803,19 @@
                     }
                 }
             },
-            "User": {
+            "User.ExternalUserInput": {
                 "type": "object",
+                "description": "",
                 "properties": {
-                    "email": {
-                        "format": "email",
-                        "externalDocs": {
-                            "url": "http://schema.org/email"
-                        },
-                        "type": "string"
-                    },
                     "fullName": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "description": "The hashed password",
-                        "type": "string"
-                    },
-                    "activeTenant": {
-                        "type": "string",
-                        "format": "iri-reference"
-                    },
-                    "userRoleTenants": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRoleTenant"
-                        }
-                    },
-                    "provider": {
-                        "type": "string"
-                    },
-                    "userIdentifier": {
-                        "readOnly": true,
-                        "description": "A visual identifier that represents this user.",
-                        "type": "string"
-                    },
-                    "username": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "roles": {
-                        "readOnly": true,
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "tenants": {
-                        "readOnly": true,
-                        "$ref": "#/components/schemas/Collection"
-                    },
-                    "salt": {
-                        "readOnly": true,
-                        "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
                         "type": "string",
                         "nullable": true
-                    },
-                    "roleTenant": {
-                        "writeOnly": true,
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "userRoleTenant": {
-                        "writeOnly": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRoleTenant"
-                        }
-                    },
-                    "id": {
-                        "readOnly": true,
-                        "description": "Get the Ulid.",
-                        "type": "string",
-                        "format": "ulid"
-                    },
-                    "createdAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
                     }
-                },
-                "required": [
-                    "fullName"
-                ]
+                }
             },
-            "User.jsonld": {
+            "User.ExternalUserInput.jsonld": {
                 "type": "object",
+                "description": "",
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -9078,105 +9852,89 @@
                         "readOnly": true,
                         "type": "string"
                     },
-                    "email": {
-                        "format": "email",
-                        "externalDocs": {
-                            "url": "http://schema.org/email"
-                        },
-                        "type": "string"
-                    },
                     "fullName": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "description": "The hashed password",
-                        "type": "string"
-                    },
-                    "activeTenant": {
                         "type": "string",
-                        "format": "iri-reference"
-                    },
-                    "userRoleTenants": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
-                        }
-                    },
-                    "provider": {
-                        "type": "string"
-                    },
-                    "userIdentifier": {
-                        "readOnly": true,
-                        "description": "A visual identifier that represents this user.",
-                        "type": "string"
-                    },
-                    "username": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "roles": {
-                        "readOnly": true,
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "tenants": {
-                        "readOnly": true,
-                        "$ref": "#/components/schemas/Collection.jsonld"
-                    },
-                    "salt": {
-                        "readOnly": true,
-                        "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
+                        "nullable": true
+                    }
+                }
+            },
+            "User.ExternalUserOutput": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "fullName": {
                         "type": "string",
                         "nullable": true
                     },
-                    "roleTenant": {
-                        "writeOnly": true,
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "userRoleTenant": {
-                        "writeOnly": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
-                        }
-                    },
-                    "id": {
-                        "readOnly": true,
-                        "description": "Get the Ulid.",
-                        "type": "string",
-                        "format": "ulid"
-                    },
-                    "createdAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
+                    "userType": {
+                        "nullable": true,
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserTypeEnum"
+                            }
+                        ]
                     }
-                },
-                "required": [
-                    "fullName"
-                ]
+                }
+            },
+            "User.ExternalUserOutput.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "fullName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "userType": {
+                        "nullable": true,
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserTypeEnum.jsonld"
+                            }
+                        ]
+                    }
+                }
             },
             "UserRoleTenant": {
                 "type": "object",
                 "properties": {
                     "user": {
-                        "$ref": "#/components/schemas/User"
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "tenant": {
                         "type": "string",
@@ -9251,7 +10009,8 @@
                         "type": "string"
                     },
                     "user": {
-                        "$ref": "#/components/schemas/User.jsonld"
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "tenant": {
                         "type": "string",
@@ -9287,6 +10046,67 @@
                     }
                 }
             },
+            "UserTypeEnum": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "value": {
+                        "readOnly": true,
+                        "type": "string"
+                    }
+                }
+            },
+            "UserTypeEnum.jsonld": {
+                "type": "object",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "name": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "value": {
+                        "readOnly": true,
+                        "type": "string"
+                    }
+                }
+            },
             "Token": {
                 "type": "object",
                 "properties": {
@@ -9299,6 +10119,11 @@
                         "type": "string",
                         "readOnly": true,
                         "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    },
+                    "refresh_token_expiration": {
+                        "type": "int",
+                        "readOnly": true,
+                        "example": "1678802283"
                     },
                     "tenants": {
                         "type": "array",
@@ -9342,7 +10167,7 @@
                             "email": {
                                 "type": "string",
                                 "readOnly": true,
-                                "example": "johndoe@example.com"
+                                "example": "john@example.com"
                             }
                         }
                     }
@@ -9377,7 +10202,7 @@
                 "properties": {
                     "email": {
                         "type": "string",
-                        "example": "johndoe@example.com"
+                        "example": "john@example.com"
                     },
                     "password": {
                         "type": "string",
