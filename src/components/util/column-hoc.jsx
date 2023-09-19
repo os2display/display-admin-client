@@ -11,9 +11,10 @@ import LinkForList from "./list/link-for-list";
  * Hoc that wraps arrays in checkbox and delete button
  *
  * @param {Array} columns - The array to wrap
+ * @param {boolean} omitStandardColumns - Omit title and createdBy columns.
  * @returns {Array} Array of columns for lists.
  */
-function ColumnHoc(columns) {
+function ColumnHoc(columns, omitStandardColumns) {
   return function WithColumnHoc({
     handleDelete,
     disableCheckbox = () => {},
@@ -37,7 +38,7 @@ function ColumnHoc(columns) {
       });
     }
 
-    const firstColumns = [
+    let firstColumns = [
       {
         key: "pick",
         content: (d) => (
@@ -49,15 +50,21 @@ function ColumnHoc(columns) {
           />
         ),
       },
-      {
+    ];
+
+    if (!omitStandardColumns) {
+      firstColumns = [
+        ...firstColumns,
+        {
         path: "title",
         label: t("name"),
       },
-      {
-        path: "createdBy",
-        label: t("created-by"),
-      },
-    ];
+        {
+          path: "createdBy",
+          label: t("created-by"),
+        },
+      ]
+    }
 
     const returnColumns = firstColumns.concat(columns({ ...props }));
 

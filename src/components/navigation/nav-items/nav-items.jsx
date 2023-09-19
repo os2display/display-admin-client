@@ -180,13 +180,19 @@ function NavItems() {
                 <FontAwesomeIcon className="me-2" icon={faUsers} />
                 {t("external-users")}
               </NavLink>
-              <Link
-                aria-label={t("add-new-external-user-aria-label")}
-                className="nav-add-new"
-                to="/users/create"
+            </Nav.Item>
+          </RestrictedNavRoute>
+          <RestrictedNavRoute roles={accessConfig.externalUsers.roles}>
+            <Nav.Item className="nav-second-level">
+              <NavLink
+                id="nav-items_activation_codes"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
+                to="/activation/list"
               >
-                <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-              </Link>
+                {t("activation-codes")}
+              </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
         </>

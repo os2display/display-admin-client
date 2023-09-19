@@ -88,7 +88,9 @@
   },
   "users-list": {
     "columns": {
-      "activated": "Aktiv"
+      "activated": "Aktiv",
+      "full-name": "Navn",
+      "created-at": "Oprettelsesdato"
     },
     "loading-messages": {
       "loading-users": "Henter brugere",
@@ -705,7 +707,8 @@
     "playlists-playlists": "Spillelister",
     "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
-    "configuration-users": "Brugere"
+    "configuration-users": "Brugere",
+    "activation-codes": "Aktiveringskoder"
   },
   "topbar": {
     "brand": "OS2Display",
@@ -908,5 +911,14 @@
   },
   "tenant-selector": {
     "tenant": "Instans"
+  },
+  "activation-code-list": {
+    "header": "Aktiveringskoder",
+    "create-activation-codes": "Opret ny",
+    "columns": {
+      "code": "Kode",
+      "created-at": "Oprettelsesdato",
+      "created-by": "Oprettet af"
+    }
   }
 }

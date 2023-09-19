@@ -10,17 +10,19 @@ import ColumnHoc from "../util/column-hoc";
 function getUserColumns() {
   const { t } = useTranslation("common", { keyPrefix: "users-list" });
 
-  const columns = [
+  return [
     {
-      path: "activated",
-      label: t("columns.activated"),
+      path: "fullName",
+      label: t("columns.full-name")
+    },
+    {
+      path: "createdAt",
+      label: t("columns.created-at"),
     },
   ];
-
-  return columns;
 }
 
-const UserColumns = ColumnHoc(getUserColumns);
-const SelectUserColumns = SelectColumnHoc(getUserColumns);
+const UserColumns = ColumnHoc(getUserColumns, true);
+const SelectUserColumns = SelectColumnHoc(getUserColumns, true);
 
 export { SelectUserColumns, UserColumns };

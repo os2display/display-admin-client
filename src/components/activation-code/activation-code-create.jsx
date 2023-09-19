@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
-import UserForm from "./user-form";
+import ActivationCodeForm from "./activation-code-form";
 import {
   displaySuccess,
   displayError,
@@ -13,7 +13,7 @@ import {
  *
  * @returns {object} The user create page.
  */
-function UserCreate() {
+function ActivationCodeCreate() {
   const { t } = useTranslation("common", { keyPrefix: "user-create" });
   const navigate = useNavigate();
   const headerText = t("create-new-user-header");
@@ -72,7 +72,7 @@ function UserCreate() {
   };
 
   return (
-    <UserForm
+    <ActivationCodeForm
       user={formStateObject}
       headerText={headerText}
       handleInput={handleInput}
@@ -83,4 +83,4 @@ function UserCreate() {
   );
 }
 
-export default UserCreate;
+export default ActivationCodeCreate;

@@ -4,7 +4,7 @@ import List from "../util/list/list";
 import ListContext from "../../context/list-context";
 import UserContext from "../../context/user-context";
 import useModal from "../../context/modal-context/modal-context-hook";
-import { SelectUserColumns, UserColumns } from "./user-columns";
+import { SelectActivationCodeColumns, ActivationCodeColumns } from "./activation-code-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -13,21 +13,17 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
-  useDeleteV1ExternalUsersByIdMutation, useGetV1ExternalUsersQuery
+  useDeleteExternalUserActivationCodeItemMutation,
+  useDeleteV1ExternalUsersByIdMutation, useGetExternalUserActivationCodeCollectionQuery, useGetV1ExternalUsersQuery
 } from "../../redux/api/api.generated";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 /**
- * The users list component.
+ * The Activation Code list component.
  *
  * @returns {object} The users list.
  */
-function UsersList() {
-  const { t } = useTranslation("common", { keyPrefix: "users-list" });
+function ActivationCodeList() {
+  const { t } = useTranslation("common", { keyPrefix: "activation-code-list" });
   const { selected, setSelected } = useModal();
   const {
     searchText: { get: searchText },
@@ -47,7 +43,7 @@ function UsersList() {
   const [
     DeleteV1ExternalUser,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteV1ExternalUsersByIdMutation();
+  ] = useDeleteExternalUserActivationCodeItemMutation();
 
   // Get method
   const {
@@ -55,7 +51,7 @@ function UsersList() {
     error: usersGetError,
     isLoading,
     refetch,
-  } = useGetV1ExternalUsersQuery({
+  } = useGetExternalUserActivationCodeCollectionQuery({
     page,
     order: { createdAt: "desc" },
     fullName: searchText,
@@ -120,15 +116,15 @@ function UsersList() {
   }, [usersGetError]);
 
   // The columns for the table.
-  const columns = UserColumns({ handleDelete });
+  const columns = ActivationCodeColumns({ handleDelete });
 
   return (
     <>
-      <Row className="align-items-center justify-content-between my-3">
-        <Col>
-          <h1>{t('header')}</h1>
-        </Col>
-      </Row>
+      <ContentHeader
+        title={t("header")}
+        newBtnTitle={t("create-activation-codes")}
+        newBtnLink="/activation/create"
+      />
       <ContentBody>
         <>
           {listData && (
@@ -150,4 +146,4 @@ function UsersList() {
   );
 }
 
-export default UsersList;
+export default ActivationCodeList;

@@ -37,9 +37,11 @@ import LoadingComponent from "./components/util/loading-component/loading-compon
 import ModalProvider from "./context/modal-context/modal-provider";
 import UsersList from "./components/users/users-list";
 import UserEdit from "./components/users/user-edit";
-import UserCreate from "./components/users/user-create";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
+import ActivationCodeList from "./components/activation-code/activation-code-list";
+import ActivationCodeEdit from "./components/activation-code/activation-code-edit";
+import ActivationCodeCreate from "./components/activation-code/activation-code-create";
 
 /**
  * App component.
@@ -347,9 +349,13 @@ function App() {
                                   element={<MediaCreate />}
                                 />
                               </Route>
+                              <Route path="activation">
+                                <Route path="list" element={<ActivationCodeList />} />
+                                <Route path="create" element={<ActivationCodeCreate />} />
+                                <Route path="edit/:id" element={<ActivationCodeEdit />} />
+                              </Route>
                               <Route path="users">
                                 <Route path="list" element={<UsersList />} />
-                                <Route path="create" element={<UserCreate />} />
                                 <Route path="edit/:id" element={<UserEdit />} />
                               </Route>
                               <Route path="themes">

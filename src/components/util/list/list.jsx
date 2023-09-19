@@ -32,6 +32,7 @@ function List({
   totalItems,
   handleDelete,
   showCreatedByFilter,
+  displaySearch,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
@@ -200,7 +201,9 @@ function List({
     <>
       <Row className="my-2">
         <Col>
-          <SearchBox value={searchParams} onChange={onSearch} />
+          {displaySearch && (
+            <SearchBox value={searchParams} onChange={onSearch} />
+          )}
         </Col>
         <>
           {displayPublished && publishedParams && (
@@ -281,6 +284,7 @@ List.defaultProps = {
   showCreatedByFilter: true,
   handleDelete: null,
   displayPublished: false,
+  displaySearch: true,
 };
 
 List.propTypes = {
@@ -292,6 +296,7 @@ List.propTypes = {
   totalItems: PropTypes.number.isRequired,
   displayPublished: PropTypes.bool,
   showCreatedByFilter: PropTypes.bool,
+  displaySearch: PropTypes.bool,
 };
 
 export default ListLoading(List);
