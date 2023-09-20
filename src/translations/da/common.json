@@ -919,8 +919,41 @@
       "code": "Kode",
       "code-expire": "Udløber",
       "created-at": "Oprettelsesdato",
-      "created-by": "Oprettet af"
+      "created-by": "Oprettet af",
+      "display-name": "Brugerens visningsnavn"
     },
-    "refresh-button": "Forny kode"
+    "refresh-button": "Forny kode",
+    "success-messages": {
+      "activation-code-delete": "Aktiveringskode slettet"
+    },
+    "loading-messages": {
+      "loading-activation-code": "Henter aktiveringskoder",
+      "deleting-activation-code": "Sletter aktiveringskode"
+    },
+    "error-messages": {
+      "activation-code-load-error": "Load af aktiveringskode fejlede",
+      "activation-code-delete-error": "Sletning af aktiveringskode fejlede"
+    }
+  },
+  "activation-code-form": {
+    "display-name-label": "Brugerens navn i systemet",
+    "display-name-placeholder": "f.eks. Test Testesen",
+    "cancel-button": "Annullér",
+    "save-button": "Gem aktiveringskode",
+    "role-external-user-admin": "Ekstern brugeradministrator",
+    "role-external-user": "Ekstern bruger",
+    "role-label": "Brugerens rolle"
+  },
+  "activation-code-create": {
+    "create-new-activation-code-header": "Opret aktiveringskode",
+    "error-messages": {
+      "save-activation-code-error": "Oprettelse af aktiveringskode fejlede"
+    },
+    "success-messages": {
+      "saved-activation-code": "Aktiveringskode oprettet"
+    },
+    "loading-messages": {
+      "saving-activation-code": "Opretter aktiveringskode"
+    }
   }
 }

@@ -1,10 +1,12 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
 import List from "../util/list/list";
 import ListContext from "../../context/list-context";
 import UserContext from "../../context/user-context";
 import useModal from "../../context/modal-context/modal-context-hook";
-import { SelectActivationCodeColumns, ActivationCodeColumns } from "./activation-code-columns";
+import { ActivationCodeColumns } from "./activation-code-columns";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
@@ -15,10 +17,8 @@ import {
 import {
   api,
   useDeleteExternalUserActivationCodeItemMutation,
-  useDeleteV1ExternalUsersByIdMutation, useGetExternalUserActivationCodeCollectionQuery, useGetV1ExternalUsersQuery
+  useGetExternalUserActivationCodeCollectionQuery,
 } from "../../redux/api/api.generated";
-import { useDispatch } from "react-redux";
-import { Button } from "react-bootstrap";
 
 /**
  * The Activation Code list component.
@@ -36,28 +36,29 @@ function ActivationCodeList() {
   const context = useContext(UserContext);
 
   // Local state
+  const [items, setItems] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("loading-messages.loading-users")
+    t("loading-messages.loading-activation-code")
   );
 
   // Delete call
   const [
-    DeleteV1ExternalUser,
+    DeleteV1ExternalUserActivationCode,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
   ] = useDeleteExternalUserActivationCodeItemMutation();
 
   // Get method
   const {
     data,
-    error: usersGetError,
+    error: activationCodeGetError,
     isLoading,
     refetch,
   } = useGetExternalUserActivationCodeCollectionQuery({
     page,
     order: { createdAt: "desc" },
-    fullName: searchText,
+    title: searchText,
     createdBy,
   });
 
@@ -71,20 +72,20 @@ function ActivationCodeList() {
     refetch();
   }, [searchText, page, createdBy]);
 
-  /** Deletes multiple users. */
+  /** Deletes multiple codes. */
   useEffect(() => {
     if (isDeleting && selected.length > 0) {
-      const userToDelete = selected[0];
+      const codeToDelete = selected[0];
       setSelected(selected.slice(1));
-      const userToDeleteId = idFromUrl(userToDelete.id);
-      DeleteV1ExternalUser({ id: userToDeleteId });
+      const codeToDeleteId = idFromUrl(codeToDelete.id);
+      DeleteV1ExternalUserActivationCode({ id: codeToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
   // Sets success messages in local storage, because the page is reloaded
   useEffect(() => {
     if (isDeleteSuccess && selected.length === 0) {
-      displaySuccess(t("success-messages.user-delete"));
+      displaySuccess(t("success-messages.activation-code-delete"));
       refetch();
       setIsDeleting(false);
     }
@@ -101,22 +102,28 @@ function ActivationCodeList() {
   useEffect(() => {
     if (isDeleteError) {
       setIsDeleting(false);
-      displayError(t("error-messages.user-delete-error"), isDeleteError);
+      displayError(
+        t("error-messages.activation-code-delete-error"),
+        isDeleteError
+      );
     }
   }, [isDeleteError]);
 
   /** Starts the deletion process. */
   const handleDelete = () => {
     setIsDeleting(true);
-    setLoadingMessage(t("loading-messages.deleting-user"));
+    setLoadingMessage(t("loading-messages.deleting-activation-code"));
   };
 
   // Error with retrieving list of users
   useEffect(() => {
-    if (usersGetError) {
-      displayError(t("error-messages.users-load-error"), usersGetError);
+    if (activationCodeGetError) {
+      displayError(
+        t("error-messages.activation-code-load-error"),
+        activationCodeGetError
+      );
     }
-  }, [usersGetError]);
+  }, [activationCodeGetError]);
 
   const dispatch = useDispatch();
 
@@ -133,7 +140,6 @@ function ActivationCodeList() {
         }
       })
       .catch((err) => {
-        setError(true);
         displayError(t("error-refreshing-code"), err);
       });
   };
@@ -142,20 +148,36 @@ function ActivationCodeList() {
   const columns = ActivationCodeColumns({ handleDelete });
 
   columns.push({
-    path: '@id',
+    path: "@id",
     dataFunction: (id) => {
       const activationCodeId = idFromUrl(id);
 
-      return <Button
-        variant="primary"
-        className="refresh-activation-code"
-        onClick={() => refreshCallback(activationCodeId)}
-      >
-        {t("refresh-button")}
-      </Button>
+      return (
+        <Button
+          variant="primary"
+          className="refresh-activation-code"
+          onClick={() => refreshCallback(activationCodeId)}
+        >
+          {t("refresh-button")}
+        </Button>
+      );
     },
-    label: ""
+    label: "",
   });
+
+  useEffect(() => {
+    if (listData) {
+      // Set title from code, for use with delete modal.
+      const newItems = [...(listData["hydra:member"] ?? [])].map((el) => {
+        return {
+          ...el,
+          title: el.code,
+        };
+      });
+
+      setItems(newItems);
+    }
+  }, [listData]);
 
   return (
     <>
@@ -170,7 +192,7 @@ function ActivationCodeList() {
             <List
               columns={columns}
               totalItems={listData["hydra:totalItems"]}
-              data={listData["hydra:member"]}
+              data={items}
               handleDelete={handleDelete}
               deleteSuccess={isDeleteSuccess || false}
               isLoading={isLoading || isDeleting}

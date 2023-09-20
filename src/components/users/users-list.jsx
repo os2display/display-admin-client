@@ -1,11 +1,12 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import List from "../util/list/list";
 import ListContext from "../../context/list-context";
 import UserContext from "../../context/user-context";
 import useModal from "../../context/modal-context/modal-context-hook";
-import { SelectUserColumns, UserColumns } from "./user-columns";
-import ContentHeader from "../util/content-header/content-header";
+import { UserColumns } from "./user-columns";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
@@ -13,13 +14,9 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
-  useDeleteV1ExternalUsersByIdMutation, useGetV1ExternalUsersQuery
+  useDeleteV1ExternalUsersByIdMutation,
+  useGetV1ExternalUsersQuery,
 } from "../../redux/api/api.generated";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * The users list component.
@@ -126,7 +123,7 @@ function UsersList() {
     <>
       <Row className="align-items-center justify-content-between my-3">
         <Col>
-          <h1>{t('header')}</h1>
+          <h1>{t("header")}</h1>
         </Col>
       </Row>
       <ContentBody>

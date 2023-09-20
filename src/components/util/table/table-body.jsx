@@ -25,13 +25,13 @@ function TableBody({ columns, data }) {
       return column.content(item);
     }
 
-    let data = get(item, column.path);
+    let cellData = get(item, column.path);
 
     if (column.dataFunction) {
-      data = column.dataFunction(data);
+      cellData = column.dataFunction(cellData);
     }
 
-    return data;
+    return cellData;
   }
 
   /**

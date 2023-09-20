@@ -7,11 +7,13 @@ import CheckboxForList from "./list/checkbox-for-list";
 import selectedHelper from "./helpers/selectedHelper";
 import useModal from "../../context/modal-context/modal-context-hook";
 import LinkForList from "./list/link-for-list";
+
 /**
  * Hoc that wraps arrays in checkbox and delete button
  *
  * @param {Array} columns - The array to wrap
  * @param {boolean} omitStandardColumns - Omit title and createdBy columns.
+ * @param {boolean} disableEdit - Remove edit button.
  * @returns {Array} Array of columns for lists.
  */
 function ColumnHoc(columns, omitStandardColumns, disableEdit) {
@@ -56,14 +58,14 @@ function ColumnHoc(columns, omitStandardColumns, disableEdit) {
       firstColumns = [
         ...firstColumns,
         {
-        path: "title",
-        label: t("name"),
-      },
+          path: "title",
+          label: t("name"),
+        },
         {
           path: "createdBy",
           label: t("created-by"),
         },
-      ]
+      ];
     }
 
     const returnColumns = firstColumns.concat(columns({ ...props }));
@@ -73,7 +75,10 @@ function ColumnHoc(columns, omitStandardColumns, disableEdit) {
       content: (d) => (
         <div className="d-flex justify-content-end">
           {!disableEdit && (
-            <LinkForList id={d["@id"]} param={`${pathname.split("/")[1]}/edit`} />
+            <LinkForList
+              id={d["@id"]}
+              param={`${pathname.split("/")[1]}/edit`}
+            />
           )}
           <Button
             variant="danger"

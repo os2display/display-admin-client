@@ -23,6 +23,7 @@ import ListContext from "../../../context/list-context";
  *   element with success.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.showCreatedByFilter - Callback for created by filter.
+ * @param {boolean} props.displaySearch - Should search be displayed.
  * @returns {object} The List.
  */
 function List({

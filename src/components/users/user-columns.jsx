@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 import SelectColumnHoc from "../util/select-column-hoc";
 import ColumnHoc from "../util/column-hoc";
-import dayjs from "dayjs";
 
 /**
  * Columns for Users lists.
@@ -14,7 +14,7 @@ function getUserColumns() {
   return [
     {
       path: "fullName",
-      label: t("columns.full-name")
+      label: t("columns.full-name"),
     },
     {
       path: "createdAt",

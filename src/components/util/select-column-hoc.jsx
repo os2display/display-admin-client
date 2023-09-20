@@ -35,7 +35,7 @@ function SelectColumnHoc(columns, omitStandardColumns) {
           path: "createdBy",
           label: t("created-by"),
         },
-      ]
+      ];
     }
 
     const returnColumns = firstColumns.concat(columns({ ...props }));

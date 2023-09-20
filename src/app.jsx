@@ -39,7 +39,6 @@ import UsersList from "./components/users/users-list";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 import ActivationCodeList from "./components/activation-code/activation-code-list";
-import ActivationCodeEdit from "./components/activation-code/activation-code-edit";
 import ActivationCodeCreate from "./components/activation-code/activation-code-create";
 
 /**
@@ -349,9 +348,14 @@ function App() {
                                 />
                               </Route>
                               <Route path="activation">
-                                <Route path="list" element={<ActivationCodeList />} />
-                                <Route path="create" element={<ActivationCodeCreate />} />
-                                <Route path="edit/:id" element={<ActivationCodeEdit />} />
+                                <Route
+                                  path="list"
+                                  element={<ActivationCodeList />}
+                                />
+                                <Route
+                                  path="create"
+                                  element={<ActivationCodeCreate />}
+                                />
                               </Route>
                               <Route path="users">
                                 <Route path="list" element={<UsersList />} />

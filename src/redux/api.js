@@ -22,7 +22,7 @@ generatedApi.enhanceEndpoints({
     "ScreenGroup",
     "FeedSource",
     "Feed",
-    "ActivationCode"
+    "ActivationCode",
   ],
   endpoints: {
     getV1FeedSources: {
@@ -218,7 +218,7 @@ generatedApi.enhanceEndpoints({
         "FeedSource",
         "Media",
         "ActivationCode",
-        "User"
+        "User",
       ],
     },
   },
