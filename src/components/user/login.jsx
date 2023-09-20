@@ -227,7 +227,7 @@ function Login() {
   return (
     <>
       {ready && (
-        <div className="login-container">
+        <div className="login-container container">
           <Row className="login-box-shadow">
             <Col
               md="4"

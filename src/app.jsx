@@ -40,6 +40,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 import ActivationCodeList from "./components/activation-code/activation-code-list";
 import ActivationCodeCreate from "./components/activation-code/activation-code-create";
+import ActivationCodeActivate from "./components/activation-code/activation-code-activate";
 
 /**
  * App component.
@@ -355,6 +356,10 @@ function App() {
                                 <Route
                                   path="create"
                                   element={<ActivationCodeCreate />}
+                                />
+                                <Route
+                                  path="activate"
+                                  element={<ActivationCodeActivate />}
                                 />
                               </Route>
                               <Route path="users">

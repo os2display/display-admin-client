@@ -39,6 +39,7 @@ function UsersList() {
   const [loadingMessage, setLoadingMessage] = useState(
     t("loading-messages.loading-users")
   );
+  const [items, setItems] = useState([]);
 
   // Delete call
   const [
@@ -119,6 +120,20 @@ function UsersList() {
   // The columns for the table.
   const columns = UserColumns({ handleDelete });
 
+  useEffect(() => {
+    if (listData) {
+      // Set title from fullName, for use with delete modal.
+      const newItems = [...(listData["hydra:member"] ?? [])].map((el) => {
+        return {
+          ...el,
+          title: el.fullName,
+        };
+      });
+
+      setItems(newItems);
+    }
+  }, [listData]);
+
   return (
     <>
       <Row className="align-items-center justify-content-between my-3">
@@ -132,7 +147,7 @@ function UsersList() {
             <List
               columns={columns}
               totalItems={listData["hydra:totalItems"]}
-              data={listData["hydra:member"]}
+              data={items}
               handleDelete={handleDelete}
               deleteSuccess={isDeleteSuccess || false}
               isLoading={isLoading || isDeleting}

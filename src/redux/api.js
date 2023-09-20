@@ -23,6 +23,7 @@ generatedApi.enhanceEndpoints({
     "FeedSource",
     "Feed",
     "ActivationCode",
+    "User"
   ],
   endpoints: {
     getV1FeedSources: {
@@ -194,7 +195,7 @@ generatedApi.enhanceEndpoints({
     },
     postV1ExternalUserActivationCodesActivate: {
       providesTags: ["ActivationCode"],
-      invalidatesTags: ["ActivationCode", "User"],
+      invalidatesTags: ["ActivationCode"],
     },
     getV1ExternalUserActivationCodesByIdRefreshCode: {
       providesTags: ["ActivationCode"],

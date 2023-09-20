@@ -712,11 +712,12 @@
   },
   "topbar": {
     "brand": "OS2Display",
-    "add": "Opret",
+    "add": "Tilføj",
     "add-slide": "Nyt slide",
     "add-screen": "Ny skærm",
     "add-playlist": "Ny spilleliste",
     "faq": "OS2Display",
+    "activate-new-code": "Instans",
     "signout": "Log ud",
     "error-messages": {
       "tenant-change-disabled": "Man kan ikke skifte konto når man er i gang med at redigere eller oprette indhold."

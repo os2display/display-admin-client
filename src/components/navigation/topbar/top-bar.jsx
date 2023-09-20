@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlusCircle,
   faPhotoVideo,
+  faPlusCircle,
+  faProjectDiagram,
   faDesktop,
   faStream,
   faSignOutAlt,
@@ -62,8 +63,8 @@ function TopBar() {
                 variant="primary"
                 id="topbar_add"
               >
-                <FontAwesomeIcon className="me-1" icon={faPlusCircle} />
-                {t("topbar.add")}
+                <FontAwesomeIcon className="me-2" icon={faPlusCircle} />
+                <span className="pe-2">{t("topbar.add")}</span>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Link
@@ -91,6 +92,15 @@ function TopBar() {
                   <FontAwesomeIcon className="me-2" icon={faDesktop} />
                   {t("topbar.add-screen")}
                 </Link>
+
+                <Link
+                  id="nav-activate-new-code"
+                  className="dropdown-item"
+                  to="/activation/activate"
+                >
+                  <FontAwesomeIcon className="me-2" icon={faProjectDiagram} />
+                  {t("topbar.activate-new-code")}
+                </Link>
               </Dropdown.Menu>
             </Dropdown>
           </Nav.Item>
@@ -100,7 +110,7 @@ function TopBar() {
               className="btn btn-dark me-1 mb-1"
               to="/logout"
             >
-              <FontAwesomeIcon className="me-1" icon={faSignOutAlt} />
+              <FontAwesomeIcon className="me-2" icon={faSignOutAlt} />
               {t("topbar.signout")}
             </Link>
           </Nav.Item>
