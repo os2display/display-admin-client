@@ -825,24 +825,7 @@
                 },
                 "summary": "Use an external user activation code.",
                 "description": "Use an external user activation code.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "ulid",
-                            "pattern": "^[A-Za-z0-9]{26}$"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
+                "parameters": [],
                 "requestBody": {
                     "description": "The new ExternalUserActivationCode resource",
                     "content": {
@@ -955,37 +938,23 @@
             "parameters": []
         },
         "/v1/external-user-activation-codes/{id}/refresh-code": {
-            "get": {
+            "post": {
                 "operationId": "post-v1-refresh-external-user-activation-code",
                 "tags": [
                     "ExternalUserActivationCode"
                 ],
                 "responses": {
-                    "200": {
-                        "description": "ExternalUserActivationCode resource",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ExternalUserActivationCode.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ExternalUserActivationCode"
-                                }
-                            }
-                        }
+                    "201": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
                     },
                     "404": {
                         "description": "Resource not found"
-                    },
-                    "201": {
-                        "description": ""
                     },
                     "204": {
                         "description": "Activation code was refreshed",
@@ -1017,6 +986,27 @@
                         "allowReserved": false
                     }
                 ],
+                "requestBody": {
+                    "description": "The new ExternalUserActivationCode resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode.jsonld"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExternalUserActivationCode"
+                            }
+                        }
+                    },
+                    "required": true
+                },
                 "deprecated": false
             },
             "parameters": []
@@ -7325,7 +7315,8 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "nullable": true
                     },
                     "id": {
                         "readOnly": true,
@@ -7526,7 +7517,8 @@
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "nullable": true
                     },
                     "id": {
                         "readOnly": true,
@@ -9873,6 +9865,16 @@
                                 "$ref": "#/components/schemas/UserTypeEnum"
                             }
                         ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
@@ -9926,6 +9928,16 @@
                                 "$ref": "#/components/schemas/UserTypeEnum.jsonld"
                             }
                         ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },

@@ -124,12 +124,14 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getV1ExternalUserActivationCodesByIdRefreshCode: build.query<
-      GetV1ExternalUserActivationCodesByIdRefreshCodeApiResponse,
-      GetV1ExternalUserActivationCodesByIdRefreshCodeApiArg
+    postV1ExternalUserActivationCodesByIdRefreshCode: build.mutation<
+      PostV1ExternalUserActivationCodesByIdRefreshCodeApiResponse,
+      PostV1ExternalUserActivationCodesByIdRefreshCodeApiArg
     >({
       query: (queryArg) => ({
         url: `/v1/external-user-activation-codes/${queryArg.id}/refresh-code`,
+        method: "POST",
+        body: queryArg.externalUserActivationCode,
       }),
     }),
     getV1ExternalUsers: build.query<
@@ -869,7 +871,6 @@ export type PostV1ExternalUserActivationCodesApiArg = {
 };
 export type PostV1ExternalUserActivationCodesActivateApiResponse = unknown;
 export type PostV1ExternalUserActivationCodesActivateApiArg = {
-  id: string;
   /** The new ExternalUserActivationCode resource */
   externalUserActivationCodeExternalUserActivateInput: ExternalUserActivationCodeExternalUserActivateInput;
 };
@@ -883,10 +884,12 @@ export type DeleteExternalUserActivationCodeItemApiArg = {
   /** Resource identifier */
   id: string;
 };
-export type GetV1ExternalUserActivationCodesByIdRefreshCodeApiResponse =
+export type PostV1ExternalUserActivationCodesByIdRefreshCodeApiResponse =
   unknown;
-export type GetV1ExternalUserActivationCodesByIdRefreshCodeApiArg = {
+export type PostV1ExternalUserActivationCodesByIdRefreshCodeApiArg = {
   id: string;
+  /** The new ExternalUserActivationCode resource */
+  externalUserActivationCode: ExternalUserActivationCode;
 };
 export type GetV1ExternalUsersApiResponse = unknown;
 export type GetV1ExternalUsersApiArg = {
@@ -1476,6 +1479,18 @@ export type ExternalUserActivationCodeExternalUserActivationCodeInput = {
 export type ExternalUserActivationCodeExternalUserActivateInput = {
   activationCode?: string;
 };
+export type ExternalUserActivationCode = {
+  tenant?: string;
+  code?: string;
+  codeExpire?: string;
+  username?: string;
+  roles?: string[] | null;
+  id?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+  createdBy?: string;
+  modifiedBy?: string;
+};
 export type UserExternalUserInput = {
   fullName?: string | null;
 };
@@ -1534,7 +1549,7 @@ export const {
   usePostV1ExternalUserActivationCodesActivateMutation,
   useGetExternalUserActivationCodeItemQuery,
   useDeleteExternalUserActivationCodeItemMutation,
-  useGetV1ExternalUserActivationCodesByIdRefreshCodeQuery,
+  usePostV1ExternalUserActivationCodesByIdRefreshCodeMutation,
   useGetV1ExternalUsersQuery,
   useGetV1ExternalUsersByIdQuery,
   usePutV1ExternalUsersByIdMutation,

@@ -917,8 +917,10 @@
     "create-activation-codes": "Opret ny",
     "columns": {
       "code": "Kode",
+      "code-expire": "Udløber",
       "created-at": "Oprettelsesdato",
       "created-by": "Oprettet af"
-    }
+    },
+    "refresh-button": "Forny kode"
   }
 }

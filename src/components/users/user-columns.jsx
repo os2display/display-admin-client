@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import SelectColumnHoc from "../util/select-column-hoc";
 import ColumnHoc from "../util/column-hoc";
+import dayjs from "dayjs";
 
 /**
  * Columns for Users lists.
@@ -18,11 +19,12 @@ function getUserColumns() {
     {
       path: "createdAt",
       label: t("columns.created-at"),
+      dataFunction: (data) => dayjs(data).format("YYYY-MM-DDTHH:mm"),
     },
   ];
 }
 
-const UserColumns = ColumnHoc(getUserColumns, true);
+const UserColumns = ColumnHoc(getUserColumns, true, true);
 const SelectUserColumns = SelectColumnHoc(getUserColumns, true);
 
 export { SelectUserColumns, UserColumns };

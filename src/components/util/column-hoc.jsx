@@ -14,7 +14,7 @@ import LinkForList from "./list/link-for-list";
  * @param {boolean} omitStandardColumns - Omit title and createdBy columns.
  * @returns {Array} Array of columns for lists.
  */
-function ColumnHoc(columns, omitStandardColumns) {
+function ColumnHoc(columns, omitStandardColumns, disableEdit) {
   return function WithColumnHoc({
     handleDelete,
     disableCheckbox = () => {},
@@ -72,8 +72,9 @@ function ColumnHoc(columns, omitStandardColumns) {
       key: "edit-delete-buttons",
       content: (d) => (
         <div className="d-flex justify-content-end">
-          {/* eslint-disable-next-line react/destructuring-assignment */}
-          <LinkForList id={d["@id"]} param={`${pathname.split("/")[1]}/edit`} />
+          {!disableEdit && (
+            <LinkForList id={d["@id"]} param={`${pathname.split("/")[1]}/edit`} />
+          )}
           <Button
             variant="danger"
             className="remove-from-list"

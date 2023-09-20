@@ -13,9 +13,12 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
+  api,
   useDeleteExternalUserActivationCodeItemMutation,
   useDeleteV1ExternalUsersByIdMutation, useGetExternalUserActivationCodeCollectionQuery, useGetV1ExternalUsersQuery
 } from "../../redux/api/api.generated";
+import { useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
 
 /**
  * The Activation Code list component.
@@ -115,8 +118,44 @@ function ActivationCodeList() {
     }
   }, [usersGetError]);
 
+  const dispatch = useDispatch();
+
+  const refreshCallback = (id) => {
+    dispatch(
+      api.endpoints.postV1ExternalUserActivationCodesByIdRefreshCode.initiate({
+        id,
+        externalUserActivationCode: JSON.stringify({}),
+      })
+    )
+      .then((response) => {
+        if (response.data) {
+          refetch();
+        }
+      })
+      .catch((err) => {
+        setError(true);
+        displayError(t("error-refreshing-code"), err);
+      });
+  };
+
   // The columns for the table.
   const columns = ActivationCodeColumns({ handleDelete });
+
+  columns.push({
+    path: '@id',
+    dataFunction: (id) => {
+      const activationCodeId = idFromUrl(id);
+
+      return <Button
+        variant="primary"
+        className="refresh-activation-code"
+        onClick={() => refreshCallback(activationCodeId)}
+      >
+        {t("refresh-button")}
+      </Button>
+    },
+    label: ""
+  });
 
   return (
     <>
