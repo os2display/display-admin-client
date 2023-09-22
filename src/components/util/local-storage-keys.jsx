@@ -1,5 +1,6 @@
 const localStorageKeys = {
   API_TOKEN: "api-token",
+  API_REFRESH_TOKEN: "api-refresh-token",
   EMAIL: "email",
   SELECTED_TENANT: "selected-tenant",
   TENANTS: "tenants",

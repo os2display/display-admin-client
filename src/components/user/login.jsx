@@ -60,6 +60,7 @@ function Login() {
 
     // Set data in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
+    localStorage.setItem(localStorageKeys.API_REFRESH_TOKEN, data.refresh_token);
     localStorage.setItem(localStorageKeys.USER_NAME, user?.fullname);
     localStorage.setItem(localStorageKeys.EMAIL, user?.email);
     localStorage.setItem(localStorageKeys.TENANTS, JSON.stringify(tenants));
@@ -109,6 +110,36 @@ function Login() {
     );
   };
 
+  const refreshTokenAndLogin = () => {
+    ConfigLoader.loadConfig().then((config) => {
+      fetch(`${config.api}v1/authentication/token/refresh`, {
+        mode: "cors",
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          refresh_token: localStorage.getItem(localStorageKeys.API_REFRESH_TOKEN),
+        })
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          if (data.code !== 200) {
+            setErrorMessage(data.message);
+          }
+
+          if (data?.token) {
+            login(data);
+          }
+        })
+        .catch((err) => {
+          setError(true);
+          displayError(t("error-refreshing-code"), err);
+        });
+    });
+  }
+
   const onActivationCodeSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -120,8 +151,8 @@ function Login() {
         }),
       })
     )
-      .then(() => {
-        window.href = "/admin";
+      .then((resp) => {
+        refreshTokenAndLogin();
       })
       .catch((err) => {
         setError(true);

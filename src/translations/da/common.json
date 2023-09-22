@@ -816,7 +816,8 @@
     "login-with-external": " login",
     "logged-in-select-tenant": "Vælg lokation.",
     "activation-code": "Indtast aktiveringskode for at blive koblet på en instans.",
-    "error-activating-code": "Aktivering fejlede."
+    "error-activating-code": "Aktivering fejlede.",
+    "error-refreshing-code": "Aktivering fejlede. Prøv igen."
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten",
