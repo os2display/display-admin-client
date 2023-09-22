@@ -78,6 +78,7 @@ function App() {
 
   const handleReauthenticate = () => {
     localStorage.removeItem(localStorageKeys.API_TOKEN);
+    localStorage.removeItem(localStorageKeys.API_REFRESH_TOKEN);
     localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
     localStorage.removeItem(localStorageKeys.TENANTS);
     localStorage.removeItem(localStorageKeys.USER_NAME);
@@ -154,7 +155,7 @@ function App() {
             roles: ["ROLE_ADMIN"],
           },
           externalUsers: {
-            roles: ["ROLE_ADMIN"],
+            roles: ["ROLE_ADMIN", "ROLE_EXTERNAL_USER_ADMIN"],
           },
         });
       });
