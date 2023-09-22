@@ -1,22 +1,17 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import {
-  usePostV1ExternalUserActivationCodesActivateMutation,
-  usePostV1ExternalUserActivationCodesMutation
-} from "../../redux/api/api.generated";
-import ActivationCodeForm from "./activation-code-form";
+import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
+import { usePostV1ExternalUserActivationCodesActivateMutation } from "../../redux/api/api.generated";
 import {
   displaySuccess,
-  displayError
+  displayError,
 } from "../util/list/toast-component/display-toast";
 import LoadingComponent from "../util/loading-component/loading-component";
-import Form from "react-bootstrap/Form";
 import ContentBody from "../util/content-body/content-body";
 import FormInput from "../util/forms/form-input";
-import RadioButtons from "../util/forms/radio-buttons";
 import ContentFooter from "../util/content-footer/content-footer";
-import { Button } from "react-bootstrap";
 
 /**
  * The user create component.
@@ -25,17 +20,16 @@ import { Button } from "react-bootstrap";
  */
 function ActivationCodeActivate() {
   const { t } = useTranslation("common", {
-    keyPrefix: "activation-code-create"
+    keyPrefix: "activation-code-create",
   });
   const navigate = useNavigate();
-  const headerText = t("activate-activation-code-header");
   const [formStateObject, setFormStateObject] = useState({
-    activationCode: ""
+    activationCode: "",
   });
 
   const [
     PostV1ExternalUserActivationCodeActivate,
-    { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess }
+    { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
   ] = usePostV1ExternalUserActivationCodesActivateMutation();
 
   /** Handle submitting is done. */
@@ -69,15 +63,18 @@ function ActivationCodeActivate() {
   const handleSubmit = () => {
     PostV1ExternalUserActivationCodeActivate({
       externalUserActivationCodeExternalUserActivateInput:
-        JSON.stringify(formStateObject)
+        JSON.stringify(formStateObject),
     });
   };
 
   return (
     <>
-      <LoadingComponent isLoading={isSaving} loadingMessage={t("loading-messages.saving-activation-code")} />
+      <LoadingComponent
+        isLoading={isSaving}
+        loadingMessage={t("loading-messages.saving-activation-code")}
+      />
       <Form>
-        <h1 id="h1ActivationCode">{t('header')}</h1>
+        <h1 id="h1ActivationCode">{t("header")}</h1>
         <ContentBody>
           <FormInput
             title="activation-code"

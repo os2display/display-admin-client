@@ -60,7 +60,10 @@ function Login() {
 
     // Set data in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
-    localStorage.setItem(localStorageKeys.API_REFRESH_TOKEN, data.refresh_token);
+    localStorage.setItem(
+      localStorageKeys.API_REFRESH_TOKEN,
+      data.refresh_token
+    );
     localStorage.setItem(localStorageKeys.USER_NAME, user?.fullname);
     localStorage.setItem(localStorageKeys.EMAIL, user?.email);
     localStorage.setItem(localStorageKeys.TENANTS, JSON.stringify(tenants));
@@ -114,14 +117,16 @@ function Login() {
     ConfigLoader.loadConfig().then((config) => {
       fetch(`${config.api}v1/authentication/token/refresh`, {
         mode: "cors",
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify({
-          refresh_token: localStorage.getItem(localStorageKeys.API_REFRESH_TOKEN),
-        })
+          refresh_token: localStorage.getItem(
+            localStorageKeys.API_REFRESH_TOKEN
+          ),
+        }),
       })
         .then((resp) => resp.json())
         .then((data) => {
@@ -138,7 +143,7 @@ function Login() {
           displayError(t("error-refreshing-code"), err);
         });
     });
-  }
+  };
 
   const onActivationCodeSubmit = (e) => {
     e.preventDefault();
@@ -151,7 +156,7 @@ function Login() {
         }),
       })
     )
-      .then((resp) => {
+      .then(() => {
         refreshTokenAndLogin();
       })
       .catch((err) => {

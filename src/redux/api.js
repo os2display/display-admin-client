@@ -23,7 +23,7 @@ generatedApi.enhanceEndpoints({
     "FeedSource",
     "Feed",
     "ActivationCode",
-    "User"
+    "User",
   ],
   endpoints: {
     getV1FeedSources: {
