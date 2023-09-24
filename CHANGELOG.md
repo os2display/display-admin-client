@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#220](https://github.com/os2display/display-admin-client/pull/220)
+  - Adds CRUD flows for external users and activation codes.
+  - Added login and activation flow for external users.
 - [#217](https://github.com/os2display/display-admin-client/pull/217)
   - Move tenant dropdown to sidebar.
 - [#215](https://github.com/os2display/display-admin-client/pull/215)
