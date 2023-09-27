@@ -346,17 +346,17 @@ function Login() {
                   <>
                     <h1>{t("login-header")}</h1>
 
-                    {(enabledLogins?.ad || enabledLogins?.external) && (
+                    {(enabledLogins?.internal || enabledLogins?.external) && (
                       <>
                         <h2 className="h4 mt-5 mb-3 fw-light">
                           {t("oidc-mit-id-header")}
                         </h2>
 
                         <div className="d-flex">
-                          {enabledLogins?.ad && (
+                          {enabledLogins?.internal && (
                             <OIDCLogin
-                              providerKey="ad"
-                              text={t("login-with-ad")}
+                              providerKey="internal"
+                              text={t("login-with-internal")}
                               icon={
                                 <FontAwesomeIcon
                                   className="me-2"

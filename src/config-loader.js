@@ -31,7 +31,7 @@ const ConfigLoader = {
                 api: "/api/",
                 touchButtonRegions: false,
                 login: {
-                  ad: true,
+                  internal: true,
                   external: true,
                   usernamePassword: true,
                 },

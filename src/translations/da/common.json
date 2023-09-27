@@ -21,8 +21,8 @@
     }
   },
   "login-sidebar": {
-    "AD-info-text": "Er du <strong>medarbejder</strong> skal du benytte AD login.",
-    "MitID-info-text": "Er du <strong>borger</strong> skal du benytte MitID login."
+    "internal-info-text": "Er du <strong>medarbejder</strong> skal du benytte medarbejderlogin.",
+    "external-info-text": "Er du <strong>borger</strong> skal du benytte MitID login."
   },
   "slides-list": {
     "columns": {
@@ -793,7 +793,7 @@
     "select-some-options": "Vælg..."
   },
   "login": {
-    "missing-tenants": "Denne bruger er ugyldig, da den ikke har tenants tilknyttet",
+    "missing-tenants": "Denne bruger er ugyldig, da den ikke har nogen instanser tilknyttet",
     "please-wait": "Vent venligst",
     "please-authenticate": "Log ind",
     "select-some-options": "Vælg...",
@@ -802,19 +802,19 @@
     "error": "Log ind fejlede:",
     "invalid-credentials": "Log ind blev ikke genkendt",
     "submit": "Log ind",
-    "error-oidc-login": "Log ind med AD fejlede",
-    "error-fetching-oidc-urls": "Opsætning af AD login fejlede",
-    "login-with-mitid-aria-label": "Log ind med mitid",
+    "error-oidc-login": "Log ind fejlede",
+    "error-fetching-oidc-urls": "Opsætning af login fejlede",
+    "login-with-mitid-aria-label": "Log ind med MitID login",
     "oidc-mit-id-header": "Adgangsservice",
     "os2-display-user-header": "OS2display-bruger",
     "login-header": "Log ind",
-    "login-with-oidc-aria-label": "Log ind med AD",
+    "login-with-oidc-aria-label": "Log ind som medarbejder",
     "login-with-username-password": "Log ind med email og kodeord",
     "select-tenant-label": "Vælg lokation",
-    "tenant-help-text": "Du er tilknyttet flere lokationer, og lokationen kan blive ændret igen når du er logget ind",
-    "login-with-ad": "AD login",
+    "tenant-help-text": "Du er tilknyttet flere instanser, og instansen kan blive ændret igen når du er logget ind",
+    "login-with-internal": "Medarbejderlogin",
     "login-with-external": " login",
-    "logged-in-select-tenant": "Vælg lokation.",
+    "logged-in-select-tenant": "Vælg instans.",
     "activation-code": "Indtast aktiveringskode for at blive koblet på en instans.",
     "error-activating-code": "Aktivering fejlede.",
     "error-refreshing-code": "Aktivering fejlede. Prøv igen."
