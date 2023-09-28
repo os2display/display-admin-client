@@ -4,21 +4,23 @@
   "loginMethods": [
     {
       "type": "oidc",
+      "enabled": true,
       "provider": "internal",
-      "label": "Medarbejder",
+      "label": null,
       "icon": "faCity"
     },
     {
       "type": "oidc",
+      "enabled": true,
       "provider": "external",
       "label": "",
       "icon": "mitID"
     },
     {
       "type": "username-password",
+      "enabled": true,
       "provider": "username-password",
-      "label": null,
-      "icon": null
+      "label": null
     }
   ]
 }

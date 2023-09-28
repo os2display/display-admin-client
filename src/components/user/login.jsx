@@ -275,10 +275,11 @@ function Login() {
   }, [search]);
 
   const oidcLogins = loginMethods.filter(
-    (loginMethod) => loginMethod.type === "oidc"
+    (loginMethod) => loginMethod.enabled && loginMethod.type === "oidc"
   );
   const usernamePasswordLogins = loginMethods.filter(
-    (loginMethod) => loginMethod.type === "username-password"
+    (loginMethod) =>
+      loginMethod.enabled && loginMethod.type === "username-password"
   );
 
   return (
