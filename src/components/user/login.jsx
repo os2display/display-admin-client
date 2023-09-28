@@ -7,7 +7,7 @@ import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCity } from "@fortawesome/free-solid-svg-icons";
+import * as FontAwesomeIcons from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
@@ -42,7 +42,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [enabledLogins, setEnabledLogins] = useState(null);
+  const [loginMethods, setLoginMethods] = useState([]);
 
   /**
    * Login, both called from oidc login and manuel login.
@@ -119,14 +119,14 @@ function Login() {
         mode: "cors",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         credentials: "include",
         body: JSON.stringify({
           refresh_token: localStorage.getItem(
             localStorageKeys.API_REFRESH_TOKEN
-          ),
-        }),
+          )
+        })
       })
         .then((resp) => resp.json())
         .then((data) => {
@@ -152,8 +152,8 @@ function Login() {
     dispatch(
       api.endpoints.postV1ExternalUserActivationCodesActivate.initiate({
         externalUserActivationCodeExternalUserActivateInput: JSON.stringify({
-          activationCode,
-        }),
+          activationCode
+        })
       })
     )
       .then(() => {
@@ -173,8 +173,8 @@ function Login() {
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
           email,
-          password,
-        }),
+          password
+        })
       })
     )
       .then((response) => {
@@ -200,12 +200,29 @@ function Login() {
   useEffect(() => {
     ConfigLoader.loadConfig().then((config) => {
       // Defaults to all enabled.
-      setEnabledLogins(
-        config.login ?? {
-          ad: true,
-          external: true,
-          usernamePassword: true,
-        }
+      setLoginMethods(
+        config.loginMethods ?? [
+          {
+            "type": "oidc",
+            "provider": "internal",
+            "enabled": true,
+            "label": null,
+            "icon": null
+          },
+          {
+            "type": "oidc",
+            "provider": "internal",
+            "enabled": true,
+            "label": null,
+            "icon": null
+          },
+          {
+            "type": "username-password",
+            "enabled": true,
+            "label": null,
+            "icon": null
+          }
+        ]
       );
     });
   }, []);
@@ -225,12 +242,12 @@ function Login() {
         ConfigLoader.loadConfig().then((config) => {
           const searchParams = new URLSearchParams({
             state,
-            code,
+            code
           });
 
           fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
-            credentials: "include",
+            credentials: "include"
           })
             .then((resp) => resp.json())
             .then((data) => {
@@ -259,6 +276,9 @@ function Login() {
       isMounted = false;
     };
   }, [search]);
+
+  const oidcLogins = loginMethods.filter((loginMethod) => loginMethod.type === "oidc");
+  const usernamePasswordLogins = loginMethods.filter((loginMethod) => loginMethod.type === "username-password");
 
   return (
     <>
@@ -321,14 +341,14 @@ function Login() {
 
                         <MultiSelect
                           overrideStrings={{
-                            selectSomeItems: t("select-some-options"),
+                            selectSomeItems: t("select-some-options")
                           }}
                           disableSearch
                           options={
                             context.tenants.get.map((item) => {
                               return {
                                 label: item.title,
-                                value: item.tenantKey,
+                                value: item.tenantKey
                               };
                             }) || []
                           }
@@ -346,48 +366,22 @@ function Login() {
                   <>
                     <h1>{t("login-header")}</h1>
 
-                    {(enabledLogins?.internal || enabledLogins?.external) && (
+                    {oidcLogins.length > 0 && (
                       <>
                         <h2 className="h4 mt-5 mb-3 fw-light">
                           {t("oidc-mit-id-header")}
                         </h2>
 
                         <div className="d-flex">
-                          {enabledLogins?.internal && (
-                            <OIDCLogin
-                              providerKey="internal"
-                              text={t("login-with-internal")}
-                              icon={
-                                <FontAwesomeIcon
-                                  className="me-2"
-                                  icon={faCity}
-                                />
-                              }
-                            />
-                          )}
-
-                          {enabledLogins?.external && (
-                            <OIDCLogin
-                              providerKey="external"
-                              text={t("login-with-external")}
-                              icon={
-                                <img
-                                  width="56"
-                                  className="me-2"
-                                  src={MitIdLogo}
-                                  alt=""
-                                />
-                              }
-                            />
-                          )}
+                          {oidcLogins.map((loginMethod) => (<OIDCLogin config={loginMethod} key={loginMethod.provider} />))}
                         </div>
                       </>
                     )}
 
-                    {enabledLogins?.usernamePassword && (
-                      <>
+                    {usernamePasswordLogins.length > 0 && usernamePasswordLogins.map((loginMethod) => (
+                      <div key={loginMethod.provider}>
                         <h2 className="h4 mt-5 mb-3 fw-light">
-                          {t("os2-display-user-header")}
+                          {loginMethod.label ?? t("os2-display-user-header")}
                         </h2>
 
                         <Form onSubmit={onSubmit}>
@@ -418,8 +412,8 @@ function Login() {
                             {t("submit")}
                           </Button>
                         </Form>
-                      </>
-                    )}
+                      </div>
+                    ))}
                   </>
                 )}
               </div>
