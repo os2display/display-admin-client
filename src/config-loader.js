@@ -35,21 +35,21 @@ const ConfigLoader = {
                     type: "oidc",
                     provider: "internal",
                     label: null,
-                    icon: null
+                    icon: null,
                   },
                   {
                     type: "oidc",
                     provider: "external",
                     label: null,
-                    icon: null
+                    icon: null,
                   },
                   {
                     type: "username-password",
                     provider: "username-password",
                     label: null,
-                    icon: null
-                  }
-                ]
+                    icon: null,
+                  },
+                ],
               });
             }
           })

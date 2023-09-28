@@ -6,8 +6,6 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as FontAwesomeIcons from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
@@ -15,7 +13,6 @@ import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";
 import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
-import MitIdLogo from "./mitid-logo.svg";
 import "./login.scss";
 import OIDCLogin from "./oidc-login";
 import LoadingComponent from "../util/loading-component/loading-component";
@@ -119,14 +116,14 @@ function Login() {
         mode: "cors",
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify({
           refresh_token: localStorage.getItem(
             localStorageKeys.API_REFRESH_TOKEN
-          )
-        })
+          ),
+        }),
       })
         .then((resp) => resp.json())
         .then((data) => {
@@ -152,8 +149,8 @@ function Login() {
     dispatch(
       api.endpoints.postV1ExternalUserActivationCodesActivate.initiate({
         externalUserActivationCodeExternalUserActivateInput: JSON.stringify({
-          activationCode
-        })
+          activationCode,
+        }),
       })
     )
       .then(() => {
@@ -173,8 +170,8 @@ function Login() {
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
           email,
-          password
-        })
+          password,
+        }),
       })
     )
       .then((response) => {
@@ -203,25 +200,25 @@ function Login() {
       setLoginMethods(
         config.loginMethods ?? [
           {
-            "type": "oidc",
-            "provider": "internal",
-            "enabled": true,
-            "label": null,
-            "icon": null
+            type: "oidc",
+            provider: "internal",
+            enabled: true,
+            label: null,
+            icon: null,
           },
           {
-            "type": "oidc",
-            "provider": "internal",
-            "enabled": true,
-            "label": null,
-            "icon": null
+            type: "oidc",
+            provider: "internal",
+            enabled: true,
+            label: null,
+            icon: null,
           },
           {
-            "type": "username-password",
-            "enabled": true,
-            "label": null,
-            "icon": null
-          }
+            type: "username-password",
+            enabled: true,
+            label: null,
+            icon: null,
+          },
         ]
       );
     });
@@ -242,12 +239,12 @@ function Login() {
         ConfigLoader.loadConfig().then((config) => {
           const searchParams = new URLSearchParams({
             state,
-            code
+            code,
           });
 
           fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
-            credentials: "include"
+            credentials: "include",
           })
             .then((resp) => resp.json())
             .then((data) => {
@@ -277,8 +274,12 @@ function Login() {
     };
   }, [search]);
 
-  const oidcLogins = loginMethods.filter((loginMethod) => loginMethod.type === "oidc");
-  const usernamePasswordLogins = loginMethods.filter((loginMethod) => loginMethod.type === "username-password");
+  const oidcLogins = loginMethods.filter(
+    (loginMethod) => loginMethod.type === "oidc"
+  );
+  const usernamePasswordLogins = loginMethods.filter(
+    (loginMethod) => loginMethod.type === "username-password"
+  );
 
   return (
     <>
@@ -341,14 +342,14 @@ function Login() {
 
                         <MultiSelect
                           overrideStrings={{
-                            selectSomeItems: t("select-some-options")
+                            selectSomeItems: t("select-some-options"),
                           }}
                           disableSearch
                           options={
                             context.tenants.get.map((item) => {
                               return {
                                 label: item.title,
-                                value: item.tenantKey
+                                value: item.tenantKey,
                               };
                             }) || []
                           }
@@ -373,47 +374,57 @@ function Login() {
                         </h2>
 
                         <div className="d-flex">
-                          {oidcLogins.map((loginMethod) => (<OIDCLogin config={loginMethod} key={loginMethod.provider} />))}
+                          {oidcLogins.map((loginMethod) => (
+                            <OIDCLogin
+                              config={loginMethod}
+                              key={loginMethod.provider}
+                            />
+                          ))}
                         </div>
                       </>
                     )}
 
-                    {usernamePasswordLogins.length > 0 && usernamePasswordLogins.map((loginMethod) => (
-                      <div key={loginMethod.provider}>
-                        <h2 className="h4 mt-5 mb-3 fw-light">
-                          {loginMethod.label ?? t("os2-display-user-header")}
-                        </h2>
+                    {usernamePasswordLogins.length > 0 &&
+                      usernamePasswordLogins.map((loginMethod) => (
+                        <div key={loginMethod.provider}>
+                          <h2 className="h4 mt-5 mb-3 fw-light">
+                            {loginMethod.label ?? t("os2-display-user-header")}
+                          </h2>
 
-                        <Form onSubmit={onSubmit}>
-                          <FormInput
-                            className={
-                              error ? "form-control is-invalid" : "form-control"
-                            }
-                            onChange={(ev) => setEmail(ev.target.value)}
-                            value={email}
-                            name="email"
-                            label={t("email")}
-                            required
-                          />
+                          <Form onSubmit={onSubmit}>
+                            <FormInput
+                              className={
+                                error
+                                  ? "form-control is-invalid"
+                                  : "form-control"
+                              }
+                              onChange={(ev) => setEmail(ev.target.value)}
+                              value={email}
+                              name="email"
+                              label={t("email")}
+                              required
+                            />
 
-                          <FormInput
-                            className={
-                              error ? "form-control is-invalid" : "form-control"
-                            }
-                            onChange={(ev) => setPassword(ev.target.value)}
-                            value={password}
-                            name="password"
-                            label={t("password")}
-                            type="password"
-                            required
-                          />
+                            <FormInput
+                              className={
+                                error
+                                  ? "form-control is-invalid"
+                                  : "form-control"
+                              }
+                              onChange={(ev) => setPassword(ev.target.value)}
+                              value={password}
+                              name="password"
+                              label={t("password")}
+                              type="password"
+                              required
+                            />
 
-                          <Button type="submit" className="mt-3" id="login">
-                            {t("submit")}
-                          </Button>
-                        </Form>
-                      </div>
-                    ))}
+                            <Button type="submit" className="mt-3" id="login">
+                              {t("submit")}
+                            </Button>
+                          </Form>
+                        </div>
+                      ))}
                   </>
                 )}
               </div>
