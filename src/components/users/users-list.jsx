@@ -14,8 +14,8 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
-  useDeleteV1ExternalUsersByIdMutation,
-  useGetV1ExternalUsersQuery,
+  useDeleteV1UsersByIdMutation,
+  useGetV1UsersQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -42,10 +42,8 @@ function UsersList() {
   const [items, setItems] = useState([]);
 
   // Delete call
-  const [
-    DeleteV1ExternalUser,
-    { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteV1ExternalUsersByIdMutation();
+  const [DeleteV1User, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
+    useDeleteV1UsersByIdMutation();
 
   // Get method
   const {
@@ -53,7 +51,7 @@ function UsersList() {
     error: usersGetError,
     isLoading,
     refetch,
-  } = useGetV1ExternalUsersQuery({
+  } = useGetV1UsersQuery({
     page,
     order: { createdAt: "desc" },
     fullName: searchText,
@@ -76,7 +74,7 @@ function UsersList() {
       const userToDelete = selected[0];
       setSelected(selected.slice(1));
       const userToDeleteId = idFromUrl(userToDelete.id);
-      DeleteV1ExternalUser({ id: userToDeleteId });
+      DeleteV1User({ id: userToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 

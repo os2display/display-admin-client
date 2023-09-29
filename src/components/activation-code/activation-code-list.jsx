@@ -16,8 +16,8 @@ import {
 } from "../util/list/toast-component/display-toast";
 import {
   api,
-  useDeleteExternalUserActivationCodeItemMutation,
-  useGetExternalUserActivationCodeCollectionQuery,
+  useDeleteUserActivationCodeItemMutation,
+  useGetUserActivationCodeCollectionQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -45,9 +45,9 @@ function ActivationCodeList() {
 
   // Delete call
   const [
-    DeleteV1ExternalUserActivationCode,
+    DeleteV1UserActivationCode,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteExternalUserActivationCodeItemMutation();
+  ] = useDeleteUserActivationCodeItemMutation();
 
   // Get method
   const {
@@ -55,7 +55,7 @@ function ActivationCodeList() {
     error: activationCodeGetError,
     isLoading,
     refetch,
-  } = useGetExternalUserActivationCodeCollectionQuery({
+  } = useGetUserActivationCodeCollectionQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,
@@ -78,7 +78,7 @@ function ActivationCodeList() {
       const codeToDelete = selected[0];
       setSelected(selected.slice(1));
       const codeToDeleteId = idFromUrl(codeToDelete.id);
-      DeleteV1ExternalUserActivationCode({ id: codeToDeleteId });
+      DeleteV1UserActivationCode({ id: codeToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
@@ -129,9 +129,9 @@ function ActivationCodeList() {
 
   const refreshCallback = (id) => {
     dispatch(
-      api.endpoints.postV1ExternalUserActivationCodesByIdRefreshCode.initiate({
+      api.endpoints.postV1UserActivationCodesByIdRefreshCode.initiate({
         id,
-        externalUserActivationCode: JSON.stringify({}),
+        activationCode: JSON.stringify({}),
       })
     )
       .then((response) => {

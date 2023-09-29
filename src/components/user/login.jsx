@@ -169,7 +169,7 @@ function Login() {
     dispatch(
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
-          email,
+          providerId: email,
           password,
         }),
       })

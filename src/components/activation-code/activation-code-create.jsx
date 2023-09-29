@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { usePostV1ExternalUserActivationCodesMutation } from "../../redux/api/api.generated";
+import { usePostV1UserActivationCodesMutation } from "../../redux/api/api.generated";
 import ActivationCodeForm from "./activation-code-form";
 import {
   displaySuccess,
@@ -25,9 +25,9 @@ function ActivationCodeCreate() {
   });
 
   const [
-    PostV1ExternalUserActivationCode,
+    PostV1UserActivationCode,
     { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
-  ] = usePostV1ExternalUserActivationCodesMutation();
+  ] = usePostV1UserActivationCodesMutation();
 
   /** Handle submitting is done. */
   useEffect(() => {
@@ -63,9 +63,8 @@ function ActivationCodeCreate() {
       roles: [formStateObject.role],
     };
 
-    PostV1ExternalUserActivationCode({
-      externalUserActivationCodeExternalUserActivationCodeInput:
-        JSON.stringify(saveData),
+    PostV1UserActivationCode({
+      userActivationCodeUserActivationCodeInput: JSON.stringify(saveData),
     });
   };
 
