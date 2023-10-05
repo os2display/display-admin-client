@@ -166,23 +166,23 @@ function NavItems() {
           </RestrictedNavRoute>
         </>
       )}
-      {accessConfig?.externalUsers?.roles && (
+      {accessConfig?.users?.roles && (
         <>
-          <RestrictedNavRoute roles={accessConfig.externalUsers.roles}>
+          <RestrictedNavRoute roles={accessConfig.users.roles}>
             <Nav.Item>
               <NavLink
-                id="nav-items_external_users"
+                id="nav-items_users"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
                 to="/users/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faUsers} />
-                {t("external-users")}
+                {t("users")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={accessConfig.externalUsers.roles}>
+          <RestrictedNavRoute roles={accessConfig.users.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_activation_codes"

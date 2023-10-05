@@ -17,6 +17,22 @@ function getUserColumns() {
       label: t("columns.full-name"),
     },
     {
+      path: "userType",
+      label: t("columns.user-type"),
+      dataFunction: (data) => {
+        switch (data) {
+          case "USERNAME_PASSWORD":
+            return t("user-type.username-password");
+          case "OIDC_EXTERNAL":
+            return t("user-type.oidc-external");
+          case "OIDC_INTERNAL":
+            return t("user-type.oidc-internal");
+          default:
+            return data;
+        }
+      },
+    },
+    {
       path: "createdAt",
       label: t("columns.created-at"),
       dataFunction: (data) => dayjs(data).format("YYYY-MM-DDTHH:mm"),

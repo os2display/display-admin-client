@@ -90,7 +90,8 @@
     "columns": {
       "activated": "Aktiv",
       "full-name": "Navn",
-      "created-at": "Oprettelsesdato"
+      "created-at": "Oprettelsesdato",
+      "user-type": "Brugertype"
     },
     "loading-messages": {
       "loading-users": "Henter brugere",
@@ -102,6 +103,11 @@
     },
     "success-messages": {
       "user-delete": "Brugeren er blevet slettet"
+    },
+    "user-type": {
+      "username-password": "Brugernavn/Kodeord",
+      "oidc-external": "Ekstern",
+      "oidc-internal": "Medarbejder"
     },
     "header": "Brugere",
     "create-new-user": "Opret ny bruger",
@@ -698,10 +704,9 @@
     "add-new-slide-aria-label": "Tilføj nyt slide",
     "add-new-playlist-aria-label": "Tilføj ny spilleliste",
     "add-new-screen-aria-label": "Tilføj ny skærm",
-    "add-new-external-user-aria-label": "Tilføj ny bruger",
-    "change-tenant-aria-label": "Her kan du ændre din instans",
+    "change-tenant-aria-label": "Her kan du ændre dit område",
     "screens-screens": "Skærme",
-    "external-users": "Eksterne brugere",
+    "users": "Brugere",
     "screens-groups": "Grupper",
     "playlists-campaigns": "Kampagner",
     "playlists-playlists": "Spillelister",
@@ -717,7 +722,7 @@
     "add-screen": "Ny skærm",
     "add-playlist": "Ny spilleliste",
     "faq": "OS2Display",
-    "activate-new-code": "Instans",
+    "activate-new-code": "Område",
     "signout": "Log ud",
     "error-messages": {
       "tenant-change-disabled": "Man kan ikke skifte konto når man er i gang med at redigere eller oprette indhold."
@@ -793,7 +798,7 @@
     "select-some-options": "Vælg..."
   },
   "login": {
-    "missing-tenants": "Denne bruger er ugyldig, da den ikke har nogen instanser tilknyttet",
+    "missing-tenants": "Denne bruger er ugyldig, da den ikke er tilnyttet noget område",
     "please-wait": "Vent venligst",
     "please-authenticate": "Log ind",
     "select-some-options": "Vælg...",
@@ -811,13 +816,13 @@
     "login-with-oidc-aria-label": "Log ind som medarbejder",
     "login-with-username-password": "Log ind med email og kodeord",
     "select-tenant-label": "Vælg lokation",
-    "tenant-help-text": "Du er tilknyttet flere instanser, og instansen kan blive ændret igen når du er logget ind",
-    "logged-in-select-tenant": "Vælg instans.",
-    "activation-code": "Indtast aktiveringskode for at blive koblet på en instans.",
+    "tenant-help-text": "Du er tilknyttet flere områder, og området kan blive ændret igen når du er logget ind",
+    "logged-in-select-tenant": "Vælg område.",
+    "activation-code": "Indtast aktiveringskode for at blive koblet på et område.",
     "error-activating-code": "Aktivering fejlede.",
     "error-refreshing-code": "Aktivering fejlede. Prøv igen."
   },
-  "login-oidc": {
+  "oidc-login": {
     "login-with-internal": "Medarbejder",
     "login-with-external": "Ekstern"
   },
@@ -914,7 +919,7 @@
     "show-gantt": "Vis en visualisering af planlægningen"
   },
   "tenant-selector": {
-    "tenant": "Instans"
+    "tenant": "Område"
   },
   "activation-code-list": {
     "header": "Aktiveringskoder",
@@ -949,6 +954,10 @@
     "role-label": "Brugerens rolle"
   },
   "activation-code-create": {
+    "header": "Tilkobling til nyt område",
+    "activation-code-label": "Aktiveringskode",
+    "activation-code-placeholder": "Aktiveringskode",
+    "save-button": "Aktivér",
     "create-new-activation-code-header": "Opret aktiveringskode",
     "error-messages": {
       "save-activation-code-error": "Oprettelse af aktiveringskode fejlede"

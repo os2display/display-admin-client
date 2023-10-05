@@ -10,7 +10,7 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/authentication/oidc/token`,
-        params: { state: queryArg.state, id_token: queryArg.idToken },
+        params: { state: queryArg.state, code: queryArg.code },
       }),
     }),
     getOidcAuthUrlsItem: build.query<
@@ -760,7 +760,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/user-activation-codes/${queryArg.id}/refresh-code`,
         method: "POST",
-        body: queryArg.userActivationCode,
+        body: queryArg.userActivationCodeEmptyDto,
       }),
     }),
     getV1Users: build.query<GetV1UsersApiResponse, GetV1UsersApiArg>({
@@ -769,10 +769,19 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
+          fullName: queryArg.fullName,
+          email: queryArg.email,
           createdBy: queryArg.createdBy,
           modifiedBy: queryArg.modifiedBy,
           order: queryArg.order,
         },
+      }),
+    }),
+    postV1Users: build.mutation<PostV1UsersApiResponse, PostV1UsersApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/users`,
+        method: "POST",
+        body: queryArg.userUserInput,
       }),
     }),
     getV1UsersById: build.query<
@@ -800,15 +809,24 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    deleteV1UsersByIdRemoveFromTenant: build.mutation<
+      DeleteV1UsersByIdRemoveFromTenantApiResponse,
+      DeleteV1UsersByIdRemoveFromTenantApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/users/${queryArg.id}/remove-from-tenant`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 export type GetOidcAuthTokenItemApiResponse =
-  /** status 200 Get JWT token from OIDC token */ Token;
+  /** status 200 Get JWT token from OIDC code */ Token;
 export type GetOidcAuthTokenItemApiArg = {
   /** OIDC state */
   state?: string;
-  /** OIDC id token */
-  idToken?: string;
+  /** OIDC code */
+  code?: string;
 };
 export type GetOidcAuthUrlsItemApiResponse =
   /** status 200 Get authentication and end session endpoints */ OidcEndpoints;
@@ -1402,13 +1420,15 @@ export type PostV1UserActivationCodesByIdRefreshCodeApiResponse = unknown;
 export type PostV1UserActivationCodesByIdRefreshCodeApiArg = {
   id: string;
   /** The new UserActivationCode resource */
-  userActivationCode: UserActivationCode;
+  userActivationCodeEmptyDto: UserActivationCodeEmptyDto;
 };
 export type GetV1UsersApiResponse = unknown;
 export type GetV1UsersApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
+  fullName?: string;
+  email?: string;
   createdBy?: {
     ""?: string[];
   };
@@ -1418,6 +1438,12 @@ export type GetV1UsersApiArg = {
   order?: {
     createdAt?: "asc" | "desc";
   };
+};
+export type PostV1UsersApiResponse = unknown;
+export type PostV1UsersApiArg = {
+  id: string;
+  /** The new User resource */
+  userUserInput: UserUserInput;
 };
 export type GetV1UsersByIdApiResponse = unknown;
 export type GetV1UsersByIdApiArg = {
@@ -1431,6 +1457,10 @@ export type PutV1UsersByIdApiArg = {
 };
 export type DeleteV1UsersByIdApiResponse = unknown;
 export type DeleteV1UsersByIdApiArg = {
+  id: string;
+};
+export type DeleteV1UsersByIdRemoveFromTenantApiResponse = unknown;
+export type DeleteV1UsersByIdRemoveFromTenantApiArg = {
   id: string;
 };
 export type Token = {
@@ -1517,18 +1547,7 @@ export type UserActivationCodeUserActivationCodeInput = {
 export type UserActivationCodeUserActivateInput = {
   activationCode?: string;
 };
-export type UserActivationCode = {
-  code?: string;
-  codeExpire?: string;
-  username?: string;
-  roles?: string[] | null;
-  tenant?: string;
-  id?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-  createdBy?: string;
-  modifiedBy?: string;
-};
+export type UserActivationCodeEmptyDto = object;
 export type UserUserInput = {
   fullName?: string | null;
 };
@@ -1609,8 +1628,10 @@ export const {
   useDeleteUserActivationCodeItemMutation,
   usePostV1UserActivationCodesByIdRefreshCodeMutation,
   useGetV1UsersQuery,
+  usePostV1UsersMutation,
   useGetV1UsersByIdQuery,
   usePutV1UsersByIdMutation,
   useDeleteV1UsersByIdMutation,
+  useDeleteV1UsersByIdRemoveFromTenantMutation,
 } = api;
 

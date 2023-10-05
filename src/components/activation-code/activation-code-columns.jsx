@@ -1,3 +1,4 @@
+import { React } from "react";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import SelectColumnHoc from "../util/select-column-hoc";
@@ -19,7 +20,16 @@ function getActivationCodeColumns() {
     {
       path: "codeExpire",
       label: t("columns.code-expire"),
-      dataFunction: (data) => dayjs(data).format("YYYY-MM-DD HH:mm"),
+      dataFunction: (data) => {
+        const date = dayjs(data);
+        const expired = date < dayjs();
+
+        return (
+          <span style={{ color: expired ? "red" : "" }}>
+            {date.format("YYYY-MM-DD HH:mm")}
+          </span>
+        );
+      },
     },
     {
       path: "username",

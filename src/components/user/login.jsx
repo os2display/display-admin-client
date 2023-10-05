@@ -147,8 +147,8 @@ function Login() {
     e.stopPropagation();
 
     dispatch(
-      api.endpoints.postV1ExternalUserActivationCodesActivate.initiate({
-        externalUserActivationCodeExternalUserActivateInput: JSON.stringify({
+      api.endpoints.postV1UserActivationCodesActivate.initiate({
+        userActivationCodeUserActivateInput: JSON.stringify({
           activationCode,
         }),
       })
@@ -305,7 +305,7 @@ function Login() {
                 {loggedIn &&
                   !context.selectedTenant.get &&
                   (context.tenants.get.length ?? 0) === 0 &&
-                  context.userType.get === "oidc-external" && (
+                  context.userType.get === "OIDC_EXTERNAL" && (
                     <>
                       <Form onSubmit={onActivationCodeSubmit}>
                         <FormInput
