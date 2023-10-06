@@ -116,7 +116,12 @@ function UsersList() {
   }, [usersGetError]);
 
   // The columns for the table.
-  const columns = UserColumns({ handleDelete });
+  const columns = UserColumns({
+    handleDelete,
+    disableDelete: ({ userType }) => {
+      return userType !== 'OIDC_EXTERNAL'
+    },
+  });
 
   useEffect(() => {
     if (listData) {
