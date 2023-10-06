@@ -155,7 +155,7 @@ function App() {
             roles: ["ROLE_ADMIN"],
           },
           users: {
-            roles: ["ROLE_EXTERNAL_USER_ADMIN"],
+            roles: ["ROLE_ADMIN", "ROLE_EXTERNAL_USER_ADMIN"],
           },
         });
       });
