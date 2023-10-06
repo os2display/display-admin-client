@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
   - Cleaned up translations.
   - Fixed some WCAG2.1 issues.
   - Added os2display logo.
+- [#214](https://github.com/os2display/display-admin-client/pull/214)
+  Use OIDC Code authorization flow and remove React StrictMode.
 
 ## [1.4.0] - 2023-09-14
 
