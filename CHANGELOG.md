@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Fixed missing pagination button in drag-and-drop-table.
+
 ## [1.4.0] - 2023-09-14
 
 - [#210](https://github.com/os2display/display-admin-client/pull/210)
