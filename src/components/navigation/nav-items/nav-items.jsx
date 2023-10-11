@@ -166,27 +166,33 @@ function NavItems() {
           </RestrictedNavRoute>
         </>
       )}
-      {accessConfig?.externalUsers?.roles && (
+      {accessConfig?.users?.roles && (
         <>
-          <RestrictedNavRoute roles={accessConfig.externalUsers.roles}>
+          <RestrictedNavRoute roles={accessConfig.users.roles}>
             <Nav.Item>
               <NavLink
-                id="nav-items_external_users"
+                id="nav-items_users"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
                 to="/users/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faUsers} />
-                {t("external-users")}
+                {t("users")}
               </NavLink>
-              <Link
-                aria-label={t("add-new-external-user-aria-label")}
-                className="nav-add-new"
-                to="/users/create"
+            </Nav.Item>
+          </RestrictedNavRoute>
+          <RestrictedNavRoute roles={accessConfig.users.roles}>
+            <Nav.Item className="nav-second-level">
+              <NavLink
+                id="nav-items_activation_codes"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
+                to="/activation/list"
               >
-                <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-              </Link>
+                {t("activation-codes")}
+              </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
         </>

@@ -8,12 +8,13 @@ import LoadingComponent from "../util/loading-component/loading-component";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
+import RadioButtons from "../util/forms/radio-buttons";
 
 /**
  * The user form component.
  *
  * @param {object} props - The props.
- * @param {object} props.user The user object to modify in the form.
+ * @param {object} props.activationCode The activationCode object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {string} props.headerText Headline text.
@@ -21,30 +22,50 @@ import FormInput from "../util/forms/form-input";
  * @param {string} props.loadingMessage The loading message for the spinner
  * @returns {object} The user form.
  */
-function UserForm({
-  user,
+function ActivationCodeForm({
+  activationCode,
   handleInput,
   handleSubmit,
   headerText,
   isLoading,
   loadingMessage,
 }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "activation-code-form" });
   const navigate = useNavigate();
+
+  const roles = [
+    {
+      id: "ROLE_EXTERNAL_USER",
+      label: t("role-external-user"),
+    },
+    {
+      id: "ROLE_EXTERNAL_USER_ADMIN",
+      label: t("role-external-user-admin"),
+    },
+  ];
 
   return (
     <>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
-        <h1 id="userTitle">{headerText}</h1>
+        <h1 id="h1UserDisplayName">{headerText}</h1>
         <ContentBody>
           <FormInput
-            title="title"
+            title="display-name"
             type="text"
-            label={t("user-form.user-title-label")}
-            placeholder={t("user-form.user-title-placeholder")}
-            value={user.title}
+            label={t("display-name-label")}
+            placeholder={t("display-name-placeholder")}
+            value={activationCode.displayName}
             onChange={handleInput}
+            name="displayName"
+            required
+          />
+          <RadioButtons
+            radioGroupName="role"
+            handleChange={handleInput}
+            options={roles}
+            label={t("role-label")}
+            selected={activationCode.role}
           />
         </ContentBody>
         <ContentFooter>
@@ -52,11 +73,11 @@ function UserForm({
             variant="secondary"
             type="button"
             id="cancel_user"
-            onClick={() => navigate("/user/list/")}
+            onClick={() => navigate("/activation/list/")}
             className="margin-right-button"
             size="lg"
           >
-            {t("user-form.cancel-button")}
+            {t("cancel-button")}
           </Button>
           <Button
             variant="primary"
@@ -66,7 +87,7 @@ function UserForm({
             size="lg"
             className="col"
           >
-            {t("user-form.save-button")}
+            {t("save-button")}
           </Button>
         </ContentFooter>
       </Form>
@@ -74,17 +95,19 @@ function UserForm({
   );
 }
 
-UserForm.defaultProps = {
+ActivationCodeForm.defaultProps = {
   isLoading: false,
   loadingMessage: "",
-  user: PropTypes.shape({
-    title: "",
+  activationCode: PropTypes.shape({
+    displayName: "",
+    role: "",
   }),
 };
 
-UserForm.propTypes = {
-  user: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+ActivationCodeForm.propTypes = {
+  activationCode: PropTypes.shape({
+    displayName: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
@@ -93,4 +116,4 @@ UserForm.propTypes = {
   loadingMessage: PropTypes.string,
 };
 
-export default UserForm;
+export default ActivationCodeForm;

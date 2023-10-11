@@ -24,7 +24,14 @@ function TableBody({ columns, data }) {
     if (column.content) {
       return column.content(item);
     }
-    return get(item, column.path);
+
+    let cellData = get(item, column.path);
+
+    if (column.dataFunction) {
+      cellData = column.dataFunction(cellData);
+    }
+
+    return cellData;
   }
 
   /**

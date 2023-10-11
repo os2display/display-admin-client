@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 import SelectColumnHoc from "../util/select-column-hoc";
 import ColumnHoc from "../util/column-hoc";
 
@@ -10,17 +11,36 @@ import ColumnHoc from "../util/column-hoc";
 function getUserColumns() {
   const { t } = useTranslation("common", { keyPrefix: "users-list" });
 
-  const columns = [
+  return [
     {
-      path: "activated",
-      label: t("columns.activated"),
+      path: "fullName",
+      label: t("columns.full-name"),
+    },
+    {
+      path: "userType",
+      label: t("columns.user-type"),
+      dataFunction: (data) => {
+        switch (data) {
+          case "USERNAME_PASSWORD":
+            return t("user-type.username-password");
+          case "OIDC_EXTERNAL":
+            return t("user-type.oidc-external");
+          case "OIDC_INTERNAL":
+            return t("user-type.oidc-internal");
+          default:
+            return data;
+        }
+      },
+    },
+    {
+      path: "createdAt",
+      label: t("columns.created-at"),
+      dataFunction: (data) => dayjs(data).format("YYYY-MM-DDTHH:mm"),
     },
   ];
-
-  return columns;
 }
 
-const UserColumns = ColumnHoc(getUserColumns);
-const SelectUserColumns = SelectColumnHoc(getUserColumns);
+const UserColumns = ColumnHoc(getUserColumns, true, true);
+const SelectUserColumns = SelectColumnHoc(getUserColumns, true);
 
 export { SelectUserColumns, UserColumns };

@@ -30,11 +30,29 @@ const ConfigLoader = {
               resolve({
                 api: "/api/",
                 touchButtonRegions: false,
-                login: {
-                  ad: true,
-                  external: true,
-                  usernamePassword: true,
-                },
+                loginMethods: [
+                  {
+                    type: "oidc",
+                    enabled: true,
+                    provider: "internal",
+                    label: null,
+                    icon: null,
+                  },
+                  {
+                    type: "oidc",
+                    enabled: true,
+                    provider: "external",
+                    label: null,
+                    icon: null,
+                  },
+                  {
+                    type: "username-password",
+                    enabled: true,
+                    provider: "username-password",
+                    label: null,
+                    icon: null,
+                  },
+                ],
               });
             }
           })

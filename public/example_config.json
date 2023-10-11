@@ -1,9 +1,26 @@
 {
   "api": "/",
   "touchButtonRegions": false,
-  "login": {
-    "ad": true,
-    "external": true,
-    "usernamePassword": true
-  }
+  "loginMethods": [
+    {
+      "type": "oidc",
+      "enabled": true,
+      "provider": "internal",
+      "label": null,
+      "icon": "faCity"
+    },
+    {
+      "type": "oidc",
+      "enabled": true,
+      "provider": "external",
+      "label": "",
+      "icon": "mitID"
+    },
+    {
+      "type": "username-password",
+      "enabled": true,
+      "provider": "username-password",
+      "label": null
+    }
+  ]
 }

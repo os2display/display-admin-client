@@ -1,12 +1,13 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
 import List from "../util/list/list";
 import ListContext from "../../context/list-context";
 import UserContext from "../../context/user-context";
 import useModal from "../../context/modal-context/modal-context-hook";
-import { UserColumns } from "./user-columns";
+import { ActivationCodeColumns } from "./activation-code-columns";
+import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
@@ -14,17 +15,18 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
-  useDeleteV1UsersByIdMutation,
-  useGetV1UsersQuery,
+  api,
+  useDeleteUserActivationCodeItemMutation,
+  useGetUserActivationCodeCollectionQuery,
 } from "../../redux/api/api.generated";
 
 /**
- * The users list component.
+ * The Activation Code list component.
  *
  * @returns {object} The users list.
  */
-function UsersList() {
-  const { t } = useTranslation("common", { keyPrefix: "users-list" });
+function ActivationCodeList() {
+  const { t } = useTranslation("common", { keyPrefix: "activation-code-list" });
   const { selected, setSelected } = useModal();
   const {
     searchText: { get: searchText },
@@ -34,27 +36,29 @@ function UsersList() {
   const context = useContext(UserContext);
 
   // Local state
+  const [items, setItems] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [listData, setListData] = useState();
   const [loadingMessage, setLoadingMessage] = useState(
-    t("loading-messages.loading-users")
+    t("loading-messages.loading-activation-code")
   );
-  const [items, setItems] = useState([]);
 
   // Delete call
-  const [DeleteV1User, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
-    useDeleteV1UsersByIdMutation();
+  const [
+    DeleteV1UserActivationCode,
+    { isSuccess: isDeleteSuccess, error: isDeleteError },
+  ] = useDeleteUserActivationCodeItemMutation();
 
   // Get method
   const {
     data,
-    error: usersGetError,
+    error: activationCodeGetError,
     isLoading,
     refetch,
-  } = useGetV1UsersQuery({
+  } = useGetUserActivationCodeCollectionQuery({
     page,
     order: { createdAt: "desc" },
-    fullName: searchText,
+    title: searchText,
     createdBy,
   });
 
@@ -68,20 +72,20 @@ function UsersList() {
     refetch();
   }, [searchText, page, createdBy]);
 
-  /** Deletes multiple users. */
+  /** Deletes multiple codes. */
   useEffect(() => {
     if (isDeleting && selected.length > 0) {
-      const userToDelete = selected[0];
+      const codeToDelete = selected[0];
       setSelected(selected.slice(1));
-      const userToDeleteId = idFromUrl(userToDelete.id);
-      DeleteV1User({ id: userToDeleteId });
+      const codeToDeleteId = idFromUrl(codeToDelete.id);
+      DeleteV1UserActivationCode({ id: codeToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
   // Sets success messages in local storage, because the page is reloaded
   useEffect(() => {
     if (isDeleteSuccess && selected.length === 0) {
-      displaySuccess(t("success-messages.user-delete"));
+      displaySuccess(t("success-messages.activation-code-delete"));
       refetch();
       setIsDeleting(false);
     }
@@ -98,38 +102,76 @@ function UsersList() {
   useEffect(() => {
     if (isDeleteError) {
       setIsDeleting(false);
-      displayError(t("error-messages.user-delete-error"), isDeleteError);
+      displayError(
+        t("error-messages.activation-code-delete-error"),
+        isDeleteError
+      );
     }
   }, [isDeleteError]);
 
   /** Starts the deletion process. */
   const handleDelete = () => {
     setIsDeleting(true);
-    setLoadingMessage(t("loading-messages.deleting-user"));
+    setLoadingMessage(t("loading-messages.deleting-activation-code"));
   };
 
   // Error with retrieving list of users
   useEffect(() => {
-    if (usersGetError) {
-      displayError(t("error-messages.users-load-error"), usersGetError);
+    if (activationCodeGetError) {
+      displayError(
+        t("error-messages.activation-code-load-error"),
+        activationCodeGetError
+      );
     }
-  }, [usersGetError]);
+  }, [activationCodeGetError]);
+
+  const dispatch = useDispatch();
+
+  const refreshCallback = (id) => {
+    dispatch(
+      api.endpoints.postV1UserActivationCodesByIdRefreshCode.initiate({
+        id,
+        activationCode: null,
+      })
+    )
+      .then((response) => {
+        if (response.data) {
+          refetch();
+        }
+      })
+      .catch((err) => {
+        displayError(t("error-refreshing-code"), err);
+      });
+  };
 
   // The columns for the table.
-  const columns = UserColumns({
-    handleDelete,
-    disableDelete: ({ userType }) => {
-      return userType !== 'OIDC_EXTERNAL'
+  const columns = ActivationCodeColumns({ handleDelete });
+
+  columns.push({
+    path: "@id",
+    dataFunction: (id) => {
+      const activationCodeId = idFromUrl(id);
+
+      return (
+        <Button
+          variant="primary"
+          className="refresh-activation-code"
+          onClick={() => refreshCallback(activationCodeId)}
+        >
+          {t("refresh-button")}
+        </Button>
+      );
     },
+    label: "",
   });
 
   useEffect(() => {
     if (listData) {
-      // Set title from fullName, for use with delete modal.
+      // Set title from code, for use with delete modal.
       const newItems = [...(listData["hydra:member"] ?? [])].map((el) => {
         return {
           ...el,
-          title: el.fullName,
+          title: el.code,
         };
       });
 
@@ -139,11 +181,11 @@ function UsersList() {
 
   return (
     <>
-      <Row className="align-items-center justify-content-between my-3">
-        <Col>
-          <h1>{t("header")}</h1>
-        </Col>
-      </Row>
+      <ContentHeader
+        title={t("header")}
+        newBtnTitle={t("create-activation-codes")}
+        newBtnLink="/activation/create"
+      />
       <ContentBody>
         <>
           {listData && (
@@ -165,4 +207,4 @@ function UsersList() {
   );
 }
 
-export default UsersList;
+export default ActivationCodeList;

@@ -3,29 +3,36 @@ import { Alert, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import "./login.scss";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as FontAwesomeIcons from "@fortawesome/free-solid-svg-icons";
 import ConfigLoader from "../../config-loader";
+import MitIdLogo from "./mitid-logo.svg";
 
 /**
  * OIDC Login component
  *
  * @param {object} props The props
- * @param {string} props.providerKey The provider key
- * @param {string} props.text Button text
- * @param {object} props.icon Button icon
+ * @param {object} props.config The login method config
  * @returns {object} - The component
  */
-function OIDCLogin({ providerKey, text, icon }) {
+function OIDCLogin({ config }) {
   // Hooks
   const { t } = useTranslation("common", { keyPrefix: "oidc-login" });
+
+  const { provider, label, icon } = config;
 
   // State
   const [oidcAuthUrl, setOidcAuthUrl] = useState("");
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
 
   useEffect(() => {
-    ConfigLoader.loadConfig().then((config) => {
+    if (!provider) {
+      return;
+    }
+
+    ConfigLoader.loadConfig().then((siteConfig) => {
       fetch(
-        `${config.api}v1/authentication/oidc/urls?providerKey=${providerKey}`,
+        `${siteConfig.api}v1/authentication/oidc/urls?providerKey=${provider}`,
         {
           mode: "cors",
           credentials: "include",
@@ -40,9 +47,34 @@ function OIDCLogin({ providerKey, text, icon }) {
           setOidcAuthLoadingError(t("error-fetching-oidc-urls"));
         });
     });
+  }, [provider]);
 
-    return () => {};
-  }, []);
+  let labelText = label;
+
+  if (labelText === null) {
+    switch (provider) {
+      case "internal":
+        labelText = t("login-with-internal");
+        break;
+      case "external":
+        labelText = t("login-with-external");
+        break;
+      default:
+        labelText = "";
+    }
+  }
+
+  let iconRender = null;
+
+  if (icon !== null) {
+    if (icon === "mitID") {
+      iconRender = <img width="56" className="me-2" src={MitIdLogo} alt="" />;
+    } else if (icon.indexOf("fa") === 0) {
+      iconRender = (
+        <FontAwesomeIcon className="me-2" icon={FontAwesomeIcons[icon]} />
+      );
+    }
+  }
 
   return (
     <>
@@ -52,12 +84,13 @@ function OIDCLogin({ providerKey, text, icon }) {
       {oidcAuthUrl !== "" && (
         <a
           href={oidcAuthUrl}
-          className="margin-right-button btn btn-primary btn-lg margin-right-button d-flex align-items-center"
+          className="margin-right-button btn btn-primary btn-lg d-flex justify-content-center align-items-center"
+          style={{ minWidth: "160px" }}
           aria-label={t("login-with-oidc-aria-label")}
           aria-describedby="ad-explanation"
         >
-          {icon}
-          {text}
+          {iconRender}
+          {labelText}
         </a>
       )}
       {oidcAuthLoadingError !== "" && (
@@ -68,9 +101,11 @@ function OIDCLogin({ providerKey, text, icon }) {
 }
 
 OIDCLogin.propTypes = {
-  providerKey: PropTypes.string.isRequired,
-  icon: PropTypes.element.isRequired,
-  text: PropTypes.string.isRequired,
+  config: PropTypes.shape({
+    provider: PropTypes.string.isRequired,
+    icon: PropTypes.string,
+    label: PropTypes.string,
+  }).isRequired,
 };
 
 export default OIDCLogin;

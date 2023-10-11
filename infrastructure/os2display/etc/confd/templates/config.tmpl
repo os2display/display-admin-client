@@ -1,9 +1,26 @@
 {
   "api": "{{ getenv "API_PATH" "/" }}",
   "touchButtonRegions": "{{ getenv "APP_TOUCH_BUTTON_REGIONS" "false"}}",
-  "login": {
-      "ad": "{{ getenv "APP_ENABLE_AD_LOGIN" "false"}}",
-      "external": "{{ getenv "APP_ENABLE_EXTERNAL_LOGIN" "false"}}",
-      "usernamePassword": "{{ getenv "APP_ENABLE_USERNAME_PASSWORD_LOGIN" "true"}}"
+  "loginMethods": [
+    {
+      "type": "oidc",
+      "enabled": "{{ getenv "APP_ENABLE_INTERNAL_LOGIN" "true"}}",
+      "provider": "internal",
+      "label": null,
+      "icon": "faCity"
+    },
+    {
+      "type": "oidc",
+      "enabled": "{{ getenv "APP_ENABLE_EXTERNAL_LOGIN" "true"}}",
+      "provider": "external",
+      "label": "",
+      "icon": "mitID"
+    },
+    {
+      "type": "username-password",
+      "enabled": "{{ getenv "APP_ENABLE_USERNAME_PASSWORD_LOGIN" "true"}}",
+      "provider": "username-password",
+      "label": null
     }
+  ]
 }

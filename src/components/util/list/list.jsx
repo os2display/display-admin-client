@@ -23,6 +23,7 @@ import ListContext from "../../../context/list-context";
  *   element with success.
  * @param {boolean} props.displayPublished - Whether to display the published filter
  * @param {Function} props.showCreatedByFilter - Callback for created by filter.
+ * @param {boolean} props.displaySearch - Should search be displayed.
  * @returns {object} The List.
  */
 function List({
@@ -32,6 +33,7 @@ function List({
   totalItems,
   handleDelete,
   showCreatedByFilter,
+  displaySearch,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
@@ -200,7 +202,9 @@ function List({
     <>
       <Row className="my-2">
         <Col>
-          <SearchBox value={searchParams} onChange={onSearch} />
+          {displaySearch && (
+            <SearchBox value={searchParams} onChange={onSearch} />
+          )}
         </Col>
         <>
           {displayPublished && publishedParams && (
@@ -281,6 +285,7 @@ List.defaultProps = {
   showCreatedByFilter: true,
   handleDelete: null,
   displayPublished: false,
+  displaySearch: true,
 };
 
 List.propTypes = {
@@ -292,6 +297,7 @@ List.propTypes = {
   totalItems: PropTypes.number.isRequired,
   displayPublished: PropTypes.bool,
   showCreatedByFilter: PropTypes.bool,
+  displaySearch: PropTypes.bool,
 };
 
 export default ListLoading(List);

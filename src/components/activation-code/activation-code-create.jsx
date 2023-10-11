@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
-import UserForm from "./user-form";
+import { usePostV1UserActivationCodesMutation } from "../../redux/api/api.generated";
+import ActivationCodeForm from "./activation-code-form";
 import {
   displaySuccess,
   displayError,
@@ -13,35 +13,34 @@ import {
  *
  * @returns {object} The user create page.
  */
-function UserCreate() {
-  const { t } = useTranslation("common", { keyPrefix: "user-create" });
+function ActivationCodeCreate() {
+  const { t } = useTranslation("common", {
+    keyPrefix: "activation-code-create",
+  });
   const navigate = useNavigate();
-  const headerText = t("create-new-user-header");
+  const headerText = t("create-new-activation-code-header");
   const [formStateObject, setFormStateObject] = useState({
-    title: "",
-    description: "",
-    createdBy: "",
-    modifiedBy: "",
+    displayName: "",
+    role: "",
   });
 
-  // Todo change post from group to user
   const [
-    PostV1ScreenGroups,
+    PostV1UserActivationCode,
     { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
-  ] = usePostV1ScreenGroupsMutation();
+  ] = usePostV1UserActivationCodesMutation();
 
   /** Handle submitting is done. */
   useEffect(() => {
     if (isSaveSuccess) {
-      displaySuccess(t("success-messages.saved-user"));
-      navigate("/users/list");
+      displaySuccess(t("success-messages.saved-activation-code"));
+      navigate("/activation/list");
     }
   }, [isSaveSuccess]);
 
   /** If the user is saved with error, display the error message */
   useEffect(() => {
     if (saveError) {
-      displayError(t("error-messages.save-user-error"), saveError);
+      displayError(t("error-messages.save-activation-code-error"), saveError);
     }
   }, [saveError]);
 
@@ -60,27 +59,25 @@ function UserCreate() {
   /** Handles submit. */
   const handleSubmit = () => {
     const saveData = {
-      title: formStateObject.title,
-      description: formStateObject.description,
-      modifiedBy: formStateObject.modifiedBy,
-      createdBy: formStateObject.createdBy,
+      displayName: formStateObject.displayName,
+      roles: [formStateObject.role],
     };
 
-    PostV1ScreenGroups({
-      screenGroupScreenGroupInput: JSON.stringify(saveData),
+    PostV1UserActivationCode({
+      userActivationCodeUserActivationCodeInput: JSON.stringify(saveData),
     });
   };
 
   return (
-    <UserForm
-      user={formStateObject}
+    <ActivationCodeForm
+      activationCode={formStateObject}
       headerText={headerText}
       handleInput={handleInput}
       handleSubmit={handleSubmit}
       isLoading={isSaving}
-      loadingMessage={t("loading-messages.saving-user")}
+      loadingMessage={t("loading-messages.saving-activation-code")}
     />
   );
 }
 
-export default UserCreate;
+export default ActivationCodeCreate;

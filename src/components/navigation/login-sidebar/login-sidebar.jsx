@@ -11,10 +11,10 @@ const LoginSidebar = () => {
       <div className="card text-white bg-dark mb-3 border border-color-white">
         <div className="card-body">
           <p className="card-text" id="ad-explanation">
-            <Trans>{t("AD-info-text")}</Trans>
+            <Trans>{t("internal-info-text")}</Trans>
           </p>
           <p className="card-text" id="mitid-explanation">
-            <Trans>{t("MitID-info-text")}</Trans>
+            <Trans>{t("external-info-text")}</Trans>
           </p>
         </div>
       </div>

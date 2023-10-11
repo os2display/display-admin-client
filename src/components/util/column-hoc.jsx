@@ -7,13 +7,16 @@ import CheckboxForList from "./list/checkbox-for-list";
 import selectedHelper from "./helpers/selectedHelper";
 import useModal from "../../context/modal-context/modal-context-hook";
 import LinkForList from "./list/link-for-list";
+
 /**
  * Hoc that wraps arrays in checkbox and delete button
  *
  * @param {Array} columns - The array to wrap
+ * @param {boolean} omitStandardColumns - Omit title and createdBy columns.
+ * @param {boolean} disableEdit - Remove edit button.
  * @returns {Array} Array of columns for lists.
  */
-function ColumnHoc(columns) {
+function ColumnHoc(columns, omitStandardColumns, disableEdit) {
   return function WithColumnHoc({
     handleDelete,
     disableCheckbox = () => {},
@@ -37,7 +40,7 @@ function ColumnHoc(columns) {
       });
     }
 
-    const firstColumns = [
+    let firstColumns = [
       {
         key: "pick",
         content: (d) => (
@@ -49,15 +52,21 @@ function ColumnHoc(columns) {
           />
         ),
       },
-      {
-        path: "title",
-        label: t("name"),
-      },
-      {
-        path: "createdBy",
-        label: t("created-by"),
-      },
     ];
+
+    if (!omitStandardColumns) {
+      firstColumns = [
+        ...firstColumns,
+        {
+          path: "title",
+          label: t("name"),
+        },
+        {
+          path: "createdBy",
+          label: t("created-by"),
+        },
+      ];
+    }
 
     const returnColumns = firstColumns.concat(columns({ ...props }));
 
@@ -65,8 +74,12 @@ function ColumnHoc(columns) {
       key: "edit-delete-buttons",
       content: (d) => (
         <div className="d-flex justify-content-end">
-          {/* eslint-disable-next-line react/destructuring-assignment */}
-          <LinkForList id={d["@id"]} param={`${pathname.split("/")[1]}/edit`} />
+          {!disableEdit && (
+            <LinkForList
+              id={d["@id"]}
+              param={`${pathname.split("/")[1]}/edit`}
+            />
+          )}
           <Button
             variant="danger"
             className="remove-from-list"

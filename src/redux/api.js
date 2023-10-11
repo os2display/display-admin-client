@@ -22,6 +22,8 @@ generatedApi.enhanceEndpoints({
     "ScreenGroup",
     "FeedSource",
     "Feed",
+    "ActivationCode",
+    "User",
   ],
   endpoints: {
     getV1FeedSources: {
@@ -191,6 +193,21 @@ generatedApi.enhanceEndpoints({
       providesTags: ["Theme"],
       invalidatesTags: ["Theme"],
     },
+    postV1ExternalUserActivationCodesActivate: {
+      providesTags: ["ActivationCode"],
+      invalidatesTags: ["ActivationCode"],
+    },
+    getV1ExternalUserActivationCodesByIdRefreshCode: {
+      providesTags: ["ActivationCode"],
+      invalidatesTags: ["ActivationCode"],
+    },
+    getExternalUserActivationCodeCollection: {
+      providesTags: ["ActivationCode"],
+    },
+    deleteExternalUserActivationCodeItem: {
+      providesTags: ["ActivationCode"],
+      invalidatesTags: ["ActivationCode"],
+    },
     tenantChangedClearCache: {
       invalidatesTags: [
         "Theme",
@@ -201,6 +218,8 @@ generatedApi.enhanceEndpoints({
         "Playlist",
         "FeedSource",
         "Media",
+        "ActivationCode",
+        "User",
       ],
     },
   },

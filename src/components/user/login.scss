@@ -8,6 +8,8 @@
   }
 
   .login-box-shadow {
+    min-height: 50vh;
+
     @media (max-width: 480px) {
       box-shadow: white 0px 2px 8px 0px;
     }

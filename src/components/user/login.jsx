@@ -6,8 +6,6 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCity } from "@fortawesome/free-solid-svg-icons";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
@@ -15,7 +13,6 @@ import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";
 import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
-import MitIdLogo from "./mitid-logo.svg";
 import "./login.scss";
 import OIDCLogin from "./oidc-login";
 import LoadingComponent from "../util/loading-component/loading-component";
@@ -42,7 +39,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [enabledLogins, setEnabledLogins] = useState(null);
+  const [loginMethods, setLoginMethods] = useState([]);
 
   /**
    * Login, both called from oidc login and manuel login.
@@ -60,6 +57,10 @@ function Login() {
 
     // Set data in local storage, to persist login on refresh
     localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
+    localStorage.setItem(
+      localStorageKeys.API_REFRESH_TOKEN,
+      data.refresh_token
+    );
     localStorage.setItem(localStorageKeys.USER_NAME, user?.fullname);
     localStorage.setItem(localStorageKeys.EMAIL, user?.email);
     localStorage.setItem(localStorageKeys.TENANTS, JSON.stringify(tenants));
@@ -109,19 +110,51 @@ function Login() {
     );
   };
 
+  const refreshTokenAndLogin = () => {
+    ConfigLoader.loadConfig().then((config) => {
+      fetch(`${config.api}v1/authentication/token/refresh`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          refresh_token: localStorage.getItem(
+            localStorageKeys.API_REFRESH_TOKEN
+          ),
+        }),
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          if (data.code !== 200) {
+            setErrorMessage(data.message);
+          }
+
+          if (data?.token) {
+            login(data);
+          }
+        })
+        .catch((err) => {
+          setError(true);
+          displayError(t("error-refreshing-code"), err);
+        });
+    });
+  };
+
   const onActivationCodeSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
     dispatch(
-      api.endpoints.postV1ExternalUserActivationCodesActivate.initiate({
-        externalUserActivationCodeExternalUserActivateInput: JSON.stringify({
+      api.endpoints.postV1UserActivationCodesActivate.initiate({
+        userActivationCodeUserActivateInput: JSON.stringify({
           activationCode,
         }),
       })
     )
       .then(() => {
-        window.href = "/admin";
+        refreshTokenAndLogin();
       })
       .catch((err) => {
         setError(true);
@@ -136,7 +169,7 @@ function Login() {
     dispatch(
       api.endpoints.postCredentialsItem.initiate({
         credentials: JSON.stringify({
-          email,
+          providerId: email,
           password,
         }),
       })
@@ -164,12 +197,29 @@ function Login() {
   useEffect(() => {
     ConfigLoader.loadConfig().then((config) => {
       // Defaults to all enabled.
-      setEnabledLogins(
-        config.login ?? {
-          ad: true,
-          external: true,
-          usernamePassword: true,
-        }
+      setLoginMethods(
+        config.loginMethods ?? [
+          {
+            type: "oidc",
+            provider: "internal",
+            enabled: true,
+            label: null,
+            icon: null,
+          },
+          {
+            type: "oidc",
+            provider: "internal",
+            enabled: true,
+            label: null,
+            icon: null,
+          },
+          {
+            type: "username-password",
+            enabled: true,
+            label: null,
+            icon: null,
+          },
+        ]
       );
     });
   }, []);
@@ -224,10 +274,18 @@ function Login() {
     };
   }, [search]);
 
+  const oidcLogins = loginMethods.filter(
+    (loginMethod) => loginMethod.enabled && loginMethod.type === "oidc"
+  );
+  const usernamePasswordLogins = loginMethods.filter(
+    (loginMethod) =>
+      loginMethod.enabled && loginMethod.type === "username-password"
+  );
+
   return (
     <>
       {ready && (
-        <div className="login-container">
+        <div className="login-container container">
           <Row className="login-box-shadow">
             <Col
               md="4"
@@ -247,7 +305,7 @@ function Login() {
                 {loggedIn &&
                   !context.selectedTenant.get &&
                   (context.tenants.get.length ?? 0) === 0 &&
-                  context.userType.get === "oidc-external" && (
+                  context.userType.get === "OIDC_EXTERNAL" && (
                     <>
                       <Form onSubmit={onActivationCodeSubmit}>
                         <FormInput
@@ -310,80 +368,64 @@ function Login() {
                   <>
                     <h1>{t("login-header")}</h1>
 
-                    {(enabledLogins?.ad || enabledLogins?.external) && (
+                    {oidcLogins.length > 0 && (
                       <>
                         <h2 className="h4 mt-5 mb-3 fw-light">
                           {t("oidc-mit-id-header")}
                         </h2>
 
                         <div className="d-flex">
-                          {enabledLogins?.ad && (
+                          {oidcLogins.map((loginMethod) => (
                             <OIDCLogin
-                              providerKey="ad"
-                              text={t("login-with-ad")}
-                              icon={
-                                <FontAwesomeIcon
-                                  className="me-2"
-                                  icon={faCity}
-                                />
-                              }
+                              config={loginMethod}
+                              key={loginMethod.provider}
                             />
-                          )}
-
-                          {enabledLogins?.external && (
-                            <OIDCLogin
-                              providerKey="external"
-                              text={t("login-with-external")}
-                              icon={
-                                <img
-                                  width="56"
-                                  className="me-2"
-                                  src={MitIdLogo}
-                                  alt=""
-                                />
-                              }
-                            />
-                          )}
+                          ))}
                         </div>
                       </>
                     )}
 
-                    {enabledLogins?.usernamePassword && (
-                      <>
-                        <h2 className="h4 mt-5 mb-3 fw-light">
-                          {t("os2-display-user-header")}
-                        </h2>
+                    {usernamePasswordLogins.length > 0 &&
+                      usernamePasswordLogins.map((loginMethod) => (
+                        <div key={loginMethod.provider}>
+                          <h2 className="h4 mt-5 mb-3 fw-light">
+                            {loginMethod.label ?? t("os2-display-user-header")}
+                          </h2>
 
-                        <Form onSubmit={onSubmit}>
-                          <FormInput
-                            className={
-                              error ? "form-control is-invalid" : "form-control"
-                            }
-                            onChange={(ev) => setEmail(ev.target.value)}
-                            value={email}
-                            name="email"
-                            label={t("email")}
-                            required
-                          />
+                          <Form onSubmit={onSubmit}>
+                            <FormInput
+                              className={
+                                error
+                                  ? "form-control is-invalid"
+                                  : "form-control"
+                              }
+                              onChange={(ev) => setEmail(ev.target.value)}
+                              value={email}
+                              name="email"
+                              label={t("email")}
+                              required
+                            />
 
-                          <FormInput
-                            className={
-                              error ? "form-control is-invalid" : "form-control"
-                            }
-                            onChange={(ev) => setPassword(ev.target.value)}
-                            value={password}
-                            name="password"
-                            label={t("password")}
-                            type="password"
-                            required
-                          />
+                            <FormInput
+                              className={
+                                error
+                                  ? "form-control is-invalid"
+                                  : "form-control"
+                              }
+                              onChange={(ev) => setPassword(ev.target.value)}
+                              value={password}
+                              name="password"
+                              label={t("password")}
+                              type="password"
+                              required
+                            />
 
-                          <Button type="submit" className="mt-3" id="login">
-                            {t("submit")}
-                          </Button>
-                        </Form>
-                      </>
-                    )}
+                            <Button type="submit" className="mt-3" id="login">
+                              {t("submit")}
+                            </Button>
+                          </Form>
+                        </div>
+                      ))}
                   </>
                 )}
               </div>

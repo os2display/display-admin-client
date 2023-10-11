@@ -36,10 +36,11 @@ import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
 import ModalProvider from "./context/modal-context/modal-provider";
 import UsersList from "./components/users/users-list";
-import UserEdit from "./components/users/user-edit";
-import UserCreate from "./components/users/user-create";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
+import ActivationCodeList from "./components/activation-code/activation-code-list";
+import ActivationCodeCreate from "./components/activation-code/activation-code-create";
+import ActivationCodeActivate from "./components/activation-code/activation-code-activate";
 
 /**
  * App component.
@@ -77,6 +78,7 @@ function App() {
 
   const handleReauthenticate = () => {
     localStorage.removeItem(localStorageKeys.API_TOKEN);
+    localStorage.removeItem(localStorageKeys.API_REFRESH_TOKEN);
     localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
     localStorage.removeItem(localStorageKeys.TENANTS);
     localStorage.removeItem(localStorageKeys.USER_NAME);
@@ -152,8 +154,8 @@ function App() {
           shared: {
             roles: ["ROLE_ADMIN"],
           },
-          externalUsers: {
-            roles: ["ROLE_ADMIN"],
+          users: {
+            roles: ["ROLE_ADMIN", "ROLE_EXTERNAL_USER_ADMIN"],
           },
         });
       });
@@ -347,10 +349,22 @@ function App() {
                                   element={<MediaCreate />}
                                 />
                               </Route>
+                              <Route path="activation">
+                                <Route
+                                  path="list"
+                                  element={<ActivationCodeList />}
+                                />
+                                <Route
+                                  path="create"
+                                  element={<ActivationCodeCreate />}
+                                />
+                                <Route
+                                  path="activate"
+                                  element={<ActivationCodeActivate />}
+                                />
+                              </Route>
                               <Route path="users">
                                 <Route path="list" element={<UsersList />} />
-                                <Route path="create" element={<UserCreate />} />
-                                <Route path="edit/:id" element={<UserEdit />} />
                               </Route>
                               <Route path="themes">
                                 <Route
