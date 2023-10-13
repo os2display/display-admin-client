@@ -10,10 +10,6 @@ import ColumnProptypes from "../../proptypes/column-proptypes";
 import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
 import "./drag-and-drop-table.scss";
 
-// Drag and drop component (react-beautiful-dnd) is replaced with hello-pangea/dnd,
-// because the drag and drop component does not work with react 18
-// https://github.com/atlassian/react-beautiful-dnd/issues/2350
-// If it some day works with react, we should consider changing it back
 /**
  * @param {object} props The props.
  * @param {Array} props.columns The columns for the table.
@@ -126,7 +122,7 @@ function DragAndDropTable({
                   {data.map((item, index) => (
                     <Draggable
                       key={item["@id"]}
-                      draggableId={item.title}
+                      draggableId={item["@id"]}
                       index={index}
                     >
                       {(providedDraggable, providedSnapshot) => (
@@ -164,7 +160,7 @@ function DragAndDropTable({
       <Row>
         <Col>
           {totalItems > data.length && (
-            <PaginationButton label={label} callback={callback} />
+            <PaginationButton label={label} callback={callback} showButton />
           )}
         </Col>
       </Row>
@@ -184,4 +180,5 @@ DragAndDropTable.propTypes = {
   callback: PropTypes.func.isRequired,
   totalItems: PropTypes.number.isRequired,
 };
+
 export default DragAndDropTable;
