@@ -1,6 +1,6 @@
 # OS2Display Admin
 
-This is an admin for OS2Display. 
+This is an admin for OS2Display.
 This is based on create-react-app.
 See [https://github.com/os2display/display-docs/blob/main/admin.md](https://github.com/os2display/display-docs/blob/main/admin.md) for a description of the admin.
 
@@ -51,14 +51,11 @@ specification with Redux Toolkit.
 To regenerate (when the API specification has changed):
 
 ```bash
-docker-compose exec node bash
-cd src/redux/api
-
 # Action: Replace api.json with the new api.json OpenAPI specification
 
 # Install and run scripts to generate ned Redux Api slices.
-npm install
-npm start
+docker compose exec node npm --prefix src/redux/api install
+docker compose exec node npm --prefix src/redux/api start
 ```
 
 ## Testing with cypress
