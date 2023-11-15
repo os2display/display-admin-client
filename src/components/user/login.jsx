@@ -101,8 +101,8 @@ function Login() {
     e.stopPropagation();
 
     dispatch(
-      api.endpoints.postCredentialsItem.initiate({
-        credentials: JSON.stringify({
+      api.endpoints.loginCheckPost.initiate({
+        body: JSON.stringify({
           email,
           password,
         }),
