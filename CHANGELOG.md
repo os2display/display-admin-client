@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#223](https://github.com/os2display/display-admin-client/pull/223)
+  - Updated to API Platform 3
 - [#222](https://github.com/os2display/display-admin-client/pull/222)
   - Fixed redux build.
 
@@ -39,8 +41,8 @@ All notable changes to this project will be documented in this file.
 - [#205](https://github.com/os2display/display-admin-client/pull/205)
   Setup separate image builds for itkdev and os2display
 - [#204](https://github.com/os2display/display-admin-client/pull/204)
-  Change docker image name from `os2display/os2display-admin-client` 
-  to `os2display/display-admin-client` to match image name and 
+  Change docker image name from `os2display/os2display-admin-client`
+  to `os2display/display-admin-client` to match image name and
   repository name
 - [#200](https://github.com/os2display/display-admin-client/pull/200)
   Update docker build to publish to "os2display" org on docker hub.
@@ -65,7 +67,7 @@ All notable changes to this project will be documented in this file.
   Prevent screen-manager.js from redirecting before everything is saved.
 - [#192](https://github.com/os2display/display-admin-client/pull/193)
   Readd and fix cypress tests.
-- 
+-
 ## [1.2.6] - 2023-05-11
 
 - [#197](https://github.com/os2display/display-admin-client/pull/197)

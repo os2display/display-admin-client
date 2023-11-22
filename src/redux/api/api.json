@@ -1,5 +1,5 @@
 {
-    "openapi": "3.0.3",
+    "openapi": "3.1.0",
     "info": {
         "title": "OS2Display Service API",
         "description": "API description",
@@ -23,7 +23,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get JWT token from OIDC token",
+                        "description": "Get JWT token from OIDC code",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -33,8 +33,7 @@
                         }
                     }
                 },
-                "summary": "Get JWT token to login from OIDC token",
-                "description": "",
+                "summary": "Get JWT token to login from OIDC code",
                 "parameters": [
                     {
                         "name": "state",
@@ -47,8 +46,8 @@
                         }
                     },
                     {
-                        "name": "id_token",
-                        "description": "OIDC id token",
+                        "name": "code",
+                        "description": "OIDC code",
                         "in": "query",
                         "required": false,
                         "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
@@ -56,8 +55,7 @@
                             "type": "string"
                         }
                     }
-                ],
-                "deprecated": false
+                ]
             },
             "parameters": []
         },
@@ -80,7 +78,6 @@
                     }
                 },
                 "summary": "Get OpenID connect URLs",
-                "description": "",
                 "parameters": [
                     {
                         "name": "providerKey",
@@ -92,8 +89,7 @@
                             "type": "string"
                         }
                     }
-                ],
-                "deprecated": false
+                ]
             },
             "parameters": []
         },
@@ -116,8 +112,6 @@
                     }
                 },
                 "summary": "Get login info for a screen.",
-                "description": "",
-                "parameters": [],
                 "requestBody": {
                     "description": "Get login info with JWT token for given nonce",
                     "content": {
@@ -128,44 +122,65 @@
                         }
                     },
                     "required": false
-                },
-                "deprecated": false
+                }
             },
             "parameters": []
         },
         "/v1/authentication/token": {
             "post": {
-                "operationId": "postCredentialsItem",
+                "operationId": "login_check_post",
                 "tags": [
-                    "Authentication"
+                    "Login Check"
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get JWT token",
+                        "description": "User token created",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Token"
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "readOnly": true,
+                                            "type": "string",
+                                            "nullable": false
+                                        }
+                                    },
+                                    "required": [
+                                        "token"
+                                    ]
                                 }
                             }
                         }
                     }
                 },
-                "summary": "Get JWT token to login from local user.",
-                "description": "",
-                "parameters": [],
+                "summary": "Creates a user token.",
+                "description": "Creates a user token.",
                 "requestBody": {
-                    "description": "Generate new JWT Token",
+                    "description": "The login data",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Credentials"
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "nullable": false
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
                             }
                         }
                     },
-                    "required": false
-                },
-                "deprecated": false
+                    "required": true
+                }
             },
             "parameters": []
         },
@@ -188,8 +203,6 @@
                     }
                 },
                 "summary": "Get JWT token from refresh token.",
-                "description": "",
-                "parameters": [],
                 "requestBody": {
                     "description": "Refresh JWT Token",
                     "content": {
@@ -200,8 +213,7 @@
                         }
                     },
                     "required": false
-                },
-                "deprecated": false
+                }
             },
             "parameters": []
         },
@@ -255,6 +267,14 @@
                                                     "type": "string",
                                                     "format": "iri-reference"
                                                 }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
                                             }
                                         },
                                         "hydra:search": {
@@ -281,8 +301,10 @@
                                                                 "type": "string"
                                                             },
                                                             "property": {
-                                                                "type": "string",
-                                                                "nullable": true
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
                                                             },
                                                             "required": {
                                                                 "type": "boolean"
@@ -385,6 +407,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -408,7 +448,7 @@
                                         "hydra:member": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign.jsonld"
+                                                "$ref": "#/components/schemas/ScreenCampaign.jsonld"
                                             }
                                         },
                                         "hydra:totalItems": {
@@ -441,6 +481,14 @@
                                                     "type": "string",
                                                     "format": "iri-reference"
                                                 }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
                                             }
                                         },
                                         "hydra:search": {
@@ -467,8 +515,10 @@
                                                                 "type": "string"
                                                             },
                                                             "property": {
-                                                                "type": "string",
-                                                                "nullable": true
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
                                                             },
                                                             "required": {
                                                                 "type": "boolean"
@@ -488,7 +538,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
+                                        "$ref": "#/components/schemas/ScreenCampaign"
                                     }
                                 }
                             },
@@ -496,7 +546,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
+                                        "$ref": "#/components/schemas/ScreenCampaign"
                                     }
                                 }
                             }
@@ -553,24 +603,6 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
-                    },
-                    {
-                        "name": "order[createdAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -591,7 +623,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a collection of FeedSource resources.",
@@ -788,6 +820,24 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "supportedFeedOutputType[]",
                         "in": "query",
                         "description": "",
@@ -823,10 +873,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a Feed Source resource.",
@@ -861,7 +908,6 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
                         "content": {
                             "application/ld+json": {
                                 "examples": {
@@ -877,10 +923,7 @@
                                 }
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Get config for name from a feed source.",
@@ -936,7 +979,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a collection of Feed resources.",
@@ -1053,6 +1096,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -1073,10 +1134,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a feed resource.",
@@ -1111,7 +1169,6 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "",
                         "content": {
                             "application/ld+json": {
                                 "examples": {
@@ -1135,10 +1192,7 @@
                                 }
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Get data from a feed.",
@@ -1177,9 +1231,9 @@
                         "content": {
                             "application/ld+json": {
                                 "examples": null
-                            }
-                        },
-                        "headers": {}
+                            },
+                            "headers": []
+                        }
                     }
                 },
                 "summary": "Retrieves a collection of layouts resources.",
@@ -1238,10 +1292,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a screen layout resource.",
@@ -1282,7 +1333,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a collection of Media resources.",
@@ -1463,6 +1514,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -1542,7 +1611,7 @@
         },
         "/v1/media/{id}": {
             "get": {
-                "operationId": "get-v1-media-id",
+                "operationId": "getV1MediaById",
                 "tags": [
                     "Media"
                 ],
@@ -1554,10 +1623,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a Media resource.",
@@ -1633,7 +1699,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a collection of Playlist resources.",
@@ -1846,6 +1912,24 @@
                         "allowReserved": false
                     },
                     {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
                         "name": "sharedWithMe",
                         "in": "query",
                         "description": "If true only entities that are shared with me will be shown",
@@ -1938,10 +2022,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a Playlist resource.",
@@ -2097,7 +2178,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves collection of weighted slide resources.",
@@ -2244,6 +2325,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -2254,44 +2353,6 @@
                     "Playlists"
                 ],
                 "responses": {
-                    "200": {
-                        "description": "PlaylistSlide resource updated",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
-                                }
-                            }
-                        },
-                        "links": {
-                            "GetPlaylistSlideItem": {
-                                "operationId": "getPlaylistSlideItem",
-                                "parameters": {
-                                    "id": "$response.body#/id"
-                                },
-                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/playlist-slides/{id}`."
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -2323,7 +2384,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Resource identifier",
+                        "description": "PlaylistSlide identifier",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
@@ -2432,7 +2493,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a collection of Screen group resources.",
@@ -2716,7 +2777,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Resource identifier",
+                        "description": "ScreenGroupCampaign identifier",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
@@ -2746,10 +2807,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a Screen group resource.",
@@ -2905,7 +2963,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves collection of campaign resources connected to a screen group.",
@@ -3052,6 +3110,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -3062,44 +3138,6 @@
                     "ScreenGroups"
                 ],
                 "responses": {
-                    "200": {
-                        "description": "ScreenGroupCampaign resource updated",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ScreenGroupCampaign.ScreenGroupCampaign"
-                                }
-                            }
-                        },
-                        "links": {
-                            "GetScreenGroupCampaignItem": {
-                                "operationId": "getScreenGroupCampaignItem",
-                                "parameters": {
-                                    "id": "$response.body#/id"
-                                },
-                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/screen-groups-campaigns/{id}`."
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -3128,7 +3166,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Resource identifier",
+                        "description": "ScreenGroupCampaign identifier",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
@@ -3270,6 +3308,14 @@
                                                     "type": "string",
                                                     "format": "iri-reference"
                                                 }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
                                             }
                                         },
                                         "hydra:search": {
@@ -3296,8 +3342,10 @@
                                                                 "type": "string"
                                                             },
                                                             "property": {
-                                                                "type": "string",
-                                                                "nullable": true
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
                                                             },
                                                             "required": {
                                                                 "type": "boolean"
@@ -3402,7 +3450,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a collection of Screen resources.",
@@ -3569,6 +3617,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -3649,10 +3715,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a Screen resource.",
@@ -3806,7 +3869,6 @@
                     }
                 },
                 "summary": "Bind screen with BindKey",
-                "description": "",
                 "parameters": [
                     {
                         "name": "id",
@@ -3833,8 +3895,7 @@
                         }
                     },
                     "required": false
-                },
-                "deprecated": false
+                }
             },
             "parameters": []
         },
@@ -3852,7 +3913,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves collection of campaign resources.",
@@ -3907,68 +3968,6 @@
                         "allowReserved": false
                     },
                     {
-                        "name": "createdBy",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "createdBy[]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "style": "form",
-                        "explode": true,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "modifiedBy",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "modifiedBy[]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "style": "form",
-                        "explode": true,
-                        "allowReserved": false
-                    },
-                    {
                         "name": "published",
                         "in": "query",
                         "description": "If true only published content will be shown",
@@ -3977,24 +3976,6 @@
                         "allowEmptyValue": true,
                         "schema": {
                             "type": "boolean"
-                        },
-                        "style": "form",
-                        "explode": false,
-                        "allowReserved": false
-                    },
-                    {
-                        "name": "order[createdAt]",
-                        "in": "query",
-                        "description": "",
-                        "required": false,
-                        "deprecated": false,
-                        "allowEmptyValue": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
                         },
                         "style": "form",
                         "explode": false,
@@ -4009,44 +3990,6 @@
                     "Screens"
                 ],
                 "responses": {
-                    "200": {
-                        "description": "ScreenCampaign resource updated",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ScreenCampaign.ScreenCampaign"
-                                }
-                            }
-                        },
-                        "links": {
-                            "GetScreenCampaignItem": {
-                                "operationId": "getScreenCampaignItem",
-                                "parameters": {
-                                    "id": "$response.body#/id"
-                                },
-                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/screen-campaigns/{id}`."
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    },
                     "201": {
                         "description": "Created",
                         "content": {
@@ -4075,7 +4018,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Resource identifier",
+                        "description": "ScreenCampaign identifier",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
@@ -4217,6 +4160,14 @@
                                                     "type": "string",
                                                     "format": "iri-reference"
                                                 }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
                                             }
                                         },
                                         "hydra:search": {
@@ -4243,8 +4194,10 @@
                                                                 "type": "string"
                                                             },
                                                             "property": {
-                                                                "type": "string",
-                                                                "nullable": true
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
                                                             },
                                                             "required": {
                                                                 "type": "boolean"
@@ -4372,17 +4325,11 @@
                     "200": {
                         "description": "Not used - remove the default 200 response"
                     },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
+                    "201": {
+                        "description": "Created"
                     },
                     "404": {
                         "description": "Not found"
-                    },
-                    "201": {
-                        "description": "Created"
                     }
                 },
                 "summary": "Add Playlist resource from screen region.",
@@ -4570,6 +4517,14 @@
                                                     "type": "string",
                                                     "format": "iri-reference"
                                                 }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
                                             }
                                         },
                                         "hydra:search": {
@@ -4596,8 +4551,10 @@
                                                                 "type": "string"
                                                             },
                                                             "property": {
-                                                                "type": "string",
-                                                                "nullable": true
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
                                                             },
                                                             "required": {
                                                                 "type": "boolean"
@@ -4735,15 +4692,6 @@
                                 "examples": null
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    },
-                    "404": {
-                        "description": "Resource not found"
                     }
                 },
                 "summary": "Update the collection of ScreenGroups on a Screen.",
@@ -4850,7 +4798,6 @@
                     }
                 },
                 "summary": "Unbind screen from machine",
-                "description": "",
                 "parameters": [
                     {
                         "name": "id",
@@ -4871,8 +4818,7 @@
                     "description": "Unbind from machine",
                     "content": {},
                     "required": false
-                },
-                "deprecated": false
+                }
             },
             "parameters": []
         },
@@ -4890,7 +4836,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a collection of Slide resources.",
@@ -5085,6 +5031,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -5165,10 +5129,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a Slide resource.",
@@ -5324,7 +5285,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Get the collection of playlist connected to a slide.",
@@ -5471,6 +5432,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -5486,119 +5465,30 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "hydra:member": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide.jsonld"
-                                            }
-                                        },
-                                        "hydra:totalItems": {
-                                            "type": "integer",
-                                            "minimum": 0
-                                        },
-                                        "hydra:view": {
-                                            "type": "object",
-                                            "properties": {
-                                                "@id": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "@type": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:first": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:last": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:previous": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:next": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                }
-                                            }
-                                        },
-                                        "hydra:search": {
-                                            "type": "object",
-                                            "properties": {
-                                                "@type": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:template": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:variableRepresentation": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:mapping": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "@type": {
-                                                                "type": "string"
-                                                            },
-                                                            "variable": {
-                                                                "type": "string"
-                                                            },
-                                                            "property": {
-                                                                "type": "string",
-                                                                "nullable": true
-                                                            },
-                                                            "required": {
-                                                                "type": "boolean"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "required": [
-                                        "hydra:member"
-                                    ]
+                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
-                                    }
+                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
-                                    }
+                                    "$ref": "#/components/schemas/PlaylistSlide.PlaylistSlide"
                                 }
                             }
                         },
-                        "links": {
-                            "GetPlaylistSlideItem": {
-                                "operationId": "getPlaylistSlideItem",
-                                "parameters": {
-                                    "id": "$response.body#/id"
-                                },
-                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /v1/playlist-slides/{id}`."
-                            }
-                        }
+                        "links": {}
                     },
                     "400": {
                         "description": "Invalid input"
                     },
                     "422": {
                         "description": "Unprocessable entity"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 },
                 "summary": "Retrieves collection of playlistresources.",
@@ -5661,7 +5551,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a collection of Template resources.",
@@ -5806,6 +5696,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -5826,10 +5734,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a Template resource.",
@@ -5870,7 +5775,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieves a collection of tenant resources.",
@@ -6017,10 +5922,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a tenant resource.",
@@ -6061,7 +5963,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a collection of Theme resources.",
@@ -6242,6 +6144,24 @@
                         "style": "form",
                         "explode": false,
                         "allowReserved": false
+                    },
+                    {
+                        "name": "order[modifiedAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
                     }
                 ],
                 "deprecated": false
@@ -6257,17 +6177,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.Theme.jsonld"
+                                    "$ref": "#/components/schemas/Theme.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.Theme"
+                                    "$ref": "#/components/schemas/Theme"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.Theme"
+                                    "$ref": "#/components/schemas/Theme"
                                 }
                             }
                         },
@@ -6322,10 +6242,7 @@
                                 "examples": null
                             }
                         },
-                        "headers": {}
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "headers": []
                     }
                 },
                 "summary": "Retrieve a Theme resource.",
@@ -6361,17 +6278,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.Theme.jsonld"
+                                    "$ref": "#/components/schemas/Theme.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.Theme"
+                                    "$ref": "#/components/schemas/Theme"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.Theme"
+                                    "$ref": "#/components/schemas/Theme"
                                 }
                             }
                         },
@@ -6472,6 +6389,8 @@
         "schemas": {
             "Collection": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "empty": {
                         "readOnly": true,
@@ -6481,10 +6400,20 @@
                     "keys": {
                         "readOnly": true,
                         "description": "Gets all keys/indices of the collection.",
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        }
+                        "anyOf": [
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ]
                     },
                     "values": {
                         "readOnly": true,
@@ -6501,42 +6430,9 @@
             },
             "Collection.jsonld": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
                     "empty": {
                         "readOnly": true,
                         "description": "Checks whether the collection is empty (contains no elements).",
@@ -6545,10 +6441,20 @@
                     "keys": {
                         "readOnly": true,
                         "description": "Gets all keys/indices of the collection.",
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        }
+                        "anyOf": [
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        ]
                     },
                     "values": {
                         "readOnly": true,
@@ -6566,14 +6472,34 @@
             "Feed.Feed": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
+                    "configuration": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
                     },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
+                    "slide": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "feedSource": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "feedUrl": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -6581,30 +6507,20 @@
                     "createdBy": {
                         "type": "string"
                     },
-                    "configuration": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
-                    },
-                    "slide": {
+                    "created": {
                         "type": "string",
-                        "nullable": true
+                        "format": "date-time"
                     },
-                    "feedSource": {
+                    "modified": {
                         "type": "string",
-                        "nullable": true
-                    },
-                    "feedUrl": {
-                        "type": "string",
-                        "nullable": true
+                        "format": "date-time"
                     }
                 }
             },
             "Feed.Feed.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -6641,13 +6557,32 @@
                             }
                         ]
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
+                    "configuration": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
                     },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
+                    "slide": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "feedSource": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "feedUrl": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -6655,49 +6590,83 @@
                     "createdBy": {
                         "type": "string"
                     },
-                    "configuration": {
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "FeedSource": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "outputType": {
+                        "type": "string"
+                    },
+                    "feedType": {
+                        "type": "string"
+                    },
+                    "secrets": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        },
-                        "nullable": true
+                        }
                     },
-                    "slide": {
-                        "type": "string",
-                        "nullable": true
+                    "feeds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
-                    "feedSource": {
-                        "type": "string",
-                        "nullable": true
+                    "admin": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
-                    "feedUrl": {
+                    "supportedFeedOutputType": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
                         "type": "string",
-                        "nullable": true
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "FeedSource.FeedSource": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
                     },
                     "description": {
-                        "type": "string"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
                         "type": "string"
                     },
                     "outputType": {
@@ -6726,12 +6695,31 @@
                     },
                     "supportedFeedOutputType": {
                         "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "FeedSource.FeedSource.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -6772,20 +6760,6 @@
                         "type": "string"
                     },
                     "description": {
-                        "type": "string"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
                         "type": "string"
                     },
                     "outputType": {
@@ -6814,11 +6788,124 @@
                     },
                     "supportedFeedOutputType": {
                         "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "FeedSource.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "outputType": {
+                        "type": "string"
+                    },
+                    "feedType": {
+                        "type": "string"
+                    },
+                    "secrets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "feeds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "admin": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "supportedFeedOutputType": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Media": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -6829,20 +6916,6 @@
                     "license": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "media": {
                         "$ref": "#/components/schemas/Collection"
                     },
@@ -6851,12 +6924,37 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Media.Media": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -6867,20 +6965,6 @@
                     "license": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "media": {
                         "$ref": "#/components/schemas/Collection"
                     },
@@ -6889,12 +6973,37 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Media.Media.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -6940,20 +7049,6 @@
                     "license": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "media": {
                         "$ref": "#/components/schemas/Collection.jsonld"
                     },
@@ -6962,11 +7057,37 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Media.jsonld": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -7012,20 +7133,6 @@
                     "license": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "media": {
                         "$ref": "#/components/schemas/Collection.jsonld"
                     },
@@ -7034,12 +7141,103 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Playlist": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "slides": {
+                        "type": "string"
+                    },
+                    "campaignScreens": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "campaignScreenGroups": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "tenants": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "isCampaign": {
+                        "type": "boolean"
+                    },
+                    "published": {
+                        "default": {
+                            "from": "",
+                            "to": ""
+                        },
+                        "example": {
+                            "from": "",
+                            "to": ""
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Playlist.Playlist": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -7052,20 +7250,6 @@
                         "items": {
                             "type": "string"
                         }
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
                     },
                     "slides": {
                         "type": "string"
@@ -7095,12 +7279,31 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Playlist.Playlist.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -7149,20 +7352,6 @@
                             "type": "string"
                         }
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "slides": {
                         "type": "string"
                     },
@@ -7191,12 +7380,31 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Playlist.PlaylistInput": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -7238,6 +7446,49 @@
             "Playlist.PlaylistInput.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenants": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "isCampaign": {
+                        "type": "boolean"
+                    },
+                    "published": {
+                        "default": {
+                            "from": "0",
+                            "to": "0"
+                        },
+                        "example": {
+                            "from": "0",
+                            "to": "0"
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "Playlist.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -7286,36 +7537,62 @@
                             "type": "string"
                         }
                     },
+                    "slides": {
+                        "type": "string"
+                    },
+                    "campaignScreens": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
+                    "campaignScreenGroups": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
                     "tenants": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/schemas/Collection.jsonld"
                     },
                     "isCampaign": {
                         "type": "boolean"
                     },
                     "published": {
                         "default": {
-                            "from": "0",
-                            "to": "0"
+                            "from": "",
+                            "to": ""
                         },
                         "example": {
-                            "from": "0",
-                            "to": "0"
+                            "from": "",
+                            "to": ""
                         },
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "PlaylistScreenRegion.PlaylistScreenRegion": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "playlist": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
@@ -7327,6 +7604,7 @@
             "PlaylistScreenRegion.PlaylistScreenRegion.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -7364,6 +7642,7 @@
                         ]
                     },
                     "playlist": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
@@ -7375,12 +7654,15 @@
             "PlaylistSlide.PlaylistSlide": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "slide": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
                     "playlist": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
@@ -7392,6 +7674,7 @@
             "PlaylistSlide.PlaylistSlide.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -7429,10 +7712,12 @@
                         ]
                     },
                     "slide": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
                     "playlist": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
@@ -7441,9 +7726,10 @@
                     }
                 }
             },
-            "Screen.Screen": {
+            "Screen": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -7454,24 +7740,16 @@
                     "size": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "campaigns": {
                         "type": "string"
                     },
                     "layout": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
+                    },
+                    "resolution": {
                         "type": "string"
                     },
                     "location": {
@@ -7488,33 +7766,114 @@
                         "example": "/v1/screens/{id}/groups",
                         "type": "string"
                     },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
+                    "screenUser": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "enableColorSchemeChange": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Screen.Screen": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "string"
+                    },
+                    "campaigns": {
+                        "type": "string"
+                    },
+                    "layout": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
+                    },
+                    "resolution": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "regions": {
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
                     },
+                    "inScreenGroups": {
+                        "default": "/v1/screens/{id}/groups",
+                        "example": "/v1/screens/{id}/groups",
+                        "type": "string"
+                    },
                     "screenUser": {
-                        "type": "string",
-                        "nullable": true
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "enableColorSchemeChange": {
-                        "type": "boolean",
-                        "nullable": true
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Screen.Screen.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -7560,24 +7919,16 @@
                     "size": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "campaigns": {
                         "type": "string"
                     },
                     "layout": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
+                    },
+                    "resolution": {
                         "type": "string"
                     },
                     "location": {
@@ -7594,33 +7945,42 @@
                         "example": "/v1/screens/{id}/groups",
                         "type": "string"
                     },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "screenUser": {
-                        "type": "string",
-                        "nullable": true
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "enableColorSchemeChange": {
-                        "type": "boolean",
-                        "nullable": true
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Screen.ScreenInput": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -7637,29 +7997,58 @@
                     "location": {
                         "type": "string"
                     },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                    "resolution": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
                     },
                     "enableColorSchemeChange": {
-                        "type": "boolean",
-                        "nullable": true
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
                     }
                 }
             },
             "Screen.ScreenInput.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "string"
+                    },
+                    "layout": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "resolution": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
+                    },
+                    "enableColorSchemeChange": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    }
+                }
+            },
+            "Screen.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -7705,49 +8094,138 @@
                     "size": {
                         "type": "string"
                     },
+                    "campaigns": {
+                        "type": "string"
+                    },
                     "layout": {
+                        "type": "string"
+                    },
+                    "orientation": {
+                        "type": "string"
+                    },
+                    "resolution": {
                         "type": "string"
                     },
                     "location": {
                         "type": "string"
                     },
-                    "dimensions": {
-                        "default": {
-                            "width": 0,
-                            "height": 0
-                        },
-                        "example": {
-                            "width": 0,
-                            "height": 0
-                        },
+                    "regions": {
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
                     },
+                    "inScreenGroups": {
+                        "default": "/v1/screens/{id}/groups",
+                        "example": "/v1/screens/{id}/groups",
+                        "type": "string"
+                    },
+                    "screenUser": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
                     "enableColorSchemeChange": {
-                        "type": "boolean",
-                        "nullable": true
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ScreenCampaign": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "campaign": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "screen": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "ScreenCampaign.ScreenCampaign": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "campaign": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
                     "screen": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "ScreenCampaign.ScreenCampaign.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -7785,24 +8263,24 @@
                         ]
                     },
                     "campaign": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
                     "screen": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
-                    }
-                }
-            },
-            "ScreenGroup.ScreenGroup": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "title": {
+                    },
+                    "modifiedBy": {
                         "type": "string"
                     },
-                    "description": {
+                    "createdBy": {
                         "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     },
                     "created": {
                         "type": "string",
@@ -7811,6 +8289,58 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                }
+            },
+            "ScreenCampaign.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "campaign": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "screen": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -7818,17 +8348,98 @@
                     "createdBy": {
                         "type": "string"
                     },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ScreenGroup": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
                     "campaigns": {
                         "type": "string"
                     },
                     "screens": {
                         "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ScreenGroup.ScreenGroup": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "campaigns": {
+                        "type": "string"
+                    },
+                    "screens": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "ScreenGroup.ScreenGroup.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -7871,13 +8482,11 @@
                     "description": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
+                    "campaigns": {
+                        "type": "string"
                     },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
+                    "screens": {
+                        "type": "string"
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -7885,17 +8494,24 @@
                     "createdBy": {
                         "type": "string"
                     },
-                    "campaigns": {
-                        "type": "string"
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     },
-                    "screens": {
-                        "type": "string"
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "ScreenGroup.ScreenGroupInput": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -7908,6 +8524,20 @@
             "ScreenGroup.ScreenGroupInput.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ScreenGroup.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -7949,18 +8579,45 @@
                     },
                     "description": {
                         "type": "string"
+                    },
+                    "campaigns": {
+                        "type": "string"
+                    },
+                    "screens": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "ScreenGroupCampaign.ScreenGroupCampaign": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "campaign": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
                     "screenGroup": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     }
@@ -7969,6 +8626,7 @@
             "ScreenGroupCampaign.ScreenGroupCampaign.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -8006,18 +8664,56 @@
                         ]
                     },
                     "campaign": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
                     "screenGroup": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
+                    }
+                }
+            },
+            "ScreenLayout": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "grid": {
+                        "default": {
+                            "rows": 1,
+                            "columns": 1
+                        },
+                        "example": {
+                            "rows": 1,
+                            "columns": 1
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "regions": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "ScreenLayout.ScreenLayout": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -8038,12 +8734,21 @@
                     },
                     "regions": {
                         "$ref": "#/components/schemas/Collection"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "ScreenLayout.ScreenLayout.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -8099,16 +8804,110 @@
                     },
                     "regions": {
                         "$ref": "#/components/schemas/Collection.jsonld"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
-            "ScreenLayoutRegions.ScreenLayoutRegions-read": {
-                "type": "object",
-                "description": ""
-            },
-            "ScreenLayoutRegions.ScreenLayoutRegions.jsonld-read": {
+            "ScreenLayout.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "grid": {
+                        "default": {
+                            "rows": 1,
+                            "columns": 1
+                        },
+                        "example": {
+                            "rows": 1,
+                            "columns": 1
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "regions": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ScreenLayoutRegions.ScreenLayoutRegions": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "gridArea": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ScreenLayoutRegions.ScreenLayoutRegions.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -8144,31 +8943,119 @@
                                 "additionalProperties": true
                             }
                         ]
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "gridArea": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Slide": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "templateInfo": {
+                        "default": {
+                            "@id": "",
+                            "options": []
+                        },
+                        "example": {
+                            "@id": "",
+                            "options": []
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "theme": {
+                        "type": "string"
+                    },
+                    "onPlaylists": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "duration": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "published": {
+                        "default": {
+                            "from": 0,
+                            "to": 0
+                        },
+                        "example": {
+                            "from": 0,
+                            "to": 0
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "media": {
+                        "$ref": "#/components/schemas/Collection"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "feed": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Slide.Slide": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
                     },
                     "description": {
-                        "type": "string"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
                         "type": "string"
                     },
                     "templateInfo": {
@@ -8192,8 +9079,10 @@
                         "$ref": "#/components/schemas/Collection"
                     },
                     "duration": {
-                        "type": "integer",
-                        "nullable": true
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
                     },
                     "published": {
                         "default": {
@@ -8219,17 +9108,38 @@
                         }
                     },
                     "feed": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
-                        },
-                        "nullable": true
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Slide.Slide.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -8272,20 +9182,6 @@
                     "description": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
                     "templateInfo": {
                         "default": {
                             "@id": "",
@@ -8307,8 +9203,10 @@
                         "$ref": "#/components/schemas/Collection.jsonld"
                     },
                     "duration": {
-                        "type": "integer",
-                        "nullable": true
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
                     },
                     "published": {
                         "default": {
@@ -8334,17 +9232,38 @@
                         }
                     },
                     "feed": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
-                        },
-                        "nullable": true
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Slide.SlideInput": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -8374,8 +9293,10 @@
                         "type": "string"
                     },
                     "duration": {
-                        "type": "integer",
-                        "nullable": true
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
                     },
                     "published": {
                         "default": {
@@ -8392,11 +9313,13 @@
                         }
                     },
                     "feed": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
-                        },
-                        "nullable": true
+                        }
                     },
                     "media": {
                         "type": "array",
@@ -8421,6 +9344,88 @@
             "Slide.SlideInput.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "templateInfo": {
+                        "default": {
+                            "@id": "",
+                            "options": {
+                                "fade": false
+                            }
+                        },
+                        "example": {
+                            "@id": "",
+                            "options": {
+                                "fade": false
+                            }
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "theme": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "published": {
+                        "default": {
+                            "from": 0,
+                            "to": 0
+                        },
+                        "example": {
+                            "from": 0,
+                            "to": 0
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "feed": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "media": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "content": {
+                        "default": {
+                            "text": "Test text"
+                        },
+                        "example": {
+                            "text": "Test text"
+                        },
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "Slide.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -8466,15 +9471,11 @@
                     "templateInfo": {
                         "default": {
                             "@id": "",
-                            "options": {
-                                "fade": false
-                            }
+                            "options": []
                         },
                         "example": {
                             "@id": "",
-                            "options": {
-                                "fade": false
-                            }
+                            "options": []
                         },
                         "type": "array",
                         "items": {
@@ -8484,9 +9485,14 @@
                     "theme": {
                         "type": "string"
                     },
+                    "onPlaylists": {
+                        "$ref": "#/components/schemas/Collection.jsonld"
+                    },
                     "duration": {
-                        "type": "integer",
-                        "nullable": true
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
                     },
                     "published": {
                         "default": {
@@ -8502,42 +9508,33 @@
                             "type": "string"
                         }
                     },
-                    "feed": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
-                    },
                     "media": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/schemas/Collection.jsonld"
                     },
                     "content": {
-                        "default": {
-                            "text": "Test text"
-                        },
-                        "example": {
-                            "text": "Test text"
-                        },
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
-                    }
-                }
-            },
-            "Template.Template": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "title": {
+                    },
+                    "feed": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modifiedBy": {
                         "type": "string"
                     },
-                    "description": {
+                    "createdBy": {
                         "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     },
                     "created": {
                         "type": "string",
@@ -8546,11 +9543,18 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "modifiedBy": {
+                    }
+                }
+            },
+            "Template": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
                         "type": "string"
                     },
-                    "createdBy": {
+                    "description": {
                         "type": "string"
                     },
                     "resources": {
@@ -8558,12 +9562,68 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Template.Template": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "resources": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Template.Template.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -8606,13 +9666,11 @@
                     "description": {
                         "type": "string"
                     },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
+                    "resources": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "modifiedBy": {
                         "type": "string"
@@ -8620,17 +9678,96 @@
                     "createdBy": {
                         "type": "string"
                     },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Template.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
                     "resources": {
                         "type": "array",
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
             "Tenant": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "tenantKey": {
                         "type": "string"
@@ -8642,8 +9779,10 @@
                         }
                     },
                     "fallbackImageUrl": {
-                        "type": "string",
-                        "nullable": true
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "title": {
                         "type": "string"
@@ -8678,6 +9817,7 @@
             "Tenant.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "@id": {
                         "readOnly": true,
@@ -8724,8 +9864,10 @@
                         }
                     },
                     "fallbackImageUrl": {
-                        "type": "string",
-                        "nullable": true
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "title": {
                         "type": "string"
@@ -8757,84 +9899,28 @@
                     }
                 }
             },
-            "Theme.Theme": {
+            "Theme": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "onNumberOfSlides": {
-                        "type": "integer"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
+                    "cssStyles": {
                         "type": "string"
                     },
                     "logo": {
-                        "nullable": true,
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Media"
-                            }
-                        ]
+                        "owl:maxCardinality": 1,
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "iri-reference"
                     },
-                    "css": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Theme.Theme.jsonld": {
-                "type": "object",
-                "description": "",
-                "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
+                    "slides": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "iri-reference"
+                        }
                     },
                     "title": {
                         "type": "string"
@@ -8842,32 +9928,31 @@
                     "description": {
                         "type": "string"
                     },
-                    "onNumberOfSlides": {
-                        "type": "integer"
+                    "tenant": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
-                    "created": {
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
                         "type": "string",
                         "format": "date-time"
                     },
-                    "modified": {
+                    "modifiedAt": {
+                        "readOnly": true,
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
                     },
                     "createdBy": {
                         "type": "string"
                     },
-                    "logo": {
-                        "nullable": true,
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Media.jsonld"
-                            }
-                        ]
-                    },
-                    "css": {
+                    "modifiedBy": {
                         "type": "string"
                     }
                 }
@@ -8875,6 +9960,7 @@
             "Theme.ThemeInput": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
                 "properties": {
                     "title": {
                         "type": "string"
@@ -8893,6 +9979,26 @@
             "Theme.ThemeInput.jsonld": {
                 "type": "object",
                 "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "css": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Theme.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "@context": {
                         "readOnly": true,
@@ -8929,27 +10035,68 @@
                         "readOnly": true,
                         "type": "string"
                     },
+                    "cssStyles": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "owl:maxCardinality": 1,
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "iri-reference"
+                    },
+                    "slides": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "iri-reference"
+                        }
+                    },
                     "title": {
                         "type": "string"
                     },
                     "description": {
                         "type": "string"
                     },
-                    "logo": {
+                    "tenant": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
                         "type": "string"
                     },
-                    "css": {
+                    "modifiedBy": {
                         "type": "string"
                     }
                 }
             },
             "User": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "email": {
                         "format": "email",
                         "externalDocs": {
-                            "url": "http://schema.org/email"
+                            "url": "https://schema.org/email"
                         },
                         "type": "string"
                     },
@@ -8960,10 +10107,6 @@
                         "description": "The hashed password",
                         "type": "string"
                     },
-                    "activeTenant": {
-                        "type": "string",
-                        "format": "iri-reference"
-                    },
                     "userRoleTenants": {
                         "type": "array",
                         "items": {
@@ -8972,6 +10115,11 @@
                     },
                     "provider": {
                         "type": "string"
+                    },
+                    "activeTenant": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "userIdentifier": {
                         "readOnly": true,
@@ -8996,21 +10144,16 @@
                     "salt": {
                         "readOnly": true,
                         "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
-                        "type": "string",
-                        "nullable": true
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "roleTenant": {
                         "writeOnly": true,
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
-                    },
-                    "userRoleTenant": {
-                        "writeOnly": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRoleTenant"
                         }
                     },
                     "id": {
@@ -9042,46 +10185,13 @@
             },
             "User.jsonld": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
                     "email": {
                         "format": "email",
                         "externalDocs": {
-                            "url": "http://schema.org/email"
+                            "url": "https://schema.org/email"
                         },
                         "type": "string"
                     },
@@ -9092,10 +10202,6 @@
                         "description": "The hashed password",
                         "type": "string"
                     },
-                    "activeTenant": {
-                        "type": "string",
-                        "format": "iri-reference"
-                    },
                     "userRoleTenants": {
                         "type": "array",
                         "items": {
@@ -9104,6 +10210,11 @@
                     },
                     "provider": {
                         "type": "string"
+                    },
+                    "activeTenant": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "userIdentifier": {
                         "readOnly": true,
@@ -9128,21 +10239,16 @@
                     "salt": {
                         "readOnly": true,
                         "description": "Returning a salt is only needed, if you are not using a modern\nhashing algorithm (e.g. bcrypt or sodium) in your security.yaml.",
-                        "type": "string",
-                        "nullable": true
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "roleTenant": {
                         "writeOnly": true,
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
-                    },
-                    "userRoleTenant": {
-                        "writeOnly": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRoleTenant.jsonld"
                         }
                     },
                     "id": {
@@ -9174,11 +10280,14 @@
             },
             "UserRoleTenant": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
                     "user": {
                         "$ref": "#/components/schemas/User"
                     },
                     "tenant": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
@@ -9214,46 +10323,14 @@
             },
             "UserRoleTenant.jsonld": {
                 "type": "object",
+                "description": "",
+                "deprecated": false,
                 "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
                     "user": {
                         "$ref": "#/components/schemas/User.jsonld"
                     },
                     "tenant": {
+                        "owl:maxCardinality": 1,
                         "type": "string",
                         "format": "iri-reference"
                     },
@@ -9300,6 +10377,11 @@
                         "readOnly": true,
                         "example": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     },
+                    "refresh_token_expiration": {
+                        "type": "int",
+                        "readOnly": true,
+                        "example": "1678802283"
+                    },
                     "tenants": {
                         "type": "array",
                         "items": {
@@ -9342,7 +10424,7 @@
                             "email": {
                                 "type": "string",
                                 "readOnly": true,
-                                "example": "johndoe@example.com"
+                                "example": "john@example.com"
                             }
                         }
                     }
@@ -9377,7 +10459,7 @@
                 "properties": {
                     "email": {
                         "type": "string",
-                        "example": "johndoe@example.com"
+                        "example": "john@example.com"
                     },
                     "password": {
                         "type": "string",

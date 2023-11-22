@@ -10,7 +10,7 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/authentication/oidc/token`,
-        params: { state: queryArg.state, id_token: queryArg.idToken },
+        params: { state: queryArg.state, code: queryArg.code },
       }),
     }),
     getOidcAuthUrlsItem: build.query<
@@ -32,14 +32,14 @@ export const api = createApi({
         body: queryArg.screenLoginInput,
       }),
     }),
-    postCredentialsItem: build.mutation<
-      PostCredentialsItemApiResponse,
-      PostCredentialsItemApiArg
+    loginCheckPost: build.mutation<
+      LoginCheckPostApiResponse,
+      LoginCheckPostApiArg
     >({
       query: (queryArg) => ({
         url: `/v1/authentication/token`,
         method: "POST",
-        body: queryArg.credentials,
+        body: queryArg.body,
       }),
     }),
     postRefreshTokenItem: build.mutation<
@@ -71,11 +71,7 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/campaigns/${queryArg.id}/screens`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          order: queryArg.order,
-        },
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
     getV1FeedSources: build.query<
@@ -446,10 +442,7 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
-          createdBy: queryArg.createdBy,
-          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
-          order: queryArg.order,
         },
       }),
     }),
@@ -710,12 +703,12 @@ export const api = createApi({
   }),
 });
 export type GetOidcAuthTokenItemApiResponse =
-  /** status 200 Get JWT token from OIDC token */ Token;
+  /** status 200 Get JWT token from OIDC code */ Token;
 export type GetOidcAuthTokenItemApiArg = {
   /** OIDC state */
   state?: string;
-  /** OIDC id token */
-  idToken?: string;
+  /** OIDC code */
+  code?: string;
 };
 export type GetOidcAuthUrlsItemApiResponse =
   /** status 200 Get authentication and end session endpoints */ OidcEndpoints;
@@ -729,11 +722,15 @@ export type PostLoginInfoScreenApiArg = {
   /** Get login info with JWT token for given nonce */
   screenLoginInput: ScreenLoginInput;
 };
-export type PostCredentialsItemApiResponse =
-  /** status 200 Get JWT token */ Token;
-export type PostCredentialsItemApiArg = {
-  /** Generate new JWT Token */
-  credentials: Credentials;
+export type LoginCheckPostApiResponse = /** status 200 User token created */ {
+  token: string;
+};
+export type LoginCheckPostApiArg = {
+  /** The login data */
+  body: {
+    email: string;
+    password: string;
+  };
 };
 export type PostRefreshTokenItemApiResponse =
   /** status 200 Refresh JWT token */ RefreshTokenResponse;
@@ -749,6 +746,7 @@ export type GetV1CampaignsByIdScreenGroupsApiArg = {
   itemsPerPage?: string;
   order?: {
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type GetV1CampaignsByIdScreensApiResponse = unknown;
@@ -757,9 +755,6 @@ export type GetV1CampaignsByIdScreensApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  order?: {
-    createdAt?: "asc" | "desc";
-  };
 };
 export type GetV1FeedSourcesApiResponse = unknown;
 export type GetV1FeedSourcesApiArg = {
@@ -781,6 +776,7 @@ export type GetV1FeedSourcesApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type GetV1FeedSourcesByIdApiResponse = unknown;
@@ -805,6 +801,7 @@ export type GetV1FeedsApiArg = {
   };
   order?: {
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type GetV1FeedsByIdApiResponse = unknown;
@@ -842,6 +839,7 @@ export type GetV1MediaApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type PostMediaCollectionApiResponse = unknown;
@@ -882,6 +880,7 @@ export type GetV1PlaylistsApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
   /** If true only entities that are shared with me will be shown */
   sharedWithMe?: boolean;
@@ -921,11 +920,12 @@ export type GetV1PlaylistsByIdSlidesApiArg = {
   published?: boolean;
   order?: {
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type PutV1PlaylistsByIdSlidesApiResponse = unknown;
 export type PutV1PlaylistsByIdSlidesApiArg = {
-  /** Resource identifier */
+  /** PlaylistSlide identifier */
   id: string;
   body: Blob;
 };
@@ -960,7 +960,7 @@ export type PostV1ScreenGroupsApiArg = {
 };
 export type GetScreenGroupCampaignItemApiResponse = unknown;
 export type GetScreenGroupCampaignItemApiArg = {
-  /** Resource identifier */
+  /** ScreenGroupCampaign identifier */
   id: string;
 };
 export type GetV1ScreenGroupsByIdApiResponse = unknown;
@@ -993,11 +993,12 @@ export type GetV1ScreenGroupsByIdCampaignsApiArg = {
   published?: boolean;
   order?: {
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type PutV1ScreenGroupsByIdCampaignsApiResponse = unknown;
 export type PutV1ScreenGroupsByIdCampaignsApiArg = {
-  /** Resource identifier */
+  /** ScreenGroupCampaign identifier */
   id: string;
   body: Blob;
 };
@@ -1030,6 +1031,7 @@ export type GetV1ScreensApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type PostV1ScreensApiResponse = unknown;
@@ -1064,21 +1066,12 @@ export type GetV1ScreensByIdCampaignsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  createdBy?: {
-    ""?: string[];
-  };
-  modifiedBy?: {
-    ""?: string[];
-  };
   /** If true only published content will be shown */
   published?: boolean;
-  order?: {
-    createdAt?: "asc" | "desc";
-  };
 };
 export type PutV1ScreensByIdCampaignsApiResponse = unknown;
 export type PutV1ScreensByIdCampaignsApiArg = {
-  /** Resource identifier */
+  /** ScreenCampaign identifier */
   id: string;
   body: Blob;
 };
@@ -1157,6 +1150,7 @@ export type GetV1SlidesApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type PostV1SlidesApiResponse = unknown;
@@ -1194,6 +1188,7 @@ export type GetV1SlidesByIdPlaylistsApiArg = {
   published?: boolean;
   order?: {
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type PutV1SlidesByIdPlaylistsApiResponse = unknown;
@@ -1216,6 +1211,7 @@ export type GetV1TemplatesApiArg = {
   };
   order?: {
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type GetV1TemplatesByIdApiResponse = unknown;
@@ -1257,6 +1253,7 @@ export type GetV1ThemesApiArg = {
     title?: "asc" | "desc";
     description?: "asc" | "desc";
     createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
   };
 };
 export type PostV1ThemesApiResponse = unknown;
@@ -1281,6 +1278,7 @@ export type DeleteV1ThemesByIdApiArg = {
 export type Token = {
   token?: string;
   refresh_token?: string;
+  refresh_token_expiration?: any;
   tenants?: {
     tenantKey?: string;
     title?: string;
@@ -1301,10 +1299,6 @@ export type ScreenLoginOutput = {
   token?: string;
 };
 export type ScreenLoginInput = object;
-export type Credentials = {
-  email?: string;
-  password?: string;
-};
 export type RefreshTokenResponse = {
   token?: string;
   refresh_token?: string;
@@ -1330,8 +1324,9 @@ export type ScreenScreenInput = {
   size?: string;
   layout?: string;
   location?: string;
-  dimensions?: string[];
-  enableColorSchemeChange?: boolean | null;
+  resolution?: string;
+  orientation?: string;
+  enableColorSchemeChange?: any;
 };
 export type ScreenBindObject = {
   bindKey?: string;
@@ -1341,9 +1336,9 @@ export type SlideSlideInput = {
   description?: string;
   templateInfo?: string[];
   theme?: string;
-  duration?: number | null;
+  duration?: any;
   published?: string[];
-  feed?: string[] | null;
+  feed?: string[];
   media?: string[];
   content?: string[];
 };
@@ -1357,7 +1352,7 @@ export const {
   useGetOidcAuthTokenItemQuery,
   useGetOidcAuthUrlsItemQuery,
   usePostLoginInfoScreenMutation,
-  usePostCredentialsItemMutation,
+  useLoginCheckPostMutation,
   usePostRefreshTokenItemMutation,
   useGetV1CampaignsByIdScreenGroupsQuery,
   useGetV1CampaignsByIdScreensQuery,
