@@ -41,9 +41,11 @@ function ScreenGanttChart({ playlists, id }) {
       const { tenants } = playlist;
       const redirectPossible =
         tenants?.length === 0 ||
-        !tenants.find(
-          (tenant) => tenant.tenantKey === context.selectedTenant.get.tenantKey
-        );
+        (tenants &&
+          !tenants.find(
+            (tenant) =>
+              tenant.tenantKey === context.selectedTenant.get.tenantKey
+          ));
 
       // If the playlist has scheduling, a playlist per scheduling will
       // be added to the gantt chart data.

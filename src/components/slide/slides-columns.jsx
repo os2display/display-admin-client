@@ -26,10 +26,13 @@ function getSlidesColumns({
 
   const columns = [
     {
-      // eslint-disable-next-line react/prop-types
-      content: ({ templateInfo }) => (
-        <TemplateLabelInList templateInfo={templateInfo} />
-      ),
+      content: ({ templateInfo }) => {
+        if (!templateInfo || !templateInfo["@id"]) {
+          return "-";
+        }
+
+        return <TemplateLabelInList path={templateInfo["@id"]} />;
+      },
       key: "template",
       label: t("columns.template"),
     },
@@ -50,7 +53,11 @@ function getSlidesColumns({
     {
       key: "published",
       // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
+      content: ({ publishedFrom, publishedTo, published }) => (
+        <Published
+          published={published || { from: publishedFrom, to: publishedTo }}
+        />
+      ),
       label: t("columns.published"),
     },
   ];

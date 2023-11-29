@@ -27,7 +27,7 @@ function getPlaylistColumns({
     keyPrefix: "playlists-columns",
   });
 
-  const columns = [
+  return [
     {
       path: "published",
       label: t("published"),
@@ -44,10 +44,11 @@ function getPlaylistColumns({
       render: ({ tenants }) => {
         return (
           tenants?.length === 0 ||
-          !tenants.find(
-            (tenant) =>
-              tenant.tenantKey === context.selectedTenant.get.tenantKey
-          )
+          (tenants &&
+            !tenants.find(
+              (tenant) =>
+                tenant.tenantKey === context.selectedTenant.get.tenantKey
+            ))
         );
       },
       // eslint-disable-next-line react/prop-types
@@ -62,8 +63,6 @@ function getPlaylistColumns({
       ),
     },
   ];
-
-  return columns;
 }
 
 const PlaylistColumns = ColumnHoc(getPlaylistColumns);
