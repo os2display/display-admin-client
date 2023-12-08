@@ -14,8 +14,8 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
-  useDeleteV1UsersByIdMutation,
-  useGetV1UsersQuery,
+  useDeleteV1UsersByIdRemoveFromTenantMutation,
+  useApiV1UsersGetCollectionQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -43,7 +43,7 @@ function UsersList() {
 
   // Delete call
   const [DeleteV1User, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
-    useDeleteV1UsersByIdMutation();
+    useDeleteV1UsersByIdRemoveFromTenantMutation();
 
   // Get method
   const {
@@ -51,7 +51,7 @@ function UsersList() {
     error: usersGetError,
     isLoading,
     refetch,
-  } = useGetV1UsersQuery({
+  } = useApiV1UsersGetCollectionQuery({
     page,
     order: { createdAt: "desc" },
     fullName: searchText,

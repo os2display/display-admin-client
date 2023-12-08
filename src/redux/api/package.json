@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "generate": "npx @rtk-incubator/rtk-query-codegen-openapi --hooks api.json > api.generated.ts",
-    "replace1": "sed -i 's/import { fetchBaseQuery } from .*;/import extendedBaseQuery from \"..\\/dynamic-base-query\";/g' api.generated.ts",
-    "replace2": "sed -i 's/baseQuery: fetchBaseQuery.*,/baseQuery: extendedBaseQuery,/g' api.generated.ts",
+    "//": "# Therefore we replace into a temporary file which is then renamed to the original file",
+    "replace": "sed 's/import { fetchBaseQuery } from .*;/import extendedBaseQuery from \"..\\/dynamic-base-query\";/g;s/baseQuery: fetchBaseQuery.*,/baseQuery: extendedBaseQuery,/g' api.generated.ts > api.generated.ts.patched && mv api.generated.ts.patched api.generated.ts",
     "compile": "node_modules/typescript/bin/tsc api.generated.ts",
-    "start": "npm run generate && npm run replace1 && npm run replace2 && npm run compile"
+    "start": "npm run generate && npm run replace && npm run compile"
   },
   "author": "ITKDev",
   "license": "ISC",

@@ -16,8 +16,8 @@ import {
 } from "../util/list/toast-component/display-toast";
 import {
   api,
-  useDeleteUserActivationCodeItemMutation,
-  useGetUserActivationCodeCollectionQuery,
+  useDeleteV1UserActivationCodesByIdMutation,
+  useGetV1UserActivationCodesQuery,
 } from "../../redux/api/api.generated";
 
 /**
@@ -47,7 +47,7 @@ function ActivationCodeList() {
   const [
     DeleteV1UserActivationCode,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteUserActivationCodeItemMutation();
+  ] = useDeleteV1UserActivationCodesByIdMutation();
 
   // Get method
   const {
@@ -55,7 +55,7 @@ function ActivationCodeList() {
     error: activationCodeGetError,
     isLoading,
     refetch,
-  } = useGetUserActivationCodeCollectionQuery({
+  } = useGetV1UserActivationCodesQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,
@@ -129,9 +129,9 @@ function ActivationCodeList() {
 
   const refreshCallback = (id) => {
     dispatch(
-      api.endpoints.postV1UserActivationCodesByIdRefreshCode.initiate({
+      api.endpoints.refreshCode.initiate({
         id,
-        activationCode: null,
+        body: null,
       })
     )
       .then((response) => {
