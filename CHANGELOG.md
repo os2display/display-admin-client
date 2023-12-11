@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#225](https://github.com/os2display/display-admin-client/pull/225)
+  - Fixed caching issues when adding/removing playlists from slide.
 - [#223](https://github.com/os2display/display-admin-client/pull/223)
   - Updated to API Platform 3
 - [#222](https://github.com/os2display/display-admin-client/pull/222)
