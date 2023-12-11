@@ -21,6 +21,13 @@ All notable changes to this project will be documented in this file.
   - Cleaned up translations.
   - Fixed some WCAG2.1 issues.
   - Added os2display logo.
+- [#223](https://github.com/os2display/display-admin-client/pull/223)
+  - Updated to API Platform 3
+- [#222](https://github.com/os2display/display-admin-client/pull/222)
+  - Fixed redux build.
+
+## [1.5.0] - 2023-10-26
+
 - [#221](https://github.com/os2display/display-admin-client/pull/221)
   - Fixed missing pagination button in drag-and-drop-table.
 - [#214](https://github.com/os2display/display-admin-client/pull/214)
