@@ -687,14 +687,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getV1UserActivationCodeOutputsById: build.query<
-      GetV1UserActivationCodeOutputsByIdApiResponse,
-      GetV1UserActivationCodeOutputsByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v1/user-activation-code-outputs/${queryArg.id}`,
-      }),
-    }),
     getV1UserActivationCodes: build.query<
       GetV1UserActivationCodesApiResponse,
       GetV1UserActivationCodesApiArg
@@ -714,7 +706,10 @@ export const api = createApi({
         body: queryArg.userActivationCodeUserActivationCodeInput,
       }),
     }),
-    activate: build.mutation<ActivateApiResponse, ActivateApiArg>({
+    postV1UserActivationCodesActivate: build.mutation<
+      PostV1UserActivationCodesActivateApiResponse,
+      PostV1UserActivationCodesActivateApiArg
+    >({
       query: (queryArg) => ({
         url: `/v1/user-activation-codes/activate`,
         method: "POST",
@@ -738,11 +733,14 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    refreshCode: build.mutation<RefreshCodeApiResponse, RefreshCodeApiArg>({
+    postV1UserActivationCodesByIdRefreshCode: build.mutation<
+      PostV1UserActivationCodesByIdRefreshCodeApiResponse,
+      PostV1UserActivationCodesByIdRefreshCodeApiArg
+    >({
       query: (queryArg) => ({
         url: `/v1/user-activation-codes/${queryArg.id}/refresh-code`,
         method: "POST",
-        body: queryArg.userActivationCodeEmptyDto,
+        body: queryArg.userActivationCode,
       }),
     }),
     apiV1UsersGetCollection: build.query<
@@ -797,9 +795,9 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    deleteV1UsersByIdRemoveFromTenant: build.mutation<
-      DeleteV1UsersByIdRemoveFromTenantApiResponse,
-      DeleteV1UsersByIdRemoveFromTenantApiArg
+    apiUsersIdremoveFromTenant: build.mutation<
+      ApiUsersIdremoveFromTenantApiResponse,
+      ApiUsersIdremoveFromTenantApiArg
     >({
       query: (queryArg) => ({
         url: `/v1/users/${queryArg.id}/remove-from-tenant`,
@@ -1347,11 +1345,6 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
-export type GetV1UserActivationCodeOutputsByIdApiResponse = unknown;
-export type GetV1UserActivationCodeOutputsByIdApiArg = {
-  /** UserActivationCodeOutput identifier */
-  id: string;
-};
 export type GetV1UserActivationCodesApiResponse = unknown;
 export type GetV1UserActivationCodesApiArg = {
   /** The collection page number */
@@ -1364,14 +1357,14 @@ export type PostV1UserActivationCodesApiArg = {
   /** The new UserActivationCode resource */
   userActivationCodeUserActivationCodeInput: UserActivationCodeUserActivationCodeInput;
 };
-export type ActivateApiResponse = unknown;
-export type ActivateApiArg = {
+export type PostV1UserActivationCodesActivateApiResponse = unknown;
+export type PostV1UserActivationCodesActivateApiArg = {
   /** The new UserActivationCode resource */
   userActivationCodeUserActivateInput: UserActivationCodeUserActivateInput;
 };
 export type GetV1UserActivationCodesByIdApiResponse = unknown;
 export type GetV1UserActivationCodesByIdApiArg = {
-  /** UserActivationCode identifier */
+  /** UserActivationCodeOutput identifier */
   id: string;
 };
 export type DeleteV1UserActivationCodesByIdApiResponse = unknown;
@@ -1379,12 +1372,12 @@ export type DeleteV1UserActivationCodesByIdApiArg = {
   /** UserActivationCode identifier */
   id: string;
 };
-export type RefreshCodeApiResponse = unknown;
-export type RefreshCodeApiArg = {
+export type PostV1UserActivationCodesByIdRefreshCodeApiResponse = unknown;
+export type PostV1UserActivationCodesByIdRefreshCodeApiArg = {
   /** UserActivationCode identifier */
   id: string;
   /** The new UserActivationCode resource */
-  userActivationCodeEmptyDto: UserActivationCodeEmptyDto;
+  userActivationCode: UserActivationCode;
 };
 export type ApiV1UsersGetCollectionApiResponse = unknown;
 export type ApiV1UsersGetCollectionApiArg = {
@@ -1426,8 +1419,8 @@ export type ApiV1UsersIdDeleteApiArg = {
   /** User identifier */
   id: string;
 };
-export type DeleteV1UsersByIdRemoveFromTenantApiResponse = unknown;
-export type DeleteV1UsersByIdRemoveFromTenantApiArg = {
+export type ApiUsersIdremoveFromTenantApiResponse = unknown;
+export type ApiUsersIdremoveFromTenantApiArg = {
   /** User identifier */
   id: string;
 };
@@ -1511,7 +1504,18 @@ export type UserActivationCodeUserActivationCodeInput = {
 export type UserActivationCodeUserActivateInput = {
   activationCode?: string;
 };
-export type UserActivationCodeEmptyDto = object;
+export type UserActivationCode = {
+  code?: string;
+  codeExpire?: string;
+  username?: string;
+  roles?: string[];
+  tenant?: string;
+  id?: string;
+  createdAt?: string;
+  modifiedAt?: string;
+  createdBy?: string;
+  modifiedBy?: string;
+};
 export type UserUserInput = {
   fullName?: any;
 };
@@ -1585,18 +1589,17 @@ export const {
   useGetV1ThemesByIdQuery,
   usePutV1ThemesByIdMutation,
   useDeleteV1ThemesByIdMutation,
-  useGetV1UserActivationCodeOutputsByIdQuery,
   useGetV1UserActivationCodesQuery,
   usePostV1UserActivationCodesMutation,
-  useActivateMutation,
+  usePostV1UserActivationCodesActivateMutation,
   useGetV1UserActivationCodesByIdQuery,
   useDeleteV1UserActivationCodesByIdMutation,
-  useRefreshCodeMutation,
+  usePostV1UserActivationCodesByIdRefreshCodeMutation,
   useApiV1UsersGetCollectionQuery,
   useApiV1UsersPostMutation,
   useApiV1UsersIdGetQuery,
   useApiV1UsersIdPutMutation,
   useApiV1UsersIdDeleteMutation,
-  useDeleteV1UsersByIdRemoveFromTenantMutation,
+  useApiUsersIdremoveFromTenantMutation,
 } = api;
 

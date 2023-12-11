@@ -43,7 +43,7 @@ function ActivationCodeList() {
     t("loading-messages.loading-activation-code")
   );
 
-  // Delete call
+  // Remove from tenant call
   const [
     DeleteV1UserActivationCode,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
@@ -129,9 +129,9 @@ function ActivationCodeList() {
 
   const refreshCallback = (id) => {
     dispatch(
-      api.endpoints.refreshCode.initiate({
+      api.endpoints.postV1UserActivationCodesByIdRefreshCode.initiate({
         id,
-        body: null,
+        userActivationCodeEmptyDto: JSON.stringify({})
       })
     )
       .then((response) => {

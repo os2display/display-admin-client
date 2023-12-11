@@ -6054,59 +6054,6 @@
             },
             "parameters": []
         },
-        "/v1/user-activation-code-outputs/{id}": {
-            "get": {
-                "operationId": "api_v1user-activation-code-outputs_id_get",
-                "tags": [
-                    "UserActivationCodeOutput"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "UserActivationCodeOutput resource",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCodeOutput.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCodeOutput"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCodeOutput"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                },
-                "summary": "Retrieves a UserActivationCodeOutput resource.",
-                "description": "Retrieves a UserActivationCodeOutput resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "UserActivationCodeOutput identifier",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "deprecated": false
-            },
-            "parameters": []
-        },
         "/v1/user-activation-codes": {
             "get": {
                 "operationId": "api_v1user-activation-codes_get_collection",
@@ -6331,7 +6278,7 @@
         },
         "/v1/user-activation-codes/activate": {
             "post": {
-                "operationId": "activate",
+                "operationId": "api_user-activation-codesactivate",
                 "tags": [
                     "UserActivationCode"
                 ],
@@ -6396,25 +6343,25 @@
             "get": {
                 "operationId": "api_v1user-activation-codes_id_get",
                 "tags": [
-                    "UserActivationCode"
+                    "UserActivationCodeOutput"
                 ],
                 "responses": {
                     "200": {
-                        "description": "UserActivationCode resource",
+                        "description": "UserActivationCodeOutput resource",
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput.jsonld"
+                                    "$ref": "#/components/schemas/UserActivationCodeOutput.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCodeOutput"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCodeOutput"
                                 }
                             }
                         }
@@ -6423,13 +6370,13 @@
                         "description": "Resource not found"
                     }
                 },
-                "summary": "Retrieves a UserActivationCode resource.",
-                "description": "Retrieves a UserActivationCode resource.",
+                "summary": "Retrieves a UserActivationCodeOutput resource.",
+                "description": "Retrieves a UserActivationCodeOutput resource.",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "UserActivationCode identifier",
+                        "description": "UserActivationCodeOutput identifier",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
@@ -6480,7 +6427,7 @@
         },
         "/v1/user-activation-codes/{id}/refresh-code": {
             "post": {
-                "operationId": "refresh_code",
+                "operationId": "api_user-activation-codesrefresh_code",
                 "tags": [
                     "UserActivationCode"
                 ],
@@ -6536,17 +6483,17 @@
                     "content": {
                         "application/ld+json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO.jsonld"
+                                "$ref": "#/components/schemas/UserActivationCode.jsonld"
                             }
                         },
                         "text/html": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO"
+                                "$ref": "#/components/schemas/UserActivationCode"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO"
+                                "$ref": "#/components/schemas/UserActivationCode"
                             }
                         }
                     },
@@ -7052,7 +6999,7 @@
         },
         "/v1/users/{id}/remove-from-tenant": {
             "delete": {
-                "operationId": "remove-from-tenant",
+                "operationId": "api_users_idremove_from_tenant",
                 "tags": [
                     "User"
                 ],
@@ -12852,15 +12799,58 @@
                     }
                 }
             },
-            "UserActivationCode.EmptyDTO": {
+            "UserActivationCode": {
                 "type": "object",
                 "description": "",
-                "deprecated": false
-            },
-            "UserActivationCode.EmptyDTO.jsonld": {
-                "type": "object",
-                "description": "",
-                "deprecated": false
+                "deprecated": false,
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "codeExpire": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenant": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    }
+                }
             },
             "UserActivationCode.UserActivateInput": {
                 "type": "object",
@@ -13052,6 +13042,59 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                }
+            },
+            "UserActivationCode.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "codeExpire": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "tenant": {
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "description": "Get the Ulid.",
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
                     }
                 }
             },
