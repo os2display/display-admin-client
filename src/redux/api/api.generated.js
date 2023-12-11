@@ -546,7 +546,7 @@ exports.api = (0, react_1.createApi)({
             query: function (queryArg) { return ({
                 url: "/v1/user-activation-codes/" + queryArg.id + "/refresh-code",
                 method: "POST",
-                body: queryArg.userActivationCode
+                body: queryArg.userActivationCodeEmptyDto
             }); }
         }),
         apiV1UsersGetCollection: build.query({

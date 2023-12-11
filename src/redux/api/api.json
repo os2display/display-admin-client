@@ -6483,17 +6483,17 @@
                     "content": {
                         "application/ld+json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.jsonld"
+                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO.jsonld"
                             }
                         },
                         "text/html": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode"
+                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode"
+                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO"
                             }
                         }
                     },
@@ -12799,58 +12799,15 @@
                     }
                 }
             },
-            "UserActivationCode": {
+            "UserActivationCode.EmptyDTO": {
                 "type": "object",
                 "description": "",
-                "deprecated": false,
-                "properties": {
-                    "code": {
-                        "type": "string"
-                    },
-                    "codeExpire": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "roles": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "tenant": {
-                        "owl:maxCardinality": 1,
-                        "type": "string",
-                        "format": "iri-reference"
-                    },
-                    "id": {
-                        "readOnly": true,
-                        "description": "Get the Ulid.",
-                        "type": "string",
-                        "format": "ulid"
-                    },
-                    "createdAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    }
-                }
+                "deprecated": false
+            },
+            "UserActivationCode.EmptyDTO.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false
             },
             "UserActivationCode.UserActivateInput": {
                 "type": "object",
@@ -13042,59 +12999,6 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
-                    }
-                }
-            },
-            "UserActivationCode.jsonld": {
-                "type": "object",
-                "description": "",
-                "deprecated": false,
-                "properties": {
-                    "code": {
-                        "type": "string"
-                    },
-                    "codeExpire": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "roles": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "tenant": {
-                        "owl:maxCardinality": 1,
-                        "type": "string",
-                        "format": "iri-reference"
-                    },
-                    "id": {
-                        "readOnly": true,
-                        "description": "Get the Ulid.",
-                        "type": "string",
-                        "format": "ulid"
-                    },
-                    "createdAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "modifiedBy": {
-                        "type": "string"
                     }
                 }
             },

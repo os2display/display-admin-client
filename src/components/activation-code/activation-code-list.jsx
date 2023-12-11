@@ -131,7 +131,7 @@ function ActivationCodeList() {
     dispatch(
       api.endpoints.postV1UserActivationCodesByIdRefreshCode.initiate({
         id,
-        userActivationCodeEmptyDto: JSON.stringify({})
+        userActivationCodeEmptyDto: JSON.stringify({}),
       })
     )
       .then((response) => {

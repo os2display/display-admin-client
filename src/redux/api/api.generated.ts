@@ -740,7 +740,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v1/user-activation-codes/${queryArg.id}/refresh-code`,
         method: "POST",
-        body: queryArg.userActivationCode,
+        body: queryArg.userActivationCodeEmptyDto,
       }),
     }),
     apiV1UsersGetCollection: build.query<
@@ -1377,7 +1377,7 @@ export type PostV1UserActivationCodesByIdRefreshCodeApiArg = {
   /** UserActivationCode identifier */
   id: string;
   /** The new UserActivationCode resource */
-  userActivationCode: UserActivationCode;
+  userActivationCodeEmptyDto: UserActivationCodeEmptyDto;
 };
 export type ApiV1UsersGetCollectionApiResponse = unknown;
 export type ApiV1UsersGetCollectionApiArg = {
@@ -1504,18 +1504,7 @@ export type UserActivationCodeUserActivationCodeInput = {
 export type UserActivationCodeUserActivateInput = {
   activationCode?: string;
 };
-export type UserActivationCode = {
-  code?: string;
-  codeExpire?: string;
-  username?: string;
-  roles?: string[];
-  tenant?: string;
-  id?: string;
-  createdAt?: string;
-  modifiedAt?: string;
-  createdBy?: string;
-  modifiedBy?: string;
-};
+export type UserActivationCodeEmptyDto = object;
 export type UserUserInput = {
   fullName?: any;
 };

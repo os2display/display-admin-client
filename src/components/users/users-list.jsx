@@ -119,7 +119,7 @@ function UsersList() {
   const columns = UserColumns({
     handleDelete,
     disableDelete: ({ userType }) => {
-      return userType !== 'OIDC_EXTERNAL'
+      return userType !== "OIDC_EXTERNAL";
     },
   });
 
