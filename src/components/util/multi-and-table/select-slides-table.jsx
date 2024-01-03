@@ -46,6 +46,11 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
         return slide;
       });
       setSelectedData([...selectedData, ...newSlides]);
+
+      // Get all selected slides. If a next page is defined, get the next page.
+      if (data["hydra:view"]["hydra:next"]) {
+        setPage(page + 1);
+      }
     }
   }, [data]);
 
