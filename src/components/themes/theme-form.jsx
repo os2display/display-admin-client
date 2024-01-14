@@ -113,7 +113,7 @@ ThemeForm.defaultProps = {
 ThemeForm.propTypes = {
   theme: PropTypes.shape({
     cssStyles: PropTypes.string,
-    logo: PropTypes.string,
+    logo: PropTypes.shape({}),
     description: PropTypes.string,
     title: PropTypes.string,
   }),
