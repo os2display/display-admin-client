@@ -5847,17 +5847,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.jsonld"
+                                    "$ref": "#/components/schemas/Theme.Theme.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme"
+                                    "$ref": "#/components/schemas/Theme.Theme"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme"
+                                    "$ref": "#/components/schemas/Theme.Theme"
                                 }
                             }
                         },
@@ -5948,17 +5948,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme.jsonld"
+                                    "$ref": "#/components/schemas/Theme.Theme.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme"
+                                    "$ref": "#/components/schemas/Theme.Theme"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Theme"
+                                    "$ref": "#/components/schemas/Theme.Theme"
                                 }
                             }
                         },
@@ -6071,7 +6071,7 @@
                                         "hydra:member": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput.jsonld"
+                                                "$ref": "#/components/schemas/UserActivationCode.UserActivationCode.jsonld"
                                             }
                                         },
                                         "hydra:totalItems": {
@@ -6161,7 +6161,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                        "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
                                     }
                                 }
                             },
@@ -6169,7 +6169,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                        "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
                                     }
                                 }
                             }
@@ -6215,7 +6215,7 @@
                 "deprecated": false
             },
             "post": {
-                "operationId": "api_v1user-activation-codes_post",
+                "operationId": "post-v1-create-user-activation-code",
                 "tags": [
                     "UserActivationCode"
                 ],
@@ -6225,17 +6225,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput.jsonld"
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
                                 }
                             }
                         },
@@ -6248,8 +6248,8 @@
                         "description": "Unprocessable entity"
                     }
                 },
-                "summary": "Creates a UserActivationCode resource.",
-                "description": "Creates a UserActivationCode resource.",
+                "summary": "Create user activation code.",
+                "description": "Create user activation code",
                 "parameters": [],
                 "requestBody": {
                     "description": "The new UserActivationCode resource",
@@ -6278,7 +6278,7 @@
         },
         "/v1/user-activation-codes/activate": {
             "post": {
-                "operationId": "api_user-activation-codesactivate",
+                "operationId": "post-v1-activate-user-activation-code",
                 "tags": [
                     "UserActivationCode"
                 ],
@@ -6288,17 +6288,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput.jsonld"
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
                                 }
                             }
                         },
@@ -6311,25 +6311,88 @@
                         "description": "Unprocessable entity"
                     }
                 },
-                "summary": "Creates a UserActivationCode resource.",
-                "description": "Creates a UserActivationCode resource.",
+                "summary": "Use user activation code.",
+                "description": "Use user activation code.",
                 "parameters": [],
                 "requestBody": {
                     "description": "The new UserActivationCode resource",
                     "content": {
                         "application/ld+json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.UserActivateInput.jsonld"
+                                "$ref": "#/components/schemas/UserActivationCode.ActivationCode.jsonld"
                             }
                         },
                         "text/html": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.UserActivateInput"
+                                "$ref": "#/components/schemas/UserActivationCode.ActivationCode"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.UserActivateInput"
+                                "$ref": "#/components/schemas/UserActivationCode.ActivationCode"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/v1/user-activation-codes/refresh": {
+            "post": {
+                "operationId": "post-v1-refresh-user-activation-code",
+                "tags": [
+                    "UserActivationCode"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "UserActivationCode resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode.jsonld"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCode"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Refresh user activation code.",
+                "description": "Refresh user activation code.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new UserActivationCode resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserActivationCode.ActivationCode.jsonld"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserActivationCode.ActivationCode"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserActivationCode.ActivationCode"
                             }
                         }
                     },
@@ -6343,25 +6406,25 @@
             "get": {
                 "operationId": "api_v1user-activation-codes_id_get",
                 "tags": [
-                    "UserActivationCodeOutput"
+                    "UserActivationCode"
                 ],
                 "responses": {
                     "200": {
-                        "description": "UserActivationCodeOutput resource",
+                        "description": "UserActivationCode resource",
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCodeOutput.jsonld"
+                                    "$ref": "#/components/schemas/UserActivationCode.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCode"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCodeOutput"
+                                    "$ref": "#/components/schemas/UserActivationCode"
                                 }
                             }
                         }
@@ -6370,13 +6433,13 @@
                         "description": "Resource not found"
                     }
                 },
-                "summary": "Retrieves a UserActivationCodeOutput resource.",
-                "description": "Retrieves a UserActivationCodeOutput resource.",
+                "summary": "Retrieves a UserActivationCode resource.",
+                "description": "Retrieves a UserActivationCode resource.",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "UserActivationCodeOutput identifier",
+                        "description": "UserActivationCode identifier",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
@@ -6425,218 +6488,37 @@
             },
             "parameters": []
         },
-        "/v1/user-activation-codes/{id}/refresh-code": {
-            "post": {
-                "operationId": "api_user-activation-codesrefresh_code",
-                "tags": [
-                    "UserActivationCode"
-                ],
-                "responses": {
-                    "201": {
-                        "description": "UserActivationCode resource created",
-                        "content": {
-                            "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserActivationCode.UserActivationCodeOutput"
-                                }
-                            }
-                        },
-                        "links": {}
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "422": {
-                        "description": "Unprocessable entity"
-                    }
-                },
-                "summary": "Creates a UserActivationCode resource.",
-                "description": "Creates a UserActivationCode resource.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "UserActivationCode identifier",
-                        "required": true,
-                        "deprecated": false,
-                        "allowEmptyValue": false,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "style": "simple",
-                        "explode": false,
-                        "allowReserved": false
-                    }
-                ],
-                "requestBody": {
-                    "description": "The new UserActivationCode resource",
-                    "content": {
-                        "application/ld+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO.jsonld"
-                            }
-                        },
-                        "text/html": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserActivationCode.EmptyDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "deprecated": false
-            },
-            "parameters": []
-        },
         "/v1/users": {
             "get": {
-                "operationId": "api_v1users_get_collection",
+                "operationId": "get-v1-users",
                 "tags": [
                     "User"
                 ],
                 "responses": {
                     "200": {
-                        "description": "User collection",
+                        "description": "OK",
                         "content": {
                             "application/ld+json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "hydra:member": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/User.UserOutput.jsonld"
-                                            }
-                                        },
-                                        "hydra:totalItems": {
-                                            "type": "integer",
-                                            "minimum": 0
-                                        },
-                                        "hydra:view": {
-                                            "type": "object",
-                                            "properties": {
-                                                "@id": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "@type": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:first": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:last": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:previous": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                },
-                                                "hydra:next": {
-                                                    "type": "string",
-                                                    "format": "iri-reference"
-                                                }
-                                            },
-                                            "example": {
-                                                "@id": "string",
-                                                "type": "string",
-                                                "hydra:first": "string",
-                                                "hydra:last": "string",
-                                                "hydra:previous": "string",
-                                                "hydra:next": "string"
-                                            }
-                                        },
-                                        "hydra:search": {
-                                            "type": "object",
-                                            "properties": {
-                                                "@type": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:template": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:variableRepresentation": {
-                                                    "type": "string"
-                                                },
-                                                "hydra:mapping": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "@type": {
-                                                                "type": "string"
-                                                            },
-                                                            "variable": {
-                                                                "type": "string"
-                                                            },
-                                                            "property": {
-                                                                "type": [
-                                                                    "string",
-                                                                    "null"
-                                                                ]
-                                                            },
-                                                            "required": {
-                                                                "type": "boolean"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "required": [
-                                        "hydra:member"
-                                    ]
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/User.UserOutput"
-                                    }
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/User.UserOutput"
-                                    }
-                                }
+                                "examples": null
                             }
-                        }
+                        },
+                        "headers": []
                     }
                 },
-                "summary": "Retrieves the collection of User resources.",
-                "description": "Retrieves the collection of User resources.",
+                "summary": "Retrieve a collection of User resources.",
+                "description": "Retrieve a collection of User resources.",
                 "parameters": [
                     {
                         "name": "page",
                         "in": "query",
-                        "description": "The collection page number",
+                        "description": "",
                         "required": false,
                         "deprecated": false,
-                        "allowEmptyValue": true,
+                        "allowEmptyValue": false,
                         "schema": {
                             "type": "integer",
+                            "minimum": 0,
+                            "format": "int32",
                             "default": 1
                         },
                         "style": "form",
@@ -6649,12 +6531,10 @@
                         "description": "The number of items per page",
                         "required": false,
                         "deprecated": false,
-                        "allowEmptyValue": true,
+                        "allowEmptyValue": false,
                         "schema": {
-                            "type": "integer",
-                            "default": 10,
-                            "minimum": 0,
-                            "maximum": 30
+                            "type": "string",
+                            "default": "10"
                         },
                         "style": "form",
                         "explode": false,
@@ -6772,7 +6652,7 @@
                 "deprecated": false
             },
             "post": {
-                "operationId": "api_v1users_post",
+                "operationId": "post-v1-user",
                 "tags": [
                     "User"
                 ],
@@ -6782,17 +6662,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User.UserOutput.jsonld"
+                                    "$ref": "#/components/schemas/User.User.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User.UserOutput"
+                                    "$ref": "#/components/schemas/User.User"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User.UserOutput"
+                                    "$ref": "#/components/schemas/User.User"
                                 }
                             }
                         },
@@ -6805,9 +6685,26 @@
                         "description": "Unprocessable entity"
                     }
                 },
-                "summary": "Creates a User resource.",
-                "description": "Creates a User resource.",
-                "parameters": [],
+                "summary": "Create a User resource.",
+                "description": "Create a User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
                 "requestBody": {
                     "description": "The new User resource",
                     "content": {
@@ -6835,47 +6732,35 @@
         },
         "/v1/users/{id}": {
             "get": {
-                "operationId": "api_v1users_id_get",
+                "operationId": "get-v1-user-id",
                 "tags": [
-                    "UserOutput"
+                    "User"
                 ],
                 "responses": {
                     "200": {
-                        "description": "UserOutput resource",
+                        "description": "OK",
                         "content": {
                             "application/ld+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserOutput.jsonld"
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserOutput"
-                                }
-                            },
-                            "multipart/form-data": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserOutput"
-                                }
+                                "examples": null
                             }
-                        }
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        },
+                        "headers": []
                     }
                 },
-                "summary": "Retrieves a UserOutput resource.",
-                "description": "Retrieves a UserOutput resource.",
+                "summary": "Retrieve User resource.",
+                "description": "Retrieves User resource.",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "UserOutput identifier",
+                        "description": "",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
                         "explode": false,
@@ -6885,7 +6770,7 @@
                 "deprecated": false
             },
             "put": {
-                "operationId": "api_v1users_id_put",
+                "operationId": "put-v1-user-id",
                 "tags": [
                     "User"
                 ],
@@ -6895,17 +6780,17 @@
                         "content": {
                             "application/ld+json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User.UserOutput.jsonld"
+                                    "$ref": "#/components/schemas/User.User.jsonld"
                                 }
                             },
                             "text/html": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User.UserOutput"
+                                    "$ref": "#/components/schemas/User.User"
                                 }
                             },
                             "multipart/form-data": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User.UserOutput"
+                                    "$ref": "#/components/schemas/User.User"
                                 }
                             }
                         },
@@ -6921,18 +6806,20 @@
                         "description": "Resource not found"
                     }
                 },
-                "summary": "Replaces the User resource.",
-                "description": "Replaces the User resource.",
+                "summary": "Update User resource.",
+                "description": "Update User resource.",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "User identifier",
+                        "description": "",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
                         "explode": false,
@@ -6963,7 +6850,7 @@
                 "deprecated": false
             },
             "delete": {
-                "operationId": "api_v1users_id_delete",
+                "operationId": "delete-v1-user-id",
                 "tags": [
                     "User"
                 ],
@@ -6975,18 +6862,20 @@
                         "description": "Resource not found"
                     }
                 },
-                "summary": "Removes the User resource.",
-                "description": "Removes the User resource.",
+                "summary": "Delete an User resource.",
+                "description": "Delete an User resource.",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "User identifier",
+                        "description": "",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
                         "explode": false,
@@ -6999,30 +6888,29 @@
         },
         "/v1/users/{id}/remove-from-tenant": {
             "delete": {
-                "operationId": "api_users_idremove_from_tenant",
+                "operationId": "post-v1-remove-user-from-tenant",
                 "tags": [
                     "User"
                 ],
                 "responses": {
                     "204": {
-                        "description": "User resource deleted"
-                    },
-                    "404": {
-                        "description": "Resource not found"
+                        "description": "User removed from tenant"
                     }
                 },
-                "summary": "Removes the User resource.",
-                "description": "Removes the User resource.",
+                "summary": "Remove a User resource from the current tenant.",
+                "description": "Remove a User resource from the current tenant.",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "User identifier",
+                        "description": "",
                         "required": true,
                         "deprecated": false,
                         "allowEmptyValue": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "ulid",
+                            "pattern": "^[A-Za-z0-9]{26}$"
                         },
                         "style": "simple",
                         "explode": false,
@@ -7203,28 +7091,27 @@
                         }
                     },
                     "slide": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "feedSource": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "feedUrl": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": "string"
                     },
                     "modifiedBy": {
                         "type": "string"
                     },
                     "createdBy": {
                         "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     },
                     "created": {
                         "type": "string",
@@ -7233,6 +7120,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -7286,28 +7176,27 @@
                         }
                     },
                     "slide": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "feedSource": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "feedUrl": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
+                        "type": "string"
                     },
                     "modifiedBy": {
                         "type": "string"
                     },
                     "createdBy": {
                         "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     },
                     "created": {
                         "type": "string",
@@ -7316,6 +7205,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -7670,6 +7562,62 @@
                     }
                 }
             },
+            "Media-playlist-slide.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "license": {
+                        "type": "string"
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                }
+            },
+            "Media-theme.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "license": {
+                        "type": "string"
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                }
+            },
             "Media.Media": {
                 "type": "object",
                 "description": "",
@@ -7887,6 +7835,62 @@
                     }
                 }
             },
+            "Media.jsonld-playlist-slide.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "license": {
+                        "type": "string"
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                }
+            },
+            "Media.jsonld-theme.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "license": {
+                        "type": "string"
+                    },
+                    "assets": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "thumbnail": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                }
+            },
             "Playlist": {
                 "type": "object",
                 "description": "",
@@ -7899,7 +7903,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -7908,13 +7915,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -7950,6 +7978,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -7965,7 +7996,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -7974,13 +8008,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection-campaigns.screen-groups.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-campaigns.screen-groups.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection-campaigns.screen-groups.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-campaigns.screen-groups.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection-campaigns.screen-groups.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-campaigns.screen-groups.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8013,7 +8068,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8022,13 +8080,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection-campaigns.screens.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-campaigns.screens.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection-campaigns.screens.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-campaigns.screens.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection-campaigns.screens.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-campaigns.screens.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8061,7 +8140,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8070,13 +8152,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection-playlist-screen-region.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-playlist-screen-region.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection-playlist-screen-region.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-playlist-screen-region.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection-playlist-screen-region.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-playlist-screen-region.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8109,7 +8212,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8118,13 +8224,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection-screen-campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-screen-campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection-screen-campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-screen-campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection-screen-campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-screen-campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8157,7 +8284,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8166,13 +8296,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection-screen-groups.campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-screen-groups.campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection-screen-groups.campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-screen-groups.campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection-screen-groups.campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-screen-groups.campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8205,7 +8356,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8214,13 +8368,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection-slides.playlists.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-slides.playlists.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection-slides.playlists.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-slides.playlists.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection-slides.playlists.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection-slides.playlists.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8253,7 +8428,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8262,13 +8440,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8304,6 +8503,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -8354,7 +8556,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8363,13 +8568,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8405,6 +8631,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -8539,7 +8768,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8548,13 +8780,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8590,6 +8843,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -8605,7 +8861,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8614,13 +8873,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld-campaigns.screen-groups.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-campaigns.screen-groups.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld-campaigns.screen-groups.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-campaigns.screen-groups.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld-campaigns.screen-groups.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-campaigns.screen-groups.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8653,7 +8933,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8662,13 +8945,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld-campaigns.screens.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-campaigns.screens.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld-campaigns.screens.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-campaigns.screens.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld-campaigns.screens.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-campaigns.screens.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8701,7 +9005,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8710,13 +9017,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld-playlist-screen-region.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-playlist-screen-region.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld-playlist-screen-region.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-playlist-screen-region.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld-playlist-screen-region.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-playlist-screen-region.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8749,7 +9077,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8758,13 +9089,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld-screen-campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-screen-campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld-screen-campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-screen-campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld-screen-campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-screen-campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8797,7 +9149,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8806,13 +9161,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld-screen-groups.campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-screen-groups.campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld-screen-groups.campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-screen-groups.campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld-screen-groups.campaigns.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-screen-groups.campaigns.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8845,7 +9221,10 @@
                         "type": "string"
                     },
                     "schedules": {
-                        "type": "array",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -8854,13 +9233,34 @@
                         "type": "string"
                     },
                     "campaignScreens": {
-                        "$ref": "#/components/schemas/Collection.jsonld-slides.playlists.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-slides.playlists.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "campaignScreenGroups": {
-                        "$ref": "#/components/schemas/Collection.jsonld-slides.playlists.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-slides.playlists.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "tenants": {
-                        "$ref": "#/components/schemas/Collection.jsonld-slides.playlists.read"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Collection.jsonld-slides.playlists.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
                     "isCampaign": {
                         "type": "boolean"
@@ -8897,6 +9297,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -8930,6 +9333,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -8998,6 +9404,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9074,6 +9483,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9120,6 +9532,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9182,6 +9597,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9279,6 +9697,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9392,6 +9813,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9518,6 +9942,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9644,6 +10071,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9751,6 +10181,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -9926,6 +10359,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10015,6 +10451,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10081,6 +10520,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10182,6 +10624,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10299,6 +10744,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10383,6 +10831,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10482,6 +10933,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10578,6 +11032,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10718,6 +11175,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10819,6 +11279,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10870,6 +11333,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -10956,6 +11422,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11058,6 +11527,9 @@
                     "id": {
                         "type": "string",
                         "format": "ulid"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11143,6 +11615,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11182,6 +11657,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11256,6 +11734,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11330,6 +11811,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11349,6 +11833,10 @@
                     },
                     "type": {
                         "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     }
                 }
             },
@@ -11403,6 +11891,10 @@
                     },
                     "type": {
                         "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     }
                 }
             },
@@ -11432,7 +11924,9 @@
                         }
                     },
                     "theme": {
-                        "type": "string"
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "onPlaylists": {
                         "$ref": "#/components/schemas/Collection"
@@ -11492,6 +11986,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11521,7 +12018,8 @@
                         }
                     },
                     "theme": {
-                        "type": "string"
+                        "owl:maxCardinality": 1,
+                        "$ref": "#/components/schemas/Theme-playlist-slide.read"
                     },
                     "onPlaylists": {
                         "$ref": "#/components/schemas/Collection-playlist-slide.read"
@@ -11583,7 +12081,9 @@
                         }
                     },
                     "theme": {
-                        "type": "string"
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "onPlaylists": {
                         "$ref": "#/components/schemas/Collection"
@@ -11643,6 +12143,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11707,7 +12210,9 @@
                         }
                     },
                     "theme": {
-                        "type": "string"
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "onPlaylists": {
                         "$ref": "#/components/schemas/Collection.jsonld"
@@ -11767,6 +12272,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -11993,7 +12501,9 @@
                         }
                     },
                     "theme": {
-                        "type": "string"
+                        "owl:maxCardinality": 1,
+                        "type": "string",
+                        "format": "iri-reference"
                     },
                     "onPlaylists": {
                         "$ref": "#/components/schemas/Collection.jsonld"
@@ -12053,6 +12563,9 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "relationsModified": {
+                        "type": "object"
                     }
                 }
             },
@@ -12082,7 +12595,8 @@
                         }
                     },
                     "theme": {
-                        "type": "string"
+                        "owl:maxCardinality": 1,
+                        "$ref": "#/components/schemas/Theme.jsonld-playlist-slide.read"
                     },
                     "onPlaylists": {
                         "$ref": "#/components/schemas/Collection.jsonld-playlist-slide.read"
@@ -12471,12 +12985,69 @@
                     }
                 }
             },
-            "Theme": {
+            "Theme-playlist-slide.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
                 "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "owl:maxCardinality": 1,
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Media-playlist-slide.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
                     "cssStyles": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Theme-theme.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "owl:maxCardinality": 1,
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Media-theme.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "cssStyles": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Theme.Theme": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
                         "type": "string"
                     },
                     "logo": {
@@ -12487,12 +13058,95 @@
                         ],
                         "format": "iri-reference"
                     },
-                    "slides": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "format": "iri-reference"
-                        }
+                    "cssStyles": {
+                        "type": "string"
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Theme.Theme-theme.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "owl:maxCardinality": 1,
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Media-theme.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "cssStyles": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Theme.Theme.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
                     },
                     "title": {
                         "type": "string"
@@ -12500,31 +13154,95 @@
                     "description": {
                         "type": "string"
                     },
-                    "tenant": {
+                    "logo": {
                         "owl:maxCardinality": 1,
-                        "type": "string",
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "format": "iri-reference"
                     },
-                    "id": {
-                        "readOnly": true,
-                        "description": "Get the Ulid.",
-                        "type": "string",
-                        "format": "ulid"
+                    "cssStyles": {
+                        "type": "string"
                     },
-                    "createdAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modifiedAt": {
-                        "readOnly": true,
-                        "type": "string",
-                        "format": "date-time"
+                    "modifiedBy": {
+                        "type": "string"
                     },
                     "createdBy": {
                         "type": "string"
                     },
-                    "modifiedBy": {
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Theme.Theme.jsonld-theme.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "owl:maxCardinality": 1,
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Media.jsonld-theme.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "cssStyles": {
                         "type": "string"
                     }
                 }
@@ -12567,7 +13285,34 @@
                     }
                 }
             },
-            "Theme.jsonld": {
+            "Theme.jsonld-playlist-slide.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "owl:maxCardinality": 1,
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Media.jsonld-playlist-slide.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "cssStyles": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Theme.jsonld-theme.read": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
@@ -12607,56 +13352,177 @@
                         "readOnly": true,
                         "type": "string"
                     },
-                    "cssStyles": {
-                        "type": "string"
-                    },
-                    "logo": {
-                        "owl:maxCardinality": 1,
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "format": "iri-reference"
-                    },
-                    "slides": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "format": "iri-reference"
-                        }
-                    },
                     "title": {
                         "type": "string"
                     },
                     "description": {
                         "type": "string"
                     },
-                    "tenant": {
+                    "logo": {
                         "owl:maxCardinality": 1,
-                        "type": "string",
-                        "format": "iri-reference"
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Media.jsonld-theme.read"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     },
-                    "id": {
-                        "readOnly": true,
-                        "description": "Get the Ulid.",
-                        "type": "string",
-                        "format": "ulid"
+                    "cssStyles": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "fullName": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "userType": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "OIDC_EXTERNAL",
+                            "OIDC_INTERNAL",
+                            "USERNAME_PASSWORD",
+                            null
+                        ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "createdAt": {
-                        "readOnly": true,
                         "type": "string",
                         "format": "date-time"
                     },
-                    "modifiedAt": {
-                        "readOnly": true,
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    }
+                }
+            },
+            "User.User": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "fullName": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "userType": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "OIDC_EXTERNAL",
+                            "OIDC_INTERNAL",
+                            "USERNAME_PASSWORD",
+                            null
+                        ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "createdAt": {
                         "type": "string",
                         "format": "date-time"
                     },
-                    "createdBy": {
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    }
+                }
+            },
+            "User.User.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
                         "type": "string"
                     },
-                    "modifiedBy": {
+                    "@type": {
+                        "readOnly": true,
                         "type": "string"
+                    },
+                    "fullName": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "userType": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "OIDC_EXTERNAL",
+                            "OIDC_INTERNAL",
+                            "USERNAME_PASSWORD",
+                            null
+                        ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
                     }
                 }
             },
@@ -12686,46 +13552,7 @@
                     }
                 }
             },
-            "User.UserOutput": {
-                "type": "object",
-                "description": "",
-                "deprecated": false,
-                "properties": {
-                    "fullName": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "userType": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "enum": [
-                            "OIDC_EXTERNAL",
-                            "OIDC_INTERNAL",
-                            "USERNAME_PASSWORD",
-                            null
-                        ]
-                    },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "id": {
-                        "type": "string",
-                        "format": "ulid"
-                    }
-                }
-            },
-            "User.UserOutput.jsonld": {
+            "User.jsonld": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
@@ -12799,17 +13626,60 @@
                     }
                 }
             },
-            "UserActivationCode.EmptyDTO": {
+            "UserActivationCode": {
                 "type": "object",
                 "description": "",
-                "deprecated": false
+                "deprecated": false,
+                "properties": {
+                    "code": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "codeExpire": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "username": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "roles": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             },
-            "UserActivationCode.EmptyDTO.jsonld": {
-                "type": "object",
-                "description": "",
-                "deprecated": false
-            },
-            "UserActivationCode.UserActivateInput": {
+            "UserActivationCode.ActivationCode": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
@@ -12819,13 +13689,154 @@
                     }
                 }
             },
-            "UserActivationCode.UserActivateInput.jsonld": {
+            "UserActivationCode.ActivationCode.jsonld": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
                 "properties": {
                     "activationCode": {
                         "type": "string"
+                    }
+                }
+            },
+            "UserActivationCode.UserActivationCode": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "code": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "codeExpire": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "username": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "roles": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "UserActivationCode.UserActivationCode.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "codeExpire": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "username": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "roles": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modifiedBy": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "ulid"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "modified": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
@@ -12861,60 +13872,7 @@
                     }
                 }
             },
-            "UserActivationCode.UserActivationCodeOutput": {
-                "type": "object",
-                "description": "",
-                "deprecated": false,
-                "properties": {
-                    "code": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "codeExpire": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "format": "date-time"
-                    },
-                    "username": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "roles": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "string",
-                        "format": "ulid"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                }
-            },
-            "UserActivationCode.UserActivationCodeOutput.jsonld": {
+            "UserActivationCode.jsonld": {
                 "type": "object",
                 "description": "",
                 "deprecated": false,
@@ -12999,260 +13957,6 @@
                     "modified": {
                         "type": "string",
                         "format": "date-time"
-                    }
-                }
-            },
-            "UserActivationCodeOutput": {
-                "type": "object",
-                "description": "",
-                "deprecated": false,
-                "properties": {
-                    "code": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "codeExpire": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "format": "date-time"
-                    },
-                    "username": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "roles": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "string",
-                        "format": "ulid"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                }
-            },
-            "UserActivationCodeOutput.jsonld": {
-                "type": "object",
-                "description": "",
-                "deprecated": false,
-                "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "code": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "codeExpire": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "format": "date-time"
-                    },
-                    "username": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "roles": {
-                        "type": [
-                            "array",
-                            "null"
-                        ],
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "modifiedBy": {
-                        "type": "string"
-                    },
-                    "createdBy": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "string",
-                        "format": "ulid"
-                    },
-                    "created": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "modified": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                }
-            },
-            "UserOutput": {
-                "type": "object",
-                "description": "",
-                "deprecated": false,
-                "properties": {
-                    "fullName": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "userType": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "enum": [
-                            "OIDC_EXTERNAL",
-                            "OIDC_INTERNAL",
-                            "USERNAME_PASSWORD",
-                            null
-                        ]
-                    },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "id": {
-                        "type": "string",
-                        "format": "ulid"
-                    }
-                }
-            },
-            "UserOutput.jsonld": {
-                "type": "object",
-                "description": "",
-                "deprecated": false,
-                "properties": {
-                    "@context": {
-                        "readOnly": true,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "@vocab": {
-                                        "type": "string"
-                                    },
-                                    "hydra": {
-                                        "type": "string",
-                                        "enum": [
-                                            "http://www.w3.org/ns/hydra/core#"
-                                        ]
-                                    }
-                                },
-                                "required": [
-                                    "@vocab",
-                                    "hydra"
-                                ],
-                                "additionalProperties": true
-                            }
-                        ]
-                    },
-                    "@id": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "@type": {
-                        "readOnly": true,
-                        "type": "string"
-                    },
-                    "fullName": {
-                        "type": [
-                            "string",
-                            "null"
-                        ]
-                    },
-                    "userType": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "enum": [
-                            "OIDC_EXTERNAL",
-                            "OIDC_INTERNAL",
-                            "USERNAME_PASSWORD",
-                            null
-                        ]
-                    },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "id": {
-                        "type": "string",
-                        "format": "ulid"
                     }
                 }
             },

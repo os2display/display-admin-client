@@ -128,10 +128,15 @@ function ActivationCodeList() {
   const dispatch = useDispatch();
 
   const refreshCallback = (id) => {
+    const item = items.filter((e) => e['@id'] === id);
+
+    if (item.length !== 1) {
+      return;
+    }
+
     dispatch(
-      api.endpoints.postV1UserActivationCodesByIdRefreshCode.initiate({
-        id,
-        userActivationCodeEmptyDto: JSON.stringify({}),
+      api.endpoints.postV1UserActivationCodesRefresh.initiate({
+        userActivationCodeActivationCode: JSON.stringify({ activationCode: item[0].code }),
       })
     )
       .then((response) => {
@@ -150,13 +155,11 @@ function ActivationCodeList() {
   columns.push({
     path: "@id",
     dataFunction: (id) => {
-      const activationCodeId = idFromUrl(id);
-
       return (
         <Button
           variant="primary"
           className="refresh-activation-code"
-          onClick={() => refreshCallback(activationCodeId)}
+          onClick={() => refreshCallback(id)}
         >
           {t("refresh-button")}
         </Button>
