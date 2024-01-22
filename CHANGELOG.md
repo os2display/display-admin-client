@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Added fetch all to avoid removing slides when saving playlist and all slides have not been fetched.
 - [#220](https://github.com/os2display/display-admin-client/pull/220)
   - Adds CRUD flows for external users and activation codes.
   - Added login and activation flow for external users.
