@@ -83,9 +83,16 @@ generatedApi.enhanceEndpoints({
       providesTags: ["Playlist"],
     },
     getV1PlaylistsByIdSlides: {
-      providesTags: ["Playlist"],
+      providesTags: ["Playlist", "Slide"],
+    },
+    getV1SlidesByIdPlaylists: {
+      providesTags: ["Playlist", "Slide"],
     },
     putV1PlaylistsByIdSlides: {
+      providesTags: ["Playlist", "Slide"],
+      invalidatesTags: ["Playlist", "Slide"],
+    },
+    putV1SlidesByIdPlaylists: {
       providesTags: ["Playlist", "Slide"],
       invalidatesTags: ["Playlist", "Slide"],
     },

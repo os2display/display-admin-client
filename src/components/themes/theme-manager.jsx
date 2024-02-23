@@ -2,11 +2,8 @@ import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import ThemeForm from "./theme-form";
-import idFromUrl from "../util/helpers/id-from-url";
 import {
-  api,
   usePostV1ThemesMutation,
   usePutV1ThemesByIdMutation,
   usePostMediaCollectionMutation,
@@ -37,7 +34,6 @@ function ThemeManager({
   // Hooks
   const { t } = useTranslation("common", { keyPrefix: "theme-manager" });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   // State
   const [headerText] = useState(
@@ -76,23 +72,7 @@ function ThemeManager({
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    if (initialState) {
-      if (initialState.logo) {
-        dispatch(
-          api.endpoints.getV1MediaById.initiate({
-            id: idFromUrl(initialState.logo),
-          })
-        )
-          .then(({ data }) => {
-            setFormStateObject({ ...initialState, logo: data });
-          })
-          .catch((err) => {
-            displayError(t("error-messages.save-media-error"), err);
-          });
-      } else {
-        setFormStateObject(initialState);
-      }
-    }
+    setFormStateObject(initialState);
   }, [initialState]);
 
   /**
@@ -242,7 +222,7 @@ ThemeManager.defaultProps = {
 
 ThemeManager.propTypes = {
   initialState: PropTypes.shape({
-    logo: PropTypes.string,
+    logo: PropTypes.shape({}),
   }),
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
