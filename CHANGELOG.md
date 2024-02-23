@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 - [#227](https://github.com/os2display/display-admin-client/pull/227)
   - Changed how theme is loaded following change to API
 - Added fetch all to avoid removing slides when saving playlist and all slides have not been fetched.
+- [#225](https://github.com/os2display/display-admin-client/pull/225)
+  - Fixed caching issues when adding/removing playlists from slide.
 - [#223](https://github.com/os2display/display-admin-client/pull/223)
   - Updated to API Platform 3
 - [#222](https://github.com/os2display/display-admin-client/pull/222)
