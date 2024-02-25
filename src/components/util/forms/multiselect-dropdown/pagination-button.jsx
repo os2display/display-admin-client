@@ -20,10 +20,15 @@ const PaginationButton = ({ callback, label, showButton }) => {
   );
 };
 
+PaginationButton.defaultProps = {
+  label: "",
+  callback: () => {},
+};
+
 PaginationButton.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   showButton: PropTypes.bool.isRequired,
-  callback: PropTypes.func.isRequired,
+  callback: PropTypes.func,
 };
 
 export default PaginationButton;

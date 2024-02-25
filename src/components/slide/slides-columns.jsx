@@ -5,6 +5,7 @@ import ListButton from "../util/list/list-button";
 import Published from "../util/published";
 import ColumnHoc from "../util/column-hoc";
 import SelectColumnHoc from "../util/select-column-hoc";
+import Playing from "../util/playing";
 
 /**
  * Columns for slides lists.
@@ -52,6 +53,16 @@ function getSlidesColumns({
       // eslint-disable-next-line react/prop-types
       content: ({ published }) => <Published published={published} />,
       label: t("columns.published"),
+    },
+    {
+      path: "playing",
+      label: t("columns.playing"),
+      // eslint-disable-next-line react/prop-types
+      content: ({ publishedFrom, publishedTo, published }) => (
+        <Playing
+          published={published || { from: publishedFrom, to: publishedTo }}
+        />
+      ),
     },
   ];
 

@@ -5,6 +5,7 @@ import SelectColumnHoc from "../util/select-column-hoc";
 import UserContext from "../../context/user-context";
 import ListButton from "../util/list/list-button";
 import Published from "../util/published";
+import Playing from "../util/playing";
 
 /**
  * Columns for playlists lists.
@@ -34,6 +35,16 @@ function getPlaylistColumns({
       // eslint-disable-next-line react/prop-types
       content: ({ publishedFrom, publishedTo, published }) => (
         <Published
+          published={published || { from: publishedFrom, to: publishedTo }}
+        />
+      ),
+    },
+    {
+      path: "playing",
+      label: t("playing"),
+      // eslint-disable-next-line react/prop-types
+      content: ({ publishedFrom, publishedTo, published }) => (
+        <Playing
           published={published || { from: publishedFrom, to: publishedTo }}
         />
       ),
