@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.useDeletePlaylistScreenRegionItemMutation = exports.usePutPlaylistScreenRegionItemMutation = exports.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery = exports.useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation = exports.usePutV1ScreensByIdCampaignsMutation = exports.useGetV1ScreensByIdCampaignsQuery = exports.usePostScreenBindKeyMutation = exports.useDeleteV1ScreensByIdMutation = exports.usePutV1ScreensByIdMutation = exports.useGetV1ScreensByIdQuery = exports.usePostV1ScreensMutation = exports.useGetV1ScreensQuery = exports.useGetV1ScreenGroupsByIdScreensQuery = exports.useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation = exports.usePutV1ScreenGroupsByIdCampaignsMutation = exports.useGetV1ScreenGroupsByIdCampaignsQuery = exports.useDeleteV1ScreenGroupsByIdMutation = exports.usePutV1ScreenGroupsByIdMutation = exports.useGetV1ScreenGroupsByIdQuery = exports.useGetScreenGroupCampaignItemQuery = exports.usePostV1ScreenGroupsMutation = exports.useGetV1ScreenGroupsQuery = exports.useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation = exports.usePutV1PlaylistsByIdSlidesMutation = exports.useGetV1PlaylistsByIdSlidesQuery = exports.useDeleteV1PlaylistsByIdMutation = exports.usePutV1PlaylistsByIdMutation = exports.useGetV1PlaylistsByIdQuery = exports.usePostV1PlaylistsMutation = exports.useGetV1PlaylistsQuery = exports.useDeleteV1MediaByIdMutation = exports.useGetV1MediaByIdQuery = exports.usePostMediaCollectionMutation = exports.useGetV1MediaQuery = exports.useGetV1LayoutsByIdQuery = exports.useGetV1LayoutsQuery = exports.useGetV1FeedsByIdDataQuery = exports.useGetV1FeedsByIdQuery = exports.useGetV1FeedsQuery = exports.useGetV1FeedSourcesByIdConfigAndNameQuery = exports.useGetV1FeedSourcesByIdQuery = exports.useGetV1FeedSourcesQuery = exports.useGetV1CampaignsByIdScreensQuery = exports.useGetV1CampaignsByIdScreenGroupsQuery = exports.usePostRefreshTokenItemMutation = exports.useLoginCheckPostMutation = exports.usePostLoginInfoScreenMutation = exports.useGetOidcAuthUrlsItemQuery = exports.useGetOidcAuthTokenItemQuery = exports.api = void 0;
-exports.useDeleteV1ThemesByIdMutation = exports.usePutV1ThemesByIdMutation = exports.useGetV1ThemesByIdQuery = exports.usePostV1ThemesMutation = exports.useGetV1ThemesQuery = exports.useGetV1TenantsByIdQuery = exports.useGetV1TenantsQuery = exports.useGetV1TemplatesByIdQuery = exports.useGetV1TemplatesQuery = exports.usePutV1SlidesByIdPlaylistsMutation = exports.useGetV1SlidesByIdPlaylistsQuery = exports.useDeleteV1SlidesByIdMutation = exports.usePutV1SlidesByIdMutation = exports.useGetV1SlidesByIdQuery = exports.usePostV1SlidesMutation = exports.useGetV1SlidesQuery = exports.usePostScreenUnbindMutation = exports.useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation = exports.usePutV1ScreensByIdScreenGroupsMutation = exports.useGetV1ScreensByIdScreenGroupsQuery = void 0;
+exports.useDeleteV1UsersByIdRemoveFromTenantMutation = exports.useDeleteV1UsersByIdMutation = exports.usePutV1UsersByIdMutation = exports.useGetV1UsersByIdQuery = exports.usePostV1UsersMutation = exports.useGetV1UsersQuery = exports.useDeleteV1UserActivationCodesByIdMutation = exports.useGetV1UserActivationCodesByIdQuery = exports.usePostV1UserActivationCodesRefreshMutation = exports.usePostV1UserActivationCodesActivateMutation = exports.usePostV1UserActivationCodesMutation = exports.useGetV1UserActivationCodesQuery = exports.useDeleteV1ThemesByIdMutation = exports.usePutV1ThemesByIdMutation = exports.useGetV1ThemesByIdQuery = exports.usePostV1ThemesMutation = exports.useGetV1ThemesQuery = exports.useGetV1TenantsByIdQuery = exports.useGetV1TenantsQuery = exports.useGetV1TemplatesByIdQuery = exports.useGetV1TemplatesQuery = exports.usePutV1SlidesByIdPlaylistsMutation = exports.useGetV1SlidesByIdPlaylistsQuery = exports.useDeleteV1SlidesByIdMutation = exports.usePutV1SlidesByIdMutation = exports.useGetV1SlidesByIdQuery = exports.usePostV1SlidesMutation = exports.useGetV1SlidesQuery = exports.usePostScreenUnbindMutation = exports.useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation = exports.usePutV1ScreensByIdScreenGroupsMutation = exports.useGetV1ScreensByIdScreenGroupsQuery = void 0;
 var react_1 = require("@reduxjs/toolkit/query/react");
 var dynamic_base_query_1 = require("../dynamic-base-query");
 exports.api = (0, react_1.createApi)({
@@ -44,11 +44,7 @@ exports.api = (0, react_1.createApi)({
         getV1CampaignsByIdScreenGroups: build.query({
             query: function (queryArg) { return ({
                 url: "/v1/campaigns/" + queryArg.id + "/screen-groups",
-                params: {
-                    page: queryArg.page,
-                    itemsPerPage: queryArg.itemsPerPage,
-                    order: queryArg.order
-                }
+                params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
             }); }
         }),
         getV1CampaignsByIdScreens: build.query({
@@ -183,10 +179,7 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    createdBy: queryArg.createdBy,
-                    modifiedBy: queryArg.modifiedBy,
-                    published: queryArg.published,
-                    order: queryArg.order
+                    published: queryArg.published
                 }
             }); }
         }),
@@ -251,10 +244,7 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    createdBy: queryArg.createdBy,
-                    modifiedBy: queryArg.modifiedBy,
-                    published: queryArg.published,
-                    order: queryArg.order
+                    published: queryArg.published
                 }
             }); }
         }),
@@ -440,10 +430,7 @@ exports.api = (0, react_1.createApi)({
                 params: {
                     page: queryArg.page,
                     itemsPerPage: queryArg.itemsPerPage,
-                    createdBy: queryArg.createdBy,
-                    modifiedBy: queryArg.modifiedBy,
-                    published: queryArg.published,
-                    order: queryArg.order
+                    published: queryArg.published
                 }
             }); }
         }),
@@ -523,7 +510,88 @@ exports.api = (0, react_1.createApi)({
                 url: "/v1/themes/" + queryArg.id,
                 method: "DELETE"
             }); }
+        }),
+        getV1UserActivationCodes: build.query({
+            query: function (queryArg) { return ({
+                url: "/v1/user-activation-codes",
+                params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage }
+            }); }
+        }),
+        postV1UserActivationCodes: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/user-activation-codes",
+                method: "POST",
+                body: queryArg.userActivationCodeUserActivationCodeInput
+            }); }
+        }),
+        postV1UserActivationCodesActivate: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/user-activation-codes/activate",
+                method: "POST",
+                body: queryArg.userActivationCodeActivationCode
+            }); }
+        }),
+        postV1UserActivationCodesRefresh: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/user-activation-codes/refresh",
+                method: "POST",
+                body: queryArg.userActivationCodeActivationCode
+            }); }
+        }),
+        getV1UserActivationCodesById: build.query({
+            query: function (queryArg) { return ({
+                url: "/v1/user-activation-codes/" + queryArg.id
+            }); }
+        }),
+        deleteV1UserActivationCodesById: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/user-activation-codes/" + queryArg.id,
+                method: "DELETE"
+            }); }
+        }),
+        getV1Users: build.query({
+            query: function (queryArg) { return ({
+                url: "/v1/users",
+                params: {
+                    page: queryArg.page,
+                    itemsPerPage: queryArg.itemsPerPage,
+                    fullName: queryArg.fullName,
+                    email: queryArg.email,
+                    createdBy: queryArg.createdBy,
+                    modifiedBy: queryArg.modifiedBy,
+                    order: queryArg.order
+                }
+            }); }
+        }),
+        postV1Users: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/users",
+                method: "POST",
+                body: queryArg.userUserInput
+            }); }
+        }),
+        getV1UsersById: build.query({
+            query: function (queryArg) { return ({ url: "/v1/users/" + queryArg.id }); }
+        }),
+        putV1UsersById: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/users/" + queryArg.id,
+                method: "PUT",
+                body: queryArg.userUserInput
+            }); }
+        }),
+        deleteV1UsersById: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/users/" + queryArg.id,
+                method: "DELETE"
+            }); }
+        }),
+        deleteV1UsersByIdRemoveFromTenant: build.mutation({
+            query: function (queryArg) { return ({
+                url: "/v1/users/" + queryArg.id + "/remove-from-tenant",
+                method: "DELETE"
+            }); }
         })
     }); }
 });
-exports.useGetOidcAuthTokenItemQuery = exports.api.useGetOidcAuthTokenItemQuery, exports.useGetOidcAuthUrlsItemQuery = exports.api.useGetOidcAuthUrlsItemQuery, exports.usePostLoginInfoScreenMutation = exports.api.usePostLoginInfoScreenMutation, exports.useLoginCheckPostMutation = exports.api.useLoginCheckPostMutation, exports.usePostRefreshTokenItemMutation = exports.api.usePostRefreshTokenItemMutation, exports.useGetV1CampaignsByIdScreenGroupsQuery = exports.api.useGetV1CampaignsByIdScreenGroupsQuery, exports.useGetV1CampaignsByIdScreensQuery = exports.api.useGetV1CampaignsByIdScreensQuery, exports.useGetV1FeedSourcesQuery = exports.api.useGetV1FeedSourcesQuery, exports.useGetV1FeedSourcesByIdQuery = exports.api.useGetV1FeedSourcesByIdQuery, exports.useGetV1FeedSourcesByIdConfigAndNameQuery = exports.api.useGetV1FeedSourcesByIdConfigAndNameQuery, exports.useGetV1FeedsQuery = exports.api.useGetV1FeedsQuery, exports.useGetV1FeedsByIdQuery = exports.api.useGetV1FeedsByIdQuery, exports.useGetV1FeedsByIdDataQuery = exports.api.useGetV1FeedsByIdDataQuery, exports.useGetV1LayoutsQuery = exports.api.useGetV1LayoutsQuery, exports.useGetV1LayoutsByIdQuery = exports.api.useGetV1LayoutsByIdQuery, exports.useGetV1MediaQuery = exports.api.useGetV1MediaQuery, exports.usePostMediaCollectionMutation = exports.api.usePostMediaCollectionMutation, exports.useGetV1MediaByIdQuery = exports.api.useGetV1MediaByIdQuery, exports.useDeleteV1MediaByIdMutation = exports.api.useDeleteV1MediaByIdMutation, exports.useGetV1PlaylistsQuery = exports.api.useGetV1PlaylistsQuery, exports.usePostV1PlaylistsMutation = exports.api.usePostV1PlaylistsMutation, exports.useGetV1PlaylistsByIdQuery = exports.api.useGetV1PlaylistsByIdQuery, exports.usePutV1PlaylistsByIdMutation = exports.api.usePutV1PlaylistsByIdMutation, exports.useDeleteV1PlaylistsByIdMutation = exports.api.useDeleteV1PlaylistsByIdMutation, exports.useGetV1PlaylistsByIdSlidesQuery = exports.api.useGetV1PlaylistsByIdSlidesQuery, exports.usePutV1PlaylistsByIdSlidesMutation = exports.api.usePutV1PlaylistsByIdSlidesMutation, exports.useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation = exports.api.useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation, exports.useGetV1ScreenGroupsQuery = exports.api.useGetV1ScreenGroupsQuery, exports.usePostV1ScreenGroupsMutation = exports.api.usePostV1ScreenGroupsMutation, exports.useGetScreenGroupCampaignItemQuery = exports.api.useGetScreenGroupCampaignItemQuery, exports.useGetV1ScreenGroupsByIdQuery = exports.api.useGetV1ScreenGroupsByIdQuery, exports.usePutV1ScreenGroupsByIdMutation = exports.api.usePutV1ScreenGroupsByIdMutation, exports.useDeleteV1ScreenGroupsByIdMutation = exports.api.useDeleteV1ScreenGroupsByIdMutation, exports.useGetV1ScreenGroupsByIdCampaignsQuery = exports.api.useGetV1ScreenGroupsByIdCampaignsQuery, exports.usePutV1ScreenGroupsByIdCampaignsMutation = exports.api.usePutV1ScreenGroupsByIdCampaignsMutation, exports.useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation = exports.api.useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation, exports.useGetV1ScreenGroupsByIdScreensQuery = exports.api.useGetV1ScreenGroupsByIdScreensQuery, exports.useGetV1ScreensQuery = exports.api.useGetV1ScreensQuery, exports.usePostV1ScreensMutation = exports.api.usePostV1ScreensMutation, exports.useGetV1ScreensByIdQuery = exports.api.useGetV1ScreensByIdQuery, exports.usePutV1ScreensByIdMutation = exports.api.usePutV1ScreensByIdMutation, exports.useDeleteV1ScreensByIdMutation = exports.api.useDeleteV1ScreensByIdMutation, exports.usePostScreenBindKeyMutation = exports.api.usePostScreenBindKeyMutation, exports.useGetV1ScreensByIdCampaignsQuery = exports.api.useGetV1ScreensByIdCampaignsQuery, exports.usePutV1ScreensByIdCampaignsMutation = exports.api.usePutV1ScreensByIdCampaignsMutation, exports.useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation = exports.api.useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation, exports.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery = exports.api.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery, exports.usePutPlaylistScreenRegionItemMutation = exports.api.usePutPlaylistScreenRegionItemMutation, exports.useDeletePlaylistScreenRegionItemMutation = exports.api.useDeletePlaylistScreenRegionItemMutation, exports.useGetV1ScreensByIdScreenGroupsQuery = exports.api.useGetV1ScreensByIdScreenGroupsQuery, exports.usePutV1ScreensByIdScreenGroupsMutation = exports.api.usePutV1ScreensByIdScreenGroupsMutation, exports.useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation = exports.api.useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation, exports.usePostScreenUnbindMutation = exports.api.usePostScreenUnbindMutation, exports.useGetV1SlidesQuery = exports.api.useGetV1SlidesQuery, exports.usePostV1SlidesMutation = exports.api.usePostV1SlidesMutation, exports.useGetV1SlidesByIdQuery = exports.api.useGetV1SlidesByIdQuery, exports.usePutV1SlidesByIdMutation = exports.api.usePutV1SlidesByIdMutation, exports.useDeleteV1SlidesByIdMutation = exports.api.useDeleteV1SlidesByIdMutation, exports.useGetV1SlidesByIdPlaylistsQuery = exports.api.useGetV1SlidesByIdPlaylistsQuery, exports.usePutV1SlidesByIdPlaylistsMutation = exports.api.usePutV1SlidesByIdPlaylistsMutation, exports.useGetV1TemplatesQuery = exports.api.useGetV1TemplatesQuery, exports.useGetV1TemplatesByIdQuery = exports.api.useGetV1TemplatesByIdQuery, exports.useGetV1TenantsQuery = exports.api.useGetV1TenantsQuery, exports.useGetV1TenantsByIdQuery = exports.api.useGetV1TenantsByIdQuery, exports.useGetV1ThemesQuery = exports.api.useGetV1ThemesQuery, exports.usePostV1ThemesMutation = exports.api.usePostV1ThemesMutation, exports.useGetV1ThemesByIdQuery = exports.api.useGetV1ThemesByIdQuery, exports.usePutV1ThemesByIdMutation = exports.api.usePutV1ThemesByIdMutation, exports.useDeleteV1ThemesByIdMutation = exports.api.useDeleteV1ThemesByIdMutation;
+exports.useGetOidcAuthTokenItemQuery = exports.api.useGetOidcAuthTokenItemQuery, exports.useGetOidcAuthUrlsItemQuery = exports.api.useGetOidcAuthUrlsItemQuery, exports.usePostLoginInfoScreenMutation = exports.api.usePostLoginInfoScreenMutation, exports.useLoginCheckPostMutation = exports.api.useLoginCheckPostMutation, exports.usePostRefreshTokenItemMutation = exports.api.usePostRefreshTokenItemMutation, exports.useGetV1CampaignsByIdScreenGroupsQuery = exports.api.useGetV1CampaignsByIdScreenGroupsQuery, exports.useGetV1CampaignsByIdScreensQuery = exports.api.useGetV1CampaignsByIdScreensQuery, exports.useGetV1FeedSourcesQuery = exports.api.useGetV1FeedSourcesQuery, exports.useGetV1FeedSourcesByIdQuery = exports.api.useGetV1FeedSourcesByIdQuery, exports.useGetV1FeedSourcesByIdConfigAndNameQuery = exports.api.useGetV1FeedSourcesByIdConfigAndNameQuery, exports.useGetV1FeedsQuery = exports.api.useGetV1FeedsQuery, exports.useGetV1FeedsByIdQuery = exports.api.useGetV1FeedsByIdQuery, exports.useGetV1FeedsByIdDataQuery = exports.api.useGetV1FeedsByIdDataQuery, exports.useGetV1LayoutsQuery = exports.api.useGetV1LayoutsQuery, exports.useGetV1LayoutsByIdQuery = exports.api.useGetV1LayoutsByIdQuery, exports.useGetV1MediaQuery = exports.api.useGetV1MediaQuery, exports.usePostMediaCollectionMutation = exports.api.usePostMediaCollectionMutation, exports.useGetV1MediaByIdQuery = exports.api.useGetV1MediaByIdQuery, exports.useDeleteV1MediaByIdMutation = exports.api.useDeleteV1MediaByIdMutation, exports.useGetV1PlaylistsQuery = exports.api.useGetV1PlaylistsQuery, exports.usePostV1PlaylistsMutation = exports.api.usePostV1PlaylistsMutation, exports.useGetV1PlaylistsByIdQuery = exports.api.useGetV1PlaylistsByIdQuery, exports.usePutV1PlaylistsByIdMutation = exports.api.usePutV1PlaylistsByIdMutation, exports.useDeleteV1PlaylistsByIdMutation = exports.api.useDeleteV1PlaylistsByIdMutation, exports.useGetV1PlaylistsByIdSlidesQuery = exports.api.useGetV1PlaylistsByIdSlidesQuery, exports.usePutV1PlaylistsByIdSlidesMutation = exports.api.usePutV1PlaylistsByIdSlidesMutation, exports.useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation = exports.api.useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation, exports.useGetV1ScreenGroupsQuery = exports.api.useGetV1ScreenGroupsQuery, exports.usePostV1ScreenGroupsMutation = exports.api.usePostV1ScreenGroupsMutation, exports.useGetScreenGroupCampaignItemQuery = exports.api.useGetScreenGroupCampaignItemQuery, exports.useGetV1ScreenGroupsByIdQuery = exports.api.useGetV1ScreenGroupsByIdQuery, exports.usePutV1ScreenGroupsByIdMutation = exports.api.usePutV1ScreenGroupsByIdMutation, exports.useDeleteV1ScreenGroupsByIdMutation = exports.api.useDeleteV1ScreenGroupsByIdMutation, exports.useGetV1ScreenGroupsByIdCampaignsQuery = exports.api.useGetV1ScreenGroupsByIdCampaignsQuery, exports.usePutV1ScreenGroupsByIdCampaignsMutation = exports.api.usePutV1ScreenGroupsByIdCampaignsMutation, exports.useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation = exports.api.useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation, exports.useGetV1ScreenGroupsByIdScreensQuery = exports.api.useGetV1ScreenGroupsByIdScreensQuery, exports.useGetV1ScreensQuery = exports.api.useGetV1ScreensQuery, exports.usePostV1ScreensMutation = exports.api.usePostV1ScreensMutation, exports.useGetV1ScreensByIdQuery = exports.api.useGetV1ScreensByIdQuery, exports.usePutV1ScreensByIdMutation = exports.api.usePutV1ScreensByIdMutation, exports.useDeleteV1ScreensByIdMutation = exports.api.useDeleteV1ScreensByIdMutation, exports.usePostScreenBindKeyMutation = exports.api.usePostScreenBindKeyMutation, exports.useGetV1ScreensByIdCampaignsQuery = exports.api.useGetV1ScreensByIdCampaignsQuery, exports.usePutV1ScreensByIdCampaignsMutation = exports.api.usePutV1ScreensByIdCampaignsMutation, exports.useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation = exports.api.useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation, exports.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery = exports.api.useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery, exports.usePutPlaylistScreenRegionItemMutation = exports.api.usePutPlaylistScreenRegionItemMutation, exports.useDeletePlaylistScreenRegionItemMutation = exports.api.useDeletePlaylistScreenRegionItemMutation, exports.useGetV1ScreensByIdScreenGroupsQuery = exports.api.useGetV1ScreensByIdScreenGroupsQuery, exports.usePutV1ScreensByIdScreenGroupsMutation = exports.api.usePutV1ScreensByIdScreenGroupsMutation, exports.useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation = exports.api.useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation, exports.usePostScreenUnbindMutation = exports.api.usePostScreenUnbindMutation, exports.useGetV1SlidesQuery = exports.api.useGetV1SlidesQuery, exports.usePostV1SlidesMutation = exports.api.usePostV1SlidesMutation, exports.useGetV1SlidesByIdQuery = exports.api.useGetV1SlidesByIdQuery, exports.usePutV1SlidesByIdMutation = exports.api.usePutV1SlidesByIdMutation, exports.useDeleteV1SlidesByIdMutation = exports.api.useDeleteV1SlidesByIdMutation, exports.useGetV1SlidesByIdPlaylistsQuery = exports.api.useGetV1SlidesByIdPlaylistsQuery, exports.usePutV1SlidesByIdPlaylistsMutation = exports.api.usePutV1SlidesByIdPlaylistsMutation, exports.useGetV1TemplatesQuery = exports.api.useGetV1TemplatesQuery, exports.useGetV1TemplatesByIdQuery = exports.api.useGetV1TemplatesByIdQuery, exports.useGetV1TenantsQuery = exports.api.useGetV1TenantsQuery, exports.useGetV1TenantsByIdQuery = exports.api.useGetV1TenantsByIdQuery, exports.useGetV1ThemesQuery = exports.api.useGetV1ThemesQuery, exports.usePostV1ThemesMutation = exports.api.usePostV1ThemesMutation, exports.useGetV1ThemesByIdQuery = exports.api.useGetV1ThemesByIdQuery, exports.usePutV1ThemesByIdMutation = exports.api.usePutV1ThemesByIdMutation, exports.useDeleteV1ThemesByIdMutation = exports.api.useDeleteV1ThemesByIdMutation, exports.useGetV1UserActivationCodesQuery = exports.api.useGetV1UserActivationCodesQuery, exports.usePostV1UserActivationCodesMutation = exports.api.usePostV1UserActivationCodesMutation, exports.usePostV1UserActivationCodesActivateMutation = exports.api.usePostV1UserActivationCodesActivateMutation, exports.usePostV1UserActivationCodesRefreshMutation = exports.api.usePostV1UserActivationCodesRefreshMutation, exports.useGetV1UserActivationCodesByIdQuery = exports.api.useGetV1UserActivationCodesByIdQuery, exports.useDeleteV1UserActivationCodesByIdMutation = exports.api.useDeleteV1UserActivationCodesByIdMutation, exports.useGetV1UsersQuery = exports.api.useGetV1UsersQuery, exports.usePostV1UsersMutation = exports.api.usePostV1UsersMutation, exports.useGetV1UsersByIdQuery = exports.api.useGetV1UsersByIdQuery, exports.usePutV1UsersByIdMutation = exports.api.usePutV1UsersByIdMutation, exports.useDeleteV1UsersByIdMutation = exports.api.useDeleteV1UsersByIdMutation, exports.useDeleteV1UsersByIdRemoveFromTenantMutation = exports.api.useDeleteV1UsersByIdRemoveFromTenantMutation;

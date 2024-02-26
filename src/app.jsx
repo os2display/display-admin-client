@@ -35,8 +35,12 @@ import Logout from "./components/user/logout";
 import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
 import ModalProvider from "./context/modal-context/modal-provider";
+import UsersList from "./components/users/users-list";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
+import ActivationCodeList from "./components/activation-code/activation-code-list";
+import ActivationCodeCreate from "./components/activation-code/activation-code-create";
+import ActivationCodeActivate from "./components/activation-code/activation-code-activate";
 
 /**
  * App component.
@@ -49,6 +53,7 @@ function App() {
   const [accessConfig, setAccessConfig] = useState();
   const [tenants, setTenants] = useState();
   const [userName, setUserName] = useState("");
+  const [userType, setUserType] = useState("");
   const [email, setEmail] = useState("");
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
@@ -61,6 +66,7 @@ function App() {
     tenants: { get: tenants, set: setTenants },
     selectedTenant: { get: selectedTenant, set: setSelectedTenant },
     userName: { get: userName, set: setUserName },
+    userType: { get: userType, set: setUserType },
     email: { get: email, set: setEmail },
   };
   const listConfig = {
@@ -72,12 +78,18 @@ function App() {
 
   const handleReauthenticate = () => {
     localStorage.removeItem(localStorageKeys.API_TOKEN);
+    localStorage.removeItem(localStorageKeys.API_REFRESH_TOKEN);
     localStorage.removeItem(localStorageKeys.SELECTED_TENANT);
     localStorage.removeItem(localStorageKeys.TENANTS);
+    localStorage.removeItem(localStorageKeys.USER_NAME);
+    localStorage.removeItem(localStorageKeys.EMAIL);
+    localStorage.removeItem(localStorageKeys.USER_TYPE);
 
     setSelectedTenant(null);
     setTenants(null);
     setUserName("");
+    setEmail("");
+    setUserType("");
     setAuthenticated(false);
   };
 
@@ -105,6 +117,9 @@ function App() {
 
       // Get the user email for displaying in top bar.
       setEmail(localStorage.getItem(localStorageKeys.EMAIL));
+
+      // Set the user type from local storage.
+      setUserType(localStorage.getItem(localStorageKeys.USER_TYPE));
     } else {
       setAuthenticated(false);
     }
@@ -138,6 +153,9 @@ function App() {
           },
           shared: {
             roles: ["ROLE_ADMIN"],
+          },
+          users: {
+            roles: ["ROLE_ADMIN", "ROLE_EXTERNAL_USER_ADMIN"],
           },
         });
       });
@@ -330,6 +348,23 @@ function App() {
                                   path="create"
                                   element={<MediaCreate />}
                                 />
+                              </Route>
+                              <Route path="activation">
+                                <Route
+                                  path="list"
+                                  element={<ActivationCodeList />}
+                                />
+                                <Route
+                                  path="create"
+                                  element={<ActivationCodeCreate />}
+                                />
+                                <Route
+                                  path="activate"
+                                  element={<ActivationCodeActivate />}
+                                />
+                              </Route>
+                              <Route path="users">
+                                <Route path="list" element={<UsersList />} />
                               </Route>
                               <Route path="themes">
                                 <Route

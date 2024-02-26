@@ -58,11 +58,7 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/v1/campaigns/${queryArg.id}/screen-groups`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          order: queryArg.order,
-        },
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
     getV1CampaignsByIdScreens: build.query<
@@ -245,10 +241,7 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
-          createdBy: queryArg.createdBy,
-          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
-          order: queryArg.order,
         },
       }),
     }),
@@ -340,10 +333,7 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
-          createdBy: queryArg.createdBy,
-          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
-          order: queryArg.order,
         },
       }),
     }),
@@ -595,10 +585,7 @@ export const api = createApi({
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
-          createdBy: queryArg.createdBy,
-          modifiedBy: queryArg.modifiedBy,
           published: queryArg.published,
-          order: queryArg.order,
         },
       }),
     }),
@@ -700,6 +687,117 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV1UserActivationCodes: build.query<
+      GetV1UserActivationCodesApiResponse,
+      GetV1UserActivationCodesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/user-activation-codes`,
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+      }),
+    }),
+    postV1UserActivationCodes: build.mutation<
+      PostV1UserActivationCodesApiResponse,
+      PostV1UserActivationCodesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/user-activation-codes`,
+        method: "POST",
+        body: queryArg.userActivationCodeUserActivationCodeInput,
+      }),
+    }),
+    postV1UserActivationCodesActivate: build.mutation<
+      PostV1UserActivationCodesActivateApiResponse,
+      PostV1UserActivationCodesActivateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/user-activation-codes/activate`,
+        method: "POST",
+        body: queryArg.userActivationCodeActivationCode,
+      }),
+    }),
+    postV1UserActivationCodesRefresh: build.mutation<
+      PostV1UserActivationCodesRefreshApiResponse,
+      PostV1UserActivationCodesRefreshApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/user-activation-codes/refresh`,
+        method: "POST",
+        body: queryArg.userActivationCodeActivationCode,
+      }),
+    }),
+    getV1UserActivationCodesById: build.query<
+      GetV1UserActivationCodesByIdApiResponse,
+      GetV1UserActivationCodesByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/user-activation-codes/${queryArg.id}`,
+      }),
+    }),
+    deleteV1UserActivationCodesById: build.mutation<
+      DeleteV1UserActivationCodesByIdApiResponse,
+      DeleteV1UserActivationCodesByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/user-activation-codes/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getV1Users: build.query<GetV1UsersApiResponse, GetV1UsersApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/users`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          fullName: queryArg.fullName,
+          email: queryArg.email,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    postV1Users: build.mutation<PostV1UsersApiResponse, PostV1UsersApiArg>({
+      query: (queryArg) => ({
+        url: `/v1/users`,
+        method: "POST",
+        body: queryArg.userUserInput,
+      }),
+    }),
+    getV1UsersById: build.query<
+      GetV1UsersByIdApiResponse,
+      GetV1UsersByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v1/users/${queryArg.id}` }),
+    }),
+    putV1UsersById: build.mutation<
+      PutV1UsersByIdApiResponse,
+      PutV1UsersByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/users/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.userUserInput,
+      }),
+    }),
+    deleteV1UsersById: build.mutation<
+      DeleteV1UsersByIdApiResponse,
+      DeleteV1UsersByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/users/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteV1UsersByIdRemoveFromTenant: build.mutation<
+      DeleteV1UsersByIdRemoveFromTenantApiResponse,
+      DeleteV1UsersByIdRemoveFromTenantApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v1/users/${queryArg.id}/remove-from-tenant`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 export type GetOidcAuthTokenItemApiResponse =
@@ -728,7 +826,7 @@ export type LoginCheckPostApiResponse = /** status 200 User token created */ {
 export type LoginCheckPostApiArg = {
   /** The login data */
   body: {
-    email: string;
+    providerId: string;
     password: string;
   };
 };
@@ -744,10 +842,6 @@ export type GetV1CampaignsByIdScreenGroupsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  order?: {
-    createdAt?: "asc" | "desc";
-    modifiedAt?: "asc" | "desc";
-  };
 };
 export type GetV1CampaignsByIdScreensApiResponse = unknown;
 export type GetV1CampaignsByIdScreensApiArg = {
@@ -910,18 +1004,8 @@ export type GetV1PlaylistsByIdSlidesApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  createdBy?: {
-    ""?: string[];
-  };
-  modifiedBy?: {
-    ""?: string[];
-  };
   /** If true only published content will be shown */
   published?: boolean;
-  order?: {
-    createdAt?: "asc" | "desc";
-    modifiedAt?: "asc" | "desc";
-  };
 };
 export type PutV1PlaylistsByIdSlidesApiResponse = unknown;
 export type PutV1PlaylistsByIdSlidesApiArg = {
@@ -983,18 +1067,8 @@ export type GetV1ScreenGroupsByIdCampaignsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  createdBy?: {
-    ""?: string[];
-  };
-  modifiedBy?: {
-    ""?: string[];
-  };
   /** If true only published content will be shown */
   published?: boolean;
-  order?: {
-    createdAt?: "asc" | "desc";
-    modifiedAt?: "asc" | "desc";
-  };
 };
 export type PutV1ScreenGroupsByIdCampaignsApiResponse = unknown;
 export type PutV1ScreenGroupsByIdCampaignsApiArg = {
@@ -1178,18 +1252,8 @@ export type GetV1SlidesByIdPlaylistsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
-  createdBy?: {
-    ""?: string[];
-  };
-  modifiedBy?: {
-    ""?: string[];
-  };
   /** If true only published content will be shown */
   published?: boolean;
-  order?: {
-    createdAt?: "asc" | "desc";
-    modifiedAt?: "asc" | "desc";
-  };
 };
 export type PutV1SlidesByIdPlaylistsApiResponse = unknown;
 export type PutV1SlidesByIdPlaylistsApiArg = {
@@ -1275,6 +1339,79 @@ export type DeleteV1ThemesByIdApiResponse = unknown;
 export type DeleteV1ThemesByIdApiArg = {
   id: string;
 };
+export type GetV1UserActivationCodesApiResponse = unknown;
+export type GetV1UserActivationCodesApiArg = {
+  /** The collection page number */
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: number;
+};
+export type PostV1UserActivationCodesApiResponse = unknown;
+export type PostV1UserActivationCodesApiArg = {
+  /** The new UserActivationCode resource */
+  userActivationCodeUserActivationCodeInput: UserActivationCodeUserActivationCodeInput;
+};
+export type PostV1UserActivationCodesActivateApiResponse = unknown;
+export type PostV1UserActivationCodesActivateApiArg = {
+  /** The new UserActivationCode resource */
+  userActivationCodeActivationCode: UserActivationCodeActivationCode;
+};
+export type PostV1UserActivationCodesRefreshApiResponse = unknown;
+export type PostV1UserActivationCodesRefreshApiArg = {
+  /** The new UserActivationCode resource */
+  userActivationCodeActivationCode: UserActivationCodeActivationCode;
+};
+export type GetV1UserActivationCodesByIdApiResponse = unknown;
+export type GetV1UserActivationCodesByIdApiArg = {
+  /** UserActivationCode identifier */
+  id: string;
+};
+export type DeleteV1UserActivationCodesByIdApiResponse = unknown;
+export type DeleteV1UserActivationCodesByIdApiArg = {
+  /** UserActivationCode identifier */
+  id: string;
+};
+export type GetV1UsersApiResponse = unknown;
+export type GetV1UsersApiArg = {
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  fullName?: string;
+  email?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  order?: {
+    createdAt?: "asc" | "desc";
+  };
+};
+export type PostV1UsersApiResponse = unknown;
+export type PostV1UsersApiArg = {
+  id: string;
+  /** The new User resource */
+  userUserInput: UserUserInput;
+};
+export type GetV1UsersByIdApiResponse = unknown;
+export type GetV1UsersByIdApiArg = {
+  id: string;
+};
+export type PutV1UsersByIdApiResponse = unknown;
+export type PutV1UsersByIdApiArg = {
+  id: string;
+  /** The updated User resource */
+  userUserInput: UserUserInput;
+};
+export type DeleteV1UsersByIdApiResponse = unknown;
+export type DeleteV1UsersByIdApiArg = {
+  id: string;
+};
+export type DeleteV1UsersByIdRemoveFromTenantApiResponse = unknown;
+export type DeleteV1UsersByIdRemoveFromTenantApiArg = {
+  id: string;
+};
 export type Token = {
   token?: string;
   refresh_token?: string;
@@ -1348,6 +1485,16 @@ export type ThemeThemeInput = {
   logo?: string;
   css?: string;
 };
+export type UserActivationCodeUserActivationCodeInput = {
+  displayName?: string;
+  roles?: string[];
+};
+export type UserActivationCodeActivationCode = {
+  activationCode?: string;
+};
+export type UserUserInput = {
+  fullName?: any;
+};
 export const {
   useGetOidcAuthTokenItemQuery,
   useGetOidcAuthUrlsItemQuery,
@@ -1418,5 +1565,17 @@ export const {
   useGetV1ThemesByIdQuery,
   usePutV1ThemesByIdMutation,
   useDeleteV1ThemesByIdMutation,
+  useGetV1UserActivationCodesQuery,
+  usePostV1UserActivationCodesMutation,
+  usePostV1UserActivationCodesActivateMutation,
+  usePostV1UserActivationCodesRefreshMutation,
+  useGetV1UserActivationCodesByIdQuery,
+  useDeleteV1UserActivationCodesByIdMutation,
+  useGetV1UsersQuery,
+  usePostV1UsersMutation,
+  useGetV1UsersByIdQuery,
+  usePutV1UsersByIdMutation,
+  useDeleteV1UsersByIdMutation,
+  useDeleteV1UsersByIdRemoveFromTenantMutation,
 } = api;
 

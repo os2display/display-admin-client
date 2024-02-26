@@ -1,11 +1,4 @@
 {
-  "user-list": {
-    "columns": {
-      "created-by": "Oprettet af"
-    },
-    "header": "Brugere",
-    "create-new-user": "Opret ny bruger"
-  },
   "remote-component-wrapper": {
     "close-preview": "Luk preview"
   },
@@ -26,6 +19,10 @@
       "save-theme-error": "Der skete en fejl da temaet skulle gemmes:",
       "load-theme-error": "Der skete en fejl da temaet med følgende id: {{id}} skulle hentes:"
     }
+  },
+  "login-sidebar": {
+    "internal-info-text": "Er du <strong>medarbejder</strong> skal du benytte medarbejderlogin.",
+    "external-info-text": "Er du <strong>borger</strong> skal du benytte MitID login."
   },
   "slides-list": {
     "columns": {
@@ -86,6 +83,34 @@
     },
     "header": "Skærme",
     "create-new-screen": "Opret ny skærm",
+    "change-view-list": "Liste",
+    "change-view-calendar": "Kalender"
+  },
+  "users-list": {
+    "columns": {
+      "activated": "Aktiv",
+      "full-name": "Navn",
+      "created-at": "Oprettelsesdato",
+      "user-type": "Brugertype"
+    },
+    "loading-messages": {
+      "loading-users": "Henter brugere",
+      "deleting-user": "Sletter bruger(e)"
+    },
+    "error-messages": {
+      "user-delete-error": "Der skete en fejl da brugeren skulle slettes:",
+      "users-load-error": "Der skete en fejl da brugerne skulle hentes:"
+    },
+    "success-messages": {
+      "user-delete": "Brugeren er blevet slettet"
+    },
+    "user-type": {
+      "username-password": "Brugernavn/Kodeord",
+      "oidc-external": "Ekstern",
+      "oidc-internal": "Medarbejder"
+    },
+    "header": "Brugere",
+    "create-new-user": "Opret ny bruger",
     "change-view-list": "Liste",
     "change-view-calendar": "Kalender"
   },
@@ -189,7 +214,7 @@
   "media-list": {
     "checkbox-label-sort-desc": "Vis nyeste først",
     "delete-button": "Slet",
-    "checkbox-form-aria-label": "Vælg dette medie til massehandling",
+    "checkbox-form-aria-label": "Vælg {{this}}",
     "header": "Medier",
     "upload-new-media": "Upload",
     "loading-messages": {
@@ -250,15 +275,6 @@
     "accept": "Ok",
     "cancel": "Annullér"
   },
-  "slide-preview": {
-    "error-messages": {
-      "loading-template-error": "Der skete en fejl da slidets skabelon skulle hentes:",
-      "loading-content-error": "Der skete en fejl da slidets indhold skulle hentes:"
-    },
-    "loading-messages": {
-      "loading": "Henter template og indhold til slide"
-    }
-  },
   "select-playlists-table": {
     "columns": {
       "published": "Udgivet",
@@ -315,6 +331,12 @@
     "group-description-label": "Gruppens beskrivelse",
     "group-description-placeholder": "Udfyld gruppens beskrivelse"
   },
+  "user-form": {
+    "save-button": "Gem brugeren",
+    "cancel-button": "Annuller",
+    "user-title-label": "Brugerens navn",
+    "user-title-placeholder": "Udfyld brugerens navn"
+  },
   "group-create": {
     "create-new-group-header": "Opret ny gruppe",
     "loading-messages": {
@@ -325,6 +347,18 @@
     },
     "error-messages": {
       "save-group-error": "Der skete en fejl da gruppen skulle gemmes:"
+    }
+  },
+  "user-create": {
+    "create-new-user-header": "Opret ny bruger",
+    "loading-messages": {
+      "saving-user": "Gemmer bruger"
+    },
+    "success-messages": {
+      "saved-user": "Brugeren er gemt"
+    },
+    "error-messages": {
+      "save-user-error": "Der skete en fejl da brugeren skulle gemmes:"
     }
   },
   "group-edit": {
@@ -339,6 +373,20 @@
     "error-messages": {
       "save-group-error": "Der skete en fejl da gruppen skulle gemmes:",
       "load-group-error": "Der skete en fejl da gruppen med følgende id: {{id}} skulle hentes:"
+    }
+  },
+  "user-edit": {
+    "edit-user-header": "Rediger følgende bruger",
+    "loading-messages": {
+      "saving-group": "Gemmer brugeren",
+      "loading-group": "Henter brugeren"
+    },
+    "success-messages": {
+      "saved-group": "Brugeren er gemt"
+    },
+    "error-messages": {
+      "save-group-error": "Der skete en fejl da brugeren skulle gemmes:",
+      "load-group-error": "Der skete en fejl da brugeren med følgende id: {{id}} skulle hentes:"
     }
   },
   "playlists-columns": {
@@ -480,6 +528,7 @@
     "pagination-next": "Næste"
   },
   "search-box": {
+    "search-box-aria-label": "Søg",
     "label": "Søg",
     "placeholder": "Indtast søgning her",
     "delete-search": "Slet søgning"
@@ -504,10 +553,6 @@
   },
   "form-input": {
     "validation-text": "Dette felt skal udfyldes"
-  },
-  "render-form-element": {
-    "image-invalid": "Der skal uploades et billede til denne template",
-    "images-invalid": "Der skal uploades et eller flere billeder til denne template"
   },
   "multi-dropdown": {
     "validation-text": "Dette felt skal udfyldes",
@@ -562,7 +607,7 @@
     "single-select-title": "Vælg et af følgende medier"
   },
   "checkbox-for-list": {
-    "checkbox-form-aria-label": "Vælg dette medie til massehandling"
+    "checkbox-form-aria-label": "Vælg {{this}} til sletning"
   },
   "list": {
     "my-content": "Mit indhold",
@@ -656,28 +701,32 @@
     "dashboard": "Oversigt",
     "content-media": "Medier",
     "content-slides": "Slides",
+    "add-new-slide-aria-label": "Tilføj nyt slide",
+    "add-new-playlist-aria-label": "Tilføj ny spilleliste",
+    "add-new-screen-aria-label": "Tilføj ny skærm",
+    "change-tenant-aria-label": "Her kan du ændre dit område",
     "screens-screens": "Skærme",
+    "users": "Brugere",
     "screens-groups": "Grupper",
     "playlists-campaigns": "Kampagner",
     "playlists-playlists": "Spillelister",
     "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
-    "configuration-users": "Brugere"
+    "configuration-users": "Brugere",
+    "activation-codes": "Aktiveringskoder"
   },
   "topbar": {
     "brand": "OS2Display",
-    "add": "Opret",
+    "add": "Tilføj",
     "add-slide": "Nyt slide",
     "add-screen": "Ny skærm",
     "add-playlist": "Ny spilleliste",
     "faq": "OS2Display",
+    "activate-new-code": "Område",
     "signout": "Log ud",
     "error-messages": {
       "tenant-change-disabled": "Man kan ikke skifte konto når man er i gang med at redigere eller oprette indhold."
     }
-  },
-  "sidebar": {
-    "brand": "OS2Display"
   },
   "schedule": {
     "plan": "Planlægning",
@@ -749,7 +798,7 @@
     "select-some-options": "Vælg..."
   },
   "login": {
-    "missing-tenants": "Denne bruger er ugyldig, da den ikke har tenants tilknyttet",
+    "missing-tenants": "Denne bruger er ugyldig, da den ikke er tilnyttet noget område",
     "please-wait": "Vent venligst",
     "please-authenticate": "Log ind",
     "select-some-options": "Vælg...",
@@ -758,16 +807,31 @@
     "error": "Log ind fejlede:",
     "invalid-credentials": "Log ind blev ikke genkendt",
     "submit": "Log ind",
-    "error-oidc-login": "Log ind med AD fejlede",
-    "error-fetching-oidc-urls": "Opsætning af AD login fejlede",
-    "login-with-oidc": "Log ind med AD",
+    "error-oidc-login": "Log ind fejlede",
+    "error-fetching-oidc-urls": "Opsætning af login fejlede",
+    "login-with-mitid-aria-label": "Log ind med MitID login",
+    "oidc-mit-id-header": "Adgangsservice",
+    "os2-display-user-header": "OS2display-bruger",
+    "login-header": "Log ind",
+    "login-with-oidc-aria-label": "Log ind som medarbejder",
     "login-with-username-password": "Log ind med email og kodeord",
-    "select-tenant-label": "Vælg tilhørselsforhold",
-    "tenant-help-text": "Tilhørselsforhold kan blive ændret igen når du er logget ind"
+    "select-tenant-label": "Vælg lokation",
+    "tenant-help-text": "Du er tilknyttet flere områder, og området kan blive ændret igen når du er logget ind",
+    "logged-in-select-tenant": "Vælg område.",
+    "activation-code": "Indtast aktiveringskode for at blive koblet på et område.",
+    "error-activating-code": "Aktivering fejlede.",
+    "error-refreshing-code": "Aktivering fejlede. Prøv igen."
+  },
+  "oidc-login": {
+    "login-with-internal": "Medarbejder",
+    "login-with-external": "Ekstern"
   },
   "file-dropzone": {
     "drag-and-drop-text": "Vælg filer ved at trykke på eller trække filer ind i firkanten",
     "larger-than-allowed-size": "er større end den tilladte størrelse"
+  },
+  "file": {
+    "image-preview": "Uploadet billede"
   },
   "file-form-element": {
     "remove": "Fjern fil",
@@ -842,9 +906,6 @@
     "you-dont-have-access": "Du har ikke adgang til denne side",
     "go-back": "Gå tilbage"
   },
-  "auth-handler": {
-    "please-wait": "Vent venligst..."
-  },
   "multiselect-from-endpoint": {
     "error-fetching": "Der opstod en fejl da konfigurationsmulighederne skulle hentes. Datakilden er måske forkert konfigureret."
   },
@@ -856,5 +917,56 @@
   },
   "playlist-gantt-chart": {
     "show-gantt": "Vis en visualisering af planlægningen"
+  },
+  "tenant-selector": {
+    "tenant": "Område"
+  },
+  "activation-code-list": {
+    "header": "Aktiveringskoder",
+    "create-activation-codes": "Opret ny",
+    "columns": {
+      "code": "Kode",
+      "code-expire": "Udløber",
+      "created-at": "Oprettelsesdato",
+      "created-by": "Oprettet af",
+      "display-name": "Brugerens visningsnavn"
+    },
+    "refresh-button": "Forny kode",
+    "success-messages": {
+      "activation-code-delete": "Aktiveringskode slettet"
+    },
+    "loading-messages": {
+      "loading-activation-code": "Henter aktiveringskoder",
+      "deleting-activation-code": "Sletter aktiveringskode"
+    },
+    "error-messages": {
+      "activation-code-load-error": "Load af aktiveringskode fejlede",
+      "activation-code-delete-error": "Sletning af aktiveringskode fejlede"
+    }
+  },
+  "activation-code-form": {
+    "display-name-label": "Brugerens navn i systemet",
+    "display-name-placeholder": "f.eks. Test Testesen",
+    "cancel-button": "Annullér",
+    "save-button": "Gem aktiveringskode",
+    "role-external-user-admin": "Ekstern brugeradministrator",
+    "role-external-user": "Ekstern bruger",
+    "role-label": "Brugerens rolle"
+  },
+  "activation-code-create": {
+    "header": "Tilkobling til nyt område",
+    "activation-code-label": "Aktiveringskode",
+    "activation-code-placeholder": "Aktiveringskode",
+    "save-button": "Aktivér",
+    "create-new-activation-code-header": "Opret aktiveringskode",
+    "error-messages": {
+      "save-activation-code-error": "Oprettelse af aktiveringskode fejlede"
+    },
+    "success-messages": {
+      "saved-activation-code": "Aktiveringskode oprettet"
+    },
+    "loading-messages": {
+      "saving-activation-code": "Opretter aktiveringskode"
+    }
   }
 }

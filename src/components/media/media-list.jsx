@@ -175,7 +175,7 @@ function MediaList({ fromModal, multiple }) {
 
   return (
     <>
-      <Row className="align-items-center justify-content-between mt-2">
+      <Row className="align-items-center justify-content-between my-3">
         <Col>
           <h1 id="media-list-title">{t("header")}</h1>
         </Col>
@@ -213,6 +213,7 @@ function MediaList({ fromModal, multiple }) {
           </Col>
           <Col>
             <FormCheckbox
+              name="form-checkbox-media-list-sort-desc"
               value={sortDesc}
               label={t("checkbox-label-sort-desc")}
               onChange={changeSort}

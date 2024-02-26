@@ -1,18 +1,21 @@
 import { React, useEffect, useState, useContext } from "react";
-import { Alert, Button, Card, Form, Row } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
-import LoadingComponent from "../util/loading-component/loading-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
 import { api } from "../../redux/api/api.generated";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";
+import LoginSidebar from "../navigation/login-sidebar/login-sidebar";
+import "./login.scss";
+import OIDCLogin from "./oidc-login";
+import LoadingComponent from "../util/loading-component/loading-component";
 
 /**
  * Login component
@@ -28,47 +31,58 @@ function Login() {
   // Context
   const context = useContext(UserContext);
 
-  // Local stage
+  // Local state
+  const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
+  const [activationCode, setActivationCode] = useState("");
   const [email, setEmail] = useState("");
-  const [oidcAuthUrls, setOidcAuthUrls] = useState("");
-  const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
-  const [ready, setReady] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loginMethods, setLoginMethods] = useState([]);
 
   /**
    * Login, both called from oidc login and manuel login.
    *
    * @param {object} data - Login data
    */
-  function login(data) {
-    // Set token in local storage, to persist login on refresh
-    localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
-    context.userName.set(data.user?.fullname);
-    context.email.set(data.user?.email);
-    localStorage.setItem(localStorageKeys.USER_NAME, data.user?.fullname);
-    localStorage.setItem(localStorageKeys.EMAIL, data.user?.email);
-    // If there are more than one tenant, the user should pick a tenant
-    if (data.tenants?.length > 1) {
-      // Save tenants
-      localStorage.setItem(
-        localStorageKeys.TENANTS,
-        JSON.stringify(data.tenants)
-      );
-      context.tenants.set(data.tenants);
-    } else if (data.tenants?.length > 0) {
-      // authenticated, and use the only received tenant.
-      context.authenticated.set(true);
-      localStorage.setItem(
-        localStorageKeys.SELECTED_TENANT,
-        JSON.stringify(data.tenants[0])
-      );
-      context.selectedTenant.set(data.tenants[0]);
-    } else {
+  const login = (data) => {
+    const { user } = data;
+    const { tenants } = data;
+
+    if (!tenants) {
       setError(true);
       displayError(t("missing-tenants"));
     }
-  }
+
+    // Set data in local storage, to persist login on refresh
+    localStorage.setItem(localStorageKeys.API_TOKEN, data.token);
+    localStorage.setItem(
+      localStorageKeys.API_REFRESH_TOKEN,
+      data.refresh_token
+    );
+    localStorage.setItem(localStorageKeys.USER_NAME, user?.fullname);
+    localStorage.setItem(localStorageKeys.EMAIL, user?.email);
+    localStorage.setItem(localStorageKeys.TENANTS, JSON.stringify(tenants));
+
+    context.userName.set(user?.fullname);
+    context.email.set(user?.email);
+    context.tenants.set(tenants);
+    context.userType.set(user?.type);
+
+    // If there are more than one tenant, the user should pick a tenant
+    if (tenants.length === 1) {
+      // authenticated, and use the only tenant.
+      context.authenticated.set(true);
+      localStorage.setItem(
+        localStorageKeys.SELECTED_TENANT,
+        JSON.stringify(tenants[0])
+      );
+      context.selectedTenant.set(tenants[0]);
+    }
+
+    setLoggedIn(true);
+  };
 
   /**
    * Select tenant function
@@ -96,6 +110,58 @@ function Login() {
     );
   };
 
+  const refreshTokenAndLogin = () => {
+    ConfigLoader.loadConfig().then((config) => {
+      fetch(`${config.api}v1/authentication/token/refresh`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          refresh_token: localStorage.getItem(
+            localStorageKeys.API_REFRESH_TOKEN
+          ),
+        }),
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          if (data.code !== 200) {
+            setErrorMessage(data.message);
+          }
+
+          if (data?.token) {
+            login(data);
+          }
+        })
+        .catch((err) => {
+          setError(true);
+          displayError(t("error-refreshing-code"), err);
+        });
+    });
+  };
+
+  const onActivationCodeSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    dispatch(
+      api.endpoints.postV1UserActivationCodesActivate.initiate({
+        userActivationCodeUserActivateInput: JSON.stringify({
+          activationCode,
+        }),
+      })
+    )
+      .then(() => {
+        refreshTokenAndLogin();
+      })
+      .catch((err) => {
+        setError(true);
+        displayError(t("error-activating-code"), err);
+      });
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -103,7 +169,7 @@ function Login() {
     dispatch(
       api.endpoints.loginCheckPost.initiate({
         body: JSON.stringify({
-          email,
+          providerId: email,
           password,
         }),
       })
@@ -129,131 +195,152 @@ function Login() {
   };
 
   useEffect(() => {
+    ConfigLoader.loadConfig().then((config) => {
+      // Defaults to all enabled.
+      setLoginMethods(
+        config.loginMethods ?? [
+          {
+            type: "oidc",
+            provider: "internal",
+            enabled: true,
+            label: null,
+            icon: null,
+          },
+          {
+            type: "oidc",
+            provider: "internal",
+            enabled: true,
+            label: null,
+            icon: null,
+          },
+          {
+            type: "username-password",
+            enabled: true,
+            label: null,
+            icon: null,
+          },
+        ]
+      );
+    });
+  }, []);
+
+  useEffect(() => {
     let isMounted = true;
     let code = null;
     let state = null;
 
     if (search) {
       const query = queryString.parse(search);
+
       code = query.code;
       state = query.state;
-    }
 
-    ConfigLoader.loadConfig().then((config) => {
       if (state && code) {
-        fetch(
-          `${config.api}v1/authentication/oidc/token?state=${state}&code=${code}`,
-          {
+        ConfigLoader.loadConfig().then((config) => {
+          const searchParams = new URLSearchParams({
+            state,
+            code,
+          });
+
+          fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
             credentials: "include",
-          }
-        )
-          .then((resp) => resp.json())
-          .then((data) => {
-            if (isMounted) {
-              if (data?.token) {
-                login(data);
+          })
+            .then((resp) => resp.json())
+            .then((data) => {
+              if (data.code !== 200) {
+                setErrorMessage(data.message);
               }
-            }
-          })
-          .catch(() => {
-            if (isMounted) {
-              setOidcAuthLoadingError(t("error-oidc-login"));
-            }
-          })
-          .finally(() => {
-            if (isMounted) {
-              setReady(true);
-            }
-          });
-      } else {
-        fetch(`${config.api}v1/authentication/oidc/urls?providerKey=oidc`, {
-          mode: "cors",
-          credentials: "include",
-        })
-          .then((resp) => {
-            resp.json().then((data) => {
+
               if (isMounted) {
-                setOidcAuthUrls(data);
+                if (data?.token) {
+                  login(data);
+                }
               }
-            });
-          })
-          .catch(() => {
-            if (isMounted) {
-              setOidcAuthLoadingError(t("error-fetching-oidc-urls"));
-            }
-          })
-          .finally(() => {
-            if (isMounted) {
+            })
+            .finally(() => {
               setReady(true);
-            }
-          });
+            });
+        });
+      } else {
+        setReady(true);
       }
-    });
+    } else {
+      setReady(true);
+    }
 
     return () => {
       isMounted = false;
     };
   }, [search]);
 
+  const oidcLogins = loginMethods.filter(
+    (loginMethod) => loginMethod.enabled && loginMethod.type === "oidc"
+  );
+  const usernamePasswordLogins = loginMethods.filter(
+    (loginMethod) =>
+      loginMethod.enabled && loginMethod.type === "username-password"
+  );
+
   return (
     <>
       {ready && (
-        <Card className="m-5 bg-light">
-          <Form onSubmit={onSubmit} className="m-3">
-            <Row>
-              <Col md>
-                <h3 className="mb-3">{t("login-with-oidc")}</h3>
-                {oidcAuthUrls && (
-                  <Button
-                    className="btn btn-primary"
-                    type="button"
-                    href={oidcAuthUrls.authorizationUrl}
-                  >
-                    {t("login-with-oidc")}
-                  </Button>
+        <div className="login-container container">
+          <Row className="login-box-shadow">
+            <Col
+              md="4"
+              className="bg-dark col justify-content-between d-flex flex-column"
+            >
+              <LoginSidebar />
+            </Col>
+
+            <Col className="bg-white">
+              <div className="mx-3 px-3 my-3 mx-md-5 px-md-5 my-md-5">
+                {errorMessage && errorMessage !== "" && (
+                  <div className="alert-danger p-2 mt-3 mb-3">
+                    {errorMessage}
+                  </div>
                 )}
-                {oidcAuthLoadingError && (
-                  <Alert variant="danger">{oidcAuthLoadingError}</Alert>
-                )}
-              </Col>
-              <Col md>
-                <>
-                  {!context.tenants.get && (
+
+                {loggedIn &&
+                  !context.selectedTenant.get &&
+                  (context.tenants.get.length ?? 0) === 0 &&
+                  context.userType.get === "OIDC_EXTERNAL" && (
                     <>
-                      <h3>{t("login-with-username-password")}</h3>
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setEmail(ev.target.value)}
-                        value={email}
-                        name="email"
-                        label={t("email")}
-                        required
-                      />
-                      <FormInput
-                        className={
-                          error ? "form-control is-invalid" : "form-control"
-                        }
-                        onChange={(ev) => setPassword(ev.target.value)}
-                        value={password}
-                        name="password"
-                        label={t("password")}
-                        type="password"
-                        required
-                      />
-                      <Button type="submit" className="mt-3" id="login">
-                        {t("submit")}
-                      </Button>
+                      <Form onSubmit={onActivationCodeSubmit}>
+                        <FormInput
+                          className={
+                            error ? "form-control is-invalid" : "form-control"
+                          }
+                          onChange={(ev) => setActivationCode(ev.target.value)}
+                          value={activationCode}
+                          name="activationCode"
+                          label={t("activation-code")}
+                          required
+                        />
+
+                        <Button
+                          type="submit"
+                          className="mt-3"
+                          id="activation-code-submit"
+                        >
+                          {t("submit")}
+                        </Button>
+                      </Form>
                     </>
                   )}
-                  {!context.selectedTenant.get &&
-                    context.tenants.get?.length > 1 && (
+
+                {loggedIn &&
+                  !context.selectedTenant.get &&
+                  (context.tenants.get.length ?? 0) > 1 && (
+                    <>
+                      <h1>{t("logged-in-select-tenant")}</h1>
+
                       <div id="tenant-picker-section">
                         <Form.Label htmlFor="tenant">
                           {t("select-tenant-label")}
                         </Form.Label>
+
                         <MultiSelect
                           overrideStrings={{
                             selectSomeItems: t("select-some-options"),
@@ -274,13 +361,79 @@ function Login() {
                         />
                         <small>{t("tenant-help-text")}</small>
                       </div>
+                    </>
+                  )}
+
+                {!loggedIn && (
+                  <>
+                    <h1>{t("login-header")}</h1>
+
+                    {oidcLogins.length > 0 && (
+                      <>
+                        <h2 className="h4 mt-5 mb-3 fw-light">
+                          {t("oidc-mit-id-header")}
+                        </h2>
+
+                        <div className="d-flex">
+                          {oidcLogins.map((loginMethod) => (
+                            <OIDCLogin
+                              config={loginMethod}
+                              key={loginMethod.provider}
+                            />
+                          ))}
+                        </div>
+                      </>
                     )}
-                </>
-              </Col>
-            </Row>
-          </Form>
-        </Card>
+
+                    {usernamePasswordLogins.length > 0 &&
+                      usernamePasswordLogins.map((loginMethod) => (
+                        <div key={loginMethod.provider}>
+                          <h2 className="h4 mt-5 mb-3 fw-light">
+                            {loginMethod.label ?? t("os2-display-user-header")}
+                          </h2>
+
+                          <Form onSubmit={onSubmit}>
+                            <FormInput
+                              className={
+                                error
+                                  ? "form-control is-invalid"
+                                  : "form-control"
+                              }
+                              onChange={(ev) => setEmail(ev.target.value)}
+                              value={email}
+                              name="email"
+                              label={t("email")}
+                              required
+                            />
+
+                            <FormInput
+                              className={
+                                error
+                                  ? "form-control is-invalid"
+                                  : "form-control"
+                              }
+                              onChange={(ev) => setPassword(ev.target.value)}
+                              value={password}
+                              name="password"
+                              label={t("password")}
+                              type="password"
+                              required
+                            />
+
+                            <Button type="submit" className="mt-3" id="login">
+                              {t("submit")}
+                            </Button>
+                          </Form>
+                        </div>
+                      ))}
+                  </>
+                )}
+              </div>
+            </Col>
+          </Row>
+        </div>
       )}
+
       {!ready && (
         <LoadingComponent isLoading loadingMessage={t("please-wait")} />
       )}

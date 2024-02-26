@@ -1,35 +1,21 @@
 @import "~bootstrap/scss/bootstrap/";
 
 .media-item {
-  &-button {
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    display: flex;
-
-    img {
+  img {
+    height: 150px;
+    @include media-breakpoint-up(md) {
+      height: 200px;
+    }
+    @include media-breakpoint-up(lg) {
       height: 150px;
-      @include media-breakpoint-up(md) {
-        height: 200px;
-      }
-      @include media-breakpoint-up(lg) {
-        height: 150px;
-      }
-      @include media-breakpoint-up(xxl) {
-        height: 200px;
-      }
-      width: 100%;
-      object-fit: cover;
-      vertical-align: baseline;
-      transition: opacity 0.1s ease-out;
     }
-
-    &:hover {
-      img {
-        opacity: 0.6;
-        transition: opacity 0.2s ease-in;
-      }
+    @include media-breakpoint-up(xxl) {
+      height: 200px;
     }
+    width: 100%;
+    object-fit: cover;
+    vertical-align: baseline;
+    transition: opacity 0.1s ease-out;
   }
 
   &.selected {
@@ -44,7 +30,14 @@
     position: absolute;
     top: $spacer * 0.5;
     right: $spacer * 0.5;
-    pointer-events: none;
+
+    input {
+      &:focus {
+        // override bootstrap to make focus more visible on images.
+        border: 3px solid #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.65);
+      }
+    }
   }
 }
 

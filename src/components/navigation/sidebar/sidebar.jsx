@@ -1,10 +1,11 @@
 import { React, useState } from "react";
 import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import Brand from "react-bootstrap/NavbarBrand";
 import Col from "react-bootstrap/Col";
-import { useTranslation } from "react-i18next";
 import NavItems from "../nav-items/nav-items";
 import "./sidebar.scss";
+import Logo from "../logo";
+import TenantSelector from "../nav-items/tenant-selector";
 
 /**
  * The sidebar component.
@@ -12,7 +13,6 @@ import "./sidebar.scss";
  * @returns {object} The SideBar
  */
 function SideBar() {
-  const [t] = useTranslation("common");
   const [active, setActive] = useState();
 
   return (
@@ -24,12 +24,17 @@ function SideBar() {
         activeKey={active}
         onSelect={(selectedKey) => setActive(selectedKey)}
       >
-        <Navbar.Brand
-          href="/"
-          className="text-white mb-2 mt-2 ms-3 d-none d-md-block"
-        >
-          {t("sidebar.brand")}
-        </Navbar.Brand>
+        <div className="bg-black pb-3">
+          <Brand
+            href="/admin"
+            className="text-white mb-2 mt-2 d-none d-md-block"
+          >
+            <Logo />
+          </Brand>
+          <div className="ms-3">
+            <TenantSelector />
+          </div>
+        </div>
         <NavItems />
       </Nav>
     </Col>

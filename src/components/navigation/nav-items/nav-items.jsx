@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDesktop,
+  faUsers,
   faStream,
   faPhotoVideo,
   faPlusCircle,
@@ -22,11 +23,13 @@ import "./nav-items.scss";
  * @returns {object} Nav items
  */
 function NavItems() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "nav-items" });
   const { setSelected } = useModal();
-  const context = useContext(UserContext);
   const { page, createdBy, isPublished } = useContext(ListContext);
   const { pathname } = useLocation();
+  const {
+    accessConfig: { get: accessConfig },
+  } = useContext(UserContext);
 
   // Reset list context and selected on page change.
   useEffect(() => {
@@ -44,50 +47,52 @@ function NavItems() {
 
   return (
     <>
-      {context.accessConfig?.get && (
+      <Nav.Item>
+        <NavLink
+          id="nav-items_content_slides"
+          className={({ isActive }) => `nav-link ${isActive ? "disabled" : ""}`}
+          to="/slide/list"
+        >
+          <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
+          {t("content-slides")}
+        </NavLink>
+        <Link
+          className="nav-add-new"
+          aria-label={t("add-new-slide-aria-label")}
+          to="/slide/create"
+        >
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+        </Link>
+      </Nav.Item>
+      <Nav.Item className="nav-second-level">
+        <NavLink
+          id="nav-items_content_media"
+          className={({ isActive }) => `nav-link ${isActive ? "disabled" : ""}`}
+          to="/media/list"
+        >
+          {t("content-media")}
+        </NavLink>
+      </Nav.Item>
+      <Nav.Item>
+        <NavLink
+          id="nav-items_playlists_playlists"
+          className={({ isActive }) => `nav-link ${isActive ? "disabled" : ""}`}
+          to="/playlist/list"
+        >
+          <FontAwesomeIcon className="me-2" icon={faStream} />
+          {t("playlists-playlists")}
+        </NavLink>
+        <Link
+          aria-label={t("add-new-playlist-aria-label")}
+          className="nav-add-new"
+          to="/playlist/create"
+        >
+          <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
+        </Link>
+      </Nav.Item>
+      {accessConfig?.campaign?.roles && (
         <>
-          <Nav.Item>
-            <NavLink
-              id="nav-items_content_slides"
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "disabled" : ""}`
-              }
-              to="/slide/list"
-            >
-              <FontAwesomeIcon className="me-2" icon={faPhotoVideo} />
-              {t("nav-items.content-slides")}
-            </NavLink>
-            <Link className="nav-add-new" to="/slide/create">
-              <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-            </Link>
-          </Nav.Item>
-          <Nav.Item className="nav-second-level">
-            <NavLink
-              id="nav-items_content_media"
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "disabled" : ""}`
-              }
-              to="/media/list"
-            >
-              {t("nav-items.content-media")}
-            </NavLink>
-          </Nav.Item>
-          <Nav.Item>
-            <NavLink
-              id="nav-items_playlists_playlists"
-              className={({ isActive }) =>
-                `nav-link ${isActive ? "disabled" : ""}`
-              }
-              to="/playlist/list"
-            >
-              <FontAwesomeIcon className="me-2" icon={faStream} />
-              {t("nav-items.playlists-playlists")}
-            </NavLink>
-            <Link className="nav-add-new" to="/playlist/create">
-              <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
-            </Link>
-          </Nav.Item>
-          <RestrictedNavRoute roles={context.accessConfig.get.campaign.roles}>
+          <RestrictedNavRoute roles={accessConfig.campaign.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_content_media"
@@ -96,11 +101,15 @@ function NavItems() {
                 }
                 to="/campaign/list"
               >
-                {t("nav-items.playlists-campaigns")}
+                {t("playlists-campaigns")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={context.accessConfig.get.shared.roles}>
+        </>
+      )}
+      {accessConfig?.shared?.roles && (
+        <>
+          <RestrictedNavRoute roles={accessConfig.shared?.roles ?? []}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_content_shared_playlists"
@@ -109,11 +118,15 @@ function NavItems() {
                 }
                 to="/shared/list"
               >
-                {t("nav-items.shared-playlists")}
+                {t("shared-playlists")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={context.accessConfig.get.campaign.roles}>
+        </>
+      )}
+      {accessConfig?.campaign?.roles && (
+        <>
+          <RestrictedNavRoute roles={accessConfig.campaign.roles}>
             <Nav.Item>
               <NavLink
                 id="nav-items_screens_screens"
@@ -123,14 +136,22 @@ function NavItems() {
                 to="/screen/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faDesktop} />
-                {t("nav-items.screens-screens")}
+                {t("screens-screens")}
               </NavLink>
-              <Link className="nav-add-new" to="/screen/create">
+              <Link
+                aria-label={t("add-new-screen-aria-label")}
+                className="nav-add-new"
+                to="/screen/create"
+              >
                 <FontAwesomeIcon className="ms-3" icon={faPlusCircle} />
               </Link>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={context.accessConfig.get.groups.roles}>
+        </>
+      )}
+      {accessConfig?.groups?.roles && (
+        <>
+          <RestrictedNavRoute roles={accessConfig.groups.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_screens_groups"
@@ -139,11 +160,46 @@ function NavItems() {
                 }
                 to="/group/list"
               >
-                {t("nav-items.screens-groups")}
+                {t("screens-groups")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={context.accessConfig.get.settings.roles}>
+        </>
+      )}
+      {accessConfig?.users?.roles && (
+        <>
+          <RestrictedNavRoute roles={accessConfig.users.roles}>
+            <Nav.Item>
+              <NavLink
+                id="nav-items_users"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
+                to="/users/list"
+              >
+                <FontAwesomeIcon className="me-2" icon={faUsers} />
+                {t("users")}
+              </NavLink>
+            </Nav.Item>
+          </RestrictedNavRoute>
+          <RestrictedNavRoute roles={accessConfig.users.roles}>
+            <Nav.Item className="nav-second-level">
+              <NavLink
+                id="nav-items_activation_codes"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
+                to="/activation/list"
+              >
+                {t("activation-codes")}
+              </NavLink>
+            </Nav.Item>
+          </RestrictedNavRoute>
+        </>
+      )}
+      {accessConfig?.settings?.roles && (
+        <>
+          <RestrictedNavRoute roles={accessConfig.settings.roles}>
             <Nav.Item>
               <NavLink
                 id="nav-items_settings"
@@ -153,11 +209,11 @@ function NavItems() {
                 to="/themes/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faCog} />
-                {t("nav-items.configuration")}
+                {t("configuration")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
-          <RestrictedNavRoute roles={context.accessConfig.get.settings.roles}>
+          <RestrictedNavRoute roles={accessConfig.settings.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
                 id="nav-items_configuration_themes"
@@ -166,7 +222,7 @@ function NavItems() {
                 }
                 to="/themes/list"
               >
-                {t("nav-items.configuration-themes")}
+                {t("configuration-themes")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>
