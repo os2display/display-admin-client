@@ -52,6 +52,11 @@ function OIDCLogin({ config }) {
     }
   }
 
+  /**
+   * Get oidc urls when chosen oidc provider is clicked. After redirecting to
+   * the url, a session is set in the API. Therefore, only one
+   * "v1/authentication/oidc/urls" session can be active at a time.
+   */
   const onClick = () => {
     ConfigLoader.loadConfig().then((siteConfig) => {
       fetch(
