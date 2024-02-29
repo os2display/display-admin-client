@@ -25,30 +25,6 @@ function OIDCLogin({ config }) {
   const [oidcAuthUrl, setOidcAuthUrl] = useState("");
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
 
-  useEffect(() => {
-    if (!provider) {
-      return;
-    }
-
-    ConfigLoader.loadConfig().then((siteConfig) => {
-      fetch(
-        `${siteConfig.api}v1/authentication/oidc/urls?providerKey=${provider}`,
-        {
-          mode: "cors",
-          credentials: "include",
-        }
-      )
-        .then((resp) => {
-          resp.json().then((data) => {
-            setOidcAuthUrl(data.authorizationUrl);
-          });
-        })
-        .catch(() => {
-          setOidcAuthLoadingError(t("error-fetching-oidc-urls"));
-        });
-    });
-  }, [provider]);
-
   let labelText = label;
 
   if (labelText === null) {
@@ -76,23 +52,43 @@ function OIDCLogin({ config }) {
     }
   }
 
+  /**
+   * Get oidc urls when chosen oidc provider is clicked. After redirecting to
+   * the url, a session is set in the API. Therefore, only one
+   * "v1/authentication/oidc/urls" session can be active at a time.
+   */
+  const onClick = () => {
+    ConfigLoader.loadConfig().then((siteConfig) => {
+      fetch(
+        `${siteConfig.api}v1/authentication/oidc/urls?providerKey=${provider}`,
+        {
+          mode: "cors",
+          credentials: "include",
+        }
+      )
+        .then((resp) => {
+          resp.json().then((data) => {
+            window.location.href = data.authorizationUrl;
+          });
+        })
+        .catch(() => {
+          setOidcAuthLoadingError(t("error-fetching-oidc-urls"));
+        });
+    });
+  };
+
   return (
     <>
-      {!oidcAuthUrl && (
-        <Spinner animation="grow" className="margin-right-button" />
-      )}
-      {oidcAuthUrl !== "" && (
-        <a
-          href={oidcAuthUrl}
-          className="margin-right-button btn btn-primary btn-lg d-flex justify-content-center align-items-center"
-          style={{ minWidth: "160px" }}
-          aria-label={t("login-with-oidc-aria-label")}
-          aria-describedby="ad-explanation"
-        >
-          {iconRender}
-          {labelText}
-        </a>
-      )}
+      <div
+        onClick={onClick}
+        className="margin-right-button btn btn-primary btn-lg d-flex justify-content-center align-items-center"
+        style={{ minWidth: "160px" }}
+        aria-label={t("login-with-oidc-aria-label")}
+        aria-describedby="ad-explanation"
+      >
+        {iconRender}
+        {labelText}
+      </div>
       {oidcAuthLoadingError !== "" && (
         <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
       )}

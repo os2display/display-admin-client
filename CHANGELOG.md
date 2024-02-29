@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#228](https://github.com/os2display/display-admin-client/pull/228)
+  - Changed login page to only get oidc urls when a login button has been clicked.
 - [#227](https://github.com/os2display/display-admin-client/pull/227)
   - Changed how theme is loaded following change to API
 - Added fetch all to avoid removing slides when saving playlist and all slides have not been fetched.
