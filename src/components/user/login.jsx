@@ -208,7 +208,7 @@ function Login() {
           },
           {
             type: "oidc",
-            provider: "internal",
+            provider: "external",
             enabled: true,
             label: null,
             icon: null,
