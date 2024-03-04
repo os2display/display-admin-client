@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#231](https://github.com/os2display/display-admin-client/pull/231)
+  - Fixed post body of activation POST request.
 - [#230](https://github.com/os2display/display-admin-client/pull/230)
   - Fixed roles in access-config.json itk-dev infrastructure template.
 - [#229](https://github.com/os2display/display-admin-client/pull/229)
