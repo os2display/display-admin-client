@@ -14,9 +14,9 @@ import FormInput from "../util/forms/form-input";
 import ContentFooter from "../util/content-footer/content-footer";
 
 /**
- * The user create component.
+ * The activation code activate page.
  *
- * @returns {object} The user create page.
+ * @returns {object} The activation code activate page.
  */
 function ActivationCodeActivate() {
   const { t } = useTranslation("common", {

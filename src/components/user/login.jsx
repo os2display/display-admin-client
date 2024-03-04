@@ -148,7 +148,7 @@ function Login() {
 
     dispatch(
       api.endpoints.postV1UserActivationCodesActivate.initiate({
-        userActivationCodeUserActivateInput: JSON.stringify({
+        userActivationCodeActivationCode: JSON.stringify({
           activationCode,
         }),
       })
