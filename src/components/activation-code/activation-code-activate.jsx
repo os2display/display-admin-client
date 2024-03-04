@@ -62,7 +62,7 @@ function ActivationCodeActivate() {
   /** Handles submit. */
   const handleSubmit = () => {
     PostV1UserActivationCodeActivate({
-      userActivationCodeUserActivateInput: JSON.stringify(formStateObject),
+      userActivationCodeActivationCode: JSON.stringify(formStateObject),
     });
   };
 
