@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#229](https://github.com/os2display/display-admin-client/pull/229)
+  - Fixed post body of activation POST request.
 - [#228](https://github.com/os2display/display-admin-client/pull/228)
   - Changed login page to only get oidc urls when a login button has been clicked.
 - [#227](https://github.com/os2display/display-admin-client/pull/227)
