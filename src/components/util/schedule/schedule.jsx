@@ -119,16 +119,9 @@ function Schedule({ schedules, onChange }) {
    * @param {object} target - Input target.
    */
   const setDateValue = (scheduleId, target) => {
-    const date = new Date(target.value);
-
+    const date = target.valueAsDate;
     const scheduleDate = new Date(
-      Date.UTC(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes()
-      )
+      date.getTime() + 60 * 1000 * date.getTimezoneOffset()
     );
 
     changeSchedule(scheduleId, target.id, scheduleDate);
@@ -141,7 +134,7 @@ function Schedule({ schedules, onChange }) {
    * @returns {string} - The date formatted for datetime-local.
    */
   const getDateValue = (date) => {
-    return date ? dayjs(date).utc().format("YYYY-MM-DDTHH:mm") : "";
+    return date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : "";
   };
 
   /**

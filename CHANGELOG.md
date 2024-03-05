@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#232](https://github.com/os2display/display-admin-client/pull/232)
+  - Fixed time zone issue in playlist schedules.
 - [#231](https://github.com/os2display/display-admin-client/pull/231)
   - Fixed post body of activation POST request.
 - [#230](https://github.com/os2display/display-admin-client/pull/230)
@@ -71,8 +73,8 @@ All notable changes to this project will be documented in this file.
 - [#205](https://github.com/os2display/display-admin-client/pull/205)
   - Setup separate image builds for itkdev and os2display
 - [#204](https://github.com/os2display/display-admin-client/pull/204)
-  - Change docker image name from `os2display/os2display-admin-client` 
-  to `os2display/display-admin-client` to match image name and 
+  - Change docker image name from `os2display/os2display-admin-client`
+  to `os2display/display-admin-client` to match image name and
   repository name
 - [#200](https://github.com/os2display/display-admin-client/pull/200)
   - Update docker build to publish to "os2display" org on docker hub.
