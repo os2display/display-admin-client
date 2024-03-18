@@ -56,15 +56,7 @@ const createNewSchedule = () => {
     id: ulid(nowTimestamp),
     duration: 60 * 60 * 24, // Default one day.
     freq: RRule.WEEKLY,
-    dtstart: new Date(
-      Date.UTC(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        now.getHours(),
-        now.getMinutes()
-      )
-    ),
+    dtstart: new Date(),
     until: null,
     wkst: RRule.MO,
     byhour: null,
