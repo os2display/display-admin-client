@@ -92,8 +92,10 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
               return (
                 <div key={data["@id"]} className="col mb-3">
                   <div
-                    className={`card bg-light h-100 media-item +
-                  ${selected ? " selected" : ""}`}
+                    className={`card bg-light h-100 media-item ${
+                      selected ? " selected" : ""
+                    }`}
+                    onClick={() => onItemClick(data)}
                   >
                     <FilePreview fileEntry={data} />
                     {multiple && (
@@ -101,7 +103,6 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
                         className="d-flex justify-content-end"
                         type="checkbox"
                         checked={selected}
-                        onClick={() => onItemClick(data)}
                         aria-label={t("checkbox-form-aria-label", {
                           this: data.title,
                         })}
