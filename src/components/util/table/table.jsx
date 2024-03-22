@@ -15,7 +15,7 @@ import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
  * @returns {object} The table.
  */
 function Table({ columns, data, label, callback, totalItems }) {
-  const showButton = totalItems && totalItems > data.length;
+  const showButton = Number.isInteger(totalItems) && totalItems > data.length;
 
   return (
     <div className="table-responsive">
