@@ -4,9 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- [#233](https://github.com/os2display/display-admin-client/pull/233)
+- [#234](https://github.com/os2display/display-admin-client/pull/234)
   - Cleaned up code flow in playlist saving.
   - Changed to chaining relations puts.
+- [#233](https://github.com/os2display/display-admin-client/pull/233)
+  - Fixed issue when clicking media archive element when media archive is not in multiple mode.
 - [#232](https://github.com/os2display/display-admin-client/pull/232)
   - Fixed time zone issue in playlist schedules.
 - [#231](https://github.com/os2display/display-admin-client/pull/231)
