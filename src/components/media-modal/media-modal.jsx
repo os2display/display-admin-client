@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import ModalDialog from "../util/modal/modal-dialog";
 import MediaList from "../media/media-list";
 import useModal from "../../context/modal-context/modal-context-hook";
+
 /**
  * Media modal component.
  *
