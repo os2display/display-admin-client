@@ -107,101 +107,90 @@ function PlaylistCampaignManager({
     }
   }, [sharedParams]);
 
-  /**
-   * @param {Array} list - The list to save.
-   * @returns {boolean} - If a list is ready to be saved.
-   */
-  function readyToSave(list) {
-    return list && list.length > 0;
-  }
-
   const bindScreens = () => {
     return new Promise((resolve, reject) => {
-      if (readyToSave(screensToAdd)) {
-        setLoadingMessage(t(`${location}.loading-messages.saving-screens`));
+      setLoadingMessage(t(`${location}.loading-messages.saving-screens`));
 
-        dispatch(
-          api.endpoints.putV1ScreensByIdCampaigns.initiate({
-            id: id || idFromUrl(data["@id"]),
-            body: JSON.stringify(screensToAdd),
-          })
-        )
-          .then((response) => {
-            if (response.error) {
-              displayError(t(`${location}.error-messages.save-screens-error`), response.error);
-              reject(response.error);
-            } else {
-              displaySuccess(t(`${location}.success-messages.saved-screens`));
-              resolve();
-            }
-          })
-          .catch((e) => {
-            displayError(t(`${location}.error-messages.save-screens-error`), e);
-            reject(e);
-          });
-      } else {
-        resolve([]);
-      }
+      dispatch(
+        api.endpoints.putV1ScreensByIdCampaigns.initiate({
+          id: id || idFromUrl(data["@id"]),
+          body: JSON.stringify(screensToAdd),
+        })
+      )
+        .then((response) => {
+          if (response.error) {
+            displayError(
+              t(`${location}.error-messages.save-screens-error`),
+              response.error
+            );
+            reject(response.error);
+          } else {
+            displaySuccess(t(`${location}.success-messages.saved-screens`));
+            resolve();
+          }
+        })
+        .catch((e) => {
+          displayError(t(`${location}.error-messages.save-screens-error`), e);
+          reject(e);
+        });
     });
   };
 
   const bindScreenGroups = () => {
     return new Promise((resolve, reject) => {
-      if (readyToSave(groupsToAdd)) {
-        setLoadingMessage(t(`${location}.loading-messages.saving-groups`));
+      setLoadingMessage(t(`${location}.loading-messages.saving-groups`));
 
-        dispatch(
-          api.endpoints.putV1ScreenGroupsByIdCampaigns.initiate({
-            id: id || idFromUrl(data["@id"]),
-            body: JSON.stringify(groupsToAdd),
-          })
-        )
-          .then((response) => {
-            if (response.error) {
-              displayError(t(`${location}.error-messages.save-group-error`), response.error);
-              reject(response.error);
-            } else {
-              displaySuccess(t(`${location}.success-messages.saved-groups`));
-              resolve();
-            }
-          })
-          .catch((e) => {
-            displayError(t(`${location}.error-messages.save-group-error`), e);
-            reject(e);
-          });
-      } else {
-        resolve([]);
-      }
+      dispatch(
+        api.endpoints.putV1ScreenGroupsByIdCampaigns.initiate({
+          id: id || idFromUrl(data["@id"]),
+          body: JSON.stringify(groupsToAdd),
+        })
+      )
+        .then((response) => {
+          if (response.error) {
+            displayError(
+              t(`${location}.error-messages.save-group-error`),
+              response.error
+            );
+            reject(response.error);
+          } else {
+            displaySuccess(t(`${location}.success-messages.saved-groups`));
+            resolve();
+          }
+        })
+        .catch((e) => {
+          displayError(t(`${location}.error-messages.save-group-error`), e);
+          reject(e);
+        });
     });
   };
 
   const bindSlides = () => {
     return new Promise((resolve, reject) => {
-      if (readyToSave(slidesToAdd)) {
-        setLoadingMessage(t(`${location}.loading-messages.saving-slides`));
+      setLoadingMessage(t(`${location}.loading-messages.saving-slides`));
 
-        dispatch(
-          api.endpoints.putV1PlaylistsByIdSlides.initiate({
-            id: id || idFromUrl(data["@id"]),
-            body: JSON.stringify(slidesToAdd),
-          })
-        )
-          .then((response) => {
-            if (response.error) {
-              displayError(t(`${location}.error-messages.save-slides-error`), response.error);
-              reject(response.error);
-            } else {
-              displaySuccess(t(`${location}.success-messages.saved-slides`));
-              resolve();
-            }
-          })
-          .catch((e) => {
-            displayError(t(`${location}.error-messages.save-slides-error`), e);
-            reject(e);
-          });
-      } else {
-        resolve([]);
-      }
+      dispatch(
+        api.endpoints.putV1PlaylistsByIdSlides.initiate({
+          id: id || idFromUrl(data["@id"]),
+          body: JSON.stringify(slidesToAdd),
+        })
+      )
+        .then((response) => {
+          if (response.error) {
+            displayError(
+              t(`${location}.error-messages.save-slides-error`),
+              response.error
+            );
+            reject(response.error);
+          } else {
+            displaySuccess(t(`${location}.success-messages.saved-slides`));
+            resolve();
+          }
+        })
+        .catch((e) => {
+          displayError(t(`${location}.error-messages.save-slides-error`), e);
+          reject(e);
+        });
     });
   };
 
@@ -210,15 +199,11 @@ function PlaylistCampaignManager({
     if (isSaveSuccessPut === true || isSaveSuccessPost === true) {
       setSavingRelations(true);
       bindScreens()
-        .then(() =>
-          bindScreenGroups().then(() =>
-            bindSlides()
-          )
-        )
+        .then(() => bindScreenGroups().then(() => bindSlides()))
         .finally(() => {
+          setSavingRelations(false);
           displaySuccess(t(`${location}.success-messages.saved`));
           navigate(`/${location}/list`);
-          setSavingRelations(false);
         });
     }
   }, [isSaveSuccessPut, isSaveSuccessPost]);
