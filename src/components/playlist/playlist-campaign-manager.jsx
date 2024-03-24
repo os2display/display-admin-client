@@ -109,6 +109,12 @@ function PlaylistCampaignManager({
 
   const bindScreens = () => {
     return new Promise((resolve, reject) => {
+      // If not campaign, do not bind screens.
+      if (!formStateObject?.isCampaign) {
+        resolve();
+        return;
+      }
+
       setLoadingMessage(t(`${location}.loading-messages.saving-screens`));
 
       dispatch(
@@ -138,6 +144,12 @@ function PlaylistCampaignManager({
 
   const bindScreenGroups = () => {
     return new Promise((resolve, reject) => {
+      // If not campaign, do not bind screen groups.
+      if (!formStateObject?.isCampaign) {
+        resolve();
+        return;
+      }
+
       setLoadingMessage(t(`${location}.loading-messages.saving-groups`));
 
       dispatch(
@@ -235,43 +247,6 @@ function PlaylistCampaignManager({
     setFormStateObject(localFormStateObject);
   };
 
-  /** Sets slides to save. */
-  function handleSaveSlides() {
-    const { slides } = formStateObject;
-    if (Array.isArray(slides)) {
-      setSlidesToAdd(
-        slides.map((slide, index) => {
-          return { slide: idFromUrl(slide), weight: index };
-        })
-      );
-    }
-  }
-
-  /** Sets screens to save. */
-  function handleSaveScreens() {
-    const { screens } = formStateObject;
-
-    if (Array.isArray(screens)) {
-      setScreensToAdd(
-        screens.map((screen) => {
-          return { screen: idFromUrl(screen) };
-        })
-      );
-    }
-  }
-
-  /** Sets groups to save. */
-  function handleSaveGroups() {
-    const { groups } = formStateObject;
-    if (Array.isArray(groups)) {
-      setGroupsToAdd(
-        groups.map((group) => {
-          return { screengroup: idFromUrl(group) };
-        })
-      );
-    }
-  }
-
   /** Handles submit. */
   const handleSubmit = () => {
     setLoadingMessage(t(`${location}.loading-messages.saving-playlist`));
@@ -310,6 +285,7 @@ function PlaylistCampaignManager({
     };
 
     setLoadingMessage(t(`${location}.loading-messages.saving`));
+
     if (saveMethod === "POST") {
       PostV1Playlist({
         playlistPlaylistInput: JSON.stringify(saveData),
@@ -322,15 +298,37 @@ function PlaylistCampaignManager({
     }
 
     if (Array.isArray(formStateObject.slides)) {
-      handleSaveSlides();
+      const { slides } = formStateObject;
+      if (Array.isArray(slides)) {
+        setSlidesToAdd(
+          slides.map((slide, index) => {
+            return { slide: idFromUrl(slide), weight: index };
+          })
+        );
+      }
     }
 
     if (Array.isArray(formStateObject.screens)) {
-      handleSaveScreens();
+      const { screens } = formStateObject;
+
+      if (Array.isArray(screens)) {
+        setScreensToAdd(
+          screens.map((screen) => {
+            return { screen: idFromUrl(screen) };
+          })
+        );
+      }
     }
 
     if (Array.isArray(formStateObject.groups)) {
-      handleSaveGroups();
+      const { groups } = formStateObject;
+      if (Array.isArray(groups)) {
+        setGroupsToAdd(
+          groups.map((group) => {
+            return { screengroup: idFromUrl(group) };
+          })
+        );
+      }
     }
   };
 
