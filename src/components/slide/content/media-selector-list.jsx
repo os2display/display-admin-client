@@ -106,6 +106,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
                         aria-label={t("checkbox-form-aria-label", {
                           this: data.title,
                         })}
+                        onChange={() => {}}
                       />
                     )}
 
