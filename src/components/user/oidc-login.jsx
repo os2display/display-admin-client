@@ -1,5 +1,5 @@
-import { React, useEffect, useState } from "react";
-import { Alert, Spinner } from "react-bootstrap";
+import { React, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import "./login.scss";
 import PropTypes from "prop-types";
@@ -22,7 +22,6 @@ function OIDCLogin({ config }) {
   const { provider, label, icon } = config;
 
   // State
-  const [oidcAuthUrl, setOidcAuthUrl] = useState("");
   const [oidcAuthLoadingError, setOidcAuthLoadingError] = useState("");
 
   let labelText = label;
@@ -79,16 +78,17 @@ function OIDCLogin({ config }) {
 
   return (
     <>
-      <div
+      <button
         onClick={onClick}
         className="margin-right-button btn btn-primary btn-lg d-flex justify-content-center align-items-center"
         style={{ minWidth: "160px" }}
+        type="button"
         aria-label={t("login-with-oidc-aria-label")}
         aria-describedby="ad-explanation"
       >
         {iconRender}
         {labelText}
-      </div>
+      </button>
       {oidcAuthLoadingError !== "" && (
         <Alert variant="danger mt-2">{oidcAuthLoadingError}</Alert>
       )}
