@@ -85,7 +85,7 @@ function PlaylistGanttChart({ slides }) {
 
 PlaylistGanttChart.propTypes = {
   slides: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+    PropTypes.shape({ name: PropTypes.string, id: PropTypes.string })
   ).isRequired,
 };
 export default PlaylistGanttChart;

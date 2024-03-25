@@ -73,7 +73,7 @@ generatedApi.enhanceEndpoints({
     },
     putV1PlaylistsById: {
       providesTags: ["Playlist"],
-      invalidatesTags: ["Playlist"],
+      invalidatesTags: ["Playlist", "Screen"],
     },
     deleteV1PlaylistsById: {
       providesTags: ["Playlist"],
