@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 - [#234](https://github.com/os2display/display-admin-client/pull/234)
   - Cleaned up code flow in playlist saving.
   - Changed to chaining relations puts.
+- [#235](https://github.com/os2display/display-admin-client/pull/235)
+  - Added roles to users list.
 - [#233](https://github.com/os2display/display-admin-client/pull/233)
   - Fixed issue when clicking media archive element when media archive is not in multiple mode.
 - [#232](https://github.com/os2display/display-admin-client/pull/232)
