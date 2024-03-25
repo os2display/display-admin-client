@@ -962,7 +962,9 @@
     "save-button": "Gem aktiveringskode",
     "role-external-user-admin": "Ekstern brugeradministrator",
     "role-external-user": "Ekstern bruger",
-    "role-label": "Brugerens rolle"
+    "role-label": "Brugerens rolle",
+    "role-external-user-helptext": "Hvis brugeren kun skal oprette indhold, vælg \"Ekstern bruger\".",
+    "role-external-user-admin-helptext": "Hvis brugeren skal kunne tilføje andre eksterne brugere til området, så vælg \"Ekstern brugeradministrator\"."
   },
   "activation-code-create": {
     "header": "Tilkobling til nyt område",

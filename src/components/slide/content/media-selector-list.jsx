@@ -91,10 +91,11 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
               const selected = selectedMediaIds.includes(data["@id"]);
               return (
                 <div key={data["@id"]} className="col mb-3">
-                  <div
+                  <button
                     className={`card bg-light h-100 media-item ${
                       selected ? " selected" : ""
                     }`}
+                    type="button"
                     onClick={() => onItemClick(data)}
                   >
                     <FilePreview fileEntry={data} />
@@ -122,7 +123,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
               );
             })}

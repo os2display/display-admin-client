@@ -44,29 +44,41 @@ function ActivationCodeForm({
     },
   ];
 
+  // 123
+
   return (
     <>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <h1 id="h1UserDisplayName">{headerText}</h1>
         <ContentBody>
-          <FormInput
-            title="display-name"
-            type="text"
-            label={t("display-name-label")}
-            placeholder={t("display-name-placeholder")}
-            value={activationCode.displayName}
-            onChange={handleInput}
-            name="displayName"
-            required
-          />
-          <RadioButtons
-            radioGroupName="role"
-            handleChange={handleInput}
-            options={roles}
-            label={t("role-label")}
-            selected={activationCode.role}
-          />
+          <div className="mb-2">
+            <FormInput
+              title="display-name"
+              type="text"
+              label={t("display-name-label")}
+              placeholder={t("display-name-placeholder")}
+              value={activationCode.displayName}
+              onChange={handleInput}
+              name="displayName"
+              required
+            />
+          </div>
+          <div className="mb-2">
+            <RadioButtons
+              radioGroupName="role"
+              handleChange={handleInput}
+              options={roles}
+              label={t("role-label")}
+              selected={activationCode.role}
+            />
+            <div>
+              <small>{t("role-external-user-helptext")}</small>
+            </div>
+            <div>
+              <small>{t("role-external-user-admin-helptext")}</small>
+            </div>
+          </div>
         </ContentBody>
         <ContentFooter>
           <Button

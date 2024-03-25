@@ -128,7 +128,7 @@ function ActivationCodeList() {
   const dispatch = useDispatch();
 
   const refreshCallback = (id) => {
-    const item = items.filter((e) => e['@id'] === id);
+    const item = items.filter((e) => e["@id"] === id);
 
     if (item.length !== 1) {
       return;
@@ -136,7 +136,9 @@ function ActivationCodeList() {
 
     dispatch(
       api.endpoints.postV1UserActivationCodesRefresh.initiate({
-        userActivationCodeActivationCode: JSON.stringify({ activationCode: item[0].code }),
+        userActivationCodeActivationCode: JSON.stringify({
+          activationCode: item[0].code,
+        }),
       })
     )
       .then((response) => {
