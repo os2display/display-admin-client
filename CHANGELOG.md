@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#234](https://github.com/os2display/display-admin-client/pull/234)
+  - Cleaned up code flow in playlist saving.
+  - Changed to chaining relations puts.
 - [#235](https://github.com/os2display/display-admin-client/pull/235)
   - Added roles to users list.
 - [#233](https://github.com/os2display/display-admin-client/pull/233)
