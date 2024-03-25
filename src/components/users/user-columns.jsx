@@ -17,6 +17,12 @@ function getUserColumns() {
       label: t("columns.full-name"),
     },
     {
+      path: "roles",
+      label: t("columns.roles"),
+      dataFunction: (roles) =>
+        roles.map((role) => t(`roles.${role}`)).join(", "),
+    },
+    {
       path: "userType",
       label: t("columns.user-type"),
       dataFunction: (data) => {

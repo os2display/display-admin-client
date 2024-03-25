@@ -91,7 +91,18 @@
       "activated": "Aktiv",
       "full-name": "Navn",
       "created-at": "Oprettelsesdato",
-      "user-type": "Brugertype"
+      "user-type": "Brugertype",
+      "roles": "Roller"
+    },
+    "roles": {
+      "ROLE_USER": "Bruger",
+      "ROLE_SCREEN":  "Skærm",
+      "ROLE_EDITOR": "Redaktør",
+      "ROLE_EXTERNAL_USER": "Ekstern bruger",
+      "ROLE_EXTERNAL_USER_ADMIN": "Ekstern brugeradministrator",
+      "ROLE_USER_ADMIN": "Brugeradministrator",
+      "ROLE_ADMIN": "Administrator",
+      "ROLE_SUPER_ADMIN": "Superadministrator"
     },
     "loading-messages": {
       "loading-users": "Henter brugere",
