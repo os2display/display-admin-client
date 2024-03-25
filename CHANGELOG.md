@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#235](https://github.com/os2display/display-admin-client/pull/235)
+  - Added roles to users list.
 - [#233](https://github.com/os2display/display-admin-client/pull/233)
   - Fixed issue when clicking media archive element when media archive is not in multiple mode.
 - [#232](https://github.com/os2display/display-admin-client/pull/232)
