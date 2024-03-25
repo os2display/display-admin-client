@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#236](https://github.com/os2display/display-admin-client/pull/236)
+  - Add help text to activation code form.
+  - Fixed warnings raised when compiling.
 - [#235](https://github.com/os2display/display-admin-client/pull/235)
   - Added roles to users list.
 - [#233](https://github.com/os2display/display-admin-client/pull/233)
