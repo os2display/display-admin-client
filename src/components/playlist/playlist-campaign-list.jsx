@@ -17,7 +17,7 @@ import {
   useDeleteV1PlaylistsByIdMutation,
   useGetV1PlaylistsByIdSlidesQuery,
   useGetV1PlaylistsQuery,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 
 /**
  * The shared list component.

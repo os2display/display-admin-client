@@ -14,16 +14,16 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
+  api,
   usePutV1PlaylistsByIdMutation,
   usePostV1PlaylistsMutation,
-  api,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 
 /**
  * The shared manager component.
  *
  * @param {object} props The props.
- * @param {object} props.initialState Initial slide state.
+ * @param {object} props.initialState Initial playlist state.
  * @param {string} props.saveMethod POST or PUT.
  * @param {string | null} props.id Playlist id.
  * @param {boolean} props.isLoading Is the slide state loading?
@@ -55,10 +55,8 @@ function PlaylistCampaignManager({
   const [formStateObject, setFormStateObject] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
   const [highlightSharedSection, setHighlightSharedSection] = useState(false);
-  const [slidesToAdd, setSlidesToAdd] = useState([]);
-  const [screensToAdd, setScreensToAdd] = useState([]);
-  const [groupsToAdd, setGroupsToAdd] = useState([]);
   const [savingRelations, setSavingRelations] = useState(false);
+  const isCampaign = location === "campaign";
 
   const [
     PutV1Playlists,
@@ -107,10 +105,10 @@ function PlaylistCampaignManager({
     }
   }, [sharedParams]);
 
-  const bindScreens = () => {
+  const bindScreens = (playlistId, selectedScreens) => {
     return new Promise((resolve, reject) => {
-      // If not campaign, do not bind screens.
-      if (!formStateObject?.isCampaign) {
+      if (selectedScreens === null || !isCampaign) {
+        // If not campaign, do not bind screens.
         resolve();
         return;
       }
@@ -119,8 +117,8 @@ function PlaylistCampaignManager({
 
       dispatch(
         api.endpoints.putV1ScreensByIdCampaigns.initiate({
-          id: id || idFromUrl(data["@id"]),
-          body: JSON.stringify(screensToAdd),
+          id: playlistId,
+          body: JSON.stringify(selectedScreens),
         })
       )
         .then((response) => {
@@ -142,10 +140,10 @@ function PlaylistCampaignManager({
     });
   };
 
-  const bindScreenGroups = () => {
+  const bindScreenGroups = (playlistId, selectedScreenGroups) => {
     return new Promise((resolve, reject) => {
-      // If not campaign, do not bind screen groups.
-      if (!formStateObject?.isCampaign) {
+      if (selectedScreenGroups === null || !isCampaign) {
+        // If not campaign, do not bind screen groups.
         resolve();
         return;
       }
@@ -154,8 +152,8 @@ function PlaylistCampaignManager({
 
       dispatch(
         api.endpoints.putV1ScreenGroupsByIdCampaigns.initiate({
-          id: id || idFromUrl(data["@id"]),
-          body: JSON.stringify(groupsToAdd),
+          id: playlistId,
+          body: JSON.stringify(selectedScreenGroups),
         })
       )
         .then((response) => {
@@ -177,14 +175,19 @@ function PlaylistCampaignManager({
     });
   };
 
-  const bindSlides = () => {
+  const bindSlides = (playlistId, selectedSlides) => {
     return new Promise((resolve, reject) => {
+      if (selectedSlides === null) {
+        resolve();
+        return;
+      }
+
       setLoadingMessage(t(`${location}.loading-messages.saving-slides`));
 
       dispatch(
         api.endpoints.putV1PlaylistsByIdSlides.initiate({
-          id: id || idFromUrl(data["@id"]),
-          body: JSON.stringify(slidesToAdd),
+          id: playlistId,
+          body: JSON.stringify(selectedSlides),
         })
       )
         .then((response) => {
@@ -210,11 +213,36 @@ function PlaylistCampaignManager({
   useEffect(() => {
     if (isSaveSuccessPut === true || isSaveSuccessPost === true) {
       setSavingRelations(true);
-      bindScreens()
-        .then(() => bindScreenGroups().then(() => bindSlides()))
+
+      const playlistId = id || idFromUrl(data["@id"]);
+
+      const { slides, groups, screens } = formStateObject;
+
+      const selectedSlides = Array.isArray(slides)
+        ? slides.map((slide, index) => {
+            return { slide: idFromUrl(slide), weight: index };
+          })
+        : null;
+
+      const selectedScreens = Array.isArray(screens)
+        ? screens.map((screen) => {
+            return { screen: idFromUrl(screen) };
+          })
+        : null;
+
+      const selectedGroups = Array.isArray(groups)
+        ? groups.map((group) => {
+            return { screengroup: idFromUrl(group) };
+          })
+        : null;
+
+      // Chain bind relations calls.
+      // Make sure we redirect to list on errors, or after all relations have been bound.
+      bindScreens(playlistId, selectedScreens)
+        .then(() => bindScreenGroups(playlistId, selectedGroups))
+        .then(() => bindSlides(playlistId, selectedSlides))
+        .then(() => displaySuccess(t(`${location}.success-messages.saved`)))
         .finally(() => {
-          setSavingRelations(false);
-          displaySuccess(t(`${location}.success-messages.saved`));
           navigate(`/${location}/list`);
         });
     }
@@ -267,7 +295,7 @@ function PlaylistCampaignManager({
 
     const saveData = {
       title: formStateObject.title,
-      isCampaign: location === "campaign",
+      isCampaign,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
@@ -295,40 +323,6 @@ function PlaylistCampaignManager({
         id,
         playlistPlaylistInput: JSON.stringify(saveData),
       });
-    }
-
-    if (Array.isArray(formStateObject.slides)) {
-      const { slides } = formStateObject;
-      if (Array.isArray(slides)) {
-        setSlidesToAdd(
-          slides.map((slide, index) => {
-            return { slide: idFromUrl(slide), weight: index };
-          })
-        );
-      }
-    }
-
-    if (Array.isArray(formStateObject.screens)) {
-      const { screens } = formStateObject;
-
-      if (Array.isArray(screens)) {
-        setScreensToAdd(
-          screens.map((screen) => {
-            return { screen: idFromUrl(screen) };
-          })
-        );
-      }
-    }
-
-    if (Array.isArray(formStateObject.groups)) {
-      const { groups } = formStateObject;
-      if (Array.isArray(groups)) {
-        setGroupsToAdd(
-          groups.map((group) => {
-            return { screengroup: idFromUrl(group) };
-          })
-        );
-      }
     }
   };
 

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated";
+import { usePostV1ScreenGroupsMutation } from "../../redux/api/api.generated.ts";
 import GroupForm from "./group-form";
 import {
   displaySuccess,

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import { usePostV1UserActivationCodesActivateMutation } from "../../redux/api/api.generated";
+import { usePostV1UserActivationCodesActivateMutation } from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
   displayError,

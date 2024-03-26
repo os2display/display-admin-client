@@ -9,7 +9,7 @@ import {
   useGetV1PlaylistsByIdSlidesQuery,
   useGetV1PlaylistsQuery,
   useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import ScreenGanttChart from "../screen/util/screen-gantt-chart";
 
 /**

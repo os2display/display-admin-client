@@ -17,7 +17,7 @@ import {
 import {
   useGetV1MediaQuery,
   useDeleteV1MediaByIdMutation,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./media-list.scss";
 

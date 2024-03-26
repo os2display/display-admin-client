@@ -6,7 +6,7 @@ import {
   useGetV1PlaylistsQuery,
   useGetV1SlidesByIdPlaylistsQuery,
   useGetV1PlaylistsByIdSlidesQuery,
-} from "../../../redux/api/api.generated";
+} from "../../../redux/api/api.generated.ts";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
 
@@ -38,11 +38,14 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   });
 
   // Get 10 of the selected playlists for table below dropdown, table is paginated so on page change more is fetched.
-  const { data: alreadySelectedPlaylists } = useGetV1SlidesByIdPlaylistsQuery({
-    itemsPerPage: 10,
-    page,
-    id,
-  });
+  const { data: alreadySelectedPlaylists } = useGetV1SlidesByIdPlaylistsQuery(
+    {
+      itemsPerPage: 10,
+      page,
+      id,
+    },
+    { skip: !id }
+  );
 
   /** Map loaded data. */
   useEffect(() => {

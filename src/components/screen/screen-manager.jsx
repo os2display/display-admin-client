@@ -8,7 +8,7 @@ import {
   usePutV1ScreensByIdMutation,
   usePutV1ScreensByIdScreenGroupsMutation,
   usePutPlaylistScreenRegionItemMutation,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import ScreenForm from "./screen-form";
 import {
   displaySuccess,

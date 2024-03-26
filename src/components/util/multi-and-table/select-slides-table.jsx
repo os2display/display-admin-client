@@ -8,7 +8,7 @@ import {
   useGetV1SlidesQuery,
   useGetV1PlaylistsByIdSlidesQuery,
   useGetV1PlaylistsByIdQuery,
-} from "../../../redux/api/api.generated";
+} from "../../../redux/api/api.generated.ts";
 import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
 
 /**
@@ -33,11 +33,16 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     order: { createdAt: "desc" },
   });
 
-  const { data } = useGetV1PlaylistsByIdSlidesQuery({
-    id: slideId,
-    itemsPerPage: 10,
-    page,
-  });
+  const { data } = useGetV1PlaylistsByIdSlidesQuery(
+    {
+      id: slideId,
+      itemsPerPage: 10,
+      page,
+    },
+    { skip: !slideId }
+  );
+
+  //
 
   useEffect(() => {
     if (data) {

@@ -16,7 +16,7 @@ import {
   api,
   useGetV1LayoutsQuery,
   useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";

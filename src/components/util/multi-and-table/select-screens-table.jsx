@@ -8,7 +8,7 @@ import {
   useGetV1ScreensQuery,
   useGetV1ScreensByIdScreenGroupsQuery,
   useGetV1CampaignsByIdScreensQuery,
-} from "../../../redux/api/api.generated";
+} from "../../../redux/api/api.generated.ts";
 
 /**
  * A multiselect and table for screens.
@@ -34,11 +34,14 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   });
 
   // Get 10 of the selected screens for table below dropdown, table is paginated so on page change more is fetched.
-  const { data: alreadySelectedScreens } = useGetV1CampaignsByIdScreensQuery({
-    id: campaignId,
-    itemsPerPage: 10,
-    page,
-  });
+  const { data: alreadySelectedScreens } = useGetV1CampaignsByIdScreensQuery(
+    {
+      id: campaignId,
+      itemsPerPage: 10,
+      page,
+    },
+    { skip: !campaignId }
+  );
 
   useEffect(() => {
     if (alreadySelectedScreens) {

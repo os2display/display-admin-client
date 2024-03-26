@@ -6,7 +6,7 @@ import { SelectGroupColumns } from "../../groups/groups-columns";
 import {
   useGetV1ScreenGroupsQuery,
   useGetV1ScreenGroupsByIdScreensQuery,
-} from "../../../redux/api/api.generated";
+} from "../../../redux/api/api.generated.ts";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 
 /**
@@ -41,11 +41,14 @@ function SelectGroupsTable({
   });
 
   // Get 10 of the selected groups for table below dropdown, table is paginated so on page change more is fetched.
-  const { data: alreadySelectedGroups } = getSelectedMethod({
-    itemsPerPage: 10,
-    page,
-    id,
-  });
+  const { data: alreadySelectedGroups } = getSelectedMethod(
+    {
+      itemsPerPage: 10,
+      page,
+      id,
+    },
+    { skip: !id }
+  );
 
   /** Map loaded data. */
   useEffect(() => {

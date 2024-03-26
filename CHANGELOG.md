@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#237](https://github.com/os2display/display-admin-client/pull/237)
+  - Fixed isCampaign check.
+  - Removed redux/api.js since it was unused.
+  - Removed js generated version of typescript api since it was unused.
+  - Added skip to queries that rely on an argument to avoid undefined queries.
 - [#236](https://github.com/os2display/display-admin-client/pull/236)
   - Add help text to activation code form.
   - Fixed warnings raised when compiling.

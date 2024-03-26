@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import idFromUrl from "../util/helpers/id-from-url";
 import ScreenManager from "./screen-manager";
-import { useGetV1ScreensByIdQuery } from "../../redux/api/api.generated";
+import { useGetV1ScreensByIdQuery } from "../../redux/api/api.generated.ts";
 
 /**
  * The screen edit component.
