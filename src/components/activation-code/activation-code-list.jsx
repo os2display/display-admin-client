@@ -18,7 +18,7 @@ import {
   api,
   useDeleteV1UserActivationCodesByIdMutation,
   useGetV1UserActivationCodesQuery,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 
 /**
  * The Activation Code list component.

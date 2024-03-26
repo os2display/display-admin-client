@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useRemoteComponent } from "./remote-component-helper";
 import ErrorBoundary from "../../../error-boundary";
 import "./remote-component-wrapper.scss";
-import { api } from "../../../redux/api/api.generated";
+import { api } from "../../../redux/api/api.generated.ts";
 import idFromUrl from "../../util/helpers/id-from-url";
 
 /**

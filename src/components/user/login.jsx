@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import { MultiSelect } from "react-multi-select-component";
 import UserContext from "../../context/user-context";
 import FormInput from "../util/forms/form-input";
-import { api } from "../../redux/api/api.generated";
+import { api } from "../../redux/api/api.generated.ts";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import localStorageKeys from "../util/local-storage-keys";

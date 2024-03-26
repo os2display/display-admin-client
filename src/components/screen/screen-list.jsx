@@ -12,7 +12,7 @@ import {
   useGetV1ScreensQuery,
   useDeleteV1ScreensByIdMutation,
   useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
   displayError,

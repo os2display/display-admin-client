@@ -9,7 +9,7 @@ import {
   api,
   useGetV1ScreensByIdCampaignsQuery,
   useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 
 /**
  * An icon to show if the screen has an active campaign.

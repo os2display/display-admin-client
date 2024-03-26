@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import PlaylistCampaignManager from "./playlist-campaign-manager";
 import idFromUrl from "../util/helpers/id-from-url";
-import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
+import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated.ts";
 
 /**
  * The playlist/campaign edit component.

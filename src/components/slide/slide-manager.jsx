@@ -14,7 +14,7 @@ import {
   usePostV1SlidesMutation,
   usePutV1SlidesByIdPlaylistsMutation,
   usePutV1SlidesByIdMutation,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import SlideForm from "./slide-form";
 import {
   displaySuccess,

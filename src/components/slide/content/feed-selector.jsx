@@ -7,7 +7,7 @@ import set from "lodash.set";
 import {
   api,
   useGetV1FeedSourcesQuery,
-} from "../../../redux/api/api.generated";
+} from "../../../redux/api/api.generated.ts";
 import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../../util/helpers/id-from-url";
 import ContentForm from "./content-form";

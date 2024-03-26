@@ -11,7 +11,7 @@ import ContentFooter from "../util/content-footer/content-footer";
 import {
   useGetV1TemplatesQuery,
   useGetV1ThemesQuery,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import idFromUrl from "../util/helpers/id-from-url";
 import FormInput from "../util/forms/form-input";
 import ContentForm from "./content/content-form";

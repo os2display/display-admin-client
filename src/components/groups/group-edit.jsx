@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import {
   useGetV1ScreenGroupsByIdQuery,
   usePutV1ScreenGroupsByIdMutation,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
   displayError,

@@ -4,7 +4,7 @@ import { Col, Form, Row, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import SearchBox from "../../util/search-box/search-box";
 import ContentBody from "../../util/content-body/content-body";
-import { useGetV1MediaQuery } from "../../../redux/api/api.generated";
+import { useGetV1MediaQuery } from "../../../redux/api/api.generated.ts";
 import "../../media/media-list.scss";
 import Pagination from "../../util/paginate/pagination";
 import FilePreview from "./file-preview";
