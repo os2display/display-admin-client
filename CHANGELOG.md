@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#238](https://github.com/os2display/display-admin-client/pull/238)
+  - Fixed screen layout overlapping issue.
 - [#237](https://github.com/os2display/display-admin-client/pull/237)
   - Fixed isCampaign check for playlist relation puts.
   - Removed redux/api.js since it was unused.

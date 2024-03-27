@@ -113,7 +113,7 @@ function GridGenerationAndSelect({
               </div>
             </div>
           </div>
-          <div className="col-md-12">
+          <div className="col-md-8">
             {regions.length > 0 && (
               <>
                 <h3 className="h5">
