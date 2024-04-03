@@ -4,7 +4,7 @@ import { Col, Form, Row, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import SearchBox from "../../util/search-box/search-box";
 import ContentBody from "../../util/content-body/content-body";
-import { useGetV1MediaQuery } from "../../../redux/api/api.generated.ts";
+import { useGetV2MediaQuery } from "../../../redux/api/api.generated.ts";
 import "../../media/media-list.scss";
 import Pagination from "../../util/paginate/pagination";
 import FilePreview from "./file-preview";
@@ -32,7 +32,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   const [title, setTitle] = useState("");
 
   // Get method
-  const { data: mediaData, isLoading } = useGetV1MediaQuery({ page, title });
+  const { data: mediaData, isLoading } = useGetV2MediaQuery({ page, title });
 
   /** Set loaded data into form state. */
   useEffect(() => {

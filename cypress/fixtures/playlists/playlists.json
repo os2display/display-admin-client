@@ -1,11 +1,11 @@
 {
   "@context": "/contexts/Playlist",
-  "@id": "/v1/playlists",
+  "@id": "/v2/playlists",
   "@type": "hydra:Collection",
   "hydra:member": [
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC",
+      "@id": "/v2/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC",
       "title": "Et consequatur voluptatibus dolore ut ut.",
       "description": "Atque maiores nam in occaecati labore labore inventore quo. Enim nemo totam hic. Ut suscipit id sint sed quia.",
       "schedules": [],
@@ -13,9 +13,9 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC/slides",
+      "slides": "/v2/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC/slides",
       "campaignScreens": [
-        "/v1/screens/00TH1ZRMZC141K1DMB1H7J03CS"
+        "/v2/screens/00TH1ZRMZC141K1DMB1H7J03CS"
       ],
       "campaignScreenGroups": [],
       "isCampaign": true,
@@ -26,7 +26,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/007TM6JDGF1ECH07J10ZHY0S7P",
+      "@id": "/v2/playlists/007TM6JDGF1ECH07J10ZHY0S7P",
       "title": "Voluptas molestias nemo et.",
       "description": "Aperiam quam sunt quia qui. Iusto ut deserunt veritatis nobis dolorem. Aliquid quo vel quia.",
       "schedules": [],
@@ -34,12 +34,12 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/007TM6JDGF1ECH07J10ZHY0S7P/slides",
+      "slides": "/v2/playlists/007TM6JDGF1ECH07J10ZHY0S7P/slides",
       "campaignScreens": [],
       "campaignScreenGroups": [
-        "/v1/screen-groups/00EQWMS5WA1WJE0WD81VF91DFH",
-        "/v1/screen-groups/0135RY0QPR1DVF0ZT70YHS1NX3",
-        "/v1/screen-groups/0135RY0QPR1DVF0ZT70YHS1NX3"
+        "/v2/screen-groups/00EQWMS5WA1WJE0WD81VF91DFH",
+        "/v2/screen-groups/0135RY0QPR1DVF0ZT70YHS1NX3",
+        "/v2/screen-groups/0135RY0QPR1DVF0ZT70YHS1NX3"
       ],
       "isCampaign": false,
       "published": {
@@ -49,7 +49,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/0095Q92C781DNX07QQ150D0PAR",
+      "@id": "/v2/playlists/0095Q92C781DNX07QQ150D0PAR",
       "title": "Quod doloribus cumque harum quia quidem.",
       "description": "Quis molestias tempore magnam dolores eos ipsa qui. Dolore consequatur ipsa et sint pariatur modi. Suscipit dignissimos sit vitae qui sit sed. Qui enim et dolorem sunt.",
       "schedules": [],
@@ -57,9 +57,9 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/0095Q92C781DNX07QQ150D0PAR/slides",
+      "slides": "/v2/playlists/0095Q92C781DNX07QQ150D0PAR/slides",
       "campaignScreens": [
-        "/v1/screens/001462PXER01AW00QB138N121Q"
+        "/v2/screens/001462PXER01AW00QB138N121Q"
       ],
       "campaignScreenGroups": [],
       "isCampaign": true,
@@ -70,7 +70,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/00GQDKZ6VR006J156R0SYG1W18",
+      "@id": "/v2/playlists/00GQDKZ6VR006J156R0SYG1W18",
       "title": "Est animi ut quidem pariatur.",
       "description": "Et consequatur sunt id fugit et ullam. Ratione dolores quis ut sit dolor consequuntur itaque. Et molestiae ipsum aut deserunt. Amet itaque placeat eius aliquid est amet voluptates.",
       "schedules": [],
@@ -78,9 +78,9 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/00GQDKZ6VR006J156R0SYG1W18/slides",
+      "slides": "/v2/playlists/00GQDKZ6VR006J156R0SYG1W18/slides",
       "campaignScreens": [
-        "/v1/screens/00PGBCV01W1BDX0K3K1QB2106P"
+        "/v2/screens/00PGBCV01W1BDX0K3K1QB2106P"
       ],
       "campaignScreenGroups": [],
       "isCampaign": true,
@@ -91,7 +91,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/00SXX5REFW0ZB2140M11DB0R1K",
+      "@id": "/v2/playlists/00SXX5REFW0ZB2140M11DB0R1K",
       "title": "Voluptates aut nobis quisquam esse.",
       "description": "Sed blanditiis omnis est ab assumenda vel et. Dolorem eum qui ut autem. Ullam et ipsum veniam deserunt commodi maiores magni itaque. Dolorem accusantium mollitia nostrum et.",
       "schedules": [],
@@ -99,12 +99,12 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/00SXX5REFW0ZB2140M11DB0R1K/slides",
+      "slides": "/v2/playlists/00SXX5REFW0ZB2140M11DB0R1K/slides",
       "campaignScreens": [
-        "/v1/screens/003M75JBZJ0BRB1Q2Z1G9913H6"
+        "/v2/screens/003M75JBZJ0BRB1Q2Z1G9913H6"
       ],
       "campaignScreenGroups": [
-        "/v1/screen-groups/00GX78ZCMK1WF51KX3193W1R7D"
+        "/v2/screen-groups/00GX78ZCMK1WF51KX3193W1R7D"
       ],
       "isCampaign": true,
       "published": {
@@ -114,7 +114,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/00X9ABVSP80YGY03KK0GWJ113M",
+      "@id": "/v2/playlists/00X9ABVSP80YGY03KK0GWJ113M",
       "title": "Ratione animi maxime quis fuga.",
       "description": "Quaerat perferendis porro recusandae sed deserunt eius consequatur. Qui quo non odio et laboriosam. Excepturi quaerat esse natus. Illo iste rerum magnam labore nihil voluptatem distinctio.",
       "schedules": [],
@@ -122,15 +122,15 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/00X9ABVSP80YGY03KK0GWJ113M/slides",
+      "slides": "/v2/playlists/00X9ABVSP80YGY03KK0GWJ113M/slides",
       "campaignScreens": [
-        "/v1/screens/014W16FKDN0QVJ1CP406S400JH",
-        "/v1/screens/01CHHVWBN10W730H1W0XT11FKP"
+        "/v2/screens/014W16FKDN0QVJ1CP406S400JH",
+        "/v2/screens/01CHHVWBN10W730H1W0XT11FKP"
       ],
       "campaignScreenGroups": [
-        "/v1/screen-groups/00435AES7E0W5K18DQ1Y2B1EYY",
-        "/v1/screen-groups/00KEW5GTSD16YR0A2V197C0EG3",
-        "/v1/screen-groups/01A5D3SYSY1MXD09VQ0S410VC0"
+        "/v2/screen-groups/00435AES7E0W5K18DQ1Y2B1EYY",
+        "/v2/screen-groups/00KEW5GTSD16YR0A2V297C0EG3",
+        "/v2/screen-groups/01A5D3SYSY1MXD09VQ0S410VC0"
       ],
       "isCampaign": true,
       "published": {
@@ -140,7 +140,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/00XVQEW1EV0N3K0JZQ0TYS0T1G",
+      "@id": "/v2/playlists/00XVQEW1EV0N3K0JZQ0TYS0T1G",
       "title": "Voluptas totam amet quia ex et.",
       "description": "Molestias voluptatem deserunt occaecati nihil dolores totam. Ratione vitae voluptatem voluptatem nihil. Dolores temporibus qui sit eveniet tempora eos. Est repellat alias nihil praesentium.",
       "schedules": [],
@@ -148,11 +148,11 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/00XVQEW1EV0N3K0JZQ0TYS0T1G/slides",
+      "slides": "/v2/playlists/00XVQEW1EV0N3K0JZQ0TYS0T1G/slides",
       "campaignScreens": [],
       "campaignScreenGroups": [
-        "/v1/screen-groups/00R2VN0CAA05MY105Q0Y1S1F3T",
-        "/v1/screen-groups/00KEW5GTSD16YR0A2V197C0EG3"
+        "/v2/screen-groups/00R2VN0CAA05MY105Q0Y1S1F3T",
+        "/v2/screen-groups/00KEW5GTSD16YR0A2V297C0EG3"
       ],
       "isCampaign": false,
       "published": {
@@ -162,7 +162,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/013DXE81FH1NMC1AYF1AVK1KW1",
+      "@id": "/v2/playlists/013DXE81FH1NMC1AYF1AVK1KW1",
       "title": "Est possimus sint est.",
       "description": "Quia iusto quidem perferendis dolores aliquid suscipit. At voluptatem non consectetur. Natus qui sint soluta cum ex dolore exercitationem ea. Sit nihil repellendus vitae voluptates maiores enim est.",
       "schedules": [
@@ -181,7 +181,7 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/013DXE81FH1NMC1AYF1AVK1KW1/slides",
+      "slides": "/v2/playlists/013DXE81FH1NMC1AYF1AVK1KW1/slides",
       "campaignScreens": [],
       "campaignScreenGroups": [],
       "isCampaign": true,
@@ -192,7 +192,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/01C71RAP7K1BAB0ZX20S161FZS",
+      "@id": "/v2/playlists/01C71RAP7K1BAB0ZX20S161FZS",
       "title": "Qui adipisci deserunt et ea.",
       "description": "Ipsum et ut quod labore dolorem. Consectetur molestiae vitae velit sit. Architecto accusamus est nihil molestiae.",
       "schedules": [],
@@ -200,13 +200,13 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/01C71RAP7K1BAB0ZX20S161FZS/slides",
+      "slides": "/v2/playlists/01C71RAP7K1BAB0ZX20S161FZS/slides",
       "campaignScreens": [
-        "/v1/screens/009TEPN46D18PN0WYT16N40885",
-        "/v1/screens/0002DM20A51N171X8J17181J16"
+        "/v2/screens/009TEPN46D18PN0WYT16N40885",
+        "/v2/screens/0002DM20A51N171X8J17181J16"
       ],
       "campaignScreenGroups": [
-        "/v1/screen-groups/00GX88B7BZ1XYF0NSF069S0093"
+        "/v2/screen-groups/00GX88B7BZ1XYF0NSF069S0093"
       ],
       "isCampaign": true,
       "published": {
@@ -216,7 +216,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/01EZRVKW721VA00AB318X70E6E",
+      "@id": "/v2/playlists/01EZRVKW721VA00AB318X70E6E",
       "title": "Omnis ipsam qui quaerat sit.",
       "description": "Quasi amet vitae et sit. Animi qui eius dolorum commodi architecto. Hic quod qui qui nihil recusandae.",
       "schedules": [],
@@ -224,10 +224,10 @@
       "modified": "2022-01-30T15:42:42.000Z",
       "modifiedBy": "",
       "createdBy": "",
-      "slides": "/v1/playlists/01EZRVKW721VA00AB318X70E6E/slides",
+      "slides": "/v2/playlists/01EZRVKW721VA00AB318X70E6E/slides",
       "campaignScreens": [
-        "/v1/screens/00X5STWXC003VE0ZH10HP41NK8",
-        "/v1/screens/00XFNN5SWM1NGD0JEB11XF06W0"
+        "/v2/screens/00X5STWXC003VE0ZH10HP41NK8",
+        "/v2/screens/00XFNN5SWM1NGD0JEB11XF06W0"
       ],
       "campaignScreenGroups": [],
       "isCampaign": true,
@@ -239,12 +239,12 @@
   ],
   "hydra:totalItems": 10,
   "hydra:view": {
-    "@id": "/v1/playlists?itemsPerPage=10",
+    "@id": "/v2/playlists?itemsPerPage=10",
     "@type": "hydra:PartialCollectionView"
   },
   "hydra:search": {
     "@type": "hydra:IriTemplate",
-    "hydra:template": "/v1/playlists{?title,description,published,order[title],order[description],order[createdAt],order[updatedAt]}",
+    "hydra:template": "/v2/playlists{?title,description,published,order[title],order[description],order[createdAt],order[updatedAt]}",
     "hydra:variableRepresentation": "BasicRepresentation",
     "hydra:mapping": [
       {

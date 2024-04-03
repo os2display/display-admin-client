@@ -9,9 +9,9 @@ import idFromUrl from "../util/helpers/id-from-url";
 import ListContext from "../../context/list-context";
 import useModal from "../../context/modal-context/modal-context-hook";
 import {
-  useGetV1ScreensQuery,
-  useDeleteV1ScreensByIdMutation,
-  useGetV1ScreensByIdScreenGroupsQuery,
+  useGetV2ScreensQuery,
+  useDeleteV2ScreensByIdMutation,
+  useGetV2ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
@@ -43,9 +43,9 @@ function ScreenList() {
 
   // Delete call
   const [
-    DeleteV1Screens,
+    DeleteV2Screens,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteV1ScreensByIdMutation();
+  ] = useDeleteV2ScreensByIdMutation();
 
   // Get method
   const {
@@ -53,7 +53,7 @@ function ScreenList() {
     error: screensGetError,
     isLoading,
     refetch,
-  } = useGetV1ScreensQuery({
+  } = useGetV2ScreensQuery({
     page,
     order: { title: "asc" },
     search: searchText,
@@ -83,7 +83,7 @@ function ScreenList() {
       const screenToDelete = selected[0];
       setSelected(selected.slice(1));
       const screenToDeleteId = idFromUrl(screenToDelete.id);
-      DeleteV1Screens({ id: screenToDeleteId });
+      DeleteV2Screens({ id: screenToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
@@ -113,7 +113,7 @@ function ScreenList() {
   // The columns for the table.
   const columns = ScreenColumns({
     handleDelete,
-    apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+    apiCall: useGetV2ScreensByIdScreenGroupsQuery,
     infoModalRedirect: "/group/edit",
     infoModalTitle: t("info-modal.screen-in-groups"),
   });

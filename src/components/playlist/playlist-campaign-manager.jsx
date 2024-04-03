@@ -15,8 +15,8 @@ import {
 } from "../util/list/toast-component/display-toast";
 import {
   api,
-  usePutV1PlaylistsByIdMutation,
-  usePostV1PlaylistsMutation,
+  usePutV2PlaylistsByIdMutation,
+  usePostV2PlaylistsMutation,
 } from "../../redux/api/api.generated.ts";
 
 /**
@@ -59,18 +59,18 @@ function PlaylistCampaignManager({
   const isCampaign = location === "campaign";
 
   const [
-    PutV1Playlists,
+    PutV2Playlists,
     {
       isLoading: savingPlaylists,
       error: saveErrorPut,
       isSuccess: isSaveSuccessPut,
     },
-  ] = usePutV1PlaylistsByIdMutation();
+  ] = usePutV2PlaylistsByIdMutation();
 
   const [
-    PostV1Playlist,
+    PostV2Playlist,
     { data, error: saveErrorPost, isSuccess: isSaveSuccessPost },
-  ] = usePostV1PlaylistsMutation();
+  ] = usePostV2PlaylistsMutation();
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -116,7 +116,7 @@ function PlaylistCampaignManager({
       setLoadingMessage(t(`${location}.loading-messages.saving-screens`));
 
       dispatch(
-        api.endpoints.putV1ScreensByIdCampaigns.initiate({
+        api.endpoints.putV2ScreensByIdCampaigns.initiate({
           id: playlistId,
           body: JSON.stringify(selectedScreens),
         })
@@ -151,7 +151,7 @@ function PlaylistCampaignManager({
       setLoadingMessage(t(`${location}.loading-messages.saving-groups`));
 
       dispatch(
-        api.endpoints.putV1ScreenGroupsByIdCampaigns.initiate({
+        api.endpoints.putV2ScreenGroupsByIdCampaigns.initiate({
           id: playlistId,
           body: JSON.stringify(selectedScreenGroups),
         })
@@ -185,7 +185,7 @@ function PlaylistCampaignManager({
       setLoadingMessage(t(`${location}.loading-messages.saving-slides`));
 
       dispatch(
-        api.endpoints.putV1PlaylistsByIdSlides.initiate({
+        api.endpoints.putV2PlaylistsByIdSlides.initiate({
           id: playlistId,
           body: JSON.stringify(selectedSlides),
         })
@@ -315,11 +315,11 @@ function PlaylistCampaignManager({
     setLoadingMessage(t(`${location}.loading-messages.saving`));
 
     if (saveMethod === "POST") {
-      PostV1Playlist({
+      PostV2Playlist({
         playlistPlaylistInput: JSON.stringify(saveData),
       });
     } else if (saveMethod === "PUT") {
-      PutV1Playlists({
+      PutV2Playlists({
         id,
         playlistPlaylistInput: JSON.stringify(saveData),
       });

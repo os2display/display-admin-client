@@ -11,9 +11,9 @@ import UserContext from "../../context/user-context";
 import {
   api,
   usePostMediaCollectionMutation,
-  usePostV1SlidesMutation,
-  usePutV1SlidesByIdPlaylistsMutation,
-  usePutV1SlidesByIdMutation,
+  usePostV2SlidesMutation,
+  usePutV2SlidesByIdPlaylistsMutation,
+  usePutV2SlidesByIdMutation,
 } from "../../redux/api/api.generated.ts";
 import SlideForm from "./slide-form";
 import {
@@ -69,17 +69,17 @@ function SlideManager({
   // Initialize to empty slide object.
   const [formStateObject, setFormStateObject] = useState(null);
 
-  const [PutV1Slides, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
-    usePutV1SlidesByIdMutation();
+  const [PutV2Slides, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
+    usePutV2SlidesByIdMutation();
 
   // Handler for creating slide.
   const [
-    PostV1Slides,
+    PostV2Slides,
     { data: postData, error: saveErrorPost, isSuccess: isSaveSuccessPost },
-  ] = usePostV1SlidesMutation();
+  ] = usePostV2SlidesMutation();
 
   const [
-    PostV1MediaCollection,
+    PostV2MediaCollection,
     {
       data: savedMediaData,
       isSuccess: isSaveMediaSuccess,
@@ -88,13 +88,13 @@ function SlideManager({
   ] = usePostMediaCollectionMutation();
 
   const [
-    PutV1SlidesByIdPlaylists,
+    PutV2SlidesByIdPlaylists,
     {
       isLoading: savingPlaylists,
       error: saveErrorPlaylists,
       isSuccess: isSaveSuccessPlaylists,
     },
-  ] = usePutV1SlidesByIdPlaylistsMutation();
+  ] = usePutV2SlidesByIdPlaylistsMutation();
 
   // Slides are saved successfully, display a message
   useEffect(() => {
@@ -223,7 +223,7 @@ function SlideManager({
       getTemplate
     ) {
       dispatch(
-        api.endpoints.getV1TemplatesById.initiate({
+        api.endpoints.getV2TemplatesById.initiate({
           id: idFromUrl(formStateObject.templateInfo["@id"]),
         })
       )
@@ -240,7 +240,7 @@ function SlideManager({
     // Load theme if set, getTheme because if not, it runs on every time formstateobject is changed
     if (formStateObject?.theme && getTheme) {
       dispatch(
-        api.endpoints.getV1ThemesById.initiate({
+        api.endpoints.getV2ThemesById.initiate({
           id: idFromUrl(formStateObject.theme),
         })
       )
@@ -270,7 +270,7 @@ function SlideManager({
 
       if (initialState?.feed && initialState?.feed["@id"]) {
         dispatch(
-          api.endpoints.getV1FeedsByIdData.initiate({
+          api.endpoints.getV2FeedsByIdData.initiate({
             id: idFromUrl(initialState.feed["@id"]),
           })
         ).then((response) => {
@@ -292,7 +292,7 @@ function SlideManager({
       localFormStateObject.media.forEach((media) => {
         promises.push(
           dispatch(
-            api.endpoints.getV1MediaById.initiate({ id: idFromUrl(media) })
+            api.endpoints.getv2MediaById.initiate({ id: idFromUrl(media) })
           )
         );
       });
@@ -433,7 +433,7 @@ function SlideManager({
       formStateObject.playlists
     ) {
       setLoadingMessage(t("loading-messages.saving-playlists"));
-      PutV1SlidesByIdPlaylists({
+      PutV2SlidesByIdPlaylists({
         id: id || idFromUrl(postData["@id"]),
         body: JSON.stringify(playlistsToAdd),
       });
@@ -468,7 +468,7 @@ function SlideManager({
         formData.append("modifiedBy", "");
         formData.append("createdBy", "");
 
-        PostV1MediaCollection({ body: formData });
+        PostV2MediaCollection({ body: formData });
       } else {
         // All media have been submitted. Submit slide.
 
@@ -522,12 +522,12 @@ function SlideManager({
 
         if (saveMethod === "POST") {
           setLoadingMessage(t("loading-messages.saving-slide"));
-          PostV1Slides(saveData);
+          PostV2Slides(saveData);
         } else if (saveMethod === "PUT") {
           setLoadingMessage(t("loading-messages.saving-slide"));
           const putData = { ...saveData, id };
 
-          PutV1Slides(putData);
+          PutV2Slides(putData);
         } else {
           throw new Error("Unsupported save method");
         }

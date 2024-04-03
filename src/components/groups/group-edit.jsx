@@ -3,8 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import {
-  useGetV1ScreenGroupsByIdQuery,
-  usePutV1ScreenGroupsByIdMutation,
+  useGetV2ScreenGroupsByIdQuery,
+  usePutV2ScreenGroupsByIdMutation,
 } from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
@@ -27,14 +27,14 @@ function GroupEdit() {
     t("loading-messages.loading-group")
   );
   const { id } = useParams();
-  const [PutV1ScreenGroup, { error: saveError, isSuccess: isSaveSuccess }] =
-    usePutV1ScreenGroupsByIdMutation();
+  const [PutV2ScreenGroup, { error: saveError, isSuccess: isSaveSuccess }] =
+    usePutV2ScreenGroupsByIdMutation();
 
   const {
     data,
     error: loadError,
     isLoading,
-  } = useGetV1ScreenGroupsByIdQuery({ id });
+  } = useGetV2ScreenGroupsByIdQuery({ id });
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -96,7 +96,7 @@ function GroupEdit() {
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
     };
-    PutV1ScreenGroup({
+    PutV2ScreenGroup({
       id,
       screenGroupScreenGroupInput: JSON.stringify(saveData),
     });

@@ -16,7 +16,7 @@
     "published": "Playlist/published"
   },
   "@type": "Playlist",
-  "@id": "/v1/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC",
+  "@id": "/v2/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC",
   "title": "Et consequatur voluptatibus dolore ut ut.",
   "description": "Atque maiores nam in occaecati labore labore inventore quo. Enim nemo totam hic. Ut suscipit id sint sed quia.",
   "schedules": [],
@@ -24,9 +24,9 @@
   "modified": "2022-01-30T15:42:42.000Z",
   "modifiedBy": "",
   "createdBy": "",
-  "slides": "/v1/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC/slides",
+  "slides": "/v2/playlists/004ZP1XQ1G1MVZ1T0100YN0MPC/slides",
   "campaignScreens": [
-    "/v1/screens/00TH1ZRMZC141K1DMB1H7J03CS"
+    "/v2/screens/00TH1ZRMZC141K1DMB1H7J03CS"
   ],
   "campaignScreenGroups": [],
   "isCampaign": true,

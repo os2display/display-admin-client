@@ -1,6 +1,6 @@
 {
   "@type": "Playlist",
-  "@id": "/v1/playlists/01FYZYGZBJD1651H9MW2FJJD6N",
+  "@id": "/v2/playlists/01FYZYGZBJD1651H9MW2FJJD6N",
   "title": "yghjknlm",
   "description": "",
   "schedules": [],
@@ -8,7 +8,7 @@
   "modified": "2022-03-25T08:22:05.000Z",
   "modifiedBy": "johndoe@example.com",
   "createdBy": "johndoe@example.com",
-  "slides": "/v1/playlists/01FYZYGZBJD1651H9MW2FJJD6N/slides",
+  "slides": "/v2/playlists/01FYZYGZBJD1651H9MW2FJJD6N/slides",
   "campaignScreens": [],
   "campaignScreenGroups": [],
   "tenants": [],

@@ -112,7 +112,7 @@ function Login() {
 
   const refreshTokenAndLogin = () => {
     ConfigLoader.loadConfig().then((config) => {
-      fetch(`${config.api}v1/authentication/token/refresh`, {
+      fetch(`${config.api}v2/authentication/token/refresh`, {
         mode: "cors",
         method: "POST",
         headers: {
@@ -147,7 +147,7 @@ function Login() {
     e.stopPropagation();
 
     dispatch(
-      api.endpoints.postV1UserActivationCodesActivate.initiate({
+      api.endpoints.postV2UserActivationCodesActivate.initiate({
         userActivationCodeActivationCode: JSON.stringify({
           activationCode,
         }),
@@ -242,7 +242,7 @@ function Login() {
             code,
           });
 
-          fetch(`${config.api}v1/authentication/oidc/token?${searchParams}`, {
+          fetch(`${config.api}v2/authentication/oidc/token?${searchParams}`, {
             mode: "cors",
             credentials: "include",
           })

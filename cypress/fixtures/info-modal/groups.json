@@ -1,64 +1,64 @@
 {
-  "@id": "/v1/screen-groups",
+  "@id": "/v2/screen-groups",
   "@type": "hydra:Collection",
   "hydra:member": [
     {
       "@type": "ScreenGroup",
-      "@id": "/v1/screen-groups/01FZ0CS2X360BEWNJXV3CB8143",
+      "@id": "/v2/screen-groups/01FZ0CS2X360BEWNJXV3CB8143",
       "title": "4",
       "description": "",
       "created": "2022-03-25T12:18:24+01:00",
       "modified": "2022-03-25T12:18:24+01:00",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "campaigns": "/v1/screen-groups/01FZ0CS2X360BEWNJXV3CB8143/campaigns",
-      "screens": "/v1/screen-groups/01FZ0CS2X360BEWNJXV3CB8143/screens"
+      "campaigns": "/v2/screen-groups/01FZ0CS2X360BEWNJXV3CB8143/campaigns",
+      "screens": "/v2/screen-groups/01FZ0CS2X360BEWNJXV3CB8143/screens"
     },
     {
       "@type": "ScreenGroup",
-      "@id": "/v1/screen-groups/01FZ0CQF398WNC3KBAF3PHEFQV",
+      "@id": "/v2/screen-groups/01FZ0CQF398WNC3KBAF3PHEFQV",
       "title": "1",
       "description": "",
       "created": "2022-03-25T12:17:31+01:00",
       "modified": "2022-03-25T12:17:31+01:00",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "campaigns": "/v1/screen-groups/01FZ0CQF398WNC3KBAF3PHEFQV/campaigns",
-      "screens": "/v1/screen-groups/01FZ0CQF398WNC3KBAF3PHEFQV/screens"
+      "campaigns": "/v2/screen-groups/01FZ0CQF398WNC3KBAF3PHEFQV/campaigns",
+      "screens": "/v2/screen-groups/01FZ0CQF398WNC3KBAF3PHEFQV/screens"
     },
     {
       "@type": "ScreenGroup",
-      "@id": "/v1/screen-groups/01FZ0CQ2HBRENEX0A76SFQYFR1",
+      "@id": "/v2/screen-groups/01FZ0CQ2HBRENEX0A76SFQYFR1",
       "title": "3",
       "description": "",
       "created": "2022-03-25T12:17:19+01:00",
       "modified": "2022-03-25T12:17:19+01:00",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "campaigns": "/v1/screen-groups/01FZ0CQ2HBRENEX0A76SFQYFR1/campaigns",
-      "screens": "/v1/screen-groups/01FZ0CQ2HBRENEX0A76SFQYFR1/screens"
+      "campaigns": "/v2/screen-groups/01FZ0CQ2HBRENEX0A76SFQYFR1/campaigns",
+      "screens": "/v2/screen-groups/01FZ0CQ2HBRENEX0A76SFQYFR1/screens"
     },
     {
       "@type": "ScreenGroup",
-      "@id": "/v1/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W",
+      "@id": "/v2/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W",
       "title": "2",
       "description": "",
       "created": "2022-03-24T20:57:52+01:00",
       "modified": "2022-03-25T12:30:14+01:00",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "campaigns": "/v1/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W/campaigns",
-      "screens": "/v1/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W/screens"
+      "campaigns": "/v2/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W/campaigns",
+      "screens": "/v2/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W/screens"
     }
   ],
   "hydra:totalItems": 4,
   "hydra:view": {
-    "@id": "/v1/screen-groups?order%5BcreatedAt%5D=desc",
+    "@id": "/v2/screen-groups?order%5BcreatedAt%5D=desc",
     "@type": "hydra:PartialCollectionView"
   },
   "hydra:search": {
     "@type": "hydra:IriTemplate",
-    "hydra:template": "/v1/screen-groups{?title,description,createdBy,createdBy[],modifiedBy,modifiedBy[],order[title],order[description],order[createdAt]}",
+    "hydra:template": "/v2/screen-groups{?title,description,createdBy,createdBy[],modifiedBy,modifiedBy[],order[title],order[description],order[createdAt]}",
     "hydra:variableRepresentation": "BasicRepresentation",
     "hydra:mapping": [
       {

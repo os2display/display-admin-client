@@ -21,7 +21,7 @@ function MediaCreate() {
   const headerText = t("create-media");
 
   const [
-    PostV1MediaCollection,
+    PostV2MediaCollection,
     { isLoading: isSavingMedia, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostMediaCollectionMutation();
 
@@ -42,7 +42,7 @@ function MediaCreate() {
     if (mediaToCreate.length > 0) {
       setIsSaving(true);
       const media = mediaToCreate.splice(0, 1).shift();
-      PostV1MediaCollection({ body: media });
+      PostV2MediaCollection({ body: media });
     }
   }, [mediaToCreate.length, isSaveSuccess]);
 

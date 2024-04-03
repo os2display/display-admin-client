@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import { usePostV1UserActivationCodesActivateMutation } from "../../redux/api/api.generated.ts";
+import { usePostV2UserActivationCodesActivateMutation } from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
   displayError,
@@ -28,9 +28,9 @@ function ActivationCodeActivate() {
   });
 
   const [
-    PostV1UserActivationCodeActivate,
+    PostV2UserActivationCodeActivate,
     { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
-  ] = usePostV1UserActivationCodesActivateMutation();
+  ] = usePostV2UserActivationCodesActivateMutation();
 
   /** Handle submitting is done. */
   useEffect(() => {
@@ -61,7 +61,7 @@ function ActivationCodeActivate() {
 
   /** Handles submit. */
   const handleSubmit = () => {
-    PostV1UserActivationCodeActivate({
+    PostV2UserActivationCodeActivate({
       userActivationCodeActivationCode: JSON.stringify(formStateObject),
     });
   };

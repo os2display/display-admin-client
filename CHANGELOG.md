@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#239](https://github.com/os2display/display-admin-client/pull/239)
+  - Updated api integration following route change to v2. 
 - [#238](https://github.com/os2display/display-admin-client/pull/238)
   - Fixed screen layout overlapping issue.
 - [#237](https://github.com/os2display/display-admin-client/pull/237)

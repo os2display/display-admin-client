@@ -6,9 +6,9 @@ import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/play
 import DragAndDropTable from "../util/drag-and-drop-table/drag-and-drop-table";
 import FormCheckbox from "../util/forms/form-checkbox";
 import {
-  useGetV1PlaylistsByIdSlidesQuery,
-  useGetV1PlaylistsQuery,
-  useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
+  useGetV2PlaylistsByIdSlidesQuery,
+  useGetV2PlaylistsQuery,
+  useGetV2ScreensByIdRegionsAndRegionIdPlaylistsQuery,
 } from "../../redux/api/api.generated.ts";
 import ScreenGanttChart from "../screen/util/screen-gantt-chart";
 
@@ -33,7 +33,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
   const [page, setPage] = useState(1);
   const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
   const { data: selectedPlaylistsByRegion } =
-    useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery({
+    useGetV2ScreensByIdRegionsAndRegionIdPlaylistsQuery({
       id: screenId,
       regionId,
       page,
@@ -41,7 +41,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     });
 
   // Get method
-  const { data } = useGetV1PlaylistsQuery({
+  const { data } = useGetV2PlaylistsQuery({
     isCampaign: false,
     title: searchText,
     itemsPerPage: 30,
@@ -106,7 +106,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 
   const columns = SelectPlaylistColumns({
     handleDelete: removeFromList,
-    apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    apiCall: useGetV2PlaylistsByIdSlidesQuery,
     editTarget: "playlist",
     infoModalRedirect: "/slide/edit",
     dataKey: "slide",

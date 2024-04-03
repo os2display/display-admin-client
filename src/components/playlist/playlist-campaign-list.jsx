@@ -14,9 +14,9 @@ import {
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
 import {
-  useDeleteV1PlaylistsByIdMutation,
-  useGetV1PlaylistsByIdSlidesQuery,
-  useGetV1PlaylistsQuery,
+  useDeleteV2PlaylistsByIdMutation,
+  useGetV2PlaylistsByIdSlidesQuery,
+  useGetV2PlaylistsQuery,
 } from "../../redux/api/api.generated.ts";
 
 /**
@@ -49,9 +49,9 @@ function PlaylistCampaignList({ location }) {
 
   // Delete call
   const [
-    DeleteV1Playlists,
+    DeleteV2Playlists,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteV1PlaylistsByIdMutation();
+  ] = useDeleteV2PlaylistsByIdMutation();
 
   // Get method
   const {
@@ -59,7 +59,7 @@ function PlaylistCampaignList({ location }) {
     error: playlistsGetError,
     isLoading,
     refetch,
-  } = useGetV1PlaylistsQuery({
+  } = useGetV2PlaylistsQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,
@@ -95,7 +95,7 @@ function PlaylistCampaignList({ location }) {
       const playlistToDelete = selected[0];
       setSelected(selected.slice(1));
       const playlistToDeleteId = idFromUrl(playlistToDelete.id);
-      DeleteV1Playlists({ id: playlistToDeleteId });
+      DeleteV2Playlists({ id: playlistToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
@@ -125,7 +125,7 @@ function PlaylistCampaignList({ location }) {
   // The columns for the table.
   const columns = PlaylistColumns({
     handleDelete,
-    apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    apiCall: useGetV2PlaylistsByIdSlidesQuery,
     infoModalRedirect: "/slide/edit",
     infoModalTitle: t(`${location}.info-modal.slides`),
     dataKey: "slide",

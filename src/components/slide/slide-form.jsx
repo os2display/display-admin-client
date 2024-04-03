@@ -9,8 +9,8 @@ import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import ContentFooter from "../util/content-footer/content-footer";
 import {
-  useGetV1TemplatesQuery,
-  useGetV1ThemesQuery,
+  useGetV2TemplatesQuery,
+  useGetV2ThemesQuery,
 } from "../../redux/api/api.generated.ts";
 import idFromUrl from "../util/helpers/id-from-url";
 import FormInput from "../util/forms/form-input";
@@ -74,13 +74,13 @@ function SlideForm({
 
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
-    useGetV1TemplatesQuery({
+    useGetV2TemplatesQuery({
       title: searchTextTemplate,
       itemsPerPage: 300,
     });
 
   // Load themes.
-  const { data: themes, isLoading: loadingThemes } = useGetV1ThemesQuery({
+  const { data: themes, isLoading: loadingThemes } = useGetV2ThemesQuery({
     title: searchTextTheme,
     itemsPerPage: 300,
     order: { createdAt: "desc" },

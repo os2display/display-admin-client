@@ -83,7 +83,7 @@ function RemoteComponentWrapper({
           const key = newSlide.themeData.logo;
 
           dispatch(
-            api.endpoints.getV1MediaById.initiate({
+            api.endpoints.getv2MediaById.initiate({
               id: idFromUrl(newSlide.themeData.logo),
             })
           ).then((resp) => {

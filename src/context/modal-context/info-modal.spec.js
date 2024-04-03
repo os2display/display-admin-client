@@ -128,6 +128,6 @@ describe("Info modal tests", () => {
     cy.get("#info-modal")
       .find("a")
       .should("have.attr", "href")
-      .and("include", "/screen/edit/01FYYRA11JSAPV15H29GGA9P78");
+      .and("include", "/screen/edit/01FYYRA11JSAPV25H29GGA9P78");
   });
 });

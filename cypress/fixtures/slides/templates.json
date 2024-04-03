@@ -1,11 +1,11 @@
 {
   "@context": "/contexts/Template",
-  "@id": "/v1/templates",
+  "@id": "/v2/templates",
   "@type": "hydra:Collection",
   "hydra:member": [
     {
       "@type": "Template",
-      "@id": "/v1/templates/000BGWFMBS15N807E60HP91JCX",
+      "@id": "/v2/templates/000BGWFMBS15N807E60HP91JCX",
       "title": "Perferendis dolores nemo nesciunt.",
       "description": "Maiores omnis quo aspernatur quod voluptas quibusdam exercitationem. Unde culpa rem sunt. Repellendus sapiente accusamus dolor.",
       "created": "1970-05-24T06:18:23+01:00",
@@ -30,7 +30,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/000YR9PMQC0GMC1TP90V9N07WX",
+      "@id": "/v2/templates/000YR9PMQC0GMC1TP90V9N07WX",
       "title": "Consequuntur et cupiditate ea eligendi in.",
       "description": "Sunt dolor omnis ut et fugiat animi veniam. Animi nihil impedit voluptatum qui.",
       "created": "1971-01-18T06:22:20+01:00",
@@ -55,7 +55,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/001R8FR6VC10G51B200TK60QP3",
+      "@id": "/v2/templates/001R8FR6VC10G51B200TK60QP3",
       "title": "Aliquid libero quis.",
       "description": "Officia nihil quidem vel doloremque modi est qui. Voluptate quos a minus.",
       "created": "1971-12-01T05:48:19+01:00",
@@ -80,7 +80,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/002BAP34VD1EHG0E4J0D2Y00JW",
+      "@id": "/v2/templates/002BAP34VD1EHG0E4J0D2Y00JW",
       "title": "Totam molestiae assumenda fugiat doloremque ab.",
       "description": "Voluptate velit et et reprehenderit officia consequatur in. Aut hic tempore maxime nemo rerum. Dolores molestias earum quos blanditiis eos ipsam.",
       "created": "1972-07-25T05:15:53+01:00",
@@ -105,7 +105,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/0044JYNRTJ1KD0128318R80B3Q",
+      "@id": "/v2/templates/0044JYNRTJ1KD0128318R80B3Q",
       "title": "Assumenda dolor enim exercitationem sunt.",
       "description": "Harum id cupiditate asperiores assumenda molestiae culpa nobis beatae. Culpa aliquam debitis aut magni qui qui officia. Sint quia quibusdam est ratione. Et consequatur suscipit saepe quia.",
       "created": "1974-07-06T19:14:31+01:00",
@@ -130,7 +130,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/00EPSCBVJS0TB0118C1JPM1VPM",
+      "@id": "/v2/templates/00EPSCBVJS0TB0118C1JPM1VPM",
       "title": "Animi ipsa dolorum optio odio aspernatur.",
       "description": "Blanditiis suscipit ipsum veniam neque omnis dolor qui. Quia voluptatem quisquam sed aut quia. Vero tenetur vel quasi corporis rerum quo.",
       "created": "1986-01-07T19:34:49+01:00",
@@ -155,7 +155,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/00PXXK8ND01SRF18YH1WN004VA",
+      "@id": "/v2/templates/00PXXK8ND01SRF18YH1WN004VA",
       "title": "Doloremque omnis ut aut et.",
       "description": "Dolorem rerum ab et culpa voluptatem aperiam qui. Pariatur rerum explicabo corrupti id alias et. Placeat ut aperiam laudantium fugiat est.",
       "created": "1994-12-21T21:40:42+01:00",
@@ -180,7 +180,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/00XZXR5XDH0D1M16K10NYQ0A55",
+      "@id": "/v2/templates/00XZXR5XDH0D1M16K10NYQ0A55",
       "title": "Est totam provident sunt.",
       "description": "Tempora qui minus officia quis consequuntur voluptates. Quasi minima eveniet repudiandae laborum dolor quasi totam qui. Iusto enim inventore molestias amet aut.",
       "created": "2002-08-30T14:14:07+02:00",
@@ -205,7 +205,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/016MHSNKCH1PQW1VY615JC19Y3",
+      "@id": "/v2/templates/016MHSNKCH1PQW1VY615JC19Y3",
       "title": "Ut exercitationem est quia ad quas.",
       "description": "Laborum quod ut ducimus suscipit quia nostrum. Saepe ex voluptas aut. Sit numquam vel est sunt. Cupiditate excepturi non saepe in voluptatem vel rem quaerat. Magni aut eaque vel deleniti.",
       "created": "2012-01-28T09:17:22+01:00",
@@ -230,7 +230,7 @@
     },
     {
       "@type": "Template",
-      "@id": "/v1/templates/017X81AEJV1GJE0NC51KKK0EK8",
+      "@id": "/v2/templates/017X81AEJV2GJE0NC51KKK0EK8",
       "title": "Delectus magnam repudiandae molestiae et a.",
       "description": "Consequuntur est ut commodi sed. Fugiat repellat harum assumenda sed illo voluptatem nobis fugit. At vero consequatur ut dignissimos. Et inventore ipsam ullam ullam dolor debitis quo saepe.",
       "created": "2013-06-17T03:02:15+02:00",
@@ -256,15 +256,15 @@
   ],
   "hydra:totalItems": 12,
   "hydra:view": {
-    "@id": "/v1/templates?itemsPerPage=10\u0026title=d\u0026page=1",
+    "@id": "/v2/templates?itemsPerPage=10\u0026title=d\u0026page=1",
     "@type": "hydra:PartialCollectionView",
-    "hydra:first": "/v1/templates?itemsPerPage=10\u0026title=d\u0026page=1",
-    "hydra:last": "/v1/templates?itemsPerPage=10\u0026title=d\u0026page=2",
-    "hydra:next": "/v1/templates?itemsPerPage=10\u0026title=d\u0026page=2"
+    "hydra:first": "/v2/templates?itemsPerPage=10\u0026title=d\u0026page=1",
+    "hydra:last": "/v2/templates?itemsPerPage=10\u0026title=d\u0026page=2",
+    "hydra:next": "/v2/templates?itemsPerPage=10\u0026title=d\u0026page=2"
   },
   "hydra:search": {
     "@type": "hydra:IriTemplate",
-    "hydra:template": "/v1/templates{?title,description,order[createdAt],order[updatedAt]}",
+    "hydra:template": "/v2/templates{?title,description,order[createdAt],order[updatedAt]}",
     "hydra:variableRepresentation": "BasicRepresentation",
     "hydra:mapping": [
       {

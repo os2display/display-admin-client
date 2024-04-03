@@ -1,25 +1,25 @@
 {
-  "@id": "/v1/screen-groups",
+  "@id": "/v2/screen-groups",
   "@type": "hydra:Collection",
   "hydra:member": [
     {
-      "@id": "/v1/screens/01FYYRA11JSAPV15H29GGA9P78",
+      "@id": "/v2/screens/01FYYRA11JSAPV25H29GGA9P78",
       "@type": "Screen",
       "size": 0,
       "resolutionWidth": 0,
       "screenCampaigns": [],
       "resolutionHeight": 0,
-      "screenLayout": "/v1/layouts/01FMYMAB1EQYQ40QE0C7Y6NVBK",
+      "screenLayout": "/v2/layouts/01FMYMAB1EQYQ40QE0C7Y6NVBK",
       "location": "",
       "playlistScreenRegions": [],
       "screenGroups": [
-        "/v1/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W"
+        "/v2/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W"
       ],
       "screenUser": null,
       "title": "a",
       "description": "",
-      "tenant": "/v1/tenants/008VDAQKX018QR0MZ10RSJ1TF3",
-      "id": "01FYYRA11JSAPV15H29GGA9P78",
+      "tenant": "/v2/tenants/008VDAQKX018QR0MZ10RSJ1TF3",
+      "id": "01FYYRA11JSAPV25H29GGA9P78",
       "createdAt": "2022-03-24T21:01:25+01:00",
       "modifiedAt": "2022-03-24T21:01:25+01:00",
       "createdBy": "johndoe@example.com",
@@ -28,7 +28,7 @@
   ],
   "hydra:totalItems": 1,
   "hydra:view": {
-    "@id": "/v1/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W/screens?itemsPerPage=5",
+    "@id": "/v2/screen-groups/01FYYR3GV7Q2K5TSBA29S3WF8W/screens?itemsPerPage=5",
     "@type": "hydra:PartialCollectionView"
   }
 }
