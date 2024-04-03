@@ -16,7 +16,7 @@
     "dimensions": "Screen/dimensions"
   },
   "@type": "Screen",
-  "@id": "/v1/screens/00APXK73HQ11PM0X3P12EG14DZ",
+  "@id": "/v2/screens/00APXK73HQ11PM0X3P12EG14DZ",
   "title": "Ab eos dolorum minima inventore.",
   "description": "Non inventore ab vitae. Voluptatem assumenda aliquam sunt nulla sint corrupti et. Nihil consectetur facere cum modi aliquid. Non aut voluptas voluptas laudantium.",
   "size": "42",
@@ -24,10 +24,10 @@
   "modified": "2021-12-09T12:01:33+01:00",
   "modifiedBy": "",
   "createdBy": "",
-  "layout": "/v1/layouts/009S1H8VER00GK086N0M1J16K9",
+  "layout": "/v2/layouts/009S1H8VER00GK086N0M1J16K9",
   "location": "Natus aut est eveniet deleniti nihil voluptatum. Accusamus similique adipisci at qui molestiae quia nihil eligendi. Delectus repellendus ut asperiores ut debitis.",
   "regions": [],
-  "inScreenGroups": "/v1/screens/00APXK73HQ11PM0X3P12EG14DZ/groups",
+  "inScreenGroups": "/v2/screens/00APXK73HQ11PM0X3P12EG14DZ/groups",
   "dimensions": {
     "width": 1920,
     "height": 1200

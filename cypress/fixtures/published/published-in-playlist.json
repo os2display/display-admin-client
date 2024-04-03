@@ -1,10 +1,10 @@
 {
-  "@id": "/v1/playlists",
+  "@id": "/v2/playlists",
   "@type": "hydra:Collection",
   "hydra:member": [
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH",
+      "@id": "/v2/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH",
       "title": "asdf",
       "description": "",
       "schedules": [],
@@ -12,7 +12,7 @@
       "modified": "2022-03-25T17:04:24.000Z",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "slides": "/v1/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH/slides",
+      "slides": "/v2/playlists/01FZ0V95N8HPZ9ND9BRA5VDRNH/slides",
       "campaignScreens": [],
       "campaignScreenGroups": [],
       "tenants": [],
@@ -24,7 +24,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/01FYZYGZBJD1651H9MW2FJJD6N",
+      "@id": "/v2/playlists/01FYZYGZBJD1651H9MW2FJJD6N",
       "title": "yghjknlm",
       "description": "",
       "schedules": [],
@@ -32,12 +32,12 @@
       "modified": "2022-03-25T17:04:48.000Z",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "slides": "/v1/playlists/01FYZYGZBJD1651H9MW2FJJD6N/slides",
+      "slides": "/v2/playlists/01FYZYGZBJD1651H9MW2FJJD6N/slides",
       "campaignScreens": [],
       "campaignScreenGroups": [],
       "tenants": [
         {
-          "@id": "/v1/tenants/00FTDXYCA20T2M122R0VQ913BH",
+          "@id": "/v2/tenants/00FTDXYCA20T2M122R0VQ913BH",
           "@type": "Tenant",
           "tenantKey": "XYZ",
           "userRoleTenants": [
@@ -59,7 +59,7 @@
           "modifiedBy": ""
         },
         {
-          "@id": "/v1/tenants/01AH7YTSFD1SEF0AFP1WCX0H24",
+          "@id": "/v2/tenants/01AH7YTSFD1SEF0AFP1WCX0H24",
           "@type": "Tenant",
           "tenantKey": "DEF",
           "userRoleTenants": [
@@ -89,7 +89,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/01FYYR23TYX3GJCMATXNQQ270V",
+      "@id": "/v2/playlists/01FYYR23TYX3GJCMATXNQQ270V",
       "title": "2",
       "description": "",
       "schedules": [],
@@ -97,7 +97,7 @@
       "modified": "2022-03-25T16:25:16.000Z",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "slides": "/v1/playlists/01FYYR23TYX3GJCMATXNQQ270V/slides",
+      "slides": "/v2/playlists/01FYYR23TYX3GJCMATXNQQ270V/slides",
       "campaignScreens": [],
       "campaignScreenGroups": [],
       "tenants": [],
@@ -109,7 +109,7 @@
     },
     {
       "@type": "Playlist",
-      "@id": "/v1/playlists/01FYYR1YPT5KT3B36JRSR7Y6ZT",
+      "@id": "/v2/playlists/01FYYR1YPT5KT3B36JRSR7Y6ZT",
       "title": "1",
       "description": "",
       "schedules": [],
@@ -117,7 +117,7 @@
       "modified": "2022-03-24T20:57:01.000Z",
       "modifiedBy": "johndoe@example.com",
       "createdBy": "johndoe@example.com",
-      "slides": "/v1/playlists/01FYYR1YPT5KT3B36JRSR7Y6ZT/slides",
+      "slides": "/v2/playlists/01FYYR1YPT5KT3B36JRSR7Y6ZT/slides",
       "campaignScreens": [],
       "campaignScreenGroups": [],
       "tenants": [],
@@ -130,12 +130,12 @@
   ],
   "hydra:totalItems": 4,
   "hydra:view": {
-    "@id": "/v1/playlists?title=\u0026isCampaign=false\u0026order%5BcreatedAt%5D=desc",
+    "@id": "/v2/playlists?title=\u0026isCampaign=false\u0026order%5BcreatedAt%5D=desc",
     "@type": "hydra:PartialCollectionView"
   },
   "hydra:search": {
     "@type": "hydra:IriTemplate",
-    "hydra:template": "/v1/playlists{?title,description,createdBy,createdBy[],modifiedBy,modifiedBy[],published,isCampaign,order[title],order[description],order[createdAt],tenants.tenantKey,tenants.tenantKey[]}",
+    "hydra:template": "/v2/playlists{?title,description,createdBy,createdBy[],modifiedBy,modifiedBy[],published,isCampaign,order[title],order[description],order[createdAt],tenants.tenantKey,tenants.tenantKey[]}",
     "hydra:variableRepresentation": "BasicRepresentation",
     "hydra:mapping": [
       {

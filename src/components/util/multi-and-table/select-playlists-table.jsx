@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import {
-  useGetV1PlaylistsQuery,
-  useGetV1SlidesByIdPlaylistsQuery,
-  useGetV1PlaylistsByIdSlidesQuery,
+  useGetV2PlaylistsQuery,
+  useGetV2SlidesByIdPlaylistsQuery,
+  useGetV2PlaylistsByIdSlidesQuery,
 } from "../../../redux/api/api.generated.ts";
 import PlaylistsDropdown from "../forms/multiselect-dropdown/playlists/playlists-dropdown";
 import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
@@ -29,7 +29,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   const [searchText, setSearchText] = useState("");
 
   // Get 30 playlists for dropdown, and when search is changed more will be fetched.
-  const { data: playlists } = useGetV1PlaylistsQuery({
+  const { data: playlists } = useGetV2PlaylistsQuery({
     title: searchText,
     itemsPerPage: 30,
     isCampaign: false,
@@ -38,7 +38,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   });
 
   // Get 10 of the selected playlists for table below dropdown, table is paginated so on page change more is fetched.
-  const { data: alreadySelectedPlaylists } = useGetV1SlidesByIdPlaylistsQuery(
+  const { data: alreadySelectedPlaylists } = useGetV2SlidesByIdPlaylistsQuery(
     {
       itemsPerPage: 10,
       page,
@@ -108,7 +108,7 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
   // The columns for the table.
   const columns = SelectPlaylistColumns({
     handleDelete: removeFromList,
-    apiCall: useGetV1PlaylistsByIdSlidesQuery,
+    apiCall: useGetV2PlaylistsByIdSlidesQuery,
     editTarget: "playlist",
     infoModalRedirect: "/slide/edit",
     dataKey: "slide",

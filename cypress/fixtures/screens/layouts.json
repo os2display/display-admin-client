@@ -1,11 +1,11 @@
 {
   "@context": "/contexts/ScreenLayout",
-  "@id": "/v1/layouts",
+  "@id": "/v2/layouts",
   "@type": "hydra:Collection",
   "hydra:member": [
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/000JEYTBF401G61A390ENH0ZB3",
+      "@id": "/v2/layouts/000JEYTBF401G61A390ENH0ZB3",
       "title": "Voluptatum dolorem et qui eaque voluptates.",
       "grid": {
         "rows": 7,
@@ -13,7 +13,7 @@
       },
       "regions": [
         {
-          "@id": "/v1/layouts/regions/00DY4WAP7N1B7B0W2C1JDC07ME",
+          "@id": "/v2/layouts/regions/00DY4WAP7N1B7B0W2C1JDC07ME",
           "@type": "ScreenLayoutRegions",
           "title": "Itaque nihil velit earum.",
           "gridArea": [
@@ -21,7 +21,7 @@
           ]
         },
         {
-          "@id": "/v1/layouts/regions/00EX7J294Q01B602NA14GQ0PY7",
+          "@id": "/v2/layouts/regions/00EX7J294Q01B602NA14GQ0PY7",
           "@type": "ScreenLayoutRegions",
           "title": "Ea fuga et sapiente.",
           "gridArea": [
@@ -29,7 +29,7 @@
           ]
         },
         {
-          "@id": "/v1/layouts/regions/010FJG4WRF15XF0K8C052P0GWJ",
+          "@id": "/v2/layouts/regions/010FJG4WRF15XF0K8C052P0GWJ",
           "@type": "ScreenLayoutRegions",
           "title": "Modi distinctio magnam recusandae blanditiis.",
           "gridArea": [
@@ -37,7 +37,7 @@
           ]
         },
         {
-          "@id": "/v1/layouts/regions/016BNG6BWB0WF91JD01G3F06WB",
+          "@id": "/v2/layouts/regions/016BNG6BWB0WF91JD01G3F06WB",
           "@type": "ScreenLayoutRegions",
           "title": "Nulla ad repudiandae.",
           "gridArea": [
@@ -48,7 +48,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/004GSSRSQM0FX404991FPW0AXC",
+      "@id": "/v2/layouts/004GSSRSQM0FX404991FPW0AXC",
       "title": "Et cumque a doloremque.",
       "grid": {
         "rows": 11,
@@ -56,7 +56,7 @@
       },
       "regions": [
         {
-          "@id": "/v1/layouts/regions/000VV01PKC1JYY0RE8178K1C7A",
+          "@id": "/v2/layouts/regions/000VV01PKC1JYY0RE8178K1C7A",
           "@type": "ScreenLayoutRegions",
           "title": "Explicabo molestiae assumenda quos ut et.",
           "gridArea": [
@@ -64,7 +64,7 @@
           ]
         },
         {
-          "@id": "/v1/layouts/regions/004QDMAQC106SR10NR1KAB1HX6",
+          "@id": "/v2/layouts/regions/004QDMAQC106SR10NR1KAB1HX6",
           "@type": "ScreenLayoutRegions",
           "title": "Quaerat harum est aperiam et ut.",
           "gridArea": [
@@ -75,7 +75,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/006CC3QSKW0BGA1BV202V70CN7",
+      "@id": "/v2/layouts/006CC3QSKW0BGA1BV202V70CN7",
       "title": "Dolor perferendis est.",
       "grid": {
         "rows": 6,
@@ -83,7 +83,7 @@
       },
       "regions": [
         {
-          "@id": "/v1/layouts/regions/0063QVGPEE0M250TF61C6X0R46",
+          "@id": "/v2/layouts/regions/0063QVGPEE0M250TF61C6X0R46",
           "@type": "ScreenLayoutRegions",
           "title": "Consequuntur omnis ullam vel eaque.",
           "gridArea": [
@@ -91,7 +91,7 @@
           ]
         },
         {
-          "@id": "/v1/layouts/regions/00FN91SEBE1QE5055K0Y7M0DDP",
+          "@id": "/v2/layouts/regions/00FN91SEBE1QE5055K0Y7M0DDP",
           "@type": "ScreenLayoutRegions",
           "title": "Qui consequatur voluptatem quas quia.",
           "gridArea": [
@@ -102,7 +102,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/009S1H8VER00GK086N0M1J16K9",
+      "@id": "/v2/layouts/009S1H8VER00GK086N0M1J16K9",
       "title": "Omnis necessitatibus quis et itaque at.",
       "grid": {
         "rows": 11,
@@ -112,7 +112,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/00ATHDKDR3101A0G5C1AQM0V6A",
+      "@id": "/v2/layouts/00ATHDKDR3101A0G5C1AQM0V6A",
       "title": "Est voluptate porro fugiat aut.",
       "grid": {
         "rows": 1,
@@ -120,7 +120,7 @@
       },
       "regions": [
         {
-          "@id": "/v1/layouts/regions/00AY0J8B8A19570G3D02CJ1BD6",
+          "@id": "/v2/layouts/regions/00AY0J8B8A19570G3D02CJ1BD6",
           "@type": "ScreenLayoutRegions",
           "title": "Tenetur quo sit ut.",
           "gridArea": [
@@ -128,7 +128,7 @@
           ]
         },
         {
-          "@id": "/v1/layouts/regions/00C0GPDHE91GF90RQN02RZ0PGH",
+          "@id": "/v2/layouts/regions/00C0GPDHE91GF90RQN02RZ0PGH",
           "@type": "ScreenLayoutRegions",
           "title": "Explicabo voluptatum voluptas earum libero eos.",
           "gridArea": [
@@ -139,7 +139,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/00XGZF2DZY07P31R9R1NQW1H31",
+      "@id": "/v2/layouts/00XGZF2DZY07P31R9R1NQW1H31",
       "title": "Et quam qui laudantium.",
       "grid": {
         "rows": 4,
@@ -149,7 +149,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/00ZJ3044V5086R1D800NAH1M84",
+      "@id": "/v2/layouts/00ZJ3044V5086R1D800NAH1M84",
       "title": "In delectus laboriosam quo nam.",
       "grid": {
         "rows": 9,
@@ -159,7 +159,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/010SMDZCA3081S1Y5C1FCS08KC",
+      "@id": "/v2/layouts/010SMDZCA3081S1Y5C1FCS08KC",
       "title": "Unde et in recusandae sit.",
       "grid": {
         "rows": 8,
@@ -169,7 +169,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/018Z1K7XPT05381Q0K1BJF00RD",
+      "@id": "/v2/layouts/018Z1K7XPT05381Q0K1BJF00RD",
       "title": "Veritatis ad minus.",
       "grid": {
         "rows": 2,
@@ -179,7 +179,7 @@
     },
     {
       "@type": "ScreenLayout",
-      "@id": "/v1/layouts/01AW3HZ5X903QN0Y5211PH1JNZ",
+      "@id": "/v2/layouts/01AW3HZ5X903QN0Y5211PH1JNZ",
       "title": "Eaque temporibus laborum quod occaecati facilis.",
       "grid": {
         "rows": 5,
@@ -190,7 +190,7 @@
   ],
   "hydra:totalItems": 10,
   "hydra:view": {
-    "@id": "/v1/layouts?itemsPerPage=20",
+    "@id": "/v2/layouts?itemsPerPage=20",
     "@type": "hydra:PartialCollectionView"
   }
 }

@@ -5,9 +5,9 @@ import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import {
-  useGetV1SlidesQuery,
-  useGetV1PlaylistsByIdSlidesQuery,
-  useGetV1PlaylistsByIdQuery,
+  useGetV2SlidesQuery,
+  useGetV2PlaylistsByIdSlidesQuery,
+  useGetV2PlaylistsByIdQuery,
 } from "../../../redux/api/api.generated.ts";
 import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
 
@@ -27,13 +27,13 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
 
-  const { data: slides } = useGetV1SlidesQuery({
+  const { data: slides } = useGetV2SlidesQuery({
     title: searchText,
     itemsPerPage: 30,
     order: { createdAt: "desc" },
   });
 
-  const { data } = useGetV1PlaylistsByIdSlidesQuery(
+  const { data } = useGetV2PlaylistsByIdSlidesQuery(
     {
       id: slideId,
       itemsPerPage: 10,
@@ -107,7 +107,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   /* eslint-disable-next-line no-unused-vars */
   const columns = SelectSlideColumns({
     handleDelete: removeFromList,
-    apiCall: useGetV1PlaylistsByIdQuery,
+    apiCall: useGetV2PlaylistsByIdQuery,
     editTarget: "slide",
     infoModalRedirect: "/playlist/edit",
     infoModalTitle: t("info-modal.slide-on-playlists"),

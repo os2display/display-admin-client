@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 import UserContext from "../../context/user-context";
 import Schedule from "../util/schedule/schedule";
-import { useGetV1TenantsQuery } from "../../redux/api/api.generated.ts";
+import { useGetV2TenantsQuery } from "../../redux/api/api.generated.ts";
 import ContentBody from "../util/content-body/content-body";
 import TenantsDropdown from "../util/forms/multiselect-dropdown/tenants/tenants-dropdown";
 
@@ -22,7 +22,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   const { t } = useTranslation("common");
   const context = useContext(UserContext);
 
-  const { data: tenants } = useGetV1TenantsQuery({
+  const { data: tenants } = useGetV2TenantsQuery({
     itemsPerPage: 30,
   });
 

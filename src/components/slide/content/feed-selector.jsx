@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import set from "lodash.set";
 import {
   api,
-  useGetV1FeedSourcesQuery,
+  useGetV2FeedSourcesQuery,
 } from "../../../redux/api/api.generated.ts";
 import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../../util/helpers/id-from-url";
@@ -35,7 +35,7 @@ function FeedSelector({ value, onChange, formElement }) {
     data: feedSourcesData,
     error: feedSourcesLoadingError,
     isLoading: feedSourcesLoading,
-  } = useGetV1FeedSourcesQuery({
+  } = useGetV2FeedSourcesQuery({
     page: 1,
     supportedFeedOutputType: formElement.supportedFeedOutputType,
   });
@@ -68,7 +68,7 @@ function FeedSelector({ value, onChange, formElement }) {
   useEffect(() => {
     if (value?.feedSource) {
       dispatch(
-        api.endpoints.getV1FeedSourcesById.initiate({
+        api.endpoints.getV2FeedSourcesById.initiate({
           id: idFromUrl(value.feedSource),
         })
       )

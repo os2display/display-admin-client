@@ -1,7 +1,7 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import Spinner from "react-bootstrap/Spinner";
-import { useGetV1TemplatesByIdQuery } from "../../redux/api/api.generated.ts";
+import { useGetV2TemplatesByIdQuery } from "../../redux/api/api.generated.ts";
 import idFromUrl from "./helpers/id-from-url";
 /**
  * @param {object} props The props.
@@ -12,7 +12,7 @@ function TemplateLabelInList({ templateInfo }) {
   // template id created below.
   const id = idFromUrl(templateInfo["@id"]);
 
-  const { data } = useGetV1TemplatesByIdQuery({
+  const { data } = useGetV2TemplatesByIdQuery({
     id,
   });
 

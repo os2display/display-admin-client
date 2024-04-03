@@ -16,8 +16,8 @@ import {
 } from "../util/list/toast-component/display-toast";
 import {
   api,
-  useDeleteV1UserActivationCodesByIdMutation,
-  useGetV1UserActivationCodesQuery,
+  useDeleteV2UserActivationCodesByIdMutation,
+  useGetV2UserActivationCodesQuery,
 } from "../../redux/api/api.generated.ts";
 
 /**
@@ -45,9 +45,9 @@ function ActivationCodeList() {
 
   // Remove from tenant call
   const [
-    DeleteV1UserActivationCode,
+    DeleteV2UserActivationCode,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteV1UserActivationCodesByIdMutation();
+  ] = useDeleteV2UserActivationCodesByIdMutation();
 
   // Get method
   const {
@@ -55,7 +55,7 @@ function ActivationCodeList() {
     error: activationCodeGetError,
     isLoading,
     refetch,
-  } = useGetV1UserActivationCodesQuery({
+  } = useGetV2UserActivationCodesQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,
@@ -78,7 +78,7 @@ function ActivationCodeList() {
       const codeToDelete = selected[0];
       setSelected(selected.slice(1));
       const codeToDeleteId = idFromUrl(codeToDelete.id);
-      DeleteV1UserActivationCode({ id: codeToDeleteId });
+      DeleteV2UserActivationCode({ id: codeToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
@@ -135,7 +135,7 @@ function ActivationCodeList() {
     }
 
     dispatch(
-      api.endpoints.postV1UserActivationCodesRefresh.initiate({
+      api.endpoints.postV2UserActivationCodesRefresh.initiate({
         userActivationCodeActivationCode: JSON.stringify({
           activationCode: item[0].code,
         }),

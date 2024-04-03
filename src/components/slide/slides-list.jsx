@@ -13,9 +13,9 @@ import {
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
 import {
-  useGetV1SlidesQuery,
-  useDeleteV1SlidesByIdMutation,
-  useGetV1PlaylistsByIdQuery,
+  useGetV2SlidesQuery,
+  useDeleteV2SlidesByIdMutation,
+  useGetV2PlaylistsByIdQuery,
 } from "../../redux/api/api.generated.ts";
 
 /**
@@ -43,8 +43,8 @@ function SlidesList() {
   );
 
   // Delete call
-  const [DeleteV1Slides, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
-    useDeleteV1SlidesByIdMutation();
+  const [DeleteV2Slides, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
+    useDeleteV2SlidesByIdMutation();
 
   // Get method
   const {
@@ -52,7 +52,7 @@ function SlidesList() {
     error: slidesGetError,
     isLoading,
     refetch,
-  } = useGetV1SlidesQuery({
+  } = useGetV2SlidesQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,
@@ -83,7 +83,7 @@ function SlidesList() {
       const slideToDelete = selected[0];
       setSelected(selected.slice(1));
       const slideToDeleteId = idFromUrl(slideToDelete.id);
-      DeleteV1Slides({ id: slideToDeleteId });
+      DeleteV2Slides({ id: slideToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
@@ -113,7 +113,7 @@ function SlidesList() {
   // The columns for the table.
   const columns = SlideColumns({
     handleDelete,
-    apiCall: useGetV1PlaylistsByIdQuery,
+    apiCall: useGetV2PlaylistsByIdQuery,
     infoModalRedirect: "/playlist/edit",
     infoModalTitle: t("info-modal.slide-on-playlists"),
   });

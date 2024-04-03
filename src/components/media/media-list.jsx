@@ -15,8 +15,8 @@ import {
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
 import {
-  useGetV1MediaQuery,
-  useDeleteV1MediaByIdMutation,
+  useGetV2MediaQuery,
+  useDeleteV2MediaByIdMutation,
 } from "../../redux/api/api.generated.ts";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./media-list.scss";
@@ -62,8 +62,8 @@ function MediaList({ fromModal, multiple }) {
   );
 
   // Delete method
-  const [DeleteV1Media, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
-    useDeleteV1MediaByIdMutation();
+  const [DeleteV2Media, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
+    useDeleteV2MediaByIdMutation();
 
   // Get method
   const {
@@ -72,7 +72,7 @@ function MediaList({ fromModal, multiple }) {
 
     isLoading,
     refetch,
-  } = useGetV1MediaQuery({
+  } = useGetV2MediaQuery({
     page,
     title: searchText,
     order: { createdAt: sortDesc ? "desc" : "asc" },
@@ -136,7 +136,7 @@ function MediaList({ fromModal, multiple }) {
       const toDelete = selected[0];
       setSelected(selected.slice(1));
       const toDeleteId = idFromUrl(toDelete.id);
-      DeleteV1Media({ id: toDeleteId });
+      DeleteV2Media({ id: toDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 

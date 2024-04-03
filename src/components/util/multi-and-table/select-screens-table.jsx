@@ -5,9 +5,9 @@ import Table from "../table/table";
 import ScreensDropdown from "../forms/multiselect-dropdown/screens/screens-dropdown";
 import { SelectScreenColumns } from "../../screen/util/screen-columns";
 import {
-  useGetV1ScreensQuery,
-  useGetV1ScreensByIdScreenGroupsQuery,
-  useGetV1CampaignsByIdScreensQuery,
+  useGetV2ScreensQuery,
+  useGetV2ScreensByIdScreenGroupsQuery,
+  useGetV2CampaignsByIdScreensQuery,
 } from "../../../redux/api/api.generated.ts";
 
 /**
@@ -27,14 +27,14 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   const [searchText, setSearchText] = useState("");
 
   // Get 30 screens for dropdown, and when search is changed more will be fetched.
-  const { data: screens } = useGetV1ScreensQuery({
+  const { data: screens } = useGetV2ScreensQuery({
     search: searchText,
     itemsPerPage: 30,
     order: { createdAt: "desc" },
   });
 
   // Get 10 of the selected screens for table below dropdown, table is paginated so on page change more is fetched.
-  const { data: alreadySelectedScreens } = useGetV1CampaignsByIdScreensQuery(
+  const { data: alreadySelectedScreens } = useGetV2CampaignsByIdScreensQuery(
     {
       id: campaignId,
       itemsPerPage: 10,
@@ -101,7 +101,7 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
   // The columns for the table.
   const columns = SelectScreenColumns({
     handleDelete: removeFromList,
-    apiCall: useGetV1ScreensByIdScreenGroupsQuery,
+    apiCall: useGetV2ScreensByIdScreenGroupsQuery,
     editTarget: "screen",
     infoModalRedirect: "/group/edit",
     infoModalTitle: t("info-modal.screen-in-groups"),

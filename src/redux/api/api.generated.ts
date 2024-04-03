@@ -9,7 +9,7 @@ export const api = createApi({
       GetOidcAuthTokenItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/authentication/oidc/token`,
+        url: `/v2/authentication/oidc/token`,
         params: { state: queryArg.state, code: queryArg.code },
       }),
     }),
@@ -18,7 +18,7 @@ export const api = createApi({
       GetOidcAuthUrlsItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/authentication/oidc/urls`,
+        url: `/v2/authentication/oidc/urls`,
         params: { providerKey: queryArg.providerKey },
       }),
     }),
@@ -27,7 +27,7 @@ export const api = createApi({
       PostLoginInfoScreenApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/authentication/screen`,
+        url: `/v2/authentication/screen`,
         method: "POST",
         body: queryArg.screenLoginInput,
       }),
@@ -37,7 +37,7 @@ export const api = createApi({
       LoginCheckPostApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/authentication/token`,
+        url: `/v2/authentication/token`,
         method: "POST",
         body: queryArg.body,
       }),
@@ -47,35 +47,35 @@ export const api = createApi({
       PostRefreshTokenItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/authentication/token/refresh`,
+        url: `/v2/authentication/token/refresh`,
         method: "POST",
         body: queryArg.refreshTokenRequest,
       }),
     }),
-    getV1CampaignsByIdScreenGroups: build.query<
-      GetV1CampaignsByIdScreenGroupsApiResponse,
-      GetV1CampaignsByIdScreenGroupsApiArg
+    getV2CampaignsByIdScreenGroups: build.query<
+      GetV2CampaignsByIdScreenGroupsApiResponse,
+      GetV2CampaignsByIdScreenGroupsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/campaigns/${queryArg.id}/screen-groups`,
+        url: `/v2/campaigns/${queryArg.id}/screen-groups`,
         params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
-    getV1CampaignsByIdScreens: build.query<
-      GetV1CampaignsByIdScreensApiResponse,
-      GetV1CampaignsByIdScreensApiArg
+    getV2CampaignsByIdScreens: build.query<
+      GetV2CampaignsByIdScreensApiResponse,
+      GetV2CampaignsByIdScreensApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/campaigns/${queryArg.id}/screens`,
+        url: `/v2/campaigns/${queryArg.id}/screens`,
         params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
-    getV1FeedSources: build.query<
-      GetV1FeedSourcesApiResponse,
-      GetV1FeedSourcesApiArg
+    getV2FeedSources: build.query<
+      GetV2FeedSourcesApiResponse,
+      GetV2FeedSourcesApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/feed-sources`,
+        url: `/v2/feed-sources`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -88,23 +88,23 @@ export const api = createApi({
         },
       }),
     }),
-    getV1FeedSourcesById: build.query<
-      GetV1FeedSourcesByIdApiResponse,
-      GetV1FeedSourcesByIdApiArg
+    getV2FeedSourcesById: build.query<
+      GetV2FeedSourcesByIdApiResponse,
+      GetV2FeedSourcesByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/feed-sources/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/feed-sources/${queryArg.id}` }),
     }),
-    getV1FeedSourcesByIdConfigAndName: build.query<
-      GetV1FeedSourcesByIdConfigAndNameApiResponse,
-      GetV1FeedSourcesByIdConfigAndNameApiArg
+    getV2FeedSourcesByIdConfigAndName: build.query<
+      GetV2FeedSourcesByIdConfigAndNameApiResponse,
+      GetV2FeedSourcesByIdConfigAndNameApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/feed_sources/${queryArg.id}/config/${queryArg.name}`,
+        url: `/v2/feed_sources/${queryArg.id}/config/${queryArg.name}`,
       }),
     }),
-    getV1Feeds: build.query<GetV1FeedsApiResponse, GetV1FeedsApiArg>({
+    getV2Feeds: build.query<GetV2FeedsApiResponse, GetV2FeedsApiArg>({
       query: (queryArg) => ({
-        url: `/v1/feeds`,
+        url: `/v2/feeds`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -114,33 +114,33 @@ export const api = createApi({
         },
       }),
     }),
-    getV1FeedsById: build.query<
-      GetV1FeedsByIdApiResponse,
-      GetV1FeedsByIdApiArg
+    getV2FeedsById: build.query<
+      GetV2FeedsByIdApiResponse,
+      GetV2FeedsByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/feeds/${queryArg.id}` }),
     }),
-    getV1FeedsByIdData: build.query<
-      GetV1FeedsByIdDataApiResponse,
-      GetV1FeedsByIdDataApiArg
+    getV2FeedsByIdData: build.query<
+      GetV2FeedsByIdDataApiResponse,
+      GetV2FeedsByIdDataApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/feeds/${queryArg.id}/data` }),
+      query: (queryArg) => ({ url: `/v2/feeds/${queryArg.id}/data` }),
     }),
-    getV1Layouts: build.query<GetV1LayoutsApiResponse, GetV1LayoutsApiArg>({
+    getV2Layouts: build.query<GetV2LayoutsApiResponse, GetV2LayoutsApiArg>({
       query: (queryArg) => ({
-        url: `/v1/layouts`,
+        url: `/v2/layouts`,
         params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
-    getV1LayoutsById: build.query<
-      GetV1LayoutsByIdApiResponse,
-      GetV1LayoutsByIdApiArg
+    getV2LayoutsById: build.query<
+      GetV2LayoutsByIdApiResponse,
+      GetV2LayoutsByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/layouts/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/layouts/${queryArg.id}` }),
     }),
-    getV1Media: build.query<GetV1MediaApiResponse, GetV1MediaApiArg>({
+    getV2Media: build.query<GetV2MediaApiResponse, GetV2MediaApiArg>({
       query: (queryArg) => ({
-        url: `/v1/media`,
+        url: `/v2/media`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -157,32 +157,32 @@ export const api = createApi({
       PostMediaCollectionApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/media`,
+        url: `/v2/media`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    getV1MediaById: build.query<
-      GetV1MediaByIdApiResponse,
-      GetV1MediaByIdApiArg
+    getv2MediaById: build.query<
+      Getv2MediaByIdApiResponse,
+      Getv2MediaByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/media/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/media/${queryArg.id}` }),
     }),
-    deleteV1MediaById: build.mutation<
-      DeleteV1MediaByIdApiResponse,
-      DeleteV1MediaByIdApiArg
+    deleteV2MediaById: build.mutation<
+      DeleteV2MediaByIdApiResponse,
+      DeleteV2MediaByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/media/${queryArg.id}`,
+        url: `/v2/media/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getV1Playlists: build.query<
-      GetV1PlaylistsApiResponse,
-      GetV1PlaylistsApiArg
+    getV2Playlists: build.query<
+      GetV2PlaylistsApiResponse,
+      GetV2PlaylistsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/playlists`,
+        url: `/v2/playlists`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -197,47 +197,47 @@ export const api = createApi({
         },
       }),
     }),
-    postV1Playlists: build.mutation<
-      PostV1PlaylistsApiResponse,
-      PostV1PlaylistsApiArg
+    postV2Playlists: build.mutation<
+      PostV2PlaylistsApiResponse,
+      PostV2PlaylistsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/playlists`,
+        url: `/v2/playlists`,
         method: "POST",
         body: queryArg.playlistPlaylistInput,
       }),
     }),
-    getV1PlaylistsById: build.query<
-      GetV1PlaylistsByIdApiResponse,
-      GetV1PlaylistsByIdApiArg
+    getV2PlaylistsById: build.query<
+      GetV2PlaylistsByIdApiResponse,
+      GetV2PlaylistsByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/playlists/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/playlists/${queryArg.id}` }),
     }),
-    putV1PlaylistsById: build.mutation<
-      PutV1PlaylistsByIdApiResponse,
-      PutV1PlaylistsByIdApiArg
+    putV2PlaylistsById: build.mutation<
+      PutV2PlaylistsByIdApiResponse,
+      PutV2PlaylistsByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/playlists/${queryArg.id}`,
+        url: `/v2/playlists/${queryArg.id}`,
         method: "PUT",
         body: queryArg.playlistPlaylistInput,
       }),
     }),
-    deleteV1PlaylistsById: build.mutation<
-      DeleteV1PlaylistsByIdApiResponse,
-      DeleteV1PlaylistsByIdApiArg
+    deleteV2PlaylistsById: build.mutation<
+      DeleteV2PlaylistsByIdApiResponse,
+      DeleteV2PlaylistsByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/playlists/${queryArg.id}`,
+        url: `/v2/playlists/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getV1PlaylistsByIdSlides: build.query<
-      GetV1PlaylistsByIdSlidesApiResponse,
-      GetV1PlaylistsByIdSlidesApiArg
+    getV2PlaylistsByIdSlides: build.query<
+      GetV2PlaylistsByIdSlidesApiResponse,
+      GetV2PlaylistsByIdSlidesApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/playlists/${queryArg.id}/slides`,
+        url: `/v2/playlists/${queryArg.id}/slides`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -245,31 +245,31 @@ export const api = createApi({
         },
       }),
     }),
-    putV1PlaylistsByIdSlides: build.mutation<
-      PutV1PlaylistsByIdSlidesApiResponse,
-      PutV1PlaylistsByIdSlidesApiArg
+    putV2PlaylistsByIdSlides: build.mutation<
+      PutV2PlaylistsByIdSlidesApiResponse,
+      PutV2PlaylistsByIdSlidesApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/playlists/${queryArg.id}/slides`,
+        url: `/v2/playlists/${queryArg.id}/slides`,
         method: "PUT",
         body: queryArg.body,
       }),
     }),
-    deleteV1PlaylistsByIdSlidesAndSlideId: build.mutation<
-      DeleteV1PlaylistsByIdSlidesAndSlideIdApiResponse,
-      DeleteV1PlaylistsByIdSlidesAndSlideIdApiArg
+    deleteV2PlaylistsByIdSlidesAndSlideId: build.mutation<
+      DeleteV2PlaylistsByIdSlidesAndSlideIdApiResponse,
+      DeleteV2PlaylistsByIdSlidesAndSlideIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/playlists/${queryArg.id}/slides/${queryArg.slideId}`,
+        url: `/v2/playlists/${queryArg.id}/slides/${queryArg.slideId}`,
         method: "DELETE",
       }),
     }),
-    getV1ScreenGroups: build.query<
-      GetV1ScreenGroupsApiResponse,
-      GetV1ScreenGroupsApiArg
+    getV2ScreenGroups: build.query<
+      GetV2ScreenGroupsApiResponse,
+      GetV2ScreenGroupsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups`,
+        url: `/v2/screen-groups`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -281,12 +281,12 @@ export const api = createApi({
         },
       }),
     }),
-    postV1ScreenGroups: build.mutation<
-      PostV1ScreenGroupsApiResponse,
-      PostV1ScreenGroupsApiArg
+    postV2ScreenGroups: build.mutation<
+      PostV2ScreenGroupsApiResponse,
+      PostV2ScreenGroupsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups`,
+        url: `/v2/screen-groups`,
         method: "POST",
         body: queryArg.screenGroupScreenGroupInput,
       }),
@@ -296,40 +296,40 @@ export const api = createApi({
       GetScreenGroupCampaignItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups-campaigns/${queryArg.id}`,
+        url: `/v2/screen-groups-campaigns/${queryArg.id}`,
       }),
     }),
-    getV1ScreenGroupsById: build.query<
-      GetV1ScreenGroupsByIdApiResponse,
-      GetV1ScreenGroupsByIdApiArg
+    getV2ScreenGroupsById: build.query<
+      GetV2ScreenGroupsByIdApiResponse,
+      GetV2ScreenGroupsByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/screen-groups/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/screen-groups/${queryArg.id}` }),
     }),
-    putV1ScreenGroupsById: build.mutation<
-      PutV1ScreenGroupsByIdApiResponse,
-      PutV1ScreenGroupsByIdApiArg
+    putV2ScreenGroupsById: build.mutation<
+      PutV2ScreenGroupsByIdApiResponse,
+      PutV2ScreenGroupsByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups/${queryArg.id}`,
+        url: `/v2/screen-groups/${queryArg.id}`,
         method: "PUT",
         body: queryArg.screenGroupScreenGroupInput,
       }),
     }),
-    deleteV1ScreenGroupsById: build.mutation<
-      DeleteV1ScreenGroupsByIdApiResponse,
-      DeleteV1ScreenGroupsByIdApiArg
+    deleteV2ScreenGroupsById: build.mutation<
+      DeleteV2ScreenGroupsByIdApiResponse,
+      DeleteV2ScreenGroupsByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups/${queryArg.id}`,
+        url: `/v2/screen-groups/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getV1ScreenGroupsByIdCampaigns: build.query<
-      GetV1ScreenGroupsByIdCampaignsApiResponse,
-      GetV1ScreenGroupsByIdCampaignsApiArg
+    getV2ScreenGroupsByIdCampaigns: build.query<
+      GetV2ScreenGroupsByIdCampaignsApiResponse,
+      GetV2ScreenGroupsByIdCampaignsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups/${queryArg.id}/campaigns`,
+        url: `/v2/screen-groups/${queryArg.id}/campaigns`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -337,37 +337,37 @@ export const api = createApi({
         },
       }),
     }),
-    putV1ScreenGroupsByIdCampaigns: build.mutation<
-      PutV1ScreenGroupsByIdCampaignsApiResponse,
-      PutV1ScreenGroupsByIdCampaignsApiArg
+    putV2ScreenGroupsByIdCampaigns: build.mutation<
+      PutV2ScreenGroupsByIdCampaignsApiResponse,
+      PutV2ScreenGroupsByIdCampaignsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups/${queryArg.id}/campaigns`,
+        url: `/v2/screen-groups/${queryArg.id}/campaigns`,
         method: "PUT",
         body: queryArg.body,
       }),
     }),
-    deleteV1ScreenGroupsByIdCampaignsAndCampaignId: build.mutation<
-      DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiResponse,
-      DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiArg
+    deleteV2ScreenGroupsByIdCampaignsAndCampaignId: build.mutation<
+      DeleteV2ScreenGroupsByIdCampaignsAndCampaignIdApiResponse,
+      DeleteV2ScreenGroupsByIdCampaignsAndCampaignIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups/${queryArg.id}/campaigns/${queryArg.campaignId}`,
+        url: `/v2/screen-groups/${queryArg.id}/campaigns/${queryArg.campaignId}`,
         method: "DELETE",
       }),
     }),
-    getV1ScreenGroupsByIdScreens: build.query<
-      GetV1ScreenGroupsByIdScreensApiResponse,
-      GetV1ScreenGroupsByIdScreensApiArg
+    getV2ScreenGroupsByIdScreens: build.query<
+      GetV2ScreenGroupsByIdScreensApiResponse,
+      GetV2ScreenGroupsByIdScreensApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screen-groups/${queryArg.id}/screens`,
+        url: `/v2/screen-groups/${queryArg.id}/screens`,
         params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
-    getV1Screens: build.query<GetV1ScreensApiResponse, GetV1ScreensApiArg>({
+    getV2Screens: build.query<GetV2ScreensApiResponse, GetV2ScreensApiArg>({
       query: (queryArg) => ({
-        url: `/v1/screens`,
+        url: `/v2/screens`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -378,38 +378,38 @@ export const api = createApi({
         },
       }),
     }),
-    postV1Screens: build.mutation<
-      PostV1ScreensApiResponse,
-      PostV1ScreensApiArg
+    postV2Screens: build.mutation<
+      PostV2ScreensApiResponse,
+      PostV2ScreensApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens`,
+        url: `/v2/screens`,
         method: "POST",
         body: queryArg.screenScreenInput,
       }),
     }),
-    getV1ScreensById: build.query<
-      GetV1ScreensByIdApiResponse,
-      GetV1ScreensByIdApiArg
+    getV2ScreensById: build.query<
+      GetV2ScreensByIdApiResponse,
+      GetV2ScreensByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/screens/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/screens/${queryArg.id}` }),
     }),
-    putV1ScreensById: build.mutation<
-      PutV1ScreensByIdApiResponse,
-      PutV1ScreensByIdApiArg
+    putV2ScreensById: build.mutation<
+      PutV2ScreensByIdApiResponse,
+      PutV2ScreensByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}`,
+        url: `/v2/screens/${queryArg.id}`,
         method: "PUT",
         body: queryArg.screenScreenInput,
       }),
     }),
-    deleteV1ScreensById: build.mutation<
-      DeleteV1ScreensByIdApiResponse,
-      DeleteV1ScreensByIdApiArg
+    deleteV2ScreensById: build.mutation<
+      DeleteV2ScreensByIdApiResponse,
+      DeleteV2ScreensByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}`,
+        url: `/v2/screens/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -418,17 +418,17 @@ export const api = createApi({
       PostScreenBindKeyApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/bind`,
+        url: `/v2/screens/${queryArg.id}/bind`,
         method: "POST",
         body: queryArg.screenBindObject,
       }),
     }),
-    getV1ScreensByIdCampaigns: build.query<
-      GetV1ScreensByIdCampaignsApiResponse,
-      GetV1ScreensByIdCampaignsApiArg
+    getV2ScreensByIdCampaigns: build.query<
+      GetV2ScreensByIdCampaignsApiResponse,
+      GetV2ScreensByIdCampaignsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/campaigns`,
+        url: `/v2/screens/${queryArg.id}/campaigns`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -436,31 +436,31 @@ export const api = createApi({
         },
       }),
     }),
-    putV1ScreensByIdCampaigns: build.mutation<
-      PutV1ScreensByIdCampaignsApiResponse,
-      PutV1ScreensByIdCampaignsApiArg
+    putV2ScreensByIdCampaigns: build.mutation<
+      PutV2ScreensByIdCampaignsApiResponse,
+      PutV2ScreensByIdCampaignsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/campaigns`,
+        url: `/v2/screens/${queryArg.id}/campaigns`,
         method: "PUT",
         body: queryArg.body,
       }),
     }),
-    deleteV1ScreensByIdCampaignsAndCampaignId: build.mutation<
-      DeleteV1ScreensByIdCampaignsAndCampaignIdApiResponse,
-      DeleteV1ScreensByIdCampaignsAndCampaignIdApiArg
+    deleteV2ScreensByIdCampaignsAndCampaignId: build.mutation<
+      DeleteV2ScreensByIdCampaignsAndCampaignIdApiResponse,
+      DeleteV2ScreensByIdCampaignsAndCampaignIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/campaigns/${queryArg.campaignId}`,
+        url: `/v2/screens/${queryArg.id}/campaigns/${queryArg.campaignId}`,
         method: "DELETE",
       }),
     }),
-    getV1ScreensByIdRegionsAndRegionIdPlaylists: build.query<
-      GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiResponse,
-      GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg
+    getV2ScreensByIdRegionsAndRegionIdPlaylists: build.query<
+      GetV2ScreensByIdRegionsAndRegionIdPlaylistsApiResponse,
+      GetV2ScreensByIdRegionsAndRegionIdPlaylistsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists`,
+        url: `/v2/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -473,7 +473,7 @@ export const api = createApi({
       PutPlaylistScreenRegionItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists`,
+        url: `/v2/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists`,
         method: "PUT",
         body: queryArg.body,
       }),
@@ -483,16 +483,16 @@ export const api = createApi({
       DeletePlaylistScreenRegionItemApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists/${queryArg.playlistId}`,
+        url: `/v2/screens/${queryArg.id}/regions/${queryArg.regionId}/playlists/${queryArg.playlistId}`,
         method: "DELETE",
       }),
     }),
-    getV1ScreensByIdScreenGroups: build.query<
-      GetV1ScreensByIdScreenGroupsApiResponse,
-      GetV1ScreensByIdScreenGroupsApiArg
+    getV2ScreensByIdScreenGroups: build.query<
+      GetV2ScreensByIdScreenGroupsApiResponse,
+      GetV2ScreensByIdScreenGroupsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/screen-groups`,
+        url: `/v2/screens/${queryArg.id}/screen-groups`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -500,22 +500,22 @@ export const api = createApi({
         },
       }),
     }),
-    putV1ScreensByIdScreenGroups: build.mutation<
-      PutV1ScreensByIdScreenGroupsApiResponse,
-      PutV1ScreensByIdScreenGroupsApiArg
+    putV2ScreensByIdScreenGroups: build.mutation<
+      PutV2ScreensByIdScreenGroupsApiResponse,
+      PutV2ScreensByIdScreenGroupsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/screen-groups`,
+        url: `/v2/screens/${queryArg.id}/screen-groups`,
         method: "PUT",
         body: queryArg.body,
       }),
     }),
-    deleteV1ScreensByIdScreenGroupsAndScreenGroupId: build.mutation<
-      DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiResponse,
-      DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiArg
+    deleteV2ScreensByIdScreenGroupsAndScreenGroupId: build.mutation<
+      DeleteV2ScreensByIdScreenGroupsAndScreenGroupIdApiResponse,
+      DeleteV2ScreensByIdScreenGroupsAndScreenGroupIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/screen-groups/${queryArg.screenGroupId}`,
+        url: `/v2/screens/${queryArg.id}/screen-groups/${queryArg.screenGroupId}`,
         method: "DELETE",
       }),
     }),
@@ -524,14 +524,14 @@ export const api = createApi({
       PostScreenUnbindApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/screens/${queryArg.id}/unbind`,
+        url: `/v2/screens/${queryArg.id}/unbind`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    getV1Slides: build.query<GetV1SlidesApiResponse, GetV1SlidesApiArg>({
+    getV2Slides: build.query<GetV2SlidesApiResponse, GetV2SlidesApiArg>({
       query: (queryArg) => ({
-        url: `/v1/slides`,
+        url: `/v2/slides`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -544,44 +544,44 @@ export const api = createApi({
         },
       }),
     }),
-    postV1Slides: build.mutation<PostV1SlidesApiResponse, PostV1SlidesApiArg>({
+    postV2Slides: build.mutation<PostV2SlidesApiResponse, PostV2SlidesApiArg>({
       query: (queryArg) => ({
-        url: `/v1/slides`,
+        url: `/v2/slides`,
         method: "POST",
         body: queryArg.slideSlideInput,
       }),
     }),
-    getV1SlidesById: build.query<
-      GetV1SlidesByIdApiResponse,
-      GetV1SlidesByIdApiArg
+    getV2SlidesById: build.query<
+      GetV2SlidesByIdApiResponse,
+      GetV2SlidesByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/slides/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/slides/${queryArg.id}` }),
     }),
-    putV1SlidesById: build.mutation<
-      PutV1SlidesByIdApiResponse,
-      PutV1SlidesByIdApiArg
+    putV2SlidesById: build.mutation<
+      PutV2SlidesByIdApiResponse,
+      PutV2SlidesByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/slides/${queryArg.id}`,
+        url: `/v2/slides/${queryArg.id}`,
         method: "PUT",
         body: queryArg.slideSlideInput,
       }),
     }),
-    deleteV1SlidesById: build.mutation<
-      DeleteV1SlidesByIdApiResponse,
-      DeleteV1SlidesByIdApiArg
+    deleteV2SlidesById: build.mutation<
+      DeleteV2SlidesByIdApiResponse,
+      DeleteV2SlidesByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/slides/${queryArg.id}`,
+        url: `/v2/slides/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getV1SlidesByIdPlaylists: build.query<
-      GetV1SlidesByIdPlaylistsApiResponse,
-      GetV1SlidesByIdPlaylistsApiArg
+    getV2SlidesByIdPlaylists: build.query<
+      GetV2SlidesByIdPlaylistsApiResponse,
+      GetV2SlidesByIdPlaylistsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/slides/${queryArg.id}/playlists`,
+        url: `/v2/slides/${queryArg.id}/playlists`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -589,22 +589,22 @@ export const api = createApi({
         },
       }),
     }),
-    putV1SlidesByIdPlaylists: build.mutation<
-      PutV1SlidesByIdPlaylistsApiResponse,
-      PutV1SlidesByIdPlaylistsApiArg
+    putV2SlidesByIdPlaylists: build.mutation<
+      PutV2SlidesByIdPlaylistsApiResponse,
+      PutV2SlidesByIdPlaylistsApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/slides/${queryArg.id}/playlists`,
+        url: `/v2/slides/${queryArg.id}/playlists`,
         method: "PUT",
         body: queryArg.body,
       }),
     }),
-    getV1Templates: build.query<
-      GetV1TemplatesApiResponse,
-      GetV1TemplatesApiArg
+    getV2Templates: build.query<
+      GetV2TemplatesApiResponse,
+      GetV2TemplatesApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/templates`,
+        url: `/v2/templates`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -616,15 +616,15 @@ export const api = createApi({
         },
       }),
     }),
-    getV1TemplatesById: build.query<
-      GetV1TemplatesByIdApiResponse,
-      GetV1TemplatesByIdApiArg
+    getV2TemplatesById: build.query<
+      GetV2TemplatesByIdApiResponse,
+      GetV2TemplatesByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/templates/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/templates/${queryArg.id}` }),
     }),
-    getV1Tenants: build.query<GetV1TenantsApiResponse, GetV1TenantsApiArg>({
+    getV2Tenants: build.query<GetV2TenantsApiResponse, GetV2TenantsApiArg>({
       query: (queryArg) => ({
-        url: `/v1/tenants`,
+        url: `/v2/tenants`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -635,15 +635,15 @@ export const api = createApi({
         },
       }),
     }),
-    getV1TenantsById: build.query<
-      GetV1TenantsByIdApiResponse,
-      GetV1TenantsByIdApiArg
+    getV2TenantsById: build.query<
+      GetV2TenantsByIdApiResponse,
+      GetV2TenantsByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/tenants/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/tenants/${queryArg.id}` }),
     }),
-    getV1Themes: build.query<GetV1ThemesApiResponse, GetV1ThemesApiArg>({
+    getV2Themes: build.query<GetV2ThemesApiResponse, GetV2ThemesApiArg>({
       query: (queryArg) => ({
-        url: `/v1/themes`,
+        url: `/v2/themes`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -655,97 +655,97 @@ export const api = createApi({
         },
       }),
     }),
-    postV1Themes: build.mutation<PostV1ThemesApiResponse, PostV1ThemesApiArg>({
+    postV2Themes: build.mutation<PostV2ThemesApiResponse, PostV2ThemesApiArg>({
       query: (queryArg) => ({
-        url: `/v1/themes`,
+        url: `/v2/themes`,
         method: "POST",
         body: queryArg.themeThemeInput,
       }),
     }),
-    getV1ThemesById: build.query<
-      GetV1ThemesByIdApiResponse,
-      GetV1ThemesByIdApiArg
+    getV2ThemesById: build.query<
+      GetV2ThemesByIdApiResponse,
+      GetV2ThemesByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/themes/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/themes/${queryArg.id}` }),
     }),
-    putV1ThemesById: build.mutation<
-      PutV1ThemesByIdApiResponse,
-      PutV1ThemesByIdApiArg
+    putV2ThemesById: build.mutation<
+      PutV2ThemesByIdApiResponse,
+      PutV2ThemesByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/themes/${queryArg.id}`,
+        url: `/v2/themes/${queryArg.id}`,
         method: "PUT",
         body: queryArg.themeThemeInput,
       }),
     }),
-    deleteV1ThemesById: build.mutation<
-      DeleteV1ThemesByIdApiResponse,
-      DeleteV1ThemesByIdApiArg
+    deleteV2ThemesById: build.mutation<
+      DeleteV2ThemesByIdApiResponse,
+      DeleteV2ThemesByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/themes/${queryArg.id}`,
+        url: `/v2/themes/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getV1UserActivationCodes: build.query<
-      GetV1UserActivationCodesApiResponse,
-      GetV1UserActivationCodesApiArg
+    getV2UserActivationCodes: build.query<
+      GetV2UserActivationCodesApiResponse,
+      GetV2UserActivationCodesApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/user-activation-codes`,
+        url: `/v2/user-activation-codes`,
         params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
-    postV1UserActivationCodes: build.mutation<
-      PostV1UserActivationCodesApiResponse,
-      PostV1UserActivationCodesApiArg
+    postV2UserActivationCodes: build.mutation<
+      PostV2UserActivationCodesApiResponse,
+      PostV2UserActivationCodesApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/user-activation-codes`,
+        url: `/v2/user-activation-codes`,
         method: "POST",
         body: queryArg.userActivationCodeUserActivationCodeInput,
       }),
     }),
-    postV1UserActivationCodesActivate: build.mutation<
-      PostV1UserActivationCodesActivateApiResponse,
-      PostV1UserActivationCodesActivateApiArg
+    postV2UserActivationCodesActivate: build.mutation<
+      PostV2UserActivationCodesActivateApiResponse,
+      PostV2UserActivationCodesActivateApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/user-activation-codes/activate`,
+        url: `/v2/user-activation-codes/activate`,
         method: "POST",
         body: queryArg.userActivationCodeActivationCode,
       }),
     }),
-    postV1UserActivationCodesRefresh: build.mutation<
-      PostV1UserActivationCodesRefreshApiResponse,
-      PostV1UserActivationCodesRefreshApiArg
+    postV2UserActivationCodesRefresh: build.mutation<
+      PostV2UserActivationCodesRefreshApiResponse,
+      PostV2UserActivationCodesRefreshApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/user-activation-codes/refresh`,
+        url: `/v2/user-activation-codes/refresh`,
         method: "POST",
         body: queryArg.userActivationCodeActivationCode,
       }),
     }),
-    getV1UserActivationCodesById: build.query<
-      GetV1UserActivationCodesByIdApiResponse,
-      GetV1UserActivationCodesByIdApiArg
+    getV2UserActivationCodesById: build.query<
+      GetV2UserActivationCodesByIdApiResponse,
+      GetV2UserActivationCodesByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/user-activation-codes/${queryArg.id}`,
+        url: `/v2/user-activation-codes/${queryArg.id}`,
       }),
     }),
-    deleteV1UserActivationCodesById: build.mutation<
-      DeleteV1UserActivationCodesByIdApiResponse,
-      DeleteV1UserActivationCodesByIdApiArg
+    deleteV2UserActivationCodesById: build.mutation<
+      DeleteV2UserActivationCodesByIdApiResponse,
+      DeleteV2UserActivationCodesByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/user-activation-codes/${queryArg.id}`,
+        url: `/v2/user-activation-codes/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getV1Users: build.query<GetV1UsersApiResponse, GetV1UsersApiArg>({
+    getV2Users: build.query<GetV2UsersApiResponse, GetV2UsersApiArg>({
       query: (queryArg) => ({
-        url: `/v1/users`,
+        url: `/v2/users`,
         params: {
           page: queryArg.page,
           itemsPerPage: queryArg.itemsPerPage,
@@ -757,44 +757,44 @@ export const api = createApi({
         },
       }),
     }),
-    postV1Users: build.mutation<PostV1UsersApiResponse, PostV1UsersApiArg>({
+    postV2Users: build.mutation<PostV2UsersApiResponse, PostV2UsersApiArg>({
       query: (queryArg) => ({
-        url: `/v1/users`,
+        url: `/v2/users`,
         method: "POST",
         body: queryArg.userUserInput,
       }),
     }),
-    getV1UsersById: build.query<
-      GetV1UsersByIdApiResponse,
-      GetV1UsersByIdApiArg
+    getV2UsersById: build.query<
+      GetV2UsersByIdApiResponse,
+      GetV2UsersByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/v1/users/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/v2/users/${queryArg.id}` }),
     }),
-    putV1UsersById: build.mutation<
-      PutV1UsersByIdApiResponse,
-      PutV1UsersByIdApiArg
+    putV2UsersById: build.mutation<
+      PutV2UsersByIdApiResponse,
+      PutV2UsersByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/users/${queryArg.id}`,
+        url: `/v2/users/${queryArg.id}`,
         method: "PUT",
         body: queryArg.userUserInput,
       }),
     }),
-    deleteV1UsersById: build.mutation<
-      DeleteV1UsersByIdApiResponse,
-      DeleteV1UsersByIdApiArg
+    deleteV2UsersById: build.mutation<
+      DeleteV2UsersByIdApiResponse,
+      DeleteV2UsersByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/users/${queryArg.id}`,
+        url: `/v2/users/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    deleteV1UsersByIdRemoveFromTenant: build.mutation<
-      DeleteV1UsersByIdRemoveFromTenantApiResponse,
-      DeleteV1UsersByIdRemoveFromTenantApiArg
+    deleteV2UsersByIdRemoveFromTenant: build.mutation<
+      DeleteV2UsersByIdRemoveFromTenantApiResponse,
+      DeleteV2UsersByIdRemoveFromTenantApiArg
     >({
       query: (queryArg) => ({
-        url: `/v1/users/${queryArg.id}/remove-from-tenant`,
+        url: `/v2/users/${queryArg.id}/remove-from-tenant`,
         method: "DELETE",
       }),
     }),
@@ -836,22 +836,22 @@ export type PostRefreshTokenItemApiArg = {
   /** Refresh JWT Token */
   refreshTokenRequest: RefreshTokenRequest;
 };
-export type GetV1CampaignsByIdScreenGroupsApiResponse = unknown;
-export type GetV1CampaignsByIdScreenGroupsApiArg = {
+export type GetV2CampaignsByIdScreenGroupsApiResponse = unknown;
+export type GetV2CampaignsByIdScreenGroupsApiArg = {
   id: string;
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
 };
-export type GetV1CampaignsByIdScreensApiResponse = unknown;
-export type GetV1CampaignsByIdScreensApiArg = {
+export type GetV2CampaignsByIdScreensApiResponse = unknown;
+export type GetV2CampaignsByIdScreensApiArg = {
   id: string;
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
 };
-export type GetV1FeedSourcesApiResponse = unknown;
-export type GetV1FeedSourcesApiArg = {
+export type GetV2FeedSourcesApiResponse = unknown;
+export type GetV2FeedSourcesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -873,17 +873,17 @@ export type GetV1FeedSourcesApiArg = {
     modifiedAt?: "asc" | "desc";
   };
 };
-export type GetV1FeedSourcesByIdApiResponse = unknown;
-export type GetV1FeedSourcesByIdApiArg = {
+export type GetV2FeedSourcesByIdApiResponse = unknown;
+export type GetV2FeedSourcesByIdApiArg = {
   id: string;
 };
-export type GetV1FeedSourcesByIdConfigAndNameApiResponse = unknown;
-export type GetV1FeedSourcesByIdConfigAndNameApiArg = {
+export type GetV2FeedSourcesByIdConfigAndNameApiResponse = unknown;
+export type GetV2FeedSourcesByIdConfigAndNameApiArg = {
   id: string;
   name: string;
 };
-export type GetV1FeedsApiResponse = unknown;
-export type GetV1FeedsApiArg = {
+export type GetV2FeedsApiResponse = unknown;
+export type GetV2FeedsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -898,26 +898,26 @@ export type GetV1FeedsApiArg = {
     modifiedAt?: "asc" | "desc";
   };
 };
-export type GetV1FeedsByIdApiResponse = unknown;
-export type GetV1FeedsByIdApiArg = {
+export type GetV2FeedsByIdApiResponse = unknown;
+export type GetV2FeedsByIdApiArg = {
   id: string;
 };
-export type GetV1FeedsByIdDataApiResponse = unknown;
-export type GetV1FeedsByIdDataApiArg = {
+export type GetV2FeedsByIdDataApiResponse = /** status 200 undefined */ Blob;
+export type GetV2FeedsByIdDataApiArg = {
   id: string;
 };
-export type GetV1LayoutsApiResponse = unknown;
-export type GetV1LayoutsApiArg = {
+export type GetV2LayoutsApiResponse = unknown;
+export type GetV2LayoutsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: number;
 };
-export type GetV1LayoutsByIdApiResponse = unknown;
-export type GetV1LayoutsByIdApiArg = {
+export type GetV2LayoutsByIdApiResponse = unknown;
+export type GetV2LayoutsByIdApiArg = {
   id: string;
 };
-export type GetV1MediaApiResponse = unknown;
-export type GetV1MediaApiArg = {
+export type GetV2MediaApiResponse = unknown;
+export type GetV2MediaApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -945,16 +945,16 @@ export type PostMediaCollectionApiArg = {
     file: Blob;
   };
 };
-export type GetV1MediaByIdApiResponse = unknown;
-export type GetV1MediaByIdApiArg = {
+export type Getv2MediaByIdApiResponse = unknown;
+export type Getv2MediaByIdApiArg = {
   id: string;
 };
-export type DeleteV1MediaByIdApiResponse = unknown;
-export type DeleteV1MediaByIdApiArg = {
+export type DeleteV2MediaByIdApiResponse = unknown;
+export type DeleteV2MediaByIdApiArg = {
   id: string;
 };
-export type GetV1PlaylistsApiResponse = unknown;
-export type GetV1PlaylistsApiArg = {
+export type GetV2PlaylistsApiResponse = unknown;
+export type GetV2PlaylistsApiArg = {
   page: number;
   /** The number of items per page */
   itemsPerPage?: number;
@@ -979,27 +979,27 @@ export type GetV1PlaylistsApiArg = {
   /** If true only entities that are shared with me will be shown */
   sharedWithMe?: boolean;
 };
-export type PostV1PlaylistsApiResponse = unknown;
-export type PostV1PlaylistsApiArg = {
+export type PostV2PlaylistsApiResponse = unknown;
+export type PostV2PlaylistsApiArg = {
   /** The new Playlist resource */
   playlistPlaylistInput: PlaylistPlaylistInput;
 };
-export type GetV1PlaylistsByIdApiResponse = unknown;
-export type GetV1PlaylistsByIdApiArg = {
+export type GetV2PlaylistsByIdApiResponse = unknown;
+export type GetV2PlaylistsByIdApiArg = {
   id: string;
 };
-export type PutV1PlaylistsByIdApiResponse = unknown;
-export type PutV1PlaylistsByIdApiArg = {
+export type PutV2PlaylistsByIdApiResponse = unknown;
+export type PutV2PlaylistsByIdApiArg = {
   id: string;
   /** The updated Playlist resource */
   playlistPlaylistInput: PlaylistPlaylistInput;
 };
-export type DeleteV1PlaylistsByIdApiResponse = unknown;
-export type DeleteV1PlaylistsByIdApiArg = {
+export type DeleteV2PlaylistsByIdApiResponse = unknown;
+export type DeleteV2PlaylistsByIdApiArg = {
   id: string;
 };
-export type GetV1PlaylistsByIdSlidesApiResponse = unknown;
-export type GetV1PlaylistsByIdSlidesApiArg = {
+export type GetV2PlaylistsByIdSlidesApiResponse = unknown;
+export type GetV2PlaylistsByIdSlidesApiArg = {
   id: string;
   page: number;
   /** The number of items per page */
@@ -1007,19 +1007,19 @@ export type GetV1PlaylistsByIdSlidesApiArg = {
   /** If true only published content will be shown */
   published?: boolean;
 };
-export type PutV1PlaylistsByIdSlidesApiResponse = unknown;
-export type PutV1PlaylistsByIdSlidesApiArg = {
+export type PutV2PlaylistsByIdSlidesApiResponse = unknown;
+export type PutV2PlaylistsByIdSlidesApiArg = {
   /** PlaylistSlide identifier */
   id: string;
   body: Blob;
 };
-export type DeleteV1PlaylistsByIdSlidesAndSlideIdApiResponse = unknown;
-export type DeleteV1PlaylistsByIdSlidesAndSlideIdApiArg = {
+export type DeleteV2PlaylistsByIdSlidesAndSlideIdApiResponse = unknown;
+export type DeleteV2PlaylistsByIdSlidesAndSlideIdApiArg = {
   id: string;
   slideId: string;
 };
-export type GetV1ScreenGroupsApiResponse = unknown;
-export type GetV1ScreenGroupsApiArg = {
+export type GetV2ScreenGroupsApiResponse = unknown;
+export type GetV2ScreenGroupsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -1037,8 +1037,8 @@ export type GetV1ScreenGroupsApiArg = {
     createdAt?: "asc" | "desc";
   };
 };
-export type PostV1ScreenGroupsApiResponse = unknown;
-export type PostV1ScreenGroupsApiArg = {
+export type PostV2ScreenGroupsApiResponse = unknown;
+export type PostV2ScreenGroupsApiArg = {
   /** The new ScreenGroup resource */
   screenGroupScreenGroupInput: ScreenGroupScreenGroupInput;
 };
@@ -1047,22 +1047,22 @@ export type GetScreenGroupCampaignItemApiArg = {
   /** ScreenGroupCampaign identifier */
   id: string;
 };
-export type GetV1ScreenGroupsByIdApiResponse = unknown;
-export type GetV1ScreenGroupsByIdApiArg = {
+export type GetV2ScreenGroupsByIdApiResponse = unknown;
+export type GetV2ScreenGroupsByIdApiArg = {
   id: string;
 };
-export type PutV1ScreenGroupsByIdApiResponse = unknown;
-export type PutV1ScreenGroupsByIdApiArg = {
+export type PutV2ScreenGroupsByIdApiResponse = unknown;
+export type PutV2ScreenGroupsByIdApiArg = {
   id: string;
   /** The updated ScreenGroup resource */
   screenGroupScreenGroupInput: ScreenGroupScreenGroupInput;
 };
-export type DeleteV1ScreenGroupsByIdApiResponse = unknown;
-export type DeleteV1ScreenGroupsByIdApiArg = {
+export type DeleteV2ScreenGroupsByIdApiResponse = unknown;
+export type DeleteV2ScreenGroupsByIdApiArg = {
   id: string;
 };
-export type GetV1ScreenGroupsByIdCampaignsApiResponse = unknown;
-export type GetV1ScreenGroupsByIdCampaignsApiArg = {
+export type GetV2ScreenGroupsByIdCampaignsApiResponse = unknown;
+export type GetV2ScreenGroupsByIdCampaignsApiArg = {
   id: string;
   page: number;
   /** The number of items per page */
@@ -1070,26 +1070,26 @@ export type GetV1ScreenGroupsByIdCampaignsApiArg = {
   /** If true only published content will be shown */
   published?: boolean;
 };
-export type PutV1ScreenGroupsByIdCampaignsApiResponse = unknown;
-export type PutV1ScreenGroupsByIdCampaignsApiArg = {
+export type PutV2ScreenGroupsByIdCampaignsApiResponse = unknown;
+export type PutV2ScreenGroupsByIdCampaignsApiArg = {
   /** ScreenGroupCampaign identifier */
   id: string;
   body: Blob;
 };
-export type DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiResponse = unknown;
-export type DeleteV1ScreenGroupsByIdCampaignsAndCampaignIdApiArg = {
+export type DeleteV2ScreenGroupsByIdCampaignsAndCampaignIdApiResponse = unknown;
+export type DeleteV2ScreenGroupsByIdCampaignsAndCampaignIdApiArg = {
   id: string;
   campaignId: string;
 };
-export type GetV1ScreenGroupsByIdScreensApiResponse = unknown;
-export type GetV1ScreenGroupsByIdScreensApiArg = {
+export type GetV2ScreenGroupsByIdScreensApiResponse = unknown;
+export type GetV2ScreenGroupsByIdScreensApiArg = {
   id: string;
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
 };
-export type GetV1ScreensApiResponse = unknown;
-export type GetV1ScreensApiArg = {
+export type GetV2ScreensApiResponse = unknown;
+export type GetV2ScreensApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -1108,23 +1108,23 @@ export type GetV1ScreensApiArg = {
     modifiedAt?: "asc" | "desc";
   };
 };
-export type PostV1ScreensApiResponse = unknown;
-export type PostV1ScreensApiArg = {
+export type PostV2ScreensApiResponse = unknown;
+export type PostV2ScreensApiArg = {
   /** The new Screen resource */
   screenScreenInput: ScreenScreenInput;
 };
-export type GetV1ScreensByIdApiResponse = unknown;
-export type GetV1ScreensByIdApiArg = {
+export type GetV2ScreensByIdApiResponse = unknown;
+export type GetV2ScreensByIdApiArg = {
   id: string;
 };
-export type PutV1ScreensByIdApiResponse = unknown;
-export type PutV1ScreensByIdApiArg = {
+export type PutV2ScreensByIdApiResponse = unknown;
+export type PutV2ScreensByIdApiArg = {
   id: string;
   /** The updated Screen resource */
   screenScreenInput: ScreenScreenInput;
 };
-export type DeleteV1ScreensByIdApiResponse = unknown;
-export type DeleteV1ScreensByIdApiArg = {
+export type DeleteV2ScreensByIdApiResponse = unknown;
+export type DeleteV2ScreensByIdApiArg = {
   id: string;
 };
 export type PostScreenBindKeyApiResponse = unknown;
@@ -1134,8 +1134,8 @@ export type PostScreenBindKeyApiArg = {
   /** Bind the screen with the bind key */
   screenBindObject: ScreenBindObject;
 };
-export type GetV1ScreensByIdCampaignsApiResponse = unknown;
-export type GetV1ScreensByIdCampaignsApiArg = {
+export type GetV2ScreensByIdCampaignsApiResponse = unknown;
+export type GetV2ScreensByIdCampaignsApiArg = {
   id: string;
   page: number;
   /** The number of items per page */
@@ -1143,19 +1143,19 @@ export type GetV1ScreensByIdCampaignsApiArg = {
   /** If true only published content will be shown */
   published?: boolean;
 };
-export type PutV1ScreensByIdCampaignsApiResponse = unknown;
-export type PutV1ScreensByIdCampaignsApiArg = {
+export type PutV2ScreensByIdCampaignsApiResponse = unknown;
+export type PutV2ScreensByIdCampaignsApiArg = {
   /** ScreenCampaign identifier */
   id: string;
   body: Blob;
 };
-export type DeleteV1ScreensByIdCampaignsAndCampaignIdApiResponse = unknown;
-export type DeleteV1ScreensByIdCampaignsAndCampaignIdApiArg = {
+export type DeleteV2ScreensByIdCampaignsAndCampaignIdApiResponse = unknown;
+export type DeleteV2ScreensByIdCampaignsAndCampaignIdApiArg = {
   id: string;
   campaignId: string;
 };
-export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiResponse = unknown;
-export type GetV1ScreensByIdRegionsAndRegionIdPlaylistsApiArg = {
+export type GetV2ScreensByIdRegionsAndRegionIdPlaylistsApiResponse = unknown;
+export type GetV2ScreensByIdRegionsAndRegionIdPlaylistsApiArg = {
   id: string;
   regionId: string;
   page: number;
@@ -1176,8 +1176,8 @@ export type DeletePlaylistScreenRegionItemApiArg = {
   regionId: string;
   playlistId: string;
 };
-export type GetV1ScreensByIdScreenGroupsApiResponse = unknown;
-export type GetV1ScreensByIdScreenGroupsApiArg = {
+export type GetV2ScreensByIdScreenGroupsApiResponse = unknown;
+export type GetV2ScreensByIdScreenGroupsApiArg = {
   id: string;
   page: number;
   /** The number of items per page */
@@ -1187,14 +1187,14 @@ export type GetV1ScreensByIdScreenGroupsApiArg = {
     description?: "asc" | "desc";
   };
 };
-export type PutV1ScreensByIdScreenGroupsApiResponse = unknown;
-export type PutV1ScreensByIdScreenGroupsApiArg = {
+export type PutV2ScreensByIdScreenGroupsApiResponse = unknown;
+export type PutV2ScreensByIdScreenGroupsApiArg = {
   id: string;
   body: string[];
 };
-export type DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiResponse =
+export type DeleteV2ScreensByIdScreenGroupsAndScreenGroupIdApiResponse =
   unknown;
-export type DeleteV1ScreensByIdScreenGroupsAndScreenGroupIdApiArg = {
+export type DeleteV2ScreensByIdScreenGroupsAndScreenGroupIdApiArg = {
   id: string;
   screenGroupId: string;
 };
@@ -1205,8 +1205,8 @@ export type PostScreenUnbindApiArg = {
   /** Unbind from machine */
   body: string;
 };
-export type GetV1SlidesApiResponse = unknown;
-export type GetV1SlidesApiArg = {
+export type GetV2SlidesApiResponse = unknown;
+export type GetV2SlidesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -1227,27 +1227,27 @@ export type GetV1SlidesApiArg = {
     modifiedAt?: "asc" | "desc";
   };
 };
-export type PostV1SlidesApiResponse = unknown;
-export type PostV1SlidesApiArg = {
+export type PostV2SlidesApiResponse = unknown;
+export type PostV2SlidesApiArg = {
   /** The new Slide resource */
   slideSlideInput: SlideSlideInput;
 };
-export type GetV1SlidesByIdApiResponse = unknown;
-export type GetV1SlidesByIdApiArg = {
+export type GetV2SlidesByIdApiResponse = unknown;
+export type GetV2SlidesByIdApiArg = {
   id: string;
 };
-export type PutV1SlidesByIdApiResponse = unknown;
-export type PutV1SlidesByIdApiArg = {
+export type PutV2SlidesByIdApiResponse = unknown;
+export type PutV2SlidesByIdApiArg = {
   id: string;
   /** The updated Slide resource */
   slideSlideInput: SlideSlideInput;
 };
-export type DeleteV1SlidesByIdApiResponse = unknown;
-export type DeleteV1SlidesByIdApiArg = {
+export type DeleteV2SlidesByIdApiResponse = unknown;
+export type DeleteV2SlidesByIdApiArg = {
   id: string;
 };
-export type GetV1SlidesByIdPlaylistsApiResponse = unknown;
-export type GetV1SlidesByIdPlaylistsApiArg = {
+export type GetV2SlidesByIdPlaylistsApiResponse = unknown;
+export type GetV2SlidesByIdPlaylistsApiArg = {
   id: string;
   page?: number;
   /** The number of items per page */
@@ -1255,13 +1255,13 @@ export type GetV1SlidesByIdPlaylistsApiArg = {
   /** If true only published content will be shown */
   published?: boolean;
 };
-export type PutV1SlidesByIdPlaylistsApiResponse = unknown;
-export type PutV1SlidesByIdPlaylistsApiArg = {
+export type PutV2SlidesByIdPlaylistsApiResponse = unknown;
+export type PutV2SlidesByIdPlaylistsApiArg = {
   id: string;
   body: Blob;
 };
-export type GetV1TemplatesApiResponse = unknown;
-export type GetV1TemplatesApiArg = {
+export type GetV2TemplatesApiResponse = unknown;
+export type GetV2TemplatesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -1278,12 +1278,12 @@ export type GetV1TemplatesApiArg = {
     modifiedAt?: "asc" | "desc";
   };
 };
-export type GetV1TemplatesByIdApiResponse = unknown;
-export type GetV1TemplatesByIdApiArg = {
+export type GetV2TemplatesByIdApiResponse = unknown;
+export type GetV2TemplatesByIdApiArg = {
   id: string;
 };
-export type GetV1TenantsApiResponse = unknown;
-export type GetV1TenantsApiArg = {
+export type GetV2TenantsApiResponse = unknown;
+export type GetV2TenantsApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -1296,12 +1296,12 @@ export type GetV1TenantsApiArg = {
     ""?: string[];
   };
 };
-export type GetV1TenantsByIdApiResponse = unknown;
-export type GetV1TenantsByIdApiArg = {
+export type GetV2TenantsByIdApiResponse = unknown;
+export type GetV2TenantsByIdApiArg = {
   id: string;
 };
-export type GetV1ThemesApiResponse = unknown;
-export type GetV1ThemesApiArg = {
+export type GetV2ThemesApiResponse = unknown;
+export type GetV2ThemesApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -1320,59 +1320,59 @@ export type GetV1ThemesApiArg = {
     modifiedAt?: "asc" | "desc";
   };
 };
-export type PostV1ThemesApiResponse = unknown;
-export type PostV1ThemesApiArg = {
+export type PostV2ThemesApiResponse = unknown;
+export type PostV2ThemesApiArg = {
   /** The new Theme resource */
   themeThemeInput: ThemeThemeInput;
 };
-export type GetV1ThemesByIdApiResponse = unknown;
-export type GetV1ThemesByIdApiArg = {
+export type GetV2ThemesByIdApiResponse = unknown;
+export type GetV2ThemesByIdApiArg = {
   id: string;
 };
-export type PutV1ThemesByIdApiResponse = unknown;
-export type PutV1ThemesByIdApiArg = {
+export type PutV2ThemesByIdApiResponse = unknown;
+export type PutV2ThemesByIdApiArg = {
   id: string;
   /** The updated Theme resource */
   themeThemeInput: ThemeThemeInput;
 };
-export type DeleteV1ThemesByIdApiResponse = unknown;
-export type DeleteV1ThemesByIdApiArg = {
+export type DeleteV2ThemesByIdApiResponse = unknown;
+export type DeleteV2ThemesByIdApiArg = {
   id: string;
 };
-export type GetV1UserActivationCodesApiResponse = unknown;
-export type GetV1UserActivationCodesApiArg = {
+export type GetV2UserActivationCodesApiResponse = unknown;
+export type GetV2UserActivationCodesApiArg = {
   /** The collection page number */
   page?: number;
   /** The number of items per page */
   itemsPerPage?: number;
 };
-export type PostV1UserActivationCodesApiResponse = unknown;
-export type PostV1UserActivationCodesApiArg = {
+export type PostV2UserActivationCodesApiResponse = unknown;
+export type PostV2UserActivationCodesApiArg = {
   /** The new UserActivationCode resource */
   userActivationCodeUserActivationCodeInput: UserActivationCodeUserActivationCodeInput;
 };
-export type PostV1UserActivationCodesActivateApiResponse = unknown;
-export type PostV1UserActivationCodesActivateApiArg = {
+export type PostV2UserActivationCodesActivateApiResponse = unknown;
+export type PostV2UserActivationCodesActivateApiArg = {
   /** The new UserActivationCode resource */
   userActivationCodeActivationCode: UserActivationCodeActivationCode;
 };
-export type PostV1UserActivationCodesRefreshApiResponse = unknown;
-export type PostV1UserActivationCodesRefreshApiArg = {
+export type PostV2UserActivationCodesRefreshApiResponse = unknown;
+export type PostV2UserActivationCodesRefreshApiArg = {
   /** The new UserActivationCode resource */
   userActivationCodeActivationCode: UserActivationCodeActivationCode;
 };
-export type GetV1UserActivationCodesByIdApiResponse = unknown;
-export type GetV1UserActivationCodesByIdApiArg = {
+export type GetV2UserActivationCodesByIdApiResponse = unknown;
+export type GetV2UserActivationCodesByIdApiArg = {
   /** UserActivationCode identifier */
   id: string;
 };
-export type DeleteV1UserActivationCodesByIdApiResponse = unknown;
-export type DeleteV1UserActivationCodesByIdApiArg = {
+export type DeleteV2UserActivationCodesByIdApiResponse = unknown;
+export type DeleteV2UserActivationCodesByIdApiArg = {
   /** UserActivationCode identifier */
   id: string;
 };
-export type GetV1UsersApiResponse = unknown;
-export type GetV1UsersApiArg = {
+export type GetV2UsersApiResponse = unknown;
+export type GetV2UsersApiArg = {
   page?: number;
   /** The number of items per page */
   itemsPerPage?: string;
@@ -1388,28 +1388,28 @@ export type GetV1UsersApiArg = {
     createdAt?: "asc" | "desc";
   };
 };
-export type PostV1UsersApiResponse = unknown;
-export type PostV1UsersApiArg = {
+export type PostV2UsersApiResponse = unknown;
+export type PostV2UsersApiArg = {
   id: string;
   /** The new User resource */
   userUserInput: UserUserInput;
 };
-export type GetV1UsersByIdApiResponse = unknown;
-export type GetV1UsersByIdApiArg = {
+export type GetV2UsersByIdApiResponse = unknown;
+export type GetV2UsersByIdApiArg = {
   id: string;
 };
-export type PutV1UsersByIdApiResponse = unknown;
-export type PutV1UsersByIdApiArg = {
+export type PutV2UsersByIdApiResponse = unknown;
+export type PutV2UsersByIdApiArg = {
   id: string;
   /** The updated User resource */
   userUserInput: UserUserInput;
 };
-export type DeleteV1UsersByIdApiResponse = unknown;
-export type DeleteV1UsersByIdApiArg = {
+export type DeleteV2UsersByIdApiResponse = unknown;
+export type DeleteV2UsersByIdApiArg = {
   id: string;
 };
-export type DeleteV1UsersByIdRemoveFromTenantApiResponse = unknown;
-export type DeleteV1UsersByIdRemoveFromTenantApiArg = {
+export type DeleteV2UsersByIdRemoveFromTenantApiResponse = unknown;
+export type DeleteV2UsersByIdRemoveFromTenantApiArg = {
   id: string;
 };
 export type Token = {
@@ -1501,80 +1501,81 @@ export const {
   usePostLoginInfoScreenMutation,
   useLoginCheckPostMutation,
   usePostRefreshTokenItemMutation,
-  useGetV1CampaignsByIdScreenGroupsQuery,
-  useGetV1CampaignsByIdScreensQuery,
-  useGetV1FeedSourcesQuery,
-  useGetV1FeedSourcesByIdQuery,
-  useGetV1FeedSourcesByIdConfigAndNameQuery,
-  useGetV1FeedsQuery,
-  useGetV1FeedsByIdQuery,
-  useGetV1FeedsByIdDataQuery,
-  useGetV1LayoutsQuery,
-  useGetV1LayoutsByIdQuery,
-  useGetV1MediaQuery,
+  useGetV2CampaignsByIdScreenGroupsQuery,
+  useGetV2CampaignsByIdScreensQuery,
+  useGetV2FeedSourcesQuery,
+  useGetV2FeedSourcesByIdQuery,
+  useGetV2FeedSourcesByIdConfigAndNameQuery,
+  useGetV2FeedsQuery,
+  useGetV2FeedsByIdQuery,
+  useGetV2FeedsByIdDataQuery,
+  useGetV2LayoutsQuery,
+  useGetV2LayoutsByIdQuery,
+  useGetV2MediaQuery,
   usePostMediaCollectionMutation,
-  useGetV1MediaByIdQuery,
-  useDeleteV1MediaByIdMutation,
-  useGetV1PlaylistsQuery,
-  usePostV1PlaylistsMutation,
-  useGetV1PlaylistsByIdQuery,
-  usePutV1PlaylistsByIdMutation,
-  useDeleteV1PlaylistsByIdMutation,
-  useGetV1PlaylistsByIdSlidesQuery,
-  usePutV1PlaylistsByIdSlidesMutation,
-  useDeleteV1PlaylistsByIdSlidesAndSlideIdMutation,
-  useGetV1ScreenGroupsQuery,
-  usePostV1ScreenGroupsMutation,
+  useGetv2MediaByIdQuery,
+  useDeleteV2MediaByIdMutation,
+  useGetV2PlaylistsQuery,
+  usePostV2PlaylistsMutation,
+  useGetV2PlaylistsByIdQuery,
+  usePutV2PlaylistsByIdMutation,
+  useDeleteV2PlaylistsByIdMutation,
+  useGetV2PlaylistsByIdSlidesQuery,
+  usePutV2PlaylistsByIdSlidesMutation,
+  useDeleteV2PlaylistsByIdSlidesAndSlideIdMutation,
+  useGetV2ScreenGroupsQuery,
+  usePostV2ScreenGroupsMutation,
   useGetScreenGroupCampaignItemQuery,
-  useGetV1ScreenGroupsByIdQuery,
-  usePutV1ScreenGroupsByIdMutation,
-  useDeleteV1ScreenGroupsByIdMutation,
-  useGetV1ScreenGroupsByIdCampaignsQuery,
-  usePutV1ScreenGroupsByIdCampaignsMutation,
-  useDeleteV1ScreenGroupsByIdCampaignsAndCampaignIdMutation,
-  useGetV1ScreenGroupsByIdScreensQuery,
-  useGetV1ScreensQuery,
-  usePostV1ScreensMutation,
-  useGetV1ScreensByIdQuery,
-  usePutV1ScreensByIdMutation,
-  useDeleteV1ScreensByIdMutation,
+  useGetV2ScreenGroupsByIdQuery,
+  usePutV2ScreenGroupsByIdMutation,
+  useDeleteV2ScreenGroupsByIdMutation,
+  useGetV2ScreenGroupsByIdCampaignsQuery,
+  usePutV2ScreenGroupsByIdCampaignsMutation,
+  useDeleteV2ScreenGroupsByIdCampaignsAndCampaignIdMutation,
+  useGetV2ScreenGroupsByIdScreensQuery,
+  useGetV2ScreensQuery,
+  usePostV2ScreensMutation,
+  useGetV2ScreensByIdQuery,
+  usePutV2ScreensByIdMutation,
+  useDeleteV2ScreensByIdMutation,
   usePostScreenBindKeyMutation,
-  useGetV1ScreensByIdCampaignsQuery,
-  usePutV1ScreensByIdCampaignsMutation,
-  useDeleteV1ScreensByIdCampaignsAndCampaignIdMutation,
-  useGetV1ScreensByIdRegionsAndRegionIdPlaylistsQuery,
+  useGetV2ScreensByIdCampaignsQuery,
+  usePutV2ScreensByIdCampaignsMutation,
+  useDeleteV2ScreensByIdCampaignsAndCampaignIdMutation,
+  useGetV2ScreensByIdRegionsAndRegionIdPlaylistsQuery,
   usePutPlaylistScreenRegionItemMutation,
   useDeletePlaylistScreenRegionItemMutation,
-  useGetV1ScreensByIdScreenGroupsQuery,
-  usePutV1ScreensByIdScreenGroupsMutation,
-  useDeleteV1ScreensByIdScreenGroupsAndScreenGroupIdMutation,
+  useGetV2ScreensByIdScreenGroupsQuery,
+  usePutV2ScreensByIdScreenGroupsMutation,
+  useDeleteV2ScreensByIdScreenGroupsAndScreenGroupIdMutation,
   usePostScreenUnbindMutation,
-  useGetV1SlidesQuery,
-  usePostV1SlidesMutation,
-  useGetV1SlidesByIdQuery,
-  usePutV1SlidesByIdMutation,
-  useDeleteV1SlidesByIdMutation,
-  useGetV1SlidesByIdPlaylistsQuery,
-  usePutV1SlidesByIdPlaylistsMutation,
-  useGetV1TemplatesQuery,
-  useGetV1TemplatesByIdQuery,
-  useGetV1TenantsQuery,
-  useGetV1TenantsByIdQuery,
-  useGetV1ThemesQuery,
-  usePostV1ThemesMutation,
-  useGetV1ThemesByIdQuery,
-  usePutV1ThemesByIdMutation,
-  useDeleteV1ThemesByIdMutation,
-  useGetV1UserActivationCodesQuery,
-  usePostV1UserActivationCodesMutation,
-  usePostV1UserActivationCodesActivateMutation,
-  usePostV1UserActivationCodesRefreshMutation,
-  useGetV1UserActivationCodesByIdQuery,
-  useDeleteV1UserActivationCodesByIdMutation,
-  useGetV1UsersQuery,
-  usePostV1UsersMutation,
-  useGetV1UsersByIdQuery,
-  usePutV1UsersByIdMutation,
-  useDeleteV1UsersByIdMutation,
-  useDeleteV1UsersByIdRemoveFromTenantMutation,
+  useGetV2SlidesQuery,
+  usePostV2SlidesMutation,
+  useGetV2SlidesByIdQuery,
+  usePutV2SlidesByIdMutation,
+  useDeleteV2SlidesByIdMutation,
+  useGetV2SlidesByIdPlaylistsQuery,
+  usePutV2SlidesByIdPlaylistsMutation,
+  useGetV2TemplatesQuery,
+  useGetV2TemplatesByIdQuery,
+  useGetV2TenantsQuery,
+  useGetV2TenantsByIdQuery,
+  useGetV2ThemesQuery,
+  usePostV2ThemesMutation,
+  useGetV2ThemesByIdQuery,
+  usePutV2ThemesByIdMutation,
+  useDeleteV2ThemesByIdMutation,
+  useGetV2UserActivationCodesQuery,
+  usePostV2UserActivationCodesMutation,
+  usePostV2UserActivationCodesActivateMutation,
+  usePostV2UserActivationCodesRefreshMutation,
+  useGetV2UserActivationCodesByIdQuery,
+  useDeleteV2UserActivationCodesByIdMutation,
+  useGetV2UsersQuery,
+  usePostV2UsersMutation,
+  useGetV2UsersByIdQuery,
+  usePutV2UsersByIdMutation,
+  useDeleteV2UsersByIdMutation,
+  useDeleteV2UsersByIdRemoveFromTenantMutation,
 } = api;
+
