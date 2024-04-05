@@ -2,6 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import extendedBaseQuery from "../dynamic-base-query";
 export const api = createApi({
   baseQuery: extendedBaseQuery,
+  keepUnusedDataFor: 0,
   tagTypes: [],
   endpoints: (build) => ({
     getOidcAuthTokenItem: build.query<
