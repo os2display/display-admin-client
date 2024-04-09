@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.0] - 2024-04-09
+
 - [#240](https://github.com/os2display/display-admin-client/pull/240)
   - Remove caching of requests from redux toolkit api.
 - [#239](https://github.com/os2display/display-admin-client/pull/239)
