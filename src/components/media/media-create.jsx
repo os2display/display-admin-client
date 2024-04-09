@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { usePostMediaCollectionMutation } from "../../redux/api/api.generated";
+import { usePostMediaCollectionMutation } from "../../redux/api/api.generated.ts";
 import MediaForm from "./media-form";
 import {
   displayError,
@@ -21,7 +21,7 @@ function MediaCreate() {
   const headerText = t("create-media");
 
   const [
-    PostV1MediaCollection,
+    PostV2MediaCollection,
     { isLoading: isSavingMedia, error: saveError, isSuccess: isSaveSuccess },
   ] = usePostMediaCollectionMutation();
 
@@ -42,7 +42,7 @@ function MediaCreate() {
     if (mediaToCreate.length > 0) {
       setIsSaving(true);
       const media = mediaToCreate.splice(0, 1).shift();
-      PostV1MediaCollection({ body: media });
+      PostV2MediaCollection({ body: media });
     }
   }, [mediaToCreate.length, isSaveSuccess]);
 

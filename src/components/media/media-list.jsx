@@ -15,9 +15,9 @@ import {
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
 import {
-  useGetV1MediaQuery,
-  useDeleteV1MediaByIdMutation,
-} from "../../redux/api/api.generated";
+  useGetV2MediaQuery,
+  useDeleteV2MediaByIdMutation,
+} from "../../redux/api/api.generated.ts";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./media-list.scss";
 
@@ -62,8 +62,8 @@ function MediaList({ fromModal, multiple }) {
   );
 
   // Delete method
-  const [DeleteV1Media, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
-    useDeleteV1MediaByIdMutation();
+  const [DeleteV2Media, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
+    useDeleteV2MediaByIdMutation();
 
   // Get method
   const {
@@ -72,7 +72,7 @@ function MediaList({ fromModal, multiple }) {
 
     isLoading,
     refetch,
-  } = useGetV1MediaQuery({
+  } = useGetV2MediaQuery({
     page,
     title: searchText,
     order: { createdAt: sortDesc ? "desc" : "asc" },
@@ -136,7 +136,7 @@ function MediaList({ fromModal, multiple }) {
       const toDelete = selected[0];
       setSelected(selected.slice(1));
       const toDeleteId = idFromUrl(toDelete.id);
-      DeleteV1Media({ id: toDeleteId });
+      DeleteV2Media({ id: toDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
@@ -175,7 +175,7 @@ function MediaList({ fromModal, multiple }) {
 
   return (
     <>
-      <Row className="align-items-center justify-content-between mt-2">
+      <Row className="align-items-center justify-content-between my-3">
         <Col>
           <h1 id="media-list-title">{t("header")}</h1>
         </Col>
@@ -213,6 +213,7 @@ function MediaList({ fromModal, multiple }) {
           </Col>
           <Col>
             <FormCheckbox
+              name="form-checkbox-media-list-sort-desc"
               value={sortDesc}
               label={t("checkbox-label-sort-desc")}
               onChange={changeSort}

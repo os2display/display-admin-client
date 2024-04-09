@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useRemoteComponent } from "./remote-component-helper";
 import ErrorBoundary from "../../../error-boundary";
 import "./remote-component-wrapper.scss";
-import { api } from "../../../redux/api/api.generated";
+import { api } from "../../../redux/api/api.generated.ts";
 import idFromUrl from "../../util/helpers/id-from-url";
 
 /**
@@ -83,7 +83,7 @@ function RemoteComponentWrapper({
           const key = newSlide.themeData.logo;
 
           dispatch(
-            api.endpoints.getV1MediaById.initiate({
+            api.endpoints.getv2MediaById.initiate({
               id: idFromUrl(newSlide.themeData.logo),
             })
           ).then((resp) => {

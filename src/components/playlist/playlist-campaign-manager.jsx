@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import set from "lodash.set";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
 import idFromUrl from "../util/helpers/id-from-url";
 import PlaylistCampaignForm from "./playlist-campaign-form";
 import PlaylistForm from "./playlist-form";
@@ -13,18 +14,16 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
-  usePutV1PlaylistsByIdMutation,
-  usePutV1ScreensByIdCampaignsMutation,
-  usePutV1PlaylistsByIdSlidesMutation,
-  usePutV1ScreenGroupsByIdCampaignsMutation,
-  usePostV1PlaylistsMutation,
-} from "../../redux/api/api.generated";
+  api,
+  usePutV2PlaylistsByIdMutation,
+  usePostV2PlaylistsMutation,
+} from "../../redux/api/api.generated.ts";
 
 /**
  * The shared manager component.
  *
  * @param {object} props The props.
- * @param {object} props.initialState Initial slide state.
+ * @param {object} props.initialState Initial playlist state.
  * @param {string} props.saveMethod POST or PUT.
  * @param {string | null} props.id Playlist id.
  * @param {boolean} props.isLoading Is the slide state loading?
@@ -42,6 +41,7 @@ function PlaylistCampaignManager({
   slideId,
   location,
 }) {
+  const dispatch = useDispatch();
   const { t } = useTranslation("common", {
     keyPrefix: "playlist-campaign-manager",
   });
@@ -55,50 +55,22 @@ function PlaylistCampaignManager({
   const [formStateObject, setFormStateObject] = useState();
   const [loadingMessage, setLoadingMessage] = useState("");
   const [highlightSharedSection, setHighlightSharedSection] = useState(false);
-  const [slidesToAdd, setSlidesToAdd] = useState([]);
-  const [screensToAdd, setScreensToAdd] = useState([]);
-  const [groupsToAdd, setGroupsToAdd] = useState([]);
+  const [savingRelations, setSavingRelations] = useState(false);
+  const isCampaign = location === "campaign";
 
   const [
-    PutV1Playlists,
+    PutV2Playlists,
     {
       isLoading: savingPlaylists,
       error: saveErrorPut,
       isSuccess: isSaveSuccessPut,
     },
-  ] = usePutV1PlaylistsByIdMutation();
+  ] = usePutV2PlaylistsByIdMutation();
 
   const [
-    PostV1Playlist,
+    PostV2Playlist,
     { data, error: saveErrorPost, isSuccess: isSaveSuccessPost },
-  ] = usePostV1PlaylistsMutation();
-
-  const [
-    PutV1ScreensByIdCampaigns,
-    {
-      isLoading: savingScreens,
-      error: saveErrorScreens,
-      isSuccess: isSaveSuccessScreens,
-    },
-  ] = usePutV1ScreensByIdCampaignsMutation();
-
-  const [
-    PutV1ScreenGroupsByIdCampaigns,
-    {
-      isLoading: savingGroups,
-      error: saveErrorGroups,
-      isSuccess: isSaveSuccessGroups,
-    },
-  ] = usePutV1ScreenGroupsByIdCampaignsMutation();
-
-  const [
-    PutV1PlaylistsByIdSlides,
-    {
-      isLoading: savingSlides,
-      error: saveErrorSlides,
-      isSuccess: isSaveSuccessSlides,
-    },
-  ] = usePutV1PlaylistsByIdSlidesMutation();
+  ] = usePostV2PlaylistsMutation();
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -133,101 +105,148 @@ function PlaylistCampaignManager({
     }
   }, [sharedParams]);
 
-  // Slides are saved successfully, display a message
-  useEffect(() => {
-    if (isSaveSuccessSlides) {
-      setSlidesToAdd([]);
-      displaySuccess(t(`${location}.success-messages.saved-slides`));
-    }
-  }, [isSaveSuccessSlides]);
+  const bindScreens = (playlistId, selectedScreens) => {
+    return new Promise((resolve, reject) => {
+      if (selectedScreens === null || !isCampaign) {
+        // If not campaign, do not bind screens.
+        resolve();
+        return;
+      }
 
-  // Screens are saved successfully, display a message
-  useEffect(() => {
-    if (isSaveSuccessScreens) {
-      setScreensToAdd([]);
-      displaySuccess(t(`${location}.success-messages.saved-screens`));
-    }
-  }, [isSaveSuccessScreens]);
-
-  // Groups are saved successfully, display a message
-  useEffect(() => {
-    if (isSaveSuccessGroups) {
-      setGroupsToAdd([]);
-      displaySuccess(t(`${location}.success-messages.saved-groups`));
-    }
-  }, [isSaveSuccessGroups]);
-
-  /**
-   * @param {Array} list - The list to save.
-   * @returns {Array} - If a list is ready to be saved.
-   */
-  function readyToSave(list) {
-    return list && list.length > 0;
-  }
-
-  /** When the screen is saved, the slide will be saved. */
-  useEffect(() => {
-    if (readyToSave(screensToAdd)) {
       setLoadingMessage(t(`${location}.loading-messages.saving-screens`));
 
-      PutV1ScreensByIdCampaigns({
-        id: id || idFromUrl(data["@id"]),
-        body: JSON.stringify(screensToAdd),
-      });
-    }
-  }, [isSaveSuccessPut, isSaveSuccessPost]);
+      dispatch(
+        api.endpoints.putV2ScreensByIdCampaigns.initiate({
+          id: playlistId,
+          body: JSON.stringify(selectedScreens),
+        })
+      )
+        .then((response) => {
+          if (response.error) {
+            displayError(
+              t(`${location}.error-messages.save-screens-error`),
+              response.error
+            );
+            reject(response.error);
+          } else {
+            displaySuccess(t(`${location}.success-messages.saved-screens`));
+            resolve();
+          }
+        })
+        .catch((e) => {
+          displayError(t(`${location}.error-messages.save-screens-error`), e);
+          reject(e);
+        });
+    });
+  };
 
-  /** When the group is saved, the slide will be saved. */
-  useEffect(() => {
-    if (readyToSave(groupsToAdd)) {
+  const bindScreenGroups = (playlistId, selectedScreenGroups) => {
+    return new Promise((resolve, reject) => {
+      if (selectedScreenGroups === null || !isCampaign) {
+        // If not campaign, do not bind screen groups.
+        resolve();
+        return;
+      }
+
       setLoadingMessage(t(`${location}.loading-messages.saving-groups`));
-      PutV1ScreenGroupsByIdCampaigns({
-        id: id || idFromUrl(data["@id"]),
-        body: JSON.stringify(groupsToAdd),
-      });
-    }
-  }, [isSaveSuccessPut, isSaveSuccessPost]);
 
-  /** When the playlist is saved, the slide will be saved. */
-  useEffect(() => {
-    if (readyToSave(slidesToAdd)) {
+      dispatch(
+        api.endpoints.putV2ScreenGroupsByIdCampaigns.initiate({
+          id: playlistId,
+          body: JSON.stringify(selectedScreenGroups),
+        })
+      )
+        .then((response) => {
+          if (response.error) {
+            displayError(
+              t(`${location}.error-messages.save-group-error`),
+              response.error
+            );
+            reject(response.error);
+          } else {
+            displaySuccess(t(`${location}.success-messages.saved-groups`));
+            resolve();
+          }
+        })
+        .catch((e) => {
+          displayError(t(`${location}.error-messages.save-group-error`), e);
+          reject(e);
+        });
+    });
+  };
+
+  const bindSlides = (playlistId, selectedSlides) => {
+    return new Promise((resolve, reject) => {
+      if (selectedSlides === null) {
+        resolve();
+        return;
+      }
+
       setLoadingMessage(t(`${location}.loading-messages.saving-slides`));
-      PutV1PlaylistsByIdSlides({
-        id: id || idFromUrl(data["@id"]),
-        body: JSON.stringify(slidesToAdd),
-      });
+
+      dispatch(
+        api.endpoints.putV2PlaylistsByIdSlides.initiate({
+          id: playlistId,
+          body: JSON.stringify(selectedSlides),
+        })
+      )
+        .then((response) => {
+          if (response.error) {
+            displayError(
+              t(`${location}.error-messages.save-slides-error`),
+              response.error
+            );
+            reject(response.error);
+          } else {
+            displaySuccess(t(`${location}.success-messages.saved-slides`));
+            resolve();
+          }
+        })
+        .catch((e) => {
+          displayError(t(`${location}.error-messages.save-slides-error`), e);
+          reject(e);
+        });
+    });
+  };
+
+  // When playlist has been saved, bind relations.
+  useEffect(() => {
+    if (isSaveSuccessPut === true || isSaveSuccessPost === true) {
+      setSavingRelations(true);
+
+      const playlistId = id || idFromUrl(data["@id"]);
+
+      const { slides, groups, screens } = formStateObject;
+
+      const selectedSlides = Array.isArray(slides)
+        ? slides.map((slide, index) => {
+            return { slide: idFromUrl(slide), weight: index };
+          })
+        : null;
+
+      const selectedScreens = Array.isArray(screens)
+        ? screens.map((screen) => {
+            return { screen: idFromUrl(screen) };
+          })
+        : null;
+
+      const selectedGroups = Array.isArray(groups)
+        ? groups.map((group) => {
+            return { screengroup: idFromUrl(group) };
+          })
+        : null;
+
+      // Chain bind relations calls.
+      // Make sure we redirect to list on errors, or after all relations have been bound.
+      bindScreens(playlistId, selectedScreens)
+        .then(() => bindScreenGroups(playlistId, selectedGroups))
+        .then(() => bindSlides(playlistId, selectedSlides))
+        .then(() => displaySuccess(t(`${location}.success-messages.saved`)))
+        .finally(() => {
+          navigate(`/${location}/list`);
+        });
     }
   }, [isSaveSuccessPut, isSaveSuccessPost]);
-
-  // Slides are not saved successfully, display a message
-  useEffect(() => {
-    if (saveErrorSlides) {
-      displayError(
-        t(`${location}.error-messages.save-slides-error`),
-        saveErrorSlides
-      );
-    }
-  }, [saveErrorSlides]);
-
-  // Screens are not saved successfully, display a message
-  useEffect(() => {
-    if (saveErrorScreens) {
-      displayError(
-        t(`${location}.error-messages.save-screens-error`),
-        saveErrorScreens
-      );
-    }
-  }, [saveErrorScreens]);
-
-  // Groups are not saved successfully, display a message
-  useEffect(() => {
-    if (saveErrorGroups) {
-      displayError(
-        t(`${location}.error-messages.save-group-error`),
-        saveErrorGroups
-      );
-    }
-  }, [saveErrorGroups]);
 
   /** Slides are not saved successfully, display a message */
   useEffect(() => {
@@ -235,25 +254,6 @@ function PlaylistCampaignManager({
       displayError(t(`${location}.error-messages.load-error`), loadingError);
     }
   }, [loadingError]);
-
-  /** If the slide is saved, display the success message and navigate to list */
-  useEffect(() => {
-    if (
-      (isSaveSuccessPost || isSaveSuccessPut) &&
-      slidesToAdd.length === 0 &&
-      groupsToAdd.length === 0 &&
-      screensToAdd.length === 0
-    ) {
-      displaySuccess(t(`${location}.success-messages.saved`));
-      navigate(`/${location}/list`);
-    }
-  }, [
-    isSaveSuccessPost,
-    isSaveSuccessPut,
-    slidesToAdd,
-    groupsToAdd,
-    screensToAdd,
-  ]);
 
   /** If the slide is saved with error, display the error message */
   useEffect(() => {
@@ -275,43 +275,6 @@ function PlaylistCampaignManager({
     setFormStateObject(localFormStateObject);
   };
 
-  /** Sets slides to save. */
-  function handleSaveSlides() {
-    const { slides } = formStateObject;
-    if (Array.isArray(slides)) {
-      setSlidesToAdd(
-        slides.map((slide, index) => {
-          return { slide: idFromUrl(slide), weight: index };
-        })
-      );
-    }
-  }
-
-  /** Sets screens to save. */
-  function handleSaveScreens() {
-    const { screens } = formStateObject;
-
-    if (Array.isArray(screens)) {
-      setScreensToAdd(
-        screens.map((screen) => {
-          return { screen: idFromUrl(screen) };
-        })
-      );
-    }
-  }
-
-  /** Sets groups to save. */
-  function handleSaveGroups() {
-    const { groups } = formStateObject;
-    if (Array.isArray(groups)) {
-      setGroupsToAdd(
-        groups.map((group) => {
-          return { screengroup: idFromUrl(group) };
-        })
-      );
-    }
-  }
-
   /** Handles submit. */
   const handleSubmit = () => {
     setLoadingMessage(t(`${location}.loading-messages.saving-playlist`));
@@ -332,7 +295,7 @@ function PlaylistCampaignManager({
 
     const saveData = {
       title: formStateObject.title,
-      isCampaign: location === "campaign",
+      isCampaign,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
       createdBy: formStateObject.createdBy,
@@ -350,27 +313,16 @@ function PlaylistCampaignManager({
     };
 
     setLoadingMessage(t(`${location}.loading-messages.saving`));
+
     if (saveMethod === "POST") {
-      PostV1Playlist({
+      PostV2Playlist({
         playlistPlaylistInput: JSON.stringify(saveData),
       });
     } else if (saveMethod === "PUT") {
-      PutV1Playlists({
+      PutV2Playlists({
         id,
         playlistPlaylistInput: JSON.stringify(saveData),
       });
-    }
-
-    if (Array.isArray(formStateObject.slides)) {
-      handleSaveSlides();
-    }
-
-    if (Array.isArray(formStateObject.screens)) {
-      handleSaveScreens();
-    }
-
-    if (Array.isArray(formStateObject.groups)) {
-      handleSaveGroups();
     }
   };
 
@@ -383,13 +335,7 @@ function PlaylistCampaignManager({
           headerText={`${headerText}: ${
             formStateObject && formStateObject.title
           }`}
-          isLoading={
-            savingPlaylists ||
-            savingSlides ||
-            isLoading ||
-            savingScreens ||
-            savingGroups
-          }
+          isLoading={savingPlaylists || savingRelations || isLoading}
           loadingMessage={loadingMessage}
           handleInput={handleInput}
           handleSubmit={handleSubmit}

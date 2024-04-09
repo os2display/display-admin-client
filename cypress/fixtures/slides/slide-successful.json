@@ -18,7 +18,7 @@
     "feed": "Slide/feed"
   },
   "@type": "Slide",
-  "@id": "/v1/slides/000622HP9N1G5P1CMD035H159G",
+  "@id": "/v2/slides/000622HP9N1G5P1CMD035H159G",
   "title": "Aut consequatur excepturi ut totam aspernatur.",
   "description": "Et aut harum aut est. Et hic et totam. Possimus veritatis nemo sit repellat dolorem. Distinctio id voluptates laborum voluptas voluptas repellat.",
   "created": "1970-03-17T08:57:16.000Z",
@@ -26,10 +26,10 @@
   "modifiedBy": "",
   "createdBy": "",
   "templateInfo": {
-    "@id": "/v1/templates/00EPSCBVJS0TB0118C1JPM1VPM",
+    "@id": "/v2/templates/00EPSCBVJS0TB0118C1JPM1VPM",
     "options": []
   },
-  "theme": "/v1/themes/01FTNTE789TEPTT7MC3TYM91JJ",
+  "theme": "/v2/themes/01FTNTE789TEPTT7MC3TYM91JJ",
   "onPlaylists": [],
   "duration": 9834,
   "published": {
@@ -37,7 +37,7 @@
     "to": "2021-06-14T01:24:17.000Z"
   },
   "media": [
-    "/v1/media/014BH0252D18481TYB050J1WD9"
+    "/v2/media/014BH0252D18481TYB050J1WD9"
   ],
   "content": [],
   "feed": null

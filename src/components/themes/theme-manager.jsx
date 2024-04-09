@@ -2,15 +2,12 @@ import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import ThemeForm from "./theme-form";
-import idFromUrl from "../util/helpers/id-from-url";
 import {
-  api,
-  usePostV1ThemesMutation,
-  usePutV1ThemesByIdMutation,
+  usePostV2ThemesMutation,
+  usePutV2ThemesByIdMutation,
   usePostMediaCollectionMutation,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
   displayError,
@@ -37,7 +34,6 @@ function ThemeManager({
   // Hooks
   const { t } = useTranslation("common", { keyPrefix: "theme-manager" });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   // State
   const [headerText] = useState(
@@ -57,16 +53,16 @@ function ThemeManager({
     css: "",
   });
 
-  const [postV1Themes, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
-    usePostV1ThemesMutation();
+  const [postV2Themes, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
+    usePostV2ThemesMutation();
 
   const [
-    PutV1ThemesById,
+    PutV2ThemesById,
     { error: saveErrorPut, isSuccess: isSaveSuccessPut },
-  ] = usePutV1ThemesByIdMutation();
+  ] = usePutV2ThemesByIdMutation();
 
   const [
-    PostV1MediaCollection,
+    PostV2MediaCollection,
     {
       data: savedMediaData,
       isSuccess: isSaveMediaSuccess,
@@ -76,23 +72,7 @@ function ThemeManager({
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    if (initialState) {
-      if (initialState.logo) {
-        dispatch(
-          api.endpoints.getV1MediaById.initiate({
-            id: idFromUrl(initialState.logo),
-          })
-        )
-          .then(({ data }) => {
-            setFormStateObject({ ...initialState, logo: data });
-          })
-          .catch((err) => {
-            displayError(t("error-messages.save-media-error"), err);
-          });
-      } else {
-        setFormStateObject(initialState);
-      }
-    }
+    setFormStateObject(initialState);
   }, [initialState]);
 
   /**
@@ -131,9 +111,9 @@ function ThemeManager({
       saveData.logo = logo;
     }
     if (saveMethod === "POST") {
-      postV1Themes({ themeThemeInput: JSON.stringify(saveData) });
+      postV2Themes({ themeThemeInput: JSON.stringify(saveData) });
     } else if (saveMethod === "PUT") {
-      PutV1ThemesById({ themeThemeInput: JSON.stringify(saveData), id });
+      PutV2ThemesById({ themeThemeInput: JSON.stringify(saveData), id });
     }
   }
 
@@ -185,7 +165,7 @@ function ThemeManager({
     formData.append("modifiedBy", "");
     formData.append("createdBy", "");
 
-    PostV1MediaCollection({ body: formData });
+    PostV2MediaCollection({ body: formData });
   }
 
   /** When the media is saved, the theme will be saved. */
@@ -242,7 +222,7 @@ ThemeManager.defaultProps = {
 
 ThemeManager.propTypes = {
   initialState: PropTypes.shape({
-    logo: PropTypes.string,
+    logo: PropTypes.shape({}),
   }),
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,

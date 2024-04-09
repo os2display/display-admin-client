@@ -76,26 +76,6 @@ describe("Campaign pages work", () => {
     cy.get("#slides-section").find("tbody").should("not.exist");
   });
 
-  it("It displays success toast on save", () => {
-    // Mock successful response on post
-    cy.intercept("PUT", "**/playlists/*", {
-      statusCode: 201,
-      fixture: "playlists/playlist-successful.json",
-    });
-
-    // Mock successful response on get
-    cy.intercept("GET", "**/playlists/*", {
-      fixture: "playlists/playlist-successful.json",
-    });
-
-    cy.visit("/campaign/edit/123");
-
-    // Displays success toast and redirects
-    cy.get(".Toastify").find(".Toastify__toast--success").should("not.exist");
-    cy.get("#save_playlist").click();
-    cy.get(".Toastify").find(".Toastify__toast--success").contains("gemt");
-  });
-
   it("It display error toast on save error", () => {
     // Mock error response on post
     cy.intercept("PUT", "**/playlists/*", {

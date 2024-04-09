@@ -1,5 +1,6 @@
 const localStorageKeys = {
   API_TOKEN: "api-token",
+  API_REFRESH_TOKEN: "api-refresh-token",
   EMAIL: "email",
   SELECTED_TENANT: "selected-tenant",
   TENANTS: "tenants",
@@ -12,5 +13,6 @@ const localStorageKeys = {
   SEARCH: "search",
   ORDER: "order",
   USER_NAME: "user-name",
+  USER_TYPE: "user-type",
 };
 export default localStorageKeys;

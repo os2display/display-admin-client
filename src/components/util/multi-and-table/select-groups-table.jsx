@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import Table from "../table/table";
 import { SelectGroupColumns } from "../../groups/groups-columns";
 import {
-  useGetV1ScreenGroupsQuery,
-  useGetV1ScreenGroupsByIdScreensQuery,
-} from "../../../redux/api/api.generated";
+  useGetV2ScreenGroupsQuery,
+  useGetV2ScreenGroupsByIdScreensQuery,
+} from "../../../redux/api/api.generated.ts";
 import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown";
 
 /**
@@ -33,7 +33,7 @@ function SelectGroupsTable({
   const [searchText, setSearchText] = useState("");
 
   // Get 30 groups for dropdown, and when search is changed more will be fetched.
-  const { data: groups } = useGetV1ScreenGroupsQuery({
+  const { data: groups } = useGetV2ScreenGroupsQuery({
     title: searchText,
     itemsPerPage: 30,
     orderBy: "createdAt",
@@ -41,11 +41,14 @@ function SelectGroupsTable({
   });
 
   // Get 10 of the selected groups for table below dropdown, table is paginated so on page change more is fetched.
-  const { data: alreadySelectedGroups } = getSelectedMethod({
-    itemsPerPage: 10,
-    page,
-    id,
-  });
+  const { data: alreadySelectedGroups } = getSelectedMethod(
+    {
+      itemsPerPage: 10,
+      page,
+      id,
+    },
+    { skip: !id }
+  );
 
   /** Map loaded data. */
   useEffect(() => {
@@ -108,7 +111,7 @@ function SelectGroupsTable({
 
   const columns = SelectGroupColumns({
     handleDelete: removeFromList,
-    apiCall: useGetV1ScreenGroupsByIdScreensQuery,
+    apiCall: useGetV2ScreenGroupsByIdScreensQuery,
     editTarget: "group",
     infoModalRedirect: "/screen/edit",
     infoModalTitle: t("info-modal.screens"),

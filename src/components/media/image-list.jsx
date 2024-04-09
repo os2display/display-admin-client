@@ -32,7 +32,7 @@ function ImageList({ media, multiple }) {
   }
 
   // Translations
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "media-list" });
 
   return (
     <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5 media-list">
@@ -46,25 +46,17 @@ function ImageList({ media, multiple }) {
                       : ""
                   }`}
           >
-            <button
-              type="button"
-              className="media-item-button"
-              onClick={() => selectImage(data)}
-            >
-              <img
-                src={data.thumbnail ?? data.assets.uri}
-                className="card-img-top"
-                alt={data.description}
-              />
-            </button>
+            <img
+              src={data.thumbnail ?? data.assets.uri}
+              className="card-img-top"
+              alt={data.description}
+            />
             <Form.Check
               type="checkbox"
+              onClick={() => selectImage(data)}
               checked={selected.find((item) => item.id === data["@id"])}
-              tabIndex={-1}
-              aria-label={t("media-list.checkbox-form-aria-label")}
-              readOnly
+              aria-label={t("checkbox-form-aria-label", { this: data.title })}
             />
-
             <div className="card-body">
               <div className="row align-items-center">
                 <div className="col-auto">

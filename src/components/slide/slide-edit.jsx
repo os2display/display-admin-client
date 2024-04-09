@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useParams } from "react-router-dom";
-import { useGetV1SlidesByIdQuery } from "../../redux/api/api.generated";
+import { useGetV2SlidesByIdQuery } from "../../redux/api/api.generated.ts";
 import SlideManager from "./slide-manager";
 
 /**
@@ -15,7 +15,7 @@ function SlideEdit() {
     data,
     error: loadingError,
     isLoading,
-  } = useGetV1SlidesByIdQuery({ id });
+  } = useGetV2SlidesByIdQuery({ id }, { skip: !id });
 
   return (
     <SlideManager

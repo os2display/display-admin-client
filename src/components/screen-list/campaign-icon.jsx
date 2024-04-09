@@ -7,9 +7,9 @@ import idFromUrl from "../util/helpers/id-from-url";
 import calculateIsPublished from "../util/helpers/calculate-is-published";
 import {
   api,
-  useGetV1ScreensByIdCampaignsQuery,
-  useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../redux/api/api.generated";
+  useGetV2ScreensByIdCampaignsQuery,
+  useGetV2ScreensByIdScreenGroupsQuery,
+} from "../../redux/api/api.generated.ts";
 
 /**
  * An icon to show if the screen has an active campaign.
@@ -23,8 +23,8 @@ function CampaignIcon({ id }) {
   const [isOverriddenByCampaign, setIsOverriddenByCampaign] = useState(false);
   const [screenCampaignsChecked, setScreenCampaignsChecked] = useState(false);
   const [allCampaigns, setAllCampaigns] = useState([]);
-  const { data: campaigns } = useGetV1ScreensByIdCampaignsQuery({ id });
-  const { data: groups } = useGetV1ScreensByIdScreenGroupsQuery({ id });
+  const { data: campaigns } = useGetV2ScreensByIdCampaignsQuery({ id });
+  const { data: groups } = useGetV2ScreensByIdScreenGroupsQuery({ id });
 
   useEffect(() => {
     if (campaigns) {
@@ -39,7 +39,7 @@ function CampaignIcon({ id }) {
     if (groups && !isOverriddenByCampaign && screenCampaignsChecked) {
       groups["hydra:member"].forEach((group) => {
         dispatch(
-          api.endpoints.getV1ScreenGroupsByIdCampaigns.initiate({
+          api.endpoints.getV2ScreenGroupsByIdCampaigns.initiate({
             id: idFromUrl(group["@id"]),
           })
         ).then((result) => {

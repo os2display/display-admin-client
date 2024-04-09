@@ -30,7 +30,7 @@ services:
 
   node:
     image: node:14
-    command: npm start
+    command: yarn start
     networks:
       - app
     working_dir: /app
@@ -46,7 +46,7 @@ services:
       start_period: 60s
 
   cypress:
-    image: cypress/included:9.5.2
+    image: cypress/included:9.5.4
     networks:
       - app
       - frontend

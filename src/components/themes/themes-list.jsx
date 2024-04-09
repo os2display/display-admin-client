@@ -13,9 +13,9 @@ import {
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
 import {
-  useGetV1ThemesQuery,
-  useDeleteV1ThemesByIdMutation,
-} from "../../redux/api/api.generated";
+  useGetV2ThemesQuery,
+  useDeleteV2ThemesByIdMutation,
+} from "../../redux/api/api.generated.ts";
 
 /**
  * The themes list component.
@@ -41,15 +41,15 @@ function ThemesList() {
   } = useContext(ListContext);
 
   // Delete call
-  const [DeleteV1Themes, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
-    useDeleteV1ThemesByIdMutation();
+  const [DeleteV2Themes, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
+    useDeleteV2ThemesByIdMutation();
 
   const {
     data,
     error: themesGetError,
     isLoading,
     refetch,
-  } = useGetV1ThemesQuery({
+  } = useGetV2ThemesQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,
@@ -71,7 +71,7 @@ function ThemesList() {
       const themeToDelete = selected[0];
       setSelected(selected.slice(1));
       const themeToDeleteId = idFromUrl(themeToDelete.id);
-      DeleteV1Themes({ id: themeToDeleteId });
+      DeleteV2Themes({ id: themeToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 

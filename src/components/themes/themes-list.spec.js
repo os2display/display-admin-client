@@ -31,7 +31,7 @@ describe("themes list tests", () => {
 
   it("It opens delete modal (themes list)", () => {
     cy.get("#delete-modal").should("not.exist");
-    cy.get("tbody").find("tr").eq(0).find("td button").eq(1).click();
+    cy.get("tbody").eq(0).find(".remove-from-list").eq(1).click();
     cy.get("#delete-modal").should("exist");
   });
 
@@ -40,7 +40,7 @@ describe("themes list tests", () => {
   });
 
   it("It removes all selected", () => {
-    cy.get("tbody").find("tr td button").eq(0).click();
+    cy.get("tbody").find("tr td input").eq(0).click();
     cy.get("tbody").find("tr").eq(0).should("have.class", "bg-light");
     cy.get("#clear-rows-button").click();
     cy.get("tbody").find("tr").eq(0).should("have.not.class", "bg-light");

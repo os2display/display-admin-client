@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import PlaylistCampaignManager from "./playlist-campaign-manager";
 import idFromUrl from "../util/helpers/id-from-url";
-import { useGetV1PlaylistsByIdQuery } from "../../redux/api/api.generated";
+import { useGetV2PlaylistsByIdQuery } from "../../redux/api/api.generated.ts";
 
 /**
  * The playlist/campaign edit component.
@@ -19,7 +19,7 @@ function PlaylistCampaignEdit({ location }) {
     data,
     error: loadingError,
     isLoading,
-  } = useGetV1PlaylistsByIdQuery({ id });
+  } = useGetV2PlaylistsByIdQuery({ id });
 
   /** Sets the id of slides for api call. */
   useEffect(() => {

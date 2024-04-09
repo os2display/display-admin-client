@@ -14,9 +14,9 @@ import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropd
 import idFromUrl from "../util/helpers/id-from-url";
 import {
   api,
-  useGetV1LayoutsQuery,
-  useGetV1ScreensByIdScreenGroupsQuery,
-} from "../../redux/api/api.generated";
+  useGetV2LayoutsQuery,
+  useGetV2ScreensByIdScreenGroupsQuery,
+} from "../../redux/api/api.generated.ts";
 import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
@@ -53,7 +53,7 @@ function ScreenForm({
   const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const [bindKey, setBindKey] = useState("");
-  const { data: layouts } = useGetV1LayoutsQuery({
+  const { data: layouts } = useGetV2LayoutsQuery({
     page: 1,
     itemsPerPage: 20,
     order: { createdAt: "desc" },
@@ -218,7 +218,7 @@ function ScreenForm({
             handleChange={handleInput}
             name="inScreenGroups"
             id={groupId}
-            getSelectedMethod={useGetV1ScreensByIdScreenGroupsQuery}
+            getSelectedMethod={useGetV2ScreensByIdScreenGroupsQuery}
           />
         </ContentBody>
         <ContentBody>

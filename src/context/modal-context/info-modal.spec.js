@@ -35,7 +35,7 @@ describe("Info modal tests", () => {
     cy.intercept("GET", "**/slides*", {
       fixture: "info-modal/slide.json",
     }).as("slide");
-    cy.get("tbody").find("tr td button").eq(1).click();
+    cy.get("tbody").find("tr td button").eq(0).click();
     cy.wait("@slide");
     cy.get("#info-modal").should("exist");
     cy.get("#info-modal")
@@ -43,6 +43,7 @@ describe("Info modal tests", () => {
       .should("have.attr", "href")
       .and("include", "/slide/edit/01FYZYHVMWMB575NPNAX55TK7G");
   });
+
   it("It opens info modal and goes to link (slides list)", () => {
     cy.intercept("POST", "**/token", {
       statusCode: 201,
@@ -127,6 +128,6 @@ describe("Info modal tests", () => {
     cy.get("#info-modal")
       .find("a")
       .should("have.attr", "href")
-      .and("include", "/screen/edit/01FYYRA11JSAPV15H29GGA9P78");
+      .and("include", "/screen/edit/01FYYRA11JSAPV25H29GGA9P78");
   });
 });

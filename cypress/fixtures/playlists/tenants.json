@@ -1,10 +1,10 @@
 {
   "@context": "\/contexts\/Tenant",
-  "@id": "\/v1\/tenants",
+  "@id": "\/v2\/tenants",
   "@type": "hydra:Collection",
   "hydra:member": [
     {
-      "@id": "\/v1\/tenants\/008VDAQKX018QR0MZ10RSJ1TF3",
+      "@id": "\/v2\/tenants\/008VDAQKX018QR0MZ10RSJ1TF3",
       "@type": "Tenant",
       "tenantKey": "ABC",
       "userRoleTenants": [
@@ -26,7 +26,7 @@
       "modifiedBy": ""
     },
     {
-      "@id": "\/v1\/tenants\/00FTDXYCA20T2M122R0VQ913BH",
+      "@id": "\/v2\/tenants\/00FTDXYCA20T2M122R0VQ913BH",
       "@type": "Tenant",
       "tenantKey": "XYZ",
       "userRoleTenants": [
@@ -48,7 +48,7 @@
       "modifiedBy": ""
     },
     {
-      "@id": "\/v1\/tenants\/01AH7YTSFD1SEF0AFP1WCX0H24",
+      "@id": "\/v2\/tenants\/01AH7YTSFD1SEF0AFP1WCX0H24",
       "@type": "Tenant",
       "tenantKey": "DEF",
       "userRoleTenants": [
@@ -72,12 +72,12 @@
   ],
   "hydra:totalItems": 3,
   "hydra:view": {
-    "@id": "\/v1\/tenants?itemsPerPage=100",
+    "@id": "\/v2\/tenants?itemsPerPage=100",
     "@type": "hydra:PartialCollectionView"
   },
   "hydra:search": {
     "@type": "hydra:IriTemplate",
-    "hydra:template": "\/v1\/tenants{?title,description,createdBy,createdBy[],modifiedBy,modifiedBy[]}",
+    "hydra:template": "\/v2\/tenants{?title,description,createdBy,createdBy[],modifiedBy,modifiedBy[]}",
     "hydra:variableRepresentation": "BasicRepresentation",
     "hydra:mapping": [
       {

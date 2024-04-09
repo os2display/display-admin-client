@@ -5,10 +5,10 @@ import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
 import {
-  useGetV1SlidesQuery,
-  useGetV1PlaylistsByIdSlidesQuery,
-  useGetV1PlaylistsByIdQuery,
-} from "../../../redux/api/api.generated";
+  useGetV2SlidesQuery,
+  useGetV2PlaylistsByIdSlidesQuery,
+  useGetV2PlaylistsByIdQuery,
+} from "../../../redux/api/api.generated.ts";
 import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
 
 /**
@@ -27,17 +27,22 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
 
-  const { data: slides } = useGetV1SlidesQuery({
+  const { data: slides } = useGetV2SlidesQuery({
     title: searchText,
     itemsPerPage: 30,
     order: { createdAt: "desc" },
   });
 
-  const { data } = useGetV1PlaylistsByIdSlidesQuery({
-    id: slideId,
-    itemsPerPage: 10,
-    page,
-  });
+  const { data } = useGetV2PlaylistsByIdSlidesQuery(
+    {
+      id: slideId,
+      itemsPerPage: 10,
+      page,
+    },
+    { skip: !slideId }
+  );
+
+  //
 
   useEffect(() => {
     if (data) {
@@ -46,6 +51,11 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
         return slide;
       });
       setSelectedData([...selectedData, ...newSlides]);
+
+      // Get all selected slides. If a next page is defined, get the next page.
+      if (data["hydra:view"]["hydra:next"]) {
+        setPage(page + 1);
+      }
     }
   }, [data]);
 
@@ -97,7 +107,7 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
   /* eslint-disable-next-line no-unused-vars */
   const columns = SelectSlideColumns({
     handleDelete: removeFromList,
-    apiCall: useGetV1PlaylistsByIdQuery,
+    apiCall: useGetV2PlaylistsByIdQuery,
     editTarget: "slide",
     infoModalRedirect: "/playlist/edit",
     infoModalTitle: t("info-modal.slide-on-playlists"),

@@ -4,11 +4,11 @@ import set from "lodash.set";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import {
-  usePostV1ScreensMutation,
-  usePutV1ScreensByIdMutation,
-  usePutV1ScreensByIdScreenGroupsMutation,
+  usePostV2ScreensMutation,
+  usePutV2ScreensByIdMutation,
+  usePutV2ScreensByIdScreenGroupsMutation,
   usePutPlaylistScreenRegionItemMutation,
-} from "../../redux/api/api.generated";
+} from "../../redux/api/api.generated.ts";
 import ScreenForm from "./screen-form";
 import {
   displaySuccess,
@@ -58,14 +58,14 @@ function ScreenManager({
   // Initialize to empty screen object.
   const [formStateObject, setFormStateObject] = useState(null);
 
-  const [PutV1Screens, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
-    usePutV1ScreensByIdMutation();
+  const [PutV2Screens, { error: saveErrorPut, isSuccess: isSaveSuccessPut }] =
+    usePutV2ScreensByIdMutation();
 
   // Handler for creating screen.
   const [
-    PostV1Screens,
+    PostV2Screens,
     { data: postData, error: saveErrorPost, isSuccess: isSaveSuccessPost },
-  ] = usePostV1ScreensMutation();
+  ] = usePostV2ScreensMutation();
 
   // @TODO: Handle errors.
   const [
@@ -74,15 +74,15 @@ function ScreenManager({
   ] = usePutPlaylistScreenRegionItemMutation();
 
   const [
-    PutV1ScreensByIdScreenGroups,
+    PutV2ScreensByIdScreenGroups,
     { error: saveErrorGroups, isSuccess: isSaveSuccessGroups },
-  ] = usePutV1ScreensByIdScreenGroupsMutation();
+  ] = usePutV2ScreensByIdScreenGroupsMutation();
 
   /** When the screen is saved, the groups will be saved. */
   useEffect(() => {
     if ((isSaveSuccessPut || isSaveSuccessPost) && groupsToAdd) {
       setLoadingMessage(t("loading-messages.saving-groups"));
-      PutV1ScreensByIdScreenGroups({
+      PutV2ScreensByIdScreenGroups({
         id: id || idFromUrl(postData["@id"]),
         body: JSON.stringify(groupsToAdd),
       });
@@ -293,12 +293,12 @@ function ScreenManager({
 
     if (saveMethod === "POST") {
       setLoadingMessage(t("loading-messages.saving-screen"));
-      PostV1Screens(saveData);
+      PostV2Screens(saveData);
     } else if (saveMethod === "PUT") {
       setLoadingMessage(t("loading-messages.saving-screen"));
       const putData = { ...saveData, id };
 
-      PutV1Screens(putData);
+      PutV2Screens(putData);
     } else {
       throw new Error("Unsupported save method");
     }

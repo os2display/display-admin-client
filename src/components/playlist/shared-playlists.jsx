@@ -7,7 +7,7 @@ import ListContext from "../../context/list-context";
 import ContentBody from "../util/content-body/content-body";
 import { displayError } from "../util/list/toast-component/display-toast";
 import getSharedPlaylistColumns from "./shared-playlists-column";
-import { useGetV1PlaylistsQuery } from "../../redux/api/api.generated";
+import { useGetV2PlaylistsQuery } from "../../redux/api/api.generated.ts";
 
 /**
  * The list component for shared playlists.
@@ -34,7 +34,7 @@ function SharedPlaylists() {
     error: playlistsGetError,
     isLoading,
     refetch,
-  } = useGetV1PlaylistsQuery({
+  } = useGetV2PlaylistsQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,

@@ -4,7 +4,7 @@ import { Col, Form, Row, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import SearchBox from "../../util/search-box/search-box";
 import ContentBody from "../../util/content-body/content-body";
-import { useGetV1MediaQuery } from "../../../redux/api/api.generated";
+import { useGetV2MediaQuery } from "../../../redux/api/api.generated.ts";
 import "../../media/media-list.scss";
 import Pagination from "../../util/paginate/pagination";
 import FilePreview from "./file-preview";
@@ -21,7 +21,7 @@ import FilePreview from "./file-preview";
  */
 function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   // Translations
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "media-list" });
 
   const pageSize = 10;
 
@@ -32,7 +32,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
   const [title, setTitle] = useState("");
 
   // Get method
-  const { data: mediaData, isLoading } = useGetV1MediaQuery({ page, title });
+  const { data: mediaData, isLoading } = useGetV2MediaQuery({ page, title });
 
   /** Set loaded data into form state. */
   useEffect(() => {
@@ -68,7 +68,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
               showLabel
               value={title}
               onChange={handleSearch}
-              helpText={t("media-list.search-help-text")}
+              helpText={t("search-help-text")}
             />
           </Col>
         </Row>
@@ -82,35 +82,32 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
               aria-hidden="true"
               className="m-1"
             />
-            {t("media-list.loading-messages.loading-media")}
+            {t("loading-messages.loading-media")}
           </>
         )}
         {!isLoading && (
           <div className="row row-cols-2 row-cols-sm-3 row-cols-xl-4 row-cols-xxl-5 media-list">
             {media.map((data) => {
               const selected = selectedMediaIds.includes(data["@id"]);
-
               return (
                 <div key={data["@id"]} className="col mb-3">
-                  <div
-                    className={`card bg-light h-100 media-item +
-                  ${selected ? " selected" : ""}`}
+                  <button
+                    className={`card bg-light h-100 media-item ${
+                      selected ? " selected" : ""
+                    }`}
+                    type="button"
+                    onClick={() => onItemClick(data)}
                   >
-                    <button
-                      type="button"
-                      className="media-item-button"
-                      onClick={() => onItemClick(data)}
-                    >
-                      <FilePreview fileEntry={data} />
-                    </button>
-
+                    <FilePreview fileEntry={data} />
                     {multiple && (
                       <Form.Check
+                        className="d-flex justify-content-end"
                         type="checkbox"
                         checked={selected}
-                        tabIndex={-1}
-                        aria-label={t("media-list.checkbox-form-aria-label")}
-                        readOnly
+                        aria-label={t("checkbox-form-aria-label", {
+                          this: data.title,
+                        })}
+                        onChange={() => {}}
                       />
                     )}
 
@@ -126,7 +123,7 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
               );
             })}

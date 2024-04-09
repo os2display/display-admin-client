@@ -13,10 +13,10 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import {
-  useGetV1ScreenGroupsQuery,
-  useGetV1ScreenGroupsByIdScreensQuery,
-  useDeleteV1ScreenGroupsByIdMutation,
-} from "../../redux/api/api.generated";
+  useGetV2ScreenGroupsQuery,
+  useGetV2ScreenGroupsByIdScreensQuery,
+  useDeleteV2ScreenGroupsByIdMutation,
+} from "../../redux/api/api.generated.ts";
 
 /**
  * The groups list component.
@@ -42,9 +42,9 @@ function GroupsList() {
 
   // Delete call
   const [
-    DeleteV1ScreenGroups,
+    DeleteV2ScreenGroups,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = useDeleteV1ScreenGroupsByIdMutation();
+  ] = useDeleteV2ScreenGroupsByIdMutation();
 
   // Get method
   const {
@@ -52,7 +52,7 @@ function GroupsList() {
     error: groupsGetError,
     isLoading,
     refetch,
-  } = useGetV1ScreenGroupsQuery({
+  } = useGetV2ScreenGroupsQuery({
     page,
     order: { createdAt: "desc" },
     title: searchText,
@@ -75,7 +75,7 @@ function GroupsList() {
       const groupToDelete = selected[0];
       setSelected(selected.slice(1));
       const groupToDeleteId = idFromUrl(groupToDelete.id);
-      DeleteV1ScreenGroups({ id: groupToDeleteId });
+      DeleteV2ScreenGroups({ id: groupToDeleteId });
     }
   }, [isDeleting, isDeleteSuccess]);
 
@@ -112,7 +112,7 @@ function GroupsList() {
   // The columns for the table.
   const columns = GroupColumns({
     handleDelete,
-    apiCall: useGetV1ScreenGroupsByIdScreensQuery,
+    apiCall: useGetV2ScreenGroupsByIdScreensQuery,
     infoModalRedirect: "/screen/edit",
     infoModalTitle: t("info-modal.screens"),
   });
