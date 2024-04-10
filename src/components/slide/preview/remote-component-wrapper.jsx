@@ -17,6 +17,7 @@ import "./remote-component-wrapper.scss";
  * @param {string} props.orientation Display orientation or horizontal.
  * @param {boolean} props.showPreview Whether to display the prevoew.
  * @param {boolean} props.closeButton Display close button on preview
+ * @param {Function} props.closeCallback Close button callback on preview
  * @returns {object} The component.
  */
 function RemoteComponentWrapper({
@@ -26,7 +27,8 @@ function RemoteComponentWrapper({
   themeData,
   showPreview,
   orientation,
-  closeButton
+  closeButton,
+  closeCallback,
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
@@ -119,6 +121,7 @@ function RemoteComponentWrapper({
 RemoteComponentWrapper.defaultProps = {
   orientation: "",
   closeButton: false,
+  closeCallback: () => {},
   mediaData: null,
   themeData: {},
 };
@@ -133,6 +136,7 @@ RemoteComponentWrapper.propTypes = {
   themeData: PropTypes.shape({
     css: PropTypes.string,
   }),
+  closeCallback: PropTypes.func,
   showPreview: PropTypes.bool.isRequired,
   closeButton: PropTypes.bool,
   orientation: PropTypes.string,
