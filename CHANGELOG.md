@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#241](https://github.com/os2display/display-admin-client/pull/241)
+  - Fixed loading of theme for slide preview.
+
 ## [2.0.0] - 2024-04-09
 
 - [#240](https://github.com/os2display/display-admin-client/pull/240)

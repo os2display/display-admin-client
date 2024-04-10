@@ -2,12 +2,9 @@ import { React, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import { useRemoteComponent } from "./remote-component-helper";
 import ErrorBoundary from "../../../error-boundary";
 import "./remote-component-wrapper.scss";
-import { api } from "../../../redux/api/api.generated.ts";
-import idFromUrl from "../../util/helpers/id-from-url";
 
 /**
  * A remote component wrapper
@@ -37,8 +34,6 @@ function RemoteComponentWrapper({
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
   const [loading, err, Component] = useRemoteComponent(url);
   const [runId, setRunId] = useState("");
-  const dispatch = useDispatch();
-  const [loadedLogos, setLoadedLogos] = useState({});
 
   /** Create remoteComponentSlide from slide and mediaData */
   useEffect(() => {
@@ -49,7 +44,7 @@ function RemoteComponentWrapper({
       if (mediaData) {
         newSlide.mediaData = mediaData;
 
-        // Map temp images so they are visible in preview before save
+        // Map temp images, so they are visible in preview before save
         const mediaDataCopy = { ...mediaData };
 
         // Find tempid keys
@@ -67,38 +62,18 @@ function RemoteComponentWrapper({
         newSlide.mediaData = mediaDataCopy;
       }
 
-      newSlide.themeData = themeData;
+      newSlide.theme = themeData;
 
       // Load theme logo.
       if (newSlide?.themeData?.logo) {
-        if (
-          Object.prototype.hasOwnProperty.call(
-            loadedLogos,
-            newSlide.themeData.logo
-          )
-        ) {
-          newSlide.mediaData[newSlide.themeData.logo] =
-            loadedLogos[newSlide.themeData.logo];
-        } else {
-          const key = newSlide.themeData.logo;
-
-          dispatch(
-            api.endpoints.getv2MediaById.initiate({
-              id: idFromUrl(newSlide.themeData.logo),
-            })
-          ).then((resp) => {
-            if (resp.isSuccess) {
-              const newLoadedLogos = { ...loadedLogos };
-              newLoadedLogos[key] = resp.data;
-              setLoadedLogos(newLoadedLogos);
-            }
-          });
-        }
+        const { logo } = newSlide.themeData;
+        const logoId = logo["@id"] ?? null;
+        newSlide.mediaData[logoId] = newSlide?.themeData.logo;
       }
 
       setRemoteComponentSlide(newSlide);
     }
-  }, [slide, mediaData, themeData, loadedLogos]);
+  }, [slide, mediaData, themeData]);
 
   useEffect(() => {
     if (showPreview) {
