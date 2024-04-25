@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.2] - 2024-04-25
+
 - [#242](https://github.com/os2display/display-admin-client/pull/242)
   - Ensured real ip is logged in nginx.
 
