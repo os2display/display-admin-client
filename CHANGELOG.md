@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - Added screen status to screen list.
 - Refactored screen status on screen edit.
+- Change campaign icon in screen list to boolean text.
 
 ## [2.0.2] - 2024-04-25
 

@@ -993,5 +993,9 @@
     "loading-messages": {
       "saving-activation-code": "Opretter aktiveringskode"
     }
+  },
+  "campaign-icon": {
+    "overridden-by-campaign": "Ja",
+    "not-overridden-by-campaign": ""
   }
 }

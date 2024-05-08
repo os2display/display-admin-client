@@ -1,8 +1,7 @@
 import { React, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import idFromUrl from "../util/helpers/id-from-url";
 import calculateIsPublished from "../util/helpers/calculate-is-published";
 import {
@@ -19,6 +18,7 @@ import {
  * @returns {object} The campaign icon.
  */
 function CampaignIcon({ id }) {
+  const { t } = useTranslation("common", { keyPrefix: "campaign-icon" });
   const dispatch = useDispatch();
   const [isOverriddenByCampaign, setIsOverriddenByCampaign] = useState(false);
   const [screenCampaignsChecked, setScreenCampaignsChecked] = useState(false);
@@ -65,12 +65,9 @@ function CampaignIcon({ id }) {
     }
   }, [allCampaigns]);
 
-  return (
-    <FontAwesomeIcon
-      icon={faExclamationCircle}
-      style={isOverriddenByCampaign ? { color: "red" } : { color: "grey" }}
-    />
-  );
+  return isOverriddenByCampaign
+    ? t("overridden-by-campaign")
+    : t("not-overridden-by-campaign");
 }
 
 CampaignIcon.propTypes = {
