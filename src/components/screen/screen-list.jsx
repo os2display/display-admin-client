@@ -20,6 +20,7 @@ import {
   displayError,
 } from "../util/list/toast-component/display-toast";
 import "./screen-list.scss";
+import ConfigLoader from "../../config-loader";
 
 /**
  * The screen list component.
@@ -42,6 +43,7 @@ function ScreenList() {
   const [loadingMessage, setLoadingMessage] = useState(
     t("loading-messages.loading-screens")
   );
+  const [showScreenStatus, setShowScreenStatus] = useState(false);
 
   // Delete call
   const [
@@ -61,6 +63,12 @@ function ScreenList() {
     search: searchText,
     createdBy,
   });
+
+  useEffect(() => {
+    ConfigLoader.loadConfig().then((config) => {
+      setShowScreenStatus(config.showScreenStatus);
+    });
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -125,7 +133,7 @@ function ScreenList() {
     apiCall: useGetV2ScreensByIdScreenGroupsQuery,
     infoModalRedirect: "/group/edit",
     infoModalTitle: t("info-modal.screen-in-groups"),
-    displayStatus: true,
+    displayStatus: showScreenStatus,
   });
 
   return (
