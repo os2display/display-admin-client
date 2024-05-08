@@ -18,6 +18,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import { api } from "../../redux/api/api.generated.ts";
 import { displayError } from "../util/list/toast-component/display-toast";
 import FormInput from "../util/forms/form-input";
+import ConfigLoader from "../../config-loader";
 
 /**
  * Displays screen status.
@@ -35,6 +36,7 @@ function ScreenStatus({ screen, handleInput, mode = "default" }) {
 
   const [clientRelease, setClientRelease] = useState(null);
   const [bindKey, setBindKey] = useState("");
+  const [showScreenStatus, setShowScreenStatus] = useState(false);
 
   const { status } = screen;
 
@@ -99,7 +101,13 @@ function ScreenStatus({ screen, handleInput, mode = "default" }) {
           .then((data) => setClientRelease(data));
       }
     }
-  }, ["status"]);
+  }, [status]);
+
+  useEffect(() => {
+    ConfigLoader.loadConfig().then((config) => {
+      setShowScreenStatus(config.showScreenStatus);
+    });
+  }, []);
 
   if (mode === "minimal") {
     if (!status || status?.clientMeta?.tokenExpired) {
@@ -197,45 +205,47 @@ function ScreenStatus({ screen, handleInput, mode = "default" }) {
 
         {screenBound && (
           <>
-            <ul>
-              {status?.latestRequestDateTime && (
-                <li>
-                  {t("latest-request")}:{" "}
-                  {dayjs(status?.latestRequestDateTime).format(
-                    "D/M YYYY HH:mm"
-                  )}
-                </li>
-              )}
-              {status?.releaseVersion && (
-                <li>
-                  {t("release-version")}: {status?.releaseVersion}
-                  {notRunningLatestRelease && (
-                    <>
-                      {" "}
-                      ({t("newest")}: {clientRelease?.releaseVersion})
-                    </>
-                  )}
-                </li>
-              )}
-              {status?.releaseTimestamp && (
-                <li>
-                  {t("release-timestamp")}:{" "}
-                  {dayjs(status?.releaseTimestamp * 1000).format(
-                    "D/M YYYY HH:mm"
-                  )}
-                  {notRunningLatestRelease && (
-                    <>
-                      {"  "}({t("newest")}:{" "}
-                      {clientRelease?.releaseTimestamp &&
-                        dayjs(clientRelease?.releaseTimestamp * 1000).format(
-                          "D/M YYYY HH:mm"
-                        )}
-                      )
-                    </>
-                  )}
-                </li>
-              )}
-            </ul>
+            {showScreenStatus && (
+              <ul>
+                {status?.latestRequestDateTime && (
+                  <li>
+                    {t("latest-request")}:{" "}
+                    {dayjs(status?.latestRequestDateTime).format(
+                      "D/M YYYY HH:mm"
+                    )}
+                  </li>
+                )}
+                {status?.releaseVersion && (
+                  <li>
+                    {t("release-version")}: {status?.releaseVersion}
+                    {notRunningLatestRelease && (
+                      <>
+                        {" "}
+                        ({t("newest")}: {clientRelease?.releaseVersion})
+                      </>
+                    )}
+                  </li>
+                )}
+                {status?.releaseTimestamp && (
+                  <li>
+                    {t("release-timestamp")}:{" "}
+                    {dayjs(status?.releaseTimestamp * 1000).format(
+                      "D/M YYYY HH:mm"
+                    )}
+                    {notRunningLatestRelease && (
+                      <>
+                        {"  "}({t("newest")}:{" "}
+                        {clientRelease?.releaseTimestamp &&
+                          dayjs(clientRelease?.releaseTimestamp * 1000).format(
+                            "D/M YYYY HH:mm"
+                          )}
+                        )
+                      </>
+                    )}
+                  </li>
+                )}
+              </ul>
+            )}
 
             <Button onClick={handleUnbindScreen} className="mt-3">
               {t("unbind")}
@@ -251,7 +261,8 @@ function ScreenStatus({ screen, handleInput, mode = "default" }) {
 
 ScreenStatus.defaultProps = {
   mode: "default",
-  handleInput: () => {},
+  handleInput: () => {
+  },
 };
 
 ScreenStatus.propTypes = {
