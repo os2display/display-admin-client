@@ -1,9 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Spinner, Alert } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
@@ -13,11 +12,9 @@ import GridGenerationAndSelect from "./util/grid-generation-and-select";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import idFromUrl from "../util/helpers/id-from-url";
 import {
-  api,
   useGetV2LayoutsQuery,
   useGetV2ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated.ts";
-import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
 import ScreenStatus from "./screen-status";
@@ -50,10 +47,8 @@ function ScreenForm({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-form" });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
-  const [bindKey, setBindKey] = useState("");
   const { data: layouts } = useGetV2LayoutsQuery({
     page: 1,
     itemsPerPage: 20,
@@ -89,57 +84,6 @@ function ScreenForm({
     handleInput({
       target: { id, value: value.map((item) => item["@id"]).shift() },
     });
-  };
-
-  const handleBindScreen = () => {
-    if (bindKey) {
-      dispatch(
-        api.endpoints.postScreenBindKey.initiate({
-          id: idFromUrl(screen["@id"]),
-          screenBindObject: JSON.stringify({
-            bindKey,
-          }),
-        })
-      ).then((response) => {
-        if (response.error) {
-          const err = response.error;
-          displayError(
-            t("error-messages.error-binding", {
-              status: err.status,
-            }),
-            err
-          );
-        } else {
-          // Set screenUser to true, to indicate it has been set.
-          handleInput({ target: { id: "screenUser", value: true } });
-        }
-      });
-    }
-  };
-
-  const handleUnbindScreen = () => {
-    if (screen?.screenUser) {
-      setBindKey("");
-
-      dispatch(
-        api.endpoints.postScreenUnbind.initiate({
-          id: idFromUrl(screen["@id"]),
-        })
-      ).then((response) => {
-        if (response.error) {
-          const err = response.error;
-          displayError(
-            t("error-messages.error-unbinding", {
-              status: err.status,
-            }),
-            err
-          );
-        } else {
-          // Set screenUser to null, to indicate it has been removed.
-          handleInput({ target: { id: "screenUser", value: null } });
-        }
-      });
-    }
   };
 
   const isVertical = () => {
@@ -182,26 +126,7 @@ function ScreenForm({
         {Object.prototype.hasOwnProperty.call(screen, "@id") && (
           <ContentBody>
             <h2 className="h4 mb-3">{t("bind-header")}</h2>
-            <ScreenStatus screen={screen} />
-            {screen?.screenUser && (
-              <>
-                <Button onClick={handleUnbindScreen}>{t("unbind")}</Button>
-              </>
-            )}
-            {!screen?.screenUser && (
-              <>
-                <FormInput
-                  onChange={({ target }) => {
-                    setBindKey(target?.value);
-                  }}
-                  name="bindKey"
-                  value={bindKey}
-                  label={t("bindkey-label")}
-                  className="mb-3"
-                />
-                <Button onClick={handleBindScreen}>{t("bind")}</Button>
-              </>
-            )}
+            <ScreenStatus screen={screen} handleInput={handleInput} />
           </ContentBody>
         )}
         <ContentBody>

@@ -62,7 +62,10 @@
     "remove-row": "Fjern række"
   },
   "screen-status": {
-    "not-bound": "Skærmen er ikke tilkoblet",
+    "bind": "Tilkobl skærm",
+    "unbind": "Afkobl skærm",
+    "bindkey-label": "Tilkoblingskode",
+    "not-bound": "Skærmen er ikke tilkoblet.",
     "already-bound": "Skærmen er tilkoblet",
     "token-expired": "Skærmens forbindelse er udløbet. Kobl på med en ny kode.",
     "release-timestamp": "Udgivelsestidspunkt",
@@ -71,7 +74,8 @@
     "latest-release": "Seneste udgivelse",
     "latest-release-timestamp": "Seneste udgivelsestidspunkt",
     "latest-request-warning": "Skærmen har ikke kommunikeret i mere end en time.",
-    "release-warning": "Skærmen kører ikke seneste udgivelse."
+    "release-warning": "Skærmen kører ikke seneste udgivelse.",
+    "newest": "Nyeste"
   },
   "screen-list": {
     "columns": {
@@ -686,9 +690,6 @@
     "touch-region": "(Touch)",
     "touch-region-helptext": "Touch region: En touch region fungerer anderledes end en normal region. I en touch region bliver slides der er tilføjet lavet til knapper der kan åbnes i fuld skærm.",
     "bind-header": "Tilkobling",
-    "bind": "Tilkobl skærm",
-    "unbind": "Afkobl skærm",
-    "bindkey-label": "Tilkoblingskode",
     "error-messages": {
       "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles:",
       "error-unbinding": "Der skete en fejl ({{status}}) da skærmen skulle afkobles:"
