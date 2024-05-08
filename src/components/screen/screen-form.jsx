@@ -20,6 +20,7 @@ import {
 import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
+import ScreenStatus from "./screen-status";
 
 /**
  * The screen form component.
@@ -181,23 +182,14 @@ function ScreenForm({
         {Object.prototype.hasOwnProperty.call(screen, "@id") && (
           <ContentBody>
             <h2 className="h4 mb-3">{t("bind-header")}</h2>
+            <ScreenStatus screen={screen} />
             {screen?.screenUser && (
               <>
-                <div className="mb-3">
-                  <Alert key="screen-bound" variant="success">
-                    {t("already-bound")}
-                  </Alert>
-                </div>
                 <Button onClick={handleUnbindScreen}>{t("unbind")}</Button>
               </>
             )}
             {!screen?.screenUser && (
               <>
-                <div className="mb-3">
-                  <Alert key="screen-not-bound" variant="danger">
-                    {t("not-bound")}
-                  </Alert>
-                </div>
                 <FormInput
                   onChange={({ target }) => {
                     setBindKey(target?.value);
@@ -351,6 +343,7 @@ ScreenForm.propTypes = {
     screenUser: PropTypes.string,
     size: PropTypes.string,
     title: PropTypes.string,
+    status: PropTypes.shape({}),
     playlists: PropTypes.arrayOf(
       PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
     ),

@@ -61,11 +61,24 @@
   "react-table": {
     "remove-row": "Fjern række"
   },
+  "screen-status": {
+    "not-bound": "Skærmen er ikke tilkoblet",
+    "already-bound": "Skærmen er tilkoblet",
+    "token-expired": "Skærmens forbindelse er udløbet. Kobl på med en ny kode.",
+    "release-timestamp": "Udgivelsestidspunkt",
+    "release-version": "Version",
+    "latest-request": "Seneste kommunikation",
+    "latest-release": "Seneste udgivelse",
+    "latest-release-timestamp": "Seneste udgivelsestidspunkt",
+    "latest-request-warning": "Skærmen har ikke kommunikeret i mere end en time.",
+    "release-warning": "Skærmen kører ikke seneste udgivelse."
+  },
   "screen-list": {
     "columns": {
       "campaign": "Kampagne",
       "on-groups": "Tilknyttede grupper",
-      "location": "Lokation"
+      "location": "Lokation",
+      "status": "Status"
     },
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
@@ -675,8 +688,6 @@
     "bind-header": "Tilkobling",
     "bind": "Tilkobl skærm",
     "unbind": "Afkobl skærm",
-    "not-bound": "Skærmen er ikke tilkoblet",
-    "already-bound": "Skærmen er tilkoblet",
     "bindkey-label": "Tilkoblingskode",
     "error-messages": {
       "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles:",

@@ -1,5 +1,6 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import UserContext from "../../context/user-context";
 import List from "../util/list/list";
 import { ScreenColumns } from "./util/screen-columns";
@@ -12,6 +13,7 @@ import {
   useGetV2ScreensQuery,
   useDeleteV2ScreensByIdMutation,
   useGetV2ScreensByIdScreenGroupsQuery,
+  api,
 } from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
@@ -110,20 +112,21 @@ function ScreenList() {
     setLoadingMessage(t("loading-messages.deleting-screen"));
   };
 
-  // The columns for the table.
-  const columns = ScreenColumns({
-    handleDelete,
-    apiCall: useGetV2ScreensByIdScreenGroupsQuery,
-    infoModalRedirect: "/group/edit",
-    infoModalTitle: t("info-modal.screen-in-groups"),
-  });
-
   // Error with retrieving list of screen
   useEffect(() => {
     if (screensGetError) {
       displayError(t("error-messages.screens-load-error"), screensGetError);
     }
   }, [screensGetError]);
+
+  // The columns for the table.
+  const columns = ScreenColumns({
+    handleDelete,
+    apiCall: useGetV2ScreensByIdScreenGroupsQuery,
+    infoModalRedirect: "/group/edit",
+    infoModalTitle: t("info-modal.screen-in-groups"),
+    displayStatus: true,
+  });
 
   return (
     <>
