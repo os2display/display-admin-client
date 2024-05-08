@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Added screen status to screen list.
+- Refactored screen status on screen edit.
+
 ## [2.0.2] - 2024-04-25
 
 - [#242](https://github.com/os2display/display-admin-client/pull/242)
