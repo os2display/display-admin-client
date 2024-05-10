@@ -154,7 +154,7 @@ function ScreenList() {
               isLoading={isLoading || isDeleting}
               isFetching={isFetching}
               loadingMessage={loadingMessage}
-              enableScreenStatus
+              enableScreenStatus={showScreenStatus}
             />
           )}
         </>
