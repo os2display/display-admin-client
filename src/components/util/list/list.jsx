@@ -85,7 +85,7 @@ function List({
       params.append("published", published);
     }
 
-    if (enableScreenStatus && screenStatusParam) {
+    if (enableScreenStatus) {
       params.delete("screenStatus");
       params.append("screenStatus", screenStatusParam);
     }
