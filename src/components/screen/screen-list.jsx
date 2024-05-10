@@ -32,6 +32,8 @@ function ScreenList() {
     searchText: { get: searchText },
     page: { get: page },
     createdBy: { get: createdBy },
+    exists: { get: exists },
+    screenUserLatestRequest: { get: screenUserLatestRequest },
   } = useContext(ListContext);
   const { selected, setSelected } = useModal();
 
@@ -53,6 +55,7 @@ function ScreenList() {
   const {
     data,
     error: screensGetError,
+    isFetching,
     isLoading,
     refetch,
   } = useGetV2ScreensQuery({
@@ -60,6 +63,8 @@ function ScreenList() {
     order: { title: "asc" },
     search: searchText,
     createdBy,
+    exists,
+    "screenUser.latestRequest": screenUserLatestRequest,
   });
 
   useEffect(() => {
@@ -73,10 +78,6 @@ function ScreenList() {
       setListData(data);
     }
   }, [data]);
-
-  useEffect(() => {
-    refetch();
-  }, [searchText, page, createdBy]);
 
   // If the tenant is changed, data should be refetched
   useEffect(() => {
@@ -151,7 +152,9 @@ function ScreenList() {
               calendarViewPossible
               handleDelete={handleDelete}
               isLoading={isLoading || isDeleting}
+              isFetching={isFetching}
               loadingMessage={loadingMessage}
+              enableScreenStatus
             />
           )}
         </>

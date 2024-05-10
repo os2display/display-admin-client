@@ -1,17 +1,7 @@
 import { React } from "react";
 import { useTranslation } from "react-i18next";
-import dayjs from "dayjs";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheckCircle,
-  faExclamationCircle,
-  faInfoCircle,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import ListButton from "../../util/list/list-button";
-import CampaignIcon from "../../screen-list/campaign-icon";
+import CampaignIcon from "./campaign-icon";
 import SelectColumnHoc from "../../util/select-column-hoc";
 import ColumnHoc from "../../util/column-hoc";
 import idFromUrl from "../../util/helpers/id-from-url";
@@ -46,6 +36,7 @@ function getScreenColumns({
           displayData={screen.inScreenGroups}
           modalTitle={infoModalTitle}
           dataKey={dataKey}
+          delayApiCall={1000}
         />
       ),
       key: "groups",
@@ -59,7 +50,7 @@ function getScreenColumns({
       key: "campaign",
       label: t("columns.campaign"),
       // eslint-disable-next-line react/destructuring-assignment
-      content: (d) => <CampaignIcon id={idFromUrl(d["@id"])} />,
+      content: (d) => <CampaignIcon id={idFromUrl(d["@id"])} delay={1000} />,
     },
   ];
 

@@ -59,6 +59,8 @@ function App() {
   const [page, setPage] = useState(1);
   const [createdBy, setCreatedBy] = useState("all");
   const [isPublished, setIsPublished] = useState("all");
+  const [exists, setExists] = useState(null);
+  const [screenUserLatestRequest, setScreenUserLatestRequest] = useState(null);
 
   const userStore = {
     authenticated: { get: authenticated, set: setAuthenticated },
@@ -74,6 +76,11 @@ function App() {
     page: { get: page, set: setPage },
     createdBy: { get: createdBy, set: setCreatedBy },
     isPublished: { get: isPublished, set: setIsPublished },
+    exists: { get: exists, set: setExists },
+    screenUserLatestRequest: {
+      get: screenUserLatestRequest,
+      set: setScreenUserLatestRequest,
+    },
   };
 
   const handleReauthenticate = () => {

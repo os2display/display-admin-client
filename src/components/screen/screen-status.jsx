@@ -26,7 +26,7 @@ import ConfigLoader from "../../config-loader";
  * @param {object} props The props.
  * @param {object} props.screen The screen.
  * @param {string | null} props.mode The display mode: 'default' or 'minimal'
- * @param props.handleInput
+ * @param {func} props.handleInput Handler for change in input.
  * @returns {JSX.Element} The status element.
  */
 function ScreenStatus({ screen, handleInput, mode = "default" }) {
@@ -261,14 +261,13 @@ function ScreenStatus({ screen, handleInput, mode = "default" }) {
 
 ScreenStatus.defaultProps = {
   mode: "default",
-  handleInput: () => {
-  },
+  handleInput: () => {},
 };
 
 ScreenStatus.propTypes = {
   screen: PropTypes.shape({
     "@id": PropTypes.string.isRequired,
-    screenUser: PropTypes.shape({}),
+    screenUser: PropTypes.string,
     status: PropTypes.shape({
       releaseVersion: PropTypes.string,
       releaseTimestamp: PropTypes.number,

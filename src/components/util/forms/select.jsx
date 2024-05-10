@@ -57,10 +57,12 @@ function Select({
 
   return (
     <FormGroup className={formGroupClasses}>
-      <label htmlFor={name} className="form-label">
-        {label}
-        {required && " *"}
-      </label>
+      {label && (
+        <label htmlFor={name} className="form-label">
+          {label}
+          {required && " *"}
+        </label>
+      )}
       <select
         className={classes}
         required={isRequired}
@@ -87,6 +89,7 @@ function Select({
 }
 
 Select.defaultProps = {
+  label: null,
   errors: null,
   errorText: "",
   helpText: "",
@@ -104,7 +107,7 @@ Select.propTypes = {
     })
   ).isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

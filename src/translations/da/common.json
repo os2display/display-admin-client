@@ -642,7 +642,11 @@
     "delete-button": "Slet",
     "deselect-all": "Fravælg alle",
     "published": "Udgivet",
-    "not-published": "Ikke udgivet"
+    "not-published": "Ikke udgivet",
+    "screen-status.all": "Alle skærme",
+    "screen-status.active": "Aktive skærme",
+    "screen-status.inactive": "Inaktive skærme",
+    "screen-status.not-connected": "Ikke forbundne skærme"
   },
   "image": {
     "image-currently-uploading": "Billedet du er ved at overføre",
