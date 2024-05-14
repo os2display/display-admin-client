@@ -20,6 +20,7 @@ import {
 import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
+import Preview from "../preview";
 
 /**
  * The screen form component.
@@ -58,6 +59,7 @@ function ScreenForm({
     itemsPerPage: 20,
     order: { createdAt: "desc" },
   });
+  const [displayPreview, setDisplayPreview] = useState(null);
 
   useEffect(() => {
     if (layouts) {
@@ -158,6 +160,7 @@ function ScreenForm({
       )}
       <Form>
         <h1 id="screenTitle">{headerText}</h1>
+
         <ContentBody>
           <h2 className="h4">{t("screen-about")}</h2>
           <FormInput
@@ -178,6 +181,24 @@ function ScreenForm({
             onChange={handleInput}
           />
         </ContentBody>
+
+        <ContentBody>
+          <h2 className="h4">{t("screen-preview")}</h2>
+          <Alert key="screen-preview-about" variant="info">{t("screen-preview-about")}</Alert>
+          {displayPreview && (
+            <Preview id={idFromUrl(screen["@id"])} mode="screen" />
+          )}
+          <Button
+            variant="primary"
+            className="mt-3"
+            onClick={() => setDisplayPreview(!displayPreview)}
+          >
+            {displayPreview
+              ? t("screen-preview-close")
+              : t("screen-preview-open")}
+          </Button>
+        </ContentBody>
+
         {Object.prototype.hasOwnProperty.call(screen, "@id") && (
           <ContentBody>
             <h2 className="h4 mb-3">{t("bind-header")}</h2>
