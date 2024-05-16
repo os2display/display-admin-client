@@ -78,11 +78,11 @@ function MultiSelectComponent({
 
   /** Map data to fit component. */
   useEffect(() => {
-    const localMappedOptions = options ? mapDataToFitMultiselect(options) : [];
+    const localMappedOptions =
+      options.length > 0 ? mapDataToFitMultiselect(options) : [];
 
-    const localMappedSelected = options
-      ? mapDataToFitMultiselect(selected)
-      : [];
+    const localMappedSelected =
+      selected.length > 0 ? mapDataToFitMultiselect(selected) : [];
 
     const optionsWithSelected = removeDuplicatesByKey(
       [...localMappedOptions, ...localMappedSelected],
