@@ -1,9 +1,9 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../../../util/forms/multiselect-dropdown/multi-dropdown";
 import { displayError } from "../../../util/list/toast-component/display-toast";
-
+import userContext from "../../../../context/user-context";
 /**
  * A multiselect and table for groups.
  *
@@ -23,13 +23,15 @@ function StationSelector({
   const { t } = useTranslation("common", { keyPrefix: "station-selector" });
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const { config } = useContext(userContext);
+
   /**
    * Adds group to list of groups.
    *
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  const handleAdd = ({ target }) => {
+  const handleSelect = ({ target }) => {
     const { value, id: localId } = target;
     onChange({
       target: { id: localId, value },
@@ -44,15 +46,29 @@ function StationSelector({
   const onFilter = (filter) => {
     setSearchText(filter);
   };
+  /**
+   * Map the data recieved from the midttrafik api.
+   *
+   * @param {object} locationData
+   * @returns {object} The mapped data.
+   */
+  const mapLocationData = (locationData) => {
+    return locationData.map((location) => ({
+      id: location.StopLocation.extId,
+      name: location.StopLocation.name,
+    }));
+  };
 
   useEffect(() => {
     fetch(
-      `https://xmlopen.rejseplanen.dk/bin/rest.exe/location?input=user%20i${searchText}?&format=json`
+      `https://www.rejseplanen.dk/api/location.name?accessId=${
+        config.rejseplanenApiKey || ""
+      }&format=json&input=${searchText}`
     )
       .then((response) => response.json())
       .then((rpData) => {
-        if (rpData?.LocationList?.StopLocation) {
-          setData(rpData.LocationList.StopLocation);
+        if (rpData?.stopLocationOrCoordLocation) {
+          setData(mapLocationData(rpData.stopLocationOrCoordLocation));
         }
       })
       .catch((er) => {
@@ -67,7 +83,7 @@ function StationSelector({
           <MultiSelectComponent
             options={data}
             singleSelect
-            handleSelection={handleAdd}
+            handleSelection={handleSelect}
             name={name}
             selected={inputValue || []}
             filterCallback={onFilter}
