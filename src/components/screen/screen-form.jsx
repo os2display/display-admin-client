@@ -15,7 +15,7 @@ import idFromUrl from "../util/helpers/id-from-url";
 import {
   api,
   useGetV2LayoutsQuery,
-  useGetV2ScreensByIdScreenGroupsQuery,
+  useGetV2ScreensByIdScreenGroupsQuery
 } from "../../redux/api/api.generated.ts";
 import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
@@ -38,16 +38,16 @@ import Preview from "../preview";
  * @returns {object} The screen form.
  */
 function ScreenForm({
-  screen,
-  handleInput,
-  handleSubmit,
-  headerText,
-  groupId,
-  isLoading,
-  loadingMessage,
-  orientationOptions,
-  resolutionOptions,
-}) {
+                      screen,
+                      handleInput,
+                      handleSubmit,
+                      headerText,
+                      groupId,
+                      isLoading,
+                      loadingMessage,
+                      orientationOptions,
+                      resolutionOptions
+                    }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-form" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ function ScreenForm({
   const { data: layouts } = useGetV2LayoutsQuery({
     page: 1,
     itemsPerPage: 20,
-    order: { createdAt: "desc" },
+    order: { createdAt: "desc" }
   });
   const [displayPreview, setDisplayPreview] = useState(null);
 
@@ -88,7 +88,7 @@ function ScreenForm({
     const { value, id } = target;
     setSelectedLayout(value);
     handleInput({
-      target: { id, value: value.map((item) => item["@id"]).shift() },
+      target: { id, value: value.map((item) => item["@id"]).shift() }
     });
   };
 
@@ -98,15 +98,15 @@ function ScreenForm({
         api.endpoints.postScreenBindKey.initiate({
           id: idFromUrl(screen["@id"]),
           screenBindObject: JSON.stringify({
-            bindKey,
-          }),
+            bindKey
+          })
         })
       ).then((response) => {
         if (response.error) {
           const err = response.error;
           displayError(
             t("error-messages.error-binding", {
-              status: err.status,
+              status: err.status
             }),
             err
           );
@@ -124,14 +124,14 @@ function ScreenForm({
 
       dispatch(
         api.endpoints.postScreenUnbind.initiate({
-          id: idFromUrl(screen["@id"]),
+          id: idFromUrl(screen["@id"])
         })
       ).then((response) => {
         if (response.error) {
           const err = response.error;
           displayError(
             t("error-messages.error-unbinding", {
-              status: err.status,
+              status: err.status
             }),
             err
           );
@@ -184,9 +184,11 @@ function ScreenForm({
 
         <ContentBody>
           <h2 className="h4">{t("screen-preview")}</h2>
-          <Alert key="screen-preview-about" variant="info">{t("screen-preview-about")}</Alert>
           {displayPreview && (
-            <Preview id={idFromUrl(screen["@id"])} mode="screen" />
+            <>
+              <Preview id={idFromUrl(screen["@id"])} mode="screen" />
+              <Alert key="screen-preview-about" variant="info" className="mt-3">{t("screen-preview-about")}</Alert>
+            </>
           )}
           <Button
             variant="primary"
@@ -356,7 +358,7 @@ ScreenForm.defaultProps = {
   groupId: "",
   isLoading: false,
   loadingMessage: "",
-  screen: null,
+  screen: null
 };
 
 ScreenForm.propTypes = {
@@ -374,7 +376,7 @@ ScreenForm.propTypes = {
     title: PropTypes.string,
     playlists: PropTypes.arrayOf(
       PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
-    ),
+    )
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
@@ -387,7 +389,7 @@ ScreenForm.propTypes = {
   ).isRequired,
   resolutionOptions: PropTypes.arrayOf(
     PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
-  ).isRequired,
+  ).isRequired
 };
 
 export default ScreenForm;

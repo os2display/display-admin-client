@@ -1,12 +1,14 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import { Alert } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import UserContext from "../../context/user-context";
 import Schedule from "../util/schedule/schedule";
 import { useGetV2TenantsQuery } from "../../redux/api/api.generated.ts";
 import ContentBody from "../util/content-body/content-body";
 import TenantsDropdown from "../util/forms/multiselect-dropdown/tenants/tenants-dropdown";
+import Preview from "../preview";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The playlist form component.
@@ -21,6 +23,7 @@ import TenantsDropdown from "../util/forms/multiselect-dropdown/tenants/tenants-
 function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   const { t } = useTranslation("common");
   const context = useContext(UserContext);
+  const [displayPreview, setDisplayPreview] = useState(null);
 
   const { data: tenants } = useGetV2TenantsQuery({
     itemsPerPage: 30,
@@ -56,6 +59,31 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
               {t("playlist-form.warning")}
             </Alert>
           </ContentBody>
+
+          <ContentBody>
+            <h2 className="h4">{t("playlist-preview")}</h2>
+            {displayPreview && (
+              <>
+                <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
+                <Alert
+                  key="playlist-preview-about"
+                  variant="info"
+                  className="mt-3"
+                >
+                  {t("playlist-preview-about")}
+                </Alert>
+              </>
+            )}
+            <Button
+              variant="primary"
+              className="mt-3"
+              onClick={() => setDisplayPreview(!displayPreview)}
+            >
+              {displayPreview
+                ? t("playlist-preview-close")
+                : t("playlist-preview-open")}
+            </Button>
+          </ContentBody>
         </>
       )}
     </>
@@ -69,6 +97,7 @@ PlaylistForm.defaultProps = {
 
 PlaylistForm.propTypes = {
   playlist: PropTypes.shape({
+    "@id": PropTypes.string,
     schedules: PropTypes.arrayOf(
       PropTypes.shape({
         duration: PropTypes.number,
