@@ -61,7 +61,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
           </ContentBody>
 
           <ContentBody>
-            <h2 className="h4">{t("playlist-preview")}</h2>
+            <h2 className="h4">{t("playlist-form.playlist-preview")}</h2>
             {displayPreview && (
               <>
                 <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
@@ -70,7 +70,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
                   variant="info"
                   className="mt-3"
                 >
-                  {t("playlist-preview-about")}
+                  {t("playlist-form.playlist-preview-about")}
                 </Alert>
               </>
             )}
@@ -80,8 +80,8 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
               onClick={() => setDisplayPreview(!displayPreview)}
             >
               {displayPreview
-                ? t("playlist-preview-close")
-                : t("playlist-preview-open")}
+                ? t("playlist-form.playlist-preview-close")
+                : t("playlist-form.playlist-preview-open")}
             </Button>
           </ContentBody>
         </>

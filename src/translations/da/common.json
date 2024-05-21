@@ -323,7 +323,11 @@
     "slide-to-label": "Udgivet til",
     "slide-theme-label": "Slidets tema",
     "slide-publish-title": "Udgivelse",
-    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i."
+    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i.",
+    "slide-preview": "Forhåndsvisning",
+    "slide-preview-open": "Åbn",
+    "slide-preview-close": "Luk",
+    "slide-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter slidet er gemt."
   },
   "theme-form": {
     "logo-title": "Tilføj logo til temaet",
@@ -462,7 +466,11 @@
   "playlist-form": {
     "schedule-header": "Planlægning",
     "share-playlist": "Del denne spilleliste",
-    "warning": "Vær opmærksom på, at ved at dele en spilleliste kan modtageren sætte den på en skærm men ikke ændre i den. Alt indholdet på spillelisten (slides, medier, temaer) bliver tilgængeligt for modtagerens skærmklient."
+    "warning": "Vær opmærksom på, at ved at dele en spilleliste kan modtageren sætte den på en skærm men ikke ændre i den. Alt indholdet på spillelisten (slides, medier, temaer) bliver tilgængeligt for modtagerens skærmklient.",
+    "playlist-preview": "Forhåndsvisning",
+    "playlist-preview-open": "Åbn",
+    "playlist-preview-close": "Luk",
+    "playlist-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter spillelisten er gemt."
   },
   "playlist-campaign-form": {
     "title-about": "Om spillelisten",
@@ -709,7 +717,7 @@
     "screen-preview": "Forhåndsvisning",
     "screen-preview-open": "Åbn",
     "screen-preview-close": "Luk",
-    "screen-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter skærmen er gemt"
+    "screen-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter skærmen er gemt."
   },
   "nav-items": {
     "shared-playlists": "Delte spillelister",

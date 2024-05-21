@@ -1,5 +1,5 @@
 import { React, useEffect, useState, Fragment } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -24,6 +24,7 @@ import localStorageKeys from "../util/local-storage-keys";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import "./slide-form.scss";
+import Preview from "../preview";
 
 /**
  * The slide form component.
@@ -71,6 +72,7 @@ function SlideForm({
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
   const [config, setConfig] = useState({});
+  const [displayPreview, setDisplayPreview] = useState(null);
 
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
@@ -407,6 +409,30 @@ function SlideForm({
               <Row>
                 <small>{t("slide-form.publish-helptext")}</small>
               </Row>
+            </ContentBody>
+            <ContentBody>
+              <h2 className="h4">{t("slide-form.slide-preview")}</h2>
+              {displayPreview && (
+                <>
+                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
+                  <Alert
+                    key="slide-preview-about"
+                    variant="info"
+                    className="mt-3"
+                  >
+                    {t("slide-form.slide-preview-about")}
+                  </Alert>
+                </>
+              )}
+              <Button
+                variant="primary"
+                className="mt-3"
+                onClick={() => setDisplayPreview(!displayPreview)}
+              >
+                {displayPreview
+                  ? t("slide-form.slide-preview-close")
+                  : t("slide-form.slide-preview-open")}
+              </Button>
             </ContentBody>
             {themesOptions && (
               <ContentBody id="theme-section">
