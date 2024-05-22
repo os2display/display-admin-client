@@ -72,6 +72,7 @@ function SlideForm({
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
   const [config, setConfig] = useState({});
+  const [previewEnabled, setPreviewEnabled] = useState(false);
   const [displayPreview, setDisplayPreview] = useState(null);
 
   // Load templates.
@@ -106,6 +107,7 @@ function SlideForm({
 
     ConfigLoader.loadConfig().then((loadedConfig) => {
       setConfig(loadedConfig);
+      setPreviewEnabled(loadedConfig?.previewClient);
     });
 
     // Remove event listeners on cleanup
@@ -410,30 +412,34 @@ function SlideForm({
                 <small>{t("publish-helptext")}</small>
               </Row>
             </ContentBody>
-            <ContentBody>
-              <h2 className="h4">{t("slide-preview")}</h2>
-              {displayPreview && (
-                <>
-                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
-                  <Alert
-                    key="slide-preview-about"
-                    variant="info"
-                    className="mt-3"
-                  >
-                    {t("slide-preview-about")}
-                  </Alert>
-                </>
-              )}
-              <Button
-                variant="primary"
-                className="mt-3"
-                onClick={() => setDisplayPreview(!displayPreview)}
-              >
-                {displayPreview
-                  ? t("slide-preview-close")
-                  : t("slide-preview-open")}
-              </Button>
-            </ContentBody>
+
+            {previewEnabled && (
+              <ContentBody>
+                <h2 className="h4">{t("slide-preview")}</h2>
+                {displayPreview && (
+                  <>
+                    <Preview id={idFromUrl(slide["@id"])} mode="slide" />
+                    <Alert
+                      key="slide-preview-about"
+                      variant="info"
+                      className="mt-3"
+                    >
+                      {t("slide-preview-about")}
+                    </Alert>
+                  </>
+                )}
+                <Button
+                  variant="primary"
+                  className="mt-3"
+                  onClick={() => setDisplayPreview(!displayPreview)}
+                >
+                  {displayPreview
+                    ? t("slide-preview-close")
+                    : t("slide-preview-open")}
+                </Button>
+              </ContentBody>
+            )}
+
             {themesOptions && (
               <ContentBody id="theme-section">
                 <MultiSelectComponent

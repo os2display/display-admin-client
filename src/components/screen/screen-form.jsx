@@ -21,6 +21,7 @@ import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
 import Preview from "../preview";
+import ConfigLoader from "../../config-loader";
 
 /**
  * The screen form component.
@@ -59,7 +60,14 @@ function ScreenForm({
     itemsPerPage: 20,
     order: { createdAt: "desc" },
   });
+  const [previewEnabled, setPreviewEnabled] = useState(false);
   const [displayPreview, setDisplayPreview] = useState(null);
+
+  useEffect(() => {
+    ConfigLoader.loadConfig().then((config) => {
+      setPreviewEnabled(config?.previewClient);
+    });
+  }, []);
 
   useEffect(() => {
     if (layouts) {
@@ -182,26 +190,28 @@ function ScreenForm({
           />
         </ContentBody>
 
-        <ContentBody>
-          <h2 className="h4">{t("screen-preview")}</h2>
-          {displayPreview && (
-            <>
-              <Preview id={idFromUrl(screen["@id"])} mode="screen" />
-              <Alert key="screen-preview-about" variant="info" className="mt-3">
-                {t("screen-preview-about")}
-              </Alert>
-            </>
-          )}
-          <Button
-            variant="primary"
-            className="mt-3"
-            onClick={() => setDisplayPreview(!displayPreview)}
-          >
-            {displayPreview
-              ? t("screen-preview-close")
-              : t("screen-preview-open")}
-          </Button>
-        </ContentBody>
+        {previewEnabled && (
+          <ContentBody>
+            <h2 className="h4">{t("screen-preview")}</h2>
+            {displayPreview && (
+              <>
+                <Preview id={idFromUrl(screen["@id"])} mode="screen" />
+                <Alert key="screen-preview-about" variant="info" className="mt-3">
+                  {t("screen-preview-about")}
+                </Alert>
+              </>
+            )}
+            <Button
+              variant="primary"
+              className="mt-3"
+              onClick={() => setDisplayPreview(!displayPreview)}
+            >
+              {displayPreview
+                ? t("screen-preview-close")
+                : t("screen-preview-open")}
+            </Button>
+          </ContentBody>
+        )}
 
         {Object.prototype.hasOwnProperty.call(screen, "@id") && (
           <ContentBody>

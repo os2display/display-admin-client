@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { Alert, Button } from "react-bootstrap";
@@ -9,6 +9,7 @@ import ContentBody from "../util/content-body/content-body";
 import TenantsDropdown from "../util/forms/multiselect-dropdown/tenants/tenants-dropdown";
 import Preview from "../preview";
 import idFromUrl from "../util/helpers/id-from-url";
+import ConfigLoader from "../../config-loader";
 
 /**
  * The playlist form component.
@@ -23,10 +24,17 @@ import idFromUrl from "../util/helpers/id-from-url";
 function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   const { t } = useTranslation("common", { keyPrefix: "playlist-form" });
   const context = useContext(UserContext);
+  const [previewEnabled, setPreviewEnabled] = useState(false);
   const [displayPreview, setDisplayPreview] = useState(null);
 
+  useEffect(() => {
+    ConfigLoader.loadConfig().then((config) => {
+      setPreviewEnabled(config?.previewClient);
+    });
+  }, []);
+
   const { data: tenants } = useGetV2TenantsQuery({
-    itemsPerPage: 30,
+    itemsPerPage: 30
   });
 
   return (
@@ -60,30 +68,32 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
             </Alert>
           </ContentBody>
 
-          <ContentBody>
-            <h2 className="h4">{t("playlist-preview")}</h2>
-            {displayPreview && (
-              <>
-                <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
-                <Alert
-                  key="playlist-preview-about"
-                  variant="info"
-                  className="mt-3"
-                >
-                  {t("playlist-preview-about")}
-                </Alert>
-              </>
-            )}
-            <Button
-              variant="primary"
-              className="mt-3"
-              onClick={() => setDisplayPreview(!displayPreview)}
-            >
-              {displayPreview
-                ? t("playlist-preview-close")
-                : t("playlist-preview-open")}
-            </Button>
-          </ContentBody>
+          {previewEnabled && (
+            <ContentBody>
+              <h2 className="h4">{t("playlist-preview")}</h2>
+              {displayPreview && (
+                <>
+                  <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
+                  <Alert
+                    key="playlist-preview-about"
+                    variant="info"
+                    className="mt-3"
+                  >
+                    {t("playlist-preview-about")}
+                  </Alert>
+                </>
+              )}
+              <Button
+                variant="primary"
+                className="mt-3"
+                onClick={() => setDisplayPreview(!displayPreview)}
+              >
+                {displayPreview
+                  ? t("playlist-preview-close")
+                  : t("playlist-preview-open")}
+              </Button>
+            </ContentBody>
+          )}
         </>
       )}
     </>
@@ -92,7 +102,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
 
 PlaylistForm.defaultProps = {
   highlightSharedSection: false,
-  playlist: null,
+  playlist: null
 };
 
 PlaylistForm.propTypes = {
@@ -102,7 +112,7 @@ PlaylistForm.propTypes = {
       PropTypes.shape({
         duration: PropTypes.number,
         id: PropTypes.string,
-        rrule: PropTypes.string,
+        rrule: PropTypes.string
       })
     ),
     tenants: PropTypes.arrayOf(
@@ -118,14 +128,14 @@ PlaylistForm.propTypes = {
             description: PropTypes.string,
             roles: PropTypes.arrayOf(PropTypes.string),
             tenantKey: PropTypes.string,
-            title: PropTypes.string,
+            title: PropTypes.string
           })
-        ),
+        )
       })
-    ),
+    )
   }),
   handleInput: PropTypes.func.isRequired,
-  highlightSharedSection: PropTypes.bool,
+  highlightSharedSection: PropTypes.bool
 };
 
 export default PlaylistForm;
