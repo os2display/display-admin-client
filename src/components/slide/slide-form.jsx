@@ -60,7 +60,7 @@ function SlideForm({
   isLoading,
   loadingMessage,
 }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "slide-form" });
   const navigate = useNavigate();
   const [showPreview, setShowPreview] = useState(false);
   const [previewLayout, setPreviewLayout] = useState("horizontal");
@@ -127,7 +127,7 @@ function SlideForm({
           setContentFormElements(data);
         })
         .catch((er) => {
-          displayError(t("slide-form.template-error"), er);
+          displayError(t("template-error"), er);
         });
 
       newSelectedTemplates.push(selectedTemplate);
@@ -215,8 +215,8 @@ function SlideForm({
               <FormInput
                 name="title"
                 type="text"
-                label={t("slide-form.slide-name-label")}
-                helpText={t("slide-form.slide-name-placeholder")}
+                label={t("slide-name-label")}
+                helpText={t("slide-name-placeholder")}
                 value={slide.title || ""}
                 onChange={handleInput}
               />
@@ -227,8 +227,8 @@ function SlideForm({
                 templateOptions && (
                   <MultiSelectComponent
                     isLoading={loadingTemplates}
-                    label={t("slide-form.slide-template-label")}
-                    helpText={t("slide-form.slide-template-help-text")}
+                    label={t("slide-template-label")}
+                    helpText={t("slide-template-help-text")}
                     handleSelection={selectTemplate}
                     options={templateOptions}
                     selected={selectedTemplates}
@@ -243,7 +243,7 @@ function SlideForm({
                     name="selectedTemplate"
                     type="text"
                     disabled
-                    label={t("slide-form.slide-template-selected")}
+                    label={t("slide-template-selected")}
                     value={
                       selectedTemplates?.length > 0
                         ? selectedTemplates[0].title
@@ -289,11 +289,11 @@ function SlideForm({
                 <div className="toggle-preview">
                   <ContentBody>
                     <h2 className="h4">
-                      {t("slide-form.preview-slide-title")}
+                      {t("preview-slide-title")}
                     </h2>
                     <div className="mt-2">
                       <FormCheckbox
-                        label={t("slide-form.show-preview-label")}
+                        label={t("show-preview-label")}
                         onChange={changeShowPreview}
                         value={showPreview}
                         name="show-preview"
@@ -301,18 +301,18 @@ function SlideForm({
                     </div>
                     <div className="mt-2">
                       <RadioButtons
-                        label={t("slide-form.horizontal-or-vertical-label")}
+                        label={t("horizontal-or-vertical-label")}
                         selected={previewLayout}
                         radioGroupName="vertical_horizontal"
                         disabled={!showPreview}
                         options={[
                           {
                             id: "horizontal",
-                            label: t("slide-form.horizontal-label"),
+                            label: t("horizontal-label"),
                           },
                           {
                             id: "vertical",
-                            label: t("slide-form.vertical-label"),
+                            label: t("vertical-label"),
                           },
                         ]}
                         handleChange={onChangePreviewLayout}
@@ -328,7 +328,7 @@ function SlideForm({
                       size="lg"
                       className="me-3"
                     >
-                      {t("slide-form.preview-in-full-screen")}
+                      {t("preview-in-full-screen")}
                     </Button>
                     {previewOverlayVisible && (
                       <div
@@ -361,9 +361,9 @@ function SlideForm({
               </>
             )}
             <ContentBody>
-              <h2 className="h4">{t("slide-form.add-slide-to-playlists")}</h2>
+              <h2 className="h4">{t("add-slide-to-playlists")}</h2>
               <SelectPlaylistsTable
-                helpText={t("slide-form.add-playlists-help-text")}
+                helpText={t("add-playlists-help-text")}
                 handleChange={handleInput}
                 name="playlists"
                 id={idFromUrl(slide["@id"])}
@@ -371,27 +371,27 @@ function SlideForm({
             </ContentBody>
             {config?.touchButtonRegions && (
               <ContentBody>
-                <h2 className="h4">{t("slide-form.touch-region")}</h2>
+                <h2 className="h4">{t("touch-region")}</h2>
                 <FormInput
                   name="touchRegionButtonText"
                   type="text"
-                  label={t("slide-form.touch-region-button-text-label")}
+                  label={t("touch-region-button-text-label")}
                   value={slide.content.touchRegionButtonText}
                   onChange={handleContent}
                 />
                 <small>
-                  {t("slide-form.touch-region-button-text-helptext")}
+                  {t("touch-region-button-text-helptext")}
                 </small>
               </ContentBody>
             )}
             <ContentBody>
-              <h3 className="h4">{t("slide-form.slide-publish-title")}</h3>
+              <h3 className="h4">{t("slide-publish-title")}</h3>
               <Row className="g-2">
                 <Col md>
                   <FormInput
                     name="published.from"
                     type="datetime-local"
-                    label={t("slide-form.slide-from-label")}
+                    label={t("slide-from-label")}
                     value={slide.published.from ?? ""}
                     onChange={handleInput}
                   />
@@ -400,18 +400,18 @@ function SlideForm({
                   <FormInput
                     name="published.to"
                     type="datetime-local"
-                    label={t("slide-form.slide-to-label")}
+                    label={t("slide-to-label")}
                     value={slide.published.to ?? ""}
                     onChange={handleInput}
                   />
                 </Col>
               </Row>
               <Row>
-                <small>{t("slide-form.publish-helptext")}</small>
+                <small>{t("publish-helptext")}</small>
               </Row>
             </ContentBody>
             <ContentBody>
-              <h2 className="h4">{t("slide-form.slide-preview")}</h2>
+              <h2 className="h4">{t("slide-preview")}</h2>
               {displayPreview && (
                 <>
                   <Preview id={idFromUrl(slide["@id"])} mode="slide" />
@@ -420,7 +420,7 @@ function SlideForm({
                     variant="info"
                     className="mt-3"
                   >
-                    {t("slide-form.slide-preview-about")}
+                    {t("slide-preview-about")}
                   </Alert>
                 </>
               )}
@@ -430,16 +430,16 @@ function SlideForm({
                 onClick={() => setDisplayPreview(!displayPreview)}
               >
                 {displayPreview
-                  ? t("slide-form.slide-preview-close")
-                  : t("slide-form.slide-preview-open")}
+                  ? t("slide-preview-close")
+                  : t("slide-preview-open")}
               </Button>
             </ContentBody>
             {themesOptions && (
               <ContentBody id="theme-section">
                 <MultiSelectComponent
                   isLoading={loadingThemes}
-                  label={t("slide-form.slide-theme-label")}
-                  helpText={t("slide-form.slide-theme-help-text")}
+                  label={t("slide-theme-label")}
+                  helpText={t("slide-theme-help-text")}
                   handleSelection={selectTheme}
                   options={themesOptions}
                   selected={selectedTheme}
@@ -476,22 +476,22 @@ function SlideForm({
               changeShowPreview({ target: { value: !showPreview } })
             }
           >
-            {t("slide-form.show-preview-label")}
+            {t("show-preview-label")}
           </button>
           {showPreview && (
             <RadioButtons
-              label={t("slide-form.horizontal-or-vertical-label")}
+              label={t("horizontal-or-vertical-label")}
               selected={previewLayout}
               radioGroupName="vertical_horizontal_mobile"
               disabled={!showPreview}
               options={[
                 {
                   id: "horizontal",
-                  label: t("slide-form.horizontal-label"),
+                  label: t("horizontal-label"),
                 },
                 {
                   id: "vertical",
-                  label: t("slide-form.vertical-label"),
+                  label: t("vertical-label"),
                 },
               ]}
               handleChange={onChangePreviewLayout}
@@ -507,7 +507,7 @@ function SlideForm({
             size="lg"
             className="margin-right-button"
           >
-            {t("slide-form.cancel-button")}
+            {t("cancel-button")}
           </Button>
           <Button
             variant="primary"
@@ -516,7 +516,7 @@ function SlideForm({
             id="save_slide"
             size="lg"
           >
-            {t("slide-form.save-button")}
+            {t("save-button")}
           </Button>
         </ContentFooter>
       </Form>

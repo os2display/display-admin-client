@@ -21,7 +21,7 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @returns {object} The playlist form.
  */
 function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", { keyPrefix: "playlist-form" });
   const context = useContext(UserContext);
   const [displayPreview, setDisplayPreview] = useState(null);
 
@@ -34,7 +34,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
       {playlist && tenants && (
         <>
           <ContentBody>
-            <h2 className="h4">{t("playlist-form.schedule-header")}</h2>
+            <h2 className="h4">{t("schedule-header")}</h2>
             <Schedule
               schedules={playlist.schedules}
               onChange={(schedules) =>
@@ -46,7 +46,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
             id="shared-section"
             highlightSection={highlightSharedSection}
           >
-            <h2 className="h4">{t("playlist-form.share-playlist")}</h2>
+            <h2 className="h4">{t("share-playlist")}</h2>
             <TenantsDropdown
               name="tenants"
               handleTenantSelection={handleInput}
@@ -56,12 +56,12 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
               })}
             />
             <Alert className="mt-3 text-dark" variant="warning">
-              {t("playlist-form.warning")}
+              {t("warning")}
             </Alert>
           </ContentBody>
 
           <ContentBody>
-            <h2 className="h4">{t("playlist-form.playlist-preview")}</h2>
+            <h2 className="h4">{t("playlist-preview")}</h2>
             {displayPreview && (
               <>
                 <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
@@ -70,7 +70,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
                   variant="info"
                   className="mt-3"
                 >
-                  {t("playlist-form.playlist-preview-about")}
+                  {t("playlist-preview-about")}
                 </Alert>
               </>
             )}
@@ -80,8 +80,8 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
               onClick={() => setDisplayPreview(!displayPreview)}
             >
               {displayPreview
-                ? t("playlist-form.playlist-preview-close")
-                : t("playlist-form.playlist-preview-open")}
+                ? t("playlist-preview-close")
+                : t("playlist-preview-open")}
             </Button>
           </ContentBody>
         </>
