@@ -10,8 +10,6 @@ All notable changes to this project will be documented in this file.
     - Make the station selector call new api
     - Add config to context in app.jsx
 
-    -
-
 
 ## [2.0.2] - 2024-04-25
 
