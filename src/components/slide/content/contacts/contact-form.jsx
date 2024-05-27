@@ -1,6 +1,6 @@
 import { React } from "react";
 import PropTypes from "prop-types";
-import set from "lodash.set";
+import { set } from "lodash";
 import { Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import FileSelector from "../file-selector";
