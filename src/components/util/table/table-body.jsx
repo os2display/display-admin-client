@@ -1,6 +1,6 @@
 import { React, Fragment } from "react";
 import PropTypes from "prop-types";
-import get from "lodash.get";
+import { get } from "lodash";
 import useModal from "../../../context/modal-context/modal-context-hook";
 import ColumnProptypes from "../../proptypes/column-proptypes";
 

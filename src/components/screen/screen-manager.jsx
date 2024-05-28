@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import set from "lodash.set";
+import { set } from "lodash";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import {
