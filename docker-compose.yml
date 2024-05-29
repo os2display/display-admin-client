@@ -34,6 +34,8 @@ services:
     networks:
       - app
     working_dir: /app
+    ports: 
+      - '3000'
     environment:
       - NODE_ENV=development
     volumes:
