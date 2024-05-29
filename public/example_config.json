@@ -1,7 +1,7 @@
 {
   "api": "/",
   "touchButtonRegions": false,
-  "rejseplanenApiKey": "abc",
+  "rejseplanenApiKey": null,
   "loginMethods": [
     {
       "type": "oidc",
