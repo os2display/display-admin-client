@@ -4,12 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#246](https://github.com/os2display/display-admin-client/pull/246)
+  - Migrate from CRA to Vite
+  - Upgrade node from 14 -> 20
+
 - [#242](https://github.com/os2display/display-admin-client/pull/243)
     - Add entry in example config for midttrafik api key
     - Clean up multi select component a bit, replace reduce with Map logic
     - Make the station selector call new api
     - Add config to context in app.jsx
-
 
 ## [2.0.2] - 2024-04-25
 
