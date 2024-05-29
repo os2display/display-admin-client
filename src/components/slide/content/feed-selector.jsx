@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { set } from "lodash";
+import set from "lodash.set";
 import {
   api,
   useGetV2FeedSourcesQuery,
