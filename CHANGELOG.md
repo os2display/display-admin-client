@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#246](https://github.com/os2display/display-admin-client/pull/246)
+  - Migrate from CRA to Vite
+  - Upgrade node from 14 -> 20
+
 ## [2.0.2] - 2024-04-25
 
 - [#242](https://github.com/os2display/display-admin-client/pull/242)
