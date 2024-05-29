@@ -7,7 +7,6 @@ import Form from "react-bootstrap/Form";
 import FormCheckbox from "../util/forms/form-checkbox";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
-import ContentFooter from "../util/content-footer/content-footer";
 import {
   useGetV2TemplatesQuery,
   useGetV2ThemesQuery,
@@ -25,6 +24,7 @@ import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import "./slide-form.scss";
 import Preview from "../preview";
+import StickyFooter from "../sticky-footer";
 
 /**
  * The slide form component.
@@ -207,10 +207,10 @@ function SlideForm({
   };
 
   return (
-    <>
+    <div>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
-        <Row>
+        <Row className="p-3">
           <h1 id="slidesTitle">{headerText}</h1>
           <Col md>
             <ContentBody>
@@ -459,7 +459,7 @@ function SlideForm({
           {showPreview && (
             <Col
               md
-              className="responsive-side shadow-sm p-3 mb-3 bg-body rounded"
+              className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3"
             >
               {selectedTemplate?.resources?.component && (
                 <RemoteComponentWrapper
@@ -504,7 +504,7 @@ function SlideForm({
             />
           )}
         </div>
-        <ContentFooter>
+        <StickyFooter>
           <Button
             variant="secondary"
             type="button"
@@ -524,9 +524,9 @@ function SlideForm({
           >
             {t("save-button")}
           </Button>
-        </ContentFooter>
+        </StickyFooter>
       </Form>
-    </>
+    </div>
   );
 }
 

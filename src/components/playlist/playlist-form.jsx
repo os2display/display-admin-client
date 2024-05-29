@@ -34,7 +34,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
   }, []);
 
   const { data: tenants } = useGetV2TenantsQuery({
-    itemsPerPage: 30
+    itemsPerPage: 30,
   });
 
   return (
@@ -112,7 +112,7 @@ PlaylistForm.propTypes = {
       PropTypes.shape({
         duration: PropTypes.number,
         id: PropTypes.string,
-        rrule: PropTypes.string
+        rrule: PropTypes.string,
       })
     ),
     tenants: PropTypes.arrayOf(
@@ -128,14 +128,14 @@ PlaylistForm.propTypes = {
             description: PropTypes.string,
             roles: PropTypes.arrayOf(PropTypes.string),
             tenantKey: PropTypes.string,
-            title: PropTypes.string
+            title: PropTypes.string,
           })
-        )
+        ),
       })
-    )
+    ),
   }),
   handleInput: PropTypes.func.isRequired,
-  highlightSharedSection: PropTypes.bool
+  highlightSharedSection: PropTypes.bool,
 };
 
 export default PlaylistForm;

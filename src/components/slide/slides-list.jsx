@@ -17,6 +17,7 @@ import {
   useDeleteV2SlidesByIdMutation,
   useGetV2PlaylistsByIdQuery,
 } from "../../redux/api/api.generated.ts";
+import { Row } from "react-bootstrap";
 
 /**
  * The slides list component.
@@ -126,7 +127,7 @@ function SlidesList() {
   }, [slidesGetError]);
 
   return (
-    <>
+    <div className="p-3">
       <ContentHeader
         title={t("header")}
         newBtnTitle={t("create-new-slide")}
@@ -145,7 +146,7 @@ function SlidesList() {
           />
         </ContentBody>
       )}
-    </>
+    </div>
   );
 }
 
