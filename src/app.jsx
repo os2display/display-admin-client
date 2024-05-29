@@ -36,12 +36,12 @@ import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
 import ModalProvider from "./context/modal-context/modal-provider";
 import UsersList from "./components/users/users-list";
-import "react-toastify/dist/ReactToastify.css";
-import "./app.scss";
 import ActivationCodeList from "./components/activation-code/activation-code-list";
 import ActivationCodeCreate from "./components/activation-code/activation-code-create";
 import ActivationCodeActivate from "./components/activation-code/activation-code-activate";
 import ConfigLoader from "./config-loader";
+import "react-toastify/dist/ReactToastify.css";
+import "./app.scss";
 
 /**
  * App component.
