@@ -42,7 +42,6 @@ import ActivationCodeActivate from "./components/activation-code/activation-code
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 
-
 /**
  * App component.
  *
