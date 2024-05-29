@@ -60,10 +60,13 @@ function StationSelector({
   };
 
   useEffect(() => {
+    const baseUrl = "https://www.rejseplanen.dk/api/location.name";
     fetch(
-      `https://www.rejseplanen.dk/api/location.name?accessId=${
-        config.rejseplanenApiKey || ""
-      }&format=json&input=${searchText}`
+      `${baseUrl}?${new URLSearchParams({
+        accessId: config.rejseplanenApiKey || "",
+        format: "json",
+        input: searchText,
+      })}`
     )
       .then((response) => response.json())
       .then((rpData) => {
