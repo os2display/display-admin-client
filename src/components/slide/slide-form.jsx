@@ -23,8 +23,8 @@ import localStorageKeys from "../util/local-storage-keys";
 import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
 import "./slide-form.scss";
-import Preview from "../preview";
-import StickyFooter from "../sticky-footer";
+import Preview from "../preview/preview";
+import StickyFooter from "../util/sticky-footer";
 
 /**
  * The slide form component.
@@ -62,7 +62,6 @@ function SlideForm({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "slide-form" });
   const navigate = useNavigate();
-  const [showPreview, setShowPreview] = useState(false);
   const [previewLayout, setPreviewLayout] = useState("horizontal");
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
   const [templateOptions, setTemplateOptions] = useState([]);
@@ -155,7 +154,7 @@ function SlideForm({
   /** Get show from local storage */
   useEffect(() => {
     const localStorageShow = localStorage.getItem(localStorageKeys.PREVIEW);
-    setShowPreview(localStorageShow === "true");
+    setDisplayPreview(localStorageShow === "true");
     const localStorageLayout = localStorage.getItem(
       localStorageKeys.PREVIEW_LAYOUT
     );
@@ -164,17 +163,11 @@ function SlideForm({
     }
   }, []);
 
-  /**
-   * Changes the show value, and saves to localstorage
-   *
-   * @param {object} props Props.
-   * @param {boolean} props.target The returned value from the checkbox.
-   */
-  const changeShowPreview = ({ target }) => {
-    const { value } = target;
-    localStorage.setItem(localStorageKeys.PREVIEW, value);
-
-    setShowPreview(value);
+  /** Toggle display preview. */
+  const toggleDisplayPreview = () => {
+    const newValue = !displayPreview;
+    localStorage.setItem(localStorageKeys.PREVIEW, newValue);
+    setDisplayPreview(newValue);
   };
 
   /**
@@ -288,78 +281,6 @@ function SlideForm({
                     </Fragment>
                   ))}
                 </ContentBody>
-                <div className="toggle-preview">
-                  <ContentBody>
-                    <h2 className="h4">
-                      {t("preview-slide-title")}
-                    </h2>
-                    <div className="mt-2">
-                      <FormCheckbox
-                        label={t("show-preview-label")}
-                        onChange={changeShowPreview}
-                        value={showPreview}
-                        name="show-preview"
-                      />
-                    </div>
-                    <div className="mt-2">
-                      <RadioButtons
-                        label={t("horizontal-or-vertical-label")}
-                        selected={previewLayout}
-                        radioGroupName="vertical_horizontal"
-                        disabled={!showPreview}
-                        options={[
-                          {
-                            id: "horizontal",
-                            label: t("horizontal-label"),
-                          },
-                          {
-                            id: "vertical",
-                            label: t("vertical-label"),
-                          },
-                        ]}
-                        handleChange={onChangePreviewLayout}
-                      />
-                    </div>
-                    <Button
-                      variant="secondary"
-                      type="button"
-                      id="preview_slide"
-                      onClick={() =>
-                        setPreviewOverlayVisible(!previewOverlayVisible)
-                      }
-                      size="lg"
-                      className="me-3"
-                    >
-                      {t("preview-in-full-screen")}
-                    </Button>
-                    {previewOverlayVisible && (
-                      <div
-                        onClick={() =>
-                          setPreviewOverlayVisible(!previewOverlayVisible)
-                        }
-                        role="presentation"
-                        className="preview-overlay"
-                      >
-                        {selectedTemplate?.resources?.component && (
-                          <RemoteComponentWrapper
-                            url={selectedTemplate?.resources?.component}
-                            slide={slide}
-                            mediaData={mediaData}
-                            themeData={
-                              selectedTheme?.length > 0 ? selectedTheme[0] : 0
-                            }
-                            showPreview={showPreview}
-                            orientation=""
-                            closeButton
-                            closeCallback={() =>
-                              setPreviewOverlayVisible(false)
-                            }
-                          />
-                        )}
-                      </div>
-                    )}
-                  </ContentBody>
-                </div>
               </>
             )}
             <ContentBody>
@@ -381,9 +302,7 @@ function SlideForm({
                   value={slide.content.touchRegionButtonText}
                   onChange={handleContent}
                 />
-                <small>
-                  {t("touch-region-button-text-helptext")}
-                </small>
+                <small>{t("touch-region-button-text-helptext")}</small>
               </ContentBody>
             )}
             <ContentBody>
@@ -412,34 +331,6 @@ function SlideForm({
                 <small>{t("publish-helptext")}</small>
               </Row>
             </ContentBody>
-
-            {previewEnabled && (
-              <ContentBody>
-                <h2 className="h4">{t("slide-preview")}</h2>
-                {displayPreview && (
-                  <>
-                    <Preview id={idFromUrl(slide["@id"])} mode="slide" />
-                    <Alert
-                      key="slide-preview-about"
-                      variant="info"
-                      className="mt-3"
-                    >
-                      {t("slide-preview-about")}
-                    </Alert>
-                  </>
-                )}
-                <Button
-                  variant="primary"
-                  className="mt-3"
-                  onClick={() => setDisplayPreview(!displayPreview)}
-                >
-                  {displayPreview
-                    ? t("slide-preview-close")
-                    : t("slide-preview-open")}
-                </Button>
-              </ContentBody>
-            )}
-
             {themesOptions && (
               <ContentBody id="theme-section">
                 <MultiSelectComponent
@@ -456,73 +347,92 @@ function SlideForm({
               </ContentBody>
             )}
           </Col>
-          {showPreview && (
-            <Col
-              md
-              className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3"
-            >
+          {displayPreview && (
+            <Col className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top">
               {selectedTemplate?.resources?.component && (
-                <RemoteComponentWrapper
-                  url={selectedTemplate?.resources?.component}
-                  slide={slide}
-                  mediaData={mediaData}
-                  showPreview={showPreview}
-                  themeData={selectedTheme?.length > 0 ? selectedTheme[0] : {}}
-                  orientation={previewLayout}
-                />
+                <div>
+                  <RemoteComponentWrapper
+                    url={selectedTemplate?.resources?.component}
+                    slide={slide}
+                    mediaData={mediaData}
+                    showPreview={displayPreview}
+                    themeData={
+                      selectedTheme?.length > 0 ? selectedTheme[0] : {}
+                    }
+                    orientation={previewLayout}
+                  />
+
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    id="preview_slide"
+                    onClick={() =>
+                      setPreviewOverlayVisible(!previewOverlayVisible)
+                    }
+                    size="lg"
+                    className="me-3 mt-3"
+                  >
+                    {t("preview-in-full-screen")}
+                  </Button>
+                </div>
+              )}
+              {previewOverlayVisible && (
+                <div
+                  onClick={() =>
+                    setPreviewOverlayVisible(!previewOverlayVisible)
+                  }
+                  role="presentation"
+                  className="preview-overlay d-flex justify-content-center align-items-center flex-column"
+                >
+                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
+                  <Alert
+                    key="slide-preview-about"
+                    variant="info"
+                    className="mt-3"
+                  >
+                    {t("slide-preview-about")}
+                  </Alert>
+                </div>
               )}
             </Col>
           )}
         </Row>
-        <div className="preview-button-container">
-          <button
-            type="button"
-            className="preview-button bg-light"
-            onClick={() =>
-              changeShowPreview({ target: { value: !showPreview } })
-            }
-          >
-            {t("show-preview-label")}
-          </button>
-          {showPreview && (
-            <RadioButtons
-              label={t("horizontal-or-vertical-label")}
-              selected={previewLayout}
-              radioGroupName="vertical_horizontal_mobile"
-              disabled={!showPreview}
-              options={[
-                {
-                  id: "horizontal",
-                  label: t("horizontal-label"),
-                },
-                {
-                  id: "vertical",
-                  label: t("vertical-label"),
-                },
-              ]}
-              handleChange={onChangePreviewLayout}
-            />
-          )}
-        </div>
         <StickyFooter>
           <Button
             variant="secondary"
             type="button"
             id="cancel_slide"
             onClick={() => navigate("/slide/list")}
-            size="lg"
             className="margin-right-button"
           >
             {t("cancel-button")}
           </Button>
           <Button
-            variant="primary"
+            variant="outline-primary"
             type="button"
             onClick={handleSubmit}
             id="save_slide"
-            size="lg"
+            className="margin-right-button"
           >
             {t("save-button")}
+          </Button>
+          <Button
+            variant="primary"
+            type="button"
+            onClick={handleSubmit}
+            id="save_slide_an_close"
+            className="margin-right-button"
+          >
+            {t("save-button-and-close")}
+          </Button>
+          <Button
+            variant="success"
+            type="button"
+            onClick={toggleDisplayPreview}
+            id="toggle_display_preview"
+            className="margin-right-button"
+          >
+            {displayPreview ? t("hide-preview") : t("show-preview")}
           </Button>
         </StickyFooter>
       </Form>

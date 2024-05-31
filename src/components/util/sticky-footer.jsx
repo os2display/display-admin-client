@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
  */
 function StickyFooter({ children }) {
   return (
-    <section className="border-top shadow-sm navbar navbar-expand-lg navbar-light bg-white position-sticky bottom-0 p-3">
+    <section className="sticky-footer border-top shadow-sm navbar navbar-expand-lg navbar-light bg-white position-sticky bottom-0 p-3">
       {children}
     </section>
   );

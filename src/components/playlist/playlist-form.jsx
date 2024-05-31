@@ -7,7 +7,7 @@ import Schedule from "../util/schedule/schedule";
 import { useGetV2TenantsQuery } from "../../redux/api/api.generated.ts";
 import ContentBody from "../util/content-body/content-body";
 import TenantsDropdown from "../util/forms/multiselect-dropdown/tenants/tenants-dropdown";
-import Preview from "../preview";
+import Preview from "../preview/preview";
 import idFromUrl from "../util/helpers/id-from-url";
 import ConfigLoader from "../../config-loader";
 

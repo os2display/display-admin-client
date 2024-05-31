@@ -20,7 +20,7 @@ import {
 import { displayError } from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
-import Preview from "../preview";
+import Preview from "../preview/preview";
 import ConfigLoader from "../../config-loader";
 
 /**

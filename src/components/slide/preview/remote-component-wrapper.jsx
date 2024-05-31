@@ -34,6 +34,7 @@ function RemoteComponentWrapper({
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
   const [loading, err, Component] = useRemoteComponent(url);
   const [runId, setRunId] = useState("");
+  const [fontSizeEm, setFontSizeEm] = useState(null);
 
   /** Create remoteComponentSlide from slide and mediaData */
   useEffect(() => {
@@ -81,10 +82,29 @@ function RemoteComponentWrapper({
     }
   }, [showPreview]);
 
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      if (entries.length > 0) {
+        const first = entries[0];
+        setFontSizeEm(
+          first.contentRect.width / (orientation === "vertical" ? 1080 : 1920)
+        );
+      }
+    });
+
+    const targets = document.querySelector(".remote-component-wrapper");
+
+    observer.observe(targets);
+
+    return () => {
+      observer.unobserve(targets);
+    };
+  }, []);
+
   return (
     <>
-      <div className="d-flex justify-content-between">
-        {closeButton && (
+      {closeButton && (
+        <div className="d-flex justify-content-between">
           <Button
             id="close_preview_button"
             variant="primary"
@@ -93,12 +113,13 @@ function RemoteComponentWrapper({
           >
             {t("remote-component-wrapper.close-preview")}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
       <div className="remote-component-wrapper">
         <div
           className={`slide remote-component-content ${orientation}`}
           id="EXE-ID-PREVIEW"
+          style={{ "--font-size-base": `${fontSizeEm}rem` }}
         >
           <ErrorBoundary errorText="remote-component.error-boundary-text">
             {loading && <div />}
