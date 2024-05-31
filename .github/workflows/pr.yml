@@ -31,13 +31,11 @@ jobs:
           docker compose run --rm node yarn install
           docker compose run --rm node yarn check-coding-standards
 
-  cypress:
-    name: Cypress
+  playwright-tests:
+    name: Playwright
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        browser: ["chrome"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -48,16 +46,18 @@ jobs:
       - name: Install client
         run: docker compose run node yarn
 
-      - name: Cypress run
-        run: docker compose run cypress run --browser ${{ matrix.browser }}
+      - name: Run playwright
+        run: |
+          docker compose run --rm node yarn install
+          docker compose run --rm playwright npx playwright install
+          docker compose run --rm playwright npx playwright test --retries 3
 
-      - name: Archive screenshots
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
+        if: always()
         with:
-          name: cypress-screenshots-${{ matrix.browser }}
-          path: cypress/screenshots
-          retention-days: 7
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
   changelog:
     runs-on: ubuntu-latest

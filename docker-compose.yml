@@ -46,18 +46,16 @@ services:
       retries: 3
       start_period: 60s
 
-  cypress:
-    image: cypress/included:9.5.4
+  playwright:
+    # https://playwright.dev/docs/docker
+    # This Playwright version should match the one in `package.json`.
+    image: mcr.microsoft.com/playwright:v1.44.1
+    command: yarn playwright test
     networks:
       - app
-      - frontend
     depends_on:
       - nginx
-    environment:
-      - CYPRESS_VIDEO=false
-      - CYPRESS_baseUrl=http://nginx:8080/admin
     volumes:
-      - .:/e2e
+      - .:/app
       - /tmp/.X11-unix:/tmp/.X11-unix
-    working_dir: /e2e
-    entrypoint: cypress
+    working_dir: /app
