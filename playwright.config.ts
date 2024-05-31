@@ -25,9 +25,9 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // Docker baseurl
-    // baseURL: 'http://nginx:8080',
+    baseURL: 'http://nginx:8080',
     // for testing locally
-    baseURL: 'https://display-admin-client.local.itkdev.dk/admin/', 
+    // baseURL: 'https://display-admin-client.local.itkdev.dk/admin/', 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
