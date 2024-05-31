@@ -55,8 +55,8 @@ function SelectGroupsTable({
     if (alreadySelectedGroups) {
       let newGroups = alreadySelectedGroups["hydra:member"];
       if (mappingId) {
-        newGroups = alreadySelectedGroups["hydra:member"].map((sdf) => {
-          return sdf[mappingId];
+        newGroups = alreadySelectedGroups["hydra:member"].map((localScreenGroup) => {
+          return localScreenGroup[mappingId];
         });
       }
       setTotalItems(alreadySelectedGroups["hydra:totalItems"]);
