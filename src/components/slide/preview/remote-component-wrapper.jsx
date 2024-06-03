@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-// import { useRemoteComponent } from "./remote-component-helper";
+import { useRemoteComponent } from "./remote-component-helper";
 import ErrorBoundary from "../../../error-boundary";
 import "./remote-component-wrapper.scss";
 
@@ -32,7 +32,7 @@ function RemoteComponentWrapper({
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
-  // const [loading, err, Component] = useRemoteComponent(url);
+  const [loading, err, Component] = useRemoteComponent(url);
   const [runId, setRunId] = useState("");
 
   /** Create remoteComponentSlide from slide and mediaData */
@@ -101,7 +101,7 @@ function RemoteComponentWrapper({
           id="EXE-ID-PREVIEW"
         >
           <ErrorBoundary errorText="remote-component.error-boundary-text">
-            {/* {loading && <div />}
+            {loading && <div />}
             {!loading && err == null && remoteComponentSlide && Component && (
               <Component
                 slide={remoteComponentSlide}
@@ -110,7 +110,7 @@ function RemoteComponentWrapper({
                 slideDone={() => {}}
                 executionId="EXE-ID-PREVIEW"
               />
-            )} */}
+            )}
           </ErrorBoundary>
         </div>
       </div>
