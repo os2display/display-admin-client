@@ -40,11 +40,6 @@ services:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
-    healthcheck:
-      interval: 5s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
 
   cypress:
     image: cypress/included:9.5.4
