@@ -47,10 +47,13 @@ jobs:
         run: docker compose run node yarn
 
       - name: Run playwright
+        env:
+          CI: 'true'
         run: |
           docker compose run --rm node yarn install
-          docker compose run --rm playwright npx playwright install
+          docker compose run --rm playwright npx playwright install --with-deps
           docker compose run --rm playwright npx playwright test --retries 3
+
 
       - uses: actions/upload-artifact@v3
         if: always()
