@@ -248,12 +248,13 @@ test.describe("Groups list works", () => {
     await page.route("**/screen-groups/*", async (route) => {
       const json = {
         "@id": "/v2/screen-groups/00GEPM6JRX0V2P0YST0JHA03CC",
-        "title": "Ea aspernatur odit rerum.",
-        "description": "Adipisci tenetur placeat perspiciatis assumenda. Voluptas officiis magnam reprehenderit possimus non. Tempore delectus numquam veritatis harum natus.",
-        "created": "1987-12-03T16:33:04+01:00",
-        "modified": "2021-12-09T12:01:33+01:00",
-        "modifiedBy": "",
-        "createdBy": ""
+        title: "Ea aspernatur odit rerum.",
+        description:
+          "Adipisci tenetur placeat perspiciatis assumenda. Voluptas officiis magnam reprehenderit possimus non. Tempore delectus numquam veritatis harum natus.",
+        created: "1987-12-03T16:33:04+01:00",
+        modified: "2021-12-09T12:01:33+01:00",
+        modifiedBy: "",
+        createdBy: "",
       };
       await route.fulfill({ json });
     });
@@ -277,8 +278,12 @@ test.describe("Groups list works", () => {
 
   test("It removes all selected", async ({ page }) => {
     await page.locator("tbody").locator("tr td input").nth(0).click();
-    expect(page.locator("tbody").locator("tr").nth(0).getByRole("checkbox")).toBeChecked();
+    expect(
+      page.locator("tbody").locator("tr").nth(0).getByRole("checkbox")
+    ).toBeChecked();
     await page.locator("#clear-rows-button").click();
-    expect(page.locator("tbody").locator("tr").nth(0).getByRole("checkbox")).not.toBeChecked();
+    expect(
+      page.locator("tbody").locator("tr").nth(0).getByRole("checkbox")
+    ).not.toBeChecked();
   });
 });
