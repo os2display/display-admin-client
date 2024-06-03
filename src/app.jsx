@@ -41,6 +41,7 @@ import "./app.scss";
 import ActivationCodeList from "./components/activation-code/activation-code-list";
 import ActivationCodeCreate from "./components/activation-code/activation-code-create";
 import ActivationCodeActivate from "./components/activation-code/activation-code-activate";
+import ConfigLoader from "./config-loader";
 
 /**
  * App component.
@@ -49,6 +50,7 @@ import ActivationCodeActivate from "./components/activation-code/activation-code
  */
 function App() {
   const [authenticated, setAuthenticated] = useState();
+  const [config, setConfig] = useState();
   const [selectedTenant, setSelectedTenant] = useState();
   const [accessConfig, setAccessConfig] = useState();
   const [tenants, setTenants] = useState();
@@ -63,6 +65,7 @@ function App() {
   const userStore = {
     authenticated: { get: authenticated, set: setAuthenticated },
     accessConfig: { get: accessConfig, set: setAccessConfig },
+    config,
     tenants: { get: tenants, set: setTenants },
     selectedTenant: { get: selectedTenant, set: setSelectedTenant },
     userName: { get: userName, set: setUserName },
@@ -75,6 +78,12 @@ function App() {
     createdBy: { get: createdBy, set: setCreatedBy },
     isPublished: { get: isPublished, set: setIsPublished },
   };
+
+  useEffect(() => {
+    ConfigLoader.loadConfig().then((loadedConfig) => {
+      setConfig(loadedConfig);
+    });
+  }, []);
 
   const handleReauthenticate = () => {
     localStorage.removeItem(localStorageKeys.API_TOKEN);
