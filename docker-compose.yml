@@ -1,5 +1,3 @@
-version: "3.4"
-
 networks:
   frontend:
     external: true
@@ -40,17 +38,3 @@ services:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
-
-  playwright:
-    # https://playwright.dev/docs/docker
-    # This Playwright version should match the one in `package.json`.
-    image: mcr.microsoft.com/playwright:v1.44.1
-    command: yarn playwright test
-    networks:
-      - app
-    depends_on:
-      - nginx
-    volumes:
-      - .:/app
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    working_dir: /app
