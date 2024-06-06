@@ -95,7 +95,7 @@ function SlideForm({
    * @param {string} props.key - The key input.
    */
   function downHandler({ key }) {
-    if (key === "Escape") {
+    if (key === "Escape" && previewOverlayVisible) {
       setPreviewOverlayVisible(false);
     }
   }
@@ -348,7 +348,7 @@ function SlideForm({
             )}
           </Col>
           {displayPreview && (
-            <Col className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top">
+            <Col className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top" style={{top: "20px"}}>
               {selectedTemplate?.resources?.component && (
                 <div>
                   <RemoteComponentWrapper
