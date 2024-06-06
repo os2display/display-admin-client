@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import { Tabs, Tab, Alert } from "react-bootstrap";
-// import { createGridArea, createGrid } from "os2display-grid-generator";
+import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
 import uniqWith from "lodash.uniqwith";
 import idFromUrl from "../../util/helpers/id-from-url";
@@ -35,7 +35,7 @@ function GridGenerationAndSelect({
   const configColumns = grid?.columns || 1;
   const configRows = grid?.rows || 1;
   const gridTemplateAreas = {
-    // gridTemplateAreas: createGrid(configColumns, configRows),
+    gridTemplateAreas: createGrid(configColumns, configRows),
   };
 
   /**
@@ -105,7 +105,7 @@ function GridGenerationAndSelect({
                           ? "grid-item selected"
                           : "grid-item "
                       }
-                      // style={{ gridArea: createGridArea(data.gridArea) }}
+                      style={{ gridArea: createGridArea(data.gridArea) }}
                     >
                       {data.title}
                     </div>
