@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#244](https://github.com/aroskanalen/display-admin-client/pull/1)
+  - Migrate from Cypress to playwright
+
 - [#243](https://github.com/aroskanalen/display-admin-client/pull/2)
   - Migrate from CRA to Vite
   - Upgrade node from 14 -> 20
