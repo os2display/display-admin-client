@@ -29,7 +29,7 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
-    image: node:14
+    image: node:20
     command: yarn start
     networks:
       - app
@@ -38,12 +38,6 @@ services:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://node:3000/tags" ]
-      interval: 5s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
 
   cypress:
     image: cypress/included:9.5.4

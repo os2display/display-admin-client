@@ -1,7 +1,7 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import set from "lodash.set";
 import get from "lodash.get";
+import set from "lodash.set";
 import { ulid } from "ulid";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
