@@ -25,11 +25,13 @@ function PlaylistCampaignCreate({ location }) {
   };
 
   return (
-    <PlaylistCampaignManager
-      location={location}
-      saveMethod="POST"
-      initialState={data}
-    />
+    <div className="p-3">
+      <PlaylistCampaignManager
+        location={location}
+        saveMethod="POST"
+        initialState={data}
+      />
+    </div>
   );
 }
 

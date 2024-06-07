@@ -102,7 +102,7 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
 
 PlaylistForm.defaultProps = {
   highlightSharedSection: false,
-  playlist: null
+  playlist: null,
 };
 
 PlaylistForm.propTypes = {

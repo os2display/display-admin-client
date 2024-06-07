@@ -23,7 +23,7 @@ function ScreenEdit() {
   }, [data]);
 
   return (
-    <>
+    <div className="p-3">
       {groupId && (
         <ScreenManager
           saveMethod="PUT"
@@ -34,7 +34,7 @@ function ScreenEdit() {
           groupId={groupId}
         />
       )}
-    </>
+    </div>
   );
 }
 

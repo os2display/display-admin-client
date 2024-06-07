@@ -21,12 +21,12 @@ function GroupCreate() {
     title: "",
     description: "",
     createdBy: "",
-    modifiedBy: "",
+    modifiedBy: ""
   });
 
   const [
     PostV2ScreenGroups,
-    { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess },
+    { error: saveError, isLoading: isSaving, isSuccess: isSaveSuccess }
   ] = usePostV2ScreenGroupsMutation();
 
   /** Handle submitting is done. */
@@ -62,23 +62,25 @@ function GroupCreate() {
       title: formStateObject.title,
       description: formStateObject.description,
       modifiedBy: formStateObject.modifiedBy,
-      createdBy: formStateObject.createdBy,
+      createdBy: formStateObject.createdBy
     };
 
     PostV2ScreenGroups({
-      screenGroupScreenGroupInput: JSON.stringify(saveData),
+      screenGroupScreenGroupInput: JSON.stringify(saveData)
     });
   };
 
   return (
-    <GroupForm
-      group={formStateObject}
-      headerText={headerText}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isLoading={isSaving}
-      loadingMessage={t("loading-messages.saving-group")}
-    />
+    <div className="p-3">
+      <GroupForm
+        group={formStateObject}
+        headerText={headerText}
+        handleInput={handleInput}
+        handleSubmit={handleSubmit}
+        isLoading={isSaving}
+        loadingMessage={t("loading-messages.saving-group")}
+      />
+    </div>
   );
 }
 

@@ -18,13 +18,15 @@ function ThemeEdit() {
   } = useGetV2ThemesByIdQuery({ id });
 
   return (
-    <ThemeManager
-      saveMethod="PUT"
-      initialState={data}
-      id={id}
-      loadingError={loadingError}
-      isLoading={isLoading}
-    />
+    <div className="p-3">
+      <ThemeManager
+        saveMethod="PUT"
+        initialState={data}
+        id={id}
+        loadingError={loadingError}
+        isLoading={isLoading}
+      />
+    </div>
   );
 }
 

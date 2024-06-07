@@ -44,8 +44,6 @@ function ActivationCodeForm({
     },
   ];
 
-  // 123
-
   return (
     <>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />

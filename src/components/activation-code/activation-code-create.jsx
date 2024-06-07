@@ -69,14 +69,16 @@ function ActivationCodeCreate() {
   };
 
   return (
-    <ActivationCodeForm
-      activationCode={formStateObject}
-      headerText={headerText}
-      handleInput={handleInput}
-      handleSubmit={handleSubmit}
-      isLoading={isSaving}
-      loadingMessage={t("loading-messages.saving-activation-code")}
-    />
+    <div className="p-3">
+      <ActivationCodeForm
+        activationCode={formStateObject}
+        headerText={headerText}
+        handleInput={handleInput}
+        handleSubmit={handleSubmit}
+        isLoading={isSaving}
+        loadingMessage={t("loading-messages.saving-activation-code")}
+      />
+    </div>
   );
 }
 

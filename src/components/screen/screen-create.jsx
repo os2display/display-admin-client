@@ -20,7 +20,11 @@ function ScreenCreate() {
     orientation: "",
   };
 
-  return <ScreenManager saveMethod="POST" initialState={data} />;
+  return (
+    <div className="p-3">
+      <ScreenManager saveMethod="POST" initialState={data} />
+    </div>
+  );
 }
 
 export default ScreenCreate;
