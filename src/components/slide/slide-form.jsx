@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import FormCheckbox from "../util/forms/form-checkbox";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import {
@@ -17,7 +16,6 @@ import ContentForm from "./content/content-form";
 import LoadingComponent from "../util/loading-component/loading-component";
 import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 import FeedSelector from "./content/feed-selector";
-import RadioButtons from "../util/forms/radio-buttons";
 import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
 import localStorageKeys from "../util/local-storage-keys";
 import ConfigLoader from "../../config-loader";
@@ -71,7 +69,6 @@ function SlideForm({
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
   const [config, setConfig] = useState({});
-  const [previewEnabled, setPreviewEnabled] = useState(false);
   const [displayPreview, setDisplayPreview] = useState(null);
 
   // Load templates.
@@ -106,7 +103,6 @@ function SlideForm({
 
     ConfigLoader.loadConfig().then((loadedConfig) => {
       setConfig(loadedConfig);
-      setPreviewEnabled(loadedConfig?.previewClient);
     });
 
     // Remove event listeners on cleanup
@@ -186,17 +182,6 @@ function SlideForm({
    */
   const onFilterTheme = (filter) => {
     setSearchTextTheme(filter);
-  };
-
-  /**
-   * Change preview layout.
-   *
-   * @param {object} props The props.
-   * @param {object} props.target Event target
-   */
-  const onChangePreviewLayout = ({ target }) => {
-    setPreviewLayout(target.value);
-    localStorage.setItem(localStorageKeys.PREVIEW_LAYOUT, target.value);
   };
 
   return (
@@ -348,7 +333,10 @@ function SlideForm({
             )}
           </Col>
           {displayPreview && (
-            <Col className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top" style={{top: "20px"}}>
+            <Col
+              className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top"
+              style={{ top: "20px" }}
+            >
               {selectedTemplate?.resources?.component && (
                 <div>
                   <RemoteComponentWrapper

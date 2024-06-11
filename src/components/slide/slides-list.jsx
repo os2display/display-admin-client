@@ -17,7 +17,6 @@ import {
   useDeleteV2SlidesByIdMutation,
   useGetV2PlaylistsByIdQuery,
 } from "../../redux/api/api.generated.ts";
-import { Row } from "react-bootstrap";
 
 /**
  * The slides list component.
