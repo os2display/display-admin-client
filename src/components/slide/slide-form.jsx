@@ -24,7 +24,6 @@ import "./slide-form.scss";
 import Preview from "../preview/preview";
 import StickyFooter from "../util/sticky-footer";
 
-//
 /**
  * The slide form component.
  *
