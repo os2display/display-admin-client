@@ -25,10 +25,6 @@ yarn-error.log*
 # Ignore VS-code
 .vscode
 
-# Cypress
-cypress/videos/*
-cypress/screenshots/*
-
 # Temp files
 temp/
 
@@ -38,3 +34,7 @@ json-server/
 public/config.json
 public/access-config.json
 public/release.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

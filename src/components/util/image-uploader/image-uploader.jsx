@@ -4,11 +4,11 @@ import ImageUploading from "react-images-uploading";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
-import "./image-uploader.scss";
 import { useTranslation } from "react-i18next";
 import Image from "./image";
 import MediaModal from "../../media-modal/media-modal";
 import useModal from "../../../context/modal-context/modal-context-hook";
+import "./image-uploader.scss";
 
 /**
  * @param {object} props The props.

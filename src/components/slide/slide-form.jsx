@@ -1,4 +1,4 @@
-import { React, useEffect, useState, Fragment } from "react";
+import { React, useEffect, useState, Fragment, useContext } from "react";
 import { Button, Row, Col, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -18,12 +18,13 @@ import RemoteComponentWrapper from "./preview/remote-component-wrapper";
 import FeedSelector from "./content/feed-selector";
 import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
 import localStorageKeys from "../util/local-storage-keys";
-import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
+import userContext from "../../context/user-context";
 import "./slide-form.scss";
 import Preview from "../preview/preview";
 import StickyFooter from "../util/sticky-footer";
 
+//
 /**
  * The slide form component.
  *
@@ -60,6 +61,8 @@ function SlideForm({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "slide-form" });
   const navigate = useNavigate();
+  const { config } = useContext(userContext);
+
   const [previewLayout, setPreviewLayout] = useState("horizontal");
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
   const [templateOptions, setTemplateOptions] = useState([]);
@@ -68,7 +71,6 @@ function SlideForm({
   const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
-  const [config, setConfig] = useState({});
   const [displayPreview, setDisplayPreview] = useState(null);
 
   // Load templates.
@@ -100,10 +102,6 @@ function SlideForm({
   // Add event listeners for keypress
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
-
-    ConfigLoader.loadConfig().then((loadedConfig) => {
-      setConfig(loadedConfig);
-    });
 
     // Remove event listeners on cleanup
     return () => {

@@ -1,4 +1,4 @@
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 html {
   height: -webkit-fill-available;
@@ -55,7 +55,7 @@ body,
   display: flex;
   justify-content: center;
   padding: 5em;
-  z-index: 10;
+  z-index: 1021;
 
   .spinner-container {
     display: flex;
