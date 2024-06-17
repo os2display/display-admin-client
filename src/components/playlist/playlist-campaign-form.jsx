@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ import SelectSlidesTable from "../util/multi-and-table/select-slides-table";
 import LoadingComponent from "../util/loading-component/loading-component";
 import Preview from "../preview/preview";
 import idFromUrl from "../util/helpers/id-from-url";
-import ConfigLoader from "../../config-loader";
 import StickyFooter from "../util/sticky-footer";
 import localStorageKeys from "../util/local-storage-keys";
 
