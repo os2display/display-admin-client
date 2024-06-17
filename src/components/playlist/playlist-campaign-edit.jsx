@@ -29,7 +29,7 @@ function PlaylistCampaignEdit({ location }) {
   }, [data]);
 
   return (
-    <div className="p-3">
+    <>
       {(slideId || loadingError) && (
         <PlaylistCampaignManager
           saveMethod="PUT"
@@ -41,7 +41,7 @@ function PlaylistCampaignEdit({ location }) {
           slideId={slideId}
         />
       )}
-    </div>
+    </>
   );
 }
 

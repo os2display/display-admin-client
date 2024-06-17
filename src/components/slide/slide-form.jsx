@@ -188,7 +188,7 @@ function SlideForm({
     <div>
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
-        <Row className="p-3">
+        <Row className="m-2">
           <h1 id="slidesTitle">{headerText}</h1>
           <Col md>
             <ContentBody>

@@ -142,7 +142,7 @@ function PlaylistCampaignList({ location }) {
   }, [playlistsGetError]);
 
   return (
-    <div className="p-3">
+    <div className="m-2">
       <ContentHeader
         title={t(`${location}.header`)}
         newBtnTitle={t(`${location}.create-new`)}
