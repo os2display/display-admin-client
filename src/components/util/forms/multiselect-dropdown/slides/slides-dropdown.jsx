@@ -14,11 +14,11 @@ import MultiSelectComponent from "../multi-dropdown";
  */
 function SlidesDropdown({
   handleSlideSelection,
-  selected,
   name,
-  errors,
   data,
   filterCallback,
+  errors = null,
+  selected = [],
 }) {
   const { t } = useTranslation("common");
 
@@ -36,11 +36,6 @@ function SlidesDropdown({
     />
   );
 }
-
-SlidesDropdown.defaultProps = {
-  errors: null,
-  selected: [],
-};
 
 SlidesDropdown.propTypes = {
   handleSlideSelection: PropTypes.func.isRequired,

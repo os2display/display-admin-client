@@ -29,11 +29,11 @@ import ListContext from "../../../context/list-context";
 function List({
   data,
   columns,
-  displayPublished,
   totalItems,
-  handleDelete,
-  showCreatedByFilter,
-  displaySearch,
+  showCreatedByFilter = true,
+  handleDelete = null,
+  displayPublished = false,
+  displaySearch = true,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
@@ -280,13 +280,6 @@ function List({
     </>
   );
 }
-
-List.defaultProps = {
-  showCreatedByFilter: true,
-  handleDelete: null,
-  displayPublished: false,
-  displaySearch: true,
-};
 
 List.propTypes = {
   data: PropTypes.arrayOf(

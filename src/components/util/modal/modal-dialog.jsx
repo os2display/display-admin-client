@@ -7,8 +7,8 @@ import FocusTrap from "focus-trap-react";
 /**
  * @param {object} props The props.
  * @param {string} props.title The modal title
- * @param {string} props.acceptText The text for the acceptbutton
- * @param {string} props.declineText The text for the declinebutton
+ * @param {string | null} props.acceptText The text for the accept button
+ * @param {string | null} props.declineText The text for the decline button
  * @param {Function} props.onClose The callback for close.
  * @param {Function} props.handleAccept The callback for accept.
  * @param {object} props.children The children to be rendered.
@@ -18,13 +18,13 @@ import FocusTrap from "focus-trap-react";
  */
 function ModalDialog({
   title,
-  acceptText,
-  declineText,
   onClose,
-  handleAccept,
   children,
-  showAcceptButton,
-  btnVariant,
+  acceptText = null,
+  declineText = null,
+  showAcceptButton = true,
+  handleAccept = () => {},
+  btnVariant = "primary",
 }) {
   const { t } = useTranslation("common");
 
@@ -72,14 +72,6 @@ function ModalDialog({
     </FocusTrap>
   );
 }
-
-ModalDialog.defaultProps = {
-  acceptText: null,
-  declineText: null,
-  showAcceptButton: true,
-  handleAccept: () => {},
-  btnVariant: "primary",
-};
 
 ModalDialog.propTypes = {
   title: PropTypes.string.isRequired,

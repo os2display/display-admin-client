@@ -4,19 +4,21 @@ import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../../../util/forms/multiselect-dropdown/multi-dropdown";
 import { displayError } from "../../../util/list/toast-component/display-toast";
 import userContext from "../../../../context/user-context";
+
 /**
  * A multiselect and table for groups.
  *
  * @param {string} props The props.
  * @param {string} props.name The name for the input
- * @param {string} props.id The id used for the get.
- * @param {string} props.helpText Helptext for dropdown.
+ * @param {string} props.helpText Help text for dropdown.
+ * @param {Function} props.onChange On change callback.
+ * @param {Array} props.value Input value.
  * @returns {object} Select groups table.
  */
 function StationSelector({
   onChange,
   name,
-  helpText,
+  helpText = "",
   label,
   value: inputValue,
 }) {
@@ -97,11 +99,6 @@ function StationSelector({
     </>
   );
 }
-
-StationSelector.defaultProps = {
-  helpText: "",
-  value: null,
-};
 
 StationSelector.propTypes = {
   label: PropTypes.string.isRequired,
