@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Fixed HMR setup.
+
 - [#244](https://github.com/aroskanalen/display-admin-client/pull/1)
   - Migrate from Cypress to playwright
 
