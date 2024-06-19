@@ -15,7 +15,7 @@ import "./remote-component-wrapper.scss";
  * @param {object} props.mediaData Object of loaded media.
  * @param {object} props.themeData Object of theme data.
  * @param {string} props.orientation Display orientation or horizontal.
- * @param {boolean} props.showPreview Whether to display the prevoew.
+ * @param {boolean} props.showPreview Whether to display the preview.
  * @param {boolean} props.closeButton Display close button on preview
  * @param {Function} props.closeCallback Close button callback on preview
  * @returns {object} The component.
@@ -23,12 +23,12 @@ import "./remote-component-wrapper.scss";
 function RemoteComponentWrapper({
   slide,
   url,
-  mediaData,
-  themeData,
   showPreview,
-  orientation,
-  closeButton,
-  closeCallback,
+  orientation = "",
+  closeButton = false,
+  closeCallback = () => {},
+  mediaData = null,
+  themeData = {},
 }) {
   const { t } = useTranslation("common");
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
@@ -138,14 +138,6 @@ function RemoteComponentWrapper({
     </>
   );
 }
-
-RemoteComponentWrapper.defaultProps = {
-  orientation: "",
-  closeButton: false,
-  closeCallback: () => {},
-  mediaData: null,
-  themeData: {},
-};
 
 RemoteComponentWrapper.propTypes = {
   slide: PropTypes.shape({ content: PropTypes.shape({}).isRequired })

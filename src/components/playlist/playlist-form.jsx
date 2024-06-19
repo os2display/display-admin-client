@@ -14,11 +14,15 @@ import TenantsDropdown from "../util/forms/multiselect-dropdown/tenants/tenants-
  * @param {object} props - The props.
  * @param {object} props.playlist The playlist object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
- * @param {boolean} props.highlightSharedSection - Hightlight section concerning
+ * @param {boolean} props.highlightSharedSection - Highlight section concerning
  *   shared info
  * @returns {object} The playlist form.
  */
-function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
+function PlaylistForm({
+  handleInput,
+  highlightSharedSection = false,
+  playlist = null,
+}) {
   const { t } = useTranslation("common", { keyPrefix: "playlist-form" });
   const context = useContext(UserContext);
 
@@ -61,11 +65,6 @@ function PlaylistForm({ playlist, handleInput, highlightSharedSection }) {
     </>
   );
 }
-
-PlaylistForm.defaultProps = {
-  highlightSharedSection: false,
-  playlist: null,
-};
 
 PlaylistForm.propTypes = {
   playlist: PropTypes.shape({

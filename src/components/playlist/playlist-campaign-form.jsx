@@ -30,16 +30,16 @@ import localStorageKeys from "../util/local-storage-keys";
  * @returns {object} The form shared by campaigns and playlists.
  */
 function PlaylistCampaignForm({
-  playlist,
   handleInput,
   handleSubmit,
   headerText,
-  slideId,
-  isLoading,
-  loadingMessage,
-  isCampaign,
   location,
   children,
+  slideId = "",
+  isLoading = false,
+  loadingMessage = "",
+  isCampaign = false,
+  playlist = null,
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -238,14 +238,6 @@ function PlaylistCampaignForm({
     </>
   );
 }
-
-PlaylistCampaignForm.defaultProps = {
-  slideId: "",
-  isLoading: false,
-  loadingMessage: "",
-  isCampaign: false,
-  playlist: null,
-};
 
 PlaylistCampaignForm.propTypes = {
   playlist: PropTypes.shape({

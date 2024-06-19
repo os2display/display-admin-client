@@ -30,7 +30,7 @@ import "./media-list.scss";
  * @param {boolean} props.multiple Whether the image list allows for multiselect
  * @returns {object} The media list.
  */
-function MediaList({ fromModal, multiple }) {
+function MediaList({ fromModal = false, multiple = true }) {
   // Translations
   const { t } = useTranslation("common", { keyPrefix: "media-list" });
   // Selected data
@@ -236,11 +236,6 @@ function MediaList({ fromModal, multiple }) {
     </div>
   );
 }
-
-MediaList.defaultProps = {
-  fromModal: false,
-  multiple: true,
-};
 
 MediaList.propTypes = {
   fromModal: PropTypes.bool,
