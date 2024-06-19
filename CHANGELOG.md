@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Fixed HMR setup.
 - Upgraded @fortawesome/react-fontawesome, react-quill, react-toastify.
 - Removed unused react-dayjs.
 - Remove default props from the project.
