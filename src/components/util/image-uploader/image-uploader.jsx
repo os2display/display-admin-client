@@ -17,17 +17,17 @@ import "./image-uploader.scss";
  * @param {string} props.name The name of the image field.
  * @param {boolean} props.multipleImages Whether the user should be able to
  *   upload multiple images.
- * @param {string} props.invalidText Text on error.
+ * @param {string | null} props.invalidText Text on error.
  * @param {boolean} props.showLibraryButton Whether to show the library button.
  * @returns {object} The image uploader.
  */
 function ImageUploader({
-  inputImage,
   handleImageUpload,
   name,
-  multipleImages,
-  invalidText,
-  showLibraryButton,
+  inputImage = [],
+  multipleImages = false,
+  invalidText = null,
+  showLibraryButton = true,
 }) {
   const { t } = useTranslation("common");
   const { setSelected } = useModal();
@@ -187,13 +187,6 @@ function ImageUploader({
     </div>
   );
 }
-
-ImageUploader.defaultProps = {
-  inputImage: [],
-  multipleImages: false,
-  invalidText: null,
-  showLibraryButton: true,
-};
 
 ImageUploader.propTypes = {
   inputImage: PropTypes.oneOfType([

@@ -10,11 +10,17 @@ import PaginationButton from "../forms/multiselect-dropdown/pagination-button";
  * @param {Array} props.columns The columns for the table.
  * @param {Array} props.data The data to display in the table.
  * @param {Function} props.callback - The callback.
- * @param {string} props.label - The label.
- * @param {number} props.totalItems - Total data items.
+ * @param {string | null} props.label - The label.
+ * @param {number | null} props.totalItems - Total data items.
  * @returns {object} The table.
  */
-function Table({ columns, data, label, callback, totalItems }) {
+function Table({
+  columns,
+  data,
+  label = null,
+  callback = null,
+  totalItems = null,
+}) {
   const showButton = Number.isInteger(totalItems) && totalItems > data.length;
 
   return (
@@ -32,12 +38,6 @@ function Table({ columns, data, label, callback, totalItems }) {
   );
 }
 
-Table.defaultProps = {
-  label: null,
-  callback: null,
-  totalItems: null,
-};
-
 Table.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, "@id": PropTypes.string })
@@ -47,4 +47,5 @@ Table.propTypes = {
   callback: PropTypes.func,
   totalItems: PropTypes.number,
 };
+
 export default Table;
