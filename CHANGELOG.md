@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 - Adds screen preview by iframing screen client into admin.
+- Changed from vite CJS to ESM.
 - Removed array spread.
 - Fixed HMR setup.
 - Upgraded @fortawesome/react-fontawesome, react-quill, react-toastify.

@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   base: "/",
@@ -9,9 +9,10 @@ export default defineConfig({
     port: 3000,
     host: "localhost",
     hmr: {
-      host: "display-admin-client.local.itkdev.dk/ws",
+      host: "display-admin-client.local.itkdev.dk",
       protocol: "wss",
-      clientPort: 80,
+      clientPort: 443,
+      path: "/ws",
     },
   },
 });
