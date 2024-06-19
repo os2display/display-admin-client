@@ -13,6 +13,7 @@
     "allowImportExportEverywhere": true
   },
   "rules": {
+    "react/require-default-props": "off",
     "react/jsx-filename-extension": [
       "warn",
       {

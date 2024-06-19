@@ -18,28 +18,28 @@ import "./multi-dropdown.scss";
  * @param {Array} props.selected - The selected options
  * @param {string} props.name - The id of the form element
  * @param {boolean} props.isLoading - Whether the component is loading.
- * @param {string} props.noSelectedString - The label for when there is nothing selected.
+ * @param {string | null} props.noSelectedString - The label for when there is nothing selected.
  * @param {string} props.errorText - The string to display on error.
  * @param {string} props.label - The input label
- * @param {string} props.helpText - Help text for the dropdown.
+ * @param {string | null} props.helpText - Help text for the dropdown.
  * @param {Function} props.filterCallback - The callback on search filter.
  * @param {boolean} props.singleSelect - If the dropdown is single select.
  * @param {boolean} props.disableSearch - Disable search option.
  * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({
-  options,
   handleSelection,
-  selected,
   name,
-  isLoading,
-  noSelectedString,
-  errorText,
   label,
-  helpText,
-  filterCallback,
-  singleSelect,
-  disableSearch,
+  noSelectedString = null,
+  isLoading = false,
+  errorText = "",
+  helpText = null,
+  selected = [],
+  options = [],
+  singleSelect = false,
+  disableSearch = false,
+  filterCallback = () => {},
 }) {
   const { t } = useTranslation("common");
   const [error] = useState();
@@ -192,18 +192,6 @@ function MultiSelectComponent({
     </>
   );
 }
-
-MultiSelectComponent.defaultProps = {
-  noSelectedString: null,
-  isLoading: false,
-  errorText: "",
-  helpText: null,
-  selected: [],
-  options: [],
-  singleSelect: false,
-  disableSearch: false,
-  filterCallback: () => {},
-};
 
 MultiSelectComponent.propTypes = {
   options: PropTypes.arrayOf(
