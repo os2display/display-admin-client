@@ -12,21 +12,21 @@ import "./rich-text.scss";
  * @param {string} props The props.
  * @param {string} props.name The name of the rich text field
  * @param {string} props.label The label for the rich text field
- * @param {string} props.helpText The helptext for the rich text field, if it is needed.
+ * @param {string} props.helpText The help text for the rich text field, if it is needed.
  * @param {string} props.value The value of the rich text field
  * @param {Function} props.onChange The callback for changes in the rich text field
- * @param {string} props.formGroupClasses Classes for the formgroup
+ * @param {string} props.formGroupClasses Classes for the form group
  * @param {boolean} props.required Whether the rich text field is required.
  * @returns {object} A rich text field.
  */
 function RichText({
   name,
-  label,
-  helpText,
-  value,
   onChange,
-  formGroupClasses,
-  required,
+  label = "",
+  helpText = "",
+  value = "",
+  formGroupClasses = "",
+  required = false,
 }) {
   /**
    * Transforms the target to something the form-components understand.
@@ -84,14 +84,6 @@ function RichText({
     </div>
   );
 }
-
-RichText.defaultProps = {
-  label: "",
-  helpText: "",
-  value: "",
-  formGroupClasses: "",
-  required: false,
-};
 
 RichText.propTypes = {
   name: PropTypes.string.isRequired,

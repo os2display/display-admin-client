@@ -138,12 +138,6 @@ function FileSelector({
   );
 }
 
-FileSelector.defaultProps = {
-  multiple: true,
-  enableMediaLibrary: true,
-  acceptedMimetypes: null,
-};
-
 FileSelector.propTypes = {
   files: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onFilesChange: PropTypes.func.isRequired,

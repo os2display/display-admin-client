@@ -35,11 +35,11 @@ import localStorageKeys from "../util/local-storage-keys";
  * @returns {object} The slide form.
  */
 function SlideManager({
-  initialState,
   saveMethod,
-  id,
-  isLoading,
-  loadingError,
+  id = null,
+  isLoading = false,
+  loadingError = null,
+  initialState = null,
 }) {
   // Hooks
   const { t } = useTranslation("common", { keyPrefix: "slide-manager" });
@@ -601,13 +601,6 @@ function SlideManager({
     </>
   );
 }
-
-SlideManager.defaultProps = {
-  id: null,
-  isLoading: false,
-  loadingError: null,
-  initialState: null,
-};
 
 SlideManager.propTypes = {
   initialState: PropTypes.shape({

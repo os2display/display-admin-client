@@ -20,9 +20,9 @@ function ModalProvider({ children }) {
   }, [setModal]);
 
   return (
+    /* eslint-disable react/jsx-props-no-spreading */
     <DeleteModalContext.Provider
       value={{ unSetModal, setModal, setSelected, selected }}
-      /* eslint-disable react/jsx-props-no-spreading */
       {...children}
     >
       {children}
@@ -45,6 +45,7 @@ function ModalProvider({ children }) {
         />
       )}
     </DeleteModalContext.Provider>
+    /* eslint-enable react/jsx-props-no-spreading */
   );
 }
 

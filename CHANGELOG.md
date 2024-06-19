@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 - Fixed HMR setup.
+- Upgraded @fortawesome/react-fontawesome, react-quill, react-toastify.
+- Removed unused react-dayjs.
+- Remove default props from the project.
 
 - [#244](https://github.com/aroskanalen/display-admin-client/pull/1)
   - Migrate from Cypress to playwright
