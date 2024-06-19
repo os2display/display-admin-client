@@ -2,7 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-bootstrap";
-import selectedHelper from "../util/helpers/selectedHelper";
+import selectedHelper from "../util/helpers/selected-helper";
 import useModal from "../../context/modal-context/modal-context-hook";
 import ListLoading from "../util/loading-component/list-loading";
 
