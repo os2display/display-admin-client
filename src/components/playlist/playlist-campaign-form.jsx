@@ -72,7 +72,7 @@ function PlaylistCampaignForm({
     const newValue = !displayPreview;
     localStorage.setItem(localStorageKeys.PREVIEW, newValue);
     setDisplayPreview(newValue);
-  }; //
+  };
 
   return (
     <>
@@ -157,7 +157,7 @@ function PlaylistCampaignForm({
               <div>
                 <Preview
                   id={idFromUrl(playlist["@id"])}
-                  mode="screen"
+                  mode="playlist"
                   width={480}
                   height={270}
                 />
@@ -182,7 +182,7 @@ function PlaylistCampaignForm({
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
-                  <Preview id={idFromUrl(playlist["@id"])} mode="screen" />
+                  <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
                   <Alert
                     key="playlist-preview-about"
                     variant="info"
