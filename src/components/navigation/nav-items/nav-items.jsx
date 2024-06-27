@@ -49,7 +49,6 @@ function NavItems() {
     <>
       <Nav.Item>
         <NavLink
-          id="nav-items_content_slides"
           className={({ isActive }) => `nav-link ${isActive ? "disabled" : ""}`}
           to="/slide/list"
         >
@@ -66,7 +65,6 @@ function NavItems() {
       </Nav.Item>
       <Nav.Item className="nav-second-level">
         <NavLink
-          id="nav-items_content_media"
           className={({ isActive }) => `nav-link ${isActive ? "disabled" : ""}`}
           to="/media/list"
         >
@@ -75,7 +73,6 @@ function NavItems() {
       </Nav.Item>
       <Nav.Item>
         <NavLink
-          id="nav-items_playlists_playlists"
           className={({ isActive }) => `nav-link ${isActive ? "disabled" : ""}`}
           to="/playlist/list"
         >
@@ -95,7 +92,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.campaign.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
-                id="nav-items_content_media"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
@@ -112,7 +108,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.shared?.roles ?? []}>
             <Nav.Item className="nav-second-level">
               <NavLink
-                id="nav-items_content_shared_playlists"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
@@ -129,7 +124,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.campaign.roles}>
             <Nav.Item>
               <NavLink
-                id="nav-items_screens_screens"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
@@ -154,7 +148,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.groups.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
-                id="nav-items_screens_groups"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
@@ -171,7 +164,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.users.roles}>
             <Nav.Item>
               <NavLink
-                id="nav-items_users"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
@@ -185,7 +177,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.users.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
-                id="nav-items_activation_codes"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
@@ -202,7 +193,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.settings.roles}>
             <Nav.Item>
               <NavLink
-                id="nav-items_settings"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
@@ -216,7 +206,6 @@ function NavItems() {
           <RestrictedNavRoute roles={accessConfig.settings.roles}>
             <Nav.Item className="nav-second-level">
               <NavLink
-                id="nav-items_configuration_themes"
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }

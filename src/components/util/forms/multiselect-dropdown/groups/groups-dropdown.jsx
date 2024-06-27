@@ -15,11 +15,11 @@ import MultiSelectComponent from "../multi-dropdown";
  */
 function GroupsDropdown({
   handleGroupsSelection,
-  selected,
   name,
-  errors,
   data,
   filterCallback,
+  errors = null,
+  selected = [],
 }) {
   const { t } = useTranslation("common");
 
@@ -37,11 +37,6 @@ function GroupsDropdown({
     />
   );
 }
-
-GroupsDropdown.defaultProps = {
-  errors: null,
-  selected: [],
-};
 
 GroupsDropdown.propTypes = {
   handleGroupsSelection: PropTypes.func.isRequired,

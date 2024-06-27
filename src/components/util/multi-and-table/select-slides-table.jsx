@@ -20,7 +20,7 @@ import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
  * @param {string} props.slideId - The slide id.
  * @returns {object} - A select slides table.
  */
-function SelectSlidesTable({ handleChange, name, slideId }) {
+function SelectSlidesTable({ handleChange, name, slideId = "" }) {
   const { t } = useTranslation("common", { keyPrefix: "select-slides-table" });
   const [searchText, setSearchText] = useState("");
   const [selectedData, setSelectedData] = useState([]);
@@ -144,10 +144,6 @@ function SelectSlidesTable({ handleChange, name, slideId }) {
     </>
   );
 }
-
-SelectSlidesTable.defaultProps = {
-  slideId: "",
-};
 
 SelectSlidesTable.propTypes = {
   name: PropTypes.string.isRequired,

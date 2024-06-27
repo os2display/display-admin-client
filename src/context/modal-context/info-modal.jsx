@@ -22,9 +22,9 @@ import idFromUrl from "../../components/util/helpers/id-from-url";
 function InfoModal({
   unSetModal,
   apiCall,
-  displayData,
+  displayData = [],
   modalTitle,
-  dataKey,
+  dataKey = "",
   redirectTo,
 }) {
   const { t } = useTranslation("common");
@@ -83,10 +83,6 @@ function InfoModal({
     </Modal>
   );
 }
-InfoModal.defaultProps = {
-  displayData: [],
-  dataKey: "",
-};
 
 InfoModal.propTypes = {
   displayData: PropTypes.oneOfType([

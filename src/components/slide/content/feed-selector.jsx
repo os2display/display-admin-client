@@ -23,7 +23,13 @@ import PosterSelector from "./poster-selector";
  * @param {object} props.formElement - The form element data.
  * @returns {object} - The FeedSelector component.
  */
-function FeedSelector({ value, onChange, formElement }) {
+function FeedSelector({
+  onChange,
+  value = {
+    feedSource: "",
+  },
+  formElement = {},
+}) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   const [feedSourceOptions, setFeedSourceOptions] = useState([]);
@@ -171,13 +177,6 @@ function FeedSelector({ value, onChange, formElement }) {
     </>
   );
 }
-
-FeedSelector.defaultProps = {
-  value: {
-    feedSource: "",
-  },
-  formElement: {},
-};
 
 FeedSelector.propTypes = {
   value: PropTypes.shape({

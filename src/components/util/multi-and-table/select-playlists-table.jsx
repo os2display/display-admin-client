@@ -19,7 +19,7 @@ import { SelectPlaylistColumns } from "../../playlist/playlists-columns";
  * @param {string} props.helpText Helptext for dropdown.
  * @returns {object} Select groups table.
  */
-function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
+function SelectPlaylistsTable({ handleChange, name, id = "", helpText }) {
   const { t } = useTranslation("common", {
     keyPrefix: "select-playlists-table",
   });
@@ -141,10 +141,6 @@ function SelectPlaylistsTable({ handleChange, name, id, helpText }) {
     </>
   );
 }
-
-SelectPlaylistsTable.defaultProps = {
-  id: "",
-};
 
 SelectPlaylistsTable.propTypes = {
   name: PropTypes.string.isRequired,

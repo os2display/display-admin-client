@@ -19,16 +19,16 @@ import RadioButtons from "../../util/forms/radio-buttons";
  * @param {Function} props.onChange - Callback, if the value of the field changes.
  * @param {object} props.formStateObject - The form state.
  * @param {Function} props.onFileChange - When file has changed call this function.
- * @param {Array} props.mediaData - Array of loaded media entities.
+ * @param {object} props.mediaData - Array of loaded media entities.
  * @returns {object} Content form element.
  */
 function ContentForm({
   data,
-  errors,
-  onChange,
   onFileChange,
   formStateObject,
-  mediaData,
+  errors = [],
+  onChange = null,
+  mediaData = {},
 }) {
   const getInputFiles = (field) => {
     const inputFiles = [];
@@ -260,12 +260,6 @@ function ContentForm({
 
   return <>{renderElement(data)}</>;
 }
-
-ContentForm.defaultProps = {
-  errors: [],
-  onChange: null,
-  mediaData: {},
-};
 
 ContentForm.propTypes = {
   data: PropTypes.shape({

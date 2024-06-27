@@ -1,7 +1,7 @@
 import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import set from "lodash.set";
 import get from "lodash.get";
+import set from "lodash.set";
 import { ulid } from "ulid";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
@@ -35,11 +35,11 @@ import localStorageKeys from "../util/local-storage-keys";
  * @returns {object} The slide form.
  */
 function SlideManager({
-  initialState,
   saveMethod,
-  id,
-  isLoading,
-  loadingError,
+  id = null,
+  isLoading = false,
+  loadingError = null,
+  initialState = null,
 }) {
   // Hooks
   const { t } = useTranslation("common", { keyPrefix: "slide-manager" });
@@ -601,13 +601,6 @@ function SlideManager({
     </>
   );
 }
-
-SlideManager.defaultProps = {
-  id: null,
-  isLoading: false,
-  loadingError: null,
-  initialState: null,
-};
 
 SlideManager.propTypes = {
   initialState: PropTypes.shape({

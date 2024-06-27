@@ -22,10 +22,10 @@ import "./grid.scss";
 function GridGenerationAndSelect({
   grid,
   vertical,
-  regions,
   handleInput,
   selectedData,
   screenId,
+  regions = [],
 }) {
   const { t } = useTranslation("common");
   const [key, setKey] = useState(regions.length > 0 ? regions[0]["@id"] : "");
@@ -155,10 +155,6 @@ function GridGenerationAndSelect({
     </>
   );
 }
-
-GridGenerationAndSelect.defaultProps = {
-  regions: [],
-};
 
 GridGenerationAndSelect.propTypes = {
   grid: PropTypes.shape({ columns: PropTypes.number, rows: PropTypes.number })

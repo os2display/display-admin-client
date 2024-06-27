@@ -25,16 +25,16 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {string | null} props.id Screen id.
  * @param {boolean} props.isLoading Is the screen state loading?
  * @param {object} props.loadingError Loading error.
- * @param {string} props.groupId The group id
+ * @param {string | null} props.groupId The group id
  * @returns {object} The screen form.
  */
 function ScreenManager({
-  initialState,
   saveMethod,
-  id,
-  isLoading,
-  loadingError,
-  groupId,
+  id = null,
+  isLoading = false,
+  loadingError = null,
+  groupId = null,
+  initialState = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-manager" });
   const navigate = useNavigate();
@@ -346,14 +346,6 @@ function ScreenManager({
     </>
   );
 }
-
-ScreenManager.defaultProps = {
-  id: null,
-  isLoading: false,
-  loadingError: null,
-  groupId: null,
-  initialState: null,
-};
 
 ScreenManager.propTypes = {
   initialState: PropTypes.shape({

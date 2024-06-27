@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
  * @param {boolean} props.highlightSection Highlight this section.
  * @returns {object} The Content header.
  */
-function ContentBody({ children, id, highlightSection }) {
+function ContentBody({ children, id = "", highlightSection = false }) {
   const classes = `shadow-sm p-3 mb-3 bg-body rounded ${
     highlightSection ? "border border-warning" : ""
   }`;
@@ -19,11 +19,6 @@ function ContentBody({ children, id, highlightSection }) {
     </section>
   );
 }
-
-ContentBody.defaultProps = {
-  id: "",
-  highlightSection: false,
-};
 
 ContentBody.propTypes = {
   children: PropTypes.node.isRequired,

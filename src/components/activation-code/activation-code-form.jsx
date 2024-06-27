@@ -23,12 +23,12 @@ import RadioButtons from "../util/forms/radio-buttons";
  * @returns {object} The user form.
  */
 function ActivationCodeForm({
-  activationCode,
   handleInput,
   handleSubmit,
   headerText,
-  isLoading,
-  loadingMessage,
+  isLoading = false,
+  loadingMessage = "",
+  activationCode,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "activation-code-form" });
   const navigate = useNavigate();
@@ -43,8 +43,6 @@ function ActivationCodeForm({
       label: t("role-external-user-admin"),
     },
   ];
-
-  // 123
 
   return (
     <>
@@ -107,20 +105,11 @@ function ActivationCodeForm({
   );
 }
 
-ActivationCodeForm.defaultProps = {
-  isLoading: false,
-  loadingMessage: "",
-  activationCode: PropTypes.shape({
-    displayName: "",
-    role: "",
-  }),
-};
-
 ActivationCodeForm.propTypes = {
   activationCode: PropTypes.shape({
     displayName: PropTypes.string.isRequired,
     role: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,

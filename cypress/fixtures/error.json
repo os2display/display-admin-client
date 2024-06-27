@@ -1,6 +1,0 @@
-{
-  "@context": "/contexts/Error",
-  "@type": "hydra:Error",
-  "hydra:title": "An error occurred",
-  "hydra:description": "An error occurred"
-}

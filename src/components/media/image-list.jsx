@@ -2,7 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-bootstrap";
-import selectedHelper from "../util/helpers/selectedHelper";
+import selectedHelper from "../util/helpers/selected-helper";
 import useModal from "../../context/modal-context/modal-context-hook";
 import ListLoading from "../util/loading-component/list-loading";
 
@@ -14,7 +14,7 @@ import ListLoading from "../util/loading-component/list-loading";
  * @param {boolean} props.multiple Whether the image list allows for multiselect
  * @returns {object} The image list page.
  */
-function ImageList({ media, multiple }) {
+function ImageList({ media = [], multiple }) {
   const { selected, setSelected } = useModal();
 
   /**
@@ -75,10 +75,6 @@ function ImageList({ media, multiple }) {
     </div>
   );
 }
-
-ImageList.defaultProps = {
-  media: [],
-};
 
 ImageList.propTypes = {
   multiple: PropTypes.bool.isRequired,

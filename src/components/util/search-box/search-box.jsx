@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
  * @param {boolean} props.showLabel Whether to show the label.
  * @returns {object} The search box.
  */
-function SearchBox({ value, onChange, showLabel }) {
+function SearchBox({ onChange, value = "", showLabel = false }) {
   const { t } = useTranslation("common", { keyPrefix: "search-box" });
 
   return (
@@ -50,11 +50,6 @@ function SearchBox({ value, onChange, showLabel }) {
     </Form>
   );
 }
-
-SearchBox.defaultProps = {
-  value: "",
-  showLabel: false,
-};
 
 SearchBox.propTypes = {
   value: PropTypes.string,

@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import CheckboxForList from "./list/checkbox-for-list";
-import selectedHelper from "./helpers/selectedHelper";
+import selectedHelper from "./helpers/selected-helper";
 import useModal from "../../context/modal-context/modal-context-hook";
 import LinkForList from "./list/link-for-list";
 

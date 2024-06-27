@@ -22,12 +22,15 @@ import FormInput from "../util/forms/form-input";
  * @returns {object} The group form.
  */
 function GroupForm({
-  group,
   handleInput,
   handleSubmit,
   headerText,
-  isLoading,
-  loadingMessage,
+  isLoading = false,
+  loadingMessage = "",
+  group = {
+    description: "",
+    title: "",
+  },
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -81,15 +84,6 @@ function GroupForm({
     </>
   );
 }
-
-GroupForm.defaultProps = {
-  isLoading: false,
-  loadingMessage: "",
-  group: PropTypes.shape({
-    description: "",
-    title: "",
-  }),
-};
 
 GroupForm.propTypes = {
   group: PropTypes.shape({

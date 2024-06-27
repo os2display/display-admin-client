@@ -45,19 +45,19 @@ import "./slide-form.scss";
  * @returns {object} The slide form.
  */
 function SlideForm({
-  slide,
   handleInput,
   handleContent,
   handleMedia,
   handleSubmit,
   selectTemplate,
-  selectedTemplate,
   headerText,
-  mediaData,
   selectTheme,
-  selectedTheme,
-  isLoading,
-  loadingMessage,
+  selectedTemplate = null,
+  selectedTheme = [],
+  isLoading = false,
+  loadingMessage = "",
+  slide = null,
+  mediaData = null,
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -494,15 +494,6 @@ function SlideForm({
     </>
   );
 }
-
-SlideForm.defaultProps = {
-  selectedTemplate: null,
-  selectedTheme: [],
-  isLoading: false,
-  loadingMessage: "",
-  slide: null,
-  mediaData: null,
-};
 
 SlideForm.propTypes = {
   slide: PropTypes.shape({

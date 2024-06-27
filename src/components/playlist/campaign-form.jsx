@@ -15,7 +15,7 @@ import SelectGroupsTable from "../util/multi-and-table/select-groups-table";
  * @param {Function} props.handleInput Handles form input.
  * @returns {object} The campaign form.
  */
-function CampaignForm({ campaign, handleInput }) {
+function CampaignForm({ campaign = null, handleInput }) {
   const { t } = useTranslation("common");
 
   return (
@@ -45,10 +45,6 @@ function CampaignForm({ campaign, handleInput }) {
     </>
   );
 }
-
-CampaignForm.defaultProps = {
-  campaign: null,
-};
 
 CampaignForm.propTypes = {
   campaign: PropTypes.shape({

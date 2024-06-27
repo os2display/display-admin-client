@@ -25,11 +25,11 @@ import {
  * @returns {object} The theme form.
  */
 function ThemeManager({
-  initialState,
   saveMethod,
-  id,
-  isLoading,
-  loadingError,
+  id = null,
+  isLoading = false,
+  loadingError = null,
+  initialState = null,
 }) {
   // Hooks
   const { t } = useTranslation("common", { keyPrefix: "theme-manager" });
@@ -212,13 +212,6 @@ function ThemeManager({
     </>
   );
 }
-
-ThemeManager.defaultProps = {
-  id: null,
-  isLoading: false,
-  loadingError: null,
-  initialState: null,
-};
 
 ThemeManager.propTypes = {
   initialState: PropTypes.shape({

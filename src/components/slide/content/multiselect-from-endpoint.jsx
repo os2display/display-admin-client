@@ -10,7 +10,7 @@ import { displayError } from "../../util/list/toast-component/display-toast";
  *
  * @param {object} props - The props.
  * @param {string} props.name - The name of the field.
- * @param {string} props.label - The label for the field.
+ * @param {string | null} props.label - The label for the field.
  * @param {object} props.value - The value.
  * @param {Function} props.onChange - On change callback.
  * @param {string} props.optionsEndpoint - Endpoint from which to fetch the options.
@@ -19,11 +19,11 @@ import { displayError } from "../../util/list/toast-component/display-toast";
  */
 function MultiselectFromEndpoint({
   name,
-  label,
-  value,
   onChange,
   optionsEndpoint,
-  singleSelect,
+  label = null,
+  value = [],
+  singleSelect = false,
 }) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState(null);
@@ -101,12 +101,6 @@ function MultiselectFromEndpoint({
     </>
   );
 }
-
-MultiselectFromEndpoint.defaultProps = {
-  label: null,
-  value: [],
-  singleSelect: false,
-};
 
 MultiselectFromEndpoint.propTypes = {
   name: PropTypes.string.isRequired,

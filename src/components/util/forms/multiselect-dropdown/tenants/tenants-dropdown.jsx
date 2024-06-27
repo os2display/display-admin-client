@@ -13,9 +13,9 @@ import MultiSelectComponent from "../multi-dropdown";
  */
 function TenantsDropdown({
   handleTenantSelection,
-  selected,
+  selected = [],
   name,
-  errors,
+  errors = null,
   data,
 }) {
   const { t } = useTranslation("common");
@@ -33,11 +33,6 @@ function TenantsDropdown({
     />
   );
 }
-
-TenantsDropdown.defaultProps = {
-  errors: null,
-  selected: [],
-};
 
 TenantsDropdown.propTypes = {
   handleTenantSelection: PropTypes.func.isRequired,

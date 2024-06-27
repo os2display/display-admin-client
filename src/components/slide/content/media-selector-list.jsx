@@ -19,7 +19,11 @@ import FilePreview from "./file-preview";
  * @param {Array} props.selectedMediaIds - List of selected media ids.
  * @returns {object} - The media list.
  */
-function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
+function MediaSelectorList({
+  selectedMediaIds,
+  onItemClick,
+  multiple = false,
+}) {
   // Translations
   const { t } = useTranslation("common", { keyPrefix: "media-list" });
 
@@ -139,10 +143,6 @@ function MediaSelectorList({ multiple, selectedMediaIds, onItemClick }) {
     </>
   );
 }
-
-MediaSelectorList.defaultProps = {
-  multiple: false,
-};
 
 MediaSelectorList.propTypes = {
   selectedMediaIds: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,

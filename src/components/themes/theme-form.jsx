@@ -24,12 +24,12 @@ import ImageUploader from "../util/image-uploader/image-uploader";
  * @returns {object} The theme form.
  */
 function ThemeForm({
-  theme,
   handleInput,
   handleSubmit,
   headerText,
-  isLoading,
-  loadingMessage,
+  isLoading = false,
+  loadingMessage = "",
+  theme = null,
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -103,12 +103,6 @@ function ThemeForm({
     </>
   );
 }
-
-ThemeForm.defaultProps = {
-  isLoading: false,
-  loadingMessage: "",
-  theme: null,
-};
 
 ThemeForm.propTypes = {
   theme: PropTypes.shape({

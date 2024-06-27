@@ -15,9 +15,9 @@ import MultiSelectComponent from "../multi-dropdown";
  */
 function ScreensDropdown({
   handleScreenSelection,
-  selected,
+  errors = null,
+  selected = [],
   name,
-  errors,
   data,
   filterCallback,
 }) {
@@ -43,11 +43,6 @@ function ScreensDropdown({
     </>
   );
 }
-
-ScreensDropdown.defaultProps = {
-  errors: null,
-  selected: [],
-};
 
 ScreensDropdown.propTypes = {
   handleScreenSelection: PropTypes.func.isRequired,

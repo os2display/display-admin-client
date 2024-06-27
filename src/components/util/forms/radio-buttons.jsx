@@ -15,8 +15,8 @@ function RadioButtons({
   selected,
   options,
   handleChange,
-  labelScreenReaderOnly,
-  disabled,
+  disabled = false,
+  labelScreenReaderOnly = false,
 }) {
   /**
    * Transforms the target to something the form-components understand.
@@ -58,11 +58,6 @@ function RadioButtons({
     </div>
   );
 }
-
-RadioButtons.defaultProps = {
-  disabled: false,
-  labelScreenReaderOnly: false,
-};
 
 RadioButtons.propTypes = {
   radioGroupName: PropTypes.string.isRequired,
