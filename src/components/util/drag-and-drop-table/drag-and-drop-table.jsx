@@ -134,6 +134,7 @@ function DragAndDropTable({
                             providedSnapshot.isDragging,
                             providedDraggable.draggableProps.style
                           )}
+                          className={data.className ?? ''}
                         >
                           <td>
                             <FontAwesomeIcon
@@ -171,7 +172,7 @@ function DragAndDropTable({
 
 DragAndDropTable.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, id: PropTypes.string })
+    PropTypes.shape({ name: PropTypes.string, id: PropTypes.string, className: PropTypes.string })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   name: PropTypes.string.isRequired,

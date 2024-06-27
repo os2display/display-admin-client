@@ -4,7 +4,7 @@ import ColumnHoc from "../util/column-hoc";
 import SelectColumnHoc from "../util/select-column-hoc";
 import UserContext from "../../context/user-context";
 import ListButton from "../util/list/list-button";
-import Published from "../util/published";
+import Publishing from "../util/publishing.jsx";
 
 /**
  * Columns for playlists lists.
@@ -33,7 +33,7 @@ function getPlaylistColumns({
       label: t("published"),
       // eslint-disable-next-line react/prop-types
       content: ({ publishedFrom, publishedTo, published }) => (
-        <Published
+        <Publishing
           published={published || { from: publishedFrom, to: publishedTo }}
         />
       ),

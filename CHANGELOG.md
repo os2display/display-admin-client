@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Added option to sort slides in playlist by published.
 - Changed from vite CJS to ESM.
 - Removed array spread.
 - Fixed HMR setup.

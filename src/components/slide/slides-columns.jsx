@@ -2,9 +2,10 @@ import { React } from "react";
 import { useTranslation } from "react-i18next";
 import TemplateLabelInList from "../util/template-label-in-list";
 import ListButton from "../util/list/list-button";
-import Published from "../util/published";
+import Publishing from "../util/publishing.jsx";
 import ColumnHoc from "../util/column-hoc";
 import SelectColumnHoc from "../util/select-column-hoc";
+import PublishingStatus from "../util/publishingStatus.jsx";
 
 /**
  * Columns for slides lists.
@@ -48,10 +49,14 @@ function getSlidesColumns({
       label: t("columns.slide-on-playlists"),
     },
     {
-      key: "published",
-      // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
-      label: t("columns.published"),
+      key: "publishing",
+      content: ({ published }) => <Publishing published={published} />,
+      label: t("columns.publishing"),
+    },
+    {
+      key: "active",
+      content: ({ published }) => <PublishingStatus published={published} />,
+      label: t("columns.status"),
     },
   ];
 

@@ -28,7 +28,8 @@
     "columns": {
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "published": "Udgivet"
+      "publishing": "Udgivelse",
+      "status": "Status"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
@@ -641,7 +642,7 @@
   "drag-and-drop-table": {
     "not-available": "Ikke tilgængeligt",
     "table-header-for-indicator": "Drag and drop indikator",
-    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
+    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piletasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
   "link-for-list": {
     "label": "Rediger"
@@ -981,5 +982,10 @@
     "loading-messages": {
       "saving-activation-code": "Opretter aktiveringskode"
     }
+  },
+  "published-state": {
+    "active": "Aktiv",
+    "future": "Fremtidig",
+    "expired": "Udløbet"
   }
 }

@@ -36,13 +36,11 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
   const { data } = useGetV2PlaylistsByIdSlidesQuery(
     {
       id: slideId,
-      itemsPerPage: 10,
+      itemsPerPage: 30,
       page,
     },
     { skip: !slideId }
   );
-
-  //
 
   useEffect(() => {
     if (data) {
@@ -50,6 +48,7 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
       const newSlides = data["hydra:member"].map(({ slide }) => {
         return slide;
       });
+
       setSelectedData([...selectedData, ...newSlides]);
 
       // Get all selected slides. If a next page is defined, get the next page.
