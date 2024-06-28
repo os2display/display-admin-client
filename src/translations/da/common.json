@@ -557,7 +557,8 @@
     "yes": "Ja",
     "no": "Nej",
     "from": "Fra",
-    "to": "Til"
+    "to": "Til",
+    "always": "Ubegrænset"
   },
   "modal-dialog": {
     "cancel": "Annuller",

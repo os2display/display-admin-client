@@ -40,6 +40,9 @@ function Publishing({ published }) {
           {t("to")}: {publishedTo}
         </div>
       )}
+      {publishedFrom === null && publishedTo === null && (
+        <div>{t("always")}</div>
+      )}
     </>
   );
 }
