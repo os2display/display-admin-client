@@ -1,5 +1,6 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Button } from "react-bootstrap";
 import TemplateLabelInList from "../util/template-label-in-list";
 import ListButton from "../util/list/list-button";
 import Publishing from "../util/publishing.jsx";
@@ -17,6 +18,7 @@ import DateValue from "../util/date-value.jsx";
  * @param {string} props.infoModalTitle - The info modal title.
  * @param {string} props.dataKey The data key for mapping the data. the list button
  * @param props.hideColumns
+ * @param props.sortColumns
  * @returns {object} The columns for the slides lists.
  */
 function getSlidesColumns({
@@ -25,6 +27,7 @@ function getSlidesColumns({
   infoModalTitle,
   dataKey,
   hideColumns = {},
+  sortColumns = {},
 }) {
   const { t } = useTranslation("common", { keyPrefix: "slides-list" });
 
@@ -85,6 +88,15 @@ function getSlidesColumns({
       key: "publishing-to",
       content: ({ published }) => <DateValue date={published.to} />,
       label: t("columns.publishing-to"),
+      actions: sortColumns.publishedTo ? (
+        <Button
+          type="button"
+          className=" btn-sm ms-2 p-0 ps-1 pe-1 btn-secondary"
+          onClick={sortColumns.publishedTo}
+        >
+          ↓
+        </Button>
+      ) : null,
     });
   }
 
@@ -93,6 +105,15 @@ function getSlidesColumns({
       key: "status",
       content: ({ published }) => <PublishingStatus published={published} />,
       label: t("columns.status"),
+      actions: sortColumns.status ? (
+        <Button
+          type="button"
+          className=" btn-sm ms-2 p-0 ps-1 pe-1 btn-secondary"
+          onClick={sortColumns.status}
+        >
+          ↓
+        </Button>
+      ) : null,
     });
   }
 

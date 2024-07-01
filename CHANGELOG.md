@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- Added option to sort slides in playlist by published.
+- Changed playlist.slides list columns.
+- Set published.to to now when creating new slides.
+- Added option to sort slides in playlist by published.to and status.
 - Changed from vite CJS to ESM.
 - Removed array spread.
 - Fixed HMR setup.

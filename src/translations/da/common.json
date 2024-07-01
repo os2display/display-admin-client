@@ -525,7 +525,8 @@
     "remove-from-list": "Fjern fra liste",
     "error-messages": {
       "load-selected-slides-error": "Fejl da valgte slides skulle loades"
-    }
+    },
+    "data-changed": "Rækkefølge ændret. Husk at gemme."
   },
   "select-screens-table": {
     "columns": {

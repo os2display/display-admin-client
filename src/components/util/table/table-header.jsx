@@ -25,7 +25,7 @@ function TableHeader({ columns, draggable = false }) {
         )}
         {columns.map((column) => (
           <Fragment key={column.path || column.key}>
-            <th>{column.label}</th>
+            <th>{column.label}{column.actions}</th>
           </Fragment>
         ))}
       </tr>

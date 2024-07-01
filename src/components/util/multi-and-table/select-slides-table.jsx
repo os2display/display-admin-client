@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Alert, Button, Card } from "react-bootstrap";
 import dayjs from "dayjs";
 import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
@@ -12,6 +11,7 @@ import {
   useGetV2PlaylistsByIdQuery,
 } from "../../../redux/api/api.generated.ts";
 import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
+import { displaySuccess } from "../list/toast-component/display-toast";
 
 /**
  * A multiselect and table for slides.
@@ -44,7 +44,7 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     { skip: !slideId }
   );
 
-  const changeOrderByStatus = () => {
+  const sortByStatus = () => {
     const expired = [];
     const active = [];
     const future = [];
@@ -65,10 +65,18 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
       }
     });
 
-    setSelectedData([...expired, ...active, ...future]);
+    const newData = [...expired, ...active, ...future];
+    setSelectedData(newData);
+
+    const order = selectedData.map((entry) => entry["@id"]);
+    const newOrder = newData.map((entry) => entry["@id"]);
+
+    if (JSON.stringify(order) !== JSON.stringify(newOrder)) {
+      displaySuccess(t("data-changed"));
+    }
   };
 
-  const changeOrderByExpirationDate = () => {
+  const sortByPublishedTo = () => {
     const newData = [...selectedData];
 
     newData.sort((a, b) => {
@@ -83,6 +91,13 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     });
 
     setSelectedData(newData);
+
+    const order = selectedData.map((entry) => entry["@id"]);
+    const newOrder = newData.map((entry) => entry["@id"]);
+
+    if (JSON.stringify(order) !== JSON.stringify(newOrder)) {
+      displaySuccess(t("data-changed"));
+    }
   };
 
   useEffect(() => {
@@ -158,6 +173,10 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
       template: true,
       playlists: true,
     },
+    sortColumns: {
+      publishedTo: sortByPublishedTo,
+      status: sortByStatus,
+    },
   });
 
   return (
@@ -183,20 +202,6 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
                 callback={() => setPage(page + 1)}
               />
               <small>{t("edit-slides-help-text")}</small>
-
-              <div className="border mt-3 mb-3 card">
-                <div className="mb-2 card-header">{t("change-order-by-status-headline")}</div>
-                <div className="card-body">
-                  <Button type="button" className="btn btn-secondary mb-1 btn-sm me-2" onClick={changeOrderByStatus}>
-                    {t("change-order-by-status")}
-                  </Button>
-                  <Button type="button" className="btn btn-secondary mb-1 btn-sm" onClick={changeOrderByExpirationDate}>
-                    {t("change-order-by-expiration-date")}
-                  </Button>
-                </div>
-                <div className="card-footer"><small>{t("change-order-by-status-helptext")}</small></div>
-              </div>
-
               <PlaylistGanttChart slides={selectedData} />
             </>
           )}
