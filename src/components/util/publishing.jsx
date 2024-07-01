@@ -21,11 +21,11 @@ function Publishing({ published }) {
   let publishedTo = null;
 
   if (published.from) {
-    publishedFrom = dayjs(published.from).locale(localeDa).format("LLL");
+    publishedFrom = dayjs(published.from).locale(localeDa).format("lll");
   }
 
   if (published.to) {
-    publishedTo = dayjs(published.to).locale(localeDa).format("LLL");
+    publishedTo = dayjs(published.to).locale(localeDa).format("lll");
   }
 
   return (

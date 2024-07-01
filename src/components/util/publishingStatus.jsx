@@ -51,7 +51,6 @@ function PublishingStatus({ published }) {
     return () => {};
   }, [published]);
 
-  // TODO: Fix to follow system colors.
   return (
     <span>
       {publishedState === PUBLISHED_EXPIRED && (

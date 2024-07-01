@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import { Alert, Button, Card } from "react-bootstrap";
+import dayjs from "dayjs";
 import { SelectSlideColumns } from "../../slide/slides-columns";
 import DragAndDropTable from "../drag-and-drop-table/drag-and-drop-table";
 import SlidesDropdown from "../forms/multiselect-dropdown/slides/slides-dropdown";
@@ -41,6 +43,47 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     },
     { skip: !slideId }
   );
+
+  const changeOrderByStatus = () => {
+    const expired = [];
+    const active = [];
+    const future = [];
+
+    const now = dayjs(new Date());
+
+    selectedData.forEach((entry) => {
+      const { published } = entry;
+      const from = published.from ? dayjs(published.from) : null;
+      const to = published.to ? dayjs(published.to) : null;
+
+      if (to !== null && to.isBefore(now)) {
+        expired.push(entry);
+      } else if (from !== null && from.isAfter(now)) {
+        future.push(entry);
+      } else {
+        active.push(entry);
+      }
+    });
+
+    setSelectedData([...expired, ...active, ...future]);
+  };
+
+  const changeOrderByExpirationDate = () => {
+    const newData = [...selectedData];
+
+    newData.sort((a, b) => {
+      if (a.published?.to === null) {
+        return 1;
+      }
+      if (b.published?.to === null) {
+        return -1;
+      }
+
+      return a.published.to > b.published?.to ? 1 : -1;
+    });
+
+    setSelectedData(newData);
+  };
 
   useEffect(() => {
     if (data) {
@@ -110,6 +153,11 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     editTarget: "slide",
     infoModalRedirect: "/playlist/edit",
     infoModalTitle: t("info-modal.slide-on-playlists"),
+    hideColumns: {
+      createdBy: true,
+      template: true,
+      playlists: true,
+    },
   });
 
   return (
@@ -135,6 +183,20 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
                 callback={() => setPage(page + 1)}
               />
               <small>{t("edit-slides-help-text")}</small>
+
+              <div className="border mt-3 mb-3 card">
+                <div className="mb-2 card-header">{t("change-order-by-status-headline")}</div>
+                <div className="card-body">
+                  <Button type="button" className="btn btn-secondary mb-1 btn-sm me-2" onClick={changeOrderByStatus}>
+                    {t("change-order-by-status")}
+                  </Button>
+                  <Button type="button" className="btn btn-secondary mb-1 btn-sm" onClick={changeOrderByExpirationDate}>
+                    {t("change-order-by-expiration-date")}
+                  </Button>
+                </div>
+                <div className="card-footer"><small>{t("change-order-by-status-helptext")}</small></div>
+              </div>
+
               <PlaylistGanttChart slides={selectedData} />
             </>
           )}

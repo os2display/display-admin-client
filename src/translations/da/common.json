@@ -26,9 +26,12 @@
   },
   "slides-list": {
     "columns": {
+      "name": "Titel",
+      "created-by": "Oprettet af",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "publishing": "Udgivelse",
+      "publishing-from": "Udgivelse fra",
+      "publishing-to": "Udgivelse til",
       "status": "Status"
     },
     "info-modal": {

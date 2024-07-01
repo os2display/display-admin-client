@@ -15,7 +15,7 @@ import "./drag-and-drop-table.scss";
  * @param {Array} props.columns The columns for the table.
  * @param {Array} props.data The data to display in the table.
  * @param {string} props.name The id of the form element
- * @param {Function} props.onDropped Callback for when an items is dropped and
+ * @param {Function} props.onDropped Callback for when an item is dropped and
  *   the list is reordered.
  * @param {Function} props.callback - The callback.
  * @param {string} props.label - The label.
