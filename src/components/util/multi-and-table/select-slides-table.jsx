@@ -11,7 +11,7 @@ import {
   useGetV2PlaylistsByIdQuery,
 } from "../../../redux/api/api.generated.ts";
 import PlaylistGanttChart from "../../playlist/playlist-gantt-chart";
-import { displaySuccess } from "../list/toast-component/display-toast";
+import { displayWarning } from "../list/toast-component/display-toast";
 
 /**
  * A multiselect and table for slides.
@@ -72,7 +72,7 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     const newOrder = newData.map((entry) => entry["@id"]);
 
     if (JSON.stringify(order) !== JSON.stringify(newOrder)) {
-      displaySuccess(t("data-changed"));
+      displayWarning(t("data-changed"));
     }
   };
 
@@ -96,7 +96,7 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     const newOrder = newData.map((entry) => entry["@id"]);
 
     if (JSON.stringify(order) !== JSON.stringify(newOrder)) {
-      displaySuccess(t("data-changed"));
+      displayWarning(t("data-changed"));
     }
   };
 
@@ -192,6 +192,7 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
           />
           {selectedData?.length > 0 && (
             <>
+              <div className="h5">Afspilningsrækkefølge</div>
               <DragAndDropTable
                 columns={columns}
                 onDropped={handleAdd}

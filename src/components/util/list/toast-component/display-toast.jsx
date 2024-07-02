@@ -10,6 +10,13 @@ export function displaySuccess(text) {
   toast.success(displayText);
 }
 
+/** @param {string} text The toast display text */
+export function displayWarning(text) {
+  const displayText = `${text} ${dayjs().format("HH:mm:ss")}`;
+
+  toast.warning(displayText);
+}
+
 /**
  * @param {string} errorString - The toast display text
  * @param {object} error - The error

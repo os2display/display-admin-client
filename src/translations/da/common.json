@@ -408,7 +408,9 @@
     "name": "Navn",
     "created-by": "Oprettet af",
     "delete-button": "Slet",
-    "published": "Udgivet",
+    "publishing-from": "Udgivelse fra",
+    "publishing-to": "Udgivelse til",
+    "status": "Status",
     "number-of-slides": "Slides tilknyttede"
   },
   "playlist-campaign-manager": {

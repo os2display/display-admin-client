@@ -1,8 +1,6 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
-import localeDa from "dayjs/locale/da";
-import localizedFormat from "dayjs/plugin/localizedFormat";
 
 /**
  * @param {object} props The props.
@@ -10,11 +8,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
  * @returns {object} Formatted date
  */
 function DateValue({ date }) {
-  useEffect(() => {
-    dayjs.extend(localizedFormat);
-  }, []);
-
-  return date ? dayjs(date).locale(localeDa).format("l LT") : "";
+  return date ? dayjs(date).format("D/M/YYYY hh:mm") : "";
 }
 
 DateValue.propTypes = {
