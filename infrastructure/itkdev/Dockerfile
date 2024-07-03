@@ -13,9 +13,11 @@ RUN mkdir -p ${APP_PATH} \
 
 WORKDIR ${APP_PATH}
 
+ARG APP_BASE_PATH=/admin/
+
 # Build it.
 RUN yarn install \
-    && yarn build
+    && BASE_PATH=${APP_BASE_PATH} yarn build
 
 # Remove fixtures
 RUN rm -rf public/fixtures

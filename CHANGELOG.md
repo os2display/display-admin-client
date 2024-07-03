@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Fixed configurable base path.
 - Changed from vite CJS to ESM.
 - Removed array spread.
 - Fixed HMR setup.

@@ -54,7 +54,7 @@
     "check-coding-standards": "yarn lint:js && yarn lint:scss",
     "apply-coding-standards": "yarn lint:js:fix && yarn lint:scss:fix",
     "start": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "vite build --base=$BASE_PATH",
     "preview": "vite preview"
   },
   "eslintConfig": {

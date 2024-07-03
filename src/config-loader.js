@@ -1,3 +1,5 @@
+import { BASE_PATH } from "./variables";
+
 let configData = null;
 let activePromise = null;
 
@@ -11,7 +13,7 @@ const ConfigLoader = {
       if (configData !== null) {
         resolve(configData);
       } else {
-        fetch("/config.json")
+        fetch(`${BASE_PATH}config.json`)
           .then((response) => response.json())
           .then((data) => {
             configData = data;

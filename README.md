@@ -8,7 +8,7 @@ description of the admin.
 
 ### Create public/config file
 
-By default the api that is requested is located at `/api/`.
+By default, the api that is requested is located at `/api/`.
 This can be configured by:
 
 ```shell
