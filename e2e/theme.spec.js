@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Theme pages work", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/themes/list");
+    await page.goto("/themes/list");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
@@ -70,9 +70,10 @@ test.describe("Theme pages work", () => {
     await expect(page.locator("#cancel_theme")).not.toBeVisible();
   });
 });
+
 test.describe("Themes list work", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/themes/list");
+    await page.goto("/themes/list");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",

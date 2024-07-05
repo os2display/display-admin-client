@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Screen list tests", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/screen/list");
+    await page.goto("/screen/list");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
@@ -121,7 +121,7 @@ test.describe("Screen list tests", () => {
 
 test.describe("Screen create tests", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/screen/create");
+    await page.goto("/screen/create");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",

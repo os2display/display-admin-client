@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Shared list tests", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/shared/list");
+    await page.goto("/shared/list");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",

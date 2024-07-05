@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Playlist create tests", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/playlist/create");
+    await page.goto("/playlist/create");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
@@ -107,7 +107,7 @@ test.describe("Playlist create tests", () => {
 });
 test.describe("Playlist list tests", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/playlist/list");
+    await page.goto("/playlist/list");
     await page.route("**/playlists*", async (route) => {
       const json = {
         "@context": "/contexts/Playlist",

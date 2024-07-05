@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Create group page works", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/group/create");
+    await page.goto("/group/create");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
@@ -91,7 +91,7 @@ test.describe("Create group page works", () => {
 
 test.describe("Groups list works", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/admin/group/list");
+    await page.goto("/group/list");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
