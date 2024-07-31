@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+
+- [#243](https://github.com/os2display/display-admin-client/pull/250)
+    - Fix null bug: replace valueAsDate with target.value as valueAsDate was null 
+
 - [#242](https://github.com/os2display/display-admin-client/pull/243)
     - Add entry in example config for midttrafik api key
     - Clean up multi select component a bit, replace reduce with Map logic
