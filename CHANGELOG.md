@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [2.0.3] - 2024-08-01
 - [#243](https://github.com/os2display/display-admin-client/pull/251)
     - Fix null bug: replace valueAsDate with target.value as valueAsDate was null 
 
