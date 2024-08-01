@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Campaign pages work", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/campaign/create");
+    await page.goto("/admin/campaign/create");
     await page.route("**/slides*", async (route) => {
       const json = {
         "@id": "/v2/slides",

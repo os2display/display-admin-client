@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Nav items loads", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/screen/create");
+    await page.goto("/admin/screen/create");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
@@ -70,7 +70,7 @@ test.describe("Nav items loads", () => {
   });
 
   test.skip("It navigates to create slide", async ({ page }) => {
-    await page.goto("/screen/create");
+    await page.goto("/admin/screen/create");
     await page.getByRole("button", { name: "Tilføj" }).click();
     await page.getByRole("link", { name: "Nyt slide", exact: true }).click();
     await expect(page.locator("h1")).toHaveText("Opret nyt slide");

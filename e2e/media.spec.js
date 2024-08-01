@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("media list tests", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/media/list");
+    await page.goto("/admin/media/list");
     await page.route("**/media*", async (route) => {
       const json = {
         "@context": "/contexts/Media",

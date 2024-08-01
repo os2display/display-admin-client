@@ -53,9 +53,9 @@
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
     "check-coding-standards": "yarn lint:js && yarn lint:scss",
     "apply-coding-standards": "yarn lint:js:fix && yarn lint:scss:fix",
-    "start": "vite --host 0.0.0.0 --base=/admin",
-    "build": "vite build --base=/admin",
-    "preview": "vite preview --base=/admin"
+    "start": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [

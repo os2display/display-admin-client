@@ -22,7 +22,7 @@ test.describe("Login works", () => {
       await route.fulfill({ json });
     });
 
-    await page.goto("/playlist/list");
+    await page.goto("/admin/playlist/list");
     await page.locator("#login").click();
     await expect(page.locator(".name")).toHaveText("John Doe");
   });
@@ -59,14 +59,14 @@ test.describe("Login works", () => {
       };
       await route.fulfill({ json });
     });
-    await page.goto("/group/list");
+    await page.goto("/admin/group/list");
     await page.locator("#login").click();
     // Expect dropdown with tenants
     await expect(page.locator(".dropdown-container")).toBeVisible();
   });
 
   test("Login with tenant that has role editor", async ({ page }) => {
-    await page.goto("/playlist/list");
+    await page.goto("/admin/playlist/list");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
@@ -87,7 +87,7 @@ test.describe("Login works", () => {
       await route.fulfill({ json });
     });
 
-    await page.goto("/group/list");
+    await page.goto("/admin/group/list");
     await page.locator("#login").click();
     await expect(page.locator(".name")).toHaveText("John Doe");
     await expect(page.locator(".sidebar-nav").locator(".nav-item")).toHaveCount(
@@ -98,7 +98,7 @@ test.describe("Login works", () => {
   test("Role editor should not be able to visit restricted route", async ({
     page,
   }) => {
-    await page.goto("/playlist/list");
+    await page.goto("/admin/playlist/list");
     await page.route("**/token", async (route) => {
       const json = {
         token: "1",
@@ -118,7 +118,7 @@ test.describe("Login works", () => {
       };
       await route.fulfill({ json });
     });
-    await page.goto("/shared/list");
+    await page.goto("/admin/shared/list");
     await page.locator("#login").click();
     await expect(page.locator("main").locator("div")).toHaveText(
       "Du har ikke adgang til denne side"
