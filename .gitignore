@@ -28,13 +28,13 @@ yarn-error.log*
 # Temp files
 temp/
 
-# API mock
-json-server/
-
-public/config.json
-public/access-config.json
-public/release.json
+# Playwright
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Json files in public folder
+public/config.json
+public/access-config.json
+public/release.json
