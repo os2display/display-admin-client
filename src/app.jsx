@@ -42,7 +42,6 @@ import ActivationCodeActivate from "./components/activation-code/activation-code
 import ConfigLoader from "./config-loader";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
-import { BASE_PATH } from "./variables";
 
 /**
  * App component.
@@ -142,7 +141,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch(`${BASE_PATH}access-config.json`)
+    fetch("/admin/access-config.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setAccessConfig(jsonData);

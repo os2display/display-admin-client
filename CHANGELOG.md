@@ -1,10 +1,11 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- Fixed configurable base path.
+- Fixed base path to /admin in vite setup.
 - Changed from vite CJS to ESM.
 - Removed array spread.
 - Fixed HMR setup.
