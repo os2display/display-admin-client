@@ -119,12 +119,8 @@ function Schedule({ schedules, onChange }) {
    * @param {object} target - Input target.
    */
   const setDateValue = (scheduleId, target) => {
-    const date = target.valueAsDate;
-    const scheduleDate = new Date(
-      date.getTime() + 60 * 1000 * date.getTimezoneOffset()
-    );
-
-    changeSchedule(scheduleId, target.id, scheduleDate);
+    const date = new Date(target.value);
+    changeSchedule(scheduleId, target.id, date);
   };
 
   /**
