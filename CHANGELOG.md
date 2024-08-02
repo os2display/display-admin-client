@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Set infrastructure node version to 20.
 - Fixed base path to /admin in vite setup.
 - Changed from vite CJS to ESM.
 - Removed array spread.
