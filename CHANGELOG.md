@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Reverted change in https://github.com/os2display/display-admin-client/commit/65762066c708f541305a48fbd6b28264dca593b5.
+- Added comments about how rrules are handled.
+
 - [#242](https://github.com/os2display/display-admin-client/pull/243)
     - Add entry in example config for midttrafik api key
     - Clean up multi select component a bit, replace reduce with Map logic
