@@ -168,8 +168,16 @@ function Schedule({ schedules, onChange }) {
     const { value } = target;
     const split = value.split(":");
 
-    changeSchedule(scheduleId, "byhour", parseInt(split[0], 10));
-    changeSchedule(scheduleId, "byminute", parseInt(split[1], 10));
+    const hour = parseInt(split[0], 10);
+    const minute = parseInt(split[1], 10);
+
+    if (isNaN(hour) || isNaN(minute)) {
+      changeSchedule(scheduleId, "byhour", null);
+      changeSchedule(scheduleId, "byminute", null);
+    } else {
+      changeSchedule(scheduleId, "byhour", hour);
+      changeSchedule(scheduleId, "byminute", minute);
+    }
   };
 
   const setDuration = (scheduleId, schedule, target) => {
@@ -259,7 +267,7 @@ function Schedule({ schedules, onChange }) {
                 </div>
               </div>
               <div className="row mt-2">
-                <div className={`col col-md-${schedule.byhour ? "3" : "6"}`}>
+                <div className={`col col-md-${!isNaN(schedule.byhour) ? "3" : "6"}`}>
                   <Select
                     onChange={({target}) =>
                       changeSchedule(schedule.id, target.id, target.value)
@@ -290,7 +298,7 @@ function Schedule({ schedules, onChange }) {
                     name="interval"
                   />
                 </div>
-                {schedule.byhour && (
+                {!isNaN(schedule.byhour) && (
                   <div className="col col-md-3">
                     <FormInput
                       onChange={({target}) => setTimeValue(schedule.id, target)}
