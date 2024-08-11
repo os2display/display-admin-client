@@ -17,7 +17,6 @@ import {
   getNextOccurrences,
   getRruleString,
 } from "./schedule-util";
-import Duration from "./duration";
 
 dayjs.extend(utc);
 
@@ -37,7 +36,7 @@ function Schedule({ schedules, onChange }) {
   const byWeekdayOptions = getByWeekdayOptions(t);
   const byMonthOptions = getByMonthOptions(t);
   const [localSchedules, setLocalSchedules] = useState([]);
-  const [showRRuleDetails, setShowRRuleDetails] = useState(false);
+  const [durationError, setDurationError] = useState(false);
 
   useEffect(() => {
     const newSchedules = schedules.map((schedule) =>
@@ -173,6 +172,22 @@ function Schedule({ schedules, onChange }) {
     changeSchedule(scheduleId, "byminute", parseInt(split[1], 10));
   };
 
+  const setDuration = (scheduleId, schedule, target) => {
+    const value = target.value;
+
+    const start = dayjs(schedule.dtstart).utc().format("YYYY-MM-DDTHH:mm");
+    const end = dayjs(value);
+    const diff = end.diff(start, 'seconds');
+
+    if (diff < 0) {
+      setDurationError(true)
+    } else {
+      setDurationError(false);
+
+      changeSchedule(scheduleId, 'duration', diff);
+    }
+  }
+
   return (
     <div className="Schedule">
       <Button
@@ -215,13 +230,14 @@ function Schedule({ schedules, onChange }) {
                   />
                 </div>
                 <div className="col">
-                  <Duration
-                    duration={schedule.duration}
-                    onChange={(newValue) => {
-                      changeSchedule(schedule.id, "duration", newValue);
-                    }}
-                    label={t("schedule.duration")}
+                  <FormInput
+                    label={t("schedule.end")}
+                    value={getDateValue(new Date(schedule.dtstart.getTime() + schedule.duration * 1000))}
+                    name="dtstart"
+                    onChange={({target}) => setDuration(schedule.id, schedule, target)}
+                    type="datetime-local"
                   />
+                  {durationError && <small className="text-danger">{t('schedule.duration-error')}</small>}
                 </div>
               </div>
               <div className="row mt-2">
@@ -342,7 +358,7 @@ function Schedule({ schedules, onChange }) {
               <div id="schedule_details" className="row">
                 <div className="mb-2">
                   <strong>{t("schedule.next-occurrences")}:</strong>
-                  {getNextOccurrences(schedule.rruleObject, schedule.duration).map(
+                  {getNextOccurrences(schedule.rruleObject, schedule.duration, schedule.count ?? 5).map(
                     (occurrence) => (<div key={occurrence.key}>
                       <span>{occurrence.text} </span>
                       <span className="ms-2 me-2"> - </span>
