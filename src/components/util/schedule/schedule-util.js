@@ -33,6 +33,7 @@ const getRruleString = (schedule) => {
     dtstart: schedule.dtstart,
     count: schedule.count,
     until: schedule.until,
+    interval: schedule.interval,
     byhour: schedule.byhour,
     byminute: schedule.byminute,
     bysecond,
@@ -57,7 +58,8 @@ const createNewSchedule = () => {
     id: ulid(nowTimestamp),
     duration: 60 * 60, // Default 1 hour.
     freq: RRule.WEEKLY,
-    count: 1,
+    count: null,
+    interval: null,
     // For evaluation with the RRule library we pretend that "now" is in UTC instead of the local timezone.
     // That is 9:00 in Europe/Copenhagen time will be evaluated as if it was 9:00 in UTC.
     // @see https://github.com/jkbrzt/rrule#important-use-utc-dates

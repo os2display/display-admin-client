@@ -784,8 +784,11 @@
     "selected-all": "Vælg alle",
     "select-some-options": "Vælg...",
     "bytime": "Tidspunkt på dagen",
-    "duration-error": "Varighed kan ikke være mindre end 0",
-    "end": "Slut"
+    "duration-error": "Slut kan ikke være før start",
+    "end": "Slut",
+    "count": "Antal gentagelser",
+    "count-placeholder": "Ubegrænset",
+    "interval": "Interval"
   },
   "duration": {
     "hours": "t.",

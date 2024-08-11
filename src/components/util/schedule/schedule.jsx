@@ -188,6 +188,16 @@ function Schedule({ schedules, onChange }) {
     }
   }
 
+  const setPositiveNumberOrNull = (scheduleId, target) => {
+    const value = target.value;
+
+    if (isNaN(value) || value <= 0) {
+      changeSchedule(scheduleId, target.id, null);
+    } else {
+      changeSchedule(scheduleId, target.id, value);
+    }
+  }
+
   return (
     <div className="Schedule">
       <Button
@@ -251,6 +261,25 @@ function Schedule({ schedules, onChange }) {
                     name="freq"
                     options={freqOptions}
                     allowNull={false}
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
+                    value={schedule.count ?? ''}
+                    label={t("schedule.count")}
+                    placeholder={t('schedule.count-placeholder')}
+                    type="search"
+                    name="count"
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
+                    value={schedule.interval ?? ''}
+                    label={t("schedule.interval")}
+                    type="search"
+                    name="interval"
                   />
                 </div>
                 <div className="col">
@@ -358,7 +387,7 @@ function Schedule({ schedules, onChange }) {
               <div id="schedule_details" className="row">
                 <div className="mb-2">
                   <strong>{t("schedule.next-occurrences")}:</strong>
-                  {getNextOccurrences(schedule.rruleObject, schedule.duration, schedule.count ?? 5).map(
+                  {getNextOccurrences(schedule.rruleObject, schedule.duration, schedule.count ? Math.min(schedule.count, 5) : 5).map(
                     (occurrence) => (<div key={occurrence.key}>
                       <span>{occurrence.text} </span>
                       <span className="ms-2 me-2"> - </span>
