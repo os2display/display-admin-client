@@ -56,7 +56,7 @@ const createNewSchedule = () => {
 
   const newSchedule = {
     id: ulid(nowTimestamp),
-    duration: 60 * 60 * 24, // Default one day.
+    duration: 60 * 60, // Default 1 hour.
     freq: RRule.WEEKLY,
     // For evaluation with the RRule library we pretend that "now" is in UTC instead of the local timezone.
     // That is 9:00 in Europe/Copenhagen time will be evaluated as if it was 9:00 in UTC.
@@ -124,7 +124,7 @@ const createScheduleFromRRule = (id, duration, rruleString) => {
  * @param {number | null} count - The max number of occurrences.
  * @returns {Array} - The occurrences.
  */
-const getNextOccurrences = (rrule, count = 5) => {
+const getNextOccurrences = (rrule, duration = null, count = 5) => {
   const occurrences = [];
 
   const newRrule = new RRule(rrule.origOptions);
@@ -133,6 +133,7 @@ const getNextOccurrences = (rrule, count = 5) => {
     occurrences.push({
       key: `occurrence${occurrences.length}`,
       text: dayjs(d).utc().locale("da").format("LLLL"),
+      end: duration !== null ? dayjs(d).utc().add(duration, 'second').locale("da").format("LLLL") : null,
     });
     return true;
   });
@@ -156,12 +157,8 @@ const getFreqOptions = (t) => {
     },
     { title: t("schedule.weekly"), value: RRule.WEEKLY, key: "rrule.weekly" },
     { title: t("schedule.daily"), value: RRule.DAILY, key: "rrule.daily" },
-    { title: t("schedule.hourly"), value: RRule.HOURLY, key: "rrule.hourly" },
-    {
-      title: t("schedule.minutely"),
-      value: RRule.MINUTELY,
-      key: "rrule.minutely",
-    },
+//    { title: t("schedule.hourly"), value: RRule.HOURLY, key: "rrule.hourly" },
+//    { title: t("schedule.minutely"), value: RRule.MINUTELY, key: "rrule.minutely" },
   ];
 };
 
