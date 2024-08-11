@@ -121,10 +121,11 @@ const createScheduleFromRRule = (id, duration, rruleString) => {
  * Get array of count occurrences of rrule.
  *
  * @param {RRule} rrule - The rrule.
- * @param {number | null} count - The max number of occurrences.
+ * @param {number} duration - The duration of an occurrence in seconds.
+ * @param {number} count - The max number of occurrences.
  * @returns {Array} - The occurrences.
  */
-const getNextOccurrences = (rrule, duration = null, count = 5) => {
+const getNextOccurrences = (rrule, duration = 0, count = 5) => {
   const occurrences = [];
 
   const newRrule = new RRule(rrule.origOptions);
@@ -133,7 +134,7 @@ const getNextOccurrences = (rrule, duration = null, count = 5) => {
     occurrences.push({
       key: `occurrence${occurrences.length}`,
       text: dayjs(d).utc().locale("da").format("LLLL"),
-      end: duration !== null ? dayjs(d).utc().add(duration, 'second').locale("da").format("LLLL") : null,
+      end: dayjs(d).utc().add(duration, 'second').locale("da").format("LLLL"),
     });
     return true;
   });

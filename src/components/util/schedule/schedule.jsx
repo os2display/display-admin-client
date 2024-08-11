@@ -340,14 +340,18 @@ function Schedule({ schedules, onChange }) {
 
             <div className="card-footer">
               <div id="schedule_details" className="row">
-                <div className="mt-2">
+                <div className="mb-2">
                   <strong>{t("schedule.next-occurrences")}:</strong>
                   {getNextOccurrences(schedule.rruleObject, schedule.duration).map(
-                    (occurrence) => (<div key={occurrence.key}>{occurrence.text} {occurrence.end ? ' - ' + occurrence.end : ''}</div>)
+                    (occurrence) => (<div key={occurrence.key}>
+                      <span>{occurrence.text} </span>
+                      <span className="ms-2 me-2"> - </span>
+                      <span>{occurrence.end}</span>
+                    </div>)
                   )}
                 </div>
               </div>
-              <small>{t("schedule.rrulestring")}: {schedule.rrule}</small>
+              <small>{t("schedule.rrulestring")}: <span style={{fontStyle: 'italic'}}>{schedule.rrule}</span></small>
             </div>
           </div>
         ))}
