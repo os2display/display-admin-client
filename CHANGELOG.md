@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Refactored scheduling to increase user experience.
+- Added interval and count to rrule inputs.
 - [#252](https://github.com/os2display/display-admin-client/pull/252)
   - Reverted change in https://github.com/os2display/display-admin-client/commit/65762066c708f541305a48fbd6b28264dca593b5 regarding rrule dtstart.
   - Added comments about how rrules are handled.
