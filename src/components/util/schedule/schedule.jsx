@@ -243,15 +243,23 @@ function Schedule({ schedules, onChange }) {
                   <FormInput
                     label={t("schedule.end")}
                     value={getDateValue(new Date(schedule.dtstart.getTime() + schedule.duration * 1000))}
-                    name="dtstart"
+                    name="end"
                     onChange={({target}) => setDuration(schedule.id, schedule, target)}
                     type="datetime-local"
                   />
+                </div>
+              </div>
+              <div className="row" style={{fontStyle: 'italic'}}>
+                <div className="col">
+                  <div><small>{t('schedule.help1')}</small></div>
+                  <small>{t('schedule.help2')}</small>
+                </div>
+                <div className="col">
                   {durationError && <small className="text-danger">{t('schedule.duration-error')}</small>}
                 </div>
               </div>
               <div className="row mt-2">
-                <div className="col">
+                <div className={`col col-md-${schedule.byhour ? "3" : "6"}`}>
                   <Select
                     onChange={({target}) =>
                       changeSchedule(schedule.id, target.id, target.value)
@@ -263,7 +271,7 @@ function Schedule({ schedules, onChange }) {
                     allowNull={false}
                   />
                 </div>
-                <div className="col">
+                <div className="col col-md-3">
                   <FormInput
                     onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
                     value={schedule.count ?? ''}
@@ -273,7 +281,7 @@ function Schedule({ schedules, onChange }) {
                     name="count"
                   />
                 </div>
-                <div className="col">
+                <div className="col col-md-3">
                   <FormInput
                     onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
                     value={schedule.interval ?? ''}
@@ -282,15 +290,17 @@ function Schedule({ schedules, onChange }) {
                     name="interval"
                   />
                 </div>
-                <div className="col">
-                  <FormInput
-                    onChange={({target}) => setTimeValue(schedule.id, target)}
-                    value={getTimeValue(schedule.byhour, schedule.byminute)}
-                    label={t("schedule.bytime")}
-                    type="time"
-                    name="bytime"
-                  />
-                </div>
+                {schedule.byhour && (
+                  <div className="col col-md-3">
+                    <FormInput
+                      onChange={({target}) => setTimeValue(schedule.id, target)}
+                      value={getTimeValue(schedule.byhour, schedule.byminute)}
+                      label={t("schedule.bytime")}
+                      type="time"
+                      name="bytime"
+                    />
+                  </div>
+                )}
               </div>
               <div className="row mt-2">
                 <div className="col">
