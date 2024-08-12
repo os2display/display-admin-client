@@ -777,7 +777,7 @@
     "minutely": "Minut",
     "rrulestring": "RRule",
     "dtstart": "Start",
-    "until": "Planlægningens sluttidspunkt",
+    "until": "Planlægningen afsluttes",
     "next-occurrences": "Næste 5 forekomster",
     "all-selected": "Alle er valgt",
     "clear-selection": "Ryd valg",
@@ -789,8 +789,8 @@
     "count": "Antal gentagelser",
     "count-placeholder": "Ubegrænset",
     "interval": "Interval",
-    "help1": "Start/slut definerer længden, starttidspunkt på dagen og første mulige dato for gentagelserne.",
-    "help2": "Hvis gentagelsesreglerne ikke inkluderer starttidspunktet, kommer det ikke med."
+    "helptext": "Start/slut definerer længden, tidspunkt på dagen og første mulige dato for gentagelserne.",
+    "repetition": "RRule"
   },
   "duration": {
     "hours": "t.",

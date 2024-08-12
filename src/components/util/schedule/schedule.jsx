@@ -259,8 +259,7 @@ function Schedule({ schedules, onChange }) {
               </div>
               <div className="row" style={{fontStyle: 'italic'}}>
                 <div className="col">
-                  <div><small>{t('schedule.help1')}</small></div>
-                  <small>{t('schedule.help2')}</small>
+                  <div><small>{t('schedule.helptext')}</small></div>
                 </div>
                 <div className="col">
                   {durationError && <small className="text-danger">{t('schedule.duration-error')}</small>}
@@ -414,7 +413,9 @@ function Schedule({ schedules, onChange }) {
                   )}
                 </div>
               </div>
-              <small>{t("schedule.rrulestring")}: <span style={{fontStyle: 'italic'}}>{schedule.rrule}</span></small>
+              <small>
+                {t('schedule.repetition')}: <span style={{fontStyle: 'italic'}}>{schedule.rruleObject.toText()}</span>
+              </small>
             </div>
           </div>
         ))}
