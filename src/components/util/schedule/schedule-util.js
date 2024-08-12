@@ -57,8 +57,8 @@ const createNewSchedule = () => {
   const newSchedule = {
     id: ulid(nowTimestamp),
     duration: 60 * 60, // Default 1 hour.
-    freq: RRule.WEEKLY,
-    count: null,
+    freq: RRule.DAILY,
+    count: 1,
     interval: null,
     // For evaluation with the RRule library we pretend that "now" is in UTC instead of the local timezone.
     // That is 9:00 in Europe/Copenhagen time will be evaluated as if it was 9:00 in UTC.
