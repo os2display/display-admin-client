@@ -2,6 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { FormControl, FormGroup, FormLabel, InputGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Tooltip from "../tooltip";
 
 /**
  * An input for forms.
@@ -36,6 +37,7 @@ function FormInput({
   inputGroupExtra,
   disabled,
   required,
+  tooltip = null,
   ...rest
 }) {
   const { t } = useTranslation("common");
@@ -43,12 +45,15 @@ function FormInput({
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClasses}>
-      {label && (
+      {label && (<>
         <FormLabel htmlFor={name}>
           {label}
           {required && " *"}
         </FormLabel>
-      )}
+        {tooltip !== null && (
+          <Tooltip id={`tooltip-${name}`} content={tooltip} />
+        )}
+      </>)}
       <InputGroup hasValidation>
         <FormControl
           name={name}
@@ -82,6 +87,7 @@ FormInput.defaultProps = {
   label: null,
   inputGroupExtra: null,
   required: false,
+  tooltip: null,
 };
 
 FormInput.propTypes = {
@@ -98,6 +104,7 @@ FormInput.propTypes = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   inputGroupExtra: PropTypes.node,
+  tooltip: PropTypes.string,
 };
 
 export default FormInput;

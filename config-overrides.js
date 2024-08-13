@@ -5,5 +5,11 @@ module.exports = function override(config, env) {
     'remote-component.config.js': `${__dirname}/src/remote-component.config.js`,
   };
 
+  config.module.rules.push({
+    test: /\.mjs$/,
+    include: /node_modules/,
+    type: "javascript/auto"
+  });
+
   return config;
 };

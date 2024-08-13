@@ -17,6 +17,8 @@ import {
   getNextOccurrences,
   getRruleString,
 } from "./schedule-util";
+import FormCheckbox from "../forms/form-checkbox";
+import Tooltip from "../tooltip";
 
 dayjs.extend(utc);
 
@@ -37,6 +39,7 @@ function Schedule({ schedules, onChange }) {
   const byMonthOptions = getByMonthOptions(t);
   const [localSchedules, setLocalSchedules] = useState([]);
   const [durationError, setDurationError] = useState(false);
+  const [repeatActivated, setRepeatActivated] = useState(false);
 
   useEffect(() => {
     const newSchedules = schedules.map((schedule) =>
@@ -206,6 +209,40 @@ function Schedule({ schedules, onChange }) {
     }
   }
 
+  const isRepeatingEvent = (schedule) => {
+    return !(schedule.duration === 60 * 60 &&
+      schedule.freq === RRule.DAILY &&
+      schedule.count === 1 &&
+      schedule.until === undefined &&
+      schedule.interval === undefined &&
+      schedule.byhour === undefined &&
+      schedule.byminute === undefined &&
+      schedule.byweekday === undefined &&
+      schedule.bymonth === undefined &&
+      schedule.byweekno === undefined);
+  }
+
+  const toggleRepeat = (schedule) => {
+    if ((isRepeatingEvent(schedule) || repeatActivated)) {
+      // Disable repeating schedule.
+      setRepeatActivated(false);
+      changeSchedule(schedule.id, 'duration', 60 * 60);
+      changeSchedule(schedule.id, 'freq', RRule.DAILY);
+      changeSchedule(schedule.id, 'count', 1);
+      changeSchedule(schedule.id, 'interval', null);
+      changeSchedule(schedule.id, 'until', null);
+      changeSchedule(schedule.id, 'byhour', null);
+      changeSchedule(schedule.id, 'byminute', null);
+      changeSchedule(schedule.id, 'byweekday', null);
+      changeSchedule(schedule.id, 'bymonth', null);
+      changeSchedule(schedule.id, 'byweekno', null);
+    } else {
+      // Activate repeating schedule.
+      setRepeatActivated(true);
+      changeSchedule(schedule.id, 'count', null);
+    }
+  }
+
   return (
     <div className="Schedule">
       <Button
@@ -245,6 +282,7 @@ function Schedule({ schedules, onChange }) {
                     name="dtstart"
                     onChange={({target}) => setDateValue(schedule.id, target)}
                     type="datetime-local"
+                    tooltip={t('schedule.dtstart-tooltip')}
                   />
                 </div>
                 <div className="col">
@@ -255,173 +293,190 @@ function Schedule({ schedules, onChange }) {
                     onChange={({target}) => setDuration(schedule.id, schedule, target)}
                     type="datetime-local"
                     className={durationError ? 'border-danger' : ''}
+                    tooltip={t('schedule.end-tooltip')}
                   />
+                  {durationError && <small className="text-danger" style={{fontStyle: 'italic'}}>{t('schedule.duration-error')}</small>}
                 </div>
               </div>
-              <div className="row" style={{fontStyle: 'italic'}}>
-                <div className="col">
-                  <small>{t('schedule.helptext')}</small>
-                </div>
-                <div className="col">
-                  {durationError && <small className="text-danger">{t('schedule.duration-error')}</small>}
-                </div>
-              </div>
-              <div className="card mt-2">
+              <div className="card mt-3">
                 <div className="card-body">
-                  <div className="row mt-2">
-                    <div className={`col col-md-${!isNaN(schedule.byhour) ? "3" : "6"}`}>
-                      <Select
-                        onChange={({target}) =>
-                          changeSchedule(schedule.id, target.id, target.value)
-                        }
-                        value={schedule.freq}
-                        label={t("schedule.freq")}
-                        name="freq"
-                        options={freqOptions}
-                        allowNull={false}
-                      />
-                    </div>
-                    <div className="col col-md-3">
-                      <FormInput
-                        onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
-                        value={schedule.interval ?? ''}
-                        label={t("schedule.interval")}
-                        type="search"
-                        name="interval"
-                      />
-                    </div>
-                    <div className="col col-md-3">
-                      <FormInput
-                        onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
-                        value={schedule.count ?? ''}
-                        label={t("schedule.count")}
-                        placeholder={t('schedule.count-placeholder')}
-                        type="search"
-                        name="count"
-                      />
-                    </div>
-                    {!isNaN(schedule.byhour) && (
-                      <div className="col col-md-3">
-                        <FormInput
-                          onChange={({target}) => setTimeValue(schedule.id, target)}
-                          value={getTimeValue(schedule.byhour, schedule.byminute)}
-                          label={t("schedule.bytime")}
-                          type="time"
-                          name="bytime"
-                        />
-                      </div>
-                    )}
-                  </div>
-                  <div className="row mt-2">
-                    <div className="col">
-                      <FormGroup>
-                        <label htmlFor="byweekday">{t("schedule.byweekday")}</label>
-                        <MultiSelect
-                          className="mt-2"
-                          options={byWeekdayOptions}
-                          value={
-                            schedule.byweekday
-                              ? schedule.byweekday.map((weekdayNumber) =>
-                                byWeekdayOptions.find(
-                                  (weekDay) => weekDay.value === weekdayNumber
-                                )
-                              )
-                              : []
-                          }
-                          name="byweekday"
-                          disableSearch
-                          overrideStrings={{
-                            allItemsAreSelected: t("schedule.all-selected"),
-                            clearSelected: t("schedule.clear-selection"),
-                            selectAll: t("schedule.selected-all"),
-                            selectSomeItems: t("schedule.select-some-options"),
-                          }}
-                          labelledBy="Select"
-                          onChange={(value) => {
-                            changeSchedule(
-                              schedule.id,
-                              "byweekday",
-                              value.map((v) => v.value)
-                            );
-                          }}
-                        />
-                      </FormGroup>
-                    </div>
-                    <div className="col">
-                      <FormGroup>
-                        <label htmlFor="bymonth" className="mb-2">
-                          {t("schedule.bymonth")}
-                        </label>
-                        <MultiSelect
-                          options={byMonthOptions}
-                          value={getByMonthValue(schedule.bymonth)}
-                          name="bymonth"
-                          disableSearch
-                          labelledBy="Select"
-                          overrideStrings={{
-                            allItemsAreSelected: t("schedule.all-selected"),
-                            clearSelected: t("schedule.clear-selection"),
-                            selectAll: t("schedule.selected-all"),
-                            selectSomeItems: t("schedule.select-some-options"),
-                          }}
-                          onChange={(values) =>
-                            changeSchedule(
-                              schedule.id,
-                              "bymonth",
-                              values.map((v) => v.value)
-                            )
-                          }
-                        />
-                      </FormGroup>
-                    </div>
-                  </div>
+                  <FormCheckbox
+                    onChange={() => toggleRepeat(schedule)}
+                    name="enableRepeat"
+                    type="checkbox"
+                    value={(isRepeatingEvent(schedule) || repeatActivated)}
+                    label={t('schedule.enable-repeat')}
+                    formGroupClasses="d-inline-block mb-2"
+                  />
+                  <Tooltip id={'tooltip-enable-repeat'} content={t('schedule.enable-repeat-tooltip')}></Tooltip>
 
-                  <div className="row mt-2">
-                    <div className="col col-md-6">
-                      <FormInput
-                        label={t("schedule.until")}
-                        value={getDateValue(schedule.until)}
-                        name="until"
-                        onChange={({target}) => setDateValue(schedule.id, target)}
-                        type="datetime-local"
-                      />
-                    </div>
-                    {schedule.freq === RRule.YEARLY && (
-                      <div className="col">
-                        <FormInput
-                          disabled={schedule.freq !== RRule.YEARLY}
-                          label={t("schedule.byweekno")}
-                          value={schedule.byweekno ?? ""}
-                          onChange={({target}) =>
-                            changeSchedule(schedule.id, target.id, target.value)
-                          }
-                          name="byweekno"
-                          type="number"
-                          min="0"
-                          max="52"
-                        />
+                  {(isRepeatingEvent(schedule) || repeatActivated) && (
+                    <>
+                      <div className="row mt-2">
+                        <div className={`col col-md-${!isNaN(schedule.byhour) ? "3" : "6"}`}>
+                          <Select
+                            onChange={({target}) =>
+                              changeSchedule(schedule.id, target.id, target.value)
+                            }
+                            value={schedule.freq}
+                            label={t("schedule.freq")}
+                            name="freq"
+                            options={freqOptions}
+                            allowNull={false}
+                            tooltip={t('schedule.frequency-tooltip')}
+                          />
+                        </div>
+                        <div className="col col-md-3">
+                          <FormInput
+                            onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
+                            value={schedule.interval ?? ''}
+                            label={t("schedule.interval")}
+                            type="search"
+                            name="interval"
+                            tooltip={t('schedule.interval-tooltip')}
+                          />
+                        </div>
+                        <div className="col col-md-3">
+                          <FormInput
+                            onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
+                            value={schedule.count ?? ''}
+                            label={t("schedule.count")}
+                            placeholder={t('schedule.count-placeholder')}
+                            type="search"
+                            name="count"
+                            tooltip={t('schedule.count-tooltip')}
+                          />
+                        </div>
+                        {!isNaN(schedule.byhour) && (
+                          <div className="col col-md-3">
+                            <FormInput
+                              onChange={({target}) => setTimeValue(schedule.id, target)}
+                              value={getTimeValue(schedule.byhour, schedule.byminute)}
+                              label={t("schedule.bytime")}
+                              type="time"
+                              name="bytime"
+                              tooltip={t('schedule.bytime-tooltip')}
+                            />
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
+                      <div className="row mt-2">
+                        <div className="col">
+                          <FormGroup>
+                            <label htmlFor="byweekday">{t("schedule.byweekday")}</label>
+                            <Tooltip id={'tooltip-byweekday'} content={t('schedule.tooltip-byweekday')}></Tooltip>
+                            <MultiSelect
+                              className="mt-2"
+                              options={byWeekdayOptions}
+                              value={
+                                schedule.byweekday
+                                  ? schedule.byweekday.map((weekdayNumber) =>
+                                    byWeekdayOptions.find(
+                                      (weekDay) => weekDay.value === weekdayNumber
+                                    )
+                                  )
+                                  : []
+                              }
+                              name="byweekday"
+                              disableSearch
+                              overrideStrings={{
+                                allItemsAreSelected: t("schedule.all-selected"),
+                                clearSelected: t("schedule.clear-selection"),
+                                selectAll: t("schedule.selected-all"),
+                                selectSomeItems: t("schedule.select-some-options"),
+                              }}
+                              labelledBy="Select"
+                              onChange={(value) => {
+                                changeSchedule(
+                                  schedule.id,
+                                  "byweekday",
+                                  value.map((v) => v.value)
+                                );
+                              }}
+                            />
+                          </FormGroup>
+                        </div>
+                        <div className="col">
+                          <FormGroup>
+                            <label htmlFor="bymonth" className="mb-2">
+                              {t("schedule.bymonth")}
+                            </label>
+                            <Tooltip id={'tooltip-bymonth'} content={t('schedule.tooltip-bymonth')}></Tooltip>
+                            <MultiSelect
+                              options={byMonthOptions}
+                              value={getByMonthValue(schedule.bymonth)}
+                              name="bymonth"
+                              disableSearch
+                              labelledBy="Select"
+                              overrideStrings={{
+                                allItemsAreSelected: t("schedule.all-selected"),
+                                clearSelected: t("schedule.clear-selection"),
+                                selectAll: t("schedule.selected-all"),
+                                selectSomeItems: t("schedule.select-some-options"),
+                              }}
+                              onChange={(values) =>
+                                changeSchedule(
+                                  schedule.id,
+                                  "bymonth",
+                                  values.map((v) => v.value)
+                                )
+                              }
+                            />
+                          </FormGroup>
+                        </div>
+                      </div>
+                      <div className="row mt-2">
+                        <div className="col col-md-6">
+                          <FormInput
+                            label={t("schedule.until")}
+                            value={getDateValue(schedule.until)}
+                            name="until"
+                            onChange={({target}) => setDateValue(schedule.id, target)}
+                            type="datetime-local"
+                            tooltip={t('schedule.until-tooltip')}
+                          />
+                        </div>
+                        {schedule.freq === RRule.YEARLY && (
+                          <div className="col">
+                            <FormInput
+                              disabled={schedule.freq !== RRule.YEARLY}
+                              label={t("schedule.byweekno")}
+                              value={schedule.byweekno ?? ""}
+                              onChange={({target}) =>
+                                changeSchedule(schedule.id, target.id, target.value)
+                              }
+                              name="byweekno"
+                              type="number"
+                              min="0"
+                              max="52"
+                              tooltip={t('schedule.byweekno-tooltip')}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
-                <div className="card-footer">
-                  <div id="schedule_details" className="row">
-                    <div className="mb-2">
-                      <strong>{t("schedule.next-occurrences")}:</strong>
-                      {getNextOccurrences(schedule.rruleObject, schedule.duration, schedule.count ? Math.min(schedule.count, 5) : 5).map(
-                        (occurrence) => (<div key={occurrence.key}>
-                          <span>{occurrence.text} </span>
-                          <span className="ms-2 me-2"> - </span>
-                          <span>{occurrence.end}</span>
-                        </div>)
-                      )}
+                {(isRepeatingEvent(schedule) || repeatActivated) && (
+                  <div className="card-footer">
+                    <div id="schedule_details" className="row">
+                      <div className="mb-2">
+                        <strong>{t("schedule.next-occurrences")}:</strong>
+                        {getNextOccurrences(schedule.rruleObject, schedule.duration, schedule.count ? Math.min(schedule.count, 5) : 5).map(
+                          (occurrence) => (<div key={occurrence.key}>
+                            <span>{occurrence.text} </span>
+                            <span className="ms-2 me-2"> - </span>
+                            <span>{occurrence.end}</span>
+                          </div>)
+                        )}
+                      </div>
                     </div>
+                    <small>
+                      {t('schedule.repetition')}: <span
+                      style={{fontStyle: 'italic'}}>{schedule.rruleObject.toText()}</span>
+                    </small>
                   </div>
-                  <small>
-                    {t('schedule.repetition')}: <span
-                    style={{fontStyle: 'italic'}}>{schedule.rruleObject.toText()}</span>
-                  </small>
-                </div>
+                )}
               </div>
             </div>
           </div>

@@ -2,6 +2,9 @@ import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FormGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
+import {Tooltip} from "react-tooltip";
 
 /**
  * @param {object} props The props.
@@ -30,6 +33,7 @@ function Select({
   formGroupClasses,
   isRequired,
   allowNull,
+  tooltip = null,
 }) {
   const { t } = useTranslation("common");
   const textOnError = errorText || t("select.validation-text");
@@ -61,6 +65,16 @@ function Select({
         {label}
         {required && " *"}
       </label>
+      {tooltip !== null && (
+        <>
+          <a data-tooltip-id={`tooltip-${name}`}> <FontAwesomeIcon icon={faQuestionCircle} className="text-black-50" /></a>
+          <Tooltip
+            id={`tooltip-${name}`}
+            openOnClick={true}
+            content={tooltip}
+          />
+        </>
+      )}
       <select
         className={classes}
         required={isRequired}

@@ -789,8 +789,18 @@
     "count": "Antal gentagelser",
     "count-placeholder": "Ubegrænset",
     "interval": "Interval",
-    "helptext": "Start/slut definerer længden, tidspunkt på dagen og første mulige dato for gentagelserne.",
-    "repetition": "RRule"
+    "dtstart-tooltip": "Start definerer tidspunkt på dagen og første mulige dato for gentagelserne, hvis dette aktiveres.",
+    "end-tooltip": "Forskellen imellem start og slut definerer længden på en gentagelse.",
+    "repetition": "RRule",
+    "enable-repeat": "Gentag planlægning",
+    "enable-repeat-tooltip": "Når gentagelse aktiveres bestemmer reglerne man vælger, hvornår spillelisten bliver vist.",
+    "frequency-tooptip": "Hvordan planlægningen skal gentages?",
+    "interval-tooltip": "Skal der være spring imellem gentagelse? Afhænger af frekvensen. F.eks. hver 3 dag.",
+    "count-tooltip": "Hvor mange gange skal planlægningen gentages? Tom værdi betyder ubegrænset.",
+    "tooltip-byweekday": "På hvilke dage skal reglen gælde?",
+    "tooltip-bymonth": "I hvilke månender skal reglen gælde?",
+    "tooltip-byweekno": "Hvilket ugenummer skal reglen gælde for?",
+    "until-tooltip": "Hvornår skal gentagelserne afsluttes? Dette tidspunkt påvirker starttidspunktet på en gentagelse, ikke sluttidspunktet."
   },
   "duration": {
     "hours": "t.",
