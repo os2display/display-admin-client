@@ -39,6 +39,7 @@ function Schedule({ schedules, onChange }) {
   const byMonthOptions = getByMonthOptions(t);
   const [localSchedules, setLocalSchedules] = useState([]);
   const [durationError, setDurationError] = useState(false);
+  const [activatedRepeatIds, setActivatedRepeatIds] = useState({});
 
   useEffect(() => {
     const newSchedules = schedules.map((schedule) =>
@@ -209,7 +210,7 @@ function Schedule({ schedules, onChange }) {
   }
 
   const isRepeatingEvent = (schedule) => {
-    return !(schedule.duration === 60 * 60 &&
+    return !(
       schedule.freq === RRule.DAILY &&
       schedule.count === 1 &&
       schedule.until === undefined &&
@@ -221,11 +222,19 @@ function Schedule({ schedules, onChange }) {
       schedule.byweekno === undefined);
   }
 
+  const displayRepeat = (schedule) => {
+    return isRepeatingEvent(schedule) || activatedRepeatIds[schedule.id] === true;
+  }
+
+  const updateActivatedRepeats = (id, value) => {
+    const updated = {...activatedRepeatIds};
+    updated[id] = value;
+    setActivatedRepeatIds(updated);
+  }
+
   const toggleRepeat = (schedule) => {
-    if ((isRepeatingEvent(schedule) || schedule.repeatActivated)) {
+    if (displayRepeat(schedule)) {
       // Disable repeating schedule.
-      changeSchedule(schedule.id, 'repeatActivated', false);
-      changeSchedule(schedule.id, 'duration', 60 * 60);
       changeSchedule(schedule.id, 'freq', RRule.DAILY);
       changeSchedule(schedule.id, 'count', 1);
       changeSchedule(schedule.id, 'interval', null);
@@ -235,10 +244,11 @@ function Schedule({ schedules, onChange }) {
       changeSchedule(schedule.id, 'byweekday', null);
       changeSchedule(schedule.id, 'bymonth', null);
       changeSchedule(schedule.id, 'byweekno', null);
+      updateActivatedRepeats(schedule.id, false);
     } else {
       // Activate repeating schedule.
-      changeSchedule(schedule.id, 'repeatActivated', true);
       changeSchedule(schedule.id, 'count', null);
+      updateActivatedRepeats(schedule.id, true);
     }
   }
 
@@ -307,13 +317,13 @@ function Schedule({ schedules, onChange }) {
                     onChange={() => toggleRepeat(schedule)}
                     name="enableRepeat"
                     type="checkbox"
-                    value={(isRepeatingEvent(schedule) || schedule.repeatActivated)}
+                    value={displayRepeat(schedule)}
                     label={t('schedule.enable-repeat')}
                     formGroupClasses="d-inline-block mb-2"
                   />
                   <Tooltip id={'tooltip-enable-repeat'} content={t('schedule.enable-repeat-tooltip')}></Tooltip>
 
-                  {(isRepeatingEvent(schedule) || schedule.repeatActivated) && (
+                  {displayRepeat(schedule) && (
                     <>
                       <div className="row mt-2">
                         <div className={`col col-md-${!isNaN(schedule.byhour) ? "3" : "6"}`}>
@@ -367,7 +377,7 @@ function Schedule({ schedules, onChange }) {
                         <div className="col">
                           <FormGroup>
                             <label htmlFor="byweekday">{t("schedule.byweekday")}</label>
-                            <Tooltip id={'tooltip-byweekday'} content={t('schedule.tooltip-byweekday')}></Tooltip>
+                            <Tooltip id={'tooltip-byweekday'} content={t('schedule.byweekday-tooltip')}></Tooltip>
                             <MultiSelect
                               className="mt-2"
                               options={byWeekdayOptions}
@@ -404,7 +414,7 @@ function Schedule({ schedules, onChange }) {
                             <label htmlFor="bymonth" className="mb-2">
                               {t("schedule.bymonth")}
                             </label>
-                            <Tooltip id={'tooltip-bymonth'} content={t('schedule.tooltip-bymonth')}></Tooltip>
+                            <Tooltip id={'tooltip-bymonth'} content={t('schedule.bymonth-tooltip')}></Tooltip>
                             <MultiSelect
                               options={byMonthOptions}
                               value={getByMonthValue(schedule.bymonth)}
@@ -460,7 +470,7 @@ function Schedule({ schedules, onChange }) {
                     </>
                   )}
                 </div>
-                {(isRepeatingEvent(schedule) || schedule.repeatActivated) && (
+                {displayRepeat(schedule) && (
                   <div className="card-footer">
                     <div id="schedule_details" className="row">
                       <div className="mb-2">
