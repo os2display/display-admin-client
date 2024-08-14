@@ -11,6 +11,8 @@ dayjs.extend(localizedFormat);
 /**
  * Get rrule string from schedule.
  *
+ *
+ *
  * @param {object} schedule - The schedule.
  * @returns {string} - RRule string.
  */
@@ -56,7 +58,18 @@ const createNewSchedule = () => {
     id: ulid(nowTimestamp),
     duration: 60 * 60 * 24, // Default one day.
     freq: RRule.WEEKLY,
-    dtstart: new Date(),
+    // For evaluation with the RRule library we pretend that "now" is in UTC instead of the local timezone.
+    // That is 9:00 in Europe/Copenhagen time will be evaluated as if it was 9:00 in UTC.
+    // @see https://github.com/jkbrzt/rrule#important-use-utc-dates
+    dtstart: new Date(
+      Date.UTC(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        now.getHours(),
+        now.getMinutes()
+      )
+    ),
     until: null,
     wkst: RRule.MO,
     byhour: null,

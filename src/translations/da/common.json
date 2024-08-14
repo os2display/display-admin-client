@@ -776,6 +776,7 @@
     "hourly": "Time",
     "minutely": "Minut",
     "rrulestring": "RRule",
+    "rrulestring-z-ignored": "Bemærk at tidszonen (Z) bliver ignoreret i evalueringen af reglen. Tidsangivelserne vil altid blive behandlet i lokal tid.",
     "dtstart": "Startdato",
     "until": "Slutdato",
     "next-occurrences": "Næste 5 forekomster",

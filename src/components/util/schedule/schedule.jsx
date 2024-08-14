@@ -120,7 +120,17 @@ function Schedule({ schedules, onChange }) {
    */
   const setDateValue = (scheduleId, target) => {
     const date = new Date(target.value);
-    changeSchedule(scheduleId, target.id, date);
+
+    // For evaluation with the RRule library we pretend that the date is in UTC instead of the local timezone.
+    // That is 9:00 in Europe/Copenhagen time will be evaluated as if it was 9:00 in UTC.
+    // @see https://github.com/jkbrzt/rrule#important-use-utc-dates
+    changeSchedule(scheduleId, target.id, new Date(Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes()
+    )));
   };
 
   /**
@@ -130,7 +140,7 @@ function Schedule({ schedules, onChange }) {
    * @returns {string} - The date formatted for datetime-local.
    */
   const getDateValue = (date) => {
-    return date ? dayjs(date).format("YYYY-MM-DDTHH:mm") : "";
+    return date ? dayjs(date).utc().format("YYYY-MM-DDTHH:mm") : "";
   };
 
   /**
@@ -342,6 +352,7 @@ function Schedule({ schedules, onChange }) {
                 <div id="schedule_details" className="row">
                   <strong>{t("schedule.rrulestring")}:</strong>
                   <span>{schedule.rrule}</span>
+                  <small>{t("schedule.rrulestring-z-ignored")}</small>
                   <div className="mt-2">
                     <strong>{t("schedule.next-occurrences")}:</strong>
                     {getNextOccurrences(schedule.rruleObject).map(
