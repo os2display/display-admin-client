@@ -800,7 +800,8 @@
     "tooltip-byweekday": "På hvilke dage skal reglen gælde?",
     "tooltip-bymonth": "I hvilke månender skal reglen gælde?",
     "tooltip-byweekno": "Hvilket ugenummer skal reglen gælde for?",
-    "until-tooltip": "Hvornår skal gentagelserne afsluttes? Dette tidspunkt påvirker starttidspunktet på en gentagelse, ikke sluttidspunktet."
+    "until-tooltip": "Hvornår skal gentagelserne afsluttes? Dette tidspunkt påvirker starttidspunktet på en gentagelse, ikke sluttidspunktet.",
+    "helptext": "Når minimum én planlægning er tilføjet, bliver spillelisten kun vist i planlægningsintervallet."
   },
   "duration": {
     "hours": "t.",

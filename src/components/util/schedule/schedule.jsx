@@ -39,7 +39,6 @@ function Schedule({ schedules, onChange }) {
   const byMonthOptions = getByMonthOptions(t);
   const [localSchedules, setLocalSchedules] = useState([]);
   const [durationError, setDurationError] = useState(false);
-  const [repeatActivated, setRepeatActivated] = useState(false);
 
   useEffect(() => {
     const newSchedules = schedules.map((schedule) =>
@@ -223,9 +222,9 @@ function Schedule({ schedules, onChange }) {
   }
 
   const toggleRepeat = (schedule) => {
-    if ((isRepeatingEvent(schedule) || repeatActivated)) {
+    if ((isRepeatingEvent(schedule) || schedule.repeatActivated)) {
       // Disable repeating schedule.
-      setRepeatActivated(false);
+      changeSchedule(schedule.id, 'repeatActivated', false);
       changeSchedule(schedule.id, 'duration', 60 * 60);
       changeSchedule(schedule.id, 'freq', RRule.DAILY);
       changeSchedule(schedule.id, 'count', 1);
@@ -238,7 +237,7 @@ function Schedule({ schedules, onChange }) {
       changeSchedule(schedule.id, 'byweekno', null);
     } else {
       // Activate repeating schedule.
-      setRepeatActivated(true);
+      changeSchedule(schedule.id, 'repeatActivated', true);
       changeSchedule(schedule.id, 'count', null);
     }
   }
@@ -253,6 +252,10 @@ function Schedule({ schedules, onChange }) {
       >
         {t("schedule.add-schedule-button-text")}
       </Button>
+
+      <div>
+        <small>{t('schedule.helptext')}</small>
+      </div>
 
       {localSchedules &&
         localSchedules.map((schedule, index) => (
@@ -304,13 +307,13 @@ function Schedule({ schedules, onChange }) {
                     onChange={() => toggleRepeat(schedule)}
                     name="enableRepeat"
                     type="checkbox"
-                    value={(isRepeatingEvent(schedule) || repeatActivated)}
+                    value={(isRepeatingEvent(schedule) || schedule.repeatActivated)}
                     label={t('schedule.enable-repeat')}
                     formGroupClasses="d-inline-block mb-2"
                   />
                   <Tooltip id={'tooltip-enable-repeat'} content={t('schedule.enable-repeat-tooltip')}></Tooltip>
 
-                  {(isRepeatingEvent(schedule) || repeatActivated) && (
+                  {(isRepeatingEvent(schedule) || schedule.repeatActivated) && (
                     <>
                       <div className="row mt-2">
                         <div className={`col col-md-${!isNaN(schedule.byhour) ? "3" : "6"}`}>
@@ -457,7 +460,7 @@ function Schedule({ schedules, onChange }) {
                     </>
                   )}
                 </div>
-                {(isRepeatingEvent(schedule) || repeatActivated) && (
+                {(isRepeatingEvent(schedule) || schedule.repeatActivated) && (
                   <div className="card-footer">
                     <div id="schedule_details" className="row">
                       <div className="mb-2">
