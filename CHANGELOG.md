@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#253](https://github.com/os2display/display-admin-client/pull/253)
+  - Refactored scheduling to increase user experience.
+  - Added interval and count to rrule inputs.
 - [#249](https://github.com/os2display/display-admin-client/pull/249)
   - Set infrastructure node version to 20.
   - Fixed base path to /admin in vite setup.

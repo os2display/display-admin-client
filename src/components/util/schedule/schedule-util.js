@@ -11,8 +11,6 @@ dayjs.extend(localizedFormat);
 /**
  * Get rrule string from schedule.
  *
- *
- *
  * @param {object} schedule - The schedule.
  * @returns {string} - RRule string.
  */
@@ -33,7 +31,9 @@ const getRruleString = (schedule) => {
     wkst: schedule.wkst ?? RRule.MO,
     freq: schedule.freq,
     dtstart: schedule.dtstart,
+    count: schedule.count,
     until: schedule.until,
+    interval: schedule.interval,
     byhour: schedule.byhour,
     byminute: schedule.byminute,
     bysecond,
@@ -56,8 +56,10 @@ const createNewSchedule = () => {
 
   const newSchedule = {
     id: ulid(nowTimestamp),
-    duration: 60 * 60 * 24, // Default one day.
-    freq: RRule.WEEKLY,
+    duration: 60 * 60, // Default 1 hour.
+    freq: RRule.DAILY,
+    count: 1,
+    interval: null,
     // For evaluation with the RRule library we pretend that "now" is in UTC instead of the local timezone.
     // That is 9:00 in Europe/Copenhagen time will be evaluated as if it was 9:00 in UTC.
     // @see https://github.com/jkbrzt/rrule#important-use-utc-dates
@@ -121,10 +123,11 @@ const createScheduleFromRRule = (id, duration, rruleString) => {
  * Get array of count occurrences of rrule.
  *
  * @param {RRule} rrule - The rrule.
- * @param {number | null} count - The max number of occurrences.
+ * @param {number} duration - The duration of an occurrence in seconds.
+ * @param {number} count - The max number of occurrences.
  * @returns {Array} - The occurrences.
  */
-const getNextOccurrences = (rrule, count = 5) => {
+const getNextOccurrences = (rrule, duration = 0, count = 5) => {
   const occurrences = [];
 
   const newRrule = new RRule(rrule.origOptions);
@@ -133,6 +136,7 @@ const getNextOccurrences = (rrule, count = 5) => {
     occurrences.push({
       key: `occurrence${occurrences.length}`,
       text: dayjs(d).utc().locale("da").format("LLLL"),
+      end: dayjs(d).utc().add(duration, 'second').locale("da").format("LLLL"),
     });
     return true;
   });
@@ -156,12 +160,6 @@ const getFreqOptions = (t) => {
     },
     { title: t("schedule.weekly"), value: RRule.WEEKLY, key: "rrule.weekly" },
     { title: t("schedule.daily"), value: RRule.DAILY, key: "rrule.daily" },
-    { title: t("schedule.hourly"), value: RRule.HOURLY, key: "rrule.hourly" },
-    {
-      title: t("schedule.minutely"),
-      value: RRule.MINUTELY,
-      key: "rrule.minutely",
-    },
   ];
 };
 
