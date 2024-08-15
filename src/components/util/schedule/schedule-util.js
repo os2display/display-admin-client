@@ -160,8 +160,6 @@ const getFreqOptions = (t) => {
     },
     { title: t("schedule.weekly"), value: RRule.WEEKLY, key: "rrule.weekly" },
     { title: t("schedule.daily"), value: RRule.DAILY, key: "rrule.daily" },
-//    { title: t("schedule.hourly"), value: RRule.HOURLY, key: "rrule.hourly" },
-//    { title: t("schedule.minutely"), value: RRule.MINUTELY, key: "rrule.minutely" },
   ];
 };
 
