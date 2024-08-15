@@ -2,6 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import { FormControl, FormGroup, FormLabel, InputGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import Tooltip from "../tooltip";
 
 /**
  * An input for forms.
@@ -19,6 +20,7 @@ import { useTranslation } from "react-i18next";
  * @param {string} props.formGroupClasses Classes for the form group
  * @param {boolean} props.disabled If the input is disabled
  * @param {boolean} props.required If the input is required
+ * @param {string | null} props.tooltip Tooltip text. Does not display if null.
  * @param {object | null} props.inputGroupExtra Extra elements for input group.
  * @returns {object} An input.
  */
@@ -36,6 +38,7 @@ function FormInput({
   label = null,
   inputGroupExtra = null,
   required = false,
+  tooltip = null,
   ...rest
 }) {
   const { t } = useTranslation("common");
@@ -43,12 +46,15 @@ function FormInput({
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClasses}>
-      {label && (
+      {label && (<>
         <FormLabel htmlFor={name}>
           {label}
           {required && " *"}
         </FormLabel>
-      )}
+        {tooltip !== null && (
+          <Tooltip id={`tooltip-${name}`} content={tooltip} />
+        )}
+      </>)}
       <InputGroup hasValidation>
         <FormControl
           name={name}
@@ -84,6 +90,7 @@ FormInput.propTypes = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   inputGroupExtra: PropTypes.node,
+  tooltip: PropTypes.string,
 };
 
 export default FormInput;

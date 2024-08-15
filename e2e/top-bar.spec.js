@@ -34,58 +34,60 @@ test.describe("Nav items loads", () => {
     await page.getByLabel("Kodeord").fill("password");
     await page.locator("#login").click();
   });
+
   test("It loads", async ({ page }) => {
     await expect(page.locator("nav")).toBeVisible();
   });
 
   test("It navigates to slides list", async ({ page }) => {
-    await page.getByRole('link', { name: 'Slides' }).click();
+    await page.getByRole("link", { name: "Slides" }).click();
     await expect(page.locator("h1")).toHaveText("Slides");
   });
 
   test("It navigates to media list", async ({ page }) => {
-    await page.getByRole('link', { name: 'Medier' }).click();
+    await page.getByRole("link", { name: "Medier" }).click();
     await expect(page.locator("h1")).toHaveText("Medier");
   });
 
   test("It navigates to screens list", async ({ page }) => {
-    await page.getByRole('link', { name: 'Skærme' }).click();
+    await page.getByRole("link", { name: "Skærme" }).click();
     await expect(page.locator("h1")).toHaveText("Skærme");
   });
+
   test("It navigates to groups list", async ({ page }) => {
-    await page.getByRole('link', { name: 'Grupper' }).click();
+    await page.getByRole("link", { name: "Grupper" }).click();
     await expect(page.locator("h1")).toHaveText("Grupper");
   });
+
   test("It navigates to playlists list", async ({ page }) => {
-    await page.getByRole('link', { name: 'Spillelister', exact: true  }).click();
+    await page.getByRole("link", { name: "Spillelister", exact: true }).click();
     await expect(page.locator("h1")).toHaveText("Spillelister");
   });
+
   test("It navigates to themes list", async ({ page }) => {
-    await page.getByRole('link', { name: 'Temaer' }).click();
+    await page.getByRole("link", { name: "Temaer" }).click();
     await expect(page.locator("h1")).toHaveText("Temaer");
   });
 
-  // todo make tests green 
   test.skip("It navigates to create slide", async ({ page }) => {
     await page.goto("/admin/screen/create");
-    await page.getByRole('button', { name: 'Tilføj' }).click();
-    await page.getByRole('link', { name: 'Nyt slide', exact: true }).click();
+    await page.getByRole("button", { name: "Tilføj" }).click();
+    await page.getByRole("link", { name: "Nyt slide", exact: true }).click();
     await expect(page.locator("h1")).toHaveText("Opret nyt slide");
   });
 
-  // todo make tests green 
   test.skip("It navigates to create playlist", async ({ page }) => {
-    await page.getByRole('button', { name: 'Tilføj' }).click();
-    await page.getByRole('link', { name: 'Ny spilleliste' }).click();
+    await page.getByRole("button", { name: "Tilføj" }).click();
+    await page.getByRole("link", { name: "Ny spilleliste" }).click();
     await expect(page.locator("h1")).toHaveText("Opret nyt spilleliste");
   });
 
-  // todo make tests green 
   test.skip("It navigates to create screen", async ({ page }) => {
-    await page.getByRole('button', { name: 'Tilføj' }).click();
-    await page.getByRole('link', { name: 'Ny skærm' }).click();
+    await page.getByRole("button", { name: "Tilføj" }).click();
+    await page.getByRole("link", { name: "Ny skærm" }).click();
     await expect(page.locator("h1")).toHaveText("Opret ny skærm");
   });
+
   test("It loads different menu on smaller screens", async ({ page }) => {
     await page.setViewportSize({ width: 550, height: 750 });
     await expect(page.locator("#basic-navbar-nav-burger")).toBeVisible();
