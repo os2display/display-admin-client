@@ -1,13 +1,12 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "react-bootstrap";
 import TemplateLabelInList from "../util/template-label-in-list";
 import ListButton from "../util/list/list-button";
-import Publishing from "../util/publishing.jsx";
 import ColumnHoc from "../util/column-hoc";
 import SelectColumnHoc from "../util/select-column-hoc";
-import PublishingStatus from "../util/publishingStatus.jsx";
-import DateValue from "../util/date-value.jsx";
+import PublishingStatus from "../util/publishingStatus";
+import DateValue from "../util/date-value";
 
 /**
  * Columns for slides lists.
@@ -17,8 +16,8 @@ import DateValue from "../util/date-value.jsx";
  * @param {string} props.infoModalRedirect - The url for redirecting in the info modal.
  * @param {string} props.infoModalTitle - The info modal title.
  * @param {string} props.dataKey The data key for mapping the data. the list button
- * @param props.hideColumns
- * @param props.sortColumns
+ * @param {object} props.hideColumns Columns to hide.
+ * @param {object} props.sortColumns Columns to sort.
  * @returns {object} The columns for the slides lists.
  */
 function getSlidesColumns({
