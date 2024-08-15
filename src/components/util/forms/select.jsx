@@ -19,20 +19,21 @@ import {Tooltip} from "react-tooltip";
  * @param {string} props.formGroupClasses The classes for the form-group element.
  * @param {boolean} props.isRequired If the select is required.
  * @param {boolean} props.allowNull Add null option.
+ * @param {string | null} props.tooltip Tooltip text. Does not display if null.
  * @returns {object} The select component.
  */
 function Select({
   name,
   label,
-  value,
   options,
   onChange,
-  errors,
-  errorText,
-  helpText,
-  formGroupClasses,
-  isRequired,
-  allowNull,
+  errors = null,
+  errorText = "",
+  helpText = "",
+  value = "",
+  formGroupClasses = "",
+  isRequired = false,
+  allowNull = true,
   tooltip = null,
 }) {
   const { t } = useTranslation("common");
@@ -99,16 +100,6 @@ function Select({
     </FormGroup>
   );
 }
-
-Select.defaultProps = {
-  errors: null,
-  errorText: "",
-  helpText: "",
-  value: "",
-  formGroupClasses: "",
-  isRequired: false,
-  allowNull: true,
-};
 
 Select.propTypes = {
   options: PropTypes.arrayOf(

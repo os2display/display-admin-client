@@ -8,7 +8,7 @@ description of the admin.
 
 ### Create public/config file
 
-By default the api that is requested is located at `/api/`.
+By default, the api that is requested is located at `/api/`.
 This can be configured by:
 
 ```shell
@@ -62,14 +62,20 @@ docker compose exec node npm --prefix src/redux/api install
 docker compose exec node npm --prefix src/redux/api start
 ```
 
-## Testing with cypress
+## Testing with playwright
 
-We use [cypress](https://www.cypress.io/) for testing.
+We use [playwright](https://playwright.dev/) for testing.
 
-To run cypress tests in the cypress container:
+To run playwright tests with docker:
 
 ```shell
-docker compose run --rm cypress run
+ docker compose run --rm playwright npx playwright test
+```
+
+To test with user interface, up the containers and change the baseUrl in playwright.config.ts, then: 
+
+```shell
+yarn playwright test --ui 
 ```
 
 ### Linting
