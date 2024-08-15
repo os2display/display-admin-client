@@ -21,15 +21,15 @@ import { useTranslation } from "react-i18next";
 function Select({
   name,
   label,
-  value,
   options,
   onChange,
-  errors,
-  errorText,
-  helpText,
-  formGroupClasses,
-  isRequired,
-  allowNull,
+  errors = null,
+  errorText = "",
+  helpText = "",
+  value = "",
+  formGroupClasses = "",
+  isRequired = false,
+  allowNull = true,
 }) {
   const { t } = useTranslation("common");
   const textOnError = errorText || t("select.validation-text");
@@ -85,16 +85,6 @@ function Select({
     </FormGroup>
   );
 }
-
-Select.defaultProps = {
-  errors: null,
-  errorText: "",
-  helpText: "",
-  value: "",
-  formGroupClasses: "",
-  isRequired: false,
-  allowNull: true,
-};
 
 Select.propTypes = {
   options: PropTypes.arrayOf(

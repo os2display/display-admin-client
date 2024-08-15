@@ -1,8 +1,22 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+- [#249](https://github.com/os2display/display-admin-client/pull/249)
+  - Set infrastructure node version to 20.
+  - Fixed base path to /admin in vite setup.
+  - Changed from vite CJS to ESM.
+  - Removed array spread.
+  - Fixed HMR setup.
+  - Upgraded @fortawesome/react-fontawesome, react-quill, react-toastify.
+  - Removed unused react-dayjs.
+  - Remove default props from the project.
+  - Migrate from Cypress to playwright
+  - Migrate from CRA to Vite
+  - Upgrade node from 14 -> 20
 
 ## [2.0.3] - 2024-08-14
 

@@ -13,7 +13,7 @@ import idFromUrl from "../helpers/id-from-url";
  * @param {boolean} props.targetBlank Whether to open in a new tab.
  * @returns {object} A link for the list.
  */
-function LinkForList({ id, param, targetBlank }) {
+function LinkForList({ id, param, targetBlank = false }) {
   const { t } = useTranslation("common", { keyPrefix: "link-for-list" });
   const newId = idFromUrl(id);
 
@@ -28,10 +28,6 @@ function LinkForList({ id, param, targetBlank }) {
     </Link>
   );
 }
-
-LinkForList.defaultProps = {
-  targetBlank: false,
-};
 
 LinkForList.propTypes = {
   id: PropTypes.string.isRequired,
