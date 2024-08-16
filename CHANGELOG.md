@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#254](https://github.com/os2display/display-admin-client/pull/254)
+  - Changed playlist.slides list columns.
+  - Set published.to to now when creating new slides.
+  - Added option to sort slides in playlist by published.to and status.
 - [#253](https://github.com/os2display/display-admin-client/pull/253)
   - Refactored scheduling to increase user experience.
   - Added interval and count to rrule inputs.

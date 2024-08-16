@@ -26,9 +26,13 @@
   },
   "slides-list": {
     "columns": {
+      "name": "Titel",
+      "created-by": "Oprettet af",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "published": "Udgivet"
+      "publishing-from": "Udgivelse fra",
+      "publishing-to": "Udgivelse til",
+      "status": "Status"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
@@ -404,7 +408,9 @@
     "name": "Navn",
     "created-by": "Oprettet af",
     "delete-button": "Slet",
-    "published": "Udgivet",
+    "publishing-from": "Udgivelse fra",
+    "publishing-to": "Udgivelse til",
+    "status": "Status",
     "number-of-slides": "Slides tilknyttede"
   },
   "playlist-campaign-manager": {
@@ -521,7 +527,8 @@
     "remove-from-list": "Fjern fra liste",
     "error-messages": {
       "load-selected-slides-error": "Fejl da valgte slides skulle loades"
-    }
+    },
+    "data-changed": "Rækkefølge ændret. Husk at gemme."
   },
   "select-screens-table": {
     "columns": {
@@ -556,7 +563,8 @@
     "yes": "Ja",
     "no": "Nej",
     "from": "Fra",
-    "to": "Til"
+    "to": "Til",
+    "always": "Ubegrænset"
   },
   "modal-dialog": {
     "cancel": "Annuller",
@@ -641,7 +649,7 @@
   "drag-and-drop-table": {
     "not-available": "Ikke tilgængeligt",
     "table-header-for-indicator": "Drag and drop indikator",
-    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
+    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piletasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
   "link-for-list": {
     "label": "Rediger"
@@ -1000,5 +1008,10 @@
     "loading-messages": {
       "saving-activation-code": "Opretter aktiveringskode"
     }
+  },
+  "published-state": {
+    "active": "Aktiv",
+    "future": "Fremtidig",
+    "expired": "Udløbet"
   }
 }
