@@ -105,6 +105,7 @@ test.describe("Playlist create tests", () => {
     await expect(page.locator("#cancel_playlist")).not.toBeVisible();
   });
 });
+
 test.describe("Playlist list tests", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/admin/playlist/list");
@@ -238,6 +239,6 @@ test.describe("Playlist list tests", () => {
   test("The correct amount of column headers loaded (playlist list)", async ({
     page,
   }) => {
-    await expect(page.locator("thead").locator("th")).toHaveCount(6);
+    await expect(page.locator("thead").locator("th")).toHaveCount(8);
   });
 });

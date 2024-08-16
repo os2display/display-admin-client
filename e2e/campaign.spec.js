@@ -336,7 +336,7 @@ test.describe("Campaign pages work", () => {
       .click();
     await expect(
       page.locator("#slides-section").locator("tbody").locator("tr td")
-    ).toHaveCount(7);
+    ).toHaveCount(6);
 
     // Remove slide
     await page

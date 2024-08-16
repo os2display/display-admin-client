@@ -491,7 +491,7 @@ test.describe("Slides list works", () => {
   });
 
   test("The correct amount of column headers loaded", async ({ page }) => {
-    await expect(page.locator("thead").locator("th")).toHaveCount(7);
+    await expect(page.locator("thead").locator("th")).toHaveCount(9);
   });
 
   test("It removes all selected", async ({ page }) => {
