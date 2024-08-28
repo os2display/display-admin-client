@@ -68,6 +68,12 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     const newData = [...expired, ...active, ...future];
     setSelectedData(newData);
 
+    const target = {
+      value: newData.map((item) => item["@id"]),
+      id: name,
+    };
+    handleChange({ target });
+
     const order = selectedData.map((entry) => entry["@id"]);
     const newOrder = newData.map((entry) => entry["@id"]);
 
@@ -91,6 +97,12 @@ function SelectSlidesTable({ handleChange, name, slideId = "" }) {
     });
 
     setSelectedData(newData);
+
+    const target = {
+      value: newData.map((item) => item["@id"]),
+      id: name,
+    };
+    handleChange({ target });
 
     const order = selectedData.map((entry) => entry["@id"]);
     const newOrder = newData.map((entry) => entry["@id"]);
