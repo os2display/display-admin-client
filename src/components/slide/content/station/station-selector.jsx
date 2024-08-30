@@ -52,33 +52,41 @@ function StationSelector({
    * Map the data recieved from the midttrafik api.
    *
    * @param {object} locationData
-   * @returns {object} The mapped data.
+   * @returns {array} The mapped data.
    */
   const mapLocationData = (locationData) => {
     return locationData.map((location) => ({
-      id: location.StopLocation.extId,
-      name: location.StopLocation.name,
+      id: location?.StopLocation?.extId,
+      name: location?.StopLocation?.name,
     }));
   };
 
   useEffect(() => {
-    const baseUrl = "https://www.rejseplanen.dk/api/location.name";
-    fetch(
-      `${baseUrl}?${new URLSearchParams({
-        accessId: config.rejseplanenApiKey || "",
-        format: "json",
-        input: searchText,
-      })}`
-    )
-      .then((response) => response.json())
-      .then((rpData) => {
-        if (rpData?.stopLocationOrCoordLocation) {
-          setData(mapLocationData(rpData.stopLocationOrCoordLocation));
-        }
-      })
-      .catch((er) => {
-        displayError(t("get-error"), er);
-      });
+    if (!config?.rejseplanenApiKey) {
+      console.error('rejseplanenApiKey not set.')
+      return;
+    }
+
+    // The api does not accept empty string as input.
+    if (searchText !== '') {
+      const baseUrl = "https://www.rejseplanen.dk/api/location.name";
+      fetch(
+        `${baseUrl}?${new URLSearchParams({
+          accessId: config.rejseplanenApiKey || "",
+          format: "json",
+          input: searchText,
+        })}`
+      )
+        .then((response) => response.json())
+        .then((rpData) => {
+          if (rpData?.stopLocationOrCoordLocation) {
+            setData(mapLocationData(rpData.stopLocationOrCoordLocation));
+          }
+        })
+        .catch((er) => {
+          displayError(t("get-error"), er);
+        });
+    }
   }, [searchText]);
 
   return (
