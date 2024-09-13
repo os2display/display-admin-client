@@ -407,6 +407,7 @@ function SlideForm({
             </ContentBody>
             {themesOptions && (
               <ContentBody id="theme-section">
+                <h3 className="h4">{t("slide-form.theme")}</h3>
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-form.slide-theme-label")}

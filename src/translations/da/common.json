@@ -322,12 +322,13 @@
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
     "slide-template-help-text": "Alle slideskabeloner er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges én skabelon per slide.",
-    "slide-theme-help-text": "Alle temaer er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges ét tema per slide.",
+    "slide-theme-help-text": "Der kan kun vælges ét tema per slide.",
     "slide-from-label": "Udgiv fra",
     "slide-to-label": "Udgiv til",
     "slide-theme-label": "Slidets tema",
     "slide-publish-title": "Begræns udgivelse",
-    "publish-helptext": "Som udgangspunkt at indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet."
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet.",
+    "theme": "Tema"
   },
   "theme-form": {
     "logo-title": "Tilføj logo til temaet",
@@ -482,7 +483,7 @@
     "publish-from-label": "Udgiv fra",
     "publish-to-label": "Udgiv til",
     "publish-title": "Begræns udgivelse",
-    "publish-helptext": "Som udgangspunkt at indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet."
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet."
   },
   "shared-playlists": {
     "change-view-calendar": "Kalender",
