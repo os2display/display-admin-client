@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#256](https://github.com/os2display/display-admin-client/pull/256)
+  - Fixed published from/to texts.
 - [#255](https://github.com/os2display/display-admin-client/pull/255)
   - Fixed rejseplanen component so it does not throw errors when searching for stops.
 - [#254](https://github.com/os2display/display-admin-client/pull/254)
