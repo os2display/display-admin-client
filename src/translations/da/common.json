@@ -322,12 +322,13 @@
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
     "slide-template-help-text": "Alle slideskabeloner er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges én skabelon per slide.",
-    "slide-theme-help-text": "Alle temaer er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges ét tema per slide.",
-    "slide-from-label": "Udgivet fra",
-    "slide-to-label": "Udgivet til",
+    "slide-theme-help-text": "Der kan kun vælges ét tema per slide.",
+    "slide-from-label": "Udgiv fra",
+    "slide-to-label": "Udgiv til",
     "slide-theme-label": "Slidets tema",
-    "slide-publish-title": "Udgivelse",
-    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i."
+    "slide-publish-title": "Begræns udgivelse",
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet.",
+    "theme": "Tema"
   },
   "theme-form": {
     "logo-title": "Tilføj logo til temaet",
@@ -479,10 +480,10 @@
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
     "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten",
-    "publish-from-label": "Udgivet fra",
-    "publish-to-label": "Udgivet til",
-    "publish-title": "Udgivelse",
-    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er spillelisten udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet spillelisten vises i."
+    "publish-from-label": "Udgiv fra",
+    "publish-to-label": "Udgiv til",
+    "publish-title": "Begræns udgivelse",
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet."
   },
   "shared-playlists": {
     "change-view-calendar": "Kalender",
