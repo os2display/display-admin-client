@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#256](https://github.com/os2display/display-admin-client/pull/257)
+  - Update multiselect component
+  - Change key in function from `id` to `@id`
 - [#256](https://github.com/os2display/display-admin-client/pull/256)
   - Fixed published from/to texts.
 - [#255](https://github.com/os2display/display-admin-client/pull/255)

@@ -127,7 +127,7 @@ function MultiSelectComponent({
       [...selected, ...options].filter((option) =>
         idsOfSelectedEntries.includes(option["@id"] || option.id)
       ),
-      "id"
+      "@id"
     );
 
     if (singleSelect) {
