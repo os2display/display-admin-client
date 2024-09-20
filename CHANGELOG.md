@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- [#256](https://github.com/os2display/display-admin-client/pull/257)
+- [#258](https://github.com/os2display/display-admin-client/pull/258)
+  - Fixed screen is vertical check.
+- [#257](https://github.com/os2display/display-admin-client/pull/257)
   - Update multiselect component
   - Change key in function from `id` to `@id`
 - [#256](https://github.com/os2display/display-admin-client/pull/256)

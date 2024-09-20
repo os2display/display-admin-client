@@ -142,7 +142,7 @@ function ScreenForm({
   };
 
   const isVertical = () => {
-    if (screen.orientation) {
+    if (screen?.orientation?.length > 0) {
       return screen.orientation[0].id === "vertical";
     }
     return false;
