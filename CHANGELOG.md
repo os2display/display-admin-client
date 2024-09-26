@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#259](https://github.com/os2display/display-admin-client/pull/259)
+  - Add saving of playlists/groups with screen (as opposed to _after_)
+  - Clean up `screen-manager.jsx`
+  - Change bootstrap column class from `col-md-8` -> `col-md-12` 
+
 ## [2.1.0] - 2024-10-23
 
 - [#258](https://github.com/os2display/display-admin-client/pull/258)
