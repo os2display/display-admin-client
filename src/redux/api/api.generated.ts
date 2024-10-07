@@ -577,6 +577,16 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    apiSlidePerformAction: build.mutation<
+      ApiSlidePerformActionApiResponse,
+      ApiSlidePerformActionApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/slides/${queryArg.id}/action`,
+        method: "POST",
+        body: queryArg.slideInteractiveSlideActionInput,
+      }),
+    }),
     getV2SlidesByIdPlaylists: build.query<
       GetV2SlidesByIdPlaylistsApiResponse,
       GetV2SlidesByIdPlaylistsApiArg
@@ -1247,6 +1257,12 @@ export type DeleteV2SlidesByIdApiResponse = unknown;
 export type DeleteV2SlidesByIdApiArg = {
   id: string;
 };
+export type ApiSlidePerformActionApiResponse = unknown;
+export type ApiSlidePerformActionApiArg = {
+  id: string;
+  /** The new Slide resource */
+  slideInteractiveSlideActionInput: SlideInteractiveSlideActionInput;
+};
 export type GetV2SlidesByIdPlaylistsApiResponse = unknown;
 export type GetV2SlidesByIdPlaylistsApiArg = {
   id: string;
@@ -1465,6 +1481,8 @@ export type ScreenScreenInput = {
   resolution?: string;
   orientation?: string;
   enableColorSchemeChange?: any;
+  regions?: string[];
+  groups?: string[];
 };
 export type ScreenBindObject = {
   bindKey?: string;
@@ -1479,6 +1497,10 @@ export type SlideSlideInput = {
   feed?: string[];
   media?: string[];
   content?: string[];
+};
+export type SlideInteractiveSlideActionInput = {
+  action?: any;
+  data?: string[];
 };
 export type ThemeThemeInput = {
   title?: string;
@@ -1555,6 +1577,7 @@ export const {
   useGetV2SlidesByIdQuery,
   usePutV2SlidesByIdMutation,
   useDeleteV2SlidesByIdMutation,
+  useApiSlidePerformActionMutation,
   useGetV2SlidesByIdPlaylistsQuery,
   usePutV2SlidesByIdPlaylistsMutation,
   useGetV2TemplatesQuery,
