@@ -386,10 +386,10 @@ function Login() {
                     )}
 
                     {usernamePasswordLogins.length > 0 &&
-                      usernamePasswordLogins.map((loginMethod) => (
-                        <div key={loginMethod.provider}>
+                      usernamePasswordLogins.map(({ label, type }) => (
+                        <div key={type}>
                           <h2 className="h4 mt-5 mb-3 fw-light">
-                            {loginMethod.label ?? t("os2-display-user-header")}
+                            {label ?? t("os2-display-user-header")}
                           </h2>
 
                           <Form onSubmit={onSubmit}>
