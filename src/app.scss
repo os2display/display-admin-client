@@ -57,13 +57,8 @@ body,
   padding: 5em;
   z-index: 1021;
 
-  .spinner-container {
-    display: flex;
-    position: fixed;
-
-    .loading-spinner {
-      margin-right: 1em;
-    }
+  .loading-spinner {
+    margin-right: 0.6em;
   }
 }
 
