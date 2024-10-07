@@ -136,20 +136,73 @@ function ScreenManager({
   }
 
   /**
+   * Creates an array of playlist ids and weight filtered by region id or null
+   *
+   * @param regionId RegionId for filtering
+   * @returns {Array | null} A mapped array with playlist ids and weight
+   *   filtered by region id or null
+   */
+  function getPlaylistsByRegionId(regionId) {
+    const { playlists } = formStateObject;
+
+    return playlists
+      .filter(({ region }) => idFromUrl(region) === idFromUrl(regionId))
+      .map((playlist, index) => {
+        return { id: idFromUrl(playlist["@id"]), weight: index };
+      });
+  }
+
+  /**
+   * @param {string} id The item to remove.
+   * @param {Array} array The array to remove from.
+   */
+  function removeFromArray(id, array) {
+    if (array.indexOf(id) >= 0) {
+      array.splice(array.indexOf(id), 1);
+    }
+  }
+
+  /**
    * Map playlists with regions and weight for submitting.
    *
    * @returns {Array | null} A mapped array with playlist, regions and weight or null
    */
   function mapPlaylistsWithRegion() {
-    const { playlists } = formStateObject;
+    const returnArray = [];
+    const { playlists, regions } = formStateObject;
+    const regionIds = regions.map((r) => r["@id"]);
 
-    return playlists
-      ? playlists.map((playlist, index) => ({
-          playlist: idFromUrl(playlist["@id"]),
-          weight: index,
-          regionId: idFromUrl(playlist.region),
-        }))
-      : null;
+    // The playlists all have a regionId, the following creates a unique list of relevant regions If there are not
+    // playlists, then an empty playlist is to be saved per region
+    let playlistRegions = [];
+    if (playlists.length > 0) {
+      playlistRegions = [...new Set(playlists.map(({ region }) => region))];
+    }
+
+    // Then the playlists are mapped by region Looping through the regions that have a playlist connected...
+    playlistRegions.forEach((regionId) => {
+      // remove region id from list of regionids to finally end up with an array of region ids with empty playlist
+      // arrays connected
+      removeFromArray(regionId, regionIds);
+
+      // Add regionsId and connected playlists to the returnarray
+      returnArray.push({
+        playlists: getPlaylistsByRegionId(regionId),
+        regionId: idFromUrl(regionId),
+      });
+    });
+
+    // The remaining regions are added with empty playlist arrays.
+    if (regionIds.length > 0) {
+      regionIds.forEach((regionId) =>
+        returnArray.push({
+          playlists: [],
+          regionId: idFromUrl(regionId),
+        })
+      );
+    }
+
+    return returnArray;
   }
 
   /**
@@ -201,7 +254,7 @@ function ScreenManager({
         resolution: getResolution(),
         groups: mapGroups(),
         orientation: getOrientation(),
-        regionsAndPlaylists: mapPlaylistsWithRegion(),
+        regions: mapPlaylistsWithRegion(),
       }),
     };
 
