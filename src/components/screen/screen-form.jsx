@@ -72,6 +72,9 @@ function ScreenForm({
       );
       if (localSelectedLayout) {
         setSelectedLayout(localSelectedLayout);
+        handleInput({
+          target: { id: "regions", value: localSelectedLayout.regions },
+        });
       }
     }
   }, [screen.layout, layoutOptions]);
@@ -84,6 +87,7 @@ function ScreenForm({
    */
   const handleAdd = ({ target }) => {
     const { value, id } = target;
+
     setSelectedLayout(value);
     handleInput({
       target: { id, value: value.map((item) => item["@id"]).shift() },
@@ -250,7 +254,7 @@ function ScreenForm({
             noSelectedString={t("nothing-selected-resolution")}
             handleSelection={handleInput}
             options={resolutionOptions}
-            selected={screen.resolution || ""}
+            selected={screen.resolution || []}
             name="resolution"
             singleSelect
           />
@@ -259,7 +263,7 @@ function ScreenForm({
             noSelectedString={t("nothing-selected-orientation")}
             handleSelection={handleInput}
             options={orientationOptions}
-            selected={screen.orientation || ""}
+            selected={screen.orientation || []}
             name="orientation"
             singleSelect
           />
