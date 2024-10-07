@@ -72,6 +72,8 @@ function ScreenForm({
       );
       if (localSelectedLayout) {
         setSelectedLayout(localSelectedLayout);
+        // Initialize regions in the formstate object of screenmanager. used to save "empty" playlists, in the situation
+        // we are deleting all playlists from a screen region
         handleInput({
           target: { id: "regions", value: localSelectedLayout.regions },
         });
