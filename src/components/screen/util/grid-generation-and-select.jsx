@@ -136,6 +136,7 @@ function GridGenerationAndSelect({
                           id="playlist_drag_and_drop"
                           handleChange={handleChange}
                           name={data["@id"]}
+                          regionIdForInitializeCallback={data["@id"]}
                           screenId={screenId}
                           regionId={idFromUrl(data["@id"])}
                         />

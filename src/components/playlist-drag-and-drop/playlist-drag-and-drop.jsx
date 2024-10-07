@@ -20,9 +20,17 @@ import ScreenGanttChart from "../screen/util/screen-gantt-chart";
  * @param {string} props.name - The id of the form element
  * @param {string} props.screenId - The screen id for get request
  * @param {string} props.regionId - The region id for get request
+ * @param {string} props.regionIdForInitializeCallback - The region id to add
+ *   regions to formstateobject.
  * @returns {object} A drag and drop component
  */
-function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
+function PlaylistDragAndDrop({
+  handleChange,
+  name,
+  screenId,
+  regionId,
+  regionIdForInitializeCallback,
+}) {
   const { t } = useTranslation("common", {
     keyPrefix: "playlist-drag-and-drop",
   });
@@ -49,6 +57,18 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
     sharedWithMe: onlySharedPlaylists,
   });
 
+  /** @param regionsAndPlaylists */
+  function callbackToinitializePlaylists(regionsAndPlaylists) {
+    handleChange({
+      target: {
+        id: regionIdForInitializeCallback,
+        value: regionsAndPlaylists["hydra:member"].map(
+          ({ playlist }) => playlist
+        ),
+      },
+    });
+  }
+
   /** Set loaded data into form state. */
   useEffect(() => {
     if (selectedPlaylistsByRegion) {
@@ -58,7 +78,9 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
           return playlist;
         }
       );
+
       setSelectedData([...selectedData, ...newPlaylists]);
+      callbackToinitializePlaylists(selectedPlaylistsByRegion);
     }
   }, [selectedPlaylistsByRegion]);
 
@@ -157,6 +179,7 @@ function PlaylistDragAndDrop({ handleChange, name, screenId, regionId }) {
 PlaylistDragAndDrop.propTypes = {
   name: PropTypes.string.isRequired,
   screenId: PropTypes.string.isRequired,
+  regionIdForInitializeCallback: PropTypes.string.isRequired,
   regionId: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
