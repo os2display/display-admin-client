@@ -127,12 +127,9 @@ function ScreenManager({
    * @returns {Array | null} A mapped array with group ids or null
    */
   function mapGroups() {
-    if (Array.isArray(formStateObject.inScreenGroups)) {
-      return formStateObject.inScreenGroups.map((group) => {
-        return idFromUrl(group);
-      });
-    }
-    return null;
+    return formStateObject.inScreenGroups.map((group) => {
+      return idFromUrl(group);
+    });
   }
 
   /**
@@ -175,7 +172,7 @@ function ScreenManager({
     // The playlists all have a regionId, the following creates a unique list of relevant regions If there are not
     // playlists, then an empty playlist is to be saved per region
     let playlistRegions = [];
-    if (playlists.length > 0) {
+    if (playlists?.length > 0) {
       playlistRegions = [...new Set(playlists.map(({ region }) => region))];
     }
 
