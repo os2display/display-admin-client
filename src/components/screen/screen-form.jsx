@@ -346,7 +346,11 @@ ScreenForm.propTypes = {
     enableColorSchemeChange: PropTypes.bool,
     layout: PropTypes.string,
     location: PropTypes.string,
-    regions: PropTypes.arrayOf(PropTypes.string),
+    regions: PropTypes.arrayOf(
+      PropTypes.shape({
+        "@id": PropTypes.string,
+      })
+    ),
     screenUser: PropTypes.string,
     size: PropTypes.string,
     title: PropTypes.string,
