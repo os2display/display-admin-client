@@ -10,7 +10,6 @@ All notable changes to this project will be documented in this file.
   - Clean up `screen-manager.jsx`
   - Change bootstrap column class from `col-md-8` -> `col-md-12` 
   - update api.generated.ts to match [related pr](https://github.com/os2display/display-api-service/pull/213)
-  - fix a small console error to do with key in `login.jsx`
   - Add @rtk-incubator/rtk-query-codegen-openapi to package.json in `src/redux/api`
 
 ## [2.1.0] - 2024-10-23
