@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#259](https://github.com/os2display/display-admin-client/pull/259)
+  - Add saving of playlists/groups with screen (as opposed to _after_)
+  - Clean up `screen-manager.jsx`
+  - Change bootstrap column class from `col-md-8` -> `col-md-12` 
+  - update api.generated.ts to match [related pr](https://github.com/os2display/display-api-service/pull/213)
+  - Add @rtk-incubator/rtk-query-codegen-openapi to package.json in `src/redux/api`
+
 - [#258](https://github.com/os2display/display-admin-client/pull/258)
   - Fixed screen is vertical check.
 - [#257](https://github.com/os2display/display-admin-client/pull/257)
