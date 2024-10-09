@@ -127,9 +127,12 @@ function ScreenManager({
    * @returns {Array | null} A mapped array with group ids or null
    */
   function mapGroups() {
-    return formStateObject.inScreenGroups.map((group) => {
-      return idFromUrl(group);
-    });
+    if (formStateObject.inScreenGroups) {
+      return formStateObject.inScreenGroups.map((group) => {
+        return idFromUrl(group);
+      });
+    }
+    return [];
   }
 
   /**
@@ -254,7 +257,7 @@ function ScreenManager({
         regions: mapPlaylistsWithRegion(),
       }),
     };
-
+    debugger;
     setLoadingMessage(t("loading-messages.saving-screen"));
 
     if (saveMethod === "POST") {
