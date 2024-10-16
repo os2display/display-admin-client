@@ -77,12 +77,14 @@ function PlaylistDragAndDrop({
     if (selectedPlaylistsByRegion) {
       setTotalItems(selectedPlaylistsByRegion["hydra:totalItems"]);
       const newPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
-        ({ playlist }) => {
-          return playlist;
-        }
+        ({ playlist, weight }) => ({ ...playlist, weight })
       );
 
-      setSelectedData([...selectedData, ...newPlaylists]);
+      const selected = [...selectedData, ...newPlaylists].sort(
+        (a, b) => a.weight - b.weight
+      );
+
+      setSelectedData(selected);
       callbackToinitializePlaylists(selectedPlaylistsByRegion);
     }
   }, [selectedPlaylistsByRegion]);
