@@ -26,6 +26,7 @@ import "./multi-dropdown.scss";
  * @param {Function} props.filterCallback - The callback on search filter.
  * @param {boolean} props.singleSelect - If the dropdown is single select.
  * @param {boolean} props.disableSearch - Disable search option.
+ * @param props.error
  * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({
@@ -35,6 +36,7 @@ function MultiSelectComponent({
   noSelectedString = null,
   isLoading = false,
   errorText = "",
+  error = false,
   helpText = null,
   selected = [],
   options = [],
@@ -43,7 +45,6 @@ function MultiSelectComponent({
   filterCallback = () => {},
 }) {
   const { t } = useTranslation("common");
-  const [error] = useState();
   const [mappedOptions, setMappedOptions] = useState();
   const [mappedSelected, setMappedSelected] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
@@ -224,6 +225,7 @@ MultiSelectComponent.propTypes = {
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   errorText: PropTypes.string,
+  error: PropTypes.bool,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   singleSelect: PropTypes.bool,
