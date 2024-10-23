@@ -1,4 +1,10 @@
+@import "bootstrap/scss/bootstrap";
+
 .rmsc {
+  &.invalid {
+    border: 1px solid $red; 
+  }
+
   &.single-select {
     input[type="checkbox"] {
       opacity: 0;
