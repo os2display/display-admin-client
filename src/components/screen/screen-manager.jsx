@@ -257,7 +257,7 @@ function ScreenManager({
         regions: mapPlaylistsWithRegion(),
       }),
     };
-    debugger;
+
     setLoadingMessage(t("loading-messages.saving-screen"));
 
     if (saveMethod === "POST") {
