@@ -14,7 +14,7 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    const { errorHandler } = this.props;
+    const { errorHandler = null } = this.props;
 
     if (errorHandler) {
       errorHandler(error, errorInfo);
@@ -37,10 +37,6 @@ class ErrorBoundary extends Component {
     return <>{children}</>;
   }
 }
-
-ErrorBoundary.defaultProps = {
-  errorHandler: null,
-};
 
 ErrorBoundary.propTypes = {
   children: PropTypes.node.isRequired,

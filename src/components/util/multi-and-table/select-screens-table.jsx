@@ -19,7 +19,7 @@ import {
  * @param {string} props.campaignId - The campaign id.
  * @returns {object} - A select screens table.
  */
-function SelectScreensTable({ handleChange, name, campaignId }) {
+function SelectScreensTable({ handleChange, name, campaignId = "" }) {
   const { t } = useTranslation("common", { keyPrefix: "select-screens-table" });
   const [selectedData, setSelectedData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -135,10 +135,6 @@ function SelectScreensTable({ handleChange, name, campaignId }) {
     </>
   );
 }
-
-SelectScreensTable.defaultProps = {
-  campaignId: "",
-};
 
 SelectScreensTable.propTypes = {
   name: PropTypes.string.isRequired,

@@ -2,6 +2,9 @@ import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FormGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
+import {Tooltip} from "react-tooltip";
 
 /**
  * @param {object} props The props.
@@ -16,20 +19,22 @@ import { useTranslation } from "react-i18next";
  * @param {string} props.formGroupClasses The classes for the form-group element.
  * @param {boolean} props.isRequired If the select is required.
  * @param {boolean} props.allowNull Add null option.
+ * @param {string | null} props.tooltip Tooltip text. Does not display if null.
  * @returns {object} The select component.
  */
 function Select({
   name,
   label,
-  value,
   options,
   onChange,
-  errors,
-  errorText,
-  helpText,
-  formGroupClasses,
-  isRequired,
-  allowNull,
+  errors = null,
+  errorText = "",
+  helpText = "",
+  value = "",
+  formGroupClasses = "",
+  isRequired = false,
+  allowNull = true,
+  tooltip = null,
 }) {
   const { t } = useTranslation("common");
   const textOnError = errorText || t("select.validation-text");
@@ -61,6 +66,16 @@ function Select({
         {label}
         {required && " *"}
       </label>
+      {tooltip !== null && (
+        <>
+          <a data-tooltip-id={`tooltip-${name}`}> <FontAwesomeIcon icon={faQuestionCircle} className="text-black-50" /></a>
+          <Tooltip
+            id={`tooltip-${name}`}
+            openOnClick={true}
+            content={tooltip}
+          />
+        </>
+      )}
       <select
         className={classes}
         required={isRequired}
@@ -85,16 +100,6 @@ function Select({
     </FormGroup>
   );
 }
-
-Select.defaultProps = {
-  errors: null,
-  errorText: "",
-  helpText: "",
-  value: "",
-  formGroupClasses: "",
-  isRequired: false,
-  allowNull: true,
-};
 
 Select.propTypes = {
   options: PropTypes.arrayOf(

@@ -37,15 +37,15 @@ import "./screen-form.scss";
  * @returns {object} The screen form.
  */
 function ScreenForm({
-  screen,
   handleInput,
   handleSubmit,
   headerText,
-  groupId,
-  isLoading,
-  loadingMessage,
   orientationOptions,
   resolutionOptions,
+  groupId = "",
+  isLoading = false,
+  loadingMessage = "",
+  screen = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-form" });
   const navigate = useNavigate();
@@ -142,7 +142,7 @@ function ScreenForm({
   };
 
   const isVertical = () => {
-    if (screen.orientation) {
+    if (screen?.orientation?.length > 0) {
       return screen.orientation[0].id === "vertical";
     }
     return false;
@@ -330,13 +330,6 @@ function ScreenForm({
     </>
   );
 }
-
-ScreenForm.defaultProps = {
-  groupId: "",
-  isLoading: false,
-  loadingMessage: "",
-  screen: null,
-};
 
 ScreenForm.propTypes = {
   screen: PropTypes.shape({

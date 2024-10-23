@@ -30,7 +30,7 @@ function SlideCreate() {
     theme: themeInfo,
     content: {},
     media: [],
-    published: { from: null, to: null },
+    published: { from: new Date(), to: null },
   };
 
   return <SlideManager saveMethod="POST" initialState={data} />;

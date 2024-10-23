@@ -45,19 +45,19 @@ import "./slide-form.scss";
  * @returns {object} The slide form.
  */
 function SlideForm({
-  slide,
   handleInput,
   handleContent,
   handleMedia,
   handleSubmit,
   selectTemplate,
-  selectedTemplate,
   headerText,
-  mediaData,
   selectTheme,
-  selectedTheme,
-  isLoading,
-  loadingMessage,
+  selectedTemplate = null,
+  selectedTheme = [],
+  isLoading = false,
+  loadingMessage = "",
+  slide = null,
+  mediaData = null,
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -407,6 +407,7 @@ function SlideForm({
             </ContentBody>
             {themesOptions && (
               <ContentBody id="theme-section">
+                <h3 className="h4">{t("slide-form.theme")}</h3>
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-form.slide-theme-label")}
@@ -494,15 +495,6 @@ function SlideForm({
     </>
   );
 }
-
-SlideForm.defaultProps = {
-  selectedTemplate: null,
-  selectedTheme: [],
-  isLoading: false,
-  loadingMessage: "",
-  slide: null,
-  mediaData: null,
-};
 
 SlideForm.propTypes = {
   slide: PropTypes.shape({

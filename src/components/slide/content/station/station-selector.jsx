@@ -4,19 +4,21 @@ import { useTranslation } from "react-i18next";
 import MultiSelectComponent from "../../../util/forms/multiselect-dropdown/multi-dropdown";
 import { displayError } from "../../../util/list/toast-component/display-toast";
 import userContext from "../../../../context/user-context";
+
 /**
  * A multiselect and table for groups.
  *
  * @param {string} props The props.
  * @param {string} props.name The name for the input
- * @param {string} props.id The id used for the get.
- * @param {string} props.helpText Helptext for dropdown.
+ * @param {string} props.helpText Help text for dropdown.
+ * @param {Function} props.onChange On change callback.
+ * @param {Array} props.value Input value.
  * @returns {object} Select groups table.
  */
 function StationSelector({
   onChange,
   name,
-  helpText,
+  helpText = "",
   label,
   value: inputValue,
 }) {
@@ -50,33 +52,41 @@ function StationSelector({
    * Map the data recieved from the midttrafik api.
    *
    * @param {object} locationData
-   * @returns {object} The mapped data.
+   * @returns {array} The mapped data.
    */
   const mapLocationData = (locationData) => {
     return locationData.map((location) => ({
-      id: location.StopLocation.extId,
-      name: location.StopLocation.name,
+      id: location?.StopLocation?.extId,
+      name: location?.StopLocation?.name,
     }));
   };
 
   useEffect(() => {
-    const baseUrl = "https://www.rejseplanen.dk/api/location.name";
-    fetch(
-      `${baseUrl}?${new URLSearchParams({
-        accessId: config.rejseplanenApiKey || "",
-        format: "json",
-        input: searchText,
-      })}`
-    )
-      .then((response) => response.json())
-      .then((rpData) => {
-        if (rpData?.stopLocationOrCoordLocation) {
-          setData(mapLocationData(rpData.stopLocationOrCoordLocation));
-        }
-      })
-      .catch((er) => {
-        displayError(t("get-error"), er);
-      });
+    if (!config?.rejseplanenApiKey) {
+      console.error('rejseplanenApiKey not set.')
+      return;
+    }
+
+    // The api does not accept empty string as input.
+    if (searchText !== '') {
+      const baseUrl = "https://www.rejseplanen.dk/api/location.name";
+      fetch(
+        `${baseUrl}?${new URLSearchParams({
+          accessId: config.rejseplanenApiKey || "",
+          format: "json",
+          input: searchText,
+        })}`
+      )
+        .then((response) => response.json())
+        .then((rpData) => {
+          if (rpData?.stopLocationOrCoordLocation) {
+            setData(mapLocationData(rpData.stopLocationOrCoordLocation));
+          }
+        })
+        .catch((er) => {
+          displayError(t("get-error"), er);
+        });
+    }
   }, [searchText]);
 
   return (
@@ -97,11 +107,6 @@ function StationSelector({
     </>
   );
 }
-
-StationSelector.defaultProps = {
-  helpText: "",
-  value: null,
-};
 
 StationSelector.propTypes = {
   label: PropTypes.string.isRequired,

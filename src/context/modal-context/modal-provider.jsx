@@ -22,8 +22,6 @@ function ModalProvider({ children }) {
   return (
     <DeleteModalContext.Provider
       value={{ unSetModal, setModal, setSelected, selected }}
-      /* eslint-disable react/jsx-props-no-spreading */
-      {...children}
     >
       {children}
       {modal?.delete && (

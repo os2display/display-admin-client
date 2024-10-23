@@ -25,26 +25,26 @@ import idFromUrl from "../util/helpers/id-from-url";
  * @param {string | null} props.id Screen id.
  * @param {boolean} props.isLoading Is the screen state loading?
  * @param {object} props.loadingError Loading error.
- * @param {string} props.groupId The group id
+ * @param {string | null} props.groupId The group id
  * @returns {object} The screen form.
  */
 function ScreenManager({
-  initialState,
   saveMethod,
-  id,
-  isLoading,
-  loadingError,
-  groupId,
+  id = null,
+  isLoading = false,
+  loadingError = null,
+  groupId = null,
+  initialState = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-manager" });
   const navigate = useNavigate();
   const [orientationOptions] = useState([
-    { title: "Vertikal", id: "vertical" },
-    { title: "Horisontal", id: "horizontal" },
+    { title: "Vertikal", "@id": "vertical" },
+    { title: "Horisontal", "@id": "horizontal" },
   ]);
   const [resolutionOptions] = useState([
-    { title: "4K", id: "4K" },
-    { title: "HD", id: "HD" },
+    { title: "4K", "@id": "4K" },
+    { title: "HD", "@id": "HD" },
   ]);
   const headerText =
     saveMethod === "PUT" ? t("edit-screen-header") : t("create-screen-header");
@@ -346,14 +346,6 @@ function ScreenManager({
     </>
   );
 }
-
-ScreenManager.defaultProps = {
-  id: null,
-  isLoading: false,
-  loadingError: null,
-  groupId: null,
-  initialState: null,
-};
 
 ScreenManager.propTypes = {
   initialState: PropTypes.shape({

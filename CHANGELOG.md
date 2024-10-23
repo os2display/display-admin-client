@@ -1,8 +1,40 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [2.1.0] - 2024-10-23
+
+- [#258](https://github.com/os2display/display-admin-client/pull/258)
+  - Fixed screen is vertical check.
+- [#257](https://github.com/os2display/display-admin-client/pull/257)
+  - Update multiselect component
+  - Change key in function from `id` to `@id`
+- [#256](https://github.com/os2display/display-admin-client/pull/256)
+  - Fixed published from/to texts.
+- [#255](https://github.com/os2display/display-admin-client/pull/255)
+  - Fixed rejseplanen component so it does not throw errors when searching for stops.
+- [#254](https://github.com/os2display/display-admin-client/pull/254)
+  - Changed playlist.slides list columns.
+  - Set published.to to now when creating new slides.
+  - Added option to sort slides in playlist by published.to and status.
+- [#253](https://github.com/os2display/display-admin-client/pull/253)
+  - Refactored scheduling to increase user experience.
+  - Added interval and count to rrule inputs.
+- [#249](https://github.com/os2display/display-admin-client/pull/249)
+  - Set infrastructure node version to 20.
+  - Fixed base path to /admin in vite setup.
+  - Changed from vite CJS to ESM.
+  - Removed array spread.
+  - Fixed HMR setup.
+  - Upgraded @fortawesome/react-fontawesome, react-quill, react-toastify.
+  - Removed unused react-dayjs.
+  - Remove default props from the project.
+  - Migrate from Cypress to playwright
+  - Migrate from CRA to Vite
+  - Upgrade node from 14 -> 20
 
 ## [2.0.3] - 2024-08-14
 

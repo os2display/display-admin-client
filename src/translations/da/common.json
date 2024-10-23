@@ -26,9 +26,13 @@
   },
   "slides-list": {
     "columns": {
+      "name": "Titel",
+      "created-by": "Oprettet af",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "published": "Udgivet"
+      "publishing-from": "Udgivelse fra",
+      "publishing-to": "Udgivelse til",
+      "status": "Status"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
@@ -318,12 +322,13 @@
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
     "slide-template-help-text": "Alle slideskabeloner er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges én skabelon per slide.",
-    "slide-theme-help-text": "Alle temaer er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges ét tema per slide.",
-    "slide-from-label": "Udgivet fra",
-    "slide-to-label": "Udgivet til",
+    "slide-theme-help-text": "Der kan kun vælges ét tema per slide.",
+    "slide-from-label": "Udgiv fra",
+    "slide-to-label": "Udgiv til",
     "slide-theme-label": "Slidets tema",
-    "slide-publish-title": "Udgivelse",
-    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i."
+    "slide-publish-title": "Begræns udgivelse",
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet.",
+    "theme": "Tema"
   },
   "theme-form": {
     "logo-title": "Tilføj logo til temaet",
@@ -404,7 +409,9 @@
     "name": "Navn",
     "created-by": "Oprettet af",
     "delete-button": "Slet",
-    "published": "Udgivet",
+    "publishing-from": "Udgivelse fra",
+    "publishing-to": "Udgivelse til",
+    "status": "Status",
     "number-of-slides": "Slides tilknyttede"
   },
   "playlist-campaign-manager": {
@@ -473,10 +480,10 @@
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
     "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten",
-    "publish-from-label": "Udgivet fra",
-    "publish-to-label": "Udgivet til",
-    "publish-title": "Udgivelse",
-    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er spillelisten udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet spillelisten vises i."
+    "publish-from-label": "Udgiv fra",
+    "publish-to-label": "Udgiv til",
+    "publish-title": "Begræns udgivelse",
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet."
   },
   "shared-playlists": {
     "change-view-calendar": "Kalender",
@@ -521,7 +528,8 @@
     "remove-from-list": "Fjern fra liste",
     "error-messages": {
       "load-selected-slides-error": "Fejl da valgte slides skulle loades"
-    }
+    },
+    "data-changed": "Rækkefølge ændret. Husk at gemme."
   },
   "select-screens-table": {
     "columns": {
@@ -556,7 +564,8 @@
     "yes": "Ja",
     "no": "Nej",
     "from": "Fra",
-    "to": "Til"
+    "to": "Til",
+    "always": "Ubegrænset"
   },
   "modal-dialog": {
     "cancel": "Annuller",
@@ -641,7 +650,7 @@
   "drag-and-drop-table": {
     "not-available": "Ikke tilgængeligt",
     "table-header-for-indicator": "Drag and drop indikator",
-    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
+    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piletasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
   "link-for-list": {
     "label": "Rediger"
@@ -747,7 +756,7 @@
     "byweekno": "Ugenummer",
     "bymonth": "Valgte måneder",
     "byweekday": "Valgte ugedage",
-    "freq": "Frekvens",
+    "freq": "Gentag",
     "show-details": "Vis detaljer",
     "hide-details": "Skjul detaljer",
     "jan": "Januar",
@@ -769,22 +778,40 @@
     "friday": "Fredag",
     "saturday": "Lørdag",
     "sunday": "Søndag",
-    "yearly": "År",
-    "monthly": "Måned",
-    "weekly": "Uge",
-    "daily": "Dag",
+    "yearly": "Hvert år",
+    "monthly": "Hver måned",
+    "weekly": "Hver uge",
+    "daily": "Hver dag",
     "hourly": "Time",
     "minutely": "Minut",
     "rrulestring": "RRule",
-    "rrulestring-z-ignored": "Bemærk at tidszonen (Z) bliver ignoreret i evalueringen af reglen. Tidsangivelserne vil altid blive behandlet i lokal tid.",
-    "dtstart": "Startdato",
-    "until": "Slutdato",
-    "next-occurrences": "Næste 5 forekomster",
+    "dtstart": "Start",
+    "until": "Gentag indtil",
+    "next-occurrences": "Næste forekomster",
     "all-selected": "Alle er valgt",
     "clear-selection": "Ryd valg",
     "selected-all": "Vælg alle",
     "select-some-options": "Vælg...",
-    "bytime": "Tidspunkt på dagen"
+    "bytime": "Tidspunkt på dagen",
+    "duration-error": "Slut kan ikke være før start",
+    "end": "Slut",
+    "count": "Antal gentagelser",
+    "count-placeholder": "Ubegrænset",
+    "interval": "Interval",
+    "repetition": "RRule",
+    "enable-repeat": "Gentag planlægning",
+    "enable-repeat-tooltip": "Når gentagelse aktiveres bestemmer reglerne man vælger, hvornår spillelisten bliver vist.",
+    "end-tooltip": "Forskellen imellem start og slut definerer længden på en gentagelse.",
+    "dtstart-tooltip": "Start definerer tidspunkt på dagen og første mulige dato for gentagelserne, hvis dette aktiveres.",
+    "frequency-tooltip": "Hvordan planlægningen skal gentages?",
+    "interval-tooltip": "Skal der være spring imellem gentagelse? Afhænger af frekvensen. F.eks. hver 3 dag.",
+    "count-tooltip": "Hvor mange gange skal planlægningen gentages? Tom værdi betyder ubegrænset.",
+    "bytime-tooltip": "På hvilke dage skal reglen gælde?",
+    "byweekday-tooltip": "På hvilke dage skal reglen gælde?",
+    "bymonth-tooltip": "I hvilke månender skal reglen gælde?",
+    "byweekno-tooltip": "Hvilket ugenummer skal reglen gælde for?",
+    "until-tooltip": "Hvornår skal gentagelserne afsluttes? Dette tidspunkt påvirker starttidspunktet på en gentagelse, ikke sluttidspunktet.",
+    "helptext": "Når minimum én planlægning er tilføjet, bliver spillelisten kun vist i planlægningsintervallet."
   },
   "duration": {
     "hours": "t.",
@@ -982,5 +1009,10 @@
     "loading-messages": {
       "saving-activation-code": "Opretter aktiveringskode"
     }
+  },
+  "published-state": {
+    "active": "Aktiv",
+    "future": "Fremtidig",
+    "expired": "Udløbet"
   }
 }

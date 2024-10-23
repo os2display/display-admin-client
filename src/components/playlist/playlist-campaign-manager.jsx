@@ -33,13 +33,13 @@ import {
  * @returns {object} The shared manager, shared by campaign and playlists.
  */
 function PlaylistCampaignManager({
-  initialState,
   saveMethod,
-  id,
-  isLoading,
-  loadingError,
-  slideId,
   location,
+  id = null,
+  isLoading = false,
+  loadingError = null,
+  initialState = null,
+  slideId = "",
 }) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common", {
@@ -360,14 +360,6 @@ function PlaylistCampaignManager({
     </>
   );
 }
-
-PlaylistCampaignManager.defaultProps = {
-  id: null,
-  isLoading: false,
-  loadingError: null,
-  initialState: null,
-  slideId: "",
-};
 
 PlaylistCampaignManager.propTypes = {
   initialState: PropTypes.shape({

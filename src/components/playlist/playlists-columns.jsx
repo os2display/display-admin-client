@@ -4,7 +4,10 @@ import ColumnHoc from "../util/column-hoc";
 import SelectColumnHoc from "../util/select-column-hoc";
 import UserContext from "../../context/user-context";
 import ListButton from "../util/list/list-button";
-import Published from "../util/published";
+import Publishing from "../util/publishing.jsx";
+import DateValue from "../util/date-value.jsx";
+import { Button } from "react-bootstrap";
+import PublishingStatus from "../util/publishingStatus.jsx";
 
 /**
  * Columns for playlists lists.
@@ -29,16 +32,6 @@ function getPlaylistColumns({
 
   const columns = [
     {
-      path: "published",
-      label: t("published"),
-      // eslint-disable-next-line react/prop-types
-      content: ({ publishedFrom, publishedTo, published }) => (
-        <Published
-          published={published || { from: publishedFrom, to: publishedTo }}
-        />
-      ),
-    },
-    {
       key: "slides",
       label: t("number-of-slides"),
       render: ({ tenants }) => {
@@ -60,6 +53,21 @@ function getPlaylistColumns({
           dataKey={dataKey}
         />
       ),
+    },
+    {
+      key: "publishing-from",
+      content: ({ published }) => <DateValue date={published.from} />,
+      label: t("publishing-from"),
+    },
+    {
+      key: "publishing-to",
+      content: ({ published }) => <DateValue date={published.to} />,
+      label: t("publishing-to"),
+    },
+    {
+      key: "status",
+      content: ({ published }) => <PublishingStatus published={published} />,
+      label: t("status"),
     },
   ];
 

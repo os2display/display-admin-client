@@ -28,8 +28,8 @@ function MediaForm({
   handleSubmit,
   headerText,
   errors,
-  isLoading,
-  loadingMessage,
+  isLoading = false,
+  loadingMessage = "",
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -83,11 +83,6 @@ function MediaForm({
     </>
   );
 }
-
-MediaForm.defaultProps = {
-  isLoading: false,
-  loadingMessage: "",
-};
 
 MediaForm.propTypes = {
   media: PropTypes.arrayOf(

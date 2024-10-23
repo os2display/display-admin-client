@@ -27,16 +27,16 @@ import LoadingComponent from "../util/loading-component/loading-component";
  * @returns {object} The form shared by campaigns and playlists.
  */
 function PlaylistCampaignForm({
-  playlist,
   handleInput,
   handleSubmit,
   headerText,
-  slideId,
-  isLoading,
-  loadingMessage,
-  isCampaign,
   location,
   children,
+  slideId = "",
+  isLoading = false,
+  loadingMessage = "",
+  isCampaign = false,
+  playlist = null,
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ function PlaylistCampaignForm({
             type="text"
             label={t("playlist-campaign-form.playlist-description-label")}
             placeholder={t(
-              "playlist-campaign-form.playlist-description-placeholder"
+              "playlist-campaign-form.playlist-description-placeholder",
             )}
             value={playlist.description}
             onChange={handleInput}
@@ -153,14 +153,6 @@ function PlaylistCampaignForm({
     </>
   );
 }
-
-PlaylistCampaignForm.defaultProps = {
-  slideId: "",
-  isLoading: false,
-  loadingMessage: "",
-  isCampaign: false,
-  playlist: null,
-};
 
 PlaylistCampaignForm.propTypes = {
   playlist: PropTypes.shape({

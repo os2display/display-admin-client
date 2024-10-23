@@ -13,7 +13,13 @@ import useModal from "../../../context/modal-context/modal-context-hook";
  * @param {string} props.dataKey The data key for mapping the data.
  * @returns {object} - The list button.
  */
-function ListButton({ apiCall, redirectTo, displayData, modalTitle, dataKey }) {
+function ListButton({
+  apiCall = () => {},
+  dataKey = "",
+  redirectTo,
+  displayData,
+  modalTitle,
+}) {
   const { setModal } = useModal();
   const [label, setLabel] = useState("");
   let data;
@@ -80,11 +86,6 @@ function ListButton({ apiCall, redirectTo, displayData, modalTitle, dataKey }) {
     </>
   );
 }
-
-ListButton.defaultProps = {
-  apiCall: () => {},
-  dataKey: "",
-};
 
 ListButton.propTypes = {
   displayData: PropTypes.oneOfType([
