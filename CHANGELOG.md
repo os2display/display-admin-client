@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.1.1] - 2024-10-23
+
+- [#266](https://github.com/os2display/display-admin-client/pull/266)
+  - Fixed search from local storage.
+- [#265](https://github.com/os2display/display-admin-client/pull/265)
+  - Add no-cache directive
+- [#263](https://github.com/os2display/display-admin-client/pull/263)
+  - Added prefix to local storage keys.
+- [#262](https://github.com/os2display/display-admin-client/pull/262)
+  - Add multi select styling for `invalid` state 
+  - Add possibility of sending error via props to multiselect component
+  - Add validation checking if layout is selected on screen before save
+  - Add validation checking if template is selected on slide before save
+- [#260](https://github.com/os2display/display-admin-client/pull/260)
+  - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id` 
+- [#265](https://github.com/os2display/display-admin-client/pull/265)
+  - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id`
+- [#259](https://github.com/os2display/display-admin-client/pull/259)
+  - Add saving of playlists/groups with screen (as opposed to _after_)
+  - Clean up `screen-manager.jsx`
+  - Change bootstrap column class from `col-md-8` -> `col-md-12` 
+  - update api.generated.ts to match [related pr](https://github.com/os2display/display-api-service/pull/213)
+  - Add @rtk-incubator/rtk-query-codegen-openapi to package.json in `src/redux/api`
+  - Sort playlists based on weight in drag/drop component
+
 ## [2.1.0] - 2024-10-23
 
 - [#258](https://github.com/os2display/display-admin-client/pull/258)

@@ -305,6 +305,7 @@
   "slide-form": {
     "slide-template-selected": "Skabelon",
     "template-error": "Der skete en fejl da skabelonen skulle hentes:",
+    "remember-template-error": "Husk at tilknytte en skabelon til dit slide",
     "touch-region": "Touch region",
     "touch-region-button-text-label": "Knaptekst i touch region",
     "touch-region-button-text-helptext": "Her kan du sætte knapteksten, hvis slidet indgår i en touch region, hvor slides bliver vist som knapper der kan åbnes.",
@@ -659,23 +660,18 @@
     "edit-screen-header": "Rediger følgende skærm",
     "create-screen-header": "Opret ny skærm",
     "loading-messages": {
-      "saving-screen": "Gemmer skærmen",
-      "saving-playlists": "Tilknytter spillelister til skærmens regioner",
-      "saving-groups": "Tilknytter grupper til skærmen"
+      "saving-screen": "Gemmer skærmen"
     },
     "success-messages": {
-      "saved-screen": "Skærmen er gemt",
-      "saved-playlists": "Spillelister er tilknyttet til skærmens regioner",
-      "saved-groups": "Grupper er tilknyttet skærmen"
+      "saved-screen": "Skærmen er gemt"
     },
     "error-messages": {
       "save-screen-error": "Der skete en fejl da skærmen skulle gemmes:",
-      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner:",
-      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen:",
       "load-screen-error": "Der skete en fejl da skærmen med følgende id: {{id}} skulle hentes:"
     }
   },
   "screen-form": {
+    "remember-layout-error": "Husk at tilknytte et layout til din skærm",
     "enable-color-scheme-change-headline": "Farveskema",
     "enable-color-scheme-change": "Aktivér farveskema skift",
     "enable-color-scheme-change-helptext": "Hvis dette aktiveres vil skærmen skifte til \"dark mode\" når solen går ned og skifte til normal visning når solen står op. Dette påvirker kun skabeloner der understøtter \"dark mode\".",

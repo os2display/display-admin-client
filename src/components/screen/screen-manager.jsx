@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 import {
   usePostV2ScreensMutation,
   usePutV2ScreensByIdMutation,
-  usePutV2ScreensByIdScreenGroupsMutation,
-  usePutPlaylistScreenRegionItemMutation,
 } from "../../redux/api/api.generated.ts";
 import ScreenForm from "./screen-form";
 import {
@@ -38,22 +36,18 @@ function ScreenManager({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-manager" });
   const navigate = useNavigate();
-  const [orientationOptions] = useState([
+  const orientationOptions = [
     { title: "Vertikal", "@id": "vertical" },
     { title: "Horisontal", "@id": "horizontal" },
-  ]);
-  const [resolutionOptions] = useState([
+  ];
+  const resolutionOptions = [
     { title: "4K", "@id": "4K" },
     { title: "HD", "@id": "HD" },
-  ]);
+  ];
   const headerText =
     saveMethod === "PUT" ? t("edit-screen-header") : t("create-screen-header");
   const [loadingMessage, setLoadingMessage] = useState("");
   const [savingScreen, setSavingScreen] = useState(false);
-  const [savingGroups, setSavingGroups] = useState(false);
-  const [savingPlaylists, setSavingPlaylists] = useState(false);
-  const [groupsToAdd, setGroupsToAdd] = useState();
-  const [playlistsToAdd, setPlaylistsToAdd] = useState([]);
 
   // Initialize to empty screen object.
   const [formStateObject, setFormStateObject] = useState(null);
@@ -64,62 +58,8 @@ function ScreenManager({
   // Handler for creating screen.
   const [
     PostV2Screens,
-    { data: postData, error: saveErrorPost, isSuccess: isSaveSuccessPost },
+    { error: saveErrorPost, isSuccess: isSaveSuccessPost },
   ] = usePostV2ScreensMutation();
-
-  // @TODO: Handle errors.
-  const [
-    putPlaylistScreenRegionItem,
-    { error: savePlaylistError, isSuccess: isSavePlaylistSuccess },
-  ] = usePutPlaylistScreenRegionItemMutation();
-
-  const [
-    PutV2ScreensByIdScreenGroups,
-    { error: saveErrorGroups, isSuccess: isSaveSuccessGroups },
-  ] = usePutV2ScreensByIdScreenGroupsMutation();
-
-  /** When the screen is saved, the groups will be saved. */
-  useEffect(() => {
-    if ((isSaveSuccessPut || isSaveSuccessPost) && groupsToAdd) {
-      setLoadingMessage(t("loading-messages.saving-groups"));
-      PutV2ScreensByIdScreenGroups({
-        id: id || idFromUrl(postData["@id"]),
-        body: JSON.stringify(groupsToAdd),
-      });
-    }
-  }, [isSaveSuccessPost, isSaveSuccessPut]);
-
-  // Playlists are saved successfully, display a message
-  useEffect(() => {
-    if (isSavePlaylistSuccess && playlistsToAdd.length === 0) {
-      setSavingPlaylists(false);
-      displaySuccess(t("success-messages.saved-playlists"));
-    }
-  }, [isSavePlaylistSuccess]);
-
-  // Groups are saved successfully, display a message
-  useEffect(() => {
-    if (isSaveSuccessGroups) {
-      setSavingGroups(false);
-      displaySuccess(t("success-messages.saved-groups"));
-    }
-  }, [isSaveSuccessGroups]);
-
-  // Playlists are not saved successfully, display an error message
-  useEffect(() => {
-    if (savePlaylistError) {
-      setSavingPlaylists(false);
-      displayError(t("error-messages.save-playlists-error"), savePlaylistError);
-    }
-  }, [savePlaylistError]);
-
-  // Groups are not saved successfully, display an error message
-  useEffect(() => {
-    if (saveErrorGroups) {
-      setSavingGroups(false);
-      displayError(t("error-messages.save-groups-error"), saveErrorGroups);
-    }
-  }, [saveErrorGroups]);
 
   /** If the screen is saved, display the success message */
   useEffect(() => {
@@ -166,102 +106,123 @@ function ScreenManager({
       const localFormStateObject = JSON.parse(JSON.stringify(initialState));
       if (localFormStateObject.orientation) {
         localFormStateObject.orientation = orientationOptions.filter(
-          ({ id: localOrientationId }) =>
-            localOrientationId === localFormStateObject.orientation
+          (orientation) =>
+            orientation["@id"] === localFormStateObject.orientation
         );
       }
 
       if (localFormStateObject.resolution) {
         localFormStateObject.resolution = resolutionOptions.filter(
-          ({ id: localResolutioId }) =>
-            localResolutioId === localFormStateObject.resolution
+          (resolution) => resolution["@id"] === localFormStateObject.resolution
         );
       }
+
       setFormStateObject(localFormStateObject);
     }
   }, [initialState]);
 
-  /** Adds playlists to regions. */
-  useEffect(() => {
-    if (
-      (isSaveSuccessPost || isSaveSuccessPut) &&
-      playlistsToAdd &&
-      playlistsToAdd.length > 0
-    ) {
-      setLoadingMessage(t("loading-messages.saving-playlists"));
-      const playlistToAdd = playlistsToAdd.splice(0, 1).shift();
-      putPlaylistScreenRegionItem({
-        body: JSON.stringify(playlistToAdd?.list),
-        id: playlistToAdd.screenId || idFromUrl(postData["@id"]),
-        regionId: playlistToAdd.regionId,
+  /**
+   * Map group ids for submitting.
+   *
+   * @returns {Array | null} A mapped array with group ids or null
+   */
+  function mapGroups() {
+    if (formStateObject.inScreenGroups) {
+      return formStateObject.inScreenGroups.map((group) => {
+        return idFromUrl(group);
       });
     }
-  }, [isSavePlaylistSuccess, isSaveSuccessPut, isSaveSuccessPost]);
+    return [];
+  }
 
-  /** Set playlists to save, if any */
-  function savePlaylists() {
-    const toSave = [];
-    const formStateObjectPlaylists = formStateObject.playlists?.map(
-      (playlist) => {
-        return {
-          id: idFromUrl(playlist["@id"]),
-          regionId: idFromUrl(playlist.region),
-        };
-      }
-    );
-    if (formStateObjectPlaylists) {
-      // Unique regions that will have a playlist connected.
-      const regions = [
-        ...new Set(
-          formStateObjectPlaylists.map((playlists) => playlists.regionId)
-        ),
-      ];
+  /**
+   * Creates an array of playlist ids and weight filtered by region id or null
+   *
+   * @param regionId RegionId for filtering
+   * @returns {Array | null} A mapped array with playlist ids and weight
+   *   filtered by region id or null
+   */
+  function getPlaylistsByRegionId(regionId) {
+    const { playlists } = formStateObject;
 
-      // Filter playlists by region
-      regions.forEach((element) => {
-        const filteredPlaylists = formStateObjectPlaylists
-          .map((localPlaylists, index) => {
-            if (element === localPlaylists.regionId) {
-              return { playlist: localPlaylists.id, weight: index };
-            }
-            return undefined;
-          })
-          .filter((anyValue) => typeof anyValue !== "undefined");
-
-        // Collect playlists with according ids for saving
-        toSave.push({
-          list: filteredPlaylists,
-          regionId: element,
-          screenId: id,
-        });
+    return playlists
+      .filter(({ region }) => idFromUrl(region) === idFromUrl(regionId))
+      .map((playlist, index) => {
+        return { id: idFromUrl(playlist["@id"]), weight: index };
       });
+  }
 
-      if (formStateObject.playlists?.length === 0) {
-        formStateObject.regions.forEach((element) => {
-          toSave.push({
-            list: [],
-            regionId: idFromUrl(element, 1),
-            screenId: id,
-          });
-        });
-      }
-
-      // Set playlists to save
-      setPlaylistsToAdd(toSave);
-      setSavingPlaylists(true);
+  /**
+   * @param {string} id The item to remove.
+   * @param {Array} array The array to remove from.
+   */
+  function removeFromArray(id, array) {
+    if (array.indexOf(id) >= 0) {
+      array.splice(array.indexOf(id), 1);
     }
   }
 
-  /** Set groups to save, if any */
-  function saveGroups() {
-    if (Array.isArray(formStateObject.inScreenGroups)) {
-      setSavingGroups(true);
-      setGroupsToAdd(
-        formStateObject.inScreenGroups.map((group) => {
-          return idFromUrl(group);
+  /**
+   * Map playlists with regions and weight for submitting.
+   *
+   * @returns {Array | null} A mapped array with playlist, regions and weight or null
+   */
+  function mapPlaylistsWithRegion() {
+    const returnArray = [];
+    const { playlists, regions } = formStateObject;
+    const regionIds = regions.map((r) => r["@id"]);
+
+    // The playlists all have a regionId, the following creates a unique list of relevant regions If there are not
+    // playlists, then an empty playlist is to be saved per region
+    let playlistRegions = [];
+    if (playlists?.length > 0) {
+      playlistRegions = [...new Set(playlists.map(({ region }) => region))];
+    }
+
+    // Then the playlists are mapped by region Looping through the regions that have a playlist connected...
+    playlistRegions.forEach((regionId) => {
+      // remove region id from list of regionids to finally end up with an array of region ids with empty playlist
+      // arrays connected
+      removeFromArray(regionId, regionIds);
+
+      // Add regionsId and connected playlists to the returnarray
+      returnArray.push({
+        playlists: getPlaylistsByRegionId(regionId),
+        regionId: idFromUrl(regionId),
+      });
+    });
+
+    // The remaining regions are added with empty playlist arrays.
+    if (regionIds.length > 0) {
+      regionIds.forEach((regionId) =>
+        returnArray.push({
+          playlists: [],
+          regionId: idFromUrl(regionId),
         })
       );
     }
+
+    return returnArray;
+  }
+
+  /**
+   * Gets orientation for submitting
+   *
+   * @returns {string} Orientation or empty string
+   */
+  function getOrientation() {
+    const { orientation } = formStateObject;
+    return orientation ? orientation[0]["@id"] : "";
+  }
+
+  /**
+   * Gets resolution for submitting
+   *
+   * @returns {string} Resolution or empty string
+   */
+  function getResolution() {
+    const { resolution } = formStateObject;
+    return resolution && resolution.length > 0 ? resolution[0]["@id"] : "";
   }
 
   /** Handles submit. */
@@ -269,62 +230,50 @@ function ScreenManager({
     setSavingScreen(true);
     setLoadingMessage(t("loading-messages.saving-screen"));
     const localFormStateObject = JSON.parse(JSON.stringify(formStateObject));
-    const resolution =
-      localFormStateObject.resolution &&
-      localFormStateObject.resolution.length > 0
-        ? localFormStateObject.resolution[0].id
-        : "";
+    const {
+      title,
+      description,
+      size,
+      modifiedBy,
+      createdBy,
+      layout,
+      location,
+      enableColorSchemeChange,
+    } = localFormStateObject;
+
     const saveData = {
       screenScreenInput: JSON.stringify({
-        title: localFormStateObject.title,
-        description: localFormStateObject.description,
-        size: localFormStateObject.size,
-        modifiedBy: localFormStateObject.modifiedBy,
-        createdBy: localFormStateObject.createdBy,
-        layout: localFormStateObject.layout,
-        location: localFormStateObject.location,
-        resolution,
-        orientation: localFormStateObject.orientation
-          ? localFormStateObject.orientation[0].id
-          : "",
-        enableColorSchemeChange: localFormStateObject.enableColorSchemeChange,
+        title,
+        description,
+        size,
+        modifiedBy,
+        createdBy,
+        layout,
+        location,
+        enableColorSchemeChange,
+        resolution: getResolution(),
+        groups: mapGroups(),
+        orientation: getOrientation(),
+        regions: mapPlaylistsWithRegion(),
       }),
     };
 
+    setLoadingMessage(t("loading-messages.saving-screen"));
+
     if (saveMethod === "POST") {
-      setLoadingMessage(t("loading-messages.saving-screen"));
       PostV2Screens(saveData);
     } else if (saveMethod === "PUT") {
-      setLoadingMessage(t("loading-messages.saving-screen"));
-      const putData = { ...saveData, id };
-
-      PutV2Screens(putData);
-    } else {
-      throw new Error("Unsupported save method");
+      PutV2Screens({ ...saveData, id });
     }
-
-    saveGroups();
-    savePlaylists();
   };
 
   /** Handle submitting is done. */
   useEffect(() => {
-    if (
-      (isSaveSuccessPut || isSaveSuccessPost) &&
-      !savingPlaylists &&
-      !savingGroups
-    ) {
+    if (isSaveSuccessPut || isSaveSuccessPost) {
       setSavingScreen(false);
       navigate("/screen/list");
     }
-  }, [
-    isSaveSuccessPut,
-    isSaveSuccessPost,
-    isSavePlaylistSuccess,
-    isSaveSuccessGroups,
-    savingGroups,
-    savingPlaylists,
-  ]);
+  }, [isSaveSuccessPut, isSaveSuccessPost]);
 
   return (
     <>
@@ -336,9 +285,7 @@ function ScreenManager({
           headerText={headerText}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
-          isLoading={
-            savingScreen || savingPlaylists || savingGroups || isLoading
-          }
+          isLoading={savingScreen || isLoading}
           loadingMessage={loadingMessage}
           groupId={groupId}
         />

@@ -50,6 +50,7 @@ function ScreenForm({
   const { t } = useTranslation("common", { keyPrefix: "screen-form" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [layoutError, setLayoutError] = useState(false);
   const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const [bindKey, setBindKey] = useState("");
@@ -58,6 +59,21 @@ function ScreenForm({
     itemsPerPage: 20,
     order: { createdAt: "desc" },
   });
+
+  /** Check if published is set */
+  const checkInputsHandleSubmit = () => {
+    setLayoutError(false);
+    let submit = true;
+    if (!selectedLayout) {
+      displayError(t("remember-layout-error"));
+      setLayoutError(true);
+      submit = false;
+    }
+
+    if (submit) {
+      handleSubmit();
+    }
+  };
 
   useEffect(() => {
     if (layouts) {
@@ -72,6 +88,11 @@ function ScreenForm({
       );
       if (localSelectedLayout) {
         setSelectedLayout(localSelectedLayout);
+        // Initialize regions in the formstate object of screenmanager. used to save "empty" playlists, in the situation
+        // we are deleting all playlists from a screen region
+        handleInput({
+          target: { id: "regions", value: localSelectedLayout.regions },
+        });
       }
     }
   }, [screen.layout, layoutOptions]);
@@ -84,6 +105,7 @@ function ScreenForm({
    */
   const handleAdd = ({ target }) => {
     const { value, id } = target;
+
     setSelectedLayout(value);
     handleInput({
       target: { id, value: value.map((item) => item["@id"]).shift() },
@@ -250,7 +272,7 @@ function ScreenForm({
             noSelectedString={t("nothing-selected-resolution")}
             handleSelection={handleInput}
             options={resolutionOptions}
-            selected={screen.resolution || ""}
+            selected={screen.resolution || []}
             name="resolution"
             singleSelect
           />
@@ -259,7 +281,7 @@ function ScreenForm({
             noSelectedString={t("nothing-selected-orientation")}
             handleSelection={handleInput}
             options={orientationOptions}
-            selected={screen.orientation || ""}
+            selected={screen.orientation || []}
             name="orientation"
             singleSelect
           />
@@ -277,6 +299,7 @@ function ScreenForm({
                   helpText={t("search-to-se-possible-selections")}
                   selected={selectedLayout ? [selectedLayout] : []}
                   name="layout"
+                  error={layoutError}
                   singleSelect
                 />
               </div>
@@ -321,7 +344,7 @@ function ScreenForm({
             type="button"
             id="save_screen"
             size="lg"
-            onClick={handleSubmit}
+            onClick={checkInputsHandleSubmit}
           >
             {t("save-button")}
           </Button>
@@ -340,7 +363,11 @@ ScreenForm.propTypes = {
     enableColorSchemeChange: PropTypes.bool,
     layout: PropTypes.string,
     location: PropTypes.string,
-    regions: PropTypes.arrayOf(PropTypes.string),
+    regions: PropTypes.arrayOf(
+      PropTypes.shape({
+        "@id": PropTypes.string,
+      })
+    ),
     screenUser: PropTypes.string,
     size: PropTypes.string,
     title: PropTypes.string,
