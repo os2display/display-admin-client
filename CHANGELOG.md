@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.1.0] - 2024-10-23
+
 - [#258](https://github.com/os2display/display-admin-client/pull/258)
   - Fixed screen is vertical check.
 - [#257](https://github.com/os2display/display-admin-client/pull/257)
