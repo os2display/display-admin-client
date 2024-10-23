@@ -50,6 +50,7 @@ function ScreenForm({
   const { t } = useTranslation("common", { keyPrefix: "screen-form" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [layoutError, setLayoutError] = useState(false);
   const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const [bindKey, setBindKey] = useState("");
@@ -58,6 +59,20 @@ function ScreenForm({
     itemsPerPage: 20,
     order: { createdAt: "desc" },
   });
+
+  /** Check if published is set */
+  const checkInputsHandleSubmit = () => {
+    setLayoutError(false);
+    let submit = true;
+    if (!selectedLayout) {
+      setLayoutError(true);
+      submit = false;
+    }
+
+    if (submit) {
+      handleSubmit();
+    }
+  };
 
   useEffect(() => {
     if (layouts) {
@@ -283,6 +298,7 @@ function ScreenForm({
                   helpText={t("search-to-se-possible-selections")}
                   selected={selectedLayout ? [selectedLayout] : []}
                   name="layout"
+                  error={layoutError}
                   singleSelect
                 />
               </div>
@@ -327,7 +343,7 @@ function ScreenForm({
             type="button"
             id="save_screen"
             size="lg"
-            onClick={handleSubmit}
+            onClick={checkInputsHandleSubmit}
           >
             {t("save-button")}
           </Button>
