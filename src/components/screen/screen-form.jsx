@@ -65,6 +65,7 @@ function ScreenForm({
     setLayoutError(false);
     let submit = true;
     if (!selectedLayout) {
+      displayError(t("remember-layout-error"));
       setLayoutError(true);
       submit = false;
     }

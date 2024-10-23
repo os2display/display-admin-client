@@ -95,6 +95,7 @@ function SlideForm({
     if (!selectedTemplate) {
       setTemplateError(true);
       submit = false;
+      displayError(t("slide-form.remember-template-error"));
     }
 
     if (submit) {
