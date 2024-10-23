@@ -72,6 +72,7 @@ function SlideForm({
   const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
+  const [templateError, setTemplateError] = useState(false);
 
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
@@ -86,6 +87,20 @@ function SlideForm({
     itemsPerPage: 300,
     order: { createdAt: "desc" },
   });
+
+  /** Check if published is set */
+  const checkInputsHandleSubmit = () => {
+    setTemplateError(false);
+    let submit = true;
+    if (!selectedTemplate) {
+      setTemplateError(true);
+      submit = false;
+    }
+
+    if (submit) {
+      handleSubmit();
+    }
+  };
 
   /**
    * For closing overlay on escape key.
@@ -227,6 +242,7 @@ function SlideForm({
                     handleSelection={selectTemplate}
                     options={templateOptions}
                     selected={selectedTemplates}
+                    error={templateError}
                     name="templateInfo"
                     filterCallback={onFilterTemplate}
                     singleSelect
@@ -484,7 +500,7 @@ function SlideForm({
           <Button
             variant="primary"
             type="button"
-            onClick={handleSubmit}
+            onClick={checkInputsHandleSubmit}
             id="save_slide"
             size="lg"
           >
