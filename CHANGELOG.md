@@ -5,9 +5,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- [#265](https://github.com/os2display/display-admin-client/pull/265)
-  - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id`
+- [#263](https://github.com/os2display/display-admin-client/pull/263)
+  - Added prefix to local storage keys.
 - [#260](https://github.com/os2display/display-admin-client/pull/260)
+  - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id` 
+- [#265](https://github.com/os2display/display-admin-client/pull/265)
   - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id`
 - [#259](https://github.com/os2display/display-admin-client/pull/259)
   - Add saving of playlists/groups with screen (as opposed to _after_)
