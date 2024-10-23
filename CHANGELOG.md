@@ -7,10 +7,18 @@ All notable changes to this project will be documented in this file.
 
 - [#263](https://github.com/os2display/display-admin-client/pull/263)
   - Added prefix to local storage keys.
+
+- [#262](https://github.com/os2display/display-admin-client/pull/262)
+  - Add multi select styling for `invalid` state 
+  - Add possibility of sending error via props to multiselect component
+  - Add validation checking if layout is selected on screen before save
+  - Add validation checking if template is selected on slide before save
+
 - [#260](https://github.com/os2display/display-admin-client/pull/260)
   - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id` 
 - [#265](https://github.com/os2display/display-admin-client/pull/265)
   - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id`
+
 - [#259](https://github.com/os2display/display-admin-client/pull/259)
   - Add saving of playlists/groups with screen (as opposed to _after_)
   - Clean up `screen-manager.jsx`
