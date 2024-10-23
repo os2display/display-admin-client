@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.1.1] - 2024-10-23
+
 - [#266](https://github.com/os2display/display-admin-client/pull/266)
   - Fixed search from local storage.
 - [#265](https://github.com/os2display/display-admin-client/pull/265)
