@@ -18,7 +18,8 @@ import "./multi-dropdown.scss";
  * @param {Array} props.selected - The selected options
  * @param {string} props.name - The id of the form element
  * @param {boolean} props.isLoading - Whether the component is loading.
- * @param {string | null} props.noSelectedString - The label for when there is nothing selected.
+ * @param {string | null} props.noSelectedString - The label for when there is
+ *   nothing selected.
  * @param {string} props.errorText - The string to display on error.
  * @param {string} props.label - The input label
  * @param {string | null} props.helpText - Help text for the dropdown.
@@ -122,13 +123,22 @@ function MultiSelectComponent({
   const addOrRemoveNewEntryToSelected = (multiselectData) => {
     let selectedOptions = [];
     const idsOfSelectedEntries = multiselectData.map(({ value }) => value);
-
-    selectedOptions = removeDuplicatesByKey(
-      [...selected, ...options].filter((option) =>
-        idsOfSelectedEntries.includes(option["@id"] || option.id)
-      ),
-      "@id"
-    );
+    const selectedAndOptions = [...selected, ...options];
+    if ("@id" in selectedAndOptions[0]) {
+      selectedOptions = removeDuplicatesByKey(
+        selectedAndOptions.filter((option) =>
+          idsOfSelectedEntries.includes(option["@id"])
+        ),
+        "@id"
+      );
+    } else {
+      selectedOptions = removeDuplicatesByKey(
+        selectedAndOptions.filter(({ id }) =>
+          idsOfSelectedEntries.includes(id)
+        ),
+        "id"
+      );
+    }
 
     if (singleSelect) {
       selectedOptions = [selectedOptions[selectedOptions.length - 1]];
