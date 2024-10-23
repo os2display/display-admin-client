@@ -7,12 +7,22 @@ server {
     # Any route containing a file extension (e.g. /devicesfile.js)
     location ~* ^{{ getenv "APP_ADMIN_CLIENT_PATH" "" }}/(.+\..+)$ {
         rewrite ^{{ getenv "APP_ADMIN_CLIENT_PATH" "/" }}(.*) /$1 break;
+
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+        add_header Pragma "no-cache";
+        add_header Expires "0";
+
         try_files $uri =404;
     }
 
     location ~* ^{{ getenv "APP_ADMIN_CLIENT_PATH" "/" }} {
         rewrite ^{{ getenv "APP_ADMIN_CLIENT_PATH" "/" }}(.*) /$1 break;
         autoindex off;
+
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
+        add_header Pragma "no-cache";
+        add_header Expires "0";
+
         try_files $uri /index.html;
     }
 
