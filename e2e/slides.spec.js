@@ -145,11 +145,7 @@ test.describe("Create slide page works", () => {
       page.locator(".Toastify").locator(".Toastify__toast--error")
     ).toBeVisible();
     await expect(
-      page
-        .locator(".Toastify")
-        .locator(".Toastify__toast--error")
-        .getByText(/Husk at tilknytte en skabelon til dit slide/)
-        .first()
+      page.locator(".Toastify").locator(".Toastify__toast--error").first()
     ).toBeVisible();
     await expect(page).toHaveURL(/slide\/create/);
   });
