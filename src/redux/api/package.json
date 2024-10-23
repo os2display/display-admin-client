@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
+    "@rtk-incubator/rtk-query-codegen-openapi": "^0.5.1",
     "typescript": "^4.4.3"
   }
 }

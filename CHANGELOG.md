@@ -5,9 +5,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-
 - [#263](https://github.com/os2display/display-admin-client/pull/263)
   - Added prefix to local storage keys.
+- [#260](https://github.com/os2display/display-admin-client/pull/260)
+  - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id` 
+- [#259](https://github.com/os2display/display-admin-client/pull/259)
+  - Add saving of playlists/groups with screen (as opposed to _after_)
+  - Clean up `screen-manager.jsx`
+  - Change bootstrap column class from `col-md-8` -> `col-md-12` 
+  - update api.generated.ts to match [related pr](https://github.com/os2display/display-api-service/pull/213)
+  - Add @rtk-incubator/rtk-query-codegen-openapi to package.json in `src/redux/api`
+  - Sort playlists based on weight in drag/drop component
+
+## [2.1.0] - 2024-10-23
+
 - [#258](https://github.com/os2display/display-admin-client/pull/258)
   - Fixed screen is vertical check.
 - [#257](https://github.com/os2display/display-admin-client/pull/257)
