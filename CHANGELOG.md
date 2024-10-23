@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+
+- [#263](https://github.com/os2display/display-admin-client/pull/263)
+  - Added prefix to local storage keys.
 - [#258](https://github.com/os2display/display-admin-client/pull/258)
   - Fixed screen is vertical check.
 - [#257](https://github.com/os2display/display-admin-client/pull/257)
