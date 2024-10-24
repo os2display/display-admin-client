@@ -23,15 +23,16 @@ function CheckboxOptions({formData, data, onChange}) {
     });
   }
 
-  return (<>
+  return (<div className={formData.formGroupClasses}>
     {
       formData.options.map(option =>
-        <div className={formData.formGroupClasses}>
-          <input type="checkbox" key={option.value} value={option.value} onChange={onOptionChange} checked={containsValue(option.value)} /> {option.title}
+        <div className="ms-2 mb-2" key={option.value}>
+          <input type="checkbox" className="form-check-input me-1" value={option.value} onChange={onOptionChange}
+                 checked={containsValue(option.value)} /> {option.title}
         </div>
       )
     }
-  </>);
+  </div>);
 }
 
 export default CheckboxOptions;
