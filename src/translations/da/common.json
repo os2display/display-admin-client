@@ -226,6 +226,14 @@
     "header": "Temaer",
     "create-new-theme": "Opret nyt tema"
   },
+  "feed-sources-list": {
+    "header": "Feed sources",
+    "create-new-feed-source": "Opret ny feed source",
+    "loading-messages": {
+      "deleting-feed-source": "Sletter feed source(s)",
+      "loading-feed-sources": "Henter feed sources"
+    }
+  },
   "media-list": {
     "checkbox-label-sort-desc": "Vis nyeste først",
     "delete-button": "Slet",
@@ -729,7 +737,8 @@
     "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
     "configuration-users": "Brugere",
-    "activation-codes": "Aktiveringskoder"
+    "activation-codes": "Aktiveringskoder",
+    "configuration-feedsources": "Feed sources"
   },
   "topbar": {
     "brand": "OS2Display",
