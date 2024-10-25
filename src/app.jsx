@@ -42,6 +42,7 @@ import ActivationCodeActivate from "./components/activation-code/activation-code
 import ConfigLoader from "./config-loader";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
+import FeedSourcesList from "./components/feed-sources/feed-sources-list";
 
 /**
  * App component.
@@ -403,6 +404,18 @@ function App() {
                                       roles={accessConfig.settings.roles}
                                     >
                                       <ThemeCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="feed-sources">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <FeedSourcesList />
                                     </RestrictedRoute>
                                   }
                                 />
