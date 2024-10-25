@@ -234,6 +234,33 @@
       "loading-feed-sources": "Henter feed sources"
     }
   },
+  "feed-source-manager": {
+    "edit-feed-source": "Rediger følgende feed source",
+    "create-new-feed-source": "Opret ny feed source",
+    "loading-messages": {
+      "loading-feed-source": "Henter feed source",
+      "saving-feed-source": "Gemmer feed source",
+      "saving-media": "Mediet bliver gemt"
+    },
+    "success-messages": {
+      "saved-media": "Mediet er gemt",
+      "saved-feed-source": "Feed source er gemt"
+    },
+    "error-messages": {
+      "save-media-error": "Der skete en fejl da mediet skulle gemmes:",
+      "save-feed-source-error": "Der skete en fejl da feed source skulle gemmes:",
+      "load-feed-source-error": "Der skete en fejl da feed source med følgende id: {{id}} skulle hentes:"
+    }
+  },
+  "feed-source-form": {
+    "logo-title": "Tilføj logo til feed source",
+    "feed-source-name-label": "Feed source navn",
+    "feed-source-description-label": "Feed source beskrivelse",
+    "css-header": "Feed source CSS",
+    "feed-source-css-label": "Feed source CSS",
+    "save-button": "Gem feed source",
+    "cancel-button": "Annuller"
+  },
   "media-list": {
     "checkbox-label-sort-desc": "Vis nyeste først",
     "delete-button": "Slet",
