@@ -43,6 +43,7 @@ import ConfigLoader from "./config-loader";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 import FeedSourcesList from "./components/feed-sources/feed-sources-list";
+import FeedSourceCreate from "./components/feed-sources/feed-source-create";
 
 /**
  * App component.
@@ -416,6 +417,16 @@ function App() {
                                       roles={accessConfig.settings.roles}
                                     >
                                       <FeedSourcesList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <FeedSourceCreate />
                                     </RestrictedRoute>
                                   }
                                 />
