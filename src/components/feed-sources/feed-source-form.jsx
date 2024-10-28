@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Button, FormLabel } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -9,7 +9,6 @@ import FormInputArea from "../util/forms/form-input-area";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
-import ImageUploader from "../util/image-uploader/image-uploader";
 
 /**
  * The feed-source form component.
@@ -57,25 +56,19 @@ function FeedSourceForm({
             value={feedSource.description}
             onChange={handleInput}
           />
-        </ContentBody>
-        <ContentBody>
-          <h2 className="h4">{t("css-header")}</h2>
           <FormInputArea
-            name="cssStyles"
+            name="feedType"
             type="text"
-            label={t("feed-source-css-label")}
-            value={feedSource.cssStyles}
+            label={t("feed-source-feed-type-label")}
+            value={feedSource.feedType}
             onChange={handleInput}
           />
-          <FormLabel htmlFor="logo" className="mt-5">
-            {t("logo-title")}
-          </FormLabel>
-          <ImageUploader
-            multipleImages={false}
-            handleImageUpload={handleInput}
-            inputImage={feedSource.logo}
-            name="logo"
-            showLibraryButton
+          <FormInputArea
+            name="supportedFeedOutputType"
+            type="text"
+            label={t("feed-source-supported-feed-output-type-label")}
+            value={feedSource.supportedFeedOutputType}
+            onChange={handleInput}
           />
         </ContentBody>
         <ContentFooter>
