@@ -256,6 +256,8 @@
     "logo-title": "Tilføj logo til feed source",
     "feed-source-name-label": "Feed source navn",
     "feed-source-description-label": "Feed source beskrivelse",
+    "feed-source-feed-type-label": "Feed source type",
+    "feed-source-supported-feed-output-type-label": "Feed output type",
     "css-header": "Feed source CSS",
     "feed-source-css-label": "Feed source CSS",
     "save-button": "Gem feed source",
