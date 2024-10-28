@@ -44,6 +44,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
 import FeedSourcesList from "./components/feed-sources/feed-sources-list";
 import FeedSourceCreate from "./components/feed-sources/feed-source-create";
+import FeedSourceEdit from "./components/feed-sources/feed-source-edit";
 
 /**
  * App component.
@@ -427,6 +428,16 @@ function App() {
                                       roles={accessConfig.settings.roles}
                                     >
                                       <FeedSourceCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <FeedSourceEdit />
                                     </RestrictedRoute>
                                   }
                                 />
