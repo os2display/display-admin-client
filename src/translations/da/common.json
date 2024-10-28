@@ -232,6 +232,9 @@
     "loading-messages": {
       "deleting-feed-source": "Sletter feed source(s)",
       "loading-feed-sources": "Henter feed sources"
+    },
+    "columns": {
+      "feed-type": "Type"
     }
   },
   "feed-source-manager": {

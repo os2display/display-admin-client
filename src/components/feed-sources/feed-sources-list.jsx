@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import ContentHeader from "../util/content-header/content-header";
 import {
   useGetV2FeedSourcesQuery,
-  useDeleteV2FeedSourcesByIdMutation,
+  useDeleteV2FeedSourcesByIdMutation
 } from "../../redux/api/api.generated.ts";
 import ListContext from "../../context/list-context.jsx";
 import ContentBody from "../util/content-body/content-body.jsx";

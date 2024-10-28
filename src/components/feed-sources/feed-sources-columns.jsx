@@ -12,10 +12,9 @@ function getFeedSourcesColumns() {
 
   const columns = [
     {
-      key: "slides",
-      // eslint-disable-next-line react/prop-types
-      content: ({ onNumberOfSlides }) => <>{onNumberOfSlides}</>,
-      label: t("columns.number-of-slides"),
+      key: "publishing-from",
+      content: ({ feedType }) => <>{feedType}</>,
+      label: t("columns.feed-type"),
     },
   ];
 
