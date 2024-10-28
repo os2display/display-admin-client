@@ -1,7 +1,10 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import ContentHeader from "../util/content-header/content-header";
-import { useGetV2FeedSourcesQuery } from "../../redux/api/api.generated.ts";
+import {
+  useGetV2FeedSourcesQuery,
+  useDeleteV2FeedSourcesByIdMutation,
+} from "../../redux/api/api.generated.ts";
 import ListContext from "../../context/list-context.jsx";
 import ContentBody from "../util/content-body/content-body.jsx";
 import List from "../util/list/list.jsx";
@@ -34,7 +37,7 @@ function FeedSourcesList() {
   const [
     DeleteV2FeedSources,
     { isSuccess: isDeleteSuccess, error: isDeleteError },
-  ] = "test"; // Insert feed source delete api;
+  ] = useDeleteV2FeedSourcesByIdMutation(); // Insert feed source delete api;
 
   const {
     searchText: { get: searchText },
