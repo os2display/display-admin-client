@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import FeedSourceForm from "./feed-source-form";
 import {
-  usePostV2ThemesMutation,
-  usePutV2ThemesByIdMutation,
-  usePostMediaCollectionMutation,
+  usePostV2FeedSourcesMutation,
+  usePutV2FeedSourcesByIdMutation
 } from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
@@ -53,67 +52,32 @@ function FeedSourceManager({
     css: "",
   });
 
-  const [postV2Themes, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
-    usePostV2ThemesMutation();
+  const [postV2FeedSources, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] = usePostV2FeedSourcesMutation();
 
   const [
-    PutV2ThemesById,
+    PutV2FeedSourcesById,
     { error: saveErrorPut, isSuccess: isSaveSuccessPut },
-  ] = usePutV2ThemesByIdMutation();
-
-  const [
-    PostV2MediaCollection,
-    {
-      data: savedMediaData,
-      isSuccess: isSaveMediaSuccess,
-      error: saveMediaError,
-    },
-  ] = usePostMediaCollectionMutation();
+  ] = usePutV2FeedSourcesByIdMutation();
 
   /** Set loaded data into form state. */
   useEffect(() => {
     setFormStateObject(initialState);
   }, [initialState]);
 
-  /**
-   * Get logo for savedata
-   *
-   * @returns {object} The logo.
-   */
-  function getLogo() {
-    if (savedMediaData) {
-      return savedMediaData["@id"];
-    }
-    if (
-      Array.isArray(formStateObject.logo) &&
-      formStateObject.logo.length > 0
-    ) {
-      return formStateObject.logo[0]["@id"];
-    }
-    if (formStateObject.logo) {
-      return formStateObject.logo["@id"];
-    }
-    return null;
-  }
 
-  /** Save theme. */
-  function saveTheme() {
+  /** Save feed source. */
+  function saveFeedSource() {
     setLoadingMessage(t("loading-messages.saving-feed-source"));
-    const logo = getLogo();
     const saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
-      modifiedBy: formStateObject.modifiedBy,
-      createdBy: formStateObject.createdBy,
-      css: formStateObject.cssStyles,
+      feedType: formStateObject.feedType,
+      supportedFeedOutputType: formStateObject.supportedFeedOutputType,
     };
-    if (logo) {
-      saveData.logo = logo;
-    }
     if (saveMethod === "POST") {
-      postV2Themes({ themeThemeInput: JSON.stringify(saveData) });
+      postV2FeedSources({ feedSourceFeedSourceInput: JSON.stringify(saveData) });
     } else if (saveMethod === "PUT") {
-      PutV2ThemesById({ themeThemeInput: JSON.stringify(saveData), id });
+      PutV2FeedSourcesById({ feedSourceFeedSourceInput: JSON.stringify(saveData), id });
     }
   }
 
@@ -129,7 +93,7 @@ function FeedSourceManager({
     setFormStateObject(localFormStateObject);
   };
 
-  /** If the theme is not loaded, display the error message */
+  /** If the feed source is not loaded, display the error message */
   useEffect(() => {
     if (loadingError) {
       displayError(
@@ -138,38 +102,6 @@ function FeedSourceManager({
       );
     }
   }, [loadingError]);
-
-  // Media are not saved successfully, display a message
-  useEffect(() => {
-    if (saveMediaError) {
-      setSubmitting(false);
-      displayError(t("error-messages.save-media-error"), saveMediaError);
-    }
-  }, [saveMediaError]);
-
-  // Media is saved successfully, display a message
-  useEffect(() => {
-    if (isSaveMediaSuccess && savedMediaData) {
-      setSubmitting(false);
-      displaySuccess(t("success-messages.saved-media"));
-      saveTheme();
-    }
-  }, [isSaveMediaSuccess]);
-
-  /** @param {object} media The media object to save */
-  function saveMedia(media) {
-    // Submit media.
-    const formData = new FormData();
-    formData.append("file", media.file);
-    formData.append("title", media.title);
-    formData.append("description", media.description);
-    formData.append("license", media.license);
-    // @TODO: Should these be optional in the API?
-    formData.append("modifiedBy", "");
-    formData.append("createdBy", "");
-
-    PostV2MediaCollection({ body: formData });
-  }
 
   /** When the media is saved, the theme will be saved. */
   useEffect(() => {
@@ -183,12 +115,7 @@ function FeedSourceManager({
   /** Handles submit. */
   const handleSubmit = () => {
     setSubmitting(true);
-    if (formStateObject.logo?.length > 0 && formStateObject.logo[0].url) {
-      setLoadingMessage(t("loading-messages.saving-media"));
-      saveMedia(formStateObject.logo[0]);
-    } else {
-      saveTheme();
-    }
+    saveFeedSource();
   };
 
   /** If the theme is saved with error, display the error message */
