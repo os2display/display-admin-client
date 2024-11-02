@@ -1,7 +1,7 @@
 import { React } from "react";
 
 function CheckboxOptions({formData, data, onChange}) {
-  const values = data[formData.name];
+  const values = data[formData.name] ?? [];
 
   const containsValue = (value) => {
     return values.includes(value);
