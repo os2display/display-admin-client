@@ -8,7 +8,7 @@ const NotifiedFeedTypeTemplate = ({ handleInput, formStateObject, t }) => {
       <FormInput
         name="token"
         type="text"
-        label={t("dynamic-fields.AppFeedNotifiedFeedType.token")}
+        label={t("dynamic-fields.NotifiedFeedType.token")}
         onChange={handleInput}
         value={formStateObject.token}
       />
