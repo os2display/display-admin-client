@@ -64,13 +64,6 @@ function FeedSourceForm({
             value={feedSource.description}
             onChange={handleInput}
           />
-          <FormSelect
-            label={t("feed-source-feed-type-label")}
-            name="feedType"
-            value={feedSource.feedType}
-            onChange={handleInput}
-            options={feedSourceTypeOptions}
-          />
           <FormInputArea
             name="supportedFeedOutputType"
             type="text"
@@ -78,6 +71,14 @@ function FeedSourceForm({
             value={feedSource.supportedFeedOutputType}
             onChange={handleInput}
           />
+          <FormSelect
+            label={t("feed-source-feed-type-label")}
+            name="feedType"
+            value={feedSource.feedType}
+            onChange={handleInput}
+            options={feedSourceTypeOptions}
+          />
+
           {dynamicFormElement}
         </ContentBody>
         <ContentFooter>
@@ -118,15 +119,18 @@ FeedSourceForm.propTypes = {
   headerText: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,
-  dynamicFormElement: PropTypes.node,
+  dynamicFormElement: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ]),
   feedSourceTypeOptions: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string,
+      value: PropTypes.string.isRequired,
       title: PropTypes.string,
-      key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      template: PropTypes.node,
+      key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      template: PropTypes.element,
     })
-  ),
+  ).isRequired,
 };
 
 export default FeedSourceForm;
