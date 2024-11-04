@@ -1,16 +1,20 @@
-import { React, useEffect, useState } from "react";
+import { cloneElement, React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import FeedSourceForm from "./feed-source-form";
 import {
   usePostV2FeedSourcesMutation,
-  usePutV2FeedSourcesByIdMutation
+  usePutV2FeedSourcesByIdMutation,
 } from "../../redux/api/api.generated.ts";
 import {
   displaySuccess,
   displayError,
 } from "../util/list/toast-component/display-toast";
+import EventDatabaseApiFeedTypeTemplate from "./feed-source-type-templates/EventDatabaseApiFeedType.template";
+import NotifiedFeedTypeTemplate from "./feed-source-type-templates/NotifiedFeedType.template";
+import SparkleIOFeedTypeTemplate from "./feed-source-type-templates/SparkleIOFeedType.template";
+import CalendarFeedTypeTemplate from "./feed-source-type-templates/CalendarFeedType.template";
 
 /**
  * The theme manager component.
@@ -31,7 +35,9 @@ function FeedSourceManager({
   initialState = null,
 }) {
   // Hooks
-  const { t } = useTranslation("common", { keyPrefix: "feed-source-manager" });
+  const { t } = useTranslation("common", {
+    keyPrefix: "feed-source-manager",
+  });
   const navigate = useNavigate();
 
   // State
@@ -43,27 +49,57 @@ function FeedSourceManager({
     t("loading-messages.loading-feed-source")
   );
 
+  const [dynamicFormElement, setDynamicFormElement] = useState();
   const [submitting, setSubmitting] = useState(false);
-  const [formStateObject, setFormStateObject] = useState({
-    title: "",
-    description: "",
-    modifiedBy: "",
-    createdBy: "",
-    css: "",
-  });
+  const [formStateObject, setFormStateObject] = useState();
 
-  const [postV2FeedSources, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] = usePostV2FeedSourcesMutation();
+  const [
+    postV2FeedSources,
+    { error: saveErrorPost, isSuccess: isSaveSuccessPost },
+  ] = usePostV2FeedSourcesMutation();
 
   const [
     PutV2FeedSourcesById,
     { error: saveErrorPut, isSuccess: isSaveSuccessPut },
   ] = usePutV2FeedSourcesByIdMutation();
 
+  const feedSourceTypeOptions = [
+    {
+      value: "App\\Feed\\EventDatabaseApiFeedType",
+      title: "Eventdatabase feed",
+      key: "1",
+      template: <EventDatabaseApiFeedTypeTemplate />,
+    },
+    {
+      value: "App\\Feed\\NotifiedFeedType",
+      title: "Notified feed",
+      key: "2",
+      template: <NotifiedFeedTypeTemplate />,
+    },
+    {
+      value: "App\\Feed\\CalendarApiFeedType",
+      title: "Kalender feed",
+      key: "3",
+      template: <CalendarFeedTypeTemplate />,
+    },
+    {
+      value: "App\\Feed\\SparkeIOFeedType",
+      title: "Instagram feed",
+      key: "4",
+      template: <SparkleIOFeedTypeTemplate />,
+    },
+    {
+      value: "App\\Feed\\RssFeedType",
+      title: "RSS feed",
+      key: "5",
+      template: null,
+    },
+  ];
+
   /** Set loaded data into form state. */
   useEffect(() => {
     setFormStateObject(initialState);
   }, [initialState]);
-
 
   /** Save feed source. */
   function saveFeedSource() {
@@ -75,9 +111,14 @@ function FeedSourceManager({
       supportedFeedOutputType: formStateObject.supportedFeedOutputType,
     };
     if (saveMethod === "POST") {
-      postV2FeedSources({ feedSourceFeedSourceInput: JSON.stringify(saveData) });
+      postV2FeedSources({
+        feedSourceFeedSourceInput: JSON.stringify(saveData),
+      });
     } else if (saveMethod === "PUT") {
-      PutV2FeedSourcesById({ feedSourceFeedSourceInput: JSON.stringify(saveData), id });
+      PutV2FeedSourcesById({
+        feedSourceFeedSourceInput: JSON.stringify(saveData),
+        id,
+      });
     }
   }
 
@@ -92,6 +133,26 @@ function FeedSourceManager({
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
   };
+
+
+  useEffect(() => {
+    if (formStateObject) {
+      const option = feedSourceTypeOptions.find(
+        (opt) => opt.value === formStateObject.feedType
+      );
+      if (option && option.template) {
+        setDynamicFormElement(
+          cloneElement(option.template, {
+            handleInput,
+            formStateObject,
+            t,
+          })
+        );
+      } else {
+        setDynamicFormElement(null);
+      }
+    }
+  }, [formStateObject ? formStateObject : null]);
 
   /** If the feed source is not loaded, display the error message */
   useEffect(() => {
@@ -137,6 +198,8 @@ function FeedSourceManager({
           handleSubmit={handleSubmit}
           isLoading={isLoading || submitting}
           loadingMessage={loadingMessage}
+          feedSourceTypeOptions={feedSourceTypeOptions}
+          dynamicFormElement={dynamicFormElement}
         />
       )}
     </>
@@ -145,7 +208,16 @@ function FeedSourceManager({
 
 FeedSourceManager.propTypes = {
   initialState: PropTypes.shape({
-    logo: PropTypes.shape({}),
+    title: PropTypes.string,
+    description: PropTypes.string,
+    feedType: PropTypes.string,
+    feedSourceType: PropTypes.string,
+    host: PropTypes.string,
+    token: PropTypes.string,
+    baseUrl: PropTypes.string,
+    clientId: PropTypes.string,
+    clientSecret: PropTypes.string,
+    feedSources: PropTypes.string,
   }),
   saveMethod: PropTypes.string.isRequired,
   id: PropTypes.string,
