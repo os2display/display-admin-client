@@ -255,19 +255,26 @@
       "load-feed-source-error": "Der skete en fejl da feed source med følgende id: {{id}} skulle hentes:"
     },
     "dynamic-fields": {
-      "eventDatabaseApi": {
+      "EventDatabaseApiFeedType": {
+        "title": "Eventdatabase API",
         "host": "Eventdatabase API host"
       },
-      "AppFeedNotifiedFeedType": {
+      "NotifiedFeedType": {
+        "title": "Notified feed",
         "token": "Notified API token"
       },
       "SparkleIOFeedType":{
+        "title": "Instagram feed",
         "baseUrl": "Instagram url",
         "clientId": "Client id",
         "clientSecret": "Client secret"
       },
-      "CalendarFeedType": {
+      "CalendarApiFeedType": {
+        "title": "Kalender feed",
         "resources": "Ressourcer"
+      },
+      "RssFeedType": {
+        "title": "RSS feed"
       }
     }
   },
