@@ -10,7 +10,7 @@ const CalendarFeedTypeTemplate = ({ handleInput, formStateObject, t }) => {
         type="text"
         label={t("dynamic-fields.CalendarApiFeedType.resources")}
         onChange={handleInput}
-        value={formStateObject.feedSources}
+        value={formStateObject.resources}
       />
     </>
   );
@@ -20,7 +20,7 @@ const CalendarFeedTypeTemplate = ({ handleInput, formStateObject, t }) => {
 CalendarFeedTypeTemplate.propTypes = {
   handleInput: PropTypes.func,
   formStateObject: PropTypes.shape({
-    feedSources: PropTypes.string,
+    resources: PropTypes.string,
   }),
   t: PropTypes.func,
 };
