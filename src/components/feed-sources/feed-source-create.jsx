@@ -11,10 +11,14 @@ function FeedSourceCreate() {
   const data = {
     title: "",
     description: "",
-    modifiedBy: "",
-    createdBy: "",
-    cssStyles: "",
-    media: [],
+    feedType: "",
+    feedSourceType: "",
+    host: "",
+    token: "",
+    baseUrl: "",
+    clientId: "",
+    clientSecret: "",
+    feedSources: "",
   };
 
   return <FeedSourceManager saveMethod="POST" initialState={data} />;
