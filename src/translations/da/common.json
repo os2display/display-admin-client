@@ -253,6 +253,22 @@
       "save-media-error": "Der skete en fejl da mediet skulle gemmes:",
       "save-feed-source-error": "Der skete en fejl da feed source skulle gemmes:",
       "load-feed-source-error": "Der skete en fejl da feed source med følgende id: {{id}} skulle hentes:"
+    },
+    "dynamic-fields": {
+      "eventDatabaseApi": {
+        "host": "Eventdatabase API host"
+      },
+      "AppFeedNotifiedFeedType": {
+        "token": "Notified API token"
+      },
+      "SparkleIOFeedType":{
+        "baseUrl": "Instagram url",
+        "clientId": "Client id",
+        "clientSecret": "Client secret"
+      },
+      "CalendarFeedType": {
+        "resources": "Ressourcer"
+      }
     }
   },
   "feed-source-form": {
@@ -261,7 +277,6 @@
     "feed-source-description-label": "Feed source beskrivelse",
     "feed-source-feed-type-label": "Feed source type",
     "feed-source-supported-feed-output-type-label": "Feed output type",
-    "css-header": "Feed source CSS",
     "feed-source-css-label": "Feed source CSS",
     "save-button": "Gem feed source",
     "cancel-button": "Annuller"
