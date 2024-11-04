@@ -8,7 +8,7 @@ const CalendarFeedTypeTemplate = ({ handleInput, formStateObject, t }) => {
       <FormInput
         name="resources"
         type="text"
-        label={t("dynamic-fields.CalendarFeedType.resources")}
+        label={t("dynamic-fields.CalendarApiFeedType.resources")}
         onChange={handleInput}
         value={formStateObject.feedSources}
       />
