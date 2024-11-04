@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import LoadingComponent from "../util/loading-component/loading-component";
 import FormInputArea from "../util/forms/form-input-area";
+import FormSelect from "../util/forms/select";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
@@ -14,12 +15,17 @@ import FormInput from "../util/forms/form-input";
  * The feed-source form component.
  *
  * @param {object} props - The props.
- * @param {object} props.feed-source The feed-source object to modify in the form.
+ * @param {object} props.feedSource The feed-source object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {string} props.headerText Headline text.
- * @param {boolean} props.isLoading Indicator of whether the form is loading
- * @param {string} props.loadingMessage The loading message for the spinner
+ * @param {boolean} [props.isLoading=false] Indicator of whether the form is
+ *   loading. Default is `false`
+ * @param {string} [props.loadingMessage=""] The loading message for the
+ *   spinner. Default is `""`
+ * @param {object} props.feedSource The feed source object
+ * @param {object} props.feedSourceTypeOptions The options for feed source types
+ * @param {element} props.dynamicFormElement The dynamic form element
  * @returns {object} The feed-source form.
  */
 function FeedSourceForm({
@@ -29,6 +35,8 @@ function FeedSourceForm({
   isLoading = false,
   loadingMessage = "",
   feedSource = null,
+  feedSourceTypeOptions = null,
+  dynamicFormElement = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "feed-source-form" });
   const navigate = useNavigate();
@@ -56,12 +64,12 @@ function FeedSourceForm({
             value={feedSource.description}
             onChange={handleInput}
           />
-          <FormInputArea
-            name="feedType"
-            type="text"
+          <FormSelect
             label={t("feed-source-feed-type-label")}
+            name="feedType"
             value={feedSource.feedType}
             onChange={handleInput}
+            options={feedSourceTypeOptions}
           />
           <FormInputArea
             name="supportedFeedOutputType"
@@ -70,6 +78,7 @@ function FeedSourceForm({
             value={feedSource.supportedFeedOutputType}
             onChange={handleInput}
           />
+          {dynamicFormElement}
         </ContentBody>
         <ContentFooter>
           <Button
@@ -99,16 +108,25 @@ function FeedSourceForm({
 
 FeedSourceForm.propTypes = {
   feedSource: PropTypes.shape({
-    cssStyles: PropTypes.string,
-    logo: PropTypes.shape({}),
-    description: PropTypes.string,
     title: PropTypes.string,
+    description: PropTypes.string,
+    feedType: PropTypes.string,
+    supportedFeedOutputType: PropTypes.string,
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,
+  dynamicFormElement: PropTypes.node,
+  feedSourceTypeOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      title: PropTypes.string,
+      key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      template: PropTypes.node,
+    })
+  ),
 };
 
 export default FeedSourceForm;
