@@ -18,7 +18,7 @@ function FeedSourceCreate() {
     baseUrl: "",
     clientId: "",
     clientSecret: "",
-    feedSources: "",
+    resources: "",
   };
 
   return <FeedSourceManager saveMethod="POST" initialState={data} />;
