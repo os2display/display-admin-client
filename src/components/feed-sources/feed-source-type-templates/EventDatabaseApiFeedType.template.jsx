@@ -8,7 +8,7 @@ const EventDatabaseApiTemplate = ({ handleInput, formStateObject, t }) => {
       <FormInput
         name="host"
         type="text"
-        label={t("dynamic-fields.eventDatabaseApi.host")}
+        label={t("dynamic-fields.EventDatabaseApiFeedType.host")}
         onChange={handleInput}
         value={formStateObject.host}
       />
