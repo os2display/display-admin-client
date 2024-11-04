@@ -108,6 +108,13 @@ function FeedSourceManager({
       title: formStateObject.title,
       description: formStateObject.description,
       feedType: formStateObject.feedType,
+      feedSourceType: formStateObject.feedSourceType,
+      host: formStateObject.host,
+      token: formStateObject.token,
+      baseUrl: formStateObject.baseUrl,
+      clientId: formStateObject.clientId,
+      clientSecret: formStateObject.clientSecret,
+      resources: formStateObject.resources,
       supportedFeedOutputType: formStateObject.supportedFeedOutputType,
     };
     if (saveMethod === "POST") {
