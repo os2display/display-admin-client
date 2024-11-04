@@ -66,31 +66,31 @@ function FeedSourceManager({
   const feedSourceTypeOptions = [
     {
       value: "App\\Feed\\EventDatabaseApiFeedType",
-      title: "Eventdatabase feed",
+      title: t("dynamic-fields.EventDatabaseApiFeedType.title"),
       key: "1",
       template: <EventDatabaseApiFeedTypeTemplate />,
     },
     {
       value: "App\\Feed\\NotifiedFeedType",
-      title: "Notified feed",
+      title: t("dynamic-fields.NotifiedFeedType.title"),
       key: "2",
       template: <NotifiedFeedTypeTemplate />,
     },
     {
       value: "App\\Feed\\CalendarApiFeedType",
-      title: "Kalender feed",
+      title: t("dynamic-fields.CalendarApiFeedType.title"),
       key: "3",
       template: <CalendarFeedTypeTemplate />,
     },
     {
-      value: "App\\Feed\\SparkeIOFeedType",
-      title: "Instagram feed",
+      value: "App\\Feed\\SparkleIOFeedType",
+      title: t("dynamic-fields.SparkleIOFeedType.title"),
       key: "4",
       template: <SparkleIOFeedTypeTemplate />,
     },
     {
       value: "App\\Feed\\RssFeedType",
-      title: "RSS feed",
+      title: t("dynamic-fields.RssFeedType.title"),
       key: "5",
       template: null,
     },
