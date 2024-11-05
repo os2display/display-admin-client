@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#268](https://github.com/os2display/display-admin-client/pull/268)
+  - Added feed source UI.
+
 ## [2.1.1] - 2024-10-23
 
 - [#266](https://github.com/os2display/display-admin-client/pull/266)
