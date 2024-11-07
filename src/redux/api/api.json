@@ -8185,7 +8185,7 @@
           }
         }
       },
-      "FeedSource-feed-sources-slide.read": {
+      "FeedSource-playlist-slide.read": {
         "type": "object",
         "description": "",
         "deprecated": false
@@ -8248,7 +8248,7 @@
           }
         }
       },
-      "FeedSource.FeedSource-feed-sources-slide.read": {
+      "FeedSource.FeedSource-playlist-slide.read": {
         "type": "object",
         "description": "",
         "deprecated": false
@@ -8346,7 +8346,7 @@
           }
         }
       },
-      "FeedSource.FeedSource.jsonld-feed-sources-slide.read": {
+      "FeedSource.FeedSource.jsonld-playlist-slide.read": {
         "type": "object",
         "description": "",
         "deprecated": false,
@@ -8522,7 +8522,7 @@
           }
         }
       },
-      "FeedSource.jsonld-feed-sources-slide.read": {
+      "FeedSource.jsonld-playlist-slide.read": {
         "type": "object",
         "description": "",
         "deprecated": false,
