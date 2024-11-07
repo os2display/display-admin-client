@@ -234,6 +234,9 @@
       "deleting-feed-source": "Sletter feed source(s)",
       "loading-feed-sources": "Henter feed sources"
     },
+    "error-messages": {
+      "feed-source-delete-error": "Der skete en fejl da feed sourcen skulle slettes:"
+    },
     "columns": {
       "feed-type": "Type"
     },
