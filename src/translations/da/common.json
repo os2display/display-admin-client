@@ -229,12 +229,16 @@
   "feed-sources-list": {
     "header": "Feed sources",
     "create-new-feed-source": "Opret ny feed source",
+    "number-of-slides": "Slides tilknyttede",
     "loading-messages": {
       "deleting-feed-source": "Sletter feed source(s)",
       "loading-feed-sources": "Henter feed sources"
     },
     "columns": {
       "feed-type": "Type"
+    },
+    "info-modal": {
+      "slides": "Feed sourcen er tilknyttet følgende slides"
     }
   },
   "feed-source-manager": {
