@@ -96,6 +96,24 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV2FeedSourcesByIdSlides: build.query<
+      GetV2FeedSourcesByIdSlidesApiResponse,
+      GetV2FeedSourcesByIdSlidesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/feed-sources/${queryArg.id}/slides`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
+      }),
+    }),
     getV2FeedSourcesByIdConfigAndName: build.query<
       GetV2FeedSourcesByIdConfigAndNameApiResponse,
       GetV2FeedSourcesByIdConfigAndNameApiArg
@@ -908,6 +926,29 @@ export type DeleteV2FeedSourcesByIdApiResponse = unknown;
 export type DeleteV2FeedSourcesByIdApiArg = {
   id: string;
 };
+export type GetV2FeedSourcesByIdSlidesApiResponse = unknown;
+export type GetV2FeedSourcesByIdSlidesApiArg = {
+  id: string;
+  page: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
+  };
+};
 export type GetV2FeedSourcesByIdConfigAndNameApiResponse = unknown;
 export type GetV2FeedSourcesByIdConfigAndNameApiArg = {
   id: string;
@@ -1581,6 +1622,7 @@ export const {
   useGetV2FeedSourcesByIdQuery,
   usePutV2FeedSourcesByIdMutation,
   useDeleteV2FeedSourcesByIdMutation,
+  useGetV2FeedSourcesByIdSlidesQuery,
   useGetV2FeedSourcesByIdConfigAndNameQuery,
   useGetV2FeedsQuery,
   useGetV2FeedsByIdQuery,

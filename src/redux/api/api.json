@@ -211,7 +211,7 @@
             "name": "supportedFeedOutputType",
             "in": "query",
             "description": "",
-            "required": true,
+            "required": false,
             "deprecated": false,
             "allowEmptyValue": false,
             "schema": {
@@ -616,6 +616,258 @@
               "pattern": "^[A-Za-z0-9]{26}$"
             },
             "style": "simple",
+            "explode": false,
+            "allowReserved": false
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/v2/feed-sources/{id}/slides": {
+      "get": {
+        "operationId": "get-v2-feed-source-slide-id",
+        "tags": [
+          "FeedSources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/ld+json": {
+                "examples": null
+              }
+            },
+            "headers": []
+          }
+        },
+        "summary": "Retrieves collection of weighted slide resources  (feedsource).",
+        "description": "Retrieves collection of weighted slide resources (feedsource).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "ulid",
+              "pattern": "^[A-Za-z0-9]{26}$"
+            },
+            "style": "simple",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "format": "int32",
+              "default": 1
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "The number of items per page",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "default": "10"
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "createdBy[]",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "style": "form",
+            "explode": true,
+            "allowReserved": false
+          },
+          {
+            "name": "modifiedBy",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "modifiedBy[]",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "style": "form",
+            "explode": true,
+            "allowReserved": false
+          },
+          {
+            "name": "published",
+            "in": "query",
+            "description": "If true only published content will be shown",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "order[title]",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "order[description]",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "order[createdAt]",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "style": "form",
+            "explode": false,
+            "allowReserved": false
+          },
+          {
+            "name": "order[modifiedAt]",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "style": "form",
             "explode": false,
             "allowReserved": false
           }
@@ -7933,6 +8185,11 @@
           }
         }
       },
+      "FeedSource-feed-sources-slide.read": {
+        "type": "object",
+        "description": "",
+        "deprecated": false
+      },
       "FeedSource.FeedSource": {
         "type": "object",
         "description": "",
@@ -7990,6 +8247,11 @@
             "format": "date-time"
           }
         }
+      },
+      "FeedSource.FeedSource-feed-sources-slide.read": {
+        "type": "object",
+        "description": "",
+        "deprecated": false
       },
       "FeedSource.FeedSource.jsonld": {
         "type": "object",
@@ -8081,6 +8343,21 @@
           "modified": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "FeedSource.FeedSource.jsonld-feed-sources-slide.read": {
+        "type": "object",
+        "description": "",
+        "deprecated": false,
+        "properties": {
+          "@id": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "@type": {
+            "readOnly": true,
+            "type": "string"
           }
         }
       },
@@ -8242,6 +8519,21 @@
           "modified": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "FeedSource.jsonld-feed-sources-slide.read": {
+        "type": "object",
+        "description": "",
+        "deprecated": false,
+        "properties": {
+          "@id": {
+            "readOnly": true,
+            "type": "string"
+          },
+          "@type": {
+            "readOnly": true,
+            "type": "string"
           }
         }
       },
