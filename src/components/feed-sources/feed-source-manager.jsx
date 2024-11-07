@@ -101,6 +101,39 @@ function FeedSourceManager({
     setFormStateObject(initialState);
   }, [initialState]);
 
+  const [requiredSecrets, setRequiredSecrets] = useState([]);
+
+  useEffect(() => {
+    let newSecrets = {};
+    if (formStateObject && formStateObject.feedType) {
+      switch (formStateObject.feedType) {
+        case "App\\Feed\\EventDatabaseApiFeedType":
+          newSecrets = {
+            host: formStateObject.host,
+          };
+          break;
+        case "App\\Feed\\NotifiedFeedType":
+          newSecrets = {
+            token: formStateObject.token,
+          };
+          break;
+        case "App\\Feed\\CalendarApiFeedType":
+          newSecrets = {
+            resources: formStateObject.resources,
+          };
+          break;
+        case "App\\Feed\\SparkleIOFeedType":
+          newSecrets = {
+            BaseUrl: formStateObject.BaseUrl,
+            clientId: formStateObject.clientId,
+            clientSecret: formStateObject.clientSecret,
+          };
+          break;
+      }
+    }
+    setRequiredSecrets(newSecrets);
+  }, [formStateObject]);
+
   /** Save feed source. */
   function saveFeedSource() {
     setLoadingMessage(t("loading-messages.saving-feed-source"));
@@ -112,12 +145,7 @@ function FeedSourceManager({
       supportedFeedOutputType: formStateObject.supportedFeedOutputType,
       secrets: [
         {
-          host: formStateObject.host,
-          token: formStateObject.token,
-          baseUrl: formStateObject.baseUrl,
-          clientId: formStateObject.clientId,
-          clientSecret: formStateObject.clientSecret,
-          resources: formStateObject.resources,
+          ...requiredSecrets,
         },
       ],
     };
@@ -145,7 +173,6 @@ function FeedSourceManager({
     setFormStateObject(localFormStateObject);
   };
 
-
   useEffect(() => {
     if (formStateObject) {
       const option = feedSourceTypeOptions.find(
@@ -163,7 +190,7 @@ function FeedSourceManager({
         setDynamicFormElement(null);
       }
     }
-  }, [formStateObject ? formStateObject : null]);
+  }, [formStateObject || null]);
 
   /** If the feed source is not loaded, display the error message */
   useEffect(() => {
