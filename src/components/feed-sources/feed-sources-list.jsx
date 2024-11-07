@@ -3,12 +3,13 @@ import { useTranslation } from "react-i18next";
 import ContentHeader from "../util/content-header/content-header";
 import {
   useGetV2FeedSourcesQuery,
-  useDeleteV2FeedSourcesByIdMutation
+  useDeleteV2FeedSourcesByIdMutation,
+  useGetV2FeedSourcesByIdSlidesQuery,
 } from "../../redux/api/api.generated.ts";
 import ListContext from "../../context/list-context.jsx";
 import ContentBody from "../util/content-body/content-body.jsx";
 import List from "../util/list/list.jsx";
-import getFeedSourcesColumns from "../feed-sources/feed-sources-columns.jsx";
+import { FeedSourceColumns } from "../feed-sources/feed-sources-columns";
 import {
   displayError,
   displaySuccess,
@@ -100,10 +101,13 @@ function FeedSourcesList() {
     setIsDeleting(true);
     setLoadingMessage(t("loading-messages.deleting-feed-source"));
   };
-  const columns = getFeedSourcesColumns({
+
+  // The columns for the table.
+  const columns = FeedSourceColumns({
     handleDelete,
-    disableCheckbox: ({ onNumberOfSlides }) => onNumberOfSlides > 0,
-    disableDelete: ({ onNumberOfSlides }) => onNumberOfSlides > 0,
+    apiCall: useGetV2FeedSourcesByIdSlidesQuery,
+    infoModalRedirect: "/slide/edit",
+    infoModalTitle: t(`info-modal.slides`),
   });
 
   useEffect(() => {
