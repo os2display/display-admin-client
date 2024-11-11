@@ -17,7 +17,6 @@ function FeedSourceEdit() {
     isLoading,
   } = useGetV2FeedSourcesByIdQuery({ id });
 
-  console.log(data);
   return (
     <FeedSourceManager
       saveMethod="PUT"
