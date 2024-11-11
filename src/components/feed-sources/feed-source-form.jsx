@@ -37,10 +37,12 @@ function FeedSourceForm({
   feedSource = null,
   feedSourceTypeOptions = null,
   dynamicFormElement = null,
+  mode = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "feed-source-form" });
   const navigate = useNavigate();
 
+  console.log(mode == "edit");
   return (
     <>
       <Form>
@@ -64,18 +66,12 @@ function FeedSourceForm({
             value={feedSource.description}
             onChange={handleInput}
           />
-          <FormInputArea
-            name="supportedFeedOutputType"
-            type="text"
-            label={t("feed-source-supported-feed-output-type-label")}
-            value={feedSource.supportedFeedOutputType}
-            onChange={handleInput}
-          />
           <FormSelect
             label={t("feed-source-feed-type-label")}
             name="feedType"
             value={feedSource.feedType}
             onChange={handleInput}
+            disabled={(mode === "edit")}
             options={feedSourceTypeOptions}
           />
 
