@@ -282,7 +282,8 @@
       },
       "RssFeedType": {
         "title": "RSS feed"
-      }
+      },
+      "redactedValueInputPlaceholder": "Skjult værdi"
     }
   },
   "feed-source-form": {
