@@ -13,7 +13,6 @@ import {
 } from "../util/list/toast-component/display-toast";
 import EventDatabaseApiFeedTypeTemplate from "./feed-source-type-templates/EventDatabaseApiFeedType.template";
 import NotifiedFeedTypeTemplate from "./feed-source-type-templates/NotifiedFeedType.template";
-import SparkleIOFeedTypeTemplate from "./feed-source-type-templates/SparkleIOFeedType.template";
 import CalendarFeedTypeTemplate from "./feed-source-type-templates/CalendarFeedType.template";
 
 /**
@@ -25,6 +24,7 @@ import CalendarFeedTypeTemplate from "./feed-source-type-templates/CalendarFeedT
  * @param {string | null} props.id Theme id.
  * @param {boolean} props.isLoading Is the theme state loading?
  * @param {object} props.loadingError Loading error.
+ * @param props.mode
  * @returns {object} The theme form.
  */
 function FeedSourceManager({
@@ -33,6 +33,7 @@ function FeedSourceManager({
   isLoading = false,
   loadingError = null,
   initialState = null,
+  mode = null,
 }) {
   // Hooks
   const { t } = useTranslation("common", {
@@ -40,6 +41,7 @@ function FeedSourceManager({
   });
   const navigate = useNavigate();
 
+  const [currentMode, setCurrentMode] = useState();
   // State
   const [headerText] = useState(
     saveMethod === "PUT" ? t("edit-feed-source") : t("create-new-feed-source")
@@ -68,25 +70,19 @@ function FeedSourceManager({
       value: "App\\Feed\\EventDatabaseApiFeedType",
       title: t("dynamic-fields.EventDatabaseApiFeedType.title"),
       key: "1",
-      template: <EventDatabaseApiFeedTypeTemplate />,
+      template: <EventDatabaseApiFeedTypeTemplate mode={currentMode} />,
     },
     {
       value: "App\\Feed\\NotifiedFeedType",
       title: t("dynamic-fields.NotifiedFeedType.title"),
       key: "2",
-      template: <NotifiedFeedTypeTemplate />,
+      template: <NotifiedFeedTypeTemplate mode={currentMode} />,
     },
     {
       value: "App\\Feed\\CalendarApiFeedType",
       title: t("dynamic-fields.CalendarApiFeedType.title"),
       key: "3",
-      template: <CalendarFeedTypeTemplate />,
-    },
-    {
-      value: "App\\Feed\\SparkleIOFeedType",
-      title: t("dynamic-fields.SparkleIOFeedType.title"),
-      key: "4",
-      template: <SparkleIOFeedTypeTemplate />,
+      template: <CalendarFeedTypeTemplate mode={currentMode} />,
     },
     {
       value: "App\\Feed\\RssFeedType",
@@ -101,6 +97,9 @@ function FeedSourceManager({
     setFormStateObject(initialState);
   }, [initialState]);
 
+  useEffect(() => {
+    setCurrentMode(mode);
+  }, [mode]);
   const [requiredSecrets, setRequiredSecrets] = useState([]);
 
   useEffect(() => {
@@ -109,24 +108,17 @@ function FeedSourceManager({
       switch (formStateObject.feedType) {
         case "App\\Feed\\EventDatabaseApiFeedType":
           newSecrets = {
-            host: formStateObject.host,
+            host: formStateObject.host ?? "",
           };
           break;
         case "App\\Feed\\NotifiedFeedType":
           newSecrets = {
-            token: formStateObject.token,
+            token: formStateObject.token ?? "",
           };
           break;
         case "App\\Feed\\CalendarApiFeedType":
           newSecrets = {
-            resources: formStateObject.resources,
-          };
-          break;
-        case "App\\Feed\\SparkleIOFeedType":
-          newSecrets = {
-            BaseUrl: formStateObject.BaseUrl,
-            clientId: formStateObject.clientId,
-            clientSecret: formStateObject.clientSecret,
+            resources: formStateObject.resources ?? "",
           };
           break;
       }
@@ -137,7 +129,7 @@ function FeedSourceManager({
   /** Save feed source. */
   function saveFeedSource() {
     setLoadingMessage(t("loading-messages.saving-feed-source"));
-    const saveData = {
+    let saveData = {
       title: formStateObject.title,
       description: formStateObject.description,
       feedType: formStateObject.feedType,
@@ -149,6 +141,10 @@ function FeedSourceManager({
         },
       ],
     };
+    if (currentMode === "edit") {
+      saveData = { ...formStateObject, ...saveData };
+    }
+
     if (saveMethod === "POST") {
       postV2FeedSources({
         feedSourceFeedSourceInput: JSON.stringify(saveData),
@@ -265,6 +261,7 @@ FeedSourceManager.propTypes = {
       status: PropTypes.number,
     }),
   }),
+  mode: PropTypes.string,
 };
 
 export default FeedSourceManager;
