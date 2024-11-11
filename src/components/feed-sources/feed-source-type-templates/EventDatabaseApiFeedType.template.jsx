@@ -2,7 +2,7 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import FormInput from "../../util/forms/form-input";
 
-const EventDatabaseApiTemplate = ({ handleInput, formStateObject, t }) => {
+const EventDatabaseApiTemplate = ({ handleInput, formStateObject, t, mode }) => {
   return (
     <>
       <FormInput
@@ -10,6 +10,11 @@ const EventDatabaseApiTemplate = ({ handleInput, formStateObject, t }) => {
         type="text"
         label={t("dynamic-fields.EventDatabaseApiFeedType.host")}
         onChange={handleInput}
+        placeholder={
+          mode === "edit"
+            ? t("dynamic-fields.redactedValueInputPlaceholder")
+            : ""
+        }
         value={formStateObject.host}
       />
     </>
@@ -22,5 +27,6 @@ EventDatabaseApiTemplate.propTypes = {
     host: PropTypes.string,
   }),
   t: PropTypes.func,
+  mode: PropTypes.string,
 };
 export default EventDatabaseApiTemplate;
