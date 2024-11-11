@@ -7,6 +7,8 @@ import FeedSourceManager from "./feed-source-manager";
  * @returns {object} The themes create page.
  */
 function FeedSourceCreate() {
+
+  const mode = "create";
   // Initialize to empty feed source object.
   const data = {
     title: "",
@@ -21,7 +23,7 @@ function FeedSourceCreate() {
     resources: "",
   };
 
-  return <FeedSourceManager saveMethod="POST" initialState={data} />;
+  return <FeedSourceManager saveMethod="POST" initialState={data} mode={mode} />;
 }
 
 export default FeedSourceCreate;

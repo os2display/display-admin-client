@@ -10,13 +10,14 @@ import FeedSourceManager from "./feed-source-manager";
  */
 function FeedSourceEdit() {
   const { id } = useParams();
-
+  const mode = "edit";
   const {
     data,
     error: loadingError,
     isLoading,
   } = useGetV2FeedSourcesByIdQuery({ id });
 
+  console.log(data);
   return (
     <FeedSourceManager
       saveMethod="PUT"
@@ -24,6 +25,7 @@ function FeedSourceEdit() {
       id={id}
       loadingError={loadingError}
       isLoading={isLoading}
+      mode={mode}
     />
   );
 }
