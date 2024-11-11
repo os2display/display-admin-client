@@ -94,13 +94,12 @@ function FeedSourceManager({
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    setFormStateObject(initialState);
+    setFormStateObject({ ...initialState });
   }, [initialState]);
 
   useEffect(() => {
     setCurrentMode(mode);
   }, [mode]);
-  const [requiredSecrets, setRequiredSecrets] = useState([]);
 
   useEffect(() => {
     let newSecrets = {};
@@ -108,50 +107,34 @@ function FeedSourceManager({
       switch (formStateObject.feedType) {
         case "App\\Feed\\EventDatabaseApiFeedType":
           newSecrets = {
-            host: formStateObject.host ?? "",
+            host: formStateObject.host,
           };
           break;
         case "App\\Feed\\NotifiedFeedType":
           newSecrets = {
-            token: formStateObject.token ?? "",
+            token: formStateObject.token,
           };
           break;
         case "App\\Feed\\CalendarApiFeedType":
           newSecrets = {
-            resources: formStateObject.resources ?? "",
+            resources: formStateObject.resources,
           };
           break;
       }
+      formStateObject.secrets = newSecrets;
     }
-    setRequiredSecrets(newSecrets);
   }, [formStateObject]);
 
   /** Save feed source. */
   function saveFeedSource() {
     setLoadingMessage(t("loading-messages.saving-feed-source"));
-    let saveData = {
-      title: formStateObject.title,
-      description: formStateObject.description,
-      feedType: formStateObject.feedType,
-      feedSourceType: formStateObject.feedSourceType,
-      supportedFeedOutputType: formStateObject.supportedFeedOutputType,
-      secrets: [
-        {
-          ...requiredSecrets,
-        },
-      ],
-    };
-    if (currentMode === "edit") {
-      saveData = { ...formStateObject, ...saveData };
-    }
-
     if (saveMethod === "POST") {
       postV2FeedSources({
-        feedSourceFeedSourceInput: JSON.stringify(saveData),
+        feedSourceFeedSourceInput: JSON.stringify(formStateObject),
       });
     } else if (saveMethod === "PUT") {
       PutV2FeedSourcesById({
-        feedSourceFeedSourceInput: JSON.stringify(saveData),
+        feedSourceFeedSourceInput: JSON.stringify(formStateObject),
         id,
       });
     }
@@ -234,6 +217,7 @@ function FeedSourceManager({
           loadingMessage={loadingMessage}
           feedSourceTypeOptions={feedSourceTypeOptions}
           dynamicFormElement={dynamicFormElement}
+          mode={currentMode}
         />
       )}
     </>
