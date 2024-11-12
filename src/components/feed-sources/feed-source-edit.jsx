@@ -10,7 +10,6 @@ import FeedSourceManager from "./feed-source-manager";
  */
 function FeedSourceEdit() {
   const { id } = useParams();
-  const mode = "edit";
   const {
     data,
     error: loadingError,
@@ -24,7 +23,6 @@ function FeedSourceEdit() {
       id={id}
       loadingError={loadingError}
       isLoading={isLoading}
-      mode={mode}
     />
   );
 }
