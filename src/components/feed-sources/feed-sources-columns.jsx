@@ -16,11 +16,7 @@ import UserContext from "../../context/user-context.jsx";
  * @returns {object} Columns - An array of objects representing the columns for
  *   feed sources data.
  */
-function getFeedSourcesColumns({
-  apiCall,
-  infoModalRedirect,
-  infoModalTitle,
-}) {
+function getFeedSourcesColumns({ apiCall, infoModalRedirect, infoModalTitle }) {
   const context = useContext(UserContext);
   const { t } = useTranslation("common", { keyPrefix: "feed-sources-list" });
 
@@ -43,7 +39,7 @@ function getFeedSourcesColumns({
         );
       },
       // eslint-disable-next-line react/prop-types
-      content: ({ id } ) => (
+      content: ({ id }) => (
         <ListButton
           apiCall={apiCall}
           redirectTo={infoModalRedirect}

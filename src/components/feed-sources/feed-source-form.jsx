@@ -71,7 +71,7 @@ function FeedSourceForm({
             name="feedType"
             value={feedSource.feedType}
             onChange={handleInput}
-            disabled={(mode === "PUT")}
+            disabled={mode === "PUT"}
             options={feedSourceTypeOptions}
           />
 
@@ -117,7 +117,7 @@ FeedSourceForm.propTypes = {
   loadingMessage: PropTypes.string,
   dynamicFormElement: PropTypes.oneOfType([
     PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element)
+    PropTypes.arrayOf(PropTypes.element),
   ]),
   feedSourceTypeOptions: PropTypes.arrayOf(
     PropTypes.shape({

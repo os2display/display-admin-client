@@ -9,7 +9,7 @@ import {
 import ListContext from "../../context/list-context.jsx";
 import ContentBody from "../util/content-body/content-body.jsx";
 import List from "../util/list/list.jsx";
-import { FeedSourceColumns } from "../feed-sources/feed-sources-columns";
+import { FeedSourceColumns } from "./feed-sources-columns";
 import {
   displayError,
   displaySuccess,
@@ -119,7 +119,10 @@ function FeedSourcesList() {
   // Error with retrieving list of feed sources
   useEffect(() => {
     if (feedSourcesGetError) {
-      displayError(t("error-messages.feed-sources-load-error"), feedSourcesGetError);
+      displayError(
+        t("error-messages.feed-sources-load-error"),
+        feedSourcesGetError
+      );
     }
   }, [feedSourcesGetError]);
 

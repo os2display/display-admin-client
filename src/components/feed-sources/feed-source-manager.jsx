@@ -95,7 +95,6 @@ function FeedSourceManager({
     setFormStateObject({ ...initialState });
   }, [initialState]);
 
-
   useEffect(() => {
     if (formStateObject && formStateObject.feedType) {
       let newSecrets = {};

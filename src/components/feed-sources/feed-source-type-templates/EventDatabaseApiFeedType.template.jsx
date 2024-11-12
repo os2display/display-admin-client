@@ -2,7 +2,12 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import FormInput from "../../util/forms/form-input";
 
-const EventDatabaseApiTemplate = ({ handleInput, formStateObject, t, mode }) => {
+const EventDatabaseApiTemplate = ({
+  handleInput,
+  formStateObject,
+  t,
+  mode,
+}) => {
   return (
     <>
       <FormInput

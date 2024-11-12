@@ -2,7 +2,12 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import FormInput from "../../util/forms/form-input";
 
-const CalendarFeedTypeTemplate = ({ handleInput, formStateObject, t, mode }) => {
+const CalendarFeedTypeTemplate = ({
+  handleInput,
+  formStateObject,
+  t,
+  mode,
+}) => {
   return (
     <>
       <FormInput
@@ -20,7 +25,6 @@ const CalendarFeedTypeTemplate = ({ handleInput, formStateObject, t, mode }) => 
     </>
   );
 };
-
 
 CalendarFeedTypeTemplate.propTypes = {
   handleInput: PropTypes.func,

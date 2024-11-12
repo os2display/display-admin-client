@@ -2,7 +2,12 @@ import { React } from "react";
 import PropTypes from "prop-types";
 import FormInput from "../../util/forms/form-input";
 
-const NotifiedFeedTypeTemplate = ({ handleInput, formStateObject, t, mode }) => {
+const NotifiedFeedTypeTemplate = ({
+  handleInput,
+  formStateObject,
+  t,
+  mode,
+}) => {
   return (
     <>
       <FormInput
