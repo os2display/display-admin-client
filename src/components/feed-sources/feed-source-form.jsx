@@ -26,6 +26,7 @@ import FormInput from "../util/forms/form-input";
  * @param {object} props.feedSource The feed source object
  * @param {object} props.feedSourceTypeOptions The options for feed source types
  * @param {element} props.dynamicFormElement The dynamic form element
+ * @param {string} props.mode The mode
  * @returns {object} The feed-source form.
  */
 function FeedSourceForm({
@@ -42,7 +43,6 @@ function FeedSourceForm({
   const { t } = useTranslation("common", { keyPrefix: "feed-source-form" });
   const navigate = useNavigate();
 
-  console.log(mode == "edit");
   return (
     <>
       <Form>
@@ -71,7 +71,7 @@ function FeedSourceForm({
             name="feedType"
             value={feedSource.feedType}
             onChange={handleInput}
-            disabled={(mode === "edit")}
+            disabled={(mode === "PUT")}
             options={feedSourceTypeOptions}
           />
 
@@ -127,6 +127,7 @@ FeedSourceForm.propTypes = {
       template: PropTypes.element,
     })
   ).isRequired,
+  mode: PropTypes.string,
 };
 
 export default FeedSourceForm;
