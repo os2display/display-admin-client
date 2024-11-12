@@ -33,7 +33,6 @@ function FeedSourceManager({
   isLoading = false,
   loadingError = null,
   initialState = null,
-  mode = null,
 }) {
   // Hooks
   const { t } = useTranslation("common", {
@@ -41,7 +40,6 @@ function FeedSourceManager({
   });
   const navigate = useNavigate();
 
-  const [currentMode, setCurrentMode] = useState();
   // State
   const [headerText] = useState(
     saveMethod === "PUT" ? t("edit-feed-source") : t("create-new-feed-source")
@@ -70,19 +68,19 @@ function FeedSourceManager({
       value: "App\\Feed\\EventDatabaseApiFeedType",
       title: t("dynamic-fields.EventDatabaseApiFeedType.title"),
       key: "1",
-      template: <EventDatabaseApiFeedTypeTemplate mode={currentMode} />,
+      template: <EventDatabaseApiFeedTypeTemplate mode={saveMethod} />,
     },
     {
       value: "App\\Feed\\NotifiedFeedType",
       title: t("dynamic-fields.NotifiedFeedType.title"),
       key: "2",
-      template: <NotifiedFeedTypeTemplate mode={currentMode} />,
+      template: <NotifiedFeedTypeTemplate mode={saveMethod} />,
     },
     {
       value: "App\\Feed\\CalendarApiFeedType",
       title: t("dynamic-fields.CalendarApiFeedType.title"),
       key: "3",
-      template: <CalendarFeedTypeTemplate mode={currentMode} />,
+      template: <CalendarFeedTypeTemplate mode={saveMethod} />,
     },
     {
       value: "App\\Feed\\RssFeedType",
@@ -97,28 +95,29 @@ function FeedSourceManager({
     setFormStateObject({ ...initialState });
   }, [initialState]);
 
-  useEffect(() => {
-    setCurrentMode(mode);
-  }, [mode]);
 
   useEffect(() => {
-    let newSecrets = {};
     if (formStateObject && formStateObject.feedType) {
+      let newSecrets = {};
+
       switch (formStateObject.feedType) {
         case "App\\Feed\\EventDatabaseApiFeedType":
-          newSecrets = {
-            host: formStateObject.host,
-          };
+          newSecrets =
+            formStateObject.host === "" ? [] : { host: formStateObject.host };
           break;
         case "App\\Feed\\NotifiedFeedType":
-          newSecrets = {
-            token: formStateObject.token,
-          };
+          newSecrets =
+            formStateObject.token === ""
+              ? []
+              : { token: formStateObject.token };
           break;
         case "App\\Feed\\CalendarApiFeedType":
-          newSecrets = {
-            resources: formStateObject.resources,
-          };
+          newSecrets =
+            formStateObject.resources === ""
+              ? []
+              : { resources: formStateObject.resources };
+          break;
+        default:
           break;
       }
       formStateObject.secrets = newSecrets;
@@ -217,7 +216,7 @@ function FeedSourceManager({
           loadingMessage={loadingMessage}
           feedSourceTypeOptions={feedSourceTypeOptions}
           dynamicFormElement={dynamicFormElement}
-          mode={currentMode}
+          mode={saveMethod}
         />
       )}
     </>
