@@ -11,7 +11,7 @@ const NotifiedFeedTypeTemplate = ({ handleInput, formStateObject, t, mode }) => 
         label={t("dynamic-fields.NotifiedFeedType.token")}
         onChange={handleInput}
         placeholder={
-          mode === "edit"
+          mode === "PUT"
             ? t("dynamic-fields.redactedValueInputPlaceholder")
             : ""
         }
