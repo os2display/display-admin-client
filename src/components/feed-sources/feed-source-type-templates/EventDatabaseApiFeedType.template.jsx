@@ -11,7 +11,7 @@ const EventDatabaseApiTemplate = ({ handleInput, formStateObject, t, mode }) => 
         label={t("dynamic-fields.EventDatabaseApiFeedType.host")}
         onChange={handleInput}
         placeholder={
-          mode === "edit"
+          mode === "PUT"
             ? t("dynamic-fields.redactedValueInputPlaceholder")
             : ""
         }
