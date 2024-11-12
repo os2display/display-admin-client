@@ -11,7 +11,7 @@ const CalendarFeedTypeTemplate = ({ handleInput, formStateObject, t, mode }) => 
         label={t("dynamic-fields.CalendarApiFeedType.resources")}
         onChange={handleInput}
         placeholder={
-          mode === "edit"
+          mode === "PUT"
             ? t("dynamic-fields.redactedValueInputPlaceholder")
             : ""
         }
