@@ -444,6 +444,6 @@ test.describe("Feed source list work", () => {
   });
 
   test("The correct amount of column headers loaded", async ({ page }) => {
-    await expect(page.locator("thead").locator("th")).toHaveCount(5);
+    await expect(page.locator("thead").locator("th")).toHaveCount(6);
   });
 });
