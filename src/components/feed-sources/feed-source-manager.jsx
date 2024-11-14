@@ -67,7 +67,7 @@ function FeedSourceManager({
       value: "App\\Feed\\EventDatabaseApiFeedType",
       title: t("dynamic-fields.event-database-api-feed-type.title"),
       key: "1",
-      secrets: "host, test",
+      secrets: "host",
       template: <EventDatabaseApiFeedTypeTemplate mode={saveMethod} />,
     },
     {
@@ -115,21 +115,6 @@ function FeedSourceManager({
     }
   }, [formStateObject]);
 
-  /** When a feedType is selected, add the required secrets to formStateObject */
-/*  useEffect(() => {
-    if (formStateObject?.feedType) {
-      const selectedFeedTypeSecret =
-        formStateObject?.feedType &&
-        feedSourceTypeOptions.find(
-          (option) => option.value === formStateObject.feedType
-        )?.secret;
-
-      formStateObject.secrets = selectedFeedTypeSecret
-        ? { [selectedFeedTypeSecret]: "" }
-        : [];
-    }
-  }, [formStateObject?.feedType]);*/
-
   useEffect(() => {
     if (formStateObject?.feedType) {
       const selectedFeedTypeSecret = feedSourceTypeOptions.find(
@@ -145,7 +130,7 @@ function FeedSourceManager({
         return acc;
       }, {});
     }
-  }, [formStateObject?.feedType]);
+  }, [formStateObject, formStateObject?.feedType]);
 
   /** Save feed source. */
   function saveFeedSource() {
