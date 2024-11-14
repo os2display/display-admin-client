@@ -237,6 +237,9 @@
     "error-messages": {
       "feed-source-delete-error": "Der skete en fejl da feed sourcen skulle slettes:"
     },
+    "success-messages": {
+      "feed-source-delete": "Feed sourcen er blevet slettet"
+    },
     "columns": {
       "feed-type": "Type"
     },
@@ -262,28 +265,24 @@
       "load-feed-source-error": "Der skete en fejl da feed source med følgende id: {{id}} skulle hentes:"
     },
     "dynamic-fields": {
-      "EventDatabaseApiFeedType": {
+      "event-database-api-feed-type": {
         "title": "Eventdatabase API",
-        "host": "Eventdatabase API host"
+        "host": "Eventdatabase API host",
+        "redacted-value-input-placeholder": "Skjult værdi"
       },
-      "NotifiedFeedType": {
+      "notified-feed-type": {
         "title": "Notified feed",
-        "token": "Notified API token"
+        "token": "Notified API token",
+        "redacted-value-input-placeholder": "Skjult værdi"
       },
-      "SparkleIOFeedType":{
-        "title": "Instagram feed",
-        "baseUrl": "Instagram url",
-        "clientId": "Client id",
-        "clientSecret": "Client secret"
-      },
-      "CalendarApiFeedType": {
+      "calendar-api-feed-type": {
         "title": "Kalender feed",
-        "resources": "Ressourcer"
+        "resources": "Ressourcer",
+        "redacted-value-input-placeholder": "Skjult værdi"
       },
-      "RssFeedType": {
+      "rss-feed-type": {
         "title": "RSS feed"
-      },
-      "redactedValueInputPlaceholder": "Skjult værdi"
+      }
     }
   },
   "feed-source-form": {
