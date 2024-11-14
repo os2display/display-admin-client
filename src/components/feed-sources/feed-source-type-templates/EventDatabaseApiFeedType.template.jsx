@@ -1,23 +1,24 @@
 import { React } from "react";
 import PropTypes from "prop-types";
 import FormInput from "../../util/forms/form-input";
+import { useTranslation } from "react-i18next";
 
 const EventDatabaseApiTemplate = ({
   handleInput,
   formStateObject,
-  t,
   mode,
 }) => {
+  const { t } = useTranslation("common", { keyPrefix: "feed-source-manager.dynamic-fields.event-database-api-feed-type" });
   return (
     <>
       <FormInput
         name="host"
         type="text"
-        label={t("dynamic-fields.EventDatabaseApiFeedType.host")}
+        label={t("host")}
         onChange={handleInput}
         placeholder={
           mode === "PUT"
-            ? t("dynamic-fields.redactedValueInputPlaceholder")
+            ? t("redacted-value-input-placeholder")
             : ""
         }
         value={formStateObject.host}
@@ -29,9 +30,10 @@ const EventDatabaseApiTemplate = ({
 EventDatabaseApiTemplate.propTypes = {
   handleInput: PropTypes.func,
   formStateObject: PropTypes.shape({
-    host: PropTypes.string,
+    secrets: PropTypes.shape({
+      host: PropTypes.string,
+    }),
   }),
-  t: PropTypes.func,
   mode: PropTypes.string,
 };
 export default EventDatabaseApiTemplate;
