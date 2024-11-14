@@ -126,7 +126,7 @@ function FeedSourceManager({
         .map((prop) => prop.trim());
 
       formStateObject.secrets = secretsArray?.reduce((acc, secret) => {
-        acc[secret] = formStateObject[secret] || "";
+        acc[secret] = formStateObject[secret];
         return acc;
       }, {});
     }
