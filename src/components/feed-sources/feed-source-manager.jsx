@@ -8,8 +8,8 @@ import {
   usePutV2FeedSourcesByIdMutation,
 } from "../../redux/api/api.generated.ts";
 import {
-  displaySuccess,
   displayError,
+  displaySuccess,
 } from "../util/list/toast-component/display-toast";
 import EventDatabaseApiFeedTypeTemplate from "./feed-source-type-templates/EventDatabaseApiFeedType.template";
 import NotifiedFeedTypeTemplate from "./feed-source-type-templates/NotifiedFeedType.template";
@@ -22,9 +22,8 @@ import CalendarFeedTypeTemplate from "./feed-source-type-templates/CalendarFeedT
  * @param {object} props.initialState Initial theme state.
  * @param {string} props.saveMethod POST or PUT.
  * @param {string | null} props.id Theme id.
- * @param {boolean} props.isLoading Is the theme state loading?
+ * @param {boolean} props.isLoading Is the theme state loading
  * @param {object} props.loadingError Loading error.
- * @param props.mode
  * @returns {object} The theme form.
  */
 function FeedSourceManager({
@@ -66,25 +65,28 @@ function FeedSourceManager({
   const feedSourceTypeOptions = [
     {
       value: "App\\Feed\\EventDatabaseApiFeedType",
-      title: t("dynamic-fields.EventDatabaseApiFeedType.title"),
+      title: t("dynamic-fields.event-database-api-feed-type.title"),
       key: "1",
+      secrets: "host, test",
       template: <EventDatabaseApiFeedTypeTemplate mode={saveMethod} />,
     },
     {
       value: "App\\Feed\\NotifiedFeedType",
-      title: t("dynamic-fields.NotifiedFeedType.title"),
+      title: t("dynamic-fields.notified-feed-type.title"),
       key: "2",
+      secrets: "token",
       template: <NotifiedFeedTypeTemplate mode={saveMethod} />,
     },
     {
       value: "App\\Feed\\CalendarApiFeedType",
-      title: t("dynamic-fields.CalendarApiFeedType.title"),
+      title: t("dynamic-fields.calendar-api-feed-type.title"),
       key: "3",
+      secrets: "resources",
       template: <CalendarFeedTypeTemplate mode={saveMethod} />,
     },
     {
       value: "App\\Feed\\RssFeedType",
-      title: t("dynamic-fields.RssFeedType.title"),
+      title: t("dynamic-fields.rss-feed-type.title"),
       key: "5",
       template: null,
     },
@@ -96,32 +98,54 @@ function FeedSourceManager({
   }, [initialState]);
 
   useEffect(() => {
-    if (formStateObject && formStateObject.feedType) {
-      let newSecrets = {};
-
-      switch (formStateObject.feedType) {
-        case "App\\Feed\\EventDatabaseApiFeedType":
-          newSecrets =
-            formStateObject.host === "" ? [] : { host: formStateObject.host };
-          break;
-        case "App\\Feed\\NotifiedFeedType":
-          newSecrets =
-            formStateObject.token === ""
-              ? []
-              : { token: formStateObject.token };
-          break;
-        case "App\\Feed\\CalendarApiFeedType":
-          newSecrets =
-            formStateObject.resources === ""
-              ? []
-              : { resources: formStateObject.resources };
-          break;
-        default:
-          break;
+    if (formStateObject) {
+      const option = feedSourceTypeOptions.find(
+        (opt) => opt.value === formStateObject.feedType
+      );
+      if (option && option.template) {
+        setDynamicFormElement(
+          cloneElement(option.template, {
+            handleInput,
+            formStateObject,
+          })
+        );
+      } else {
+        setDynamicFormElement(null);
       }
-      formStateObject.secrets = newSecrets;
     }
   }, [formStateObject]);
+
+  /** When a feedType is selected, add the required secrets to formStateObject */
+/*  useEffect(() => {
+    if (formStateObject?.feedType) {
+      const selectedFeedTypeSecret =
+        formStateObject?.feedType &&
+        feedSourceTypeOptions.find(
+          (option) => option.value === formStateObject.feedType
+        )?.secret;
+
+      formStateObject.secrets = selectedFeedTypeSecret
+        ? { [selectedFeedTypeSecret]: "" }
+        : [];
+    }
+  }, [formStateObject?.feedType]);*/
+
+  useEffect(() => {
+    if (formStateObject?.feedType) {
+      const selectedFeedTypeSecret = feedSourceTypeOptions.find(
+        (option) => option.value === formStateObject.feedType
+      ).secrets;
+
+      const secretsArray = selectedFeedTypeSecret
+        .split(",")
+        .map((prop) => prop.trim());
+
+      formStateObject.secrets = secretsArray?.reduce((acc, secret) => {
+        acc[secret] = formStateObject[secret] || "";
+        return acc;
+      }, {});
+    }
+  }, [formStateObject?.feedType]);
 
   /** Save feed source. */
   function saveFeedSource() {
@@ -149,25 +173,6 @@ function FeedSourceManager({
     localFormStateObject[target.id] = target.value;
     setFormStateObject(localFormStateObject);
   };
-
-  useEffect(() => {
-    if (formStateObject) {
-      const option = feedSourceTypeOptions.find(
-        (opt) => opt.value === formStateObject.feedType
-      );
-      if (option && option.template) {
-        setDynamicFormElement(
-          cloneElement(option.template, {
-            handleInput,
-            formStateObject,
-            t,
-          })
-        );
-      } else {
-        setDynamicFormElement(null);
-      }
-    }
-  }, [formStateObject || null]);
 
   /** If the feed source is not loaded, display the error message */
   useEffect(() => {
