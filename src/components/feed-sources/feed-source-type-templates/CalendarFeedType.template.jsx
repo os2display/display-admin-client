@@ -1,23 +1,22 @@
 import { React } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import FormInput from "../../util/forms/form-input";
 
-const CalendarFeedTypeTemplate = ({
-  handleInput,
-  formStateObject,
-  t,
-  mode,
-}) => {
+const CalendarFeedTypeTemplate = ({ handleInput, formStateObject, mode }) => {
+  const { t } = useTranslation("common", {
+    keyPrefix: "feed-source-manager.dynamic-fields.calendar-api-feed-type",
+  });
   return (
     <>
       <FormInput
         name="resources"
         type="text"
-        label={t("dynamic-fields.CalendarApiFeedType.resources")}
+        label={t("resources")}
         onChange={handleInput}
         placeholder={
           mode === "PUT"
-            ? t("dynamic-fields.redactedValueInputPlaceholder")
+            ? t("redacted-value-input-placeholder")
             : ""
         }
         value={formStateObject.resources}
@@ -31,7 +30,6 @@ CalendarFeedTypeTemplate.propTypes = {
   formStateObject: PropTypes.shape({
     resources: PropTypes.string,
   }),
-  t: PropTypes.func,
   mode: PropTypes.string,
 };
 export default CalendarFeedTypeTemplate;
