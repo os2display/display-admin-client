@@ -92,6 +92,18 @@ function FeedSourceManager({
     },
   ];
 
+  /**
+   * Set state on change in input field
+   *
+   * @param {object} props - The props.
+   * @param {object} props.target - Event target.
+   */
+  const handleInput = ({ target }) => {
+    const localFormStateObject = { ...formStateObject };
+    localFormStateObject[target.id] = target.value;
+    setFormStateObject(localFormStateObject);
+  };
+
   /** Set loaded data into form state. */
   useEffect(() => {
     setFormStateObject({ ...initialState });
@@ -121,14 +133,16 @@ function FeedSourceManager({
         (option) => option.value === formStateObject.feedType
       ).secrets;
 
-      const secretsArray = selectedFeedTypeSecret
-        .split(",")
-        .map((prop) => prop.trim());
+      if (selectedFeedTypeSecret) {
+        const secretsArray = selectedFeedTypeSecret
+          .split(",")
+          .map((prop) => prop.trim());
 
-      formStateObject.secrets = secretsArray?.reduce((acc, secret) => {
-        acc[secret] = formStateObject[secret];
-        return acc;
-      }, {});
+        formStateObject.secrets = secretsArray?.reduce((acc, secret) => {
+          acc[secret] = formStateObject[secret];
+          return acc;
+        }, {});
+      }
     }
   }, [formStateObject, formStateObject?.feedType]);
 
@@ -146,18 +160,6 @@ function FeedSourceManager({
       });
     }
   }
-
-  /**
-   * Set state on change in input field
-   *
-   * @param {object} props - The props.
-   * @param {object} props.target - Event target.
-   */
-  const handleInput = ({ target }) => {
-    const localFormStateObject = { ...formStateObject };
-    localFormStateObject[target.id] = target.value;
-    setFormStateObject(localFormStateObject);
-  };
 
   /** If the feed source is not loaded, display the error message */
   useEffect(() => {
