@@ -36,4 +36,5 @@ EventDatabaseApiTemplate.propTypes = {
   }),
   mode: PropTypes.string,
 };
+
 export default EventDatabaseApiTemplate;

@@ -37,6 +37,7 @@ function FeedSourceForm({
   loadingMessage = "",
   feedSource = null,
   feedSourceTypeOptions = null,
+                          handleChangeFeedType = () => {},
   dynamicFormElement = null,
   mode = null,
 }) {
@@ -67,10 +68,10 @@ function FeedSourceForm({
             onChange={handleInput}
           />
           <FormSelect
-            label={t("feed-source-feed-type-label")}
             name="feedType"
+            label={t("feed-source-feed-type-label")}
             value={feedSource.feedType}
-            onChange={handleInput}
+            onChange={handleChangeFeedType}
             disabled={mode === "PUT"}
             options={feedSourceTypeOptions}
           />

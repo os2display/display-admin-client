@@ -45,6 +45,7 @@ function FeedSourcesList() {
     page: { get: page },
     createdBy: { get: createdBy },
   } = useContext(ListContext);
+
   const {
     data,
     error: feedSourcesGetError,
@@ -97,6 +98,7 @@ function FeedSourcesList() {
       displayError(t("error-messages.feed-source-delete-error"), isDeleteError);
     }
   }, [isDeleteError]);
+
   const handleDelete = () => {
     setIsDeleting(true);
     setLoadingMessage(t("loading-messages.deleting-feed-source"));

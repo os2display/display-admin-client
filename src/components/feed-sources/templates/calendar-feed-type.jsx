@@ -3,37 +3,35 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import FormInput from "../../util/forms/form-input";
 
-const NotifiedFeedTypeTemplate = ({
-  handleInput,
-  formStateObject,
-  mode,
-}) => {
+const CalendarFeedType = ({ handleInput, formStateObject, mode }) => {
   const { t } = useTranslation("common", {
-    keyPrefix: "feed-source-manager.dynamic-fields.notified-feed-type",
+    keyPrefix: "feed-source-manager.dynamic-fields.calendar-api-feed-type",
   });
+
   return (
     <>
       <FormInput
-        name="token"
+        name="resources"
         type="text"
-        label={t("token")}
+        label={t("resources")}
         onChange={handleInput}
         placeholder={
           mode === "PUT"
             ? t("redacted-value-input-placeholder")
             : ""
         }
-        value={formStateObject.token}
+        value={formStateObject.resources}
       />
     </>
   );
 };
 
-NotifiedFeedTypeTemplate.propTypes = {
+CalendarFeedType.propTypes = {
   handleInput: PropTypes.func,
   formStateObject: PropTypes.shape({
-    token: PropTypes.string,
+    resources: PropTypes.string,
   }),
   mode: PropTypes.string,
 };
-export default NotifiedFeedTypeTemplate;
+
+export default CalendarFeedType;
