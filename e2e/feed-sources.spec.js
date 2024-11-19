@@ -26,8 +26,8 @@ const feedSourcesJson = {
     {
       "@id": "/v2/feed-sources/01JB9MSQEH75HC3GG75XCVP2WH",
       "@type": "FeedSource",
-      title: "Ny feed source test 3",
-      description: "Ny feed source test 3",
+      title: "Ny datakilde test 3",
+      description: "Ny datakilde test 3",
       outputType: "",
       feedType: "App\\Feed\\RssFeedType",
       secrets: [],
@@ -75,7 +75,7 @@ const feedSourcesJson = {
     {
       "@id": "/v2/feed-sources/01JB1DH8G4CXKGX5JRTYDHDPSP",
       "@type": "FeedSource",
-      title: "Calendar feed source test",
+      title: "Calendar datakilde test",
       description: "test",
       outputType: "",
       feedType: "App\\Feed\\CalendarApiFeedType",
@@ -217,8 +217,8 @@ test.describe("fest", () => {
     await page.locator("#login").click();
   });
 
-  test("It loads create feed source page", async ({ page }) => {
-    page.getByText("Opret ny feed source").click();
+  test("It loads create datakilde page", async ({ page }) => {
+    page.getByText("Opret ny datakilde").click();
     await expect(page.locator("#save_feed-source")).toBeVisible();
   });
 
@@ -232,7 +232,7 @@ test.describe("fest", () => {
       };
       await route.fulfill({ status: 500, json });
     });
-    page.getByText("Opret ny feed source").click();
+    page.getByText("Opret ny datakilde").click();
 
     // Displays error toast and stays on page
     await expect(
@@ -251,8 +251,8 @@ test.describe("fest", () => {
     ).toBeVisible();
     await expect(page).toHaveURL(/feed-sources\/create/);
   });
-  test("Cancel create feed source", async ({ page }) => {
-    page.getByText("Opret ny feed source").click();
+  test("Cancel create datakilde", async ({ page }) => {
+    page.getByText("Opret ny datakilde").click();
     await expect(page.locator("#cancel_feed-source")).toBeVisible();
     await page.locator("#cancel_feed-source").click();
     await expect(page.locator("#cancel_feed-source")).not.toBeVisible();
@@ -260,7 +260,7 @@ test.describe("fest", () => {
 });
 
 
-test.describe("Feed source list work", () => {
+test.describe("datakilde list work", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/admin/feed-sources/list");
     await page.route("**/token", async (route) => {
@@ -291,7 +291,7 @@ test.describe("Feed source list work", () => {
     await page.locator("#login").click();
   });
 
-  test("It loads feed source list", async ({ page }) => {
+  test("It loads datakilde list", async ({ page }) => {
     await expect(page.locator("table").locator("tbody")).not.toBeEmpty();
     await expect(page.locator("tbody").locator("tr td").first()).toBeVisible();
   });
