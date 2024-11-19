@@ -10,6 +10,9 @@ import FormSelect from "../util/forms/select";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
+import CalendarFeedType from "./templates/calendar-feed-type.jsx";
+import NotifiedFeedType from "./templates/notified-feed-type.jsx";
+import EventDatabaseFeedType from "./templates/event-database-feed-type.jsx";
 
 /**
  * The feed-source form component.
@@ -25,7 +28,6 @@ import FormInput from "../util/forms/form-input";
  *   spinner. Default is `""`
  * @param {object} props.feedSource The feed source object
  * @param {object} props.feedSourceTypeOptions The options for feed source types
- * @param {element} props.dynamicFormElement The dynamic form element
  * @param {string} props.mode The mode
  * @returns {object} The feed-source form.
  */
@@ -37,8 +39,8 @@ function FeedSourceForm({
   loadingMessage = "",
   feedSource = null,
   feedSourceTypeOptions = null,
-                          handleChangeFeedType = () => {},
-  dynamicFormElement = null,
+  onFeedTypeChange = () => {},
+  handleSecretInput = () => {},
   mode = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "feed-source-form" });
@@ -71,12 +73,20 @@ function FeedSourceForm({
             name="feedType"
             label={t("feed-source-feed-type-label")}
             value={feedSource.feedType}
-            onChange={handleChangeFeedType}
+            onChange={onFeedTypeChange}
             disabled={mode === "PUT"}
             options={feedSourceTypeOptions}
           />
 
-          {dynamicFormElement}
+          {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" &&
+            (<CalendarFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
+          }
+          {feedSource?.feedType === "App\\Feed\\NotifiedFeedType" &&
+            (<NotifiedFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
+          }
+          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" &&
+            (<EventDatabaseFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
+          }
         </ContentBody>
         <ContentFooter>
           <Button
