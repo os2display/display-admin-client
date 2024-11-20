@@ -196,7 +196,6 @@ function NavItems() {
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "disabled" : ""}`
                 }
-                to="/themes/list"
               >
                 <FontAwesomeIcon className="me-2" icon={faCog} />
                 {t("configuration")}
@@ -212,6 +211,16 @@ function NavItems() {
                 to="/themes/list"
               >
                 {t("configuration-themes")}
+              </NavLink>
+            </Nav.Item>
+            <Nav.Item className="nav-second-level">
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "disabled" : ""}`
+                }
+                to="/feed-sources/list"
+              >
+                {t("configuration-feedsources")}
               </NavLink>
             </Nav.Item>
           </RestrictedNavRoute>

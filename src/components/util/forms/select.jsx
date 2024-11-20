@@ -35,6 +35,7 @@ function Select({
   isRequired = false,
   allowNull = true,
   tooltip = null,
+  disabled = null,
 }) {
   const { t } = useTranslation("common");
   const textOnError = errorText || t("select.validation-text");
@@ -83,6 +84,7 @@ function Select({
         name={name}
         value={value}
         onChange={onChange}
+        disabled={disabled}
       >
         {allowNull && (
           <option disabled value="">
