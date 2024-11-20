@@ -226,6 +226,69 @@
     "header": "Temaer",
     "create-new-theme": "Opret nyt tema"
   },
+  "feed-sources-list": {
+    "header": "Datakilder",
+    "number-of-slides": "Tilkoblede slides",
+    "create-new-feed-source": "Opret ny datakilde",
+    "loading-messages": {
+      "deleting-feed-source": "Sletter datakilde(r)",
+      "loading-feed-sources": "Henter datakilder"
+    },
+    "error-messages": {
+      "feed-source-delete-error": "Der skete en fejl da datakilden skulle slettes:"
+    },
+    "success-messages": {
+      "feed-source-delete": "Datakilden er blevet slettet"
+    },
+    "columns": {
+      "feed-type": "Type"
+    },
+    "info-modal": {
+      "slides": "Datakilde er tilknyttet følgende slides"
+    }
+  },
+  "feed-source-manager": {
+    "edit-feed-source": "Rediger følgende datakilde",
+    "create-new-feed-source": "Opret ny datakilde",
+    "loading-messages": {
+      "loading-feed-source": "Henter datakilde",
+      "saving-feed-source": "Gemmer datakilde"
+    },
+    "success-messages": {
+      "saved-feed-source": "Feed source er gemt"
+    },
+    "error-messages": {
+      "save-feed-source-error": "Der skete en fejl da feed source skulle gemmes:",
+      "load-feed-source-error": "Der skete en fejl da feed source med følgende id: {{id}} skulle hentes:"
+    },
+    "dynamic-fields": {
+      "event-database-api-feed-type": {
+        "title": "Eventdatabase API",
+        "host": "Eventdatabase API host",
+        "redacted-value-input-placeholder": "Skjult værdi"
+      },
+      "notified-feed-type": {
+        "title": "Notified",
+        "token": "Notified API token",
+        "redacted-value-input-placeholder": "Skjult værdi"
+      },
+      "calendar-api-feed-type": {
+        "title": "Kalender feed",
+        "resources": "Ressourcer",
+        "redacted-value-input-placeholder": "Skjult værdi"
+      },
+      "rss-feed-type": {
+        "title": "RSS feed"
+      }
+    }
+  },
+  "feed-source-form": {
+    "feed-source-name-label": "Navn",
+    "feed-source-description-label": "Beskrivelse",
+    "feed-source-feed-type-label": "Type",
+    "save-button": "Gem datakilde",
+    "cancel-button": "Annuller"
+  },
   "media-list": {
     "checkbox-label-sort-desc": "Vis nyeste først",
     "delete-button": "Slet",
@@ -729,7 +792,8 @@
     "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
     "configuration-users": "Brugere",
-    "activation-codes": "Aktiveringskoder"
+    "activation-codes": "Aktiveringskoder",
+    "configuration-feedsources": "Datakilder"
   },
   "topbar": {
     "brand": "OS2Display",
