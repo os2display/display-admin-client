@@ -21,7 +21,7 @@ const EventDatabaseApiTemplate = ({
             ? t("redacted-value-input-placeholder")
             : ""
         }
-        value={formStateObject.host}
+        value={formStateObject?.host}
       />
     </>
   );
@@ -36,4 +36,5 @@ EventDatabaseApiTemplate.propTypes = {
   }),
   mode: PropTypes.string,
 };
+
 export default EventDatabaseApiTemplate;

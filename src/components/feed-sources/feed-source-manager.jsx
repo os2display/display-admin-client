@@ -11,9 +11,9 @@ import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
-import EventDatabaseApiFeedTypeTemplate from "./feed-source-type-templates/EventDatabaseApiFeedType.template";
-import NotifiedFeedTypeTemplate from "./feed-source-type-templates/NotifiedFeedType.template";
-import CalendarFeedTypeTemplate from "./feed-source-type-templates/CalendarFeedType.template";
+import EventDatabaseFeedType from "./templates/event-database-feed-type.jsx";
+import NotifiedFeedType from "./templates/notified-feed-type.jsx";
+import CalendarFeedType from "./templates/calendar-feed-type.jsx";
 
 /**
  * The theme manager component.
@@ -50,7 +50,7 @@ function FeedSourceManager({
 
   const [dynamicFormElement, setDynamicFormElement] = useState();
   const [submitting, setSubmitting] = useState(false);
-  const [formStateObject, setFormStateObject] = useState();
+  const [formStateObject, setFormStateObject] = useState({});
 
   const [
     postV2FeedSources,
@@ -67,28 +67,31 @@ function FeedSourceManager({
       value: "App\\Feed\\EventDatabaseApiFeedType",
       title: t("dynamic-fields.event-database-api-feed-type.title"),
       key: "1",
-      secrets: "host",
-      template: <EventDatabaseApiFeedTypeTemplate mode={saveMethod} />,
+      secretsDefault: {
+        "host": ""
+      },
     },
     {
       value: "App\\Feed\\NotifiedFeedType",
       title: t("dynamic-fields.notified-feed-type.title"),
       key: "2",
-      secrets: "token",
-      template: <NotifiedFeedTypeTemplate mode={saveMethod} />,
+      secretsDefault: {
+        "token": "",
+      },
     },
     {
       value: "App\\Feed\\CalendarApiFeedType",
       title: t("dynamic-fields.calendar-api-feed-type.title"),
       key: "3",
-      secrets: "resources",
-      template: <CalendarFeedTypeTemplate mode={saveMethod} />,
+      secretsDefault: {
+        "resources": []
+      },
     },
     {
       value: "App\\Feed\\RssFeedType",
       title: t("dynamic-fields.rss-feed-type.title"),
-      key: "5",
-      template: null,
+      key: "4",
+      secretsDefault: {},
     },
   ];
 
@@ -109,46 +112,28 @@ function FeedSourceManager({
     setFormStateObject({ ...initialState });
   }, [initialState]);
 
-  useEffect(() => {
-    if (formStateObject) {
-      const option = feedSourceTypeOptions.find(
-        (opt) => opt.value === formStateObject.feedType
-      );
-      if (option && option.template) {
-        setDynamicFormElement(
-          cloneElement(option.template, {
-            handleInput,
-            formStateObject,
-          })
-        );
-      } else {
-        setDynamicFormElement(null);
-      }
+  const handleSecretInput = ({target}) => {
+    const localFormStateObject = { ...formStateObject };
+    if (!localFormStateObject.secrets) {
+      localFormStateObject.secrets = {};
     }
-  }, [formStateObject]);
+    localFormStateObject.secrets[target.id] = target.value;
+    setFormStateObject(localFormStateObject);
+  };
 
-  useEffect(() => {
-    if (formStateObject?.feedType) {
-      const selectedFeedTypeSecret = feedSourceTypeOptions.find(
-        (option) => option.value === formStateObject.feedType
-      ).secrets;
-
-      if (selectedFeedTypeSecret) {
-        const secretsArray = selectedFeedTypeSecret
-          .split(",")
-          .map((prop) => prop.trim());
-
-        formStateObject.secrets = secretsArray?.reduce((acc, secret) => {
-          acc[secret] = formStateObject[secret];
-          return acc;
-        }, {});
-      }
-    }
-  }, [formStateObject, formStateObject?.feedType]);
+  const onFeedTypeChange = ({target}) => {
+    const value = target.value
+    const option = feedSourceTypeOptions.find((opt) => opt.value === value);
+    const newFormStateObject = {...formStateObject};
+    newFormStateObject.feedType = value;
+    newFormStateObject.secrets = {...option.secretsDefault};
+    setFormStateObject(newFormStateObject);
+  }
 
   /** Save feed source. */
   function saveFeedSource() {
     setLoadingMessage(t("loading-messages.saving-feed-source"));
+
     if (saveMethod === "POST") {
       postV2FeedSources({
         feedSourceFeedSourceInput: JSON.stringify(formStateObject),
@@ -205,6 +190,8 @@ function FeedSourceManager({
           handleSubmit={handleSubmit}
           isLoading={isLoading || submitting}
           loadingMessage={loadingMessage}
+          onFeedTypeChange={onFeedTypeChange}
+          handleSecretInput={handleSecretInput}
           feedSourceTypeOptions={feedSourceTypeOptions}
           dynamicFormElement={dynamicFormElement}
           mode={saveMethod}

@@ -227,40 +227,37 @@
     "create-new-theme": "Opret nyt tema"
   },
   "feed-sources-list": {
-    "header": "Feed sources",
-    "create-new-feed-source": "Opret ny feed source",
-    "number-of-slides": "Slides tilknyttede",
+    "header": "Datakilder",
+    "number-of-slides": "Tilkoblede slides",
+    "create-new-feed-source": "Opret ny datakilde",
     "loading-messages": {
-      "deleting-feed-source": "Sletter feed source(s)",
-      "loading-feed-sources": "Henter feed sources"
+      "deleting-feed-source": "Sletter datakilde(r)",
+      "loading-feed-sources": "Henter datakilder"
     },
     "error-messages": {
-      "feed-source-delete-error": "Der skete en fejl da feed sourcen skulle slettes:"
+      "feed-source-delete-error": "Der skete en fejl da datakilden skulle slettes:"
     },
     "success-messages": {
-      "feed-source-delete": "Feed sourcen er blevet slettet"
+      "feed-source-delete": "Datakilden er blevet slettet"
     },
     "columns": {
       "feed-type": "Type"
     },
     "info-modal": {
-      "slides": "Feed sourcen er tilknyttet følgende slides"
+      "slides": "Datakilde er tilknyttet følgende slides"
     }
   },
   "feed-source-manager": {
-    "edit-feed-source": "Rediger følgende feed source",
-    "create-new-feed-source": "Opret ny feed source",
+    "edit-feed-source": "Rediger følgende datakilde",
+    "create-new-feed-source": "Opret ny datakilde",
     "loading-messages": {
-      "loading-feed-source": "Henter feed source",
-      "saving-feed-source": "Gemmer feed source",
-      "saving-media": "Mediet bliver gemt"
+      "loading-feed-source": "Henter datakilde",
+      "saving-feed-source": "Gemmer datakilde"
     },
     "success-messages": {
-      "saved-media": "Mediet er gemt",
       "saved-feed-source": "Feed source er gemt"
     },
     "error-messages": {
-      "save-media-error": "Der skete en fejl da mediet skulle gemmes:",
       "save-feed-source-error": "Der skete en fejl da feed source skulle gemmes:",
       "load-feed-source-error": "Der skete en fejl da feed source med følgende id: {{id}} skulle hentes:"
     },
@@ -271,7 +268,7 @@
         "redacted-value-input-placeholder": "Skjult værdi"
       },
       "notified-feed-type": {
-        "title": "Notified feed",
+        "title": "Notified",
         "token": "Notified API token",
         "redacted-value-input-placeholder": "Skjult værdi"
       },
@@ -286,13 +283,10 @@
     }
   },
   "feed-source-form": {
-    "logo-title": "Tilføj logo til feed source",
-    "feed-source-name-label": "Feed source navn",
-    "feed-source-description-label": "Feed source beskrivelse",
-    "feed-source-feed-type-label": "Feed source type",
-    "feed-source-supported-feed-output-type-label": "Feed output type",
-    "feed-source-css-label": "Feed source CSS",
-    "save-button": "Gem feed source",
+    "feed-source-name-label": "Navn",
+    "feed-source-description-label": "Beskrivelse",
+    "feed-source-feed-type-label": "Type",
+    "save-button": "Gem datakilde",
     "cancel-button": "Annuller"
   },
   "media-list": {
@@ -799,7 +793,7 @@
     "configuration-themes": "Temaer",
     "configuration-users": "Brugere",
     "activation-codes": "Aktiveringskoder",
-    "configuration-feedsources": "Feed sources"
+    "configuration-feedsources": "Datakilde"
   },
   "topbar": {
     "brand": "OS2Display",
