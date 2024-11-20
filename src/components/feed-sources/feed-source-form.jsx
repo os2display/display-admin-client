@@ -57,6 +57,7 @@ function FeedSourceForm({
         <ContentBody>
           <FormInput
             name="title"
+            formGroupClasses="mb-2"
             type="text"
             label={t("feed-source-name-label")}
             value={feedSource.title}
@@ -64,6 +65,7 @@ function FeedSourceForm({
           />
           <FormInputArea
             name="description"
+            formGroupClasses="mb-2"
             type="text"
             label={t("feed-source-description-label")}
             value={feedSource.description}
@@ -71,6 +73,7 @@ function FeedSourceForm({
           />
           <FormSelect
             name="feedType"
+            formGroupClasses="mb-2"
             label={t("feed-source-feed-type-label")}
             value={feedSource.feedType}
             onChange={onFeedTypeChange}
