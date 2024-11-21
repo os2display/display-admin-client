@@ -48,12 +48,15 @@
     "vite": "^5.2.11"
   },
   "scripts": {
-    "lint:js": "eslint --ext .js --ext .jsx ./src --max-warnings=0",
+    "lint:js": "eslint --ext .js --ext .jsx ./src",
+    "lint-actions:js": "eslint --ext .js --ext .jsx ./src --max-warnings=0",
     "lint:js:fix": "eslint --ext .js --ext .jsx --fix ./src",
-    "lint:scss": "stylelint \"./src/**/*.scss\" --max-warnings=0",
+    "lint:scss": "stylelint \"./src/**/*.scss\"",
+    "lint-actions:scss": "stylelint \"./src/**/*.scss\" --max-warnings=0",
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
     "check-coding-standards": "yarn lint:js && yarn lint:scss",
     "apply-coding-standards": "yarn lint:js:fix && yarn lint:scss:fix",
+    "check-coding-standards-actions": "yarn lint-actions:js && yarn lint-actions:scss",
     "start": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview"
