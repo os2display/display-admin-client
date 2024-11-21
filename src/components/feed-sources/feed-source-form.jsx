@@ -10,9 +10,9 @@ import FormSelect from "../util/forms/select";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
-import CalendarApiFeedType from "./templates/calendar-api-feed-type.jsx";
-import NotifiedFeedType from "./templates/notified-feed-type.jsx";
-import EventDatabaseApiFeedType from "./templates/event-database-feed-type.jsx";
+import CalendarApiFeedType from "./templates/calendar-api-feed-type";
+import NotifiedFeedType from "./templates/notified-feed-type";
+import EventDatabaseApiFeedType from "./templates/event-database-feed-type";
 
 /**
  * The feed-source form component.

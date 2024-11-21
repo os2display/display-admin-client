@@ -11,9 +11,6 @@ import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
-import EventDatabaseFeedType from "./templates/event-database-feed-type.jsx";
-import NotifiedFeedType from "./templates/notified-feed-type.jsx";
-import CalendarApiFeedType from "./templates/calendar-api-feed-type.jsx";
 
 /**
  * The theme manager component.

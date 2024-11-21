@@ -9,7 +9,7 @@ import FormTable from "../../util/forms/form-table/form-table";
 import FileSelector from "./file-selector";
 import StationSelector from "./station/station-selector";
 import RadioButtons from "../../util/forms/radio-buttons";
-import CheckboxOptions from "../../util/forms/checkbox-options.jsx";
+import CheckboxOptions from "../../util/forms/checkbox-options";
 
 /**
  * Render form elements for content form.
