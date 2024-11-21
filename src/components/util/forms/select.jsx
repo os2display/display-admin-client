@@ -62,6 +62,7 @@ function Select({
     return null;
   };
 
+  /* eslint-disable jsx-a11y/anchor-is-valid */
   return (
     <FormGroup className={formGroupClasses}>
       <label htmlFor={name} className="form-label">
