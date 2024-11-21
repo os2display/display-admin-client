@@ -136,7 +136,7 @@ const getNextOccurrences = (rrule, duration = 0, count = 5) => {
     occurrences.push({
       key: `occurrence${occurrences.length}`,
       text: dayjs(d).utc().locale("da").format("LLLL"),
-      end: dayjs(d).utc().add(duration, 'second').locale("da").format("LLLL"),
+      end: dayjs(d).utc().add(duration, "second").locale("da").format("LLLL"),
     });
     return true;
   });

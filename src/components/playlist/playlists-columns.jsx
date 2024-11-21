@@ -4,10 +4,8 @@ import ColumnHoc from "../util/column-hoc";
 import SelectColumnHoc from "../util/select-column-hoc";
 import UserContext from "../../context/user-context";
 import ListButton from "../util/list/list-button";
-import Publishing from "../util/publishing.jsx";
-import DateValue from "../util/date-value.jsx";
-import { Button } from "react-bootstrap";
-import PublishingStatus from "../util/publishingStatus.jsx";
+import DateValue from "../util/date-value";
+import PublishingStatus from "../util/publishingStatus";
 
 /**
  * Columns for playlists lists.

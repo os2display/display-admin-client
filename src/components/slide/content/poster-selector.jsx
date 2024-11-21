@@ -11,8 +11,6 @@ import FormInput from "../../util/forms/form-input";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import localStorageKeys from "../../util/local-storage-keys";
 
-// TODO: Fix all translations.
-
 /**
  * @param {object} props Props.
  * @param {object} props.feedSource Feed source.

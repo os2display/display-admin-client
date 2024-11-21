@@ -2,9 +2,9 @@ import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FormGroup } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
-import {Tooltip} from "react-tooltip";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from "react-tooltip";
 
 /**
  * @param {object} props The props.
@@ -20,6 +20,7 @@ import {Tooltip} from "react-tooltip";
  * @param {boolean} props.isRequired If the select is required.
  * @param {boolean} props.allowNull Add null option.
  * @param {string | null} props.tooltip Tooltip text. Does not display if null.
+ * @param props.disabled
  * @returns {object} The select component.
  */
 function Select({
@@ -69,12 +70,14 @@ function Select({
       </label>
       {tooltip !== null && (
         <>
-          <a data-tooltip-id={`tooltip-${name}`}> <FontAwesomeIcon icon={faQuestionCircle} className="text-black-50" /></a>
-          <Tooltip
-            id={`tooltip-${name}`}
-            openOnClick={true}
-            content={tooltip}
-          />
+          <a data-tooltip-id={`tooltip-${name}`}>
+            {" "}
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="text-black-50"
+            />
+          </a>
+          <Tooltip id={`tooltip-${name}`} openOnClick content={tooltip} />
         </>
       )}
       <select

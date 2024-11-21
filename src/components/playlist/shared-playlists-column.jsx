@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useTranslation } from "react-i18next";
-import Publishing from "../util/publishing.jsx";
+import Publishing from "../util/publishing";
 
 /**
  * Columns for shared playlists lists.

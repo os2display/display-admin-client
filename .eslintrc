@@ -7,6 +7,11 @@
     "plugin:prettier/recommended"
   ],
   "ignorePatterns": ["*.yml"],
+  "globals": {
+    "window": true,
+    "localStorage": true,
+    "document": true
+  },
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",

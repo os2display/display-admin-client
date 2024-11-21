@@ -10,7 +10,7 @@ import ContactForm from "./contact-form";
  * A contacts component for forms.
  *
  * @param {string} props The props.
- * @param {array} props.inputContacts Array of contacts.
+ * @param {Array} props.inputContacts Array of contacts.
  * @param {string} props.formGroupClasses Classes.
  * @param {Function} props.onFilesChange When files are changed.
  * @returns {object} A contacts component.
