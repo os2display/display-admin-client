@@ -13,7 +13,7 @@ import {
 } from "../util/list/toast-component/display-toast";
 import EventDatabaseFeedType from "./templates/event-database-feed-type.jsx";
 import NotifiedFeedType from "./templates/notified-feed-type.jsx";
-import CalendarFeedType from "./templates/calendar-feed-type.jsx";
+import CalendarApiFeedType from "./templates/calendar-api-feed-type.jsx";
 
 /**
  * The theme manager component.
@@ -82,9 +82,9 @@ function FeedSourceManager({
     {
       value: "App\\Feed\\CalendarApiFeedType",
       title: t("dynamic-fields.calendar-api-feed-type.title"),
-      key: "3",
+      key: "0",
       secretsDefault: {
-        "resources": []
+        "locations": []
       },
     },
     {
@@ -109,16 +109,19 @@ function FeedSourceManager({
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    setFormStateObject({ ...initialState });
+    const newState = { ...initialState };
+
+    if (newState.secrets instanceof Array) {
+      newState.secrets = {};
+    }
+
+    setFormStateObject(newState);
   }, [initialState]);
 
   const handleSecretInput = ({target}) => {
-    const localFormStateObject = { ...formStateObject };
-    if (!localFormStateObject.secrets) {
-      localFormStateObject.secrets = {};
-    }
-    localFormStateObject.secrets[target.id] = target.value;
-    setFormStateObject(localFormStateObject);
+    const secrets = { ...formStateObject.secrets };
+    secrets[target.id] = target.value;
+    setFormStateObject({ ...formStateObject, secrets: secrets });
   };
 
   const onFeedTypeChange = ({target}) => {

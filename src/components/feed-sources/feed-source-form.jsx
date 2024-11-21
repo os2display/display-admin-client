@@ -10,9 +10,9 @@ import FormSelect from "../util/forms/select";
 import ContentBody from "../util/content-body/content-body";
 import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
-import CalendarFeedType from "./templates/calendar-feed-type.jsx";
+import CalendarApiFeedType from "./templates/calendar-api-feed-type.jsx";
 import NotifiedFeedType from "./templates/notified-feed-type.jsx";
-import EventDatabaseFeedType from "./templates/event-database-feed-type.jsx";
+import EventDatabaseApiFeedType from "./templates/event-database-feed-type.jsx";
 
 /**
  * The feed-source form component.
@@ -82,13 +82,13 @@ function FeedSourceForm({
           />
 
           {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" &&
-            (<CalendarFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
+            (<CalendarApiFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} feedSourceId={feedSource['@id']} />)
+          }
+          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" &&
+            (<EventDatabaseApiFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
           }
           {feedSource?.feedType === "App\\Feed\\NotifiedFeedType" &&
             (<NotifiedFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
-          }
-          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" &&
-            (<EventDatabaseFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
           }
         </ContentBody>
         <ContentFooter>
