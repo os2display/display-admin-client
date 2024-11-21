@@ -49,7 +49,7 @@ function FeedSelector({
   useEffect(() => {
     if (feedSourceOptions?.length === 1) {
       // If there's only one feed source option select it.
-      const feedSource = feedSourceOptions[0]['@id'];
+      const feedSource = feedSourceOptions[0]["@id"];
       const configuration = value?.configuration ?? {};
       const newValue = { ...value, feedSource, configuration };
       onChange(newValue);
@@ -163,7 +163,7 @@ function FeedSelector({
           selected={getSelected(value?.feedSource)}
           name="feedSource"
           labelledBy="Select"
-          singleSelect={true}
+          singleSelect
           overrideStrings={{
             allItemsAreSelected: t("feed-selector.all-selected"),
             clearSelected: t("feed-selector.clear-selection"),

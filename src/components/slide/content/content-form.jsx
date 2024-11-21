@@ -54,7 +54,13 @@ function ContentForm({
     let defaultMimetypes = null;
     switch (formData.input) {
       case "checkbox-options":
-        returnElement = <CheckboxOptions formData={formData} data={formStateObject} onChange={onChange} />;
+        returnElement = (
+          <CheckboxOptions
+            formData={formData}
+            data={formStateObject}
+            onChange={onChange}
+          />
+        );
         break;
       case "image":
       case "video":

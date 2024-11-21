@@ -126,13 +126,19 @@ function Schedule({ schedules, onChange }) {
     // For evaluation with the RRule library we pretend that the date is in UTC instead of the local timezone.
     // That is 9:00 in Europe/Copenhagen time will be evaluated as if it was 9:00 in UTC.
     // @see https://github.com/jkbrzt/rrule#important-use-utc-dates
-    changeSchedule(scheduleId, target.id, new Date(Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes()
-    )));
+    changeSchedule(
+      scheduleId,
+      target.id,
+      new Date(
+        Date.UTC(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours(),
+          date.getMinutes()
+        )
+      )
+    );
   };
 
   /**
@@ -174,7 +180,7 @@ function Schedule({ schedules, onChange }) {
     const hour = parseInt(split[0], 10);
     const minute = parseInt(split[1], 10);
 
-    if (isNaN(hour) || isNaN(minute)) {
+    if (Number.isNaN(hour) || Number.isNaN(minute)) {
       changeSchedule(scheduleId, "byhour", null);
       changeSchedule(scheduleId, "byminute", null);
     } else {
@@ -184,30 +190,30 @@ function Schedule({ schedules, onChange }) {
   };
 
   const setDuration = (scheduleId, schedule, target) => {
-    const value = target.value;
+    const { value } = target;
 
     const start = dayjs(schedule.dtstart).utc().format("YYYY-MM-DDTHH:mm");
     const end = dayjs(value);
-    const diff = end.diff(start, 'seconds');
+    const diff = end.diff(start, "seconds");
 
     if (diff < 0) {
-      setDurationError(true)
+      setDurationError(true);
     } else {
       setDurationError(false);
 
-      changeSchedule(scheduleId, 'duration', diff);
+      changeSchedule(scheduleId, "duration", diff);
     }
-  }
+  };
 
   const setPositiveNumberOrNull = (scheduleId, target) => {
-    const value = target.value;
+    const { value } = target;
 
-    if (isNaN(value) || value <= 0) {
+    if (Number.isNaN(value) || value <= 0) {
       changeSchedule(scheduleId, target.id, null);
     } else {
       changeSchedule(scheduleId, target.id, value);
     }
-  }
+  };
 
   const isRepeatingEvent = (schedule) => {
     return !(
@@ -219,38 +225,41 @@ function Schedule({ schedules, onChange }) {
       schedule.byminute === undefined &&
       schedule.byweekday === undefined &&
       schedule.bymonth === undefined &&
-      schedule.byweekno === undefined);
-  }
+      schedule.byweekno === undefined
+    );
+  };
 
   const displayRepeat = (schedule) => {
-    return isRepeatingEvent(schedule) || activatedRepeatIds[schedule.id] === true;
-  }
+    return (
+      isRepeatingEvent(schedule) || activatedRepeatIds[schedule.id] === true
+    );
+  };
 
   const updateActivatedRepeats = (id, value) => {
-    const updated = {...activatedRepeatIds};
+    const updated = { ...activatedRepeatIds };
     updated[id] = value;
     setActivatedRepeatIds(updated);
-  }
+  };
 
   const toggleRepeat = (schedule) => {
     if (displayRepeat(schedule)) {
       // Disable repeating schedule.
-      changeSchedule(schedule.id, 'freq', RRule.DAILY);
-      changeSchedule(schedule.id, 'count', 1);
-      changeSchedule(schedule.id, 'interval', null);
-      changeSchedule(schedule.id, 'until', null);
-      changeSchedule(schedule.id, 'byhour', null);
-      changeSchedule(schedule.id, 'byminute', null);
-      changeSchedule(schedule.id, 'byweekday', null);
-      changeSchedule(schedule.id, 'bymonth', null);
-      changeSchedule(schedule.id, 'byweekno', null);
+      changeSchedule(schedule.id, "freq", RRule.DAILY);
+      changeSchedule(schedule.id, "count", 1);
+      changeSchedule(schedule.id, "interval", null);
+      changeSchedule(schedule.id, "until", null);
+      changeSchedule(schedule.id, "byhour", null);
+      changeSchedule(schedule.id, "byminute", null);
+      changeSchedule(schedule.id, "byweekday", null);
+      changeSchedule(schedule.id, "bymonth", null);
+      changeSchedule(schedule.id, "byweekno", null);
       updateActivatedRepeats(schedule.id, false);
     } else {
       // Activate repeating schedule.
-      changeSchedule(schedule.id, 'count', null);
+      changeSchedule(schedule.id, "count", null);
       updateActivatedRepeats(schedule.id, true);
     }
-  }
+  };
 
   return (
     <div className="Schedule">
@@ -264,7 +273,7 @@ function Schedule({ schedules, onChange }) {
       </Button>
 
       <div>
-        <small>{t('schedule.helptext')}</small>
+        <small>{t("schedule.helptext")}</small>
       </div>
 
       {localSchedules &&
@@ -293,22 +302,35 @@ function Schedule({ schedules, onChange }) {
                     label={t("schedule.dtstart")}
                     value={getDateValue(schedule.dtstart)}
                     name="dtstart"
-                    onChange={({target}) => setDateValue(schedule.id, target)}
+                    onChange={({ target }) => setDateValue(schedule.id, target)}
                     type="datetime-local"
-                    tooltip={t('schedule.dtstart-tooltip')}
+                    tooltip={t("schedule.dtstart-tooltip")}
                   />
                 </div>
                 <div className="col">
                   <FormInput
                     label={t("schedule.end")}
-                    value={getDateValue(new Date(schedule.dtstart.getTime() + schedule.duration * 1000))}
+                    value={getDateValue(
+                      new Date(
+                        schedule.dtstart.getTime() + schedule.duration * 1000
+                      )
+                    )}
                     name="end"
-                    onChange={({target}) => setDuration(schedule.id, schedule, target)}
+                    onChange={({ target }) =>
+                      setDuration(schedule.id, schedule, target)
+                    }
                     type="datetime-local"
-                    className={durationError ? 'border-danger' : ''}
-                    tooltip={t('schedule.end-tooltip')}
+                    className={durationError ? "border-danger" : ""}
+                    tooltip={t("schedule.end-tooltip")}
                   />
-                  {durationError && <small className="text-danger" style={{fontStyle: 'italic'}}>{t('schedule.duration-error')}</small>}
+                  {durationError && (
+                    <small
+                      className="text-danger"
+                      style={{ fontStyle: "italic" }}
+                    >
+                      {t("schedule.duration-error")}
+                    </small>
+                  )}
                 </div>
               </div>
               <div className="card mt-3">
@@ -318,57 +340,77 @@ function Schedule({ schedules, onChange }) {
                     name="enableRepeat"
                     type="checkbox"
                     value={displayRepeat(schedule)}
-                    label={t('schedule.enable-repeat')}
+                    label={t("schedule.enable-repeat")}
                     formGroupClasses="d-inline-block mb-2"
                   />
-                  <Tooltip id={'tooltip-enable-repeat'} content={t('schedule.enable-repeat-tooltip')}></Tooltip>
+                  <Tooltip
+                    id="tooltip-enable-repeat"
+                    content={t("schedule.enable-repeat-tooltip")}
+                  />
 
                   {displayRepeat(schedule) && (
                     <>
                       <div className="row mt-2">
-                        <div className={`col col-md-${!isNaN(schedule.byhour) ? "3" : "6"}`}>
+                        <div
+                          className={`col col-md-${
+                            !Number.isNaN(schedule.byhour) ? "3" : "6"
+                          }`}
+                        >
                           <Select
-                            onChange={({target}) =>
-                              changeSchedule(schedule.id, target.id, target.value)
+                            onChange={({ target }) =>
+                              changeSchedule(
+                                schedule.id,
+                                target.id,
+                                target.value
+                              )
                             }
                             value={schedule.freq}
                             label={t("schedule.freq")}
                             name="freq"
                             options={freqOptions}
                             allowNull={false}
-                            tooltip={t('schedule.frequency-tooltip')}
+                            tooltip={t("schedule.frequency-tooltip")}
                           />
                         </div>
                         <div className="col col-md-3">
                           <FormInput
-                            onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
-                            value={schedule.interval ?? ''}
+                            onChange={({ target }) =>
+                              setPositiveNumberOrNull(schedule.id, target)
+                            }
+                            value={schedule.interval ?? ""}
                             label={t("schedule.interval")}
                             type="search"
                             name="interval"
-                            tooltip={t('schedule.interval-tooltip')}
+                            tooltip={t("schedule.interval-tooltip")}
                           />
                         </div>
                         <div className="col col-md-3">
                           <FormInput
-                            onChange={({target}) => setPositiveNumberOrNull(schedule.id, target)}
-                            value={schedule.count ?? ''}
+                            onChange={({ target }) =>
+                              setPositiveNumberOrNull(schedule.id, target)
+                            }
+                            value={schedule.count ?? ""}
                             label={t("schedule.count")}
-                            placeholder={t('schedule.count-placeholder')}
+                            placeholder={t("schedule.count-placeholder")}
                             type="search"
                             name="count"
-                            tooltip={t('schedule.count-tooltip')}
+                            tooltip={t("schedule.count-tooltip")}
                           />
                         </div>
-                        {!isNaN(schedule.byhour) && (
+                        {!Number.isNaN(schedule.byhour) && (
                           <div className="col col-md-3">
                             <FormInput
-                              onChange={({target}) => setTimeValue(schedule.id, target)}
-                              value={getTimeValue(schedule.byhour, schedule.byminute)}
+                              onChange={({ target }) =>
+                                setTimeValue(schedule.id, target)
+                              }
+                              value={getTimeValue(
+                                schedule.byhour,
+                                schedule.byminute
+                              )}
                               label={t("schedule.bytime")}
                               type="time"
                               name="bytime"
-                              tooltip={t('schedule.bytime-tooltip')}
+                              tooltip={t("schedule.bytime-tooltip")}
                             />
                           </div>
                         )}
@@ -376,18 +418,24 @@ function Schedule({ schedules, onChange }) {
                       <div className="row mt-2">
                         <div className="col">
                           <FormGroup>
-                            <label htmlFor="byweekday">{t("schedule.byweekday")}</label>
-                            <Tooltip id={'tooltip-byweekday'} content={t('schedule.byweekday-tooltip')}></Tooltip>
+                            <label htmlFor="byweekday">
+                              {t("schedule.byweekday")}
+                            </label>
+                            <Tooltip
+                              id="tooltip-byweekday"
+                              content={t("schedule.byweekday-tooltip")}
+                            />
                             <MultiSelect
                               className="mt-2"
                               options={byWeekdayOptions}
                               value={
                                 schedule.byweekday
                                   ? schedule.byweekday.map((weekdayNumber) =>
-                                    byWeekdayOptions.find(
-                                      (weekDay) => weekDay.value === weekdayNumber
+                                      byWeekdayOptions.find(
+                                        (weekDay) =>
+                                          weekDay.value === weekdayNumber
+                                      )
                                     )
-                                  )
                                   : []
                               }
                               name="byweekday"
@@ -396,7 +444,9 @@ function Schedule({ schedules, onChange }) {
                                 allItemsAreSelected: t("schedule.all-selected"),
                                 clearSelected: t("schedule.clear-selection"),
                                 selectAll: t("schedule.selected-all"),
-                                selectSomeItems: t("schedule.select-some-options"),
+                                selectSomeItems: t(
+                                  "schedule.select-some-options"
+                                ),
                               }}
                               labelledBy="Select"
                               onChange={(value) => {
@@ -414,7 +464,10 @@ function Schedule({ schedules, onChange }) {
                             <label htmlFor="bymonth" className="mb-2">
                               {t("schedule.bymonth")}
                             </label>
-                            <Tooltip id={'tooltip-bymonth'} content={t('schedule.bymonth-tooltip')}></Tooltip>
+                            <Tooltip
+                              id="tooltip-bymonth"
+                              content={t("schedule.bymonth-tooltip")}
+                            />
                             <MultiSelect
                               options={byMonthOptions}
                               value={getByMonthValue(schedule.bymonth)}
@@ -425,7 +478,9 @@ function Schedule({ schedules, onChange }) {
                                 allItemsAreSelected: t("schedule.all-selected"),
                                 clearSelected: t("schedule.clear-selection"),
                                 selectAll: t("schedule.selected-all"),
-                                selectSomeItems: t("schedule.select-some-options"),
+                                selectSomeItems: t(
+                                  "schedule.select-some-options"
+                                ),
                               }}
                               onChange={(values) =>
                                 changeSchedule(
@@ -444,9 +499,11 @@ function Schedule({ schedules, onChange }) {
                             label={t("schedule.until")}
                             value={getDateValue(schedule.until)}
                             name="until"
-                            onChange={({target}) => setDateValue(schedule.id, target)}
+                            onChange={({ target }) =>
+                              setDateValue(schedule.id, target)
+                            }
                             type="datetime-local"
-                            tooltip={t('schedule.until-tooltip')}
+                            tooltip={t("schedule.until-tooltip")}
                           />
                         </div>
                         {schedule.freq === RRule.YEARLY && (
@@ -455,14 +512,18 @@ function Schedule({ schedules, onChange }) {
                               disabled={schedule.freq !== RRule.YEARLY}
                               label={t("schedule.byweekno")}
                               value={schedule.byweekno ?? ""}
-                              onChange={({target}) =>
-                                changeSchedule(schedule.id, target.id, target.value)
+                              onChange={({ target }) =>
+                                changeSchedule(
+                                  schedule.id,
+                                  target.id,
+                                  target.value
+                                )
                               }
                               name="byweekno"
                               type="number"
                               min="0"
                               max="52"
-                              tooltip={t('schedule.byweekno-tooltip')}
+                              tooltip={t("schedule.byweekno-tooltip")}
                             />
                           </div>
                         )}
@@ -475,18 +536,24 @@ function Schedule({ schedules, onChange }) {
                     <div id="schedule_details" className="row">
                       <div className="mb-2">
                         <strong>{t("schedule.next-occurrences")}:</strong>
-                        {getNextOccurrences(schedule.rruleObject, schedule.duration, schedule.count ? Math.min(schedule.count, 5) : 5).map(
-                          (occurrence) => (<div key={occurrence.key}>
+                        {getNextOccurrences(
+                          schedule.rruleObject,
+                          schedule.duration,
+                          schedule.count ? Math.min(schedule.count, 5) : 5
+                        ).map((occurrence) => (
+                          <div key={occurrence.key}>
                             <span>{occurrence.text} </span>
                             <span className="ms-2 me-2"> - </span>
                             <span>{occurrence.end}</span>
-                          </div>)
-                        )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                     <small>
-                      {t('schedule.repetition')}: <span
-                      style={{fontStyle: 'italic'}}>{schedule.rruleObject.toText()}</span>
+                      {t("schedule.repetition")}:{" "}
+                      <span style={{ fontStyle: "italic" }}>
+                        {schedule.rruleObject.toText()}
+                      </span>
                     </small>
                   </div>
                 )}

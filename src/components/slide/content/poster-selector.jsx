@@ -11,8 +11,6 @@ import FormInput from "../../util/forms/form-input";
 import FormCheckbox from "../../util/forms/form-checkbox";
 import localStorageKeys from "../../util/local-storage-keys";
 
-// TODO: Fix all translations.
-
 /**
  * @param {object} props Props.
  * @param {object} props.feedSource Feed source.
@@ -340,6 +338,7 @@ function PosterSelector({
     setSingleSelectedOccurrence(null);
   };
 
+  /* eslint-disable jsx-a11y/control-has-associated-label */
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -888,6 +887,7 @@ function PosterSelector({
       </Card.Body>
     </Card>
   );
+  /* eslint-enable jsx-a11y/control-has-associated-label */
 }
 
 PosterSelector.propTypes = {

@@ -26,7 +26,7 @@ import "./multi-dropdown.scss";
  * @param {Function} props.filterCallback - The callback on search filter.
  * @param {boolean} props.singleSelect - If the dropdown is single select.
  * @param {boolean} props.disableSearch - Disable search option.
- * @param props.error
+ * @param {boolean} props.error - Error.
  * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({

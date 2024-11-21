@@ -22,13 +22,14 @@ import EventDatabaseApiFeedType from "./templates/event-database-feed-type";
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
  * @param {string} props.headerText Headline text.
- * @param {boolean} [props.isLoading=false] Indicator of whether the form is
- *   loading. Default is `false`
- * @param {string} [props.loadingMessage=""] The loading message for the
- *   spinner. Default is `""`
- * @param {object} props.feedSource The feed source object
+ * @param {boolean} [props.isLoading] Indicator of whether the form is loading.
+ *   Default is `false`
+ * @param {string} [props.loadingMessage] The loading message for the spinner.
+ *   Default is `""`
  * @param {object} props.feedSourceTypeOptions The options for feed source types
  * @param {string} props.mode The mode
+ * @param {Function} props.onFeedTypeChange Callback on feed type change.
+ * @param {Function} props.handleSecretInput Callback on secret input change.
  * @returns {object} The feed-source form.
  */
 function FeedSourceForm({
@@ -81,15 +82,28 @@ function FeedSourceForm({
             options={feedSourceTypeOptions}
           />
 
-          {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" &&
-            (<CalendarApiFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} feedSourceId={feedSource['@id']} />)
-          }
-          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" &&
-            (<EventDatabaseApiFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
-          }
-          {feedSource?.feedType === "App\\Feed\\NotifiedFeedType" &&
-            (<NotifiedFeedType handleInput={handleSecretInput} formStateObject={feedSource.secrets} mode={mode} />)
-          }
+          {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" && (
+            <CalendarApiFeedType
+              handleInput={handleSecretInput}
+              formStateObject={feedSource.secrets}
+              mode={mode}
+              feedSourceId={feedSource["@id"]}
+            />
+          )}
+          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" && (
+            <EventDatabaseApiFeedType
+              handleInput={handleSecretInput}
+              formStateObject={feedSource.secrets}
+              mode={mode}
+            />
+          )}
+          {feedSource?.feedType === "App\\Feed\\NotifiedFeedType" && (
+            <NotifiedFeedType
+              handleInput={handleSecretInput}
+              formStateObject={feedSource.secrets}
+              mode={mode}
+            />
+          )}
         </ContentBody>
         <ContentFooter>
           <Button
@@ -126,13 +140,11 @@ FeedSourceForm.propTypes = {
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleSecretInput: PropTypes.func.isRequired,
+  onFeedTypeChange: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,
-  dynamicFormElement: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
   feedSourceTypeOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string.isRequired,

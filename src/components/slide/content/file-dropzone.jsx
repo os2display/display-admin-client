@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
  * @param {Array | null} props.acceptedMimetypes - Mimetypes to accept.
  * @returns {object} Dropzone component.
  */
-function FileDropzone({ onFilesAdded, acceptedMimetypes = null, }) {
+function FileDropzone({ onFilesAdded, acceptedMimetypes = null }) {
   const { t } = useTranslation("common");
 
   // TODO: Make this configurable. It should always align with sizes in
