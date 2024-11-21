@@ -41,7 +41,8 @@ function CheckboxOptions({ formData, data, onChange }) {
             value={option.value}
             onChange={onOptionChange}
             checked={containsValue(option.value)}
-          /><span className="ms-2">{option.title}</span>
+          />
+          <span className="ms-2">{option.title}</span>
         </div>
       ))}
     </div>
