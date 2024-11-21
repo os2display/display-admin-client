@@ -48,9 +48,9 @@
     "vite": "^5.2.11"
   },
   "scripts": {
-    "lint:js": "eslint --ext .js --ext .jsx ./src",
+    "lint:js": "eslint --ext .js --ext .jsx ./src --max-warnings=0",
     "lint:js:fix": "eslint --ext .js --ext .jsx --fix ./src",
-    "lint:scss": "stylelint \"./src/**/*.scss\"",
+    "lint:scss": "stylelint \"./src/**/*.scss\" --max-warnings=0",
     "lint:scss:fix": "stylelint --fix \"./src/**/*.scss\"",
     "check-coding-standards": "yarn lint:js && yarn lint:scss",
     "apply-coding-standards": "yarn lint:js:fix && yarn lint:scss:fix",

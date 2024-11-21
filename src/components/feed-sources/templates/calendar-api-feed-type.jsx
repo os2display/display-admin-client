@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import MultiselectFromEndpoint from "../../slide/content/multiselect-from-endpoint";
 import { Alert } from "react-bootstrap";
+import MultiselectFromEndpoint from "../../slide/content/multiselect-from-endpoint";
 import ConfigLoader from "../../../config-loader";
 
 const CalendarApiFeedType = ({

@@ -1,10 +1,12 @@
 import { React } from "react";
+import PropTypes from "prop-types";
 
 /**
- * @param root0
- * @param root0.formData
- * @param root0.data
- * @param root0.onChange
+ * @param {object} props The props.
+ * @param {object} props.formData The form data.
+ * @param {object} props.data The data.
+ * @param {Function} props.onChange On change callback.
+ * @returns {React.JSX} The component.
  */
 function CheckboxOptions({ formData, data, onChange }) {
   const values = data[formData.name] ?? [];
@@ -46,5 +48,20 @@ function CheckboxOptions({ formData, data, onChange }) {
     </div>
   );
 }
+
+CheckboxOptions.propTypes = {
+  formData: PropTypes.shape({
+    name: PropTypes.string,
+    formGroupClasses: PropTypes.string,
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+      })
+    ),
+  }),
+  onChange: PropTypes.func.isRequired,
+  data: PropTypes.shape({}),
+};
 
 export default CheckboxOptions;

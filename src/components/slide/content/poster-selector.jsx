@@ -338,6 +338,7 @@ function PosterSelector({
     setSingleSelectedOccurrence(null);
   };
 
+  /* eslint-disable jsx-a11y/control-has-associated-label */
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -886,6 +887,7 @@ function PosterSelector({
       </Card.Body>
     </Card>
   );
+  /* eslint-enable jsx-a11y/control-has-associated-label */
 }
 
 PosterSelector.propTypes = {

@@ -43,6 +43,7 @@ function FormInputArea({
 
 FormInputArea.propTypes = {
   name: PropTypes.string.isRequired,
+  formGroupClasses: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,

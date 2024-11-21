@@ -20,7 +20,7 @@ import { Tooltip } from "react-tooltip";
  * @param {boolean} props.isRequired If the select is required.
  * @param {boolean} props.allowNull Add null option.
  * @param {string | null} props.tooltip Tooltip text. Does not display if null.
- * @param props.disabled
+ * @param {boolean | null} props.disabled Disable the select.
  * @returns {object} The select component.
  */
 function Select({
@@ -104,6 +104,7 @@ function Select({
       {error && <div className="invalid-feedback">{textOnError}</div>}
     </FormGroup>
   );
+  /* eslint-enable jsx-a11y/anchor-is-valid */
 }
 
 Select.propTypes = {
@@ -113,6 +114,8 @@ Select.propTypes = {
       title: PropTypes.string.isRequired,
     })
   ).isRequired,
+  disabled: PropTypes.bool,
+  tooltip: PropTypes.string,
   errors: PropTypes.arrayOf(PropTypes.string),
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
