@@ -13,7 +13,7 @@ import FormInput from "../form-input";
  *
  * @param {string} props The props.
  * @param {string} props.name The name of the table
- * @param {array} props.value The value of the rich text field
+ * @param {Array} props.value The value of the rich text field
  * @param {Function} props.onChange The callback for changes in the rich text field
  * @param {string} props.formGroupClasses Classes for the form group
  * @returns {object} A table for forms.

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#264](https://github.com/os2display/display-admin-client/pull/264)
+  - Added checkbox options component for use in calendar modifiers.
+  - Fixed multiselect when more than one feed source of the given type is installed.
+  - Fixed github action to fail on warnings.
 - [#268](https://github.com/os2display/display-admin-client/pull/268)
   - Added feed source UI.
 
@@ -23,8 +27,6 @@ All notable changes to this project will be documented in this file.
   - Add validation checking if template is selected on slide before save
 - [#260](https://github.com/os2display/display-admin-client/pull/260)
   - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id` 
-- [#265](https://github.com/os2display/display-admin-client/pull/265)
-  - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id`
 - [#259](https://github.com/os2display/display-admin-client/pull/259)
   - Add saving of playlists/groups with screen (as opposed to _after_)
   - Clean up `screen-manager.jsx`

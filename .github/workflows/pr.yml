@@ -29,7 +29,7 @@ jobs:
         run: |
           docker network create frontend
           docker compose run --rm node yarn install
-          docker compose run --rm node yarn check-coding-standards
+          docker compose run --rm node yarn check-coding-standards-actions
 
   playwright-tests:
     name: Playwright

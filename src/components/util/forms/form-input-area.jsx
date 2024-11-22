@@ -23,7 +23,7 @@ function FormInputArea({
   required = false,
 }) {
   return (
-    <div className={"form-group " + formGroupClasses}>
+    <div className={`form-group ${formGroupClasses}`}>
       <FormLabel htmlFor={name}>
         {label}
         {required && " *"}
@@ -43,6 +43,7 @@ function FormInputArea({
 
 FormInputArea.propTypes = {
   name: PropTypes.string.isRequired,
+  formGroupClasses: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,

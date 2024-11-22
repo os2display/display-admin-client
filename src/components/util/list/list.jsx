@@ -91,7 +91,8 @@ function List({
     }
 
     // search
-    const localSearch = searchParams || localStorage.getItem(localStorageKeys.SEARCH) || "";
+    const localSearch =
+      searchParams || localStorage.getItem(localStorageKeys.SEARCH) || "";
     params.delete("search");
 
     if (localSearch) {

@@ -6,17 +6,17 @@ import {
   useDeleteV2FeedSourcesByIdMutation,
   useGetV2FeedSourcesByIdSlidesQuery,
 } from "../../redux/api/api.generated.ts";
-import ListContext from "../../context/list-context.jsx";
-import ContentBody from "../util/content-body/content-body.jsx";
-import List from "../util/list/list.jsx";
+import ListContext from "../../context/list-context";
+import ContentBody from "../util/content-body/content-body";
+import List from "../util/list/list";
 import { FeedSourceColumns } from "./feed-sources-columns";
 import {
   displayError,
   displaySuccess,
-} from "../util/list/toast-component/display-toast.jsx";
-import idFromUrl from "../util/helpers/id-from-url.jsx";
-import UserContext from "../../context/user-context.jsx";
-import useModal from "../../context/modal-context/modal-context-hook.jsx";
+} from "../util/list/toast-component/display-toast";
+import idFromUrl from "../util/helpers/id-from-url";
+import UserContext from "../../context/user-context";
+import useModal from "../../context/modal-context/modal-context-hook";
 
 /**
  * The feed sources list component.

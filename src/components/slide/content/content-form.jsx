@@ -9,6 +9,7 @@ import FormTable from "../../util/forms/form-table/form-table";
 import FileSelector from "./file-selector";
 import StationSelector from "./station/station-selector";
 import RadioButtons from "../../util/forms/radio-buttons";
+import CheckboxOptions from "../../util/forms/checkbox-options";
 
 /**
  * Render form elements for content form.
@@ -52,6 +53,15 @@ function ContentForm({
     let returnElement;
     let defaultMimetypes = null;
     switch (formData.input) {
+      case "checkbox-options":
+        returnElement = (
+          <CheckboxOptions
+            formData={formData}
+            data={formStateObject}
+            onChange={onChange}
+          />
+        );
+        break;
       case "image":
       case "video":
       case "file":

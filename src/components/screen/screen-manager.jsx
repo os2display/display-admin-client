@@ -138,7 +138,7 @@ function ScreenManager({
   /**
    * Creates an array of playlist ids and weight filtered by region id or null
    *
-   * @param regionId RegionId for filtering
+   * @param {string} regionId RegionId for filtering
    * @returns {Array | null} A mapped array with playlist ids and weight
    *   filtered by region id or null
    */
@@ -153,12 +153,12 @@ function ScreenManager({
   }
 
   /**
-   * @param {string} id The item to remove.
+   * @param {string} itemId The item to remove.
    * @param {Array} array The array to remove from.
    */
-  function removeFromArray(id, array) {
-    if (array.indexOf(id) >= 0) {
-      array.splice(array.indexOf(id), 1);
+  function removeFromArray(itemId, array) {
+    if (array.indexOf(itemId) >= 0) {
+      array.splice(array.indexOf(itemId), 1);
     }
   }
 

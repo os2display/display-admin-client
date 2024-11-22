@@ -274,8 +274,9 @@
       },
       "calendar-api-feed-type": {
         "title": "Kalender feed",
-        "resources": "Ressourcer",
-        "redacted-value-input-placeholder": "Skjult værdi"
+        "locations": "Lokationer",
+        "redacted-value-input-placeholder": "Skjult værdi",
+        "save-before-locations-can-be-set": "Bemærk! Datakilden skal gemmes før der kan tilkobles lokationer. Gem og åbn datakilden igen."
       },
       "rss-feed-type": {
         "title": "RSS feed"
