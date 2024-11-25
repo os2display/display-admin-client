@@ -15,7 +15,7 @@ import "./drag-and-drop-table.scss";
  * @param {Array} props.columns The columns for the table.
  * @param {Array} props.data The data to display in the table.
  * @param {string} props.name The id of the form element
- * @param {Function} props.onDropped Callback for when an items is dropped and
+ * @param {Function} props.onDropped Callback for when an item is dropped and
  *   the list is reordered.
  * @param {Function} props.callback - The callback.
  * @param {string} props.label - The label.
@@ -134,6 +134,7 @@ function DragAndDropTable({
                             providedSnapshot.isDragging,
                             providedDraggable.draggableProps.style
                           )}
+                          className={data.className ?? ''}
                         >
                           <td>
                             <FontAwesomeIcon
@@ -171,7 +172,7 @@ function DragAndDropTable({
 
 DragAndDropTable.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, id: PropTypes.string })
+    PropTypes.shape({ name: PropTypes.string, id: PropTypes.string, className: PropTypes.string })
   ).isRequired,
   columns: ColumnProptypes.isRequired,
   name: PropTypes.string.isRequired,

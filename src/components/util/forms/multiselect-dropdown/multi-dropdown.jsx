@@ -18,13 +18,15 @@ import "./multi-dropdown.scss";
  * @param {Array} props.selected - The selected options
  * @param {string} props.name - The id of the form element
  * @param {boolean} props.isLoading - Whether the component is loading.
- * @param {string | null} props.noSelectedString - The label for when there is nothing selected.
+ * @param {string | null} props.noSelectedString - The label for when there is
+ *   nothing selected.
  * @param {string} props.errorText - The string to display on error.
  * @param {string} props.label - The input label
  * @param {string | null} props.helpText - Help text for the dropdown.
  * @param {Function} props.filterCallback - The callback on search filter.
  * @param {boolean} props.singleSelect - If the dropdown is single select.
  * @param {boolean} props.disableSearch - Disable search option.
+ * @param props.error
  * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({
@@ -34,6 +36,7 @@ function MultiSelectComponent({
   noSelectedString = null,
   isLoading = false,
   errorText = "",
+  error = false,
   helpText = null,
   selected = [],
   options = [],
@@ -42,7 +45,6 @@ function MultiSelectComponent({
   filterCallback = () => {},
 }) {
   const { t } = useTranslation("common");
-  const [error] = useState();
   const [mappedOptions, setMappedOptions] = useState();
   const [mappedSelected, setMappedSelected] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
@@ -122,13 +124,22 @@ function MultiSelectComponent({
   const addOrRemoveNewEntryToSelected = (multiselectData) => {
     let selectedOptions = [];
     const idsOfSelectedEntries = multiselectData.map(({ value }) => value);
-
-    selectedOptions = removeDuplicatesByKey(
-      [...selected, ...options].filter((option) =>
-        idsOfSelectedEntries.includes(option["@id"] || option.id)
-      ),
-      "id"
-    );
+    const selectedAndOptions = [...selected, ...options];
+    if ("@id" in selectedAndOptions[0]) {
+      selectedOptions = removeDuplicatesByKey(
+        selectedAndOptions.filter((option) =>
+          idsOfSelectedEntries.includes(option["@id"])
+        ),
+        "@id"
+      );
+    } else {
+      selectedOptions = removeDuplicatesByKey(
+        selectedAndOptions.filter(({ id }) =>
+          idsOfSelectedEntries.includes(id)
+        ),
+        "id"
+      );
+    }
 
     if (singleSelect) {
       selectedOptions = [selectedOptions[selectedOptions.length - 1]];
@@ -214,6 +225,7 @@ MultiSelectComponent.propTypes = {
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   errorText: PropTypes.string,
+  error: PropTypes.bool,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   singleSelect: PropTypes.bool,

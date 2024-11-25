@@ -11,7 +11,7 @@ const ConfigLoader = {
       if (configData !== null) {
         resolve(configData);
       } else {
-        fetch("/config.json")
+        fetch("/admin/config.json")
           .then((response) => response.json())
           .then((data) => {
             configData = data;

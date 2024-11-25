@@ -62,7 +62,11 @@ function SelectGroupsTable({
         );
       }
       setTotalItems(alreadySelectedGroups["hydra:totalItems"]);
-      setSelectedData([...selectedData, ...newGroups]);
+      const value = [...selectedData, ...newGroups];
+      setSelectedData(value);
+      handleChange({
+        target: { id: name, value: value.map((item) => item["@id"]) },
+      });
     }
   }, [alreadySelectedGroups]);
 

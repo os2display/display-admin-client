@@ -4,24 +4,75 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- Adds screen preview by iframing screen client into admin.
-- Changed from vite CJS to ESM.
-- Removed array spread.
-- Fixed HMR setup.
-- Upgraded @fortawesome/react-fontawesome, react-quill, react-toastify.
-- Removed unused react-dayjs.
-- Remove default props from the project.
+- [#268](https://github.com/os2display/display-admin-client/pull/268)
+  - Added feed source UI.
 
-- [#244](https://github.com/aroskanalen/display-admin-client/pull/1)
+## [2.1.1] - 2024-10-23
+
+- [#266](https://github.com/os2display/display-admin-client/pull/266)
+  - Fixed search from local storage.
+- [#265](https://github.com/os2display/display-admin-client/pull/265)
+  - Add no-cache directive
+- [#263](https://github.com/os2display/display-admin-client/pull/263)
+  - Added prefix to local storage keys.
+- [#262](https://github.com/os2display/display-admin-client/pull/262)
+  - Add multi select styling for `invalid` state 
+  - Add possibility of sending error via props to multiselect component
+  - Add validation checking if layout is selected on screen before save
+  - Add validation checking if template is selected on slide before save
+- [#260](https://github.com/os2display/display-admin-client/pull/260)
+  - Bug in multiselect, fixed by removing duplicates by key both `@id`and `id` 
+- [#259](https://github.com/os2display/display-admin-client/pull/259)
+  - Add saving of playlists/groups with screen (as opposed to _after_)
+  - Clean up `screen-manager.jsx`
+  - Change bootstrap column class from `col-md-8` -> `col-md-12` 
+  - update api.generated.ts to match [related pr](https://github.com/os2display/display-api-service/pull/213)
+  - Add @rtk-incubator/rtk-query-codegen-openapi to package.json in `src/redux/api`
+  - Sort playlists based on weight in drag/drop component
+
+## [2.1.0] - 2024-10-23
+
+- [#258](https://github.com/os2display/display-admin-client/pull/258)
+  - Fixed screen is vertical check.
+- [#257](https://github.com/os2display/display-admin-client/pull/257)
+  - Update multiselect component
+  - Change key in function from `id` to `@id`
+- [#256](https://github.com/os2display/display-admin-client/pull/256)
+  - Fixed published from/to texts.
+- [#255](https://github.com/os2display/display-admin-client/pull/255)
+  - Fixed rejseplanen component so it does not throw errors when searching for stops.
+- [#254](https://github.com/os2display/display-admin-client/pull/254)
+  - Changed playlist.slides list columns.
+  - Set published.to to now when creating new slides.
+  - Added option to sort slides in playlist by published.to and status.
+- [#253](https://github.com/os2display/display-admin-client/pull/253)
+  - Refactored scheduling to increase user experience.
+  - Added interval and count to rrule inputs.
+- [#249](https://github.com/os2display/display-admin-client/pull/249)
+  - Set infrastructure node version to 20.
+  - Fixed base path to /admin in vite setup.
+  - Changed from vite CJS to ESM.
+  - Removed array spread.
+  - Fixed HMR setup.
+  - Upgraded @fortawesome/react-fontawesome, react-quill, react-toastify.
+  - Removed unused react-dayjs.
+  - Remove default props from the project.
   - Migrate from Cypress to playwright
-- [#243](https://github.com/aroskanalen/display-admin-client/pull/2)
   - Migrate from CRA to Vite
   - Upgrade node from 14 -> 20
+
+## [2.0.3] - 2024-08-14
+
+- [#252](https://github.com/os2display/display-admin-client/pull/252)
+  - Reverted change in https://github.com/os2display/display-admin-client/commit/65762066c708f541305a48fbd6b28264dca593b5 regarding rrule dtstart.
+  - Added comments about how rrules are handled.
 - [#242](https://github.com/os2display/display-admin-client/pull/243)
   - Add entry in example config for midttrafik api key
   - Clean up multi select component a bit, replace reduce with Map logic
   - Make the station selector call new api
   - Add config to context in app.jsx
+- [#243](https://github.com/os2display/display-admin-client/pull/251)
+  - Fix null bug: replace valueAsDate with target.value as valueAsDate was null
 
 ## [2.0.2] - 2024-04-25
 

@@ -33,16 +33,6 @@ export const api = createApi({
         body: queryArg.screenLoginInput,
       }),
     }),
-    loginCheckPost: build.mutation<
-      LoginCheckPostApiResponse,
-      LoginCheckPostApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/authentication/token`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
     postRefreshTokenItem: build.mutation<
       PostRefreshTokenItemApiResponse,
       PostRefreshTokenItemApiArg
@@ -51,24 +41,6 @@ export const api = createApi({
         url: `/v2/authentication/token/refresh`,
         method: "POST",
         body: queryArg.refreshTokenRequest,
-      }),
-    }),
-    getV2CampaignsByIdScreenGroups: build.query<
-      GetV2CampaignsByIdScreenGroupsApiResponse,
-      GetV2CampaignsByIdScreenGroupsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/campaigns/${queryArg.id}/screen-groups`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
-      }),
-    }),
-    getV2CampaignsByIdScreens: build.query<
-      GetV2CampaignsByIdScreensApiResponse,
-      GetV2CampaignsByIdScreensApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/campaigns/${queryArg.id}/screens`,
-        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
     getV2FeedSources: build.query<
@@ -89,11 +61,58 @@ export const api = createApi({
         },
       }),
     }),
+    postV2FeedSources: build.mutation<
+      PostV2FeedSourcesApiResponse,
+      PostV2FeedSourcesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/feed-sources`,
+        method: "POST",
+        body: queryArg.feedSourceFeedSourceInput,
+      }),
+    }),
     getV2FeedSourcesById: build.query<
       GetV2FeedSourcesByIdApiResponse,
       GetV2FeedSourcesByIdApiArg
     >({
       query: (queryArg) => ({ url: `/v2/feed-sources/${queryArg.id}` }),
+    }),
+    putV2FeedSourcesById: build.mutation<
+      PutV2FeedSourcesByIdApiResponse,
+      PutV2FeedSourcesByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/feed-sources/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.feedSourceFeedSourceInput,
+      }),
+    }),
+    deleteV2FeedSourcesById: build.mutation<
+      DeleteV2FeedSourcesByIdApiResponse,
+      DeleteV2FeedSourcesByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/feed-sources/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getV2FeedSourcesByIdSlides: build.query<
+      GetV2FeedSourcesByIdSlidesApiResponse,
+      GetV2FeedSourcesByIdSlidesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/feed-sources/${queryArg.id}/slides`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          title: queryArg.title,
+          description: queryArg.description,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          published: queryArg.published,
+          order: queryArg.order,
+        },
+      }),
     }),
     getV2FeedSourcesByIdConfigAndName: build.query<
       GetV2FeedSourcesByIdConfigAndNameApiResponse,
@@ -139,6 +158,16 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/v2/layouts/${queryArg.id}` }),
     }),
+    loginCheckPost: build.mutation<
+      LoginCheckPostApiResponse,
+      LoginCheckPostApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/authentication/token`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
     getV2Media: build.query<GetV2MediaApiResponse, GetV2MediaApiArg>({
       query: (queryArg) => ({
         url: `/v2/media`,
@@ -176,6 +205,24 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/v2/media/${queryArg.id}`,
         method: "DELETE",
+      }),
+    }),
+    getV2CampaignsByIdScreenGroups: build.query<
+      GetV2CampaignsByIdScreenGroupsApiResponse,
+      GetV2CampaignsByIdScreenGroupsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/campaigns/${queryArg.id}/screen-groups`,
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
+      }),
+    }),
+    getV2CampaignsByIdScreens: build.query<
+      GetV2CampaignsByIdScreensApiResponse,
+      GetV2CampaignsByIdScreensApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/campaigns/${queryArg.id}/screens`,
+        params: { page: queryArg.page, itemsPerPage: queryArg.itemsPerPage },
       }),
     }),
     getV2Playlists: build.query<
@@ -265,6 +312,37 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV2SlidesByIdPlaylists: build.query<
+      GetV2SlidesByIdPlaylistsApiResponse,
+      GetV2SlidesByIdPlaylistsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/slides/${queryArg.id}/playlists`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          published: queryArg.published,
+        },
+      }),
+    }),
+    putV2SlidesByIdPlaylists: build.mutation<
+      PutV2SlidesByIdPlaylistsApiResponse,
+      PutV2SlidesByIdPlaylistsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/slides/${queryArg.id}/playlists`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
+    getScreenGroupCampaignItem: build.query<
+      GetScreenGroupCampaignItemApiResponse,
+      GetScreenGroupCampaignItemApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/screen-groups-campaigns/${queryArg.id}`,
+      }),
+    }),
     getV2ScreenGroups: build.query<
       GetV2ScreenGroupsApiResponse,
       GetV2ScreenGroupsApiArg
@@ -290,14 +368,6 @@ export const api = createApi({
         url: `/v2/screen-groups`,
         method: "POST",
         body: queryArg.screenGroupScreenGroupInput,
-      }),
-    }),
-    getScreenGroupCampaignItem: build.query<
-      GetScreenGroupCampaignItemApiResponse,
-      GetScreenGroupCampaignItemApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/screen-groups-campaigns/${queryArg.id}`,
       }),
     }),
     getV2ScreenGroupsById: build.query<
@@ -577,27 +647,14 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getV2SlidesByIdPlaylists: build.query<
-      GetV2SlidesByIdPlaylistsApiResponse,
-      GetV2SlidesByIdPlaylistsApiArg
+    apiSlidePerformAction: build.mutation<
+      ApiSlidePerformActionApiResponse,
+      ApiSlidePerformActionApiArg
     >({
       query: (queryArg) => ({
-        url: `/v2/slides/${queryArg.id}/playlists`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          published: queryArg.published,
-        },
-      }),
-    }),
-    putV2SlidesByIdPlaylists: build.mutation<
-      PutV2SlidesByIdPlaylistsApiResponse,
-      PutV2SlidesByIdPlaylistsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/slides/${queryArg.id}/playlists`,
-        method: "PUT",
-        body: queryArg.body,
+        url: `/v2/slides/${queryArg.id}/action`,
+        method: "POST",
+        body: queryArg.slideInteractiveSlideActionInput,
       }),
     }),
     getV2Templates: build.query<
@@ -688,6 +745,61 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getV2Users: build.query<GetV2UsersApiResponse, GetV2UsersApiArg>({
+      query: (queryArg) => ({
+        url: `/v2/users`,
+        params: {
+          page: queryArg.page,
+          itemsPerPage: queryArg.itemsPerPage,
+          fullName: queryArg.fullName,
+          email: queryArg.email,
+          createdBy: queryArg.createdBy,
+          modifiedBy: queryArg.modifiedBy,
+          order: queryArg.order,
+        },
+      }),
+    }),
+    postV2Users: build.mutation<PostV2UsersApiResponse, PostV2UsersApiArg>({
+      query: (queryArg) => ({
+        url: `/v2/users`,
+        method: "POST",
+        body: queryArg.userUserInput,
+      }),
+    }),
+    getV2UsersById: build.query<
+      GetV2UsersByIdApiResponse,
+      GetV2UsersByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/v2/users/${queryArg.id}` }),
+    }),
+    putV2UsersById: build.mutation<
+      PutV2UsersByIdApiResponse,
+      PutV2UsersByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/users/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.userUserInput,
+      }),
+    }),
+    deleteV2UsersById: build.mutation<
+      DeleteV2UsersByIdApiResponse,
+      DeleteV2UsersByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/users/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteV2UsersByIdRemoveFromTenant: build.mutation<
+      DeleteV2UsersByIdRemoveFromTenantApiResponse,
+      DeleteV2UsersByIdRemoveFromTenantApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/v2/users/${queryArg.id}/remove-from-tenant`,
+        method: "DELETE",
+      }),
+    }),
     getV2UserActivationCodes: build.query<
       GetV2UserActivationCodesApiResponse,
       GetV2UserActivationCodesApiArg
@@ -744,61 +856,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getV2Users: build.query<GetV2UsersApiResponse, GetV2UsersApiArg>({
-      query: (queryArg) => ({
-        url: `/v2/users`,
-        params: {
-          page: queryArg.page,
-          itemsPerPage: queryArg.itemsPerPage,
-          fullName: queryArg.fullName,
-          email: queryArg.email,
-          createdBy: queryArg.createdBy,
-          modifiedBy: queryArg.modifiedBy,
-          order: queryArg.order,
-        },
-      }),
-    }),
-    postV2Users: build.mutation<PostV2UsersApiResponse, PostV2UsersApiArg>({
-      query: (queryArg) => ({
-        url: `/v2/users`,
-        method: "POST",
-        body: queryArg.userUserInput,
-      }),
-    }),
-    getV2UsersById: build.query<
-      GetV2UsersByIdApiResponse,
-      GetV2UsersByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/v2/users/${queryArg.id}` }),
-    }),
-    putV2UsersById: build.mutation<
-      PutV2UsersByIdApiResponse,
-      PutV2UsersByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/users/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.userUserInput,
-      }),
-    }),
-    deleteV2UsersById: build.mutation<
-      DeleteV2UsersByIdApiResponse,
-      DeleteV2UsersByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/users/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    deleteV2UsersByIdRemoveFromTenant: build.mutation<
-      DeleteV2UsersByIdRemoveFromTenantApiResponse,
-      DeleteV2UsersByIdRemoveFromTenantApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/v2/users/${queryArg.id}/remove-from-tenant`,
-        method: "DELETE",
-      }),
-    }),
   }),
 });
 export type GetOidcAuthTokenItemApiResponse =
@@ -821,35 +878,11 @@ export type PostLoginInfoScreenApiArg = {
   /** Get login info with JWT token for given nonce */
   screenLoginInput: ScreenLoginInput;
 };
-export type LoginCheckPostApiResponse = /** status 200 User token created */ {
-  token: string;
-};
-export type LoginCheckPostApiArg = {
-  /** The login data */
-  body: {
-    providerId: string;
-    password: string;
-  };
-};
 export type PostRefreshTokenItemApiResponse =
   /** status 200 Refresh JWT token */ RefreshTokenResponse;
 export type PostRefreshTokenItemApiArg = {
   /** Refresh JWT Token */
   refreshTokenRequest: RefreshTokenRequest;
-};
-export type GetV2CampaignsByIdScreenGroupsApiResponse = unknown;
-export type GetV2CampaignsByIdScreenGroupsApiArg = {
-  id: string;
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
-};
-export type GetV2CampaignsByIdScreensApiResponse = unknown;
-export type GetV2CampaignsByIdScreensApiArg = {
-  id: string;
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
 };
 export type GetV2FeedSourcesApiResponse = unknown;
 export type GetV2FeedSourcesApiArg = {
@@ -874,9 +907,47 @@ export type GetV2FeedSourcesApiArg = {
     modifiedAt?: "asc" | "desc";
   };
 };
+export type PostV2FeedSourcesApiResponse = unknown;
+export type PostV2FeedSourcesApiArg = {
+  /** The new FeedSource resource */
+  feedSourceFeedSourceInput: FeedSourceFeedSourceInput;
+};
 export type GetV2FeedSourcesByIdApiResponse = unknown;
 export type GetV2FeedSourcesByIdApiArg = {
   id: string;
+};
+export type PutV2FeedSourcesByIdApiResponse = unknown;
+export type PutV2FeedSourcesByIdApiArg = {
+  id: string;
+  /** The updated FeedSource resource */
+  feedSourceFeedSourceInput: FeedSourceFeedSourceInput;
+};
+export type DeleteV2FeedSourcesByIdApiResponse = unknown;
+export type DeleteV2FeedSourcesByIdApiArg = {
+  id: string;
+};
+export type GetV2FeedSourcesByIdSlidesApiResponse = unknown;
+export type GetV2FeedSourcesByIdSlidesApiArg = {
+  id: string;
+  page: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  title?: string;
+  description?: string;
+  createdBy?: {
+    ""?: string[];
+  };
+  modifiedBy?: {
+    ""?: string[];
+  };
+  /** If true only published content will be shown */
+  published?: boolean;
+  order?: {
+    title?: "asc" | "desc";
+    description?: "asc" | "desc";
+    createdAt?: "asc" | "desc";
+    modifiedAt?: "asc" | "desc";
+  };
 };
 export type GetV2FeedSourcesByIdConfigAndNameApiResponse = unknown;
 export type GetV2FeedSourcesByIdConfigAndNameApiArg = {
@@ -917,6 +988,16 @@ export type GetV2LayoutsByIdApiResponse = unknown;
 export type GetV2LayoutsByIdApiArg = {
   id: string;
 };
+export type LoginCheckPostApiResponse = /** status 200 User token created */ {
+  token: string;
+};
+export type LoginCheckPostApiArg = {
+  /** The login data */
+  body: {
+    providerId: string;
+    password: string;
+  };
+};
 export type GetV2MediaApiResponse = unknown;
 export type GetV2MediaApiArg = {
   page?: number;
@@ -953,6 +1034,20 @@ export type Getv2MediaByIdApiArg = {
 export type DeleteV2MediaByIdApiResponse = unknown;
 export type DeleteV2MediaByIdApiArg = {
   id: string;
+};
+export type GetV2CampaignsByIdScreenGroupsApiResponse = unknown;
+export type GetV2CampaignsByIdScreenGroupsApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+};
+export type GetV2CampaignsByIdScreensApiResponse = unknown;
+export type GetV2CampaignsByIdScreensApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
 };
 export type GetV2PlaylistsApiResponse = unknown;
 export type GetV2PlaylistsApiArg = {
@@ -1019,6 +1114,25 @@ export type DeleteV2PlaylistsByIdSlidesAndSlideIdApiArg = {
   id: string;
   slideId: string;
 };
+export type GetV2SlidesByIdPlaylistsApiResponse = unknown;
+export type GetV2SlidesByIdPlaylistsApiArg = {
+  id: string;
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: string;
+  /** If true only published content will be shown */
+  published?: boolean;
+};
+export type PutV2SlidesByIdPlaylistsApiResponse = unknown;
+export type PutV2SlidesByIdPlaylistsApiArg = {
+  id: string;
+  body: Blob;
+};
+export type GetScreenGroupCampaignItemApiResponse = unknown;
+export type GetScreenGroupCampaignItemApiArg = {
+  /** ScreenGroupCampaign identifier */
+  id: string;
+};
 export type GetV2ScreenGroupsApiResponse = unknown;
 export type GetV2ScreenGroupsApiArg = {
   page?: number;
@@ -1042,11 +1156,6 @@ export type PostV2ScreenGroupsApiResponse = unknown;
 export type PostV2ScreenGroupsApiArg = {
   /** The new ScreenGroup resource */
   screenGroupScreenGroupInput: ScreenGroupScreenGroupInput;
-};
-export type GetScreenGroupCampaignItemApiResponse = unknown;
-export type GetScreenGroupCampaignItemApiArg = {
-  /** ScreenGroupCampaign identifier */
-  id: string;
 };
 export type GetV2ScreenGroupsByIdApiResponse = unknown;
 export type GetV2ScreenGroupsByIdApiArg = {
@@ -1247,19 +1356,11 @@ export type DeleteV2SlidesByIdApiResponse = unknown;
 export type DeleteV2SlidesByIdApiArg = {
   id: string;
 };
-export type GetV2SlidesByIdPlaylistsApiResponse = unknown;
-export type GetV2SlidesByIdPlaylistsApiArg = {
+export type ApiSlidePerformActionApiResponse = unknown;
+export type ApiSlidePerformActionApiArg = {
   id: string;
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: string;
-  /** If true only published content will be shown */
-  published?: boolean;
-};
-export type PutV2SlidesByIdPlaylistsApiResponse = unknown;
-export type PutV2SlidesByIdPlaylistsApiArg = {
-  id: string;
-  body: Blob;
+  /** The new Slide resource */
+  slideInteractiveSlideActionInput: SlideInteractiveSlideActionInput;
 };
 export type GetV2TemplatesApiResponse = unknown;
 export type GetV2TemplatesApiArg = {
@@ -1340,38 +1441,6 @@ export type DeleteV2ThemesByIdApiResponse = unknown;
 export type DeleteV2ThemesByIdApiArg = {
   id: string;
 };
-export type GetV2UserActivationCodesApiResponse = unknown;
-export type GetV2UserActivationCodesApiArg = {
-  /** The collection page number */
-  page?: number;
-  /** The number of items per page */
-  itemsPerPage?: number;
-};
-export type PostV2UserActivationCodesApiResponse = unknown;
-export type PostV2UserActivationCodesApiArg = {
-  /** The new UserActivationCode resource */
-  userActivationCodeUserActivationCodeInput: UserActivationCodeUserActivationCodeInput;
-};
-export type PostV2UserActivationCodesActivateApiResponse = unknown;
-export type PostV2UserActivationCodesActivateApiArg = {
-  /** The new UserActivationCode resource */
-  userActivationCodeActivationCode: UserActivationCodeActivationCode;
-};
-export type PostV2UserActivationCodesRefreshApiResponse = unknown;
-export type PostV2UserActivationCodesRefreshApiArg = {
-  /** The new UserActivationCode resource */
-  userActivationCodeActivationCode: UserActivationCodeActivationCode;
-};
-export type GetV2UserActivationCodesByIdApiResponse = unknown;
-export type GetV2UserActivationCodesByIdApiArg = {
-  /** UserActivationCode identifier */
-  id: string;
-};
-export type DeleteV2UserActivationCodesByIdApiResponse = unknown;
-export type DeleteV2UserActivationCodesByIdApiArg = {
-  /** UserActivationCode identifier */
-  id: string;
-};
 export type GetV2UsersApiResponse = unknown;
 export type GetV2UsersApiArg = {
   page?: number;
@@ -1413,6 +1482,38 @@ export type DeleteV2UsersByIdRemoveFromTenantApiResponse = unknown;
 export type DeleteV2UsersByIdRemoveFromTenantApiArg = {
   id: string;
 };
+export type GetV2UserActivationCodesApiResponse = unknown;
+export type GetV2UserActivationCodesApiArg = {
+  /** The collection page number */
+  page?: number;
+  /** The number of items per page */
+  itemsPerPage?: number;
+};
+export type PostV2UserActivationCodesApiResponse = unknown;
+export type PostV2UserActivationCodesApiArg = {
+  /** The new UserActivationCode resource */
+  userActivationCodeUserActivationCodeInput: UserActivationCodeUserActivationCodeInput;
+};
+export type PostV2UserActivationCodesActivateApiResponse = unknown;
+export type PostV2UserActivationCodesActivateApiArg = {
+  /** The new UserActivationCode resource */
+  userActivationCodeActivationCode: UserActivationCodeActivationCode;
+};
+export type PostV2UserActivationCodesRefreshApiResponse = unknown;
+export type PostV2UserActivationCodesRefreshApiArg = {
+  /** The new UserActivationCode resource */
+  userActivationCodeActivationCode: UserActivationCodeActivationCode;
+};
+export type GetV2UserActivationCodesByIdApiResponse = unknown;
+export type GetV2UserActivationCodesByIdApiArg = {
+  /** UserActivationCode identifier */
+  id: string;
+};
+export type DeleteV2UserActivationCodesByIdApiResponse = unknown;
+export type DeleteV2UserActivationCodesByIdApiArg = {
+  /** UserActivationCode identifier */
+  id: string;
+};
 export type Token = {
   token?: string;
   refresh_token?: string;
@@ -1444,6 +1545,15 @@ export type RefreshTokenResponse = {
 export type RefreshTokenRequest = {
   refresh_token?: string;
 };
+export type FeedSourceFeedSourceInput = {
+  title?: string;
+  description?: string;
+  outputType?: string;
+  feedType?: string;
+  secrets?: string[];
+  feeds?: string[];
+  supportedFeedOutputType?: string;
+};
 export type PlaylistPlaylistInput = {
   title?: string;
   description?: string;
@@ -1465,6 +1575,8 @@ export type ScreenScreenInput = {
   resolution?: string;
   orientation?: string;
   enableColorSchemeChange?: any;
+  regions?: string[];
+  groups?: string[];
 };
 export type ScreenBindObject = {
   bindKey?: string;
@@ -1480,11 +1592,18 @@ export type SlideSlideInput = {
   media?: string[];
   content?: string[];
 };
+export type SlideInteractiveSlideActionInput = {
+  action?: any;
+  data?: string[];
+};
 export type ThemeThemeInput = {
   title?: string;
   description?: string;
   logo?: string;
   css?: string;
+};
+export type UserUserInput = {
+  fullName?: any;
 };
 export type UserActivationCodeUserActivationCodeInput = {
   displayName?: string;
@@ -1493,29 +1612,30 @@ export type UserActivationCodeUserActivationCodeInput = {
 export type UserActivationCodeActivationCode = {
   activationCode?: string;
 };
-export type UserUserInput = {
-  fullName?: any;
-};
 export const {
   useGetOidcAuthTokenItemQuery,
   useGetOidcAuthUrlsItemQuery,
   usePostLoginInfoScreenMutation,
-  useLoginCheckPostMutation,
   usePostRefreshTokenItemMutation,
-  useGetV2CampaignsByIdScreenGroupsQuery,
-  useGetV2CampaignsByIdScreensQuery,
   useGetV2FeedSourcesQuery,
+  usePostV2FeedSourcesMutation,
   useGetV2FeedSourcesByIdQuery,
+  usePutV2FeedSourcesByIdMutation,
+  useDeleteV2FeedSourcesByIdMutation,
+  useGetV2FeedSourcesByIdSlidesQuery,
   useGetV2FeedSourcesByIdConfigAndNameQuery,
   useGetV2FeedsQuery,
   useGetV2FeedsByIdQuery,
   useGetV2FeedsByIdDataQuery,
   useGetV2LayoutsQuery,
   useGetV2LayoutsByIdQuery,
+  useLoginCheckPostMutation,
   useGetV2MediaQuery,
   usePostMediaCollectionMutation,
   useGetv2MediaByIdQuery,
   useDeleteV2MediaByIdMutation,
+  useGetV2CampaignsByIdScreenGroupsQuery,
+  useGetV2CampaignsByIdScreensQuery,
   useGetV2PlaylistsQuery,
   usePostV2PlaylistsMutation,
   useGetV2PlaylistsByIdQuery,
@@ -1524,9 +1644,11 @@ export const {
   useGetV2PlaylistsByIdSlidesQuery,
   usePutV2PlaylistsByIdSlidesMutation,
   useDeleteV2PlaylistsByIdSlidesAndSlideIdMutation,
+  useGetV2SlidesByIdPlaylistsQuery,
+  usePutV2SlidesByIdPlaylistsMutation,
+  useGetScreenGroupCampaignItemQuery,
   useGetV2ScreenGroupsQuery,
   usePostV2ScreenGroupsMutation,
-  useGetScreenGroupCampaignItemQuery,
   useGetV2ScreenGroupsByIdQuery,
   usePutV2ScreenGroupsByIdMutation,
   useDeleteV2ScreenGroupsByIdMutation,
@@ -1555,8 +1677,7 @@ export const {
   useGetV2SlidesByIdQuery,
   usePutV2SlidesByIdMutation,
   useDeleteV2SlidesByIdMutation,
-  useGetV2SlidesByIdPlaylistsQuery,
-  usePutV2SlidesByIdPlaylistsMutation,
+  useApiSlidePerformActionMutation,
   useGetV2TemplatesQuery,
   useGetV2TemplatesByIdQuery,
   useGetV2TenantsQuery,
@@ -1566,17 +1687,17 @@ export const {
   useGetV2ThemesByIdQuery,
   usePutV2ThemesByIdMutation,
   useDeleteV2ThemesByIdMutation,
-  useGetV2UserActivationCodesQuery,
-  usePostV2UserActivationCodesMutation,
-  usePostV2UserActivationCodesActivateMutation,
-  usePostV2UserActivationCodesRefreshMutation,
-  useGetV2UserActivationCodesByIdQuery,
-  useDeleteV2UserActivationCodesByIdMutation,
   useGetV2UsersQuery,
   usePostV2UsersMutation,
   useGetV2UsersByIdQuery,
   usePutV2UsersByIdMutation,
   useDeleteV2UsersByIdMutation,
   useDeleteV2UsersByIdRemoveFromTenantMutation,
+  useGetV2UserActivationCodesQuery,
+  usePostV2UserActivationCodesMutation,
+  usePostV2UserActivationCodesActivateMutation,
+  usePostV2UserActivationCodesRefreshMutation,
+  useGetV2UserActivationCodesByIdQuery,
+  useDeleteV2UserActivationCodesByIdMutation,
 } = api;
 

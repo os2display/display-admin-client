@@ -71,6 +71,7 @@ function SlideForm({
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
   const [displayPreview, setDisplayPreview] = useState(null);
+  const [templateError, setTemplateError] = useState(false);
 
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
@@ -85,6 +86,21 @@ function SlideForm({
     itemsPerPage: 300,
     order: { createdAt: "desc" },
   });
+
+  /** Check if published is set */
+  const checkInputsHandleSubmit = () => {
+    setTemplateError(false);
+    let submit = true;
+    if (!selectedTemplate) {
+      setTemplateError(true);
+      submit = false;
+      displayError(t("slide-form.remember-template-error"));
+    }
+
+    if (submit) {
+      handleSubmit();
+    }
+  };
 
   /**
    * For closing overlay on escape key.
@@ -209,6 +225,7 @@ function SlideForm({
                     handleSelection={selectTemplate}
                     options={templateOptions}
                     selected={selectedTemplates}
+                    error={templateError}
                     name="templateInfo"
                     filterCallback={onFilterTemplate}
                     singleSelect
@@ -315,6 +332,7 @@ function SlideForm({
             </ContentBody>
             {themesOptions && (
               <ContentBody id="theme-section">
+                <h3 className="h4">{t("slide-form.theme")}</h3>
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-theme-label")}
@@ -404,9 +422,10 @@ function SlideForm({
           <Button
             variant="primary"
             type="button"
-            onClick={handleSubmit}
             id="save_slide_an_close"
             className="margin-right-button"
+            onClick={checkInputsHandleSubmit}
+            size="lg"
           >
             {t("save-button-and-close")}
           </Button>

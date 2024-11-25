@@ -145,11 +145,7 @@ test.describe("Create slide page works", () => {
       page.locator(".Toastify").locator(".Toastify__toast--error")
     ).toBeVisible();
     await expect(
-      page
-        .locator(".Toastify")
-        .locator(".Toastify__toast--error")
-        .getByText(/An error occurred/)
-        .first()
+      page.locator(".Toastify").locator(".Toastify__toast--error").first()
     ).toBeVisible();
     await expect(page).toHaveURL(/slide\/create/);
   });
@@ -491,7 +487,7 @@ test.describe("Slides list works", () => {
   });
 
   test("The correct amount of column headers loaded", async ({ page }) => {
-    await expect(page.locator("thead").locator("th")).toHaveCount(7);
+    await expect(page.locator("thead").locator("th")).toHaveCount(9);
   });
 
   test("It removes all selected", async ({ page }) => {

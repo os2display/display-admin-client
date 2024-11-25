@@ -1,9 +1,9 @@
-import { React, useEffect, useState } from "react";
-import { Button, Form, Spinner, Alert, Col, Row } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import {React, useEffect, useState} from "react";
+import {Button, Form, Spinner, Alert, Col, Row} from "react-bootstrap";
+import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 import ContentBody from "../util/content-body/content-body";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
@@ -16,7 +16,7 @@ import {
   useGetV2LayoutsQuery,
   useGetV2ScreensByIdScreenGroupsQuery,
 } from "../../redux/api/api.generated.ts";
-import { displayError } from "../util/list/toast-component/display-toast";
+import {displayError} from "../util/list/toast-component/display-toast";
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
 import Preview from "../preview/preview";
@@ -38,29 +38,45 @@ import StickyFooter from "../util/sticky-footer";
  * @returns {object} The screen form.
  */
 function ScreenForm({
-  handleInput,
-  handleSubmit,
-  headerText,
-  orientationOptions,
-  resolutionOptions,
-  groupId = "",
-  isLoading = false,
-  loadingMessage = "",
-  screen = null,
-}) {
-  const { t } = useTranslation("common", { keyPrefix: "screen-form" });
+                      handleInput,
+                      handleSubmit,
+                      headerText,
+                      orientationOptions,
+                      resolutionOptions,
+                      groupId = "",
+                      isLoading = false,
+                      loadingMessage = "",
+                      screen = null,
+                    }) {
+  const {t} = useTranslation("common", {keyPrefix: "screen-form"});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [layoutError, setLayoutError] = useState(false);
   const [selectedLayout, setSelectedLayout] = useState();
   const [layoutOptions, setLayoutOptions] = useState();
   const [bindKey, setBindKey] = useState("");
-  const { data: layouts } = useGetV2LayoutsQuery({
+  const {data: layouts} = useGetV2LayoutsQuery({
     page: 1,
     itemsPerPage: 20,
-    order: { createdAt: "desc" },
+    order: {createdAt: "desc"},
   });
   const [displayPreview, setDisplayPreview] = useState(null);
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
+
+  /** Check if published is set */
+  const checkInputsHandleSubmit = () => {
+    setLayoutError(false);
+    let submit = true;
+    if (!selectedLayout) {
+      displayError(t("remember-layout-error"));
+      setLayoutError(true);
+      submit = false;
+    }
+
+    if (submit) {
+      handleSubmit();
+    }
+  };
 
   useEffect(() => {
     if (layouts) {
@@ -75,6 +91,11 @@ function ScreenForm({
       );
       if (localSelectedLayout) {
         setSelectedLayout(localSelectedLayout);
+        // Initialize regions in the formstate object of screenmanager. used to save "empty" playlists, in the situation
+        // we are deleting all playlists from a screen region
+        handleInput({
+          target: {id: "regions", value: localSelectedLayout.regions},
+        });
       }
     }
   }, [screen.layout, layoutOptions]);
@@ -85,11 +106,12 @@ function ScreenForm({
    * @param {object} props - The props.
    * @param {object} props.target - The target.
    */
-  const handleAdd = ({ target }) => {
-    const { value, id } = target;
+  const handleAdd = ({target}) => {
+    const {value, id} = target;
+
     setSelectedLayout(value);
     handleInput({
-      target: { id, value: value.map((item) => item["@id"]).shift() },
+      target: {id, value: value.map((item) => item["@id"]).shift()},
     });
   };
 
@@ -113,7 +135,7 @@ function ScreenForm({
           );
         } else {
           // Set screenUser to true, to indicate it has been set.
-          handleInput({ target: { id: "screenUser", value: true } });
+          handleInput({target: {id: "screenUser", value: true}});
         }
       });
     }
@@ -138,14 +160,14 @@ function ScreenForm({
           );
         } else {
           // Set screenUser to null, to indicate it has been removed.
-          handleInput({ target: { id: "screenUser", value: null } });
+          handleInput({target: {id: "screenUser", value: null}});
         }
       });
     }
   };
 
   const isVertical = () => {
-    if (screen.orientation) {
+    if (screen?.orientation?.length > 0) {
       return screen.orientation[0].id === "vertical";
     }
     return false;
@@ -155,7 +177,7 @@ function ScreenForm({
     <div>
       {isLoading && (
         <div className="spinner-overlay">
-          <Spinner animation="border" className="loading-spinner" />
+          <Spinner animation="border" className="loading-spinner"/>
           {loadingMessage && <h2>{loadingMessage}</h2>}
         </div>
       )}
@@ -205,7 +227,7 @@ function ScreenForm({
                       </Alert>
                     </div>
                     <FormInput
-                      onChange={({ target }) => {
+                      onChange={({target}) => {
                         setBindKey(target?.value);
                       }}
                       name="bindKey"
@@ -250,13 +272,48 @@ function ScreenForm({
                   value={screen.size}
                   onChange={handleInput}
                 />
+                <Button onClick={handleBindScreen}>{t("bind")}</Button>
+              </div>
+            </ContentBody>
+            <ContentBody>
+              <h2 className="h4">{t("screen-groups")}</h2>
+              <SelectGroupsTable
+                handleChange={handleInput}
+                name="inScreenGroups"
+                id={groupId}
+                getSelectedMethod={useGetV2ScreensByIdScreenGroupsQuery}
+              />
+            </ContentBody>
+            <ContentBody>
+              <h2 className="h4">{t("screen-location")}</h2>
+              <FormInput
+                name="location"
+                type="text"
+                required
+                label={t("screen-location-label")}
+                helpText={t("screen-location-placeholder")}
+                value={screen.location}
+                onChange={handleInput}
+              />
+            </ContentBody>
+            <ContentBody>
+              <h2 className="h4">{t("screen-settings")}</h2>
+              <div className="mb-3">
+                <FormInput
+                  name="size"
+                  type="text"
+                  label={t("screen-size-of-screen-label")}
+                  helpText={t("screen-size-of-screen-placeholder")}
+                  value={screen.size}
+                  onChange={handleInput}
+                />
               </div>
               <MultiSelectComponent
                 label={t("screen-resolution-label")}
                 noSelectedString={t("nothing-selected-resolution")}
                 handleSelection={handleInput}
                 options={resolutionOptions}
-                selected={screen.resolution || ""}
+                selected={screen.resolution || []}
                 name="resolution"
                 singleSelect
               />
@@ -265,10 +322,48 @@ function ScreenForm({
                 noSelectedString={t("nothing-selected-orientation")}
                 handleSelection={handleInput}
                 options={orientationOptions}
-                selected={screen.orientation || ""}
+                selected={screen.orientation || []}
                 name="orientation"
                 singleSelect
               />
+            </ContentBody>
+            <ContentBody id="layout-section">
+              <h2 className="h4">{t("screen-layout")}</h2>
+              <div className="row">
+                {layoutOptions && (
+                  <div className="col-md-8">
+                    <MultiSelectComponent
+                      label={t("screen-layout-label")}
+                      noSelectedString={t("nothing-selected-layout")}
+                      handleSelection={handleAdd}
+                      options={layoutOptions}
+                      helpText={t("search-to-se-possible-selections")}
+                      selected={selectedLayout ? [selectedLayout] : []}
+                      name="layout"
+                      error={layoutError}
+                      singleSelect
+                    />
+                    <MultiSelectComponent
+                      label={t("screen-resolution-label")}
+                      noSelectedString={t("nothing-selected-resolution")}
+                      handleSelection={handleInput}
+                      options={resolutionOptions}
+                      selected={screen.resolution || ""}
+                      name="resolution"
+                      singleSelect
+                    />
+                  </div>
+                )}
+                <MultiSelectComponent
+                  label={t("screen-orientation-label")}
+                  noSelectedString={t("nothing-selected-orientation")}
+                  handleSelection={handleInput}
+                  options={orientationOptions}
+                  selected={screen.orientation || ""}
+                  name="orientation"
+                  singleSelect
+                />
+              </div>
             </ContentBody>
             <ContentBody id="layout-section">
               <h2 className="h4">{t("screen-layout")}</h2>
@@ -316,7 +411,7 @@ function ScreenForm({
           {displayPreview && (
             <Col
               className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top"
-              style={{ top: "20px" }}
+              style={{top: "20px"}}
             >
               <div>
                 <Preview
@@ -346,7 +441,7 @@ function ScreenForm({
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
-                  <Preview id={idFromUrl(screen["@id"])} mode="screen" />
+                  <Preview id={idFromUrl(screen["@id"])} mode="screen"/>
                   <Alert
                     key="slide-preview-about"
                     variant="info"
@@ -374,9 +469,10 @@ function ScreenForm({
           <Button
             variant="outline-primary"
             type="button"
-            onClick={handleSubmit}
-            id="save_slide"
             className="margin-right-button"
+            id="save_screen"
+            size="lg"
+            onClick={checkInputsHandleSubmit}
           >
             {t("save-button")}
           </Button>
@@ -401,7 +497,8 @@ function ScreenForm({
         </StickyFooter>
       </Form>
     </div>
-  );
+  )
+    ;
 }
 
 ScreenForm.propTypes = {
@@ -413,25 +510,37 @@ ScreenForm.propTypes = {
     enableColorSchemeChange: PropTypes.bool,
     layout: PropTypes.string,
     location: PropTypes.string,
-    regions: PropTypes.arrayOf(PropTypes.string),
+    regions: PropTypes.arrayOf(
+      PropTypes.shape({
+        "@id": PropTypes.string,
+      })
+    ),
     screenUser: PropTypes.string,
     size: PropTypes.string,
     title: PropTypes.string,
     playlists: PropTypes.arrayOf(
-      PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
+      PropTypes.shape({name: PropTypes.string, id: PropTypes.number})
     ),
   }),
-  handleInput: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  headerText: PropTypes.string.isRequired,
-  groupId: PropTypes.string,
-  isLoading: PropTypes.bool,
-  loadingMessage: PropTypes.string,
-  orientationOptions: PropTypes.arrayOf(
-    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
+  handleInput:
+  PropTypes.func.isRequired,
+  handleSubmit:
+  PropTypes.func.isRequired,
+  headerText:
+  PropTypes.string.isRequired,
+  groupId:
+  PropTypes.string,
+  isLoading:
+  PropTypes.bool,
+  loadingMessage:
+  PropTypes.string,
+  orientationOptions:
+  PropTypes.arrayOf(
+    PropTypes.shape({title: PropTypes.string, id: PropTypes.string})
   ).isRequired,
-  resolutionOptions: PropTypes.arrayOf(
-    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
+  resolutionOptions:
+  PropTypes.arrayOf(
+    PropTypes.shape({title: PropTypes.string, id: PropTypes.string})
   ).isRequired,
 };
 

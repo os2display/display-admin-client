@@ -2,8 +2,12 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
-  base: "/",
+  base: "/admin",
   plugins: [react()],
+  build: {
+    outDir: "build",
+    emptyOutDir: true,
+  },
   server: {
     strictPort: true,
     port: 3000,

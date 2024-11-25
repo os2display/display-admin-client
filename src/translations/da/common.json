@@ -26,9 +26,13 @@
   },
   "slides-list": {
     "columns": {
+      "name": "Titel",
+      "created-by": "Oprettet af",
       "template": "Skabelon",
       "slide-on-playlists": "Spillelister",
-      "published": "Udgivet"
+      "publishing-from": "Udgivelse fra",
+      "publishing-to": "Udgivelse til",
+      "status": "Status"
     },
     "info-modal": {
       "slide-on-playlists": "Slidet er på de følgende spillelister"
@@ -222,6 +226,69 @@
     "header": "Temaer",
     "create-new-theme": "Opret nyt tema"
   },
+  "feed-sources-list": {
+    "header": "Datakilder",
+    "number-of-slides": "Tilkoblede slides",
+    "create-new-feed-source": "Opret ny datakilde",
+    "loading-messages": {
+      "deleting-feed-source": "Sletter datakilde(r)",
+      "loading-feed-sources": "Henter datakilder"
+    },
+    "error-messages": {
+      "feed-source-delete-error": "Der skete en fejl da datakilden skulle slettes:"
+    },
+    "success-messages": {
+      "feed-source-delete": "Datakilden er blevet slettet"
+    },
+    "columns": {
+      "feed-type": "Type"
+    },
+    "info-modal": {
+      "slides": "Datakilde er tilknyttet følgende slides"
+    }
+  },
+  "feed-source-manager": {
+    "edit-feed-source": "Rediger følgende datakilde",
+    "create-new-feed-source": "Opret ny datakilde",
+    "loading-messages": {
+      "loading-feed-source": "Henter datakilde",
+      "saving-feed-source": "Gemmer datakilde"
+    },
+    "success-messages": {
+      "saved-feed-source": "Feed source er gemt"
+    },
+    "error-messages": {
+      "save-feed-source-error": "Der skete en fejl da feed source skulle gemmes:",
+      "load-feed-source-error": "Der skete en fejl da feed source med følgende id: {{id}} skulle hentes:"
+    },
+    "dynamic-fields": {
+      "event-database-api-feed-type": {
+        "title": "Eventdatabase API",
+        "host": "Eventdatabase API host",
+        "redacted-value-input-placeholder": "Skjult værdi"
+      },
+      "notified-feed-type": {
+        "title": "Notified",
+        "token": "Notified API token",
+        "redacted-value-input-placeholder": "Skjult værdi"
+      },
+      "calendar-api-feed-type": {
+        "title": "Kalender feed",
+        "resources": "Ressourcer",
+        "redacted-value-input-placeholder": "Skjult værdi"
+      },
+      "rss-feed-type": {
+        "title": "RSS feed"
+      }
+    }
+  },
+  "feed-source-form": {
+    "feed-source-name-label": "Navn",
+    "feed-source-description-label": "Beskrivelse",
+    "feed-source-feed-type-label": "Type",
+    "save-button": "Gem datakilde",
+    "cancel-button": "Annuller"
+  },
   "media-list": {
     "checkbox-label-sort-desc": "Vis nyeste først",
     "delete-button": "Slet",
@@ -301,6 +368,7 @@
   "slide-form": {
     "slide-template-selected": "Skabelon",
     "template-error": "Der skete en fejl da skabelonen skulle hentes:",
+    "remember-template-error": "Husk at tilknytte en skabelon til dit slide",
     "touch-region": "Touch region",
     "touch-region-button-text-label": "Knaptekst i touch region",
     "touch-region-button-text-helptext": "Her kan du sætte knapteksten, hvis slidet indgår i en touch region, hvor slides bliver vist som knapper der kan åbnes.",
@@ -319,16 +387,17 @@
     "slide-name-placeholder": "Udfyld slides navn",
     "slide-template-label": "Vælg en skabelon til dit slide",
     "slide-template-help-text": "Alle slideskabeloner er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges én skabelon per slide.",
-    "slide-theme-help-text": "Alle temaer er hentet og klar i listen, listen er stadig søgbar. Der kan kun vælges ét tema per slide.",
-    "slide-from-label": "Udgivet fra",
-    "slide-to-label": "Udgivet til",
+    "slide-theme-help-text": "Der kan kun vælges ét tema per slide.",
+    "slide-from-label": "Udgiv fra",
+    "slide-to-label": "Udgiv til",
     "slide-theme-label": "Slidets tema",
-    "slide-publish-title": "Udgivelse",
-    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er slidet udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet sliden vises i.",
     "slide-preview": "Forhåndsvisning",
     "slide-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter slidet er gemt.",
     "show-preview": "Åbn forhåndsvisning",
-    "hide-preview": "Luk forhåndsvisning"
+    "hide-preview": "Luk forhåndsvisning",
+    "slide-publish-title": "Begræns udgivelse",
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet.",
+    "theme": "Tema"
   },
   "theme-form": {
     "logo-title": "Tilføj logo til temaet",
@@ -409,7 +478,9 @@
     "name": "Navn",
     "created-by": "Oprettet af",
     "delete-button": "Slet",
-    "published": "Udgivet",
+    "publishing-from": "Udgivelse fra",
+    "publishing-to": "Udgivelse til",
+    "status": "Status",
     "number-of-slides": "Slides tilknyttede"
   },
   "playlist-campaign-manager": {
@@ -482,10 +553,10 @@
     "playlist-name-placeholder": "Udfyld spillelistens navn",
     "playlist-description-label": "Beskrivelse af spillelisten",
     "playlist-description-placeholder": "Udfyld beskrivelsen af spillelisten",
-    "publish-from-label": "Udgivet fra",
-    "publish-to-label": "Udgivet til",
-    "publish-title": "Udgivelse",
-    "publish-helptext": "Hvis der ikke vælges udgivet til/fra er spillelisten udgivet. Vælg derfor kun udgivelse til/fra, hvis du vil begrænse tidsrummet spillelisten vises i."
+    "publish-from-label": "Udgiv fra",
+    "publish-to-label": "Udgiv til",
+    "publish-title": "Begræns udgivelse",
+    "publish-helptext": "Som udgangspunkt er indhold udgivet. Når udgiv fra/til er udfyldt, begrænser det udgivelsesperioden for indholdselementet."
   },
   "shared-playlists": {
     "change-view-calendar": "Kalender",
@@ -530,7 +601,8 @@
     "remove-from-list": "Fjern fra liste",
     "error-messages": {
       "load-selected-slides-error": "Fejl da valgte slides skulle loades"
-    }
+    },
+    "data-changed": "Rækkefølge ændret. Husk at gemme."
   },
   "select-screens-table": {
     "columns": {
@@ -565,7 +637,8 @@
     "yes": "Ja",
     "no": "Nej",
     "from": "Fra",
-    "to": "Til"
+    "to": "Til",
+    "always": "Ubegrænset"
   },
   "modal-dialog": {
     "cancel": "Annuller",
@@ -650,7 +723,7 @@
   "drag-and-drop-table": {
     "not-available": "Ikke tilgængeligt",
     "table-header-for-indicator": "Drag and drop indikator",
-    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piltasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
+    "help-text": "Brug space til at vælge et element til flytning, og brug derefter piletasterne til at trække op eller ned. Brug space til at slippe elementet igen, og brug escape til at annullere. Nogle skærmlæsere skal være i fokus før det virker."
   },
   "link-for-list": {
     "label": "Rediger"
@@ -659,23 +732,18 @@
     "edit-screen-header": "Rediger følgende skærm",
     "create-screen-header": "Opret ny skærm",
     "loading-messages": {
-      "saving-screen": "Gemmer skærmen",
-      "saving-playlists": "Tilknytter spillelister til skærmens regioner",
-      "saving-groups": "Tilknytter grupper til skærmen"
+      "saving-screen": "Gemmer skærmen"
     },
     "success-messages": {
-      "saved-screen": "Skærmen er gemt",
-      "saved-playlists": "Spillelister er tilknyttet til skærmens regioner",
-      "saved-groups": "Grupper er tilknyttet skærmen"
+      "saved-screen": "Skærmen er gemt"
     },
     "error-messages": {
       "save-screen-error": "Der skete en fejl da skærmen skulle gemmes:",
-      "save-playlists-error": "Der skete en fejl da spillelisterne skulle tilknyttes til skærmens regioner:",
-      "save-groups-error": "Der skete en fejl da grupperne skulle tilknyttes skærmen:",
       "load-screen-error": "Der skete en fejl da skærmen med følgende id: {{id}} skulle hentes:"
     }
   },
   "screen-form": {
+    "remember-layout-error": "Husk at tilknytte et layout til din skærm",
     "enable-color-scheme-change-headline": "Farveskema",
     "enable-color-scheme-change": "Aktivér farveskema skift",
     "enable-color-scheme-change-helptext": "Hvis dette aktiveres vil skærmen skifte til \"dark mode\" når solen går ned og skifte til normal visning når solen står op. Dette påvirker kun skabeloner der understøtter \"dark mode\".",
@@ -737,7 +805,8 @@
     "configuration": "Indstillinger",
     "configuration-themes": "Temaer",
     "configuration-users": "Brugere",
-    "activation-codes": "Aktiveringskoder"
+    "activation-codes": "Aktiveringskoder",
+    "configuration-feedsources": "Datakilder"
   },
   "topbar": {
     "brand": "OS2Display",
@@ -760,7 +829,7 @@
     "byweekno": "Ugenummer",
     "bymonth": "Valgte måneder",
     "byweekday": "Valgte ugedage",
-    "freq": "Frekvens",
+    "freq": "Gentag",
     "show-details": "Vis detaljer",
     "hide-details": "Skjul detaljer",
     "jan": "Januar",
@@ -782,21 +851,40 @@
     "friday": "Fredag",
     "saturday": "Lørdag",
     "sunday": "Søndag",
-    "yearly": "År",
-    "monthly": "Måned",
-    "weekly": "Uge",
-    "daily": "Dag",
+    "yearly": "Hvert år",
+    "monthly": "Hver måned",
+    "weekly": "Hver uge",
+    "daily": "Hver dag",
     "hourly": "Time",
     "minutely": "Minut",
     "rrulestring": "RRule",
-    "dtstart": "Startdato",
-    "until": "Slutdato",
-    "next-occurrences": "Næste 5 forekomster",
+    "dtstart": "Start",
+    "until": "Gentag indtil",
+    "next-occurrences": "Næste forekomster",
     "all-selected": "Alle er valgt",
     "clear-selection": "Ryd valg",
     "selected-all": "Vælg alle",
     "select-some-options": "Vælg...",
-    "bytime": "Tidspunkt på dagen"
+    "bytime": "Tidspunkt på dagen",
+    "duration-error": "Slut kan ikke være før start",
+    "end": "Slut",
+    "count": "Antal gentagelser",
+    "count-placeholder": "Ubegrænset",
+    "interval": "Interval",
+    "repetition": "RRule",
+    "enable-repeat": "Gentag planlægning",
+    "enable-repeat-tooltip": "Når gentagelse aktiveres bestemmer reglerne man vælger, hvornår spillelisten bliver vist.",
+    "end-tooltip": "Forskellen imellem start og slut definerer længden på en gentagelse.",
+    "dtstart-tooltip": "Start definerer tidspunkt på dagen og første mulige dato for gentagelserne, hvis dette aktiveres.",
+    "frequency-tooltip": "Hvordan planlægningen skal gentages?",
+    "interval-tooltip": "Skal der være spring imellem gentagelse? Afhænger af frekvensen. F.eks. hver 3 dag.",
+    "count-tooltip": "Hvor mange gange skal planlægningen gentages? Tom værdi betyder ubegrænset.",
+    "bytime-tooltip": "På hvilke dage skal reglen gælde?",
+    "byweekday-tooltip": "På hvilke dage skal reglen gælde?",
+    "bymonth-tooltip": "I hvilke månender skal reglen gælde?",
+    "byweekno-tooltip": "Hvilket ugenummer skal reglen gælde for?",
+    "until-tooltip": "Hvornår skal gentagelserne afsluttes? Dette tidspunkt påvirker starttidspunktet på en gentagelse, ikke sluttidspunktet.",
+    "helptext": "Når minimum én planlægning er tilføjet, bliver spillelisten kun vist i planlægningsintervallet."
   },
   "duration": {
     "hours": "t.",
@@ -994,5 +1082,10 @@
     "loading-messages": {
       "saving-activation-code": "Opretter aktiveringskode"
     }
+  },
+  "published-state": {
+    "active": "Aktiv",
+    "future": "Fremtidig",
+    "expired": "Udløbet"
   }
 }
