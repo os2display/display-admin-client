@@ -48,11 +48,12 @@ function StationSelector({
   const onFilter = (filter) => {
     setSearchText(filter);
   };
+
   /**
-   * Map the data recieved from the midttrafik api.
+   * Map the data received from the midttrafik api.
    *
-   * @param {object} locationData
-   * @returns {array} The mapped data.
+   * @param {Array} locationData The input location data.
+   * @returns {Array} The mapped data.
    */
   const mapLocationData = (locationData) => {
     return locationData.map((location) => ({
@@ -63,12 +64,13 @@ function StationSelector({
 
   useEffect(() => {
     if (!config?.rejseplanenApiKey) {
-      console.error('rejseplanenApiKey not set.')
+      // eslint-disable-next-line no-console
+      console.error("rejseplanenApiKey not set.");
       return;
     }
 
     // The api does not accept empty string as input.
-    if (searchText !== '') {
+    if (searchText !== "") {
       const baseUrl = "https://www.rejseplanen.dk/api/location.name";
       fetch(
         `${baseUrl}?${new URLSearchParams({

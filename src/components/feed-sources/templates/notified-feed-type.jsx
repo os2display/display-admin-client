@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import FormInput from "../../util/forms/form-input";
 
-const NotifiedFeedType = ({
-  handleInput,
-  formStateObject,
-  mode,
-}) => {
+const NotifiedFeedType = ({ handleInput, formStateObject, mode }) => {
   const { t } = useTranslation("common", {
     keyPrefix: "feed-source-manager.dynamic-fields.notified-feed-type",
   });
@@ -20,9 +16,7 @@ const NotifiedFeedType = ({
         label={t("token")}
         onChange={handleInput}
         placeholder={
-          mode === "PUT"
-            ? t("redacted-value-input-placeholder")
-            : ""
+          mode === "PUT" ? t("redacted-value-input-placeholder") : ""
         }
         value={formStateObject.token}
       />

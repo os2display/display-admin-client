@@ -58,8 +58,8 @@ function PlaylistDragAndDrop({
   });
 
   /**
-   * @param regionsAndPlaylists This method initializes playlists, so the
-   *   initial formstate object in screen manager is not empty
+   * @param {object} regionsAndPlaylists This method initializes playlists, so
+   *   the initial formstate object in screen manager is not empty
    */
   function callbackToinitializePlaylists(regionsAndPlaylists) {
     handleChange({

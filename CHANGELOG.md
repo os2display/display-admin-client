@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#264](https://github.com/os2display/display-admin-client/pull/264)
+  - Added checkbox options component for use in calendar modifiers.
+  - Fixed multiselect when more than one feed source of the given type is installed.
+  - Fixed github action to fail on warnings.
 - [#268](https://github.com/os2display/display-admin-client/pull/268)
   - Added feed source UI.
 

@@ -46,15 +46,17 @@ function FormInput({
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClasses}>
-      {label && (<>
-        <FormLabel htmlFor={name}>
-          {label}
-          {required && " *"}
-        </FormLabel>
-        {tooltip !== null && (
-          <Tooltip id={`tooltip-${name}`} content={tooltip} />
-        )}
-      </>)}
+      {label && (
+        <>
+          <FormLabel htmlFor={name}>
+            {label}
+            {required && " *"}
+          </FormLabel>
+          {tooltip !== null && (
+            <Tooltip id={`tooltip-${name}`} content={tooltip} />
+          )}
+        </>
+      )}
       <InputGroup hasValidation>
         <FormControl
           name={name}

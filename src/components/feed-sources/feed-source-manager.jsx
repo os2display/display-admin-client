@@ -1,4 +1,4 @@
-import { cloneElement, React, useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +11,6 @@ import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
-import EventDatabaseFeedType from "./templates/event-database-feed-type.jsx";
-import NotifiedFeedType from "./templates/notified-feed-type.jsx";
-import CalendarFeedType from "./templates/calendar-feed-type.jsx";
 
 /**
  * The theme manager component.
@@ -48,7 +45,6 @@ function FeedSourceManager({
     t("loading-messages.loading-feed-source")
   );
 
-  const [dynamicFormElement, setDynamicFormElement] = useState();
   const [submitting, setSubmitting] = useState(false);
   const [formStateObject, setFormStateObject] = useState({});
 
@@ -68,7 +64,7 @@ function FeedSourceManager({
       title: t("dynamic-fields.event-database-api-feed-type.title"),
       key: "1",
       secretsDefault: {
-        "host": ""
+        host: "",
       },
     },
     {
@@ -76,15 +72,15 @@ function FeedSourceManager({
       title: t("dynamic-fields.notified-feed-type.title"),
       key: "2",
       secretsDefault: {
-        "token": "",
+        token: "",
       },
     },
     {
       value: "App\\Feed\\CalendarApiFeedType",
       title: t("dynamic-fields.calendar-api-feed-type.title"),
-      key: "3",
+      key: "0",
       secretsDefault: {
-        "resources": []
+        locations: [],
       },
     },
     {
@@ -109,26 +105,29 @@ function FeedSourceManager({
 
   /** Set loaded data into form state. */
   useEffect(() => {
-    setFormStateObject({ ...initialState });
+    const newState = { ...initialState };
+
+    if (newState.secrets instanceof Array) {
+      newState.secrets = {};
+    }
+
+    setFormStateObject(newState);
   }, [initialState]);
 
-  const handleSecretInput = ({target}) => {
-    const localFormStateObject = { ...formStateObject };
-    if (!localFormStateObject.secrets) {
-      localFormStateObject.secrets = {};
-    }
-    localFormStateObject.secrets[target.id] = target.value;
-    setFormStateObject(localFormStateObject);
+  const handleSecretInput = ({ target }) => {
+    const secrets = { ...formStateObject.secrets };
+    secrets[target.id] = target.value;
+    setFormStateObject({ ...formStateObject, secrets });
   };
 
-  const onFeedTypeChange = ({target}) => {
-    const value = target.value
+  const onFeedTypeChange = ({ target }) => {
+    const { value } = target;
     const option = feedSourceTypeOptions.find((opt) => opt.value === value);
-    const newFormStateObject = {...formStateObject};
+    const newFormStateObject = { ...formStateObject };
     newFormStateObject.feedType = value;
-    newFormStateObject.secrets = {...option.secretsDefault};
+    newFormStateObject.secrets = { ...option.secretsDefault };
     setFormStateObject(newFormStateObject);
-  }
+  };
 
   /** Save feed source. */
   function saveFeedSource() {
@@ -193,7 +192,6 @@ function FeedSourceManager({
           onFeedTypeChange={onFeedTypeChange}
           handleSecretInput={handleSecretInput}
           feedSourceTypeOptions={feedSourceTypeOptions}
-          dynamicFormElement={dynamicFormElement}
           mode={saveMethod}
         />
       )}
@@ -222,7 +220,6 @@ FeedSourceManager.propTypes = {
       status: PropTypes.number,
     }),
   }),
-  mode: PropTypes.string,
 };
 
 export default FeedSourceManager;
