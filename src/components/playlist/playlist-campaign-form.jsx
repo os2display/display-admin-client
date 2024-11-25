@@ -41,7 +41,7 @@ function PlaylistCampaignForm({
   isCampaign = false,
   playlist = null,
 }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("common", {'keyPrefix': 'playlist-campaign-form'});
   const navigate = useNavigate();
   const [publishedFromError, setPublishedFromError] = useState(false);
   const [publishedToError, setPublishedToError] = useState(false);
@@ -82,13 +82,13 @@ function PlaylistCampaignForm({
           <h1 id="playlistTitle">{headerText}</h1>
           <Col>
             <ContentBody>
-              <h2 className="h4">{t("playlist-campaign-form.title-about")}</h2>
+              <h2 className="h4">{t("title-about")}</h2>
               <FormInput
                 name="title"
                 type="text"
-                label={t("playlist-campaign-form.playlist-name-label")}
+                label={t("playlist-name-label")}
                 placeholder={t(
-                  "playlist-campaign-form.playlist-name-placeholder"
+                  "playlist-name-placeholder"
                 )}
                 value={playlist.title}
                 onChange={handleInput}
@@ -96,16 +96,16 @@ function PlaylistCampaignForm({
               <FormInputArea
                 name="description"
                 type="text"
-                label={t("playlist-campaign-form.playlist-description-label")}
+                label={t("playlist-description-label")}
                 placeholder={t(
-                  "playlist-campaign-form.playlist-description-placeholder"
+                  "playlist-description-placeholder"
                 )}
                 value={playlist.description}
                 onChange={handleInput}
               />
             </ContentBody>
             <ContentBody id="slides-section">
-              <h2 className="h4">{t("playlist-campaign-form.title-slides")}</h2>
+              <h2 className="h4">{t("title-slides")}</h2>
               <SelectSlidesTable
                 handleChange={handleInput}
                 name="slides"
@@ -116,7 +116,7 @@ function PlaylistCampaignForm({
             {children}
             <ContentBody>
               <h3 className="h4">
-                {t("playlist-campaign-form.publish-title")}
+                {t("publish-title")}
               </h3>
               <Row className="g-2">
                 <Col md>
@@ -124,7 +124,7 @@ function PlaylistCampaignForm({
                     required={isCampaign}
                     name="published.from"
                     type="datetime-local"
-                    label={t("playlist-campaign-form.publish-from-label")}
+                    label={t("publish-from-label")}
                     value={playlist.published?.from ?? ""}
                     error={publishedFromError}
                     onChange={handleInput}
@@ -136,14 +136,14 @@ function PlaylistCampaignForm({
                     name="published.to"
                     type="datetime-local"
                     error={publishedToError}
-                    label={t("playlist-campaign-form.publish-to-label")}
+                    label={t("publish-to-label")}
                     value={playlist.published?.to ?? ""}
                     onChange={handleInput}
                   />
                 </Col>
               </Row>
               <Row>
-                <small>{t("playlist-campaign-form.publish-helptext")}</small>
+                <small>{t("publish-helptext")}</small>
               </Row>
             </ContentBody>
           </Col>
@@ -203,7 +203,7 @@ function PlaylistCampaignForm({
               onClick={() => navigate(`/${location}/list`)}
               className="margin-right-button"
             >
-              {t("playlist-campaign-form.cancel-button")}
+              {t("cancel-button")}
             </Button>
             <Button
               variant="outline-primary"
@@ -212,7 +212,7 @@ function PlaylistCampaignForm({
               id="save_playlist"
               className="margin-right-button"
             >
-              {t("playlist-campaign-form.save-button")}
+              {t("save-button")}
             </Button>
             <Button
               variant="primary"
