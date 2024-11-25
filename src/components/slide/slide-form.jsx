@@ -425,7 +425,6 @@ function SlideForm({
             id="save_slide_an_close"
             className="margin-right-button"
             onClick={checkInputsHandleSubmit}
-            size="lg"
           >
             {t("save-button-and-close")}
           </Button>

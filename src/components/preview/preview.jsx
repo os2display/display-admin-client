@@ -1,6 +1,7 @@
 import { React, JSX, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+import LocalStorageKeys from "../util/local-storage-keys.jsx";
 
 /**
  * The preview component.
@@ -33,8 +34,8 @@ function Preview({
     const urlSearchParams = new URLSearchParams();
     urlSearchParams.set("preview", mode);
     urlSearchParams.set("preview-id", id);
-    urlSearchParams.set("preview-token", localStorage.getItem("api-token"));
-    const tenantEntry = localStorage.getItem("selected-tenant");
+    urlSearchParams.set("preview-token", localStorage.getItem(LocalStorageKeys.API_TOKEN));
+    const tenantEntry = localStorage.getItem(LocalStorageKeys.SELECTED_TENANT);
     urlSearchParams.set("preview-tenant", JSON.parse(tenantEntry).tenantKey);
 
     setPreviewClientUrl(`${base}?${urlSearchParams}`);
@@ -68,13 +69,6 @@ function Preview({
     </>
   );
 }
-
-Preview.defaultProps = {
-  width: 960,
-  height: 540,
-  simulatedWidth: 1920,
-  simulatedHeight: 1080,
-};
 
 Preview.propTypes = {
   id: PropTypes.string.isRequired,
