@@ -18,7 +18,7 @@ import {
 import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
 import ScreenStatus from "./screen-status";
-import {displayError} from "../util/list/toast-component/display-toast.jsx";
+import { displayError } from "../util/list/toast-component/display-toast";
 
 /**
  * The screen form component.
