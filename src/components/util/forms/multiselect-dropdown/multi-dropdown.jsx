@@ -18,68 +18,80 @@ import "./multi-dropdown.scss";
  * @param {Array} props.selected - The selected options
  * @param {string} props.name - The id of the form element
  * @param {boolean} props.isLoading - Whether the component is loading.
- * @param {string} props.noSelectedString - The label for when there is nothing selected.
+ * @param {string | null} props.noSelectedString - The label for when there is
+ *   nothing selected.
  * @param {string} props.errorText - The string to display on error.
  * @param {string} props.label - The input label
- * @param {string} props.helpText - Help text for the dropdown.
+ * @param {string | null} props.helpText - Help text for the dropdown.
  * @param {Function} props.filterCallback - The callback on search filter.
  * @param {boolean} props.singleSelect - If the dropdown is single select.
  * @param {boolean} props.disableSearch - Disable search option.
+ * @param {boolean} props.error - Error.
  * @returns {object} - The multidropdown
  */
 function MultiSelectComponent({
-  options,
   handleSelection,
-  selected,
   name,
-  isLoading,
-  noSelectedString,
-  errorText,
   label,
-  helpText,
-  filterCallback,
-  singleSelect,
-  disableSearch,
+  noSelectedString = null,
+  isLoading = false,
+  errorText = "",
+  error = false,
+  helpText = null,
+  selected = [],
+  options = [],
+  singleSelect = false,
+  disableSearch = false,
+  filterCallback = () => {},
 }) {
   const { t } = useTranslation("common");
-  const [error] = useState();
   const [mappedOptions, setMappedOptions] = useState();
   const [mappedSelected, setMappedSelected] = useState();
   const textOnError = errorText || t("multi-dropdown.validation-text");
   const nothingSelectedLabel =
     noSelectedString || t("multi-dropdown.nothing-selected");
 
+  /**
+   * @param {Array} arrayWithDuplicates - Array of objects to make unique
+   * @param {string} key - The key to make array unique by.
+   * @returns {Array} Unique array
+   */
+  function removeDuplicatesByKey(arrayWithDuplicates, key) {
+    return [
+      ...new Map(arrayWithDuplicates.map((item) => [item[key], item])).values(),
+    ];
+  }
+
+  /**
+   * @param {Array} dataToMap - The data to map to {label, value, disabled}
+   * @returns {Array} An array of {label, value, disabled}
+   */
+  function mapDataToFitMultiselect(dataToMap) {
+    return (
+      dataToMap.map((item) => {
+        return {
+          label: item.title || item.name,
+          value: item["@id"] || item.id,
+          disabled: false,
+        };
+      }) ?? []
+    );
+  }
+
   /** Map data to fit component. */
   useEffect(() => {
     const localMappedOptions =
-      options?.map((item) => {
-        return {
-          label: item.title || item.name,
-          value: item["@id"] || item.id,
-          disabled: false,
-        };
-      }) ?? [];
-    let localMappedSelected = [];
+      options.length > 0 ? mapDataToFitMultiselect(options) : [];
 
-    if (selected.length > 0) {
-      localMappedSelected = selected.map((item) => {
-        return {
-          label: item.title || item.name,
-          value: item["@id"] || item.id,
-          disabled: false,
-        };
-      });
-    }
+    const localMappedSelected =
+      selected.length > 0 ? mapDataToFitMultiselect(selected) : [];
 
-    const optionsWithSelected = Object.values(
-      [...localMappedOptions, ...localMappedSelected].reduce((a, c) => {
-        const aCopy = { ...a };
-        aCopy[c.value] = c;
-        return aCopy;
-      }, {})
+    const optionsWithSelected = removeDuplicatesByKey(
+      [...localMappedOptions, ...localMappedSelected],
+      "value"
     );
-    setMappedOptions(optionsWithSelected);
 
+    setMappedOptions(optionsWithSelected);
     setMappedSelected(localMappedSelected);
   }, [selected, selected.length, options]);
 
@@ -104,28 +116,47 @@ function MultiSelectComponent({
   };
 
   /**
+   * Filter to replace the default filter in multi-select. It matches the label name.
+   *
+   * @param {Array} multiselectData Data from the multiselect component
+   * @returns {Array} Array of selected values without duplicates
+   */
+  const addOrRemoveNewEntryToSelected = (multiselectData) => {
+    let selectedOptions = [];
+    const idsOfSelectedEntries = multiselectData.map(({ value }) => value);
+    const selectedAndOptions = [...selected, ...options];
+    if ("@id" in selectedAndOptions[0]) {
+      selectedOptions = removeDuplicatesByKey(
+        selectedAndOptions.filter((option) =>
+          idsOfSelectedEntries.includes(option["@id"])
+        ),
+        "@id"
+      );
+    } else {
+      selectedOptions = removeDuplicatesByKey(
+        selectedAndOptions.filter(({ id }) =>
+          idsOfSelectedEntries.includes(id)
+        ),
+        "id"
+      );
+    }
+
+    if (singleSelect) {
+      selectedOptions = [selectedOptions[selectedOptions.length - 1]];
+    }
+
+    return selectedOptions;
+  };
+
+  /**
    * A callback on changed data.
    *
    * @param {Array} data The data to call back with
    */
   const changeData = (data) => {
     let selectedOptions = [];
-
     if (data.length > 0) {
-      const ids = data.map(({ value }) => value);
-      selectedOptions = Object.values(
-        [...selected, ...options]
-          .filter((option) => ids.includes(option["@id"] || option.id))
-          .reduce((a, c) => {
-            const aCopy = { ...a };
-            aCopy[c["@id"] || c.id] = c;
-            return aCopy;
-          }, {})
-      );
-
-      if (singleSelect) {
-        selectedOptions = [selectedOptions[selectedOptions.length - 1]];
-      }
+      selectedOptions = addOrRemoveNewEntryToSelected(data);
     }
 
     const target = { value: selectedOptions, id: name };
@@ -173,18 +204,6 @@ function MultiSelectComponent({
   );
 }
 
-MultiSelectComponent.defaultProps = {
-  noSelectedString: null,
-  isLoading: false,
-  errorText: "",
-  helpText: null,
-  selected: [],
-  options: [],
-  singleSelect: false,
-  disableSearch: false,
-  filterCallback: () => {},
-};
-
 MultiSelectComponent.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -206,6 +225,7 @@ MultiSelectComponent.propTypes = {
   name: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   errorText: PropTypes.string,
+  error: PropTypes.bool,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   singleSelect: PropTypes.bool,

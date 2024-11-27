@@ -24,7 +24,7 @@ import Select from "../forms/select";
  * @param {Function} props.handleDelete - For deleting elements in the list.
  *   element with success.
  * @param {boolean} props.displayPublished - Whether to display the published filter
- * @param {Function} props.showCreatedByFilter - Callback for created by filter.
+ * @param {boolean} props.showCreatedByFilter - Callback for created by filter.
  * @param {boolean} props.displaySearch - Should search be displayed.
  * @param {boolean} props.enableScreenStatus - Should screen status be displayed?
  * @param {boolean} props.isFetching - Is fetching.
@@ -33,13 +33,13 @@ import Select from "../forms/select";
 function List({
   data,
   columns,
-  displayPublished,
   totalItems,
-  handleDelete,
-  showCreatedByFilter,
-  displaySearch,
   enableScreenStatus,
-  isFetching,
+  showCreatedByFilter = true,
+  isFetching = false,
+  handleDelete = null,
+  displayPublished = false,
+  displaySearch = true,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "list" });
   const navigate = useNavigate();
@@ -103,7 +103,8 @@ function List({
     }
 
     // search
-    const localSearch = searchParams || localStorage.search || "";
+    const localSearch =
+      searchParams || localStorage.getItem(localStorageKeys.SEARCH) || "";
     params.delete("search");
 
     if (localSearch) {
@@ -359,15 +360,6 @@ function List({
     </>
   );
 }
-
-List.defaultProps = {
-  showCreatedByFilter: true,
-  handleDelete: null,
-  displayPublished: false,
-  displaySearch: true,
-  enableScreenStatus: false,
-  isFetching: false,
-};
 
 List.propTypes = {
   data: PropTypes.arrayOf(

@@ -1,7 +1,6 @@
-/* eslint-disable global-require */
-/** Dependencies for Remote Components */
-module.exports = {
-  resolve: {
-    react: require("react"),
-  },
+import react from "react";
+
+// eslint-disable-next-line import/prefer-default-export
+export const resolve = {
+  react,
 };

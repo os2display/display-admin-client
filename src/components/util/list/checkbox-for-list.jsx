@@ -8,13 +8,18 @@ import "./checkbox-for-list.scss";
  * A checkbox for the list.
  *
  * @param {object} props Props.
- * @param {Function} props.onSelected The callback for onselected.
+ * @param {Function} props.onSelected The callback for on selected.
  * @param {boolean} props.selected Whether the checkbox should display selected.
  * @param {boolean} props.disabled Whether the checkbox is disabled
  * @param {string} props.title The title for the aria label
  * @returns {object} A checkbox for the list.
  */
-function CheckboxForList({ selected, onSelected, disabled, title }) {
+function CheckboxForList({
+  selected = false,
+  onSelected,
+  disabled = false,
+  title,
+}) {
   const { t } = useTranslation("common", { keyPrefix: "checkbox-for-list" });
 
   return (
@@ -32,11 +37,6 @@ function CheckboxForList({ selected, onSelected, disabled, title }) {
     </Form>
   );
 }
-
-CheckboxForList.defaultProps = {
-  selected: false,
-  disabled: false,
-};
 
 CheckboxForList.propTypes = {
   onSelected: PropTypes.func.isRequired,

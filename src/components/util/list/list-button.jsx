@@ -15,12 +15,12 @@ import useModal from "../../../context/modal-context/modal-context-hook";
  * @returns {object} - The list button.
  */
 function ListButton({
-  apiCall,
   redirectTo,
   displayData,
   modalTitle,
-  dataKey,
-  delayApiCall,
+  delayApiCall= 0,
+  apiCall = () => {},
+  dataKey = "",
 }) {
   const { setModal } = useModal();
   const [label, setLabel] = useState("");
@@ -104,12 +104,6 @@ function ListButton({
     </>
   );
 }
-
-ListButton.defaultProps = {
-  apiCall: () => {},
-  dataKey: "",
-  delayApiCall: 0,
-};
 
 ListButton.propTypes = {
   displayData: PropTypes.oneOfType([

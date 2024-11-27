@@ -16,15 +16,15 @@ import GroupsDropdown from "../forms/multiselect-dropdown/groups/groups-dropdown
  * @param {string} props.name The name for the input
  * @param {string} props.id The id used for the get.
  * @param {string} props.getSelectedMethod Method that gets selected for dropdown
- * @param {string} props.mappingId For mapping selected data
+ * @param {string | null} props.mappingId For mapping selected data
  * @returns {object} Select groups table.
  */
 function SelectGroupsTable({
   handleChange,
   name,
-  id,
   getSelectedMethod,
-  mappingId,
+  id = "",
+  mappingId = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "select-groups-table" });
   const [selectedData, setSelectedData] = useState([]);
@@ -55,12 +55,18 @@ function SelectGroupsTable({
     if (alreadySelectedGroups) {
       let newGroups = alreadySelectedGroups["hydra:member"];
       if (mappingId) {
-        newGroups = alreadySelectedGroups["hydra:member"].map((sdf) => {
-          return sdf[mappingId];
-        });
+        newGroups = alreadySelectedGroups["hydra:member"].map(
+          (localScreenGroup) => {
+            return localScreenGroup[mappingId];
+          }
+        );
       }
       setTotalItems(alreadySelectedGroups["hydra:totalItems"]);
-      setSelectedData([...selectedData, ...newGroups]);
+      const value = [...selectedData, ...newGroups];
+      setSelectedData(value);
+      handleChange({
+        target: { id: name, value: value.map((item) => item["@id"]) },
+      });
     }
   }, [alreadySelectedGroups]);
 
@@ -145,11 +151,6 @@ function SelectGroupsTable({
     </>
   );
 }
-
-SelectGroupsTable.defaultProps = {
-  id: "",
-  mappingId: null,
-};
 
 SelectGroupsTable.propTypes = {
   name: PropTypes.string.isRequired,

@@ -10,7 +10,7 @@ import "./table-header.scss";
  * @param {boolean} props.draggable If table has draggable rows.
  * @returns {object} The table body.
  */
-function TableHeader({ columns, draggable }) {
+function TableHeader({ columns, draggable = false }) {
   const { t } = useTranslation("common");
 
   return (
@@ -25,17 +25,16 @@ function TableHeader({ columns, draggable }) {
         )}
         {columns.map((column) => (
           <Fragment key={column.path || column.key}>
-            <th>{column.label}</th>
+            <th>
+              {column.label}
+              {column.actions}
+            </th>
           </Fragment>
         ))}
       </tr>
     </thead>
   );
 }
-
-TableHeader.defaultProps = {
-  draggable: false,
-};
 
 TableHeader.propTypes = {
   columns: ColumnProptypes.isRequired,

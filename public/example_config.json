@@ -2,6 +2,7 @@
   "api": "/",
   "touchButtonRegions": false,
   "showScreenStatus": false,
+  "rejseplanenApiKey": null,
   "loginMethods": [
     {
       "type": "oidc",

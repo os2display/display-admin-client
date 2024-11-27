@@ -36,11 +36,15 @@ import AuthHandler from "./auth-handler";
 import LoadingComponent from "./components/util/loading-component/loading-component";
 import ModalProvider from "./context/modal-context/modal-provider";
 import UsersList from "./components/users/users-list";
-import "react-toastify/dist/ReactToastify.css";
-import "./app.scss";
 import ActivationCodeList from "./components/activation-code/activation-code-list";
 import ActivationCodeCreate from "./components/activation-code/activation-code-create";
 import ActivationCodeActivate from "./components/activation-code/activation-code-activate";
+import ConfigLoader from "./config-loader";
+import "react-toastify/dist/ReactToastify.css";
+import "./app.scss";
+import FeedSourcesList from "./components/feed-sources/feed-sources-list";
+import FeedSourceCreate from "./components/feed-sources/feed-source-create";
+import FeedSourceEdit from "./components/feed-sources/feed-source-edit";
 
 /**
  * App component.
@@ -49,6 +53,7 @@ import ActivationCodeActivate from "./components/activation-code/activation-code
  */
 function App() {
   const [authenticated, setAuthenticated] = useState();
+  const [config, setConfig] = useState();
   const [selectedTenant, setSelectedTenant] = useState();
   const [accessConfig, setAccessConfig] = useState();
   const [tenants, setTenants] = useState();
@@ -65,6 +70,7 @@ function App() {
   const userStore = {
     authenticated: { get: authenticated, set: setAuthenticated },
     accessConfig: { get: accessConfig, set: setAccessConfig },
+    config,
     tenants: { get: tenants, set: setTenants },
     selectedTenant: { get: selectedTenant, set: setSelectedTenant },
     userName: { get: userName, set: setUserName },
@@ -82,6 +88,12 @@ function App() {
       set: setScreenUserLatestRequest,
     },
   };
+
+  useEffect(() => {
+    ConfigLoader.loadConfig().then((loadedConfig) => {
+      setConfig(loadedConfig);
+    });
+  }, []);
 
   const handleReauthenticate = () => {
     localStorage.removeItem(localStorageKeys.API_TOKEN);
@@ -401,6 +413,38 @@ function App() {
                                       roles={accessConfig.settings.roles}
                                     >
                                       <ThemeCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                              </Route>
+                              <Route path="feed-sources">
+                                <Route
+                                  path="list"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <FeedSourcesList />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="create"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <FeedSourceCreate />
+                                    </RestrictedRoute>
+                                  }
+                                />
+                                <Route
+                                  path="edit/:id"
+                                  element={
+                                    <RestrictedRoute
+                                      roles={accessConfig.settings.roles}
+                                    >
+                                      <FeedSourceEdit />
                                     </RestrictedRoute>
                                   }
                                 />

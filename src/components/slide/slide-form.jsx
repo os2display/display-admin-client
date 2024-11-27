@@ -1,4 +1,4 @@
-import { React, useEffect, useState, Fragment } from "react";
+import { React, useEffect, useState, Fragment, useContext } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +21,8 @@ import FeedSelector from "./content/feed-selector";
 import RadioButtons from "../util/forms/radio-buttons";
 import SelectPlaylistsTable from "../util/multi-and-table/select-playlists-table";
 import localStorageKeys from "../util/local-storage-keys";
-import ConfigLoader from "../../config-loader";
 import { displayError } from "../util/list/toast-component/display-toast";
+import userContext from "../../context/user-context";
 import "./slide-form.scss";
 
 /**
@@ -45,22 +45,24 @@ import "./slide-form.scss";
  * @returns {object} The slide form.
  */
 function SlideForm({
-  slide,
   handleInput,
   handleContent,
   handleMedia,
   handleSubmit,
   selectTemplate,
-  selectedTemplate,
   headerText,
-  mediaData,
   selectTheme,
-  selectedTheme,
-  isLoading,
-  loadingMessage,
+  selectedTemplate = null,
+  selectedTheme = [],
+  isLoading = false,
+  loadingMessage = "",
+  slide = null,
+  mediaData = null,
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
+  const { config } = useContext(userContext);
+
   const [showPreview, setShowPreview] = useState(false);
   const [previewLayout, setPreviewLayout] = useState("horizontal");
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
@@ -70,7 +72,7 @@ function SlideForm({
   const [searchTextTheme, setSearchTextTheme] = useState("");
   const [selectedTemplates, setSelectedTemplates] = useState([]);
   const [themesOptions, setThemesOptions] = useState();
-  const [config, setConfig] = useState({});
+  const [templateError, setTemplateError] = useState(false);
 
   // Load templates.
   const { data: templates, isLoading: loadingTemplates } =
@@ -85,6 +87,21 @@ function SlideForm({
     itemsPerPage: 300,
     order: { createdAt: "desc" },
   });
+
+  /** Check if published is set */
+  const checkInputsHandleSubmit = () => {
+    setTemplateError(false);
+    let submit = true;
+    if (!selectedTemplate) {
+      setTemplateError(true);
+      submit = false;
+      displayError(t("slide-form.remember-template-error"));
+    }
+
+    if (submit) {
+      handleSubmit();
+    }
+  };
 
   /**
    * For closing overlay on escape key.
@@ -101,10 +118,6 @@ function SlideForm({
   // Add event listeners for keypress
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
-
-    ConfigLoader.loadConfig().then((loadedConfig) => {
-      setConfig(loadedConfig);
-    });
 
     // Remove event listeners on cleanup
     return () => {
@@ -230,6 +243,7 @@ function SlideForm({
                     handleSelection={selectTemplate}
                     options={templateOptions}
                     selected={selectedTemplates}
+                    error={templateError}
                     name="templateInfo"
                     filterCallback={onFilterTemplate}
                     singleSelect
@@ -410,6 +424,7 @@ function SlideForm({
             </ContentBody>
             {themesOptions && (
               <ContentBody id="theme-section">
+                <h3 className="h4">{t("slide-form.theme")}</h3>
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-form.slide-theme-label")}
@@ -486,7 +501,7 @@ function SlideForm({
           <Button
             variant="primary"
             type="button"
-            onClick={handleSubmit}
+            onClick={checkInputsHandleSubmit}
             id="save_slide"
             size="lg"
           >
@@ -497,15 +512,6 @@ function SlideForm({
     </>
   );
 }
-
-SlideForm.defaultProps = {
-  selectedTemplate: null,
-  selectedTheme: [],
-  isLoading: false,
-  loadingMessage: "",
-  slide: null,
-  mediaData: null,
-};
 
 SlideForm.propTypes = {
   slide: PropTypes.shape({

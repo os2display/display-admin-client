@@ -4,16 +4,21 @@
     "airbnb",
     "prettier",
     "plugin:jsdoc/recommended",
-    "plugin:prettier/recommended",
-    "plugin:cypress/recommended"
+    "plugin:prettier/recommended"
   ],
   "ignorePatterns": ["*.yml"],
+  "globals": {
+    "window": true,
+    "localStorage": true,
+    "document": true
+  },
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
     "allowImportExportEverywhere": true
   },
   "rules": {
+    "react/require-default-props": "off",
     "react/jsx-filename-extension": [
       "warn",
       {

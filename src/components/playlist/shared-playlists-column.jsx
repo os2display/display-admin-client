@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useTranslation } from "react-i18next";
-import Published from "../util/published";
+import Publishing from "../util/publishing";
 
 /**
  * Columns for shared playlists lists.
@@ -25,7 +25,7 @@ function getSharedPlaylistColumns() {
       path: "published",
       label: t("published"),
       // eslint-disable-next-line react/prop-types
-      content: ({ published }) => <Published published={published} />,
+      content: ({ published }) => <Publishing published={published} />,
     },
   ];
 

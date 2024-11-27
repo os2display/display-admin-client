@@ -19,9 +19,9 @@ function FileFormElement({
   inputFile,
   onRemove,
   onChange,
-  disableInput,
-  displayPreview,
-  displayFileInfo,
+  disableInput = false,
+  displayPreview = true,
+  displayFileInfo = true,
 }) {
   const { t } = useTranslation("common");
   const md = displayPreview ? "4" : "6";
@@ -97,12 +97,6 @@ function FileFormElement({
     </Row>
   );
 }
-
-FileFormElement.defaultProps = {
-  disableInput: false,
-  displayPreview: true,
-  displayFileInfo: true,
-};
 
 FileFormElement.propTypes = {
   inputFile: PropTypes.shape({

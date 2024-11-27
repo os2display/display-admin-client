@@ -63,10 +63,6 @@ function FileDropzone({ onFilesAdded, acceptedMimetypes = null }) {
   );
 }
 
-FileDropzone.defaultProps = {
-  acceptedMimetypes: null,
-};
-
 FileDropzone.propTypes = {
   onFilesAdded: PropTypes.func.isRequired,
   acceptedMimetypes: PropTypes.arrayOf(PropTypes.string),

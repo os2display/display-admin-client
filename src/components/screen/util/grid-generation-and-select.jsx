@@ -22,10 +22,10 @@ import "./grid.scss";
 function GridGenerationAndSelect({
   grid,
   vertical,
-  regions,
   handleInput,
   selectedData,
   screenId,
+  regions = [],
 }) {
   const { t } = useTranslation("common");
   const [key, setKey] = useState(regions.length > 0 ? regions[0]["@id"] : "");
@@ -113,7 +113,7 @@ function GridGenerationAndSelect({
               </div>
             </div>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-12">
             {regions.length > 0 && (
               <>
                 <h3 className="h5">
@@ -136,6 +136,7 @@ function GridGenerationAndSelect({
                           id="playlist_drag_and_drop"
                           handleChange={handleChange}
                           name={data["@id"]}
+                          regionIdForInitializeCallback={data["@id"]}
                           screenId={screenId}
                           regionId={idFromUrl(data["@id"])}
                         />
@@ -155,10 +156,6 @@ function GridGenerationAndSelect({
     </>
   );
 }
-
-GridGenerationAndSelect.defaultProps = {
-  regions: [],
-};
 
 GridGenerationAndSelect.propTypes = {
   grid: PropTypes.shape({ columns: PropTypes.number, rows: PropTypes.number })

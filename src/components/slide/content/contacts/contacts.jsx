@@ -10,18 +10,18 @@ import ContactForm from "./contact-form";
  * A contacts component for forms.
  *
  * @param {string} props The props.
- * @param {string} props.inputContacts TODO
- * @param {string} props.formGroupClasses TODO
- * @param {Function} props.onFilesChange TODO
+ * @param {Array} props.inputContacts Array of contacts.
+ * @param {string} props.formGroupClasses Classes.
+ * @param {Function} props.onFilesChange When files are changed.
  * @returns {object} A contacts component.
  */
 function Contacts({
   name,
   inputContacts,
-  formGroupClasses,
   getInputFiles,
   onFilesChange,
   onChange,
+  formGroupClasses = "",
 }) {
   const { t } = useTranslation("common");
   const [contacts, setContacts] = useState([]);
@@ -103,10 +103,6 @@ function Contacts({
     </Card>
   );
 }
-
-Contacts.defaultProps = {
-  formGroupClasses: "",
-};
 
 Contacts.propTypes = {
   name: PropTypes.string.isRequired,
