@@ -96,7 +96,7 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
       const now = dayjs().startOf("minute").valueOf();
 
       if (status?.clientMeta?.host) {
-        fetch(`${status.clientMeta.host}client/release.json?ts=${now}`)
+        fetch(`${status.clientMeta.host}/release.json?ts=${now}`)
           .then((res) => res.json())
           .then((data) => setClientRelease(data));
       }
