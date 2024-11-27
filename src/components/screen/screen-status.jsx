@@ -29,7 +29,7 @@ import ConfigLoader from "../../config-loader";
  * @param {func} props.handleInput Handler for change in input.
  * @returns {JSX.Element} The status element.
  */
-function ScreenStatus({ screen, handleInput, mode = "default" }) {
+function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-status" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -96,7 +96,7 @@ function ScreenStatus({ screen, handleInput, mode = "default" }) {
       const now = dayjs().startOf("minute").valueOf();
 
       if (status?.clientMeta?.host) {
-        fetch(`${status.clientMeta.host}/client/release.json?ts=${now}`)
+        fetch(`${status.clientMeta.host}client/release.json?ts=${now}`)
           .then((res) => res.json())
           .then((data) => setClientRelease(data));
       }
@@ -258,11 +258,6 @@ function ScreenStatus({ screen, handleInput, mode = "default" }) {
 
   return <>{getStatusAlert()}</>;
 }
-
-ScreenStatus.defaultProps = {
-  mode: "default",
-  handleInput: () => {},
-};
 
 ScreenStatus.propTypes = {
   screen: PropTypes.shape({
