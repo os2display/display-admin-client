@@ -120,7 +120,7 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
           className="margin-right-button"
           size="sm"
         >
-          <FontAwesomeIcon icon={faPlus} /> Connect
+          <FontAwesomeIcon icon={faPlus} /> {t('connect')}
         </Button>
       );
     }

@@ -66,6 +66,7 @@
     "remove-row": "Fjern række"
   },
   "screen-status": {
+    "connect": "Tilkobl",
     "bind": "Tilkobl skærm",
     "unbind": "Afkobl skærm",
     "bindkey-label": "Tilkoblingskode",
