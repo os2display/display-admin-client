@@ -35,8 +35,6 @@ function FeedSelector({
   const [feedSourceOptions, setFeedSourceOptions] = useState([]);
   const [feedSourceData, setFeedSourceData] = useState();
 
-  // @TODO: Filter by dataType
-
   const {
     data: feedSourcesData,
     error: feedSourcesLoadingError,
@@ -47,7 +45,7 @@ function FeedSelector({
   });
 
   useEffect(() => {
-    if (feedSourceOptions?.length === 1) {
+    if (!value.feedSource && feedSourceOptions?.length === 1) {
       // If there's only one feed source option select it.
       const feedSource = feedSourceOptions[0]["@id"];
       const configuration = value?.configuration ?? {};

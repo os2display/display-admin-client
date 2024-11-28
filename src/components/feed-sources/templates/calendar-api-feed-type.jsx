@@ -35,6 +35,7 @@ const CalendarApiFeedType = ({
         <MultiselectFromEndpoint
           onChange={handleInput}
           name="locations"
+          disableSearch={false}
           label={t("locations")}
           value={formStateObject.locations ?? []}
           optionsEndpoint={optionsEndpoint}
