@@ -19,7 +19,12 @@ const CalendarApiFeedType = ({
   useEffect(() => {
     if (feedSourceId && feedSourceId !== "") {
       ConfigLoader.loadConfig().then((config) => {
-        setOptionsEndpoint(`${config.api + feedSourceId}/config/locations`);
+        let endpoint = config.api;
+        endpoint = endpoint.replace(/\/$/, "");
+        endpoint += feedSourceId;
+        endpoint += "/config/locations";
+
+        setOptionsEndpoint(endpoint);
       });
     }
   }, [feedSourceId]);
