@@ -23,6 +23,8 @@ import userContext from "../../context/user-context";
 import "./slide-form.scss";
 import Preview from "../preview/preview";
 import StickyFooter from "../util/sticky-footer";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExpand} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * The slide form component.
@@ -31,6 +33,7 @@ import StickyFooter from "../util/sticky-footer";
  * @param {object} props.slide The slide object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
+ * @param {Function} props.handleSaveNoClose Handles form submit without redirecting.
  * @param {string} props.headerText Headline text.
  * @param {Function} props.handleContent Function for handling changes to content field
  * @param {Function} props.handleMedia Handle media field
@@ -48,6 +51,7 @@ function SlideForm({
   handleContent,
   handleMedia,
   handleSubmit,
+  handleSaveNoClose,
   selectTemplate,
   headerText,
   selectTheme,
@@ -87,18 +91,22 @@ function SlideForm({
     order: { createdAt: "desc" },
   });
 
-  /** Check if published is set */
-  const checkInputsHandleSubmit = () => {
+  /** Check if template is set */
+  const checkInputsHandleSubmit = (noRedirect) => {
     setTemplateError(false);
     let submit = true;
     if (!selectedTemplate) {
       setTemplateError(true);
       submit = false;
-      displayError(t("slide-form.remember-template-error"));
+      displayError(t("remember-template-error"));
     }
 
     if (submit) {
-      handleSubmit();
+      if (noRedirect === true) {
+        handleSaveNoClose();
+      } else {
+        handleSubmit();
+      }
     }
   };
 
@@ -332,7 +340,7 @@ function SlideForm({
             </ContentBody>
             {themesOptions && (
               <ContentBody id="theme-section">
-                <h3 className="h4">{t("slide-form.theme")}</h3>
+                <h3 className="h4">{t("theme")}</h3>
                 <MultiSelectComponent
                   isLoading={loadingThemes}
                   label={t("slide-theme-label")}
@@ -354,6 +362,8 @@ function SlideForm({
             >
               {selectedTemplate?.resources?.component && (
                 <div>
+                  <Alert variant="warning">{t('slide-preview-info')}</Alert>
+
                   <RemoteComponentWrapper
                     url={selectedTemplate?.resources?.component}
                     slide={slide}
@@ -372,10 +382,9 @@ function SlideForm({
                     onClick={() =>
                       setPreviewOverlayVisible(!previewOverlayVisible)
                     }
-                    size="lg"
-                    className="me-3 mt-3"
+                    className="me-3 mt-3 float-end"
                   >
-                    {t("preview-in-full-screen")}
+                    <FontAwesomeIcon icon={faExpand} className="me-3" />{t("preview-in-full-screen")}
                   </Button>
                 </div>
               )}
@@ -387,7 +396,6 @@ function SlideForm({
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
-                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
                   <Alert
                     key="slide-preview-about"
                     variant="info"
@@ -395,6 +403,7 @@ function SlideForm({
                   >
                     {t("slide-preview-about")}
                   </Alert>
+                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
                 </div>
               )}
             </Col>
@@ -413,7 +422,7 @@ function SlideForm({
           <Button
             variant="outline-primary"
             type="button"
-            onClick={handleSubmit}
+            onClick={() => checkInputsHandleSubmit(true)}
             id="save_slide"
             className="margin-right-button"
           >
