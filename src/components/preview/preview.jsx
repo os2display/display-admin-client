@@ -2,6 +2,7 @@ import { React, JSX, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import LocalStorageKeys from "../util/local-storage-keys.jsx";
+import ConfigLoader from "../../config-loader.js";
 
 /**
  * The preview component.
@@ -28,17 +29,23 @@ function Preview({
   const [previewClientUrl, setPreviewClientUrl] = useState(null);
 
   useEffect(() => {
-    // TODO: Get base from config.
-    const base = "https://display-client.local.itkdev.dk/";
+    ConfigLoader.loadConfig().then((config) => {
+      const base = config.previewClient ?? "";
 
-    const urlSearchParams = new URLSearchParams();
-    urlSearchParams.set("preview", mode);
-    urlSearchParams.set("preview-id", id);
-    urlSearchParams.set("preview-token", localStorage.getItem(LocalStorageKeys.API_TOKEN));
-    const tenantEntry = localStorage.getItem(LocalStorageKeys.SELECTED_TENANT);
-    urlSearchParams.set("preview-tenant", JSON.parse(tenantEntry).tenantKey);
+      const urlSearchParams = new URLSearchParams();
+      urlSearchParams.set("preview", mode);
+      urlSearchParams.set("preview-id", id);
+      urlSearchParams.set(
+        "preview-token",
+        localStorage.getItem(LocalStorageKeys.API_TOKEN)
+      );
+      const tenantEntry = localStorage.getItem(
+        LocalStorageKeys.SELECTED_TENANT
+      );
+      urlSearchParams.set("preview-tenant", JSON.parse(tenantEntry).tenantKey);
 
-    setPreviewClientUrl(`${base}?${urlSearchParams}`);
+      setPreviewClientUrl(`${base}?${urlSearchParams}`);
+    })
   }, []);
 
   const scale = width / simulatedWidth;

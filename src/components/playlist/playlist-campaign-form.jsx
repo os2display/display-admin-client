@@ -12,6 +12,8 @@ import Preview from "../preview/preview";
 import idFromUrl from "../util/helpers/id-from-url";
 import StickyFooter from "../util/sticky-footer";
 import localStorageKeys from "../util/local-storage-keys";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExpand} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * The shared form component.
@@ -32,6 +34,7 @@ import localStorageKeys from "../util/local-storage-keys";
 function PlaylistCampaignForm({
   handleInput,
   handleSubmit,
+  handleSaveNoClose,
   headerText,
   location,
   children,
@@ -48,8 +51,12 @@ function PlaylistCampaignForm({
   const [displayPreview, setDisplayPreview] = useState(null);
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
 
-  /** Check if published is set */
-  const checkInputsHandleSubmit = () => {
+  /**
+   * Check if published is set
+   *
+   * @param {boolean | null} noRedirect - Save without redirect.
+   */
+  const checkInputsHandleSubmit = (noRedirect) => {
     setPublishedToError(false);
     setPublishedFromError(false);
     let submit = true;
@@ -63,7 +70,11 @@ function PlaylistCampaignForm({
     }
 
     if (submit) {
-      handleSubmit();
+      if (noRedirect === true) {
+        handleSaveNoClose();
+      } else {
+        handleSubmit();
+      }
     }
   };
 
@@ -155,6 +166,13 @@ function PlaylistCampaignForm({
             >
               <h2 className="h4">{t("playlist-preview")}</h2>
               <div>
+                <Alert
+                  key="playlist-preview-about"
+                  variant="info"
+                  className="mt-3"
+                >
+                  {t("playlist-preview-about")}
+                </Alert>
                 <Preview
                   id={idFromUrl(playlist["@id"])}
                   mode="playlist"
@@ -171,7 +189,7 @@ function PlaylistCampaignForm({
                   size="lg"
                   className="me-3 mt-3"
                 >
-                  {t("preview-in-full-screen")}
+                  <FontAwesomeIcon icon={faExpand} className="me-3" /> {t("preview-in-full-screen")}
                 </Button>
               </div>
               {previewOverlayVisible && (
@@ -182,7 +200,6 @@ function PlaylistCampaignForm({
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
-                  <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
                   <Alert
                     key="playlist-preview-about"
                     variant="info"
@@ -190,50 +207,50 @@ function PlaylistCampaignForm({
                   >
                     {t("playlist-preview-about")}
                   </Alert>
+                  <Preview id={idFromUrl(playlist["@id"])} mode="playlist" />
                 </div>
               )}
             </Col>
           )}
-
-          <StickyFooter>
-            <Button
-              variant="secondary"
-              type="button"
-              id="cancel_playlist"
-              onClick={() => navigate(`/${location}/list`)}
-              className="margin-right-button"
-            >
-              {t("cancel-button")}
-            </Button>
-            <Button
-              variant="outline-primary"
-              type="button"
-              onClick={checkInputsHandleSubmit}
-              id="save_playlist"
-              className="margin-right-button"
-            >
-              {t("save-button")}
-            </Button>
-            <Button
-              variant="primary"
-              type="button"
-              onClick={handleSubmit}
-              id="save_slide_an_close"
-              className="margin-right-button"
-            >
-              {t("save-button-and-close")}
-            </Button>
-            <Button
-              variant="success"
-              type="button"
-              onClick={toggleDisplayPreview}
-              id="toggle_display_preview"
-              className="margin-right-button"
-            >
-              {displayPreview ? t("hide-preview") : t("show-preview")}
-            </Button>
-          </StickyFooter>
         </Row>
+        <StickyFooter>
+          <Button
+            variant="secondary"
+            type="button"
+            id="cancel_playlist"
+            onClick={() => navigate(`/${location}/list`)}
+            className="margin-right-button"
+          >
+            {t("cancel-button")}
+          </Button>
+          <Button
+            variant="outline-primary"
+            type="button"
+            onClick={() => checkInputsHandleSubmit(true)}
+            id="save_playlist"
+            className="margin-right-button"
+          >
+            {t("save-button")}
+          </Button>
+          <Button
+            variant="primary"
+            type="button"
+            onClick={checkInputsHandleSubmit}
+            id="save_slide_an_close"
+            className="margin-right-button"
+          >
+            {t("save-button-and-close")}
+          </Button>
+          <Button
+            variant="success"
+            type="button"
+            onClick={toggleDisplayPreview}
+            id="toggle_display_preview"
+            className="margin-right-button"
+          >
+            {displayPreview ? t("hide-preview") : t("show-preview")}
+          </Button>
+        </StickyFooter>
       </Form>
     </>
   );
@@ -251,6 +268,7 @@ PlaylistCampaignForm.propTypes = {
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleSaveNoClose: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   slideId: PropTypes.string,
   isLoading: PropTypes.bool,

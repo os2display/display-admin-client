@@ -388,7 +388,6 @@ function ScreenForm({
             type="button"
             id="cancel_screen"
             onClick={() => navigate("/screen/list")}
-            size="lg"
             className="margin-right-button"
           >
             {t("cancel-button")}
@@ -398,7 +397,6 @@ function ScreenForm({
             type="button"
             className="margin-right-button"
             id="save_screen"
-            size="lg"
             onClick={checkInputsHandleSubmit}
           >
             {t("save-button")}
@@ -406,7 +404,7 @@ function ScreenForm({
           <Button
             variant="primary"
             type="button"
-            onClick={handleSubmit}
+            onClick={() => checkInputsHandleSubmit(true)}
             id="save_slide_an_close"
             className="margin-right-button"
           >

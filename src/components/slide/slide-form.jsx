@@ -91,7 +91,10 @@ function SlideForm({
     order: { createdAt: "desc" },
   });
 
-  /** Check if template is set */
+  /**
+   * Check if template is set
+   * @param noRedirect
+   */
   const checkInputsHandleSubmit = (noRedirect) => {
     setTemplateError(false);
     let submit = true;
@@ -358,12 +361,12 @@ function SlideForm({
           {displayPreview && (
             <Col
               className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top"
-              style={{ top: "20px" }}
+              style={{top: "20px"}}
             >
-              {selectedTemplate?.resources?.component && (
-                <div>
-                  <Alert variant="warning">{t('slide-preview-info')}</Alert>
+              <h2 className="h4">{t("slide-preview")}</h2>
 
+              {selectedTemplate?.resources?.component && (
+                <>
                   <RemoteComponentWrapper
                     url={selectedTemplate?.resources?.component}
                     slide={slide}
@@ -384,9 +387,9 @@ function SlideForm({
                     }
                     className="me-3 mt-3 float-end"
                   >
-                    <FontAwesomeIcon icon={faExpand} className="me-3" />{t("preview-in-full-screen")}
+                    <FontAwesomeIcon icon={faExpand} className="me-3"/>{t("preview-in-full-screen")}
                   </Button>
-                </div>
+                </>
               )}
               {previewOverlayVisible && (
                 <div
@@ -403,7 +406,7 @@ function SlideForm({
                   >
                     {t("slide-preview-about")}
                   </Alert>
-                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
+                  <Preview id={idFromUrl(slide["@id"])} mode="slide"/>
                 </div>
               )}
             </Col>
@@ -468,6 +471,7 @@ SlideForm.propTypes = {
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleSaveNoClose: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   selectTheme: PropTypes.func.isRequired,
   selectedTheme: PropTypes.arrayOf(

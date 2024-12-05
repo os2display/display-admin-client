@@ -287,7 +287,8 @@
     "feed-source-name-label": "Navn",
     "feed-source-description-label": "Beskrivelse",
     "feed-source-feed-type-label": "Type",
-    "save-button": "Gem datakilde",
+    "save-button": "Gem datakilde og luk",
+    "save-without-close-button": "Gem datakilde",
     "cancel-button": "Annuller"
   },
   "media-list": {
@@ -375,9 +376,8 @@
     "touch-region-button-text-helptext": "Her kan du sætte knapteksten, hvis slidet indgår i en touch region, hvor slides bliver vist som knapper der kan åbnes.",
     "add-slide-to-playlists": "Tilføj slide til spillelister",
     "add-playlists-help-text": "For at se mulige spillelister, skal du fremsøge dem pr navn. Dette slide vil blive placeret i slutningen af spillelisten.",
-    "preview-in-full-screen": "Fuldskærm",
+    "preview-in-full-screen": "Fuld skærm",
     "horizontal-or-vertical-label": "Vælg preview-format",
-    "slide-preview-info": "Forhåndsvisningen er ikke helt præcis.",
     "horizontal-label": "16:9",
     "vertical-label": "9:16",
     "show-preview-label": "Vis preview af slide",
@@ -393,7 +393,7 @@
     "slide-from-label": "Udgiv fra",
     "slide-to-label": "Udgiv til",
     "slide-theme-label": "Slidets tema",
-    "slide-preview": "Forhåndsvisning",
+    "slide-preview": "Levende visning",
     "slide-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter slidet er gemt.",
     "show-preview": "Åbn forhåndsvisning",
     "hide-preview": "Luk forhåndsvisning",
@@ -553,8 +553,9 @@
     "save-button-and-close": "Gem og luk",
     "show-preview": "Åbn forhåndsvisning",
     "hide-preview": "Luk forhåndsvisning",
-    "preview-in-full-screen": "Åbn forhåndsvisning i fuld skærm",
+    "preview-in-full-screen": "Fuld skærm",
     "playlist-preview": "Forhåndsvisning",
+    "playlist-preview-small-about": "Gem for at opdatere indhold.",
     "playlist-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter spillelisten er gemt.",
     "cancel-button": "Annuller",
     "playlist-name-label": "Spillelistens navn",
@@ -794,7 +795,11 @@
     "screen-preview": "Forhåndsvisning",
     "screen-preview-open": "Åbn",
     "screen-preview-close": "Luk",
-    "screen-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter skærmen er gemt."
+    "screen-preview-small-about": "Gem for at opdatere indhold.",
+    "screen-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter skærmen er gemt.",
+    "save-button-and-close": "Gem og luk",
+    "show-preview": "Åbn forhåndsvisning",
+    "hide-preview": "Luk forhåndsvisning"
   },
   "nav-items": {
     "shared-playlists": "Delte spillelister",
