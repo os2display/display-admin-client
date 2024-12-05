@@ -1,5 +1,5 @@
-import { React, useState, useEffect, useContext } from "react";
-import { useTranslation } from "react-i18next";
+import {React, useState, useEffect, useContext} from "react";
+import {useTranslation} from "react-i18next";
 import List from "../util/list/list";
 import idFromUrl from "../util/helpers/id-from-url";
 import UserContext from "../../context/user-context";
@@ -7,7 +7,7 @@ import ListContext from "../../context/list-context";
 import ContentHeader from "../util/content-header/content-header";
 import ContentBody from "../util/content-body/content-body";
 import useModal from "../../context/modal-context/modal-context-hook";
-import { SlideColumns } from "./slides-columns";
+import {SlideColumns} from "./slides-columns";
 import {
   displayError,
   displaySuccess,
@@ -17,6 +17,7 @@ import {
   useDeleteV2SlidesByIdMutation,
   useGetV2PlaylistsByIdQuery,
 } from "../../redux/api/api.generated.ts";
+import Row from "react-bootstrap/Row";
 
 /**
  * The slides list component.
@@ -24,15 +25,15 @@ import {
  * @returns {object} The slides list
  */
 function SlidesList() {
-  const { t } = useTranslation("common", { keyPrefix: "slides-list" });
+  const {t} = useTranslation("common", {keyPrefix: "slides-list"});
   const context = useContext(UserContext);
-  const { selected, setSelected } = useModal();
+  const {selected, setSelected} = useModal();
 
   const {
-    searchText: { get: searchText },
-    page: { get: page },
-    createdBy: { get: createdBy },
-    isPublished: { get: isPublished },
+    searchText: {get: searchText},
+    page: {get: page},
+    createdBy: {get: createdBy},
+    isPublished: {get: isPublished},
   } = useContext(ListContext);
 
   // Local state
@@ -43,7 +44,7 @@ function SlidesList() {
   );
 
   // Delete call
-  const [DeleteV2Slides, { isSuccess: isDeleteSuccess, error: isDeleteError }] =
+  const [DeleteV2Slides, {isSuccess: isDeleteSuccess, error: isDeleteError}] =
     useDeleteV2SlidesByIdMutation();
 
   // Get method
@@ -54,7 +55,7 @@ function SlidesList() {
     refetch,
   } = useGetV2SlidesQuery({
     page,
-    order: { createdAt: "desc" },
+    order: {createdAt: "desc"},
     title: searchText,
     published: isPublished,
     createdBy,
@@ -83,7 +84,7 @@ function SlidesList() {
       const slideToDelete = selected[0];
       setSelected(selected.slice(1));
       const slideToDeleteId = idFromUrl(slideToDelete.id);
-      DeleteV2Slides({ id: slideToDeleteId });
+      DeleteV2Slides({id: slideToDeleteId});
     }
   }, [isDeleting, isDeleteSuccess]);
 

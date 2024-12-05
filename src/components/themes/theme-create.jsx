@@ -18,9 +18,7 @@ function ThemeCreate() {
   };
 
   return (
-    <div className="p-3">
-      <ThemeManager saveMethod="POST" initialState={data} />
-    </div>
+    <ThemeManager saveMethod="POST" initialState={data} />
   );
 }
 

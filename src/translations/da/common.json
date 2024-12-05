@@ -407,7 +407,8 @@
     "theme-description-label": "Temaets beskrivelse",
     "css-header": "Temaets CSS",
     "theme-css-label": "Temaets CSS",
-    "save-button": "Gem tema",
+    "save-button": "Gem tema og luk",
+    "save-without-close-button": "Gem tema",
     "cancel-button": "Annuller"
   },
   "group-form": {
