@@ -83,6 +83,7 @@ function RemoteComponentWrapper({
   }, [showPreview]);
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     const observer = new ResizeObserver((entries) => {
       if (entries.length > 0) {
         const first = entries[0];

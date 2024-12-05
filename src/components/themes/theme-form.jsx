@@ -18,6 +18,7 @@ import StickyFooter from "../util/sticky-footer";
  * @param {object} props.theme The theme object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
+ * @param {Function} props.handleSaveNoClose Handles form submit without close.
  * @param {string} props.headerText Headline text.
  * @param {boolean} props.isLoading Indicator of whether the form is loading
  * @param {string} props.loadingMessage The loading message for the spinner
@@ -37,10 +38,7 @@ function ThemeForm({
 
   return (
     <div>
-      <LoadingComponent
-        isLoading={isLoading}
-        loadingMessage={loadingMessage}
-      />
+      <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <Row className="m-2">
           <h1 id="themeTitle">{headerText}</h1>

@@ -67,6 +67,7 @@ function ScreenForm({
   const checkInputsHandleSubmit = () => {
     setLayoutError(false);
     let submit = true;
+
     if (!selectedLayout) {
       displayError(t("remember-layout-error"));
       setLayoutError(true);
@@ -305,6 +306,7 @@ function ScreenForm({
                       helpText={t("search-to-se-possible-selections")}
                       selected={selectedLayout ? [selectedLayout] : []}
                       name="layout"
+                      error={layoutError}
                       singleSelect
                     />
                   </div>

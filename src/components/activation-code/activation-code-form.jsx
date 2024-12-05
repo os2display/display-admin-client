@@ -17,7 +17,6 @@ import StickyFooter from "../util/sticky-footer";
  * @param {object} props.activationCode The activationCode object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
- * @param {Function} props.handleSaveNoClose Handles form submit without close.
  * @param {string} props.headerText Headline text.
  * @param {boolean} props.isLoading Indicator of whether the form is loading
  * @param {string} props.loadingMessage The loading message for the spinner
@@ -115,7 +114,6 @@ ActivationCodeForm.propTypes = {
   }).isRequired,
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleSaveNoClose: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   loadingMessage: PropTypes.string,

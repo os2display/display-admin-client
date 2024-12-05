@@ -3,6 +3,8 @@ import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import ContentBody from "../util/content-body/content-body";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
@@ -12,8 +14,6 @@ import Preview from "../preview/preview";
 import idFromUrl from "../util/helpers/id-from-url";
 import StickyFooter from "../util/sticky-footer";
 import localStorageKeys from "../util/local-storage-keys";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExpand} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * The shared form component.
@@ -29,6 +29,7 @@ import {faExpand} from "@fortawesome/free-solid-svg-icons";
  * @param {boolean} props.isCampaign If it is a campaign form.
  * @param {string} props.location Either playlist or campaign.
  * @param {Array} props.children The children being passed from parent
+ * @param {Function} props.handleSaveNoClose Handles form submit with close.
  * @returns {object} The form shared by campaigns and playlists.
  */
 function PlaylistCampaignForm({
@@ -44,7 +45,9 @@ function PlaylistCampaignForm({
   isCampaign = false,
   playlist = null,
 }) {
-  const { t } = useTranslation("common", {'keyPrefix': 'playlist-campaign-form'});
+  const { t } = useTranslation("common", {
+    keyPrefix: "playlist-campaign-form",
+  });
   const navigate = useNavigate();
   const [publishedFromError, setPublishedFromError] = useState(false);
   const [publishedToError, setPublishedToError] = useState(false);
@@ -98,9 +101,7 @@ function PlaylistCampaignForm({
                 name="title"
                 type="text"
                 label={t("playlist-name-label")}
-                placeholder={t(
-                  "playlist-name-placeholder"
-                )}
+                placeholder={t("playlist-name-placeholder")}
                 value={playlist.title}
                 onChange={handleInput}
               />
@@ -108,9 +109,7 @@ function PlaylistCampaignForm({
                 name="description"
                 type="text"
                 label={t("playlist-description-label")}
-                placeholder={t(
-                  "playlist-description-placeholder"
-                )}
+                placeholder={t("playlist-description-placeholder")}
                 value={playlist.description}
                 onChange={handleInput}
               />
@@ -126,9 +125,7 @@ function PlaylistCampaignForm({
             {/* Playlist or campaign form */}
             {children}
             <ContentBody>
-              <h3 className="h4">
-                {t("publish-title")}
-              </h3>
+              <h3 className="h4">{t("publish-title")}</h3>
               <Row className="g-2">
                 <Col md>
                   <FormInput
@@ -189,7 +186,8 @@ function PlaylistCampaignForm({
                   size="lg"
                   className="me-3 mt-3"
                 >
-                  <FontAwesomeIcon icon={faExpand} className="me-3" /> {t("preview-in-full-screen")}
+                  <FontAwesomeIcon icon={faExpand} className="me-3" />{" "}
+                  {t("preview-in-full-screen")}
                 </Button>
               </div>
               {previewOverlayVisible && (

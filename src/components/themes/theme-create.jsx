@@ -17,9 +17,7 @@ function ThemeCreate() {
     media: [],
   };
 
-  return (
-    <ThemeManager saveMethod="POST" initialState={data} />
-  );
+  return <ThemeManager saveMethod="POST" initialState={data} />;
 }
 
 export default ThemeCreate;

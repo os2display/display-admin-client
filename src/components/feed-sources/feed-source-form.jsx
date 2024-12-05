@@ -21,6 +21,7 @@ import StickyFooter from "../util/sticky-footer";
  * @param {object} props.feedSource The feed-source object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
+ * @param {Function} props.handleSaveNoClose Handles form submit with close.
  * @param {string} props.headerText Headline text.
  * @param {boolean} [props.isLoading] Indicator of whether the form is loading.
  *   Default is `false`
@@ -93,7 +94,8 @@ function FeedSourceForm({
                   feedSourceId={feedSource["@id"]}
                 />
               )}
-              {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" && (
+              {feedSource?.feedType ===
+                "App\\Feed\\EventDatabaseApiFeedType" && (
                 <EventDatabaseApiFeedType
                   handleInput={handleSecretInput}
                   formStateObject={feedSource.secrets}

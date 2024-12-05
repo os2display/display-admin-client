@@ -1,8 +1,8 @@
 import { React, JSX, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import LocalStorageKeys from "../util/local-storage-keys.jsx";
-import ConfigLoader from "../../config-loader.js";
+import LocalStorageKeys from "../util/local-storage-keys";
+import ConfigLoader from "../../config-loader";
 
 /**
  * The preview component.
@@ -25,7 +25,6 @@ function Preview({
   simulatedHeight = 1080,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "preview" });
-
   const [previewClientUrl, setPreviewClientUrl] = useState(null);
 
   useEffect(() => {
@@ -45,7 +44,7 @@ function Preview({
       urlSearchParams.set("preview-tenant", JSON.parse(tenantEntry).tenantKey);
 
       setPreviewClientUrl(`${base}?${urlSearchParams}`);
-    })
+    });
   }, []);
 
   const scale = width / simulatedWidth;

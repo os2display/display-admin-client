@@ -55,8 +55,10 @@ function ThemeManager({
     css: "",
   });
 
-  const [postV2Themes, { error: saveErrorPost, isSuccess: isSaveSuccessPost }] =
-    usePostV2ThemesMutation();
+  const [
+    postV2Themes,
+    { error: saveErrorPost, isSuccess: isSaveSuccessPost, data },
+  ] = usePostV2ThemesMutation();
 
   const [
     PutV2ThemesById,

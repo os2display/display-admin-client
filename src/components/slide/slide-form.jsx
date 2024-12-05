@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import ContentBody from "../util/content-body/content-body";
 import MultiSelectComponent from "../util/forms/multiselect-dropdown/multi-dropdown";
 import {
@@ -23,8 +25,6 @@ import userContext from "../../context/user-context";
 import "./slide-form.scss";
 import Preview from "../preview/preview";
 import StickyFooter from "../util/sticky-footer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExpand} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * The slide form component.
@@ -93,7 +93,8 @@ function SlideForm({
 
   /**
    * Check if template is set
-   * @param noRedirect
+   *
+   * @param {boolean | null} noRedirect Avoid close after save.
    */
   const checkInputsHandleSubmit = (noRedirect) => {
     setTemplateError(false);
@@ -361,7 +362,7 @@ function SlideForm({
           {displayPreview && (
             <Col
               className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top"
-              style={{top: "20px"}}
+              style={{ top: "20px" }}
             >
               <h2 className="h4">{t("slide-preview")}</h2>
 
@@ -387,7 +388,8 @@ function SlideForm({
                     }
                     className="me-3 mt-3 float-end"
                   >
-                    <FontAwesomeIcon icon={faExpand} className="me-3"/>{t("preview-in-full-screen")}
+                    <FontAwesomeIcon icon={faExpand} className="me-3" />
+                    {t("preview-in-full-screen")}
                   </Button>
                 </>
               )}
@@ -406,7 +408,7 @@ function SlideForm({
                   >
                     {t("slide-preview-about")}
                   </Alert>
-                  <Preview id={idFromUrl(slide["@id"])} mode="slide"/>
+                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
                 </div>
               )}
             </Col>
