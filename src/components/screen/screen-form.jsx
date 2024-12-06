@@ -21,6 +21,9 @@ import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
 import Preview from "../preview/preview";
 import StickyFooter from "../util/sticky-footer";
+import Select from "../util/forms/select.jsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExpand} from "@fortawesome/free-solid-svg-icons";
 
 /**
  * The screen form component.
@@ -62,6 +65,21 @@ function ScreenForm({
   });
   const [displayPreview, setDisplayPreview] = useState(null);
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
+  const previewOrientationOptions = [
+    {
+      value: "horizontal",
+      title: t("preview-orientation-landscape"),
+      key: "horizontal",
+    },
+    {
+      value: "vertical",
+      title: t("preview-orientation-portrait"),
+      key: "vertical",
+    },
+  ];
+  const [previewOrientation, setPreviewOrientation] = useState(
+    previewOrientationOptions[0].value
+  );
 
   /** Check if published is set */
   const checkInputsHandleSubmit = () => {
@@ -340,27 +358,55 @@ function ScreenForm({
           {displayPreview && (
             <Col
               className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top"
-              style={{ top: "20px" }}
+              style={{ top: "20px", maxWidth: "520px" }}
             >
+              <h2 className="h4">{t("preview")}</h2>
               <div>
+                <Alert
+                  key="screen-preview-about"
+                  variant="info"
+                  className="mt-3"
+                >
+                  {t("preview-small-about")}
+                </Alert>
+                <div className="preview-actions mb-3">
+                  <Select
+                    isRequired
+                    allowNull={false}
+                    onChange={({ target }) =>
+                      setPreviewOrientation(target.value)
+                    }
+                    required
+                    name="preview-orientation"
+                    options={previewOrientationOptions}
+                    className="m-0"
+                    value={previewOrientation}
+                  />
+
+                  <Button
+                    variant="outline-secondary"
+                    type="button"
+                    id="preview_slide"
+                    onClick={() =>
+                      setPreviewOverlayVisible(!previewOverlayVisible)
+                    }
+                  >
+                    <FontAwesomeIcon icon={faExpand} className="me-3"/>
+                    {t("preview-in-full-screen")}
+                  </Button>
+                </div>
                 <Preview
                   id={idFromUrl(screen["@id"])}
                   mode="screen"
-                  width={480}
-                  height={270}
-                />
-                <Button
-                  variant="secondary"
-                  type="button"
-                  id="preview_slide"
-                  onClick={() =>
-                    setPreviewOverlayVisible(!previewOverlayVisible)
+                  height={previewOrientation === "horizontal" ? 270 : 480}
+                  width={previewOrientation === "horizontal" ? 480 : 270}
+                  simulatedHeight={
+                    previewOrientation === "horizontal" ? 1080 : 1920
                   }
-                  size="lg"
-                  className="me-3 mt-3"
-                >
-                  {t("preview-in-full-screen")}
-                </Button>
+                  simulatedWidth={
+                    previewOrientation === "horizontal" ? 1920 : 1080
+                  }
+                />
               </div>
               {previewOverlayVisible && (
                 <div
@@ -370,13 +416,13 @@ function ScreenForm({
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
-                  <Preview id={idFromUrl(screen["@id"])} mode="screen" />
+                  <Preview id={idFromUrl(screen["@id"])} mode="screen"/>
                   <Alert
                     key="slide-preview-about"
                     variant="info"
                     className="mt-3"
                   >
-                    {t("slide-preview-about")}
+                    {t("screen-preview-about")}
                   </Alert>
                 </div>
               )}

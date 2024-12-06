@@ -368,6 +368,8 @@
     }
   },
   "slide-form": {
+    "preview-orientation-portrait": "Portræt (9:16)",
+    "preview-orientation-landscape": "Landskab (16:9)",
     "slide-template-selected": "Skabelon",
     "template-error": "Der skete en fejl da skabelonen skulle hentes:",
     "remember-template-error": "Husk at tilknytte en skabelon til dit slide",
@@ -548,6 +550,8 @@
     "playlist-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter spillelisten er gemt."
   },
   "playlist-campaign-form": {
+    "preview-orientation-portrait": "Portræt (9:16)",
+    "preview-orientation-landscape": "Landskab (16:9)",
     "title-about": "Om spillelisten",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
@@ -800,7 +804,12 @@
     "screen-preview-about": "Bemærk! Ændringer bliver først vist i forhåndsvisningen efter skærmen er gemt.",
     "save-button-and-close": "Gem og luk",
     "show-preview": "Åbn forhåndsvisning",
-    "hide-preview": "Luk forhåndsvisning"
+    "hide-preview": "Luk forhåndsvisning",
+    "preview-orientation-portrait": "Portræt (9:16)",
+    "preview-orientation-landscape": "Landskab (16:9)",
+    "preview-in-full-screen": "Fuld skærm",
+    "preview-small-about": "Gem for at opdatere indhold.",
+    "preview": "Forhåndsvisning"
   },
   "nav-items": {
     "shared-playlists": "Delte spillelister",

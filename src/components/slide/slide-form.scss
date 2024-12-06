@@ -16,6 +16,12 @@
   }
 }
 
+.preview-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .preview-button-container {
   display: none;
   position: fixed;

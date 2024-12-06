@@ -25,6 +25,7 @@ import userContext from "../../context/user-context";
 import "./slide-form.scss";
 import Preview from "../preview/preview";
 import StickyFooter from "../util/sticky-footer";
+import Select from "../util/forms/select";
 
 /**
  * The slide form component.
@@ -66,7 +67,22 @@ function SlideForm({
   const navigate = useNavigate();
   const { config } = useContext(userContext);
 
-  const [previewLayout, setPreviewLayout] = useState("horizontal");
+  const previewOrientationOptions = [
+    {
+      value: "horizontal",
+      title: t("preview-orientation-landscape"),
+      key: "horizontal",
+    },
+    {
+      value: "vertical",
+      title: t("preview-orientation-portrait"),
+      key: "vertical",
+    },
+  ];
+  const [previewOrientation, setPreviewOrientation] = useState(
+    previewOrientationOptions[0].value
+  );
+
   const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
   const [templateOptions, setTemplateOptions] = useState([]);
   const [contentFormElements, setContentFormElements] = useState([]);
@@ -176,12 +192,6 @@ function SlideForm({
   useEffect(() => {
     const localStorageShow = localStorage.getItem(localStorageKeys.PREVIEW);
     setDisplayPreview(localStorageShow === "true");
-    const localStorageLayout = localStorage.getItem(
-      localStorageKeys.PREVIEW_LAYOUT
-    );
-    if (localStorageLayout) {
-      setPreviewLayout(localStorageLayout);
-    }
   }, []);
 
   /** Toggle display preview. */
@@ -362,35 +372,67 @@ function SlideForm({
           {displayPreview && (
             <Col
               className="responsive-side shadow-sm p-3 mb-3 bg-body rounded me-3 sticky-top"
-              style={{ top: "20px" }}
+              style={{ top: "20px", maxWidth: "520px" }}
             >
               <h2 className="h4">{t("slide-preview")}</h2>
 
+              <div className="preview-actions mb-3">
+                <Select
+                  isRequired
+                  allowNull={false}
+                  onChange={({ target }) => setPreviewOrientation(target.value)}
+                  required
+                  name="preview-orientation"
+                  options={previewOrientationOptions}
+                  className="m-0"
+                  value={previewOrientation}
+                />
+
+                <Button
+                  variant="outline-secondary"
+                  type="button"
+                  id="preview_slide"
+                  onClick={() =>
+                    setPreviewOverlayVisible(!previewOverlayVisible)
+                  }
+                >
+                  <FontAwesomeIcon icon={faExpand} className="me-3" />
+                  {t("preview-in-full-screen")}
+                </Button>
+              </div>
+
               {selectedTemplate?.resources?.component && (
                 <>
-                  <RemoteComponentWrapper
-                    url={selectedTemplate?.resources?.component}
-                    slide={slide}
-                    mediaData={mediaData}
-                    showPreview={displayPreview}
-                    themeData={
-                      selectedTheme?.length > 0 ? selectedTheme[0] : {}
-                    }
-                    orientation={previewLayout}
-                  />
-
-                  <Button
-                    variant="secondary"
-                    type="button"
-                    id="preview_slide"
-                    onClick={() =>
-                      setPreviewOverlayVisible(!previewOverlayVisible)
-                    }
-                    className="me-3 mt-3 float-end"
-                  >
-                    <FontAwesomeIcon icon={faExpand} className="me-3" />
-                    {t("preview-in-full-screen")}
-                  </Button>
+                  {previewOrientation === "horizontal" && (
+                    <div style={{ width: "100%" }}>
+                      <RemoteComponentWrapper
+                        key="live-preview-horizontal"
+                        url={selectedTemplate?.resources?.component}
+                        slide={slide}
+                        mediaData={mediaData}
+                        showPreview={displayPreview}
+                        themeData={
+                          selectedTheme?.length > 0 ? selectedTheme[0] : {}
+                        }
+                        orientation={previewOrientation}
+                      />
+                    </div>
+                  )}
+                  {previewOrientation === "vertical" && (
+                    <div style={{ width: "56.25%" }}>
+                      <RemoteComponentWrapper
+                        key="live-preview-vertical"
+                        url={selectedTemplate?.resources?.component}
+                        slide={slide}
+                        mediaData={mediaData}
+                        showPreview={displayPreview}
+                        themeData={
+                          selectedTheme?.length > 0 ? selectedTheme[0] : {}
+                        }
+                        orientation={previewOrientation}
+                      />
+                    </div>
+                  )}
                 </>
               )}
               {previewOverlayVisible && (
@@ -408,7 +450,19 @@ function SlideForm({
                   >
                     {t("slide-preview-about")}
                   </Alert>
-                  <Preview id={idFromUrl(slide["@id"])} mode="slide" />
+
+                  <Preview
+                    id={idFromUrl(slide["@id"])}
+                    mode="slide"
+                    height={previewOrientation === "horizontal" ? 540 : 960}
+                    width={previewOrientation === "horizontal" ? 960 : 540}
+                    simulatedHeight={
+                      previewOrientation === "horizontal" ? 1080 : 1920
+                    }
+                    simulatedWidth={
+                      previewOrientation === "horizontal" ? 1920 : 1080
+                    }
+                  />
                 </div>
               )}
             </Col>
