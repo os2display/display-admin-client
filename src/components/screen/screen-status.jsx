@@ -115,7 +115,6 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
         <Button
           variant="outline-primary"
           type="button"
-          id="cancel_user"
           onClick={() => navigate(`/screen/edit/${idFromUrl(screen["@id"])}`)}
           className="margin-right-button"
           size="sm"
