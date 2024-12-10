@@ -18,7 +18,7 @@ function ListButton({
   redirectTo,
   displayData,
   modalTitle,
-  delayApiCall= 0,
+  delayApiCall = 0,
   apiCall = () => {},
   dataKey = "",
 }) {

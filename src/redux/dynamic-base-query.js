@@ -29,7 +29,9 @@ const extendedBaseQuery = async (args, api, extraOptions) => {
 
     if (newArgs.params["screenUser.latestRequest"]) {
       const key = Object.keys(newArgs.params["screenUser.latestRequest"])[0];
-      const value = Object.values(newArgs.params["screenUser.latestRequest"])[0];
+      const value = Object.values(
+        newArgs.params["screenUser.latestRequest"]
+      )[0];
       newArgs.params[`screenUser.latestRequest[${key}]`] = `${value}`;
     }
 

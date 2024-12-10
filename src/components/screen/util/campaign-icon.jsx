@@ -31,10 +31,8 @@ function CampaignIcon({ id, delay }) {
     { id },
     { skip: !getData }
   );
-  const { data: groups, isLoading: isLoadingScreenGroups } = useGetV2ScreensByIdScreenGroupsQuery(
-    { id },
-    { skip: !getData }
-  );
+  const { data: groups, isLoading: isLoadingScreenGroups } =
+    useGetV2ScreensByIdScreenGroupsQuery({ id }, { skip: !getData });
 
   useEffect(() => {
     if (campaigns) {

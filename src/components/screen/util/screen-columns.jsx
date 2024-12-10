@@ -15,7 +15,7 @@ import ScreenStatus from "../screen-status";
  * @param {string} props.infoModalRedirect - The url for redirecting in the info modal.
  * @param {string} props.infoModalTitle - The info modal title.
  * @param {string} props.dataKey The data key for mapping the data.
- * @param {bool} props.displayStatus Should status be displayed?
+ * @param {boolean} props.displayStatus Should status be displayed?
  * @returns {object} The columns for the screens lists.
  */
 function getScreenColumns({

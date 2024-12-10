@@ -26,7 +26,7 @@ import ConfigLoader from "../../config-loader";
  * @param {object} props The props.
  * @param {object} props.screen The screen.
  * @param {string | null} props.mode The display mode: 'default' or 'minimal'
- * @param {func} props.handleInput Handler for change in input.
+ * @param {Function} props.handleInput Handler for change in input.
  * @returns {JSX.Element} The status element.
  */
 function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
@@ -120,7 +120,7 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
           className="margin-right-button"
           size="sm"
         >
-          <FontAwesomeIcon icon={faPlus} /> {t('connect')}
+          <FontAwesomeIcon icon={faPlus} /> {t("connect")}
         </Button>
       );
     }
