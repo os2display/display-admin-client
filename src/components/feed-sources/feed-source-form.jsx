@@ -116,7 +116,7 @@ function FeedSourceForm({
           <Button
             variant="secondary"
             type="button"
-            id="cancel_feed-source"
+            id="cancel"
             onClick={() => navigate("/feed-sources/list")}
             className="margin-right-button"
           >
@@ -125,7 +125,7 @@ function FeedSourceForm({
           <Button
             variant="outline-primary"
             type="button"
-            id="cancel_feed-source"
+            id="save-without-close"
             onClick={handleSaveNoClose}
             className="margin-right-button"
           >
@@ -135,7 +135,7 @@ function FeedSourceForm({
             variant="primary"
             type="button"
             onClick={handleSubmit}
-            id="save_feed-source"
+            id="save"
           >
             {t("save-button")}
           </Button>

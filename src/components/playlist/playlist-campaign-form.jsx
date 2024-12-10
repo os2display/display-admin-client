@@ -283,7 +283,7 @@ function PlaylistCampaignForm({
             variant="primary"
             type="button"
             onClick={checkInputsHandleSubmit}
-            id="save_slide_an_close"
+            id="save_slide_and_close"
             className="margin-right-button"
           >
             {t("save-button-and-close")}
