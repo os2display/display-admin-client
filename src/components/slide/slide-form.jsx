@@ -436,34 +436,62 @@ function SlideForm({
                 </>
               )}
               {previewOverlayVisible && (
-                <div
-                  onClick={() =>
-                    setPreviewOverlayVisible(!previewOverlayVisible)
-                  }
-                  role="presentation"
-                  className="preview-overlay d-flex justify-content-center align-items-center flex-column"
-                >
-                  <Alert
-                    key="slide-preview-about"
-                    variant="info"
-                    className="mt-3"
-                  >
-                    {t("slide-preview-about")}
-                  </Alert>
+                <>
+                  {config?.previewClient && (
+                    <div
+                      onClick={() =>
+                        setPreviewOverlayVisible(!previewOverlayVisible)
+                      }
+                      role="presentation"
+                      className="preview-overlay d-flex justify-content-center align-items-center flex-column"
+                    >
+                      <Alert
+                        key="slide-preview-about"
+                        variant="info"
+                        className="mt-3"
+                      >
+                        {t("slide-preview-about")}
+                      </Alert>
 
-                  <Preview
-                    id={idFromUrl(slide["@id"])}
-                    mode="slide"
-                    height={previewOrientation === "horizontal" ? 540 : 960}
-                    width={previewOrientation === "horizontal" ? 960 : 540}
-                    simulatedHeight={
-                      previewOrientation === "horizontal" ? 1080 : 1920
-                    }
-                    simulatedWidth={
-                      previewOrientation === "horizontal" ? 1920 : 1080
-                    }
-                  />
-                </div>
+                      <Preview
+                        id={idFromUrl(slide["@id"])}
+                        mode="slide"
+                        height={previewOrientation === "horizontal" ? 540 : 960}
+                        width={previewOrientation === "horizontal" ? 960 : 540}
+                        simulatedHeight={
+                          previewOrientation === "horizontal" ? 1080 : 1920
+                        }
+                        simulatedWidth={
+                          previewOrientation === "horizontal" ? 1920 : 1080
+                        }
+                      />
+                    </div>
+                  )}
+                  {!config?.previewClient && (
+                    <div
+                      onClick={() =>
+                        setPreviewOverlayVisible(!previewOverlayVisible)
+                      }
+                      role="presentation"
+                      className="preview-overlay"
+                    >
+                      {selectedTemplate?.resources?.component && (
+                        <RemoteComponentWrapper
+                          url={selectedTemplate?.resources?.component}
+                          adjustFontSize={false}
+                          slide={slide}
+                          mediaData={mediaData}
+                          themeData={
+                            selectedTheme?.length > 0 ? selectedTheme[0] : 0
+                          }
+                          showPreview
+                          closeButton
+                          closeCallback={() => setPreviewOverlayVisible(false)}
+                        />
+                      )}
+                    </div>
+                  )}
+                </>
               )}
             </Col>
           )}

@@ -1,9 +1,11 @@
-import { React, useEffect, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import { Button, Form, Spinner, Alert, Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import ContentBody from "../util/content-body/content-body";
 import FormInput from "../util/forms/form-input";
 import FormInputArea from "../util/forms/form-input-area";
@@ -21,9 +23,8 @@ import FormCheckbox from "../util/forms/form-checkbox";
 import "./screen-form.scss";
 import Preview from "../preview/preview";
 import StickyFooter from "../util/sticky-footer";
-import Select from "../util/forms/select.jsx";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExpand} from "@fortawesome/free-solid-svg-icons";
+import Select from "../util/forms/select";
+import userContext from "../../context/user-context";
 
 /**
  * The screen form component.
@@ -52,6 +53,7 @@ function ScreenForm({
   screen = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-form" });
+  const { config } = useContext(userContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [layoutError, setLayoutError] = useState(false);
@@ -391,7 +393,7 @@ function ScreenForm({
                       setPreviewOverlayVisible(!previewOverlayVisible)
                     }
                   >
-                    <FontAwesomeIcon icon={faExpand} className="me-3"/>
+                    <FontAwesomeIcon icon={faExpand} className="me-3" />
                     {t("preview-in-full-screen")}
                   </Button>
                 </div>
@@ -416,7 +418,7 @@ function ScreenForm({
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
-                  <Preview id={idFromUrl(screen["@id"])} mode="screen"/>
+                  <Preview id={idFromUrl(screen["@id"])} mode="screen" />
                   <Alert
                     key="slide-preview-about"
                     variant="info"
@@ -458,15 +460,17 @@ function ScreenForm({
           >
             {t("save-button-and-close")}
           </Button>
-          <Button
-            variant="success"
-            type="button"
-            onClick={() => setDisplayPreview(!displayPreview)}
-            id="toggle_display_preview"
-            className="margin-right-button"
-          >
-            {displayPreview ? t("hide-preview") : t("show-preview")}
-          </Button>
+          {config?.previewClient && (
+            <Button
+              variant="success"
+              type="button"
+              onClick={() => setDisplayPreview(!displayPreview)}
+              id="toggle_display_preview"
+              className="margin-right-button"
+            >
+              {displayPreview ? t("hide-preview") : t("show-preview")}
+            </Button>
+          )}
         </StickyFooter>
       </Form>
     </div>

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useContext, useState } from "react";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,8 @@ import Preview from "../preview/preview";
 import idFromUrl from "../util/helpers/id-from-url";
 import StickyFooter from "../util/sticky-footer";
 import localStorageKeys from "../util/local-storage-keys";
-import Select from "../util/forms/select.jsx";
+import Select from "../util/forms/select";
+import userContext from "../../context/user-context";
 
 /**
  * The shared form component.
@@ -32,7 +33,7 @@ import Select from "../util/forms/select.jsx";
  * @param {Array} props.children The children being passed from parent
  * @param {Function} props.handleSaveNoClose Handles form submit with close.
  * @returns {object} The form shared by campaigns and playlists.
- */4
+ */
 function PlaylistCampaignForm({
   handleInput,
   handleSubmit,
@@ -49,6 +50,7 @@ function PlaylistCampaignForm({
   const { t } = useTranslation("common", {
     keyPrefix: "playlist-campaign-form",
   });
+  const { config } = useContext(userContext);
 
   const previewOrientationOptions = [
     {
@@ -286,15 +288,17 @@ function PlaylistCampaignForm({
           >
             {t("save-button-and-close")}
           </Button>
-          <Button
-            variant="success"
-            type="button"
-            onClick={toggleDisplayPreview}
-            id="toggle_display_preview"
-            className="margin-right-button"
-          >
-            {displayPreview ? t("hide-preview") : t("show-preview")}
-          </Button>
+          {config?.previewClient && (
+            <Button
+              variant="success"
+              type="button"
+              onClick={toggleDisplayPreview}
+              id="toggle_display_preview"
+              className="margin-right-button"
+            >
+              {displayPreview ? t("hide-preview") : t("show-preview")}
+            </Button>
+          )}
         </StickyFooter>
       </Form>
     </>
