@@ -49,7 +49,7 @@ function ActivationCodeForm({
       <LoadingComponent isLoading={isLoading} loadingMessage={loadingMessage} />
       <Form>
         <Row className="m-3">
-          <h1 id="h1UserDisplayName">{headerText}</h1>
+          <h1>{headerText}</h1>
           <Col>
             <ContentBody>
               <div className="mb-2">
