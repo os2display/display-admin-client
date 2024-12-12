@@ -110,7 +110,7 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
   }, []);
 
   if (mode === "minimal") {
-    if (!status || status?.clientMeta?.tokenExpired) {
+    if (!status) {
       return (
         <Button
           variant="outline-primary"
@@ -127,7 +127,7 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
     const latestRequest = dayjs(status.latestRequestDateTime);
     const inOneHour = dayjs().add(1, "hours");
 
-    if (latestRequest > inOneHour) {
+    if (status?.clientMeta?.tokenExpired || latestRequest > inOneHour) {
       return (
         <FontAwesomeIcon icon={faExclamationCircle} className="text-danger" />
       );
