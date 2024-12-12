@@ -73,7 +73,7 @@
     "not-bound": "Skærmen er ikke tilkoblet.",
     "already-bound": "Skærmen er tilkoblet",
     "token-expired": "Skærmens forbindelse er udløbet. Kobl på med en ny kode.",
-    "release-timestamp": "Udgivelsestidspunkt",
+    "release-timestamp": "Kodeudgivelsestidspunkt",
     "release-version": "Version",
     "latest-request": "Seneste kommunikation",
     "latest-release": "Seneste udgivelse",
