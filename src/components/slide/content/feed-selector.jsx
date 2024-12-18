@@ -123,7 +123,8 @@ function FeedSelector({
           value={getValueFromConfiguration(element.name)}
           label={element.label}
           optionsEndpoint={element.endpoint}
-          singleSelect={formElement.singleSelect ?? false}
+          disableSearch={element.disableSearch ?? false}
+          singleSelect={element.singleSelect ?? false}
         />
       );
     }

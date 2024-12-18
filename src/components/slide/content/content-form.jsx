@@ -72,7 +72,7 @@ function ContentForm({
         }
 
         returnElement = (
-          <div key={formData.key}>
+          <div key={formData.key} className={formData.formGroupClasses}>
             {formData?.label && (
               <label htmlFor={formData.name} className="form-label">
                 {formData.label}
