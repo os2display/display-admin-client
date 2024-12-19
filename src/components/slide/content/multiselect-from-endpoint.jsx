@@ -16,6 +16,7 @@ import { displayError } from "../../util/list/toast-component/display-toast";
  * @param {string} props.optionsEndpoint - Endpoint from which to fetch the options.
  * @param {boolean} props.singleSelect - Allow only to select one option.
  * @param {boolean} props.disableSearch - Disable search. Defaults to true.
+ * @param {string | null} props.helpText - Help text.
  * @returns {object} - The FeedSelector component.
  */
 function MultiselectFromEndpoint({

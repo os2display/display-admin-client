@@ -13,7 +13,7 @@ import FormInput from "../util/forms/form-input";
 import CalendarApiFeedType from "./templates/calendar-api-feed-type";
 import NotifiedFeedType from "./templates/notified-feed-type";
 import EventDatabaseApiFeedType from "./templates/event-database-feed-type";
-import ColiboFeedType from "./templates/colibo-feed-type.jsx";
+import ColiboFeedType from "./templates/colibo-feed-type";
 
 /**
  * The feed-source form component.
