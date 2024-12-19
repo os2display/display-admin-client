@@ -1086,8 +1086,8 @@
     "client-id": "Client ID",
     "client-secret": "Client Secret",
     "values-info": "Værdierne Client ID og Client Secret findes ved at oprette en API klient i \"Systemadministration\" -> \"API adgangshåndtering\" i Colibo intranet.",
-    "recipients": "Modtagergrupper",
+    "allowed-recipients": "Tilladte modtagergrupper",
     "redacted-value-input-placeholder": "Skjult værdi",
-    "save-before-recipients-can-be-set": "Bemærk! Datakilden skal gemmes før der kan tilkobles modtagergrupper. Gem og åbn datakilden igen."
+    "save-before-recipients-can-be-set": "Bemærk! Datakilden skal gemmes før der kan tilkobles tilladte modtagergrupper. Gem og åbn datakilden igen."
   }
 }

@@ -123,7 +123,7 @@ function ContentForm({
             errors={formData.required ? errors : null}
             label={formData.label}
             helpText={formData.helpText}
-            value={formStateObject[formData.name]}
+            value={formStateObject[formData.name] ?? formData?.defaultValue}
             onChange={onChange}
             formGroupClasses={formData.formGroupClasses}
           />

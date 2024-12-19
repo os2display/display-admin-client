@@ -125,6 +125,7 @@ function FeedSelector({
           optionsEndpoint={element.endpoint}
           disableSearch={element.disableSearch ?? false}
           singleSelect={element.singleSelect ?? false}
+          helpText={element.helpText ?? null}
         />
       );
     }

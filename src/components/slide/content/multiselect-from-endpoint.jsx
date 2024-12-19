@@ -26,6 +26,7 @@ function MultiselectFromEndpoint({
   value = [],
   disableSearch = true,
   singleSelect = false,
+  helpText = null,
 }) {
   const { t } = useTranslation("common");
   const [options, setOptions] = useState(null);
@@ -98,6 +99,7 @@ function MultiselectFromEndpoint({
           }}
           filterCallback={() => {}}
           label={label ?? t("multiselect.select")}
+          helpText={helpText}
         />
       )}
     </>
@@ -112,6 +114,7 @@ MultiselectFromEndpoint.propTypes = {
   optionsEndpoint: PropTypes.string.isRequired,
   singleSelect: PropTypes.bool,
   disableSearch: PropTypes.bool,
+  helpText: PropTypes.string,
 };
 
 export default MultiselectFromEndpoint;

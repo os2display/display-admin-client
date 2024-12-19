@@ -24,7 +24,7 @@ const ColiboFeedType = ({
         let endpoint = config.api;
         endpoint = endpoint.replace(/\/$/, "");
         endpoint += feedSourceId;
-        endpoint += "/config/FeedEntryRecipients";
+        endpoint += "/config/recipients";
 
         setOptionsEndpoint(endpoint);
       });
@@ -81,10 +81,10 @@ const ColiboFeedType = ({
       {optionsEndpoint && (
         <MultiselectFromEndpoint
           onChange={handleInput}
-          name="recipients"
+          name="allowed_recipients"
           disableSearch={false}
-          label={t("recipients")}
-          value={formStateObject.recipients ?? []}
+          label={t("allowed-recipients")}
+          value={formStateObject.allowed_recipients ?? []}
           optionsEndpoint={optionsEndpoint}
         />
       )}
@@ -98,7 +98,7 @@ ColiboFeedType.propTypes = {
     api_base_uri: PropTypes.string,
     client_id: PropTypes.string,
     client_secret: PropTypes.string,
-    recipients: PropTypes.arrayOf(PropTypes.string),
+    allowed_recipients: PropTypes.arrayOf(PropTypes.string),
   }),
   feedSourceId: PropTypes.string,
   mode: PropTypes.string,
