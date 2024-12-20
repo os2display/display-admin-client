@@ -60,7 +60,7 @@ function FeedSourceManager({
 
   const feedSourceTypeOptions = [
     {
-      value: "App\\Feed\\SourceType\\Calendar\\CalendarApiFeedType",
+      value: "App\\Feed\\CalendarApiFeedType",
       title: t("dynamic-fields.calendar-api-feed-type.title"),
       key: "0",
       secretsDefault: {
@@ -68,9 +68,9 @@ function FeedSourceManager({
       },
     },
     {
-      value: "App\\Feed\\SourceType\\Colibo\\ColiboFeedType",
+      value: "App\\Feed\\ColiboFeedType",
       title: t("colibo-feed-type.title"),
-      key: "5",
+      key: "1",
       secretsDefault: {
         api_base_uri: "",
         client_id: "",
@@ -79,23 +79,23 @@ function FeedSourceManager({
       },
     },
     {
-      value: "App\\Feed\\SourceType\\EventDatabase\\EventDatabaseApiFeedType",
+      value: "App\\Feed\\EventDatabaseApiFeedType",
       title: t("dynamic-fields.event-database-api-feed-type.title"),
-      key: "1",
+      key: "2",
       secretsDefault: {
         host: "",
       },
     },
     {
-      value: "App\\Feed\\SourceType\\Notified\\NotifiedFeedType",
+      value: "App\\Feed\\NotifiedFeedType",
       title: t("dynamic-fields.notified-feed-type.title"),
-      key: "2",
+      key: "3",
       secretsDefault: {
         token: "",
       },
     },
     {
-      value: "App\\Feed\\SourceType\\Rss\\RssFeedType",
+      value: "App\\Feed\\RssFeedType",
       title: t("dynamic-fields.rss-feed-type.title"),
       key: "4",
       secretsDefault: {},

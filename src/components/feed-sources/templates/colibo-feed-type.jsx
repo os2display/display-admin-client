@@ -86,6 +86,7 @@ const ColiboFeedType = ({
           label={t("allowed-recipients")}
           value={formStateObject.allowed_recipients ?? []}
           optionsEndpoint={optionsEndpoint}
+          helpText={t("allowed-recipients-help")}
         />
       )}
     </>

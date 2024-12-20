@@ -105,8 +105,7 @@ function FeedSourceForm({
             </>
           )}
 
-          {feedSource?.feedType ===
-            "App\\Feed\\SourceType\\Calendar\\CalendarApiFeedType" && (
+          {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" && (
             <CalendarApiFeedType
               handleInput={handleSecretInput}
               formStateObject={feedSource.secrets}
@@ -114,8 +113,7 @@ function FeedSourceForm({
               feedSourceId={feedSource["@id"]}
             />
           )}
-          {feedSource?.feedType ===
-            "App\\Feed\\SourceType\\Colibo\\ColiboFeedType" && (
+          {feedSource?.feedType === "App\\Feed\\ColiboFeedType" && (
             <ColiboFeedType
               handleInput={handleSecretInput}
               formStateObject={feedSource.secrets}
@@ -123,16 +121,14 @@ function FeedSourceForm({
               feedSourceId={feedSource["@id"]}
             />
           )}
-          {feedSource?.feedType ===
-            "App\\Feed\\SourceType\\EventDatabase\\EventDatabaseApiFeedType" && (
+          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" && (
             <EventDatabaseApiFeedType
               handleInput={handleSecretInput}
               formStateObject={feedSource.secrets}
               mode={mode}
             />
           )}
-          {feedSource?.feedType ===
-            "App\\Feed\\SourceType\\Notified\\NotifiedFeedType" && (
+          {feedSource?.feedType === "App\\Feed\\NotifiedFeedType" && (
             <NotifiedFeedType
               handleInput={handleSecretInput}
               formStateObject={feedSource.secrets}
