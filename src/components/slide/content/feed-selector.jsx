@@ -35,8 +35,6 @@ function FeedSelector({
   const [feedSourceOptions, setFeedSourceOptions] = useState([]);
   const [feedSourceData, setFeedSourceData] = useState();
 
-  // @TODO: Filter by dataType
-
   const {
     data: feedSourcesData,
     error: feedSourcesLoadingError,
@@ -47,20 +45,24 @@ function FeedSelector({
   });
 
   useEffect(() => {
+    if (!value.feedSource && feedSourceOptions?.length === 1) {
+      // If there's only one feed source option select it.
+      const feedSource = feedSourceOptions[0]["@id"];
+      const configuration = value?.configuration ?? {};
+      const newValue = { ...value, feedSource, configuration };
+      onChange(newValue);
+    }
+  }, [feedSourceOptions]);
+
+  useEffect(() => {
     if (feedSourcesData) {
-      if (feedSourcesData["hydra:member"].length === 1) {
-        // If there's only one feed source option select it.
-        const feedSource = feedSourcesData["hydra:member"][0]["@id"];
-        const configuration = value?.configuration ?? {};
-        const newValue = { ...value, feedSource, configuration };
-        onChange(newValue);
-      }
       setFeedSourceOptions(
         feedSourcesData["hydra:member"].map((source) => {
           return {
             title: source.title,
             value: source["@id"],
             key: source["@id"],
+            id: source["@id"],
           };
         })
       );
@@ -153,13 +155,13 @@ function FeedSelector({
       {feedSourcesLoadingError && <div>Error</div>}
       {feedSourcesLoading && <Spinner animation="border" />}
 
-      {feedSourcesData && feedSourceOptions && (
+      {feedSourcesData && feedSourceOptions?.length > 0 && (
         <MultiSelectComponent
           options={feedSourceOptions}
           selected={getSelected(value?.feedSource)}
           name="feedSource"
           labelledBy="Select"
-          singleSelect={formElement.singleSelect ?? false}
+          singleSelect
           overrideStrings={{
             allItemsAreSelected: t("feed-selector.all-selected"),
             clearSelected: t("feed-selector.clear-selection"),

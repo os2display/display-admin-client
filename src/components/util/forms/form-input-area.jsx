@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { FormLabel } from "react-bootstrap";
 
 /**
  * A text area for forms.
@@ -17,11 +18,16 @@ function FormInputArea({
   label,
   onChange,
   value = "",
+  formGroupClasses = "",
   placeholder = "",
+  required = false,
 }) {
   return (
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
+    <div className={`form-group ${formGroupClasses}`}>
+      <FormLabel htmlFor={name}>
+        {label}
+        {required && " *"}
+      </FormLabel>
       <textarea
         name={name}
         id={name}
@@ -37,9 +43,11 @@ function FormInputArea({
 
 FormInputArea.propTypes = {
   name: PropTypes.string.isRequired,
+  formGroupClasses: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,
+  required: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };
 

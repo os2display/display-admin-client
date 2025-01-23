@@ -15,6 +15,7 @@ import { displayError } from "../../util/list/toast-component/display-toast";
  * @param {Function} props.onChange - On change callback.
  * @param {string} props.optionsEndpoint - Endpoint from which to fetch the options.
  * @param {boolean} props.singleSelect - Allow only to select one option.
+ * @param {boolean} props.disableSearch - Disable search. Defaults to true.
  * @returns {object} - The FeedSelector component.
  */
 function MultiselectFromEndpoint({
@@ -23,6 +24,7 @@ function MultiselectFromEndpoint({
   optionsEndpoint,
   label = null,
   value = [],
+  disableSearch = true,
   singleSelect = false,
 }) {
   const { t } = useTranslation("common");
@@ -81,7 +83,7 @@ function MultiselectFromEndpoint({
           options={options}
           selected={getSelected(value)}
           name={name}
-          disableSearch
+          disableSearch={disableSearch}
           singleSelect={singleSelect}
           labelledBy="Select"
           overrideStrings={{
@@ -109,6 +111,7 @@ MultiselectFromEndpoint.propTypes = {
   onChange: PropTypes.func.isRequired,
   optionsEndpoint: PropTypes.string.isRequired,
   singleSelect: PropTypes.bool,
+  disableSearch: PropTypes.bool,
 };
 
 export default MultiselectFromEndpoint;
