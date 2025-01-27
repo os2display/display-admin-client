@@ -5,7 +5,7 @@ import { Row, Spinner } from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import localStorageKeys from "../../../util/local-storage-keys";
-import { formatDate } from "./poster-helper";
+import { formatDate, loadDropdownOptions } from "./poster-helper";
 
 /**
  * @param {object} props Props.
@@ -51,7 +51,6 @@ function PosterSubscription({
   const [subscriptionEvents, setSubscriptionEvents] = useState(null);
 
   const [loadingResults, setLoadingResults] = useState(false);
-  const posterType = getValueFromConfiguration("posterType");
 
   useEffect(() => {
     if (subscriptionPlaceValue) {
@@ -134,9 +133,7 @@ function PosterSubscription({
 
   // Fetch results.
   useEffect(() => {
-    if (posterType === "subscription") {
-      subscriptionFetch();
-    }
+    subscriptionFetch();
   }, [
     subscriptionPlaceValue,
     subscriptionOrganizerValue,
@@ -144,29 +141,7 @@ function PosterSubscription({
     subscriptionNumberValue,
   ]);
 
-  const loadDropdownOptions = (inputValue, callback, type) => {
-    const url = feedSource.admin[0].endpointSearch;
-
-    let query = `?type=${type}&display=options`;
-
-    if (inputValue) {
-      query = `${query}&title=${inputValue}`;
-    }
-
-    // TODO: Get this endpoint in a different way.
-    fetch(`${url}${query}`, {
-      headers,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        callback(data);
-      })
-      .catch(() => {
-        callback([]);
-        // TODO: Display error.
-      });
-  };
-
+  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
 
   const numberOptions = Array.from(Array(10).keys());
 
@@ -175,9 +150,7 @@ function PosterSubscription({
       <Row>
         <Col>
           <h5>{t("selected-type-subscription")}</h5>
-          <small className="form-text">
-            {t("subscription-helptext")}
-          </small>
+          <small className="form-text">{t("subscription-helptext")}</small>
 
           <Row>
             <Col md="3" className="bg-light">
@@ -194,7 +167,13 @@ function PosterSubscription({
                     defaultOptions
                     isMulti
                     loadOptions={(inputValue, callback) =>
-                      loadDropdownOptions(inputValue, callback, "places")
+                      loadDropdownOptions(
+                        searchEndpoint,
+                        headers,
+                        inputValue,
+                        callback,
+                        "places"
+                      )
                     }
                     value={subscriptionPlaceValue}
                     onChange={(newValue) => {
@@ -219,7 +198,13 @@ function PosterSubscription({
                     defaultOptions
                     isMulti
                     loadOptions={(inputValue, callback) =>
-                      loadDropdownOptions(inputValue, callback, "organizers")
+                      loadDropdownOptions(
+                        searchEndpoint,
+                        headers,
+                        inputValue,
+                        callback,
+                        "organizers"
+                      )
                     }
                     value={subscriptionOrganizerValue}
                     onChange={(newValue) => {
@@ -244,7 +229,13 @@ function PosterSubscription({
                     defaultOptions
                     isMulti
                     loadOptions={(inputValue, callback) =>
-                      loadDropdownOptions(inputValue, callback, "tags")
+                      loadDropdownOptions(
+                        searchEndpoint,
+                        headers,
+                        inputValue,
+                        callback,
+                        "tags"
+                      )
                     }
                     value={subscriptionTagValue}
                     onChange={(newValue) => {
@@ -283,9 +274,7 @@ function PosterSubscription({
             </Col>
             <div className="col-md-9">
               <div>
-                <h5 className="mt-3">
-                  {t("preview-of-events")}
-                </h5>
+                <h5 className="mt-3">{t("preview-of-events")}</h5>
                 <table className="table table-hover text-left">
                   <thead>
                     <tr>

@@ -14,4 +14,27 @@ const formatDate = (date, format) => {
   );
 };
 
-export { formatDate, capitalize };
+const loadDropdownOptions = (url, headers, inputValue, callback, type) => {
+  const query = new URLSearchParams({
+    type,
+    display: "options",
+  });
+
+  if (inputValue) {
+    query.set("title", inputValue);
+  }
+
+  fetch(`${url}${query}`, {
+    headers,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      callback(data);
+    })
+    .catch(() => {
+      callback([]);
+      // TODO: Display error.
+    });
+};
+
+export { formatDate, capitalize, loadDropdownOptions };

@@ -10,7 +10,7 @@ import Select from "../../../util/forms/select.jsx";
 import FormInput from "../../../util/forms/form-input.jsx";
 import FormCheckbox from "../../../util/forms/form-checkbox.jsx";
 import localStorageKeys from "../../../util/local-storage-keys.jsx";
-import {formatDate} from "./poster-helper.js";
+import {formatDate, loadDropdownOptions} from "./poster-helper.js";
 
 /**
  * @param {object} props Props.
@@ -193,30 +193,8 @@ function PosterSingle({
     }
   }, []);
 
-  const loadDropdownOptions = (inputValue, callback, type) => {
-    const url = feedSource.admin[0].endpointSearch;
+  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
 
-    let query = `?type=${type}&display=options`;
-
-    if (inputValue) {
-      query = `${query}&title=${inputValue}`;
-    }
-
-    // TODO: Get this endpoint in a different way.
-    fetch(`${url}${query}`, {
-      headers,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        callback(data);
-      })
-      .catch(() => {
-        callback([]);
-        // TODO: Display error.
-      });
-  };
-
-  /* eslint-disable jsx-a11y/control-has-associated-label */
   return (
     <>
       <h5>{t("selected-type-single")}</h5>
@@ -356,7 +334,13 @@ function PosterSingle({
                   isSearchable
                   defaultOptions
                   loadOptions={(inputValue, callback) =>
-                    loadDropdownOptions(inputValue, callback, singleSearchType)
+                    loadDropdownOptions(
+                      searchEndpoint,
+                      headers,
+                      inputValue,
+                      callback,
+                      singleSearchType
+                    )
                   }
                   defaultInputValue={singleSearchTypeValue}
                   onChange={(newValue) => {
@@ -440,9 +424,7 @@ function PosterSingle({
                       <thead>
                         <tr>
                           <th scope="col">{t("table-date")}</th>
-                          <th scope="col">
-                            {t("table-price")}
-                          </th>
+                          <th scope="col">{t("table-price")}</th>
                           <th scope="col"> </th>
                         </tr>
                       </thead>
@@ -473,7 +455,6 @@ function PosterSingle({
       )}
     </>
   );
-  /* eslint-enable jsx-a11y/control-has-associated-label */
 }
 
 PosterSingle.propTypes = {
