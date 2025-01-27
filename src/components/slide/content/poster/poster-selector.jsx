@@ -6,10 +6,10 @@ import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import dayjs from "dayjs";
 import localeDa from "dayjs/locale/da";
-import Select from "../../util/forms/select";
-import FormInput from "../../util/forms/form-input";
-import FormCheckbox from "../../util/forms/form-checkbox";
-import localStorageKeys from "../../util/local-storage-keys";
+import Select from "../../../util/forms/select.jsx";
+import FormInput from "../../../util/forms/form-input.jsx";
+import FormCheckbox from "../../../util/forms/form-checkbox.jsx";
+import localStorageKeys from "../../../util/local-storage-keys.jsx";
 
 /**
  * @param {object} props Props.
@@ -77,8 +77,6 @@ function PosterSelector({
         "singleSelectedOccurrence"
       );
 
-      console.log(occurrenceId, "occurrenceId");
-
       if (eventId !== null) {
         fetch(`${url}?path=${eventId}`, {
           headers,
@@ -93,12 +91,12 @@ function PosterSelector({
       }
 
       if (occurrenceId !== null) {
-        fetch(`${url}?path=/occurrences/${occurrenceId}`, {
+        fetch(`${url}?path=${occurrenceId}`, {
           headers,
         })
           .then((response) => response.json())
           .then((data) => {
-            setSingleSelectedOccurrence(data["hydra:member"][0]);
+            setSingleSelectedOccurrence(data);
           })
           .catch(() => {
             // TODO: Display error.
@@ -121,7 +119,7 @@ function PosterSelector({
       target: {
         id: "singleSelectedOccurrence",
         value: singleSelectedOccurrence
-          ? singleSelectedOccurrence.entityId
+          ? singleSelectedOccurrence["@id"]
           : null,
       },
     });
@@ -235,7 +233,7 @@ function PosterSelector({
 
     switch (singleSearchType) {
       case "title":
-        query = `${query}&title=${singleSearch}`;
+        query = `${query}&name=${singleSearch}`;
         break;
       case "url":
         query = `${query}&url=${singleSearch}`;
@@ -303,7 +301,7 @@ function PosterSelector({
     let query = `?type=${type}&display=options`;
 
     if (inputValue) {
-      query = `${query}&title=${inputValue}`;
+      query = `${query}&name=${inputValue}`;
     }
 
     // TODO: Get this endpoint in a different way.
@@ -392,7 +390,7 @@ function PosterSelector({
                           {singleSelectedEvent && (
                             <div>
                               <strong>Valgt begivenhed:</strong>{" "}
-                              {singleSelectedEvent.title} (
+                              {singleSelectedEvent.name} (
                               {singleSelectedEvent?.organizer?.name})
                             </div>
                           )}
@@ -401,7 +399,7 @@ function PosterSelector({
                               <strong>
                                 {t("poster-selector.chosen-occurrence")}:
                               </strong>{" "}
-                              {formatDate(singleSelectedOccurrence.start)} -
+                              {formatDate(singleSelectedOccurrence.startDate)} -
                               {singleSelectedOccurrence.ticketPriceRange}
                             </div>
                           )}
@@ -597,23 +595,23 @@ function PosterSelector({
                                   onClick={() => handleSelectEvent(searchEvent)}
                                 >
                                   <td>
-                                    {searchEvent?.imageUrls?.small && (
+                                    {searchEvent?.images?.small && (
                                       <img
-                                        src={searchEvent?.imageUrls?.small}
-                                        alt={searchEvent?.title}
+                                        src={searchEvent?.images?.small}
+                                        alt={searchEvent?.name}
                                         style={{ maxWidth: "80px" }}
                                       />
                                     )}
                                   </td>
                                   <td>
-                                    <strong>{searchEvent.title}</strong>
+                                    <strong>{searchEvent.name}</strong>
                                     <br />
                                     {searchEvent.organizer.name}
                                   </td>
                                   <td>
                                     {searchEvent?.occurrences?.length > 0 &&
                                       formatDate(
-                                        searchEvent?.occurrences[0]?.start
+                                        searchEvent?.occurrences[0]?.startDate
                                       )}
                                     {searchEvent?.occurrences?.length > 1 && (
                                       <span>, ...</span>
@@ -652,14 +650,14 @@ function PosterSelector({
                                     <th scope="col">
                                       {t("poster-selector.table-price")}
                                     </th>
-                                    <th scope="col"> </th>
+                                    <th scope="col" />
                                   </tr>
                                 </thead>
                                 <tbody>
                                   {singleSelectedEvent?.occurrences?.map(
                                     (occurrence) => (
                                       <tr>
-                                        <td>{occurrence.start}</td>
+                                        <td>{occurrence.startDate}</td>
                                         <td>{occurrence.ticketPriceRange}</td>
                                         <td>
                                           <Button
@@ -845,7 +843,7 @@ function PosterSelector({
                                   <tr>
                                     <td>
                                       <img
-                                        src={event?.imageUrls?.small}
+                                        src={event?.images?.small}
                                         alt={event.name}
                                         style={{ maxWidth: "80px" }}
                                       />
@@ -863,10 +861,10 @@ function PosterSelector({
                                       {firstOccurrence && (
                                         <>
                                           {`${formatDate(
-                                            firstOccurrence.start,
+                                            firstOccurrence.startDate,
                                             "L"
                                           )} - ${formatDate(
-                                            firstOccurrence.end,
+                                            firstOccurrence.endDate,
                                             "L"
                                           )}`}
                                         </>

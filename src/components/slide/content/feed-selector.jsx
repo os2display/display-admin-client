@@ -12,7 +12,8 @@ import MultiSelectComponent from "../../util/forms/multiselect-dropdown/multi-dr
 import idFromUrl from "../../util/helpers/id-from-url";
 import ContentForm from "./content-form";
 import MultiselectFromEndpoint from "./multiselect-from-endpoint";
-import PosterSelector from "./poster-selector";
+import PosterSelector from "./poster/poster-selector";
+import PosterSelectorV2 from "./poster/poster-selector-v2";
 
 /**
  * Feed selector.
@@ -130,6 +131,16 @@ function FeedSelector({
     if (element?.input === "poster-selector") {
       return (
         <PosterSelector
+          key={element.key}
+          feedSource={feedSourceData}
+          configurationChange={configurationChange}
+          getValueFromConfiguration={getValueFromConfiguration}
+        />
+      );
+    }
+    if (element?.input === "poster-selector-v2") {
+      return (
+        <PosterSelectorV2
           key={element.key}
           feedSource={feedSourceData}
           configurationChange={configurationChange}
