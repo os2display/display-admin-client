@@ -38,6 +38,10 @@ function PosterSubscription({
 
   const [loadingResults, setLoadingResults] = useState(false);
 
+  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
+
+  const numberOptions = Array.from(Array(10).keys());
+
   useEffect(() => {
     if (subscriptionPlaceValue) {
       configurationChange({
@@ -81,19 +85,19 @@ function PosterSubscription({
 
     const query = new URLSearchParams({
       type: "events",
-      items_per_page: subscriptionNumberValue,
+      itemsPerPage: subscriptionNumberValue,
     });
 
     const places = subscriptionPlaceValue.map((option) => option.value);
 
     places.forEach((place) => {
-      query.append("place", place);
+      query.append("location", place);
     });
 
     const organizers = subscriptionOrganizerValue.map((option) => option.value);
 
     organizers.forEach((organizer) => {
-      query.append("organizer", organizer);
+      query.append("organization", organizer);
     });
 
     const tags = subscriptionTagValue.map((option) => option.value);
@@ -104,7 +108,7 @@ function PosterSubscription({
 
     setLoadingResults(true);
 
-    fetch(`${url}${query}`, {
+    fetch(`${url}?${query}`, {
       headers: getHeaders(),
     })
       .then((response) => response.json())
@@ -129,10 +133,6 @@ function PosterSubscription({
     subscriptionNumberValue,
   ]);
 
-  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
-
-  const numberOptions = Array.from(Array(10).keys());
-
   return (
     <>
       <Row>
@@ -141,147 +141,140 @@ function PosterSubscription({
           <small className="form-text">{t("subscription-helptext")}</small>
 
           <Row>
-            <Col md="3" className="bg-light">
-              <h5 className="mt-3">{t("filters")}</h5>
-              <div className="mb-2">
-                <div className="form-group">
-                  <label htmlFor="os2display-poster--select-subscription-places">
-                    {t("filters-place")}
-                  </label>
-                  <AsyncSelect
-                    id="subscription-search-place"
-                    isClearable
-                    isSearchable
-                    defaultOptions
-                    isMulti
-                    loadOptions={(inputValue, callback) =>
-                      loadDropdownOptions(
-                        searchEndpoint,
-                        headers,
-                        inputValue,
-                        callback,
-                        "places"
-                      )
-                    }
-                    value={subscriptionPlaceValue}
-                    onChange={(newValue) => {
-                      setSubscriptionPlaceValue(newValue);
-                    }}
-                  />
-                  <small className="form-text">
-                    {t("filter-place-helptext")}
-                  </small>
-                </div>
+            <h5 className="mt-3">{t("filters")}</h5>
+            <div className="mb-2">
+              <div className="form-group">
+                <label htmlFor="os2display-poster--select-subscription-places">
+                  {t("filters-place")}
+                </label>
+                <AsyncSelect
+                  id="subscription-search-place"
+                  isClearable
+                  isSearchable
+                  defaultOptions
+                  isMulti
+                  loadOptions={(inputValue, callback) =>
+                    loadDropdownOptions(
+                      searchEndpoint,
+                      getHeaders(),
+                      inputValue,
+                      callback,
+                      "locations"
+                    )
+                  }
+                  value={subscriptionPlaceValue}
+                  onChange={(newValue) => {
+                    setSubscriptionPlaceValue(newValue);
+                  }}
+                />
               </div>
+            </div>
 
-              <div className="mb-2">
-                <div className="form-group">
-                  <label htmlFor="os2display-poster--select-subscription-organizers">
-                    {t("filters-organizer")}
-                  </label>
-                  <AsyncSelect
-                    id="subscription-search-place"
-                    isClearable
-                    isSearchable
-                    defaultOptions
-                    isMulti
-                    loadOptions={(inputValue, callback) =>
-                      loadDropdownOptions(
-                        searchEndpoint,
-                        headers,
-                        inputValue,
-                        callback,
-                        "organizers"
-                      )
-                    }
-                    value={subscriptionOrganizerValue}
-                    onChange={(newValue) => {
-                      setSubscriptionOrganizerValue(newValue);
-                    }}
-                  />
-                  <small className="form-text">
-                    {t("filter-organizer-helptext")}
-                  </small>
-                </div>
+            <div className="mb-2">
+              <div className="form-group">
+                <label htmlFor="os2display-poster--select-subscription-organizers">
+                  {t("filters-organizer")}
+                </label>
+                <AsyncSelect
+                  id="subscription-search-place"
+                  isClearable
+                  isSearchable
+                  defaultOptions
+                  isMulti
+                  loadOptions={(inputValue, callback) =>
+                    loadDropdownOptions(
+                      searchEndpoint,
+                      getHeaders(),
+                      inputValue,
+                      callback,
+                      "organizations"
+                    )
+                  }
+                  value={subscriptionOrganizerValue}
+                  onChange={(newValue) => {
+                    setSubscriptionOrganizerValue(newValue);
+                  }}
+                />
               </div>
+            </div>
 
-              <div className="mb-2">
-                <div className="form-group">
-                  <label htmlFor="os2display-poster--select-subscription-tags">
-                    {t("filters-tag")}
-                  </label>
-                  <AsyncSelect
-                    id="subscription-search-place"
-                    isClearable
-                    isSearchable
-                    defaultOptions
-                    isMulti
-                    loadOptions={(inputValue, callback) =>
-                      loadDropdownOptions(
-                        searchEndpoint,
-                        headers,
-                        inputValue,
-                        callback,
-                        "tags"
-                      )
-                    }
-                    value={subscriptionTagValue}
-                    onChange={(newValue) => {
-                      setSubscriptionTagValue(newValue);
-                    }}
-                  />
-                  <small className="form-text">
-                    {t("filter-tag-helptext")}
-                  </small>
-                </div>
+            <div className="mb-2">
+              <div className="form-group">
+                <label htmlFor="os2display-poster--select-subscription-tags">
+                  {t("filters-tag")}
+                </label>
+                <AsyncSelect
+                  id="subscription-search-place"
+                  isClearable
+                  isSearchable
+                  defaultOptions
+                  isMulti
+                  loadOptions={(inputValue, callback) =>
+                    loadDropdownOptions(
+                      searchEndpoint,
+                      getHeaders(),
+                      inputValue,
+                      callback,
+                      "tags"
+                    )
+                  }
+                  value={subscriptionTagValue}
+                  onChange={(newValue) => {
+                    setSubscriptionTagValue(newValue);
+                  }}
+                />
               </div>
+            </div>
 
-              <div>
-                <div className="form-group">
-                  <div>
-                    <label htmlFor="os2display-poster--select-number">
-                      {t("number-of-slides")}
-                      <select
-                        id="os2display-poster--select-number"
-                        value={subscriptionNumberValue}
-                        onChange={({ target }) =>
-                          setSubscriptionNumberValue(target.value)
-                        }
-                      >
-                        {numberOptions?.map((i) => (
-                          <option value={i + 1}>{i + 1}</option>
-                        ))}
-                      </select>
-                    </label>
-                  </div>
-                  <span className="small text-muted">
-                    {t("number-of-slides-helptext")}
-                  </span>
+            <div>
+              <div className="form-group">
+                <div>
+                  <label htmlFor="os2display-poster--select-number">
+                    {t("number-of-slides")}
+                    <select
+                      id="os2display-poster--select-number"
+                      value={subscriptionNumberValue}
+                      onChange={({ target }) =>
+                        setSubscriptionNumberValue(target.value)
+                      }
+                    >
+                      {numberOptions?.map((i) => (
+                        <option
+                          value={i + 1}
+                          key={`number-of-slides-option-${i}`}
+                        >
+                          {i + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
                 </div>
               </div>
-            </Col>
-            <div className="col-md-9">
-              <div>
-                <h5 className="mt-3">{t("preview-of-events")}</h5>
-                <table className="table table-hover text-left">
-                  <thead>
-                    <tr>
-                      <th scope="col">{t("table-image")}</th>
-                      <th scope="col">{t("table-event")}</th>
-                      <th scope="col">{t("table-place")}</th>
-                      <th scope="col">{t("table-date")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {loadingResults && <Spinner animation="border" />}
-                    {subscriptionEvents?.map((event) => {
+            </div>
+          </Row>
+          <Row>
+            <div>
+              <h5 className="mt-3">{t("preview-of-events")}</h5>
+              {loadingResults && <Spinner animation="border" />}
+              <table className="table table-hover text-left">
+                <thead>
+                  <tr>
+                    <th scope="col">{t("table-image")}</th>
+                    <th scope="col">{t("table-event")}</th>
+                    <th scope="col">{t("table-place")}</th>
+                    <th scope="col">{t("table-date")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {subscriptionEvents?.length > 0 &&
+                    subscriptionEvents?.map((event) => {
                       const firstOccurrence =
                         event?.occurrences.length > 0
                           ? event.occurrences[0]
                           : null;
 
                       return (
-                        <tr>
+                        <tr key={`event-${event.entityId}`}>
                           <td>
                             <img
                               src={event?.imageUrls?.small}
@@ -310,9 +303,8 @@ function PosterSubscription({
                         </tr>
                       );
                     })}
-                  </tbody>
-                </table>
-              </div>
+                </tbody>
+              </table>
             </div>
           </Row>
         </Col>
