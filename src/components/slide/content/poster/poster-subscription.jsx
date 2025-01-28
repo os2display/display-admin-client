@@ -4,8 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Row, Spinner } from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
-import localStorageKeys from "../../../util/local-storage-keys";
-import { formatDate, loadDropdownOptions } from "./poster-helper";
+import { formatDate, getHeaders, loadDropdownOptions } from "./poster-helper";
 
 /**
  * @param {object} props Props.
@@ -21,19 +20,6 @@ function PosterSubscription({
   feedSource,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
-
-  const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
-  const tenantKey = JSON.parse(
-    localStorage.getItem(localStorageKeys.SELECTED_TENANT)
-  );
-
-  const headers = {
-    authorization: `Bearer ${apiToken ?? ""}`,
-  };
-
-  if (tenantKey) {
-    headers["Authorization-Tenant-Key"] = tenantKey.tenantKey;
-  }
 
   const [subscriptionPlaceValue, setSubscriptionPlaceValue] = useState(
     getValueFromConfiguration("subscriptionPlaceValue") ?? []
@@ -92,32 +78,34 @@ function PosterSubscription({
 
   const subscriptionFetch = () => {
     const url = feedSource.admin[0].endpointSearch;
-    let query = `?type=events`;
+
+    const query = new URLSearchParams({
+      type: "events",
+      items_per_page: subscriptionNumberValue,
+    });
 
     const places = subscriptionPlaceValue.map((option) => option.value);
 
     places.forEach((place) => {
-      query = `${query}&place=${place}`;
+      query.append("place", place);
     });
 
     const organizers = subscriptionOrganizerValue.map((option) => option.value);
 
     organizers.forEach((organizer) => {
-      query = `${query}&organizer=${organizer}`;
+      query.append("organizer", organizer);
     });
 
     const tags = subscriptionTagValue.map((option) => option.value);
 
     tags.forEach((tag) => {
-      query = `${query}&tag=${tag}`;
+      query.append("tag", tag);
     });
-
-    query = `${query}&items_per_page=${subscriptionNumberValue}`;
 
     setLoadingResults(true);
 
     fetch(`${url}${query}`, {
-      headers,
+      headers: getHeaders(),
     })
       .then((response) => response.json())
       .then((data) => {

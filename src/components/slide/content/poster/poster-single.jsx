@@ -1,16 +1,17 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Row, Spinner } from "react-bootstrap";
+import { Button, Row, Spinner } from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
-import dayjs from "dayjs";
-import localeDa from "dayjs/locale/da";
-import Select from "../../../util/forms/select.jsx";
-import FormInput from "../../../util/forms/form-input.jsx";
-import FormCheckbox from "../../../util/forms/form-checkbox.jsx";
-import localStorageKeys from "../../../util/local-storage-keys.jsx";
-import {formatDate, loadDropdownOptions} from "./poster-helper.js";
+import Select from "../../../util/forms/select";
+import FormInput from "../../../util/forms/form-input";
+import FormCheckbox from "../../../util/forms/form-checkbox";
+import {
+  formatDate,
+  getHeaders,
+  loadDropdownOptionsPromise,
+} from "./poster-helper";
 
 /**
  * @param {object} props Props.
@@ -24,21 +25,9 @@ function PosterSingle({
   getValueFromConfiguration,
   configurationChange,
   feedSource,
+  configuration,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
-
-  const apiToken = localStorage.getItem(localStorageKeys.API_TOKEN);
-  const tenantKey = JSON.parse(
-    localStorage.getItem(localStorageKeys.SELECTED_TENANT)
-  );
-
-  const headers = {
-    authorization: `Bearer ${apiToken ?? ""}`,
-  };
-
-  if (tenantKey) {
-    headers["Authorization-Tenant-Key"] = tenantKey.tenantKey;
-  }
 
   const [loadingResults, setLoadingResults] = useState(false);
 
@@ -54,6 +43,9 @@ function PosterSingle({
   const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(
     getValueFromConfiguration("singleSelectedOccurrence") ?? null
   );
+
+  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
+  const entityEndpoint = feedSource.admin[0].endpointEntity ?? null;
 
   const removeSingleSelected = () => {
     setSingleSelectedEvent(null);
@@ -73,13 +65,13 @@ function PosterSingle({
     },
     {
       key: "singleSearchTypeOptions3",
-      value: "organizers",
-      title: t("single-search-type-organizer"),
+      value: "organizations",
+      title: t("single-search-type-organization"),
     },
     {
       key: "singleSearchTypeOptions4",
-      value: "places",
-      title: t("single-search-type-place"),
+      value: "locations",
+      title: t("single-search-type-location"),
     },
     {
       key: "singleSearchTypeOptions5",
@@ -96,8 +88,9 @@ function PosterSingle({
   };
 
   const singleSearchFetch = () => {
-    const url = feedSource.admin[0].endpointSearch;
-    let query = `?type=events`;
+    const params = {
+      type: "events",
+    };
 
     const singleSearchTypeValueId = singleSearchTypeValue
       ? singleSearchTypeValue.value.split("/").pop()
@@ -105,34 +98,33 @@ function PosterSingle({
 
     switch (singleSearchType) {
       case "title":
-        query = `${query}&title=${singleSearch}`;
+        params.title = singleSearch;
         break;
       case "url":
-        query = `${query}&url=${singleSearch}`;
+        params.url = singleSearch;
         break;
       case "tags":
-        query = `${query}&tag=${singleSearchTypeValueId}`;
+        params.tag = singleSearchTypeValueId;
         break;
-      case "organizers":
-        query = `${query}&organizer=${singleSearchTypeValueId}`;
+      case "organizations":
+        params.organization = singleSearchTypeValueId;
         break;
-      case "places":
-        query = `${query}&place=${singleSearchTypeValueId}`;
+      case "locations":
+        params.location = singleSearchTypeValueId;
         break;
       default:
     }
 
     setLoadingResults(true);
 
-    fetch(`${url}${query}`, {
-      headers,
+    const query = new URLSearchParams(params);
+
+    fetch(`${searchEndpoint}?${query}`, {
+      headers: getHeaders(),
     })
       .then((response) => response.json())
       .then((data) => {
         setSingleSearchEvents(data);
-      })
-      .catch(() => {
-        // @TODO: Handle error.
       })
       .finally(() => {
         setLoadingResults(false);
@@ -143,7 +135,7 @@ function PosterSingle({
     configurationChange({
       target: {
         id: "singleSelectedEvent",
-        value: singleSelectedEvent ? singleSelectedEvent["@id"] : null,
+        value: singleSelectedEvent?.entityId,
       },
     });
   }, [singleSelectedEvent]);
@@ -152,48 +144,79 @@ function PosterSingle({
     configurationChange({
       target: {
         id: "singleSelectedOccurrence",
-        value: singleSelectedOccurrence
-          ? singleSelectedOccurrence.entityId
-          : null,
+        value: singleSelectedOccurrence?.entityId,
       },
     });
   }, [singleSelectedOccurrence]);
 
   useEffect(() => {
-    const url = feedSource.admin[0].endpointEntity;
     const eventId = getValueFromConfiguration("singleSelectedEvent");
     const occurrenceId = getValueFromConfiguration("singleSelectedOccurrence");
 
-    console.log(occurrenceId, "occurrenceId");
-
     if (eventId !== null) {
-      fetch(`${url}?path=${eventId}`, {
-        headers,
+      const query = new URLSearchParams({
+        entityType: "events",
+        entityId: eventId,
+      });
+
+      fetch(`${entityEndpoint}?${query}`, {
+        headers: getHeaders(),
       })
         .then((response) => response.json())
         .then((data) => {
           setSingleSelectedEvent(data);
-        })
-        .catch(() => {
-          // TODO: Display error.
         });
     }
 
     if (occurrenceId !== null) {
-      fetch(`${url}?path=/occurrences/${occurrenceId}`, {
-        headers,
+      const query = new URLSearchParams({
+        entityType: "occurrences",
+        entityId: occurrenceId,
+      });
+
+      fetch(`${entityEndpoint}?${query}`, {
+        headers: getHeaders(),
       })
         .then((response) => response.json())
         .then((data) => {
           setSingleSelectedOccurrence(data["hydra:member"][0]);
-        })
-        .catch(() => {
-          // TODO: Display error.
         });
     }
   }, []);
 
-  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
+  useEffect(() => {
+    if (
+      singleSearchType === "tags" ||
+      singleSearchType === "locations" ||
+      singleSearchType === "organizations"
+    ) {
+      // TODO: Refresh dropdown results.
+    }
+  }, [singleSearchType]);
+
+  const timeoutRef = useRef(null);
+
+  const debounceOptions = (inputValue) => {
+    // Debounce promise.
+    return new Promise((resolve, reject) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        loadDropdownOptionsPromise(
+          searchEndpoint,
+          getHeaders(),
+          inputValue,
+          singleSearchType
+        )
+          .then((data) => resolve(data))
+          .catch((reason) => reject(reason));
+      }, 500);
+    });
+  };
+
+  console.log(configuration);
 
   return (
     <>
@@ -322,8 +345,8 @@ function PosterSingle({
               </Col>
             )}
             {(singleSearchType === "tags" ||
-              singleSearchType === "places" ||
-              singleSearchType === "organizers") && (
+              singleSearchType === "locations" ||
+              singleSearchType === "organizations") && (
               <Col>
                 <label className="form-label" htmlFor="single-search-select">
                   {t("single-search-select")}
@@ -333,15 +356,7 @@ function PosterSingle({
                   isClearable
                   isSearchable
                   defaultOptions
-                  loadOptions={(inputValue, callback) =>
-                    loadDropdownOptions(
-                      searchEndpoint,
-                      headers,
-                      inputValue,
-                      callback,
-                      singleSearchType
-                    )
-                  }
+                  loadOptions={debounceOptions}
                   defaultInputValue={singleSearchTypeValue}
                   onChange={(newValue) => {
                     setSingleSearchTypeValue(newValue);

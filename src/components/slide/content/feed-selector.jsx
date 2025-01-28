@@ -144,6 +144,7 @@ function FeedSelector({
           key={element.key}
           feedSource={feedSourceData}
           configurationChange={configurationChange}
+          configuration={value.configuration}
           getValueFromConfiguration={getValueFromConfiguration}
         />
       );

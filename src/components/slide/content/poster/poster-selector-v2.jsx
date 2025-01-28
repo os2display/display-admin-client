@@ -17,6 +17,7 @@ import PosterSubscription from "./poster-subscription";
 function PosterSelectorV2({
   feedSource,
   getValueFromConfiguration,
+  configuration,
   configurationChange,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
@@ -65,6 +66,7 @@ function PosterSelectorV2({
             {posterType === "single" && (
               <PosterSingle
                 feedSource={feedSource}
+                configuration={configuration}
                 getValueFromConfiguration={getValueFromConfiguration}
                 configurationChange={configurationChange}
               />
@@ -72,6 +74,7 @@ function PosterSelectorV2({
             {posterType === "subscription" && (
               <PosterSubscription
                 feedSource={feedSource}
+                configuration={configuration}
                 getValueFromConfiguration={getValueFromConfiguration}
                 configurationChange={configurationChange}
               />
