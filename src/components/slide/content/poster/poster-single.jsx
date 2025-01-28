@@ -1,7 +1,7 @@
-import { React, useEffect, useRef, useState } from "react";
+import {React, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
-import { Button, Row, Spinner } from "react-bootstrap";
+import {useTranslation} from "react-i18next";
+import {Button, Row, Spinner} from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import Select from "../../../util/forms/select";
@@ -16,18 +16,16 @@ import {
 /**
  * @param {object} props Props.
  * @param {object} props.feedSource Feed source.
- * @param {Function} props.getValueFromConfiguration Gets a value from the feed
- *   configuration.
  * @param {Function} props.configurationChange Configuration onChange.
+ * @param {object} props.configuration Feed configuration.
  * @returns {object} PosterSingle component.
  */
 function PosterSingle({
-  getValueFromConfiguration,
-  configurationChange,
-  feedSource,
-  configuration,
-}) {
-  const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
+                        configurationChange,
+                        feedSource,
+                        configuration,
+                      }) {
+  const {t} = useTranslation("common", {keyPrefix: "poster-selector-v2"});
 
   const [loadingResults, setLoadingResults] = useState(false);
 
@@ -37,19 +35,25 @@ function PosterSingle({
   const [singleSearchEvents, setSingleSearchEvents] = useState(null);
   const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
 
-  const [singleSelectedEvent, setSingleSelectedEvent] = useState(
-    getValueFromConfiguration("singleSelectedEvent") ?? null
-  );
-  const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(
-    getValueFromConfiguration("singleSelectedOccurrence") ?? null
-  );
+  const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
+  const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
 
   const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
   const entityEndpoint = feedSource.admin[0].endpointEntity ?? null;
 
   const removeSingleSelected = () => {
-    setSingleSelectedEvent(null);
-    setSingleSelectedOccurrence(null);
+    configurationChange({
+      targets: [
+        {
+          id: "singleSelectedEvent",
+          value: null,
+        },
+        {
+          id: "singleSelectedOccurrence",
+          value: null,
+        },
+      ],
+    });
   };
 
   const singleSearchTypeOptions = [
@@ -81,10 +85,18 @@ function PosterSingle({
   ];
 
   const handleSelectEvent = (singleEvent) => {
-    setSingleSelectedEvent(singleEvent);
-    if (singleEvent.occurrences?.length === 1) {
-      setSingleSelectedOccurrence(singleEvent.occurrences[0]);
-    }
+    configurationChange({
+      targets: [
+        {
+          id: "singleSelectedEvent",
+          value: singleEvent?.entityId,
+        },
+        {
+          id: "singleSelectedOccurrence",
+          value: singleEvent?.occurrences[0]?.entityId,
+        },
+      ],
+    });
   };
 
   const singleSearchFetch = () => {
@@ -132,41 +144,7 @@ function PosterSingle({
   };
 
   useEffect(() => {
-    configurationChange({
-      target: {
-        id: "singleSelectedEvent",
-        value: singleSelectedEvent?.entityId,
-      },
-    });
-  }, [singleSelectedEvent]);
-
-  useEffect(() => {
-    configurationChange({
-      target: {
-        id: "singleSelectedOccurrence",
-        value: singleSelectedOccurrence?.entityId,
-      },
-    });
-  }, [singleSelectedOccurrence]);
-
-  useEffect(() => {
-    const eventId = getValueFromConfiguration("singleSelectedEvent");
-    const occurrenceId = getValueFromConfiguration("singleSelectedOccurrence");
-
-    if (eventId !== null) {
-      const query = new URLSearchParams({
-        entityType: "events",
-        entityId: eventId,
-      });
-
-      fetch(`${entityEndpoint}?${query}`, {
-        headers: getHeaders(),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setSingleSelectedEvent(data);
-        });
-    }
+    const occurrenceId = configuration.singleSelectedOccurrence ?? null;
 
     if (occurrenceId !== null) {
       const query = new URLSearchParams({
@@ -179,10 +157,33 @@ function PosterSingle({
       })
         .then((response) => response.json())
         .then((data) => {
-          setSingleSelectedOccurrence(data["hydra:member"][0]);
+          setSingleSelectedOccurrence(data[0]);
         });
+    } else {
+      setSingleSelectedOccurrence(null);
     }
-  }, []);
+  }, [configuration?.singleSelectedOccurrence]);
+
+  useEffect(() => {
+    const eventId = configuration.singleSelectedEvent ?? null;
+
+    if (eventId !== null) {
+      const query = new URLSearchParams({
+        entityType: "events",
+        entityId: eventId,
+      });
+
+      fetch(`${entityEndpoint}?${query}`, {
+        headers: getHeaders(),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setSingleSelectedEvent(data[0]);
+        });
+    } else {
+      setSingleSelectedEvent(null);
+    }
+  }, [configuration?.singleSelectedEvent]);
 
   useEffect(() => {
     if (
@@ -215,8 +216,6 @@ function PosterSingle({
       }, 500);
     });
   };
-
-  console.log(configuration);
 
   return (
     <>
@@ -268,30 +267,28 @@ function PosterSingle({
                   <FormInput
                     label={t("single-override-title")}
                     name="overrideTitle"
-                    value={getValueFromConfiguration("overrideTitle") ?? ""}
+                    value={configuration.overrideTitle ?? ""}
                     onChange={configurationChange}
                     className="mb-3"
                   />
                   <FormInput
                     label={t("single-override-subtitle")}
                     name="overrideSubTitle"
-                    value={getValueFromConfiguration("overrideSubTitle") ?? ""}
+                    value={configuration.overrideSubTitle ?? ""}
                     onChange={configurationChange}
                     className="mb-3"
                   />
                   <FormInput
                     label={t("single-override-ticket-price")}
                     name="overrideTicketPrice"
-                    value={
-                      getValueFromConfiguration("overrideTicketPrice") ?? ""
-                    }
+                    value={configuration.overrideTicketPrice ?? ""}
                     onChange={configurationChange}
                     className="mb-3"
                   />
                   <FormInput
                     label={t("single-read-more-text")}
                     name="readMoreText"
-                    value={getValueFromConfiguration("readMoreText") ?? ""}
+                    value={configuration.readMoreText ?? ""}
                     onChange={configurationChange}
                     className="mb-3"
                   />
@@ -299,7 +296,7 @@ function PosterSingle({
                     label={t("single-read-more-url")}
                     name="overrideReadMoreUrl"
                     value={
-                      getValueFromConfiguration("overrideReadMoreUrl") ?? ""
+                      configuration.overrideReadMoreUrl ?? ""
                     }
                     onChange={configurationChange}
                     className="mb-3"
@@ -307,7 +304,7 @@ function PosterSingle({
                   <FormCheckbox
                     label={t("single-hide-time")}
                     name="hideTime"
-                    value={getValueFromConfiguration("hideTime") ?? false}
+                    value={configuration.hideTime ?? false}
                     onChange={configurationChange}
                     className="mb-3"
                   />
@@ -327,7 +324,7 @@ function PosterSingle({
             <Col>
               <Select
                 value={singleSearchType}
-                onChange={({ target }) => setSingleSearchType(target.value)}
+                onChange={({target}) => setSingleSearchType(target.value)}
                 label={t("single-search-type")}
                 options={singleSearchTypeOptions}
                 name="poster-search-type"
@@ -340,7 +337,7 @@ function PosterSingle({
                   label={t("single-search-text")}
                   name="poster-search"
                   value={singleSearch}
-                  onChange={({ target }) => setSingleSearch(target.value)}
+                  onChange={({target}) => setSingleSearch(target.value)}
                 />
               </Col>
             )}
@@ -379,54 +376,54 @@ function PosterSingle({
               <Col>
                 <table className="table table-hover text-left">
                   <thead>
-                    <tr>
-                      <th scope="col">{t("table-image")}</th>
-                      <th scope="col">{t("table-event")}</th>
-                      <th scope="col">{t("table-date")}</th>
-                    </tr>
+                  <tr>
+                    <th scope="col">{t("table-image")}</th>
+                    <th scope="col">{t("table-event")}</th>
+                    <th scope="col">{t("table-date")}</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    {singleSearchEvents?.map((searchEvent) => (
-                      <tr
-                        style={{ cursor: "pointer" }}
-                        key={searchEvent["@id"]}
-                        onClick={() => handleSelectEvent(searchEvent)}
-                      >
-                        <td>
-                          {searchEvent?.imageUrls?.small && (
-                            <img
-                              src={searchEvent?.imageUrls?.small}
-                              alt={searchEvent?.title}
-                              style={{ maxWidth: "80px" }}
-                            />
-                          )}
-                        </td>
-                        <td>
-                          <strong>{searchEvent.title}</strong>
-                          <br />
-                          {searchEvent.organizer.name}
-                        </td>
-                        <td>
-                          {searchEvent?.occurrences?.length > 0 &&
-                            formatDate(searchEvent?.occurrences[0]?.start)}
-                          {searchEvent?.occurrences?.length > 1 && (
-                            <span>, ...</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                    {singleSearchEvents?.length === 0 && (
-                      <tr>
-                        <td colSpan="3">{t("no-results")}</td>
-                      </tr>
-                    )}
+                  {singleSearchEvents?.map((searchEvent) => (
+                    <tr
+                      style={{cursor: "pointer"}}
+                      key={searchEvent["@id"]}
+                      onClick={() => handleSelectEvent(searchEvent)}
+                    >
+                      <td>
+                        {searchEvent?.imageUrls?.small && (
+                          <img
+                            src={searchEvent?.imageUrls?.small}
+                            alt={searchEvent?.title}
+                            style={{maxWidth: "80px"}}
+                          />
+                        )}
+                      </td>
+                      <td>
+                        <strong>{searchEvent.title}</strong>
+                        <br/>
+                        {searchEvent.organizer.name}
+                      </td>
+                      <td>
+                        {searchEvent?.occurrences?.length > 0 &&
+                          formatDate(searchEvent?.occurrences[0]?.start)}
+                        {searchEvent?.occurrences?.length > 1 && (
+                          <span>, ...</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                  {singleSearchEvents?.length === 0 && (
+                    <tr>
+                      <td colSpan="3">{t("no-results")}</td>
+                    </tr>
+                  )}
                   </tbody>
                 </table>
               </Col>
             )}
             {loadingResults && (
               <Col>
-                <Spinner className="mt-3" animation="border" />
+                <Spinner className="mt-3" animation="border"/>
               </Col>
             )}
 
@@ -437,28 +434,28 @@ function PosterSingle({
                   <>
                     <table className="table table-hover text-left">
                       <thead>
-                        <tr>
-                          <th scope="col">{t("table-date")}</th>
-                          <th scope="col">{t("table-price")}</th>
-                          <th scope="col"> </th>
-                        </tr>
+                      <tr>
+                        <th scope="col">{t("table-date")}</th>
+                        <th scope="col">{t("table-price")}</th>
+                        <th scope="col"></th>
+                      </tr>
                       </thead>
                       <tbody>
-                        {singleSelectedEvent?.occurrences?.map((occurrence) => (
-                          <tr>
-                            <td>{occurrence.start}</td>
-                            <td>{occurrence.ticketPriceRange}</td>
-                            <td>
-                              <Button
-                                onClick={() =>
-                                  setSingleSelectedOccurrence(occurrence)
-                                }
-                              >
-                                {t("choose-occurrence")}
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
+                      {singleSelectedEvent?.occurrences?.map((occurrence) => (
+                        <tr>
+                          <td>{occurrence.start}</td>
+                          <td>{occurrence.ticketPriceRange}</td>
+                          <td>
+                            <Button
+                              onClick={() =>
+                                setSingleSelectedOccurrence(occurrence)
+                              }
+                            >
+                              {t("choose-occurrence")}
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
                       </tbody>
                     </table>
                   </>
@@ -473,8 +470,11 @@ function PosterSingle({
 }
 
 PosterSingle.propTypes = {
-  getValueFromConfiguration: PropTypes.func.isRequired,
   configurationChange: PropTypes.func.isRequired,
+  configuration: PropTypes.shape({
+    singleSelectedEvent: PropTypes.number,
+    singleSelectedOccurrence: PropTypes.number,
+  }).isRequired,
   feedSource: PropTypes.shape({
     admin: PropTypes.arrayOf(
       PropTypes.shape({

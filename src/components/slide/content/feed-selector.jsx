@@ -97,9 +97,19 @@ function FeedSelector({
     onChange(newValue);
   };
 
-  const configurationChange = ({ target }) => {
+  const configurationChange = ({ target = null, targets = null }) => {
     const configuration = { ...value.configuration };
-    set(configuration, target.id, target.value);
+
+    if (target !== null) {
+      set(configuration, target.id, target.value);
+    }
+
+    if (targets !== null) {
+      for (let i = 0; i < targets.length; i = i + 1) {
+        set(configuration, targets[i].id, targets[i].value);
+      }
+    }
+
     const newValue = { ...value, configuration };
     onChange(newValue);
   };
