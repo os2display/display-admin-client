@@ -1,10 +1,10 @@
-import { React, useEffect, useState } from "react";
+import {React, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Row, Spinner } from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
-import { formatDate, getHeaders, loadDropdownOptions } from "./poster-helper";
+import {formatDate, getHeaders, loadDropdownOptions, loadDropdownOptionsPromise} from "./poster-helper";
 
 /**
  * @param {object} props Props.
@@ -133,6 +133,28 @@ function PosterSubscription({
     subscriptionNumberValue,
   ]);
 
+  const timeoutRef = useRef(null);
+
+  const debounceOptions = (inputValue, type) => {
+    // Debounce promise.
+    return new Promise((resolve, reject) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        loadDropdownOptionsPromise(
+          searchEndpoint,
+          getHeaders(),
+          inputValue,
+          type
+        )
+          .then((data) => resolve(data))
+          .catch((reason) => reject(reason));
+      }, 500);
+    });
+  };
+
   return (
     <>
       <Row>
@@ -153,14 +175,8 @@ function PosterSubscription({
                   isSearchable
                   defaultOptions
                   isMulti
-                  loadOptions={(inputValue, callback) =>
-                    loadDropdownOptions(
-                      searchEndpoint,
-                      getHeaders(),
-                      inputValue,
-                      callback,
-                      "locations"
-                    )
+                  loadOptions={(inputValue) =>
+                    debounceOptions(inputValue, "locations")
                   }
                   value={subscriptionPlaceValue}
                   onChange={(newValue) => {
@@ -181,14 +197,8 @@ function PosterSubscription({
                   isSearchable
                   defaultOptions
                   isMulti
-                  loadOptions={(inputValue, callback) =>
-                    loadDropdownOptions(
-                      searchEndpoint,
-                      getHeaders(),
-                      inputValue,
-                      callback,
-                      "organizations"
-                    )
+                  loadOptions={(inputValue) =>
+                    debounceOptions(inputValue, "organizations")
                   }
                   value={subscriptionOrganizerValue}
                   onChange={(newValue) => {
@@ -209,14 +219,8 @@ function PosterSubscription({
                   isSearchable
                   defaultOptions
                   isMulti
-                  loadOptions={(inputValue, callback) =>
-                    loadDropdownOptions(
-                      searchEndpoint,
-                      getHeaders(),
-                      inputValue,
-                      callback,
-                      "tags"
-                    )
+                  loadOptions={(inputValue) =>
+                    debounceOptions(inputValue, "tags")
                   }
                   value={subscriptionTagValue}
                   onChange={(newValue) => {
