@@ -1,10 +1,14 @@
-import {React, useEffect, useRef, useState} from "react";
+import { React, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Row, Spinner } from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
-import {formatDate, getHeaders, loadDropdownOptions, loadDropdownOptionsPromise} from "./poster-helper";
+import {
+  formatDate,
+  getHeaders,
+  loadDropdownOptionsPromise,
+} from "./poster-helper";
 
 /**
  * @param {object} props Props.
@@ -38,7 +42,7 @@ function PosterSubscription({
 
   const [loadingResults, setLoadingResults] = useState(false);
 
-  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
+  const optionsEndpoint = feedSource.admin[0].endpointOption ?? null;
 
   const numberOptions = Array.from(Array(10).keys());
 
@@ -133,18 +137,36 @@ function PosterSubscription({
     subscriptionNumberValue,
   ]);
 
-  const timeoutRef = useRef(null);
+  const locationTimeoutRef = useRef(null);
+  const organizationTimeoutRef = useRef(null);
+  const tagTimeoutRef = useRef(null);
 
   const debounceOptions = (inputValue, type) => {
     // Debounce promise.
     return new Promise((resolve, reject) => {
+      let timeoutRef = null;
+
+      switch (type) {
+        case "locations":
+          timeoutRef = locationTimeoutRef;
+          break;
+        case "organizations":
+          timeoutRef = organizationTimeoutRef;
+          break;
+        case "tags":
+          timeoutRef = tagTimeoutRef;
+          break;
+        default:
+          return;
+      }
+
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
 
       timeoutRef.current = setTimeout(() => {
         loadDropdownOptionsPromise(
-          searchEndpoint,
+          optionsEndpoint,
           getHeaders(),
           inputValue,
           type
@@ -214,7 +236,7 @@ function PosterSubscription({
                   {t("filters-tag")}
                 </label>
                 <AsyncSelect
-                  id="subscription-search-place"
+                  id="subscription-search-tag"
                   isClearable
                   isSearchable
                   defaultOptions
@@ -287,12 +309,12 @@ function PosterSubscription({
                             />
                           </td>
                           <td>
-                            <strong>{event.name}</strong>
+                            <strong>{event.title}</strong>
                             <br />
                             {event?.organizer?.name}
                           </td>
                           <td>
-                            {firstOccurrence && firstOccurrence.place?.name}
+                            {firstOccurrence && firstOccurrence?.place?.name}
                           </td>
                           <td>
                             {firstOccurrence && (
@@ -324,6 +346,7 @@ PosterSubscription.propTypes = {
     admin: PropTypes.arrayOf(
       PropTypes.shape({
         endpointEntity: PropTypes.string,
+        endpointOption: PropTypes.string,
         endpointSearch: PropTypes.string,
       })
     ),

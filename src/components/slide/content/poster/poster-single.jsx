@@ -235,7 +235,8 @@ function PosterSingle({
                 {singleSelectedOccurrence && (
                   <div>
                     <strong>{t("chosen-occurrence")}:</strong>{" "}
-                    {formatDate(singleSelectedOccurrence.start)} -
+                    {formatDate(singleSelectedOccurrence.startDate)}
+                    {" - "}
                     {singleSelectedOccurrence.ticketPriceRange}
                   </div>
                 )}

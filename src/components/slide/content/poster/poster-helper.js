@@ -42,12 +42,11 @@ const loadDropdownOptions = (url, headers, inputValue, callback, type) => {
 const loadDropdownOptionsPromise = (url, headers, inputValue, type) => {
   return new Promise((resolve, reject) => {
     const params = {
-      type,
-      display: "options",
+      entityType: type,
     };
 
     if (inputValue) {
-      params.name = inputValue;
+      params.search = inputValue;
     }
 
     const query = new URLSearchParams(params);

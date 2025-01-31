@@ -89,6 +89,7 @@ function PosterSelectorV2({
 PosterSelectorV2.propTypes = {
   getValueFromConfiguration: PropTypes.func.isRequired,
   configurationChange: PropTypes.func.isRequired,
+  configuration: PropTypes.shape({}),
   feedSource: PropTypes.shape({
     admin: PropTypes.arrayOf(
       PropTypes.shape({
