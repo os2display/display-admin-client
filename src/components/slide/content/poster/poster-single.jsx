@@ -1,7 +1,7 @@
-import {React, useEffect, useRef, useState} from "react";
+import { React, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {useTranslation} from "react-i18next";
-import {Button, Row, Spinner} from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { Button, Row, Spinner } from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import Select from "../../../util/forms/select";
@@ -20,12 +20,8 @@ import {
  * @param {object} props.configuration Feed configuration.
  * @returns {object} PosterSingle component.
  */
-function PosterSingle({
-                        configurationChange,
-                        feedSource,
-                        configuration,
-                      }) {
-  const {t} = useTranslation("common", {keyPrefix: "poster-selector-v2"});
+function PosterSingle({ configurationChange, feedSource, configuration }) {
+  const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
 
   const [loadingResults, setLoadingResults] = useState(false);
 
@@ -36,9 +32,11 @@ function PosterSingle({
   const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
 
   const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
-  const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
+  const [singleSelectedOccurrence, setSingleSelectedOccurrence] =
+    useState(null);
 
   const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
+  const optionsEndpoint = feedSource.admin[0].endpointOption ?? null;
   const entityEndpoint = feedSource.admin[0].endpointEntity ?? null;
 
   const removeSingleSelected = () => {
@@ -104,9 +102,7 @@ function PosterSingle({
       type: "events",
     };
 
-    const singleSearchTypeValueId = singleSearchTypeValue
-      ? singleSearchTypeValue.value.split("/").pop()
-      : null;
+    const singleSearchTypeValueId = singleSearchTypeValue?.value;
 
     switch (singleSearchType) {
       case "title":
@@ -206,7 +202,7 @@ function PosterSingle({
 
       timeoutRef.current = setTimeout(() => {
         loadDropdownOptionsPromise(
-          searchEndpoint,
+          optionsEndpoint,
           getHeaders(),
           inputValue,
           singleSearchType
@@ -296,9 +292,7 @@ function PosterSingle({
                   <FormInput
                     label={t("single-read-more-url")}
                     name="overrideReadMoreUrl"
-                    value={
-                      configuration.overrideReadMoreUrl ?? ""
-                    }
+                    value={configuration.overrideReadMoreUrl ?? ""}
                     onChange={configurationChange}
                     className="mb-3"
                   />
@@ -325,7 +319,7 @@ function PosterSingle({
             <Col>
               <Select
                 value={singleSearchType}
-                onChange={({target}) => setSingleSearchType(target.value)}
+                onChange={({ target }) => setSingleSearchType(target.value)}
                 label={t("single-search-type")}
                 options={singleSearchTypeOptions}
                 name="poster-search-type"
@@ -338,7 +332,7 @@ function PosterSingle({
                   label={t("single-search-text")}
                   name="poster-search"
                   value={singleSearch}
-                  onChange={({target}) => setSingleSearch(target.value)}
+                  onChange={({ target }) => setSingleSearch(target.value)}
                 />
               </Col>
             )}
@@ -377,54 +371,54 @@ function PosterSingle({
               <Col>
                 <table className="table table-hover text-left">
                   <thead>
-                  <tr>
-                    <th scope="col">{t("table-image")}</th>
-                    <th scope="col">{t("table-event")}</th>
-                    <th scope="col">{t("table-date")}</th>
-                  </tr>
+                    <tr>
+                      <th scope="col">{t("table-image")}</th>
+                      <th scope="col">{t("table-event")}</th>
+                      <th scope="col">{t("table-date")}</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  {singleSearchEvents?.map((searchEvent) => (
-                    <tr
-                      style={{cursor: "pointer"}}
-                      key={searchEvent["@id"]}
-                      onClick={() => handleSelectEvent(searchEvent)}
-                    >
-                      <td>
-                        {searchEvent?.imageUrls?.small && (
-                          <img
-                            src={searchEvent?.imageUrls?.small}
-                            alt={searchEvent?.title}
-                            style={{maxWidth: "80px"}}
-                          />
-                        )}
-                      </td>
-                      <td>
-                        <strong>{searchEvent.title}</strong>
-                        <br/>
-                        {searchEvent.organizer.name}
-                      </td>
-                      <td>
-                        {searchEvent?.occurrences?.length > 0 &&
-                          formatDate(searchEvent?.occurrences[0]?.start)}
-                        {searchEvent?.occurrences?.length > 1 && (
-                          <span>, ...</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                  {singleSearchEvents?.length === 0 && (
-                    <tr>
-                      <td colSpan="3">{t("no-results")}</td>
-                    </tr>
-                  )}
+                    {singleSearchEvents?.map((searchEvent) => (
+                      <tr
+                        style={{ cursor: "pointer" }}
+                        key={searchEvent["@id"]}
+                        onClick={() => handleSelectEvent(searchEvent)}
+                      >
+                        <td>
+                          {searchEvent?.imageUrls?.small && (
+                            <img
+                              src={searchEvent?.imageUrls?.small}
+                              alt={searchEvent?.title}
+                              style={{ maxWidth: "80px" }}
+                            />
+                          )}
+                        </td>
+                        <td>
+                          <strong>{searchEvent.title}</strong>
+                          <br />
+                          {searchEvent.organizer.name}
+                        </td>
+                        <td>
+                          {searchEvent?.occurrences?.length > 0 &&
+                            formatDate(searchEvent?.occurrences[0]?.start)}
+                          {searchEvent?.occurrences?.length > 1 && (
+                            <span>, ...</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                    {singleSearchEvents?.length === 0 && (
+                      <tr>
+                        <td colSpan="3">{t("no-results")}</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </Col>
             )}
             {loadingResults && (
               <Col>
-                <Spinner className="mt-3" animation="border"/>
+                <Spinner className="mt-3" animation="border" />
               </Col>
             )}
 
@@ -435,28 +429,28 @@ function PosterSingle({
                   <>
                     <table className="table table-hover text-left">
                       <thead>
-                      <tr>
-                        <th scope="col">{t("table-date")}</th>
-                        <th scope="col">{t("table-price")}</th>
-                        <th scope="col"></th>
-                      </tr>
+                        <tr>
+                          <th scope="col">{t("table-date")}</th>
+                          <th scope="col">{t("table-price")}</th>
+                          <th scope="col" />
+                        </tr>
                       </thead>
                       <tbody>
-                      {singleSelectedEvent?.occurrences?.map((occurrence) => (
-                        <tr>
-                          <td>{occurrence.start}</td>
-                          <td>{occurrence.ticketPriceRange}</td>
-                          <td>
-                            <Button
-                              onClick={() =>
-                                setSingleSelectedOccurrence(occurrence)
-                              }
-                            >
-                              {t("choose-occurrence")}
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
+                        {singleSelectedEvent?.occurrences?.map((occurrence) => (
+                          <tr>
+                            <td>{occurrence.start}</td>
+                            <td>{occurrence.ticketPriceRange}</td>
+                            <td>
+                              <Button
+                                onClick={() =>
+                                  setSingleSelectedOccurrence(occurrence)
+                                }
+                              >
+                                {t("choose-occurrence")}
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </>
