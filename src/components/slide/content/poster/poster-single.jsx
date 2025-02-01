@@ -181,16 +181,6 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     }
   }, [configuration?.singleSelectedEvent]);
 
-  useEffect(() => {
-    if (
-      singleSearchType === "tags" ||
-      singleSearchType === "locations" ||
-      singleSearchType === "organizations"
-    ) {
-      // TODO: Refresh dropdown results.
-    }
-  }, [singleSearchType]);
-
   const timeoutRef = useRef(null);
 
   const debounceOptions = (inputValue) => {
@@ -336,15 +326,49 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                 />
               </Col>
             )}
-            {(singleSearchType === "tags" ||
-              singleSearchType === "locations" ||
-              singleSearchType === "organizations") && (
+            {(singleSearchType === "locations") && (
               <Col>
                 <label className="form-label" htmlFor="single-search-select">
                   {t("single-search-select")}
                 </label>
                 <AsyncSelect
-                  id="single-search-select"
+                  id="single-search-select-locations"
+                  isClearable
+                  isSearchable
+                  defaultOptions
+                  loadOptions={debounceOptions}
+                  defaultInputValue={singleSearchTypeValue}
+                  onChange={(newValue) => {
+                    setSingleSearchTypeValue(newValue);
+                  }}
+                />
+              </Col>
+            )}
+            {(singleSearchType === "organizations") && (
+              <Col>
+                <label className="form-label" htmlFor="single-search-select">
+                  {t("single-search-select")}
+                </label>
+                <AsyncSelect
+                  id="single-search-select-organizations"
+                  isClearable
+                  isSearchable
+                  defaultOptions
+                  loadOptions={debounceOptions}
+                  defaultInputValue={singleSearchTypeValue}
+                  onChange={(newValue) => {
+                    setSingleSearchTypeValue(newValue);
+                  }}
+                />
+              </Col>
+            )}
+            {(singleSearchType === "tags") && (
+              <Col>
+                <label className="form-label" htmlFor="single-search-select">
+                  {t("single-search-select")}
+                </label>
+                <AsyncSelect
+                  id="single-search-select-tags"
                   isClearable
                   isSearchable
                   defaultOptions
@@ -381,7 +405,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                     {singleSearchEvents?.map((searchEvent) => (
                       <tr
                         style={{ cursor: "pointer" }}
-                        key={searchEvent["@id"]}
+                        key={searchEvent.entityId}
                         onClick={() => handleSelectEvent(searchEvent)}
                       >
                         <td>
@@ -469,12 +493,19 @@ PosterSingle.propTypes = {
   configuration: PropTypes.shape({
     singleSelectedEvent: PropTypes.number,
     singleSelectedOccurrence: PropTypes.number,
+    overrideTitle: PropTypes.string,
+    overrideSubTitle: PropTypes.string,
+    overrideTicketPrice: PropTypes.string,
+    readMoreText: PropTypes.string,
+    overrideReadMoreUrl: PropTypes.string,
+    hideTime: PropTypes.bool,
   }).isRequired,
   feedSource: PropTypes.shape({
     admin: PropTypes.arrayOf(
       PropTypes.shape({
         endpointEntity: PropTypes.string,
         endpointSearch: PropTypes.string,
+        endpointOption: PropTypes.string,
       })
     ),
   }).isRequired,
