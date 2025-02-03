@@ -1,7 +1,7 @@
 import { React, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Button, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Row, Spinner } from "react-bootstrap";
 import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import Select from "../../../util/forms/select";
@@ -235,7 +235,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
       <h5>{t("selected-type-single")}</h5>
       {(singleSelectedEvent || singleSelectedOccurrence) && (
         <>
-          <Row>
+          <Row className="mb-3">
             <Col md="9">
               <>
                 {singleSelectedEvent && (
@@ -249,8 +249,8 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                   <div>
                     <strong>{t("chosen-occurrence")}:</strong>{" "}
                     {formatDate(singleSelectedOccurrence.startDate)}
-                    {" - "}
-                    {singleSelectedOccurrence.ticketPriceRange}
+                    {singleSelectedOccurrence?.ticketPriceRange &&
+                      ` - ${singleSelectedOccurrence.ticketPriceRange}`}
                   </div>
                 )}
               </>
@@ -261,67 +261,67 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
               </Button>
             </Col>
           </Row>
+
           <Row className="mb-3">
             <Col>
-              <Button
-                onClick={() =>
-                  setSingleDisplayOverrides(!singleDisplayOverrides)
-                }
-              >
-                {singleDisplayOverrides
-                  ? t("hide-overrides")
-                  : t("display-overrides")}
-              </Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {singleDisplayOverrides && (
-                <>
-                  <FormInput
-                    label={t("single-override-title")}
-                    name="overrideTitle"
-                    value={configuration.overrideTitle ?? ""}
-                    onChange={configurationChange}
-                    className="mb-3"
-                  />
-                  <FormInput
-                    label={t("single-override-subtitle")}
-                    name="overrideSubTitle"
-                    value={configuration.overrideSubTitle ?? ""}
-                    onChange={configurationChange}
-                    className="mb-3"
-                  />
-                  <FormInput
-                    label={t("single-override-ticket-price")}
-                    name="overrideTicketPrice"
-                    value={configuration.overrideTicketPrice ?? ""}
-                    onChange={configurationChange}
-                    className="mb-3"
-                  />
-                  <FormInput
-                    label={t("single-read-more-text")}
-                    name="readMoreText"
-                    value={configuration.readMoreText ?? ""}
-                    onChange={configurationChange}
-                    className="mb-3"
-                  />
-                  <FormInput
-                    label={t("single-read-more-url")}
-                    name="overrideReadMoreUrl"
-                    value={configuration.overrideReadMoreUrl ?? ""}
-                    onChange={configurationChange}
-                    className="mb-3"
-                  />
-                  <FormCheckbox
-                    label={t("single-hide-time")}
-                    name="hideTime"
-                    value={configuration.hideTime ?? false}
-                    onChange={configurationChange}
-                    className="mb-3"
-                  />
-                </>
-              )}
+              <Card className="p-3">
+                <Button
+                  className="btn-sm mb-2"
+                  onClick={() =>
+                    setSingleDisplayOverrides(!singleDisplayOverrides)
+                  }
+                >
+                  {singleDisplayOverrides
+                    ? t("hide-overrides")
+                    : t("display-overrides")}
+                </Button>
+                {singleDisplayOverrides && (
+                  <>
+                    <FormInput
+                      label={t("single-override-title")}
+                      name="overrideTitle"
+                      value={configuration.overrideTitle ?? ""}
+                      onChange={configurationChange}
+                      className="mb-3"
+                    />
+                    <FormInput
+                      label={t("single-override-subtitle")}
+                      name="overrideSubTitle"
+                      value={configuration.overrideSubTitle ?? ""}
+                      onChange={configurationChange}
+                      className="mb-3"
+                    />
+                    <FormInput
+                      label={t("single-override-ticket-price")}
+                      name="overrideTicketPrice"
+                      value={configuration.overrideTicketPrice ?? ""}
+                      onChange={configurationChange}
+                      className="mb-3"
+                    />
+                    <FormInput
+                      label={t("single-read-more-text")}
+                      name="readMoreText"
+                      value={configuration.readMoreText ?? ""}
+                      onChange={configurationChange}
+                      className="mb-3"
+                    />
+                    <FormInput
+                      label={t("single-read-more-url")}
+                      name="overrideReadMoreUrl"
+                      value={configuration.overrideReadMoreUrl ?? ""}
+                      onChange={configurationChange}
+                      className="mb-3"
+                    />
+                    <FormCheckbox
+                      label={t("single-hide-time")}
+                      name="hideTime"
+                      value={configuration.hideTime ?? false}
+                      onChange={configurationChange}
+                      className="mb-3"
+                    />
+                  </>
+                )}
+              </Card>
             </Col>
           </Row>
         </>
@@ -467,6 +467,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                 </table>
               </Col>
             )}
+
             {loadingResults && (
               <Col>
                 <Spinner className="mt-3" animation="border" />
