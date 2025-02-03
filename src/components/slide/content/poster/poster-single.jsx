@@ -99,7 +99,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     if (numberOfOccurrences === 1) {
       configChange.targets.push({
         id: "singleSelectedOccurrence",
-        value: singleEvent.occurrences.pop().entityId,
+        value: singleEvent.occurrences[0].entityId,
       });
     }
 
@@ -329,10 +329,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
 
       {(!singleSelectedEvent || !singleSelectedOccurrence) && (
         <>
-          <Row>
+          <Row className="mb-2">
             <h5 className="mt-2">{t("search-for-event")}</h5>
           </Row>
-          <Row>
+          <Row className="mb-2">
             <Col>
               <Select
                 value={singleSearchType}
@@ -417,7 +417,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
               </Button>
             </Col>
           </Row>
-          <Row>
+          <Row className="mb-2">
             {!singleSelectedEvent && singleSearchEvents !== null && (
               <Col>
                 <table className="table table-hover text-left">
