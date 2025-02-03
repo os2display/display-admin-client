@@ -188,7 +188,7 @@ function PosterSubscription({
             <h5 className="mt-3">{t("filters")}</h5>
             <div className="mb-2">
               <div className="form-group">
-                <label htmlFor="os2display-poster--select-subscription-places">
+                <label htmlFor="os2display-poster--select-subscription-places" className="form-label">
                   {t("filters-place")}
                 </label>
                 <AsyncSelect
@@ -210,7 +210,7 @@ function PosterSubscription({
 
             <div className="mb-2">
               <div className="form-group">
-                <label htmlFor="os2display-poster--select-subscription-organizers">
+                <label htmlFor="os2display-poster--select-subscription-organizers" className="form-label">
                   {t("filters-organizer")}
                 </label>
                 <AsyncSelect
@@ -232,7 +232,7 @@ function PosterSubscription({
 
             <div className="mb-2">
               <div className="form-group">
-                <label htmlFor="os2display-poster--select-subscription-tags">
+                <label htmlFor="os2display-poster--select-subscription-tags" className="form-label">
                   {t("filters-tag")}
                 </label>
                 <AsyncSelect
@@ -255,9 +255,10 @@ function PosterSubscription({
             <div>
               <div className="form-group">
                 <div>
-                  <label htmlFor="os2display-poster--select-number">
+                  <label htmlFor="os2display-poster--select-number" className="form-label">
                     {t("number-of-slides")}
                     <select
+                      className="form-control"
                       id="os2display-poster--select-number"
                       value={subscriptionNumberValue}
                       onChange={({ target }) =>

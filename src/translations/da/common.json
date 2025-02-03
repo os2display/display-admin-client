@@ -1086,7 +1086,7 @@
     "redacted-value-input-placeholder": "Skjult værdi"
   },
   "poster-selector-v2": {
-    "preview-of-events": "Forhåndsvisning af begivenheder udfra valg",
+    "preview-of-events": "Begivenheder der vil vises nu:",
     "table-image": "Billede",
     "table-event": "Begivenhed",
     "table-date": "Dato",
@@ -1122,8 +1122,8 @@
     "poster-feed-type-single": "Enkelt",
     "poster-feed-type-subscription": "Abonnement",
     "select-mode": "Vælg visningstype",
-    "subscription-helptext": "Kombiner felterne \"sted\", \"arrangør\" og \"tags\", for at tilpasse de viste begivenheder.",
-    "filters": "Filtre",
+    "subscription-helptext": "Kombiner \"sted\", \"arrangør\", \"tags\" og \"antal slides\" for at opsætte abonnementet på begivenheder.",
+    "filters": "Vælg filtre",
     "filters-place": "Sted",
     "filter-place-helptext": "Begynd at skrive navnet på det sted du ønsker begivenheder fra, og vælg det på listen som kommer frem.",
     "filters-organizer": "Arrangør",
