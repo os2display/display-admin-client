@@ -225,6 +225,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     });
   };
 
+  useEffect(() => {
+    setSingleSearchTypeValue("");
+  }, [singleSearchType]);
+
   /* eslint-disable jsx-a11y/control-has-associated-label */
   return (
     <>
@@ -360,7 +364,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                   isSearchable
                   defaultOptions
                   loadOptions={debounceOptions}
-                  defaultInputValue={singleSearchTypeValue}
+                  value={singleSearchTypeValue}
                   onChange={(newValue) => {
                     setSingleSearchTypeValue(newValue);
                   }}
@@ -378,7 +382,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                   isSearchable
                   defaultOptions
                   loadOptions={debounceOptions}
-                  defaultInputValue={singleSearchTypeValue}
+                  value={singleSearchTypeValue}
                   onChange={(newValue) => {
                     setSingleSearchTypeValue(newValue);
                   }}
@@ -396,7 +400,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                   isSearchable
                   defaultOptions
                   loadOptions={debounceOptions}
-                  defaultInputValue={singleSearchTypeValue}
+                  value={singleSearchTypeValue}
                   onChange={(newValue) => {
                     setSingleSearchTypeValue(newValue);
                   }}
