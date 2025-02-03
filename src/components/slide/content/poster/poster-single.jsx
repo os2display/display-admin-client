@@ -12,6 +12,7 @@ import {
   getHeaders,
   loadDropdownOptionsPromise,
 } from "./poster-helper";
+import dayjs from "dayjs";
 
 /**
  * @param {object} props Props.
@@ -24,16 +25,13 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
 
   const [loadingResults, setLoadingResults] = useState(false);
-
   const [singleSearch, setSingleSearch] = useState("");
   const [singleSearchType, setSingleSearchType] = useState("title");
   const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
   const [singleSearchEvents, setSingleSearchEvents] = useState(null);
   const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
-
   const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
-  const [singleSelectedOccurrence, setSingleSelectedOccurrence] =
-    useState(null);
+  const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
 
   const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
   const optionsEndpoint = feedSource.admin[0].endpointOption ?? null;
@@ -83,18 +81,42 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   ];
 
   const handleSelectEvent = (singleEvent) => {
-    configurationChange({
+    if (!singleEvent) {
+      return;
+    }
+
+    const numberOfOccurrences = singleEvent.occurrences?.length ?? 0;
+
+    const configChange = {
       targets: [
         {
           id: "singleSelectedEvent",
-          value: singleEvent?.entityId,
-        },
-        {
-          id: "singleSelectedOccurrence",
-          value: singleEvent?.occurrences[0]?.entityId,
+          value: singleEvent.entityId,
         },
       ],
-    });
+    };
+
+    if (numberOfOccurrences === 1) {
+      configChange.targets.push({
+        id: "singleSelectedOccurrence",
+        value: singleEvent.occurrences.pop().entityId,
+      });
+    }
+
+    configurationChange(configChange);
+  };
+
+  const handleSelectOccurrence = (occurrence) => {
+    const configChange = {
+      targets: [
+        {
+          id: "singleSelectedOccurrence",
+          value: occurrence.entityId,
+        },
+      ],
+    };
+
+    configurationChange(configChange);
   };
 
   const singleSearchFetch = () => {
@@ -326,7 +348,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                 />
               </Col>
             )}
-            {(singleSearchType === "locations") && (
+            {singleSearchType === "locations" && (
               <Col>
                 <label className="form-label" htmlFor="single-search-select">
                   {t("single-search-select")}
@@ -344,7 +366,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                 />
               </Col>
             )}
-            {(singleSearchType === "organizations") && (
+            {singleSearchType === "organizations" && (
               <Col>
                 <label className="form-label" htmlFor="single-search-select">
                   {t("single-search-select")}
@@ -362,7 +384,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                 />
               </Col>
             )}
-            {(singleSearchType === "tags") && (
+            {singleSearchType === "tags" && (
               <Col>
                 <label className="form-label" htmlFor="single-search-select">
                   {t("single-search-select")}
@@ -450,34 +472,32 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
               <Col>
                 <h5>{t("choose-an-occurrence")}</h5>
                 {!singleSelectedOccurrence && (
-                  <>
-                    <table className="table table-hover text-left">
-                      <thead>
-                        <tr>
-                          <th scope="col">{t("table-date")}</th>
-                          <th scope="col">{t("table-price")}</th>
-                          <th scope="col" />
+                  <table className="table table-hover text-left">
+                    <thead>
+                      <tr>
+                        <th scope="col">{t("table-date")}</th>
+                        <th scope="col">{t("table-price")}</th>
+                        <th scope="col" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {singleSelectedEvent?.occurrences?.map((occurrence) => (
+                        <tr key={occurrence.entityId}>
+                          <td>{formatDate(occurrence.start)}</td>
+                          <td>{occurrence.ticketPriceRange}</td>
+                          <td>
+                            <Button
+                              onClick={() =>
+                                handleSelectOccurrence(occurrence)
+                              }
+                            >
+                              {t("choose-occurrence")}
+                            </Button>
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {singleSelectedEvent?.occurrences?.map((occurrence) => (
-                          <tr>
-                            <td>{occurrence.start}</td>
-                            <td>{occurrence.ticketPriceRange}</td>
-                            <td>
-                              <Button
-                                onClick={() =>
-                                  setSingleSelectedOccurrence(occurrence)
-                                }
-                              >
-                                {t("choose-occurrence")}
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </>
+                      ))}
+                    </tbody>
+                  </table>
                 )}
               </Col>
             )}
