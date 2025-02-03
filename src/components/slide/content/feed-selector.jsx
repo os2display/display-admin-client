@@ -105,7 +105,7 @@ function FeedSelector({
     }
 
     if (targets !== null) {
-      for (let i = 0; i < targets.length; i = i + 1) {
+      for (let i = 0; i < targets.length; i += 1) {
         set(configuration, targets[i].id, targets[i].value);
       }
     }

@@ -12,7 +12,6 @@ import {
   getHeaders,
   loadDropdownOptionsPromise,
 } from "./poster-helper";
-import dayjs from "dayjs";
 
 /**
  * @param {object} props Props.
@@ -31,7 +30,8 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const [singleSearchEvents, setSingleSearchEvents] = useState(null);
   const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
   const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
-  const [singleSelectedOccurrence, setSingleSelectedOccurrence] = useState(null);
+  const [singleSelectedOccurrence, setSingleSelectedOccurrence] =
+    useState(null);
 
   const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
   const optionsEndpoint = feedSource.admin[0].endpointOption ?? null;
@@ -225,6 +225,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     });
   };
 
+  /* eslint-disable jsx-a11y/control-has-associated-label */
   return (
     <>
       <h5>{t("selected-type-single")}</h5>
@@ -487,9 +488,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                           <td>{occurrence.ticketPriceRange}</td>
                           <td>
                             <Button
-                              onClick={() =>
-                                handleSelectOccurrence(occurrence)
-                              }
+                              onClick={() => handleSelectOccurrence(occurrence)}
                             >
                               {t("choose-occurrence")}
                             </Button>
@@ -506,6 +505,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
       )}
     </>
   );
+  /* eslint-enable jsx-a11y/control-has-associated-label */
 }
 
 PosterSingle.propTypes = {

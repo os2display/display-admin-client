@@ -12,6 +12,7 @@ import PosterSubscription from "./poster-subscription";
  * @param {Function} props.getValueFromConfiguration Gets a value from the feed
  *   configuration.
  * @param {Function} props.configurationChange Configuration onChange.
+ * @param {object} props.configuration Configuration.
  * @returns {object} PosterSelector component.
  */
 function PosterSelectorV2({
