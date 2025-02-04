@@ -33,9 +33,22 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const [singleSelectedOccurrence, setSingleSelectedOccurrence] =
     useState(null);
 
-  const searchEndpoint = feedSource.admin[0].endpointSearch ?? null;
-  const optionsEndpoint = feedSource.admin[0].endpointOption ?? null;
-  const entityEndpoint = feedSource.admin[0].endpointEntity ?? null;
+  const {
+    singleSelectedEvent: singleSelectedEventId = null,
+    singleSelectedOccurrence: singleSelectedOccurrenceId = null,
+    overrideTitle = "",
+    overrideSubTitle = "",
+    overrideTicketPrice = "",
+    readMoreText = "",
+    overrideReadMoreUrl = "",
+    hideTime = false,
+  } = configuration;
+
+  const { admin } = feedSource;
+
+  const searchEndpoint = admin[0].endpointSearch ?? null;
+  const optionsEndpoint = admin[0].endpointOption ?? null;
+  const entityEndpoint = admin[0].endpointEntity ?? null;
 
   const removeSingleSelected = () => {
     configurationChange({
@@ -160,12 +173,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   };
 
   useEffect(() => {
-    const occurrenceId = configuration.singleSelectedOccurrence ?? null;
-
-    if (occurrenceId !== null) {
+    if (singleSelectedOccurrenceId !== null) {
       const query = new URLSearchParams({
         entityType: "occurrences",
-        entityId: occurrenceId,
+        entityId: singleSelectedOccurrenceId,
       });
 
       fetch(`${entityEndpoint}?${query}`, {
@@ -178,15 +189,13 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     } else {
       setSingleSelectedOccurrence(null);
     }
-  }, [configuration?.singleSelectedOccurrence]);
+  }, [singleSelectedOccurrenceId]);
 
   useEffect(() => {
-    const eventId = configuration.singleSelectedEvent ?? null;
-
-    if (eventId !== null) {
+    if (singleSelectedEventId !== null) {
       const query = new URLSearchParams({
         entityType: "events",
-        entityId: eventId,
+        entityId: singleSelectedEventId,
       });
 
       fetch(`${entityEndpoint}?${query}`, {
@@ -276,42 +285,42 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                     <FormInput
                       label={t("single-override-title")}
                       name="overrideTitle"
-                      value={configuration.overrideTitle ?? ""}
+                      value={overrideTitle}
                       onChange={configurationChange}
                       className="mb-3"
                     />
                     <FormInput
                       label={t("single-override-subtitle")}
                       name="overrideSubTitle"
-                      value={configuration.overrideSubTitle ?? ""}
+                      value={overrideSubTitle}
                       onChange={configurationChange}
                       className="mb-3"
                     />
                     <FormInput
                       label={t("single-override-ticket-price")}
                       name="overrideTicketPrice"
-                      value={configuration.overrideTicketPrice ?? ""}
+                      value={overrideTicketPrice}
                       onChange={configurationChange}
                       className="mb-3"
                     />
                     <FormInput
                       label={t("single-read-more-text")}
                       name="readMoreText"
-                      value={configuration.readMoreText ?? ""}
+                      value={readMoreText}
                       onChange={configurationChange}
                       className="mb-3"
                     />
                     <FormInput
                       label={t("single-read-more-url")}
                       name="overrideReadMoreUrl"
-                      value={configuration.overrideReadMoreUrl ?? ""}
+                      value={overrideReadMoreUrl}
                       onChange={configurationChange}
                       className="mb-3"
                     />
                     <FormCheckbox
                       label={t("single-hide-time")}
                       name="hideTime"
-                      value={configuration.hideTime ?? false}
+                      value={hideTime}
                       onChange={configurationChange}
                       className="mb-3"
                     />
