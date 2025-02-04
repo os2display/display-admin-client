@@ -10,6 +10,7 @@ import FormCheckbox from "../../../util/forms/form-checkbox";
 import {
   formatDate,
   getHeaders,
+  getSingleSearchOptions,
   loadDropdownOptionsPromise,
 } from "./poster-helper";
 
@@ -51,6 +52,8 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const optionsEndpoint = firstAdminEntry.endpointOption ?? null;
   const entityEndpoint = firstAdminEntry.endpointEntity ?? null;
 
+  const singleSearchTypeOptions = getSingleSearchOptions(t);
+
   const removeSingleSelected = () => {
     configurationChange({
       targets: [
@@ -65,34 +68,6 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
       ],
     });
   };
-
-  const singleSearchTypeOptions = [
-    {
-      key: "singleSearchTypeOptions1",
-      value: "title",
-      title: t("single-search-type-title"),
-    },
-    {
-      key: "singleSearchTypeOptions2",
-      value: "url",
-      title: t("single-search-type-url"),
-    },
-    {
-      key: "singleSearchTypeOptions3",
-      value: "organizations",
-      title: t("single-search-type-organization"),
-    },
-    {
-      key: "singleSearchTypeOptions4",
-      value: "locations",
-      title: t("single-search-type-location"),
-    },
-    {
-      key: "singleSearchTypeOptions5",
-      value: "tags",
-      title: t("single-search-type-tag"),
-    },
-  ];
 
   const handleSelectEvent = (eventId, occurrenceIds = []) => {
     if (!eventId) {
@@ -214,7 +189,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const timeoutRef = useRef(null);
 
   const debounceOptions = (inputValue) => {
-    // Debounce promise.
+    // Debounce result to avoid searching while typing.
     return new Promise((resolve, reject) => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
