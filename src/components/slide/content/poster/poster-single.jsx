@@ -45,10 +45,11 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   } = configuration;
 
   const { admin } = feedSource;
+  const [firstAdminEntry] = admin;
 
-  const searchEndpoint = admin[0].endpointSearch ?? null;
-  const optionsEndpoint = admin[0].endpointOption ?? null;
-  const entityEndpoint = admin[0].endpointEntity ?? null;
+  const searchEndpoint = firstAdminEntry.endpointSearch ?? null;
+  const optionsEndpoint = firstAdminEntry.endpointOption ?? null;
+  const entityEndpoint = firstAdminEntry.endpointEntity ?? null;
 
   const removeSingleSelected = () => {
     configurationChange({
@@ -110,7 +111,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     if (occurrenceIds.length === 1) {
       configChange.targets.push({
         id: "singleSelectedOccurrence",
-        value: occurrenceIds[0].entityId,
+        value: occurrenceIds[0],
       });
     }
 
@@ -445,7 +446,13 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                   </thead>
                   <tbody>
                     {singleSearchEvents?.map(
-                      (entityId, title, imageUrls, organizer, occurrences) => (
+                      ({
+                        entityId,
+                        title,
+                        imageUrls,
+                        organizer,
+                        occurrences,
+                      }) => (
                         <tr key={entityId}>
                           <td>
                             {imageUrls?.small && (
@@ -459,7 +466,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                           <td>
                             <b>{title}</b>
                             <br />
-                            {organizer.name}
+                            {organizer?.name}
                           </td>
                           <td>
                             {occurrences?.length > 0 &&
