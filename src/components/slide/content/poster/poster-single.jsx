@@ -80,38 +80,36 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     },
   ];
 
-  const handleSelectEvent = (singleEvent) => {
-    if (!singleEvent) {
+  const handleSelectEvent = (eventId, occurrenceIds = []) => {
+    if (!eventId) {
       return;
     }
-
-    const numberOfOccurrences = singleEvent.occurrences?.length ?? 0;
 
     const configChange = {
       targets: [
         {
           id: "singleSelectedEvent",
-          value: singleEvent.entityId,
+          value: eventId,
         },
       ],
     };
 
-    if (numberOfOccurrences === 1) {
+    if (occurrenceIds.length === 1) {
       configChange.targets.push({
         id: "singleSelectedOccurrence",
-        value: singleEvent.occurrences[0].entityId,
+        value: occurrenceIds[0].entityId,
       });
     }
 
     configurationChange(configChange);
   };
 
-  const handleSelectOccurrence = (occurrence) => {
+  const handleSelectOccurrence = (occurrenceId) => {
     const configChange = {
       targets: [
         {
           id: "singleSelectedOccurrence",
-          value: occurrence.entityId,
+          value: occurrenceId,
         },
       ],
     };
@@ -229,7 +227,6 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     setSingleSearchTypeValue("");
   }, [singleSearchType]);
 
-  /* eslint-disable jsx-a11y/control-has-associated-label */
   return (
     <>
       <h5>{t("selected-type-single")}</h5>
@@ -240,14 +237,13 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
               <>
                 {singleSelectedEvent && (
                   <div>
-                    <strong>Valgt begivenhed:</strong>{" "}
-                    {singleSelectedEvent.title} (
+                    <b>Valgt begivenhed:</b> {singleSelectedEvent.title} (
                     {singleSelectedEvent?.organizer?.name})
                   </div>
                 )}
                 {singleSelectedOccurrence && (
                   <div>
-                    <strong>{t("chosen-occurrence")}:</strong>{" "}
+                    <b>{t("chosen-occurrence")}:</b>{" "}
                     {formatDate(singleSelectedOccurrence.startDate)}
                     {singleSelectedOccurrence?.ticketPriceRange &&
                       ` - ${singleSelectedOccurrence.ticketPriceRange}`}
@@ -355,7 +351,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
             )}
             {singleSearchType === "locations" && (
               <Col>
-                <label className="form-label" htmlFor="single-search-select">
+                <label
+                  className="form-label"
+                  htmlFor="single-search-select-locations"
+                >
                   {t("single-search-select")}
                 </label>
                 <AsyncSelect
@@ -373,7 +372,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
             )}
             {singleSearchType === "organizations" && (
               <Col>
-                <label className="form-label" htmlFor="single-search-select">
+                <label
+                  className="form-label"
+                  htmlFor="single-search-select-organizations"
+                >
                   {t("single-search-select")}
                 </label>
                 <AsyncSelect
@@ -391,7 +393,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
             )}
             {singleSearchType === "tags" && (
               <Col>
-                <label className="form-label" htmlFor="single-search-select">
+                <label
+                  className="form-label"
+                  htmlFor="single-search-select-tags"
+                >
                   {t("single-search-select")}
                 </label>
                 <AsyncSelect
@@ -426,38 +431,50 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                       <th scope="col">{t("table-image")}</th>
                       <th scope="col">{t("table-event")}</th>
                       <th scope="col">{t("table-date")}</th>
+                      <th scope="col" aria-label={t("table-actions")} />
                     </tr>
                   </thead>
                   <tbody>
-                    {singleSearchEvents?.map((searchEvent) => (
-                      <tr
-                        style={{ cursor: "pointer" }}
-                        key={searchEvent.entityId}
-                        onClick={() => handleSelectEvent(searchEvent)}
-                      >
-                        <td>
-                          {searchEvent?.imageUrls?.small && (
-                            <img
-                              src={searchEvent?.imageUrls?.small}
-                              alt={searchEvent?.title}
-                              style={{ maxWidth: "80px" }}
-                            />
-                          )}
-                        </td>
-                        <td>
-                          <strong>{searchEvent.title}</strong>
-                          <br />
-                          {searchEvent.organizer.name}
-                        </td>
-                        <td>
-                          {searchEvent?.occurrences?.length > 0 &&
-                            formatDate(searchEvent?.occurrences[0]?.start)}
-                          {searchEvent?.occurrences?.length > 1 && (
-                            <span>, ...</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
+                    {singleSearchEvents?.map(
+                      (entityId, title, imageUrls, organizer, occurrences) => (
+                        <tr key={entityId}>
+                          <td>
+                            {imageUrls?.small && (
+                              <img
+                                src={imageUrls?.small}
+                                alt={t("search-result-image")}
+                                style={{ maxWidth: "80px" }}
+                              />
+                            )}
+                          </td>
+                          <td>
+                            <b>{title}</b>
+                            <br />
+                            {organizer.name}
+                          </td>
+                          <td>
+                            {occurrences?.length > 0 &&
+                              formatDate(occurrences[0]?.start)}
+                            {occurrences?.length > 1 && <span>, ...</span>}
+                          </td>
+                          <td>
+                            <Button
+                              onClick={() =>
+                                handleSelectEvent(
+                                  entityId,
+                                  occurrences.map(
+                                    ({ entityId: occurrenceEntityId }) =>
+                                      occurrenceEntityId
+                                  )
+                                )
+                              }
+                            >
+                              {t("choose-event")}
+                            </Button>
+                          </td>
+                        </tr>
+                      )
+                    )}
                     {singleSearchEvents?.length === 0 && (
                       <tr>
                         <td colSpan="3">{t("no-results")}</td>
@@ -483,23 +500,25 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                       <tr>
                         <th scope="col">{t("table-date")}</th>
                         <th scope="col">{t("table-price")}</th>
-                        <th scope="col" />
+                        <th scope="col" aria-label={t("table-actions")} />
                       </tr>
                     </thead>
                     <tbody>
-                      {singleSelectedEvent?.occurrences?.map((occurrence) => (
-                        <tr key={occurrence.entityId}>
-                          <td>{formatDate(occurrence.start)}</td>
-                          <td>{occurrence.ticketPriceRange}</td>
-                          <td>
-                            <Button
-                              onClick={() => handleSelectOccurrence(occurrence)}
-                            >
-                              {t("choose-occurrence")}
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
+                      {singleSelectedEvent.occurrences.map(
+                        ({ entityId, start, ticketPriceRange }) => (
+                          <tr key={entityId}>
+                            <td>{formatDate(start)}</td>
+                            <td>{ticketPriceRange}</td>
+                            <td>
+                              <Button
+                                onClick={() => handleSelectOccurrence(entityId)}
+                              >
+                                {t("choose-occurrence")}
+                              </Button>
+                            </td>
+                          </tr>
+                        )
+                      )}
                     </tbody>
                   </table>
                 )}
@@ -510,7 +529,6 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
       )}
     </>
   );
-  /* eslint-enable jsx-a11y/control-has-associated-label */
 }
 
 PosterSingle.propTypes = {

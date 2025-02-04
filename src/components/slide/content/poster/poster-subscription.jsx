@@ -44,6 +44,7 @@ function PosterSubscription({
 
   const optionsEndpoint = feedSource.admin[0].endpointOption ?? null;
 
+  // The user can choose between 1-10 entries to display.
   const numberOptions = Array.from(Array(10).keys());
 
   useEffect(() => {
@@ -92,19 +93,19 @@ function PosterSubscription({
       itemsPerPage: subscriptionNumberValue,
     });
 
-    const places = subscriptionPlaceValue.map((option) => option.value);
+    const places = subscriptionPlaceValue.map(({ value }) => value);
 
     places.forEach((place) => {
       query.append("location", place);
     });
 
-    const organizers = subscriptionOrganizerValue.map((option) => option.value);
+    const organizers = subscriptionOrganizerValue.map(({ value }) => value);
 
     organizers.forEach((organizer) => {
       query.append("organization", organizer);
     });
 
-    const tags = subscriptionTagValue.map((option) => option.value);
+    const tags = subscriptionTagValue.map(({ value }) => value);
 
     tags.forEach((tag) => {
       query.append("tag", tag);
