@@ -6,6 +6,8 @@ import Col from "react-bootstrap/Col";
 import { formatDate, getHeaders } from "./poster-helper";
 import PosterSingleOverride from "./poster-single-override";
 import PosterSingleSearch from "./poster-single-search";
+import PosterSingleEvents from "./poster-single-events.jsx";
+import PosterSingleOccurrences from "./poster-single-occurences.jsx";
 
 /**
  * @param {object} props Props.
@@ -203,69 +205,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
 
           {singleSearchEvents && (
             <Row className="mb-2">
-              <table className="table table-hover text-left">
-                <thead>
-                  <tr>
-                    <th scope="col">{t("table-image")}</th>
-                    <th scope="col">{t("table-event")}</th>
-                    <th scope="col">{t("table-date")}</th>
-                    <th scope="col" aria-label={t("table-actions")} />
-                  </tr>
-                </thead>
-                <tbody>
-                  {singleSearchEvents?.map(
-                    ({
-                      entityId,
-                      title,
-                      imageUrls,
-                      organizer,
-                      occurrences,
-                    }) => (
-                      <tr key={entityId}>
-                        <td>
-                          {imageUrls?.small && (
-                            <img
-                              src={imageUrls?.small}
-                              alt={t("search-result-image")}
-                              style={{ maxWidth: "80px" }}
-                            />
-                          )}
-                        </td>
-                        <td>
-                          <b>{title}</b>
-                          <br />
-                          {organizer?.name}
-                        </td>
-                        <td>
-                          {occurrences?.length > 0 &&
-                            formatDate(occurrences[0]?.start)}
-                          {occurrences?.length > 1 && <span>, ...</span>}
-                        </td>
-                        <td>
-                          <Button
-                            onClick={() =>
-                              handleSelectEvent(
-                                entityId,
-                                occurrences.map(
-                                  ({ entityId: occurrenceEntityId }) =>
-                                    occurrenceEntityId
-                                )
-                              )
-                            }
-                          >
-                            {t("choose-event")}
-                          </Button>
-                        </td>
-                      </tr>
-                    )
-                  )}
-                  {singleSearchEvents?.length === 0 && (
-                    <tr>
-                      <td colSpan="3">{t("no-results")}</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+              <PosterSingleEvents
+                handleSelectEvent={handleSelectEvent}
+                events={singleSearchEvents}
+              />
             </Row>
           )}
         </>
@@ -273,31 +216,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
 
       {singleSelectedEvent !== null && singleSelectedOccurrence === null && (
         <Row className="mb-2">
-          <h5>{t("choose-an-occurrence")}</h5>
-          <table className="table table-hover text-left">
-            <thead>
-              <tr>
-                <th scope="col">{t("table-date")}</th>
-                <th scope="col">{t("table-price")}</th>
-                <th scope="col" aria-label={t("table-actions")} />
-              </tr>
-            </thead>
-            <tbody>
-              {singleSelectedEvent.occurrences.map(
-                ({ entityId, start, ticketPriceRange }) => (
-                  <tr key={entityId}>
-                    <td>{formatDate(start)}</td>
-                    <td>{ticketPriceRange}</td>
-                    <td>
-                      <Button onClick={() => handleSelectOccurrence(entityId)}>
-                        {t("choose-occurrence")}
-                      </Button>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
+          <PosterSingleOccurrences
+            occurrences={singleSelectedEvent.occurrences}
+            handleSelectOccurrence={handleSelectOccurrence}
+          />
         </Row>
       )}
     </>
