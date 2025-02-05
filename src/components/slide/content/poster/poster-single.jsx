@@ -6,8 +6,8 @@ import Col from "react-bootstrap/Col";
 import { formatDate, getHeaders } from "./poster-helper";
 import PosterSingleOverride from "./poster-single-override";
 import PosterSingleSearch from "./poster-single-search";
-import PosterSingleEvents from "./poster-single-events.jsx";
-import PosterSingleOccurrences from "./poster-single-occurences.jsx";
+import PosterSingleEvents from "./poster-single-events";
+import PosterSingleOccurrences from "./poster-single-occurences";
 
 /**
  * @param {object} props Props.
