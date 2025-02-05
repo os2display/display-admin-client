@@ -61,9 +61,6 @@ function PosterSingleSearch({
       case "title":
         params.title = singleSearch;
         break;
-      case "url":
-        params.url = singleSearch;
-        break;
       case "tags":
         params.tag = singleSearchTypeValueId;
         break;
@@ -100,21 +97,16 @@ function PosterSingleSearch({
     },
     {
       key: "singleSearchTypeOptions2",
-      value: "url",
-      title: t("single-search-type-url"),
-    },
-    {
-      key: "singleSearchTypeOptions3",
       value: "organizations",
       title: t("single-search-type-organization"),
     },
     {
-      key: "singleSearchTypeOptions4",
+      key: "singleSearchTypeOptions3",
       value: "locations",
       title: t("single-search-type-location"),
     },
     {
-      key: "singleSearchTypeOptions5",
+      key: "singleSearchTypeOptions4",
       value: "tags",
       title: t("single-search-type-tag"),
     },
@@ -136,10 +128,10 @@ function PosterSingleSearch({
           allowNull={false}
         />
       </Col>
-      {(singleSearchType === "title" || singleSearchType === "url") && (
+      {singleSearchType === "title" && (
         <Col>
           <FormInput
-            label={t("single-search-text")}
+            label={t("single-search-title")}
             name="poster-search"
             value={singleSearch}
             onChange={({ target }) => setSingleSearch(target.value)}

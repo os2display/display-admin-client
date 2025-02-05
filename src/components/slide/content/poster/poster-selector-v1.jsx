@@ -19,7 +19,7 @@ import localStorageKeys from "../../../util/local-storage-keys";
  * @param {Function} props.configurationChange Configuration onChange.
  * @returns {object} PosterSelector component.
  */
-function PosterSelector({
+function PosterSelectorV1({
   feedSource,
   getValueFromConfiguration,
   configurationChange,
@@ -890,7 +890,7 @@ function PosterSelector({
   /* eslint-enable jsx-a11y/control-has-associated-label */
 }
 
-PosterSelector.propTypes = {
+PosterSelectorV1.propTypes = {
   getValueFromConfiguration: PropTypes.func.isRequired,
   configurationChange: PropTypes.func.isRequired,
   feedSource: PropTypes.shape({
@@ -903,4 +903,4 @@ PosterSelector.propTypes = {
   }).isRequired,
 };
 
-export default PosterSelector;
+export default PosterSelectorV1;
