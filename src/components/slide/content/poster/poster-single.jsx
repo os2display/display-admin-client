@@ -1,18 +1,11 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Row, Spinner } from "react-bootstrap";
-import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
-import Select from "../../../util/forms/select";
-import FormInput from "../../../util/forms/form-input";
-import {
-  formatDate,
-  getHeaders,
-  getSingleSearchOptions,
-  loadDropdownOptionsPromise,
-} from "./poster-helper";
+import { formatDate, getHeaders } from "./poster-helper";
 import PosterSingleOverride from "./poster-single-override";
+import PosterSingleSearch from "./poster-single-search";
 
 /**
  * @param {object} props Props.
@@ -25,14 +18,11 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
 
   const [loadingResults, setLoadingResults] = useState(false);
-  const [singleSearch, setSingleSearch] = useState("");
-  const [singleSearchType, setSingleSearchType] = useState("title");
-  const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
-  const [singleSearchEvents, setSingleSearchEvents] = useState(null);
   const [singleDisplayOverrides, setSingleDisplayOverrides] = useState(false);
   const [singleSelectedEvent, setSingleSelectedEvent] = useState(null);
   const [singleSelectedOccurrence, setSingleSelectedOccurrence] =
     useState(null);
+  const [singleSearchEvents, setSingleSearchEvents] = useState(null);
 
   const {
     singleSelectedEvent: singleSelectedEventId = null,
@@ -42,11 +32,9 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const { admin } = feedSource;
   const [firstAdminEntry] = admin;
 
-  const searchEndpoint = firstAdminEntry.endpointSearch ?? null;
-  const optionsEndpoint = firstAdminEntry.endpointOption ?? null;
   const entityEndpoint = firstAdminEntry.endpointEntity ?? null;
-
-  const singleSearchTypeOptions = getSingleSearchOptions(t);
+  const optionsEndpoint = firstAdminEntry.endpointOption ?? null;
+  const searchEndpoint = firstAdminEntry.endpointSearch ?? null;
 
   const removeSingleSelected = () => {
     configurationChange({
@@ -100,48 +88,6 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     configurationChange(configChange);
   };
 
-  const singleSearchFetch = () => {
-    const params = {
-      type: "events",
-    };
-
-    const singleSearchTypeValueId = singleSearchTypeValue?.value;
-
-    switch (singleSearchType) {
-      case "title":
-        params.title = singleSearch;
-        break;
-      case "url":
-        params.url = singleSearch;
-        break;
-      case "tags":
-        params.tag = singleSearchTypeValueId;
-        break;
-      case "organizations":
-        params.organization = singleSearchTypeValueId;
-        break;
-      case "locations":
-        params.location = singleSearchTypeValueId;
-        break;
-      default:
-    }
-
-    setLoadingResults(true);
-
-    const query = new URLSearchParams(params);
-
-    fetch(`${searchEndpoint}?${query}`, {
-      headers: getHeaders(),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setSingleSearchEvents(data);
-      })
-      .finally(() => {
-        setLoadingResults(false);
-      });
-  };
-
   useEffect(() => {
     if (singleSelectedOccurrenceId !== null) {
       const query = new URLSearchParams({
@@ -179,32 +125,6 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
       setSingleSelectedEvent(null);
     }
   }, [singleSelectedEventId]);
-
-  const timeoutRef = useRef(null);
-
-  const debounceOptions = (inputValue) => {
-    // Debounce result to avoid searching while typing.
-    return new Promise((resolve, reject) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(() => {
-        loadDropdownOptionsPromise(
-          optionsEndpoint,
-          getHeaders(),
-          inputValue,
-          singleSearchType
-        )
-          .then((data) => resolve(data))
-          .catch((reason) => reject(reason));
-      }, 500);
-    });
-  };
-
-  useEffect(() => {
-    setSingleSearchTypeValue("");
-  }, [singleSearchType]);
 
   return (
     <>
@@ -262,215 +182,123 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
         </>
       )}
 
-      {(!singleSelectedEvent || !singleSelectedOccurrence) && (
+      {singleSelectedEvent === null && (
         <>
           <Row className="mb-2">
             <h5 className="mt-2">{t("search-for-event")}</h5>
           </Row>
-          <Row className="mb-2">
-            <Col>
-              <Select
-                value={singleSearchType}
-                onChange={({ target }) => setSingleSearchType(target.value)}
-                label={t("single-search-type")}
-                options={singleSearchTypeOptions}
-                name="poster-search-type"
-                allowNull={false}
-              />
-            </Col>
-            {(singleSearchType === "title" || singleSearchType === "url") && (
-              <Col>
-                <FormInput
-                  label={t("single-search-text")}
-                  name="poster-search"
-                  value={singleSearch}
-                  onChange={({ target }) => setSingleSearch(target.value)}
-                />
-              </Col>
-            )}
-            {singleSearchType === "locations" && (
-              <Col>
-                <label
-                  className="form-label"
-                  htmlFor="single-search-select-locations"
-                >
-                  {t("single-search-select")}
-                </label>
-                <AsyncSelect
-                  id="single-search-select-locations"
-                  isClearable
-                  isSearchable
-                  defaultOptions
-                  loadOptions={debounceOptions}
-                  value={singleSearchTypeValue}
-                  onChange={(newValue) => {
-                    setSingleSearchTypeValue(newValue);
-                  }}
-                />
-              </Col>
-            )}
-            {singleSearchType === "organizations" && (
-              <Col>
-                <label
-                  className="form-label"
-                  htmlFor="single-search-select-organizations"
-                >
-                  {t("single-search-select")}
-                </label>
-                <AsyncSelect
-                  id="single-search-select-organizations"
-                  isClearable
-                  isSearchable
-                  defaultOptions
-                  loadOptions={debounceOptions}
-                  value={singleSearchTypeValue}
-                  onChange={(newValue) => {
-                    setSingleSearchTypeValue(newValue);
-                  }}
-                />
-              </Col>
-            )}
-            {singleSearchType === "tags" && (
-              <Col>
-                <label
-                  className="form-label"
-                  htmlFor="single-search-select-tags"
-                >
-                  {t("single-search-select")}
-                </label>
-                <AsyncSelect
-                  id="single-search-select-tags"
-                  isClearable
-                  isSearchable
-                  defaultOptions
-                  loadOptions={debounceOptions}
-                  value={singleSearchTypeValue}
-                  onChange={(newValue) => {
-                    setSingleSearchTypeValue(newValue);
-                  }}
-                />
-              </Col>
-            )}
-            <Col className="d-flex align-items-end">
-              <Button
-                onClick={singleSearchFetch}
-                className="mt-3"
-                variant="success"
-              >
-                {t("single-search-button")}
-              </Button>
-            </Col>
-          </Row>
-          <Row className="mb-2">
-            {!singleSelectedEvent && singleSearchEvents !== null && (
-              <Col>
-                <table className="table table-hover text-left">
-                  <thead>
-                    <tr>
-                      <th scope="col">{t("table-image")}</th>
-                      <th scope="col">{t("table-event")}</th>
-                      <th scope="col">{t("table-date")}</th>
-                      <th scope="col" aria-label={t("table-actions")} />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {singleSearchEvents?.map(
-                      ({
-                        entityId,
-                        title,
-                        imageUrls,
-                        organizer,
-                        occurrences,
-                      }) => (
-                        <tr key={entityId}>
-                          <td>
-                            {imageUrls?.small && (
-                              <img
-                                src={imageUrls?.small}
-                                alt={t("search-result-image")}
-                                style={{ maxWidth: "80px" }}
-                              />
-                            )}
-                          </td>
-                          <td>
-                            <b>{title}</b>
-                            <br />
-                            {organizer?.name}
-                          </td>
-                          <td>
-                            {occurrences?.length > 0 &&
-                              formatDate(occurrences[0]?.start)}
-                            {occurrences?.length > 1 && <span>, ...</span>}
-                          </td>
-                          <td>
-                            <Button
-                              onClick={() =>
-                                handleSelectEvent(
-                                  entityId,
-                                  occurrences.map(
-                                    ({ entityId: occurrenceEntityId }) =>
-                                      occurrenceEntityId
-                                  )
+
+          <PosterSingleSearch
+            optionsEndpoint={optionsEndpoint}
+            searchEndpoint={searchEndpoint}
+            setLoading={setLoadingResults}
+            setResult={setSingleSearchEvents}
+          />
+
+          {loadingResults && (
+            <Row className="mb-2">
+              <Spinner className="mt-3" animation="border" />
+            </Row>
+          )}
+
+          {singleSearchEvents && (
+            <Row className="mb-2">
+              <table className="table table-hover text-left">
+                <thead>
+                  <tr>
+                    <th scope="col">{t("table-image")}</th>
+                    <th scope="col">{t("table-event")}</th>
+                    <th scope="col">{t("table-date")}</th>
+                    <th scope="col" aria-label={t("table-actions")} />
+                  </tr>
+                </thead>
+                <tbody>
+                  {singleSearchEvents?.map(
+                    ({
+                      entityId,
+                      title,
+                      imageUrls,
+                      organizer,
+                      occurrences,
+                    }) => (
+                      <tr key={entityId}>
+                        <td>
+                          {imageUrls?.small && (
+                            <img
+                              src={imageUrls?.small}
+                              alt={t("search-result-image")}
+                              style={{ maxWidth: "80px" }}
+                            />
+                          )}
+                        </td>
+                        <td>
+                          <b>{title}</b>
+                          <br />
+                          {organizer?.name}
+                        </td>
+                        <td>
+                          {occurrences?.length > 0 &&
+                            formatDate(occurrences[0]?.start)}
+                          {occurrences?.length > 1 && <span>, ...</span>}
+                        </td>
+                        <td>
+                          <Button
+                            onClick={() =>
+                              handleSelectEvent(
+                                entityId,
+                                occurrences.map(
+                                  ({ entityId: occurrenceEntityId }) =>
+                                    occurrenceEntityId
                                 )
-                              }
-                            >
-                              {t("choose-event")}
-                            </Button>
-                          </td>
-                        </tr>
-                      )
-                    )}
-                    {singleSearchEvents?.length === 0 && (
-                      <tr>
-                        <td colSpan="3">{t("no-results")}</td>
+                              )
+                            }
+                          >
+                            {t("choose-event")}
+                          </Button>
+                        </td>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
-              </Col>
-            )}
-
-            {loadingResults && (
-              <Col>
-                <Spinner className="mt-3" animation="border" />
-              </Col>
-            )}
-
-            {singleSelectedEvent !== null && (
-              <Col>
-                <h5>{t("choose-an-occurrence")}</h5>
-                {!singleSelectedOccurrence && (
-                  <table className="table table-hover text-left">
-                    <thead>
-                      <tr>
-                        <th scope="col">{t("table-date")}</th>
-                        <th scope="col">{t("table-price")}</th>
-                        <th scope="col" aria-label={t("table-actions")} />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {singleSelectedEvent.occurrences.map(
-                        ({ entityId, start, ticketPriceRange }) => (
-                          <tr key={entityId}>
-                            <td>{formatDate(start)}</td>
-                            <td>{ticketPriceRange}</td>
-                            <td>
-                              <Button
-                                onClick={() => handleSelectOccurrence(entityId)}
-                              >
-                                {t("choose-occurrence")}
-                              </Button>
-                            </td>
-                          </tr>
-                        )
-                      )}
-                    </tbody>
-                  </table>
-                )}
-              </Col>
-            )}
-          </Row>
+                    )
+                  )}
+                  {singleSearchEvents?.length === 0 && (
+                    <tr>
+                      <td colSpan="3">{t("no-results")}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </Row>
+          )}
         </>
+      )}
+
+      {singleSelectedEvent !== null && singleSelectedOccurrence === null && (
+        <Row className="mb-2">
+          <h5>{t("choose-an-occurrence")}</h5>
+          <table className="table table-hover text-left">
+            <thead>
+              <tr>
+                <th scope="col">{t("table-date")}</th>
+                <th scope="col">{t("table-price")}</th>
+                <th scope="col" aria-label={t("table-actions")} />
+              </tr>
+            </thead>
+            <tbody>
+              {singleSelectedEvent.occurrences.map(
+                ({ entityId, start, ticketPriceRange }) => (
+                  <tr key={entityId}>
+                    <td>{formatDate(start)}</td>
+                    <td>{ticketPriceRange}</td>
+                    <td>
+                      <Button onClick={() => handleSelectOccurrence(entityId)}>
+                        {t("choose-occurrence")}
+                      </Button>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        </Row>
       )}
     </>
   );

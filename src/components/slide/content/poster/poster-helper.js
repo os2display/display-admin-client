@@ -80,41 +80,10 @@ const getHeaders = () => {
   return headers;
 };
 
-const getSingleSearchOptions = (t) => {
-  return [
-    {
-      key: "singleSearchTypeOptions1",
-      value: "title",
-      title: t("single-search-type-title"),
-    },
-    {
-      key: "singleSearchTypeOptions2",
-      value: "url",
-      title: t("single-search-type-url"),
-    },
-    {
-      key: "singleSearchTypeOptions3",
-      value: "organizations",
-      title: t("single-search-type-organization"),
-    },
-    {
-      key: "singleSearchTypeOptions4",
-      value: "locations",
-      title: t("single-search-type-location"),
-    },
-    {
-      key: "singleSearchTypeOptions5",
-      value: "tags",
-      title: t("single-search-type-tag"),
-    },
-  ];
-};
-
 export {
   formatDate,
   capitalize,
   loadDropdownOptions,
   getHeaders,
   loadDropdownOptionsPromise,
-  getSingleSearchOptions,
 };
