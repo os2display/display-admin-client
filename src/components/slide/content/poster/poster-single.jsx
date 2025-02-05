@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Row, Spinner } from "react-bootstrap";
+import { Alert, Button, Card, Row, Spinner } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import { formatDate, getHeaders } from "./poster-helper";
 import PosterSingleOverride from "./poster-single-override";
@@ -131,6 +131,13 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   return (
     <>
       <h5>{t("selected-type-single")}</h5>
+
+      <Row className="m-1 mt-2 mb-3">
+        <Alert variant="warning" className="mb-0">
+          {t("preview-updates-after-save")}
+        </Alert>
+      </Row>
+
       {(singleSelectedEvent || singleSelectedOccurrence) && (
         <>
           <Row className="mb-3">
