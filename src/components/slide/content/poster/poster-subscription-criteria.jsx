@@ -87,6 +87,7 @@ function PosterSubscriptionCriteria({
             isSearchable
             defaultOptions
             isMulti
+            placeholder={t("single-search-placeholder")}
             loadOptions={(inputValue) =>
               debounceOptions(inputValue, "locations")
             }
@@ -112,6 +113,7 @@ function PosterSubscriptionCriteria({
             isSearchable
             defaultOptions
             isMulti
+            placeholder={t("single-search-placeholder")}
             loadOptions={(inputValue) =>
               debounceOptions(inputValue, "organizations")
             }
@@ -137,6 +139,7 @@ function PosterSubscriptionCriteria({
             isSearchable
             defaultOptions
             isMulti
+            placeholder={t("single-search-placeholder")}
             loadOptions={(inputValue) => debounceOptions(inputValue, "tags")}
             value={subscriptionTagValue}
             onChange={(newValue) => {
