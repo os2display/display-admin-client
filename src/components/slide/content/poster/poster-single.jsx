@@ -6,13 +6,13 @@ import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import Select from "../../../util/forms/select";
 import FormInput from "../../../util/forms/form-input";
-import FormCheckbox from "../../../util/forms/form-checkbox";
 import {
   formatDate,
   getHeaders,
   getSingleSearchOptions,
   loadDropdownOptionsPromise,
 } from "./poster-helper";
+import PosterSingleOverride from "./poster-single-override";
 
 /**
  * @param {object} props Props.
@@ -37,12 +37,6 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
   const {
     singleSelectedEvent: singleSelectedEventId = null,
     singleSelectedOccurrence: singleSelectedOccurrenceId = null,
-    overrideTitle = "",
-    overrideSubTitle = "",
-    overrideTicketPrice = "",
-    readMoreText = "",
-    overrideReadMoreUrl = "",
-    hideTime = false,
   } = configuration;
 
   const { admin } = feedSource;
@@ -184,7 +178,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
     } else {
       setSingleSelectedEvent(null);
     }
-  }, [configuration?.singleSelectedEvent]);
+  }, [singleSelectedEventId]);
 
   const timeoutRef = useRef(null);
 
@@ -222,7 +216,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
               <>
                 {singleSelectedEvent && (
                   <div>
-                    <b>Valgt begivenhed:</b> {singleSelectedEvent.title} (
+                    <b>{t("chosen-event")}:</b> {singleSelectedEvent.title} (
                     {singleSelectedEvent?.organizer?.name})
                   </div>
                 )}
@@ -257,50 +251,10 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
                     : t("display-overrides")}
                 </Button>
                 {singleDisplayOverrides && (
-                  <>
-                    <FormInput
-                      label={t("single-override-title")}
-                      name="overrideTitle"
-                      value={overrideTitle}
-                      onChange={configurationChange}
-                      className="mb-3"
-                    />
-                    <FormInput
-                      label={t("single-override-subtitle")}
-                      name="overrideSubTitle"
-                      value={overrideSubTitle}
-                      onChange={configurationChange}
-                      className="mb-3"
-                    />
-                    <FormInput
-                      label={t("single-override-ticket-price")}
-                      name="overrideTicketPrice"
-                      value={overrideTicketPrice}
-                      onChange={configurationChange}
-                      className="mb-3"
-                    />
-                    <FormInput
-                      label={t("single-read-more-text")}
-                      name="readMoreText"
-                      value={readMoreText}
-                      onChange={configurationChange}
-                      className="mb-3"
-                    />
-                    <FormInput
-                      label={t("single-read-more-url")}
-                      name="overrideReadMoreUrl"
-                      value={overrideReadMoreUrl}
-                      onChange={configurationChange}
-                      className="mb-3"
-                    />
-                    <FormCheckbox
-                      label={t("single-hide-time")}
-                      name="hideTime"
-                      value={hideTime}
-                      onChange={configurationChange}
-                      className="mb-3"
-                    />
-                  </>
+                  <PosterSingleOverride
+                    onChange={configurationChange}
+                    configuration={configuration}
+                  />
                 )}
               </Card>
             </Col>
