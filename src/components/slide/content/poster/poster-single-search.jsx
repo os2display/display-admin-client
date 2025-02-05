@@ -151,6 +151,7 @@ function PosterSingleSearch({
             isClearable
             isSearchable
             defaultOptions
+            placeholder={t("single-search-placeholder")}
             loadOptions={debounceOptions}
             value={singleSearchTypeValue}
             onChange={(newValue) => {
@@ -172,6 +173,7 @@ function PosterSingleSearch({
             isClearable
             isSearchable
             defaultOptions
+            placeholder={t("single-search-placeholder")}
             loadOptions={debounceOptions}
             value={singleSearchTypeValue}
             onChange={(newValue) => {
@@ -190,6 +192,7 @@ function PosterSingleSearch({
             isClearable
             isSearchable
             defaultOptions
+            placeholder={t("single-search-placeholder")}
             loadOptions={debounceOptions}
             value={singleSearchTypeValue}
             onChange={(newValue) => {
