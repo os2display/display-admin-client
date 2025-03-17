@@ -29,7 +29,7 @@ jobs:
         run: |
           docker network create frontend
           docker compose run --rm node yarn install
-          docker compose run --rm node yarn check-coding-standards
+          docker compose run --rm node yarn check-coding-standards-actions
 
   playwright-tests:
     name: Playwright
@@ -55,7 +55,7 @@ jobs:
           docker compose run --rm playwright npx playwright test --retries 3
 
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report

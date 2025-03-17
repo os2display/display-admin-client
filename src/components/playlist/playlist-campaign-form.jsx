@@ -82,7 +82,7 @@ function PlaylistCampaignForm({
             type="text"
             label={t("playlist-campaign-form.playlist-description-label")}
             placeholder={t(
-              "playlist-campaign-form.playlist-description-placeholder",
+              "playlist-campaign-form.playlist-description-placeholder"
             )}
             value={playlist.description}
             onChange={handleInput}

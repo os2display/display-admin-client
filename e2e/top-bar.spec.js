@@ -99,7 +99,7 @@ test.describe("Nav items loads", () => {
     await expect(page.locator("#basic-navbar-nav")).toBeVisible();
     await expect(
       page.locator("#basic-navbar-nav").locator(".nav-item")
-    ).toHaveCount(13);
+    ).toHaveCount(14);
     await expect(
       page.locator("#basic-navbar-nav").locator(".nav-add-new")
     ).toHaveCount(3);
