@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 
 - [#271](https://github.com/os2display/display-admin-client/pull/271)
   - Added new feed source: Eventdatabasen v2.
+
+## [2.2.0] - 2025-03-17
+
 - [#273](https://github.com/os2display/display-admin-client/pull/273)
   - Fixed calendar api feed source config endpoint.
 - [#272](https://github.com/os2display/display-admin-client/pull/272)
