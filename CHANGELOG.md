@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 - [#279](https://github.com/os2display/display-admin-client/pull/279)
   - Eventdatabase v2 feed source - Change subscription endpoint.
+  - Eventdatabase v2 feed source - Fixed options load.
 - [#271](https://github.com/os2display/display-admin-client/pull/271)
   - Added new feed source: Eventdatabasen v2.
 

@@ -1,8 +1,9 @@
 import AsyncSelect from "react-select/async";
-import { React, useRef } from "react";
+import {React, useEffect, useRef, useState} from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { getHeaders, loadDropdownOptionsPromise } from "./poster-helper";
+import {MultiSelect} from "react-multi-select-component";
 
 /**
  * @param {object} props The props.
@@ -27,47 +28,35 @@ function PosterSubscriptionCriteria({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
 
-  const locationTimeoutRef = useRef(null);
-  const organizationTimeoutRef = useRef(null);
-  const tagTimeoutRef = useRef(null);
-
   // The user can choose between 1-10 entries to display.
   const numberOptions = Array.from(Array(10).keys());
 
-  const debounceOptions = (inputValue, type) => {
-    // Debounce promise.
-    return new Promise((resolve, reject) => {
-      let timeoutRef = null;
+  const [locations, setLocations] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
 
-      switch (type) {
-        case "locations":
-          timeoutRef = locationTimeoutRef;
-          break;
-        case "organizations":
-          timeoutRef = organizationTimeoutRef;
-          break;
-        case "tags":
-          timeoutRef = tagTimeoutRef;
-          break;
-        default:
-          return;
-      }
+  useEffect(() => {
+    loadDropdownOptionsPromise(optionsEndpoint, getHeaders(), "", "tags").then(
+      (r) => setTags(r)
+    );
 
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+    loadDropdownOptionsPromise(
+      optionsEndpoint,
+      getHeaders(),
+      "",
+      "locations"
+    ).then((r) => setLocations(r));
 
-      timeoutRef.current = setTimeout(() => {
-        loadDropdownOptionsPromise(
-          optionsEndpoint,
-          getHeaders(),
-          inputValue,
-          type
-        )
-          .then((data) => resolve(data))
-          .catch((reason) => reject(reason));
-      }, 500);
-    });
+    loadDropdownOptionsPromise(
+      optionsEndpoint,
+      getHeaders(),
+      "",
+      "organizations"
+    ).then((r) => setOrganizations(r));
+  }, []);
+
+  const changeData = (field, newValue) => {
+    handleSelect(field, newValue);
   };
 
   return (
@@ -76,25 +65,22 @@ function PosterSubscriptionCriteria({
       <div className="mb-2">
         <div className="form-group">
           <label
-            htmlFor="os2display-poster--select-subscription-places"
+            htmlFor="select-subscription-places"
             className="form-label"
           >
             {t("filters-place")}
           </label>
-          <AsyncSelect
+          <MultiSelect
+            isCreatable={false}
             id="subscription-search-place"
-            isClearable
-            isSearchable
-            defaultOptions
-            isMulti
-            placeholder={t("single-search-placeholder")}
-            loadOptions={(inputValue) =>
-              debounceOptions(inputValue, "locations")
-            }
-            value={subscriptionPlaceValue}
-            onChange={(newValue) => {
-              handleSelect("subscriptionPlaceValue", newValue);
-            }}
+            label={t("subscription-search-select")}
+            name="subscriptionPlaceValue"
+            options={locations}
+            hasSelectAll={false}
+            onChange={(newValue) => handleSelect('subscriptionPlaceValue', newValue)}
+            value={subscriptionPlaceValue ?? []}
+            placeholder={t("subscription-search-placeholder")}
+            labelledBy="select-subscription-places"
           />
         </div>
       </div>
@@ -107,20 +93,17 @@ function PosterSubscriptionCriteria({
           >
             {t("filters-organizer")}
           </label>
-          <AsyncSelect
-            id="subscription-search-place"
-            isClearable
-            isSearchable
-            defaultOptions
-            isMulti
-            placeholder={t("single-search-placeholder")}
-            loadOptions={(inputValue) =>
-              debounceOptions(inputValue, "organizations")
-            }
-            value={subscriptionOrganizerValue}
-            onChange={(newValue) => {
-              handleSelect("subscriptionOrganizerValue", newValue);
-            }}
+          <MultiSelect
+            isCreatable={false}
+            id="subscription-search-organizer"
+            label={t("subscription-search-select")}
+            name="subscriptionOrganizerValue"
+            options={organizations}
+            hasSelectAll={false}
+            onChange={(newValue) => handleSelect('subscriptionOrganizerValue', newValue[0])}
+            value={subscriptionOrganizerValue ?? []}
+            placeholder={t("subscription-search-placeholder")}
+            labelledBy="select-subscription-organizers"
           />
         </div>
       </div>
@@ -133,18 +116,17 @@ function PosterSubscriptionCriteria({
           >
             {t("filters-tag")}
           </label>
-          <AsyncSelect
-            id="subscription-search-tag"
-            isClearable
-            isSearchable
-            defaultOptions
-            isMulti
-            placeholder={t("single-search-placeholder")}
-            loadOptions={(inputValue) => debounceOptions(inputValue, "tags")}
-            value={subscriptionTagValue}
-            onChange={(newValue) => {
-              handleSelect("subscriptionTagValue", newValue);
-            }}
+          <MultiSelect
+            isCreatable={false}
+            id="subscription-search-tags"
+            label={t("subscription-search-select")}
+            name="subscriptionTagValue"
+            options={tags}
+            hasSelectAll={false}
+            onChange={(newValue) => handleSelect('subscriptionTagValue', newValue)}
+            value={subscriptionTagValue ?? []}
+            placeholder={t("subscription-search-placeholder")}
+            labelledBy="select-subscription-tags"
           />
         </div>
       </div>

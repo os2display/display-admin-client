@@ -1,9 +1,10 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import AsyncSelect from "react-select/async";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
+import { MultiSelect } from "react-multi-select-component";
+import Form from "react-bootstrap/Form";
 import FormInput from "../../../util/forms/form-input";
 import Select from "../../../util/forms/select";
 import { getHeaders, loadDropdownOptionsPromise } from "./poster-helper";
@@ -28,27 +29,29 @@ function PosterSingleSearch({
   const [singleSearchType, setSingleSearchType] = useState("title");
   const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
 
-  const timeoutRef = useRef(null);
+  const [locations, setLocations] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
 
-  const debounceOptions = (inputValue) => {
-    // Debounce result to avoid searching while typing.
-    return new Promise((resolve, reject) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  useEffect(() => {
+    loadDropdownOptionsPromise(optionsEndpoint, getHeaders(), "", "tags").then(
+      (r) => setTags(r)
+    );
 
-      timeoutRef.current = setTimeout(() => {
-        loadDropdownOptionsPromise(
-          optionsEndpoint,
-          getHeaders(),
-          inputValue,
-          singleSearchType
-        )
-          .then((data) => resolve(data))
-          .catch((reason) => reject(reason));
-      }, 500);
-    });
-  };
+    loadDropdownOptionsPromise(
+      optionsEndpoint,
+      getHeaders(),
+      "",
+      "locations"
+    ).then((r) => setLocations(r));
+
+    loadDropdownOptionsPromise(
+      optionsEndpoint,
+      getHeaders(),
+      "",
+      "organizations"
+    ).then((r) => setOrganizations(r));
+  }, []);
 
   const singleSearchFetch = () => {
     const params = {
@@ -112,6 +115,18 @@ function PosterSingleSearch({
     },
   ];
 
+  /**
+   * A callback on changed data.
+   *
+   * @param {Array} data The data to call back with
+   */
+  const changeData = (data) => {
+    if (data?.length > 0) {
+      const index = data?.length > 1 ? 1 : 0;
+      setSingleSearchTypeValue(data[index]);
+    }
+  };
+
   useEffect(() => {
     setSingleSearchTypeValue("");
   }, [singleSearchType]);
@@ -140,64 +155,53 @@ function PosterSingleSearch({
       )}
       {singleSearchType === "locations" && (
         <Col>
-          <label
-            className="form-label"
-            htmlFor="single-search-select-locations"
-          >
+          <Form.Label htmlFor="single-search-select-locations">
             {t("single-search-select")}
-          </label>
-          <AsyncSelect
+          </Form.Label>
+          <MultiSelect
             id="single-search-select-locations"
-            isClearable
-            isSearchable
-            defaultOptions
+            label={t("single-search-select")}
+            name="locations"
+            onChange={changeData}
+            options={locations}
+            value={singleSearchTypeValue ? [singleSearchTypeValue] : []}
             placeholder={t("single-search-placeholder")}
-            loadOptions={debounceOptions}
-            value={singleSearchTypeValue}
-            onChange={(newValue) => {
-              setSingleSearchTypeValue(newValue);
-            }}
+            labelledBy="single-search-select-locations"
           />
         </Col>
       )}
       {singleSearchType === "organizations" && (
         <Col>
-          <label
-            className="form-label"
-            htmlFor="single-search-select-organizations"
-          >
+          <Form.Label htmlFor="single-search-select-organizations">
             {t("single-search-select")}
-          </label>
-          <AsyncSelect
+          </Form.Label>
+          <MultiSelect
             id="single-search-select-organizations"
-            isClearable
-            isSearchable
-            defaultOptions
+            label={t("single-search-select")}
+            name="organizations"
+            singleSelect
+            options={organizations}
+            onChange={changeData}
+            value={singleSearchTypeValue ? [singleSearchTypeValue] : []}
             placeholder={t("single-search-placeholder")}
-            loadOptions={debounceOptions}
-            value={singleSearchTypeValue}
-            onChange={(newValue) => {
-              setSingleSearchTypeValue(newValue);
-            }}
+            labelledBy="single-search-select-organizations"
           />
         </Col>
       )}
       {singleSearchType === "tags" && (
         <Col>
-          <label className="form-label" htmlFor="single-search-select-tags">
+          <Form.Label htmlFor="single-search-select-tags">
             {t("single-search-select")}
-          </label>
-          <AsyncSelect
+          </Form.Label>
+          <MultiSelect
             id="single-search-select-tags"
-            isClearable
-            isSearchable
-            defaultOptions
+            label={t("single-search-select")}
+            name="tags"
+            options={tags}
+            onChange={changeData}
+            value={singleSearchTypeValue ? [singleSearchTypeValue] : []}
             placeholder={t("single-search-placeholder")}
-            loadOptions={debounceOptions}
-            value={singleSearchTypeValue}
-            onChange={(newValue) => {
-              setSingleSearchTypeValue(newValue);
-            }}
+            labelledBy="single-search-select-tags"
           />
         </Col>
       )}
