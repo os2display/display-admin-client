@@ -29,7 +29,7 @@ function PosterSubscription({
   const subscriptionEndpoint = firstAdmin.endpointSubscription ?? null;
 
   const {
-    subscriptionNumberValue = [],
+    subscriptionNumberValue = 5,
     subscriptionPlaceValue = [],
     subscriptionOrganizerValue = [],
     subscriptionTagValue = [],
@@ -109,56 +109,59 @@ function PosterSubscription({
           <Row>
             <div>
               <h5>{t("preview-of-events")}</h5>
-              {loadingResults && <Spinner animation="border" />}
+              {loadingResults && <Spinner animation="border"/>}
               <table className="table table-hover text-left">
                 <thead>
-                  <tr>
-                    <th scope="col">{t("table-image")}</th>
-                    <th scope="col">{t("table-event")}</th>
-                    <th scope="col">{t("table-place")}</th>
-                    <th scope="col">{t("table-date")}</th>
-                  </tr>
+                <tr>
+                  <th scope="col">{t("table-image")}</th>
+                  <th scope="col">{t("table-event")}</th>
+                  <th scope="col">{t("table-place")}</th>
+                  <th scope="col">{t("table-date")}</th>
+                </tr>
                 </thead>
                 <tbody>
-                  {subscriptionOccurrences?.length > 0 &&
-                    subscriptionOccurrences?.map(
-                      ({
-                        eventId,
-                        imageThumbnail,
-                        image,
-                        startDate,
-                        endDate,
-                        title,
-                        organizer,
-                        place,
-                      }) => {
-                        return (
-                          <tr key={`event-${eventId}`}>
-                            <td>
-                              <img
-                                src={imageThumbnail ?? image}
-                                alt={title}
-                                style={{ maxWidth: "80px" }}
-                              />
-                            </td>
-                            <td>
-                              <strong>{title}</strong>
-                              <br />
-                              {organizer?.name}
-                            </td>
-                            <td>{place?.name}</td>
-                            <td>
-                              {formatDate(startDate, "L HH:mm")}
-                              {" - "}
-                              {formatDate(endDate, "L HH:mm")}
-                            </td>
-                          </tr>
-                        );
-                      }
-                    )}
+                {subscriptionOccurrences?.length > 0 &&
+                  subscriptionOccurrences?.map(
+                    ({
+                       eventId,
+                       imageThumbnail,
+                       image,
+                       startDate,
+                       endDate,
+                       title,
+                       organizer,
+                       place,
+                     }) => {
+                      return (
+                        <tr key={`event-${eventId}`}>
+                          <td>
+                            <img
+                              src={imageThumbnail ?? image}
+                              alt={title}
+                              style={{maxWidth: "80px"}}
+                            />
+                          </td>
+                          <td>
+                            <strong>{title}</strong>
+                            <br/>
+                            {organizer?.name}
+                          </td>
+                          <td>{place?.name}</td>
+                          <td>
+                            {formatDate(startDate, "L HH:mm")}
+                            {" - "}
+                            {formatDate(endDate, "L HH:mm")}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )}
                 </tbody>
               </table>
             </div>
+            <small className="form-text">
+              {t("subscription-preview-of-events-helptext")}
+            </small>
           </Row>
         </Col>
       </Row>

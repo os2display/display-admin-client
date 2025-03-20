@@ -55,10 +55,6 @@ function PosterSubscriptionCriteria({
     ).then((r) => setOrganizations(r));
   }, []);
 
-  const changeData = (field, newValue) => {
-    handleSelect(field, newValue);
-  };
-
   return (
     <>
       <h5 className="mt-3">{t("filters")}</h5>

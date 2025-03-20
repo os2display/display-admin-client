@@ -1129,6 +1129,7 @@
     "poster-feed-type-single": "Enkelt",
     "poster-feed-type-subscription": "Abonnement",
     "select-mode": "Vælg visningstype",
+    "subscription-preview-of-events-helptext": "Bemærk! Forhåndsvisningen bliver først opdateret når slidet gemmes.",
     "subscription-helptext": "Kombiner \"sted\", \"arrangør\", \"tags\" og \"antal slides\" for at opsætte abonnementet på begivenheder.",
     "filters": "Vælg filtre",
     "filters-place": "Sted",
