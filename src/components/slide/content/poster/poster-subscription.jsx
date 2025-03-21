@@ -51,19 +51,19 @@ function PosterSubscription({
     const places = subscriptionPlaceValue.map(({ value }) => value);
 
     places.forEach((place) => {
-      query.append("location", place);
+      query.append("location[]", place);
     });
 
     const organizers = subscriptionOrganizerValue.map(({ value }) => value);
 
     organizers.forEach((organizer) => {
-      query.append("organization", organizer);
+      query.append("organization[]", organizer);
     });
 
     const tags = subscriptionTagValue.map(({ value }) => value);
 
     tags.forEach((tag) => {
-      query.append("tag", tag);
+      query.append("tag[]", tag);
     });
 
     setLoadingResults(true);

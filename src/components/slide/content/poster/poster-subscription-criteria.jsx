@@ -95,7 +95,7 @@ function PosterSubscriptionCriteria({
             options={organizations}
             hasSelectAll={false}
             onChange={(newValue) =>
-              handleSelect("subscriptionOrganizerValue", newValue[0])
+              handleSelect("subscriptionOrganizerValue", newValue)
             }
             value={subscriptionOrganizerValue ?? []}
             placeholder={t("subscription-search-placeholder")}
