@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { MultiSelect } from "react-multi-select-component";
 import Form from "react-bootstrap/Form";
 import FormInput from "../../../util/forms/form-input";
-import Select from "../../../util/forms/select";
 import { getHeaders, loadDropdownOptionsPromise } from "./poster-helper";
 
 /**
@@ -25,17 +24,18 @@ function PosterSingleSearch({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
 
-  const [singleSearch, setSingleSearch] = useState("");
-  const [singleSearchType, setSingleSearchType] = useState("title");
-  const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
-
+  const [title, setTitle] = useState("");
+  const [organizations, setOrganizations] = useState([]);
   const [locations, setLocations] = useState([]);
   const [tags, setTags] = useState([]);
-  const [organizations, setOrganizations] = useState([]);
+
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [tagOptions, setTagOptions] = useState([]);
+  const [organizationOptions, setOrganizationOptions] = useState([]);
 
   useEffect(() => {
     loadDropdownOptionsPromise(optionsEndpoint, getHeaders(), "", "tags").then(
-      (r) => setTags(r)
+      (r) => setTagOptions(r)
     );
 
     loadDropdownOptionsPromise(
@@ -43,14 +43,14 @@ function PosterSingleSearch({
       getHeaders(),
       "",
       "locations"
-    ).then((r) => setLocations(r));
+    ).then((r) => setLocationOptions(r));
 
     loadDropdownOptionsPromise(
       optionsEndpoint,
       getHeaders(),
       "",
       "organizations"
-    ).then((r) => setOrganizations(r));
+    ).then((r) => setOrganizationOptions(r));
   }, []);
 
   const singleSearchFetch = () => {
@@ -58,23 +58,10 @@ function PosterSingleSearch({
       type: "events",
     };
 
-    const singleSearchTypeValueId = singleSearchTypeValue?.value;
-
-    switch (singleSearchType) {
-      case "title":
-        params.title = singleSearch;
-        break;
-      case "tags":
-        params.tag = singleSearchTypeValueId;
-        break;
-      case "organizations":
-        params.organization = singleSearchTypeValueId;
-        break;
-      case "locations":
-        params.location = singleSearchTypeValueId;
-        break;
-      default:
-    }
+    params.title = title;
+    params.tag = tags.map(({ value }) => value);
+    params.organization = organizations.map(({ value }) => value);
+    params.location = locations.map(({ value }) => value);
 
     setLoading(true);
 
@@ -92,125 +79,79 @@ function PosterSingleSearch({
       });
   };
 
-  const singleSearchTypeOptions = [
-    {
-      key: "singleSearchTypeOptions1",
-      value: "title",
-      title: t("single-search-type-title"),
-    },
-    {
-      key: "singleSearchTypeOptions2",
-      value: "organizations",
-      title: t("single-search-type-organization"),
-    },
-    {
-      key: "singleSearchTypeOptions3",
-      value: "locations",
-      title: t("single-search-type-location"),
-    },
-    {
-      key: "singleSearchTypeOptions4",
-      value: "tags",
-      title: t("single-search-type-tag"),
-    },
-  ];
-
-  /**
-   * A callback on changed data.
-   *
-   * @param {Array} data The data to call back with
-   */
-  const changeData = (data) => {
-    if (data?.length > 0) {
-      const index = data?.length > 1 ? 1 : 0;
-      setSingleSearchTypeValue(data[index]);
-    }
-  };
-
-  useEffect(() => {
-    setSingleSearchTypeValue("");
-  }, [singleSearchType]);
-
   return (
-    <Row className="mb-2">
-      <Col>
-        <Select
-          value={singleSearchType}
-          onChange={({ target }) => setSingleSearchType(target.value)}
-          label={t("single-search-type")}
-          options={singleSearchTypeOptions}
-          name="poster-search-type"
-          allowNull={false}
-        />
-      </Col>
-      {singleSearchType === "title" && (
-        <Col>
-          <FormInput
-            label={t("single-search-title")}
-            name="poster-search"
-            value={singleSearch}
-            onChange={({ target }) => setSingleSearch(target.value)}
-          />
-        </Col>
-      )}
-      {singleSearchType === "locations" && (
+    <>
+      <Row className="mb-2">
         <Col>
           <Form.Label htmlFor="single-search-select-locations">
-            {t("single-search-select")}
+            {t("single-search-locations")}
           </Form.Label>
           <MultiSelect
             id="single-search-select-locations"
             label={t("single-search-select")}
             name="locations"
-            onChange={changeData}
-            options={locations}
-            value={singleSearchTypeValue ? [singleSearchTypeValue] : []}
+            onChange={(newValue) => setLocations(newValue)}
+            options={locationOptions}
+            hasSelectAll={false}
+            value={locations}
             placeholder={t("single-search-placeholder")}
             labelledBy="single-search-select-locations"
           />
         </Col>
-      )}
-      {singleSearchType === "organizations" && (
         <Col>
           <Form.Label htmlFor="single-search-select-organizations">
-            {t("single-search-select")}
+            {t("single-search-organizations")}
           </Form.Label>
           <MultiSelect
             id="single-search-select-organizations"
             label={t("single-search-select")}
             name="organizations"
             singleSelect
-            options={organizations}
-            onChange={changeData}
-            value={singleSearchTypeValue ? [singleSearchTypeValue] : []}
+            options={organizationOptions}
+            hasSelectAll={false}
+            onChange={(newValue) => setOrganizations(newValue)}
+            value={organizations}
             placeholder={t("single-search-placeholder")}
             labelledBy="single-search-select-organizations"
           />
         </Col>
-      )}
-      {singleSearchType === "tags" && (
+      </Row>
+      <Row>
         <Col>
           <Form.Label htmlFor="single-search-select-tags">
-            {t("single-search-select")}
+            {t("single-search-tags")}
           </Form.Label>
           <MultiSelect
             id="single-search-select-tags"
             label={t("single-search-select")}
             name="tags"
-            options={tags}
-            onChange={changeData}
-            value={singleSearchTypeValue ? [singleSearchTypeValue] : []}
+            options={tagOptions}
+            hasSelectAll={false}
+            onChange={(newValue) => setTags(newValue)}
+            value={tags}
             placeholder={t("single-search-placeholder")}
             labelledBy="single-search-select-tags"
           />
         </Col>
-      )}
-      <Col className="d-flex align-items-end">
-        <Button onClick={singleSearchFetch} className="mt-3" variant="success">
-          {t("single-search-button")}
-        </Button>
-      </Col>
-    </Row>
+        <Col>
+          <FormInput
+            label={t("single-search-title")}
+            name="poster-search"
+            value={title}
+            onChange={({ target }) => setTitle(target.value)}
+          />
+        </Col>
+        <Col className="d-flex align-items-end">
+          <Button
+            onClick={singleSearchFetch}
+            className="mt-3"
+            variant="success"
+          >
+            {t("single-search-button")}
+          </Button>
+        </Col>
+      </Row>
+    </>
   );
 }
 

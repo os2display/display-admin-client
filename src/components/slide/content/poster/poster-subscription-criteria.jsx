@@ -1,9 +1,8 @@
-import AsyncSelect from "react-select/async";
-import {React, useEffect, useRef, useState} from "react";
+import { React, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
+import { MultiSelect } from "react-multi-select-component";
 import { getHeaders, loadDropdownOptionsPromise } from "./poster-helper";
-import {MultiSelect} from "react-multi-select-component";
 
 /**
  * @param {object} props The props.
@@ -60,10 +59,7 @@ function PosterSubscriptionCriteria({
       <h5 className="mt-3">{t("filters")}</h5>
       <div className="mb-2">
         <div className="form-group">
-          <label
-            htmlFor="select-subscription-places"
-            className="form-label"
-          >
+          <label htmlFor="select-subscription-places" className="form-label">
             {t("filters-place")}
           </label>
           <MultiSelect
@@ -73,7 +69,9 @@ function PosterSubscriptionCriteria({
             name="subscriptionPlaceValue"
             options={locations}
             hasSelectAll={false}
-            onChange={(newValue) => handleSelect('subscriptionPlaceValue', newValue)}
+            onChange={(newValue) =>
+              handleSelect("subscriptionPlaceValue", newValue)
+            }
             value={subscriptionPlaceValue ?? []}
             placeholder={t("subscription-search-placeholder")}
             labelledBy="select-subscription-places"
@@ -96,7 +94,9 @@ function PosterSubscriptionCriteria({
             name="subscriptionOrganizerValue"
             options={organizations}
             hasSelectAll={false}
-            onChange={(newValue) => handleSelect('subscriptionOrganizerValue', newValue[0])}
+            onChange={(newValue) =>
+              handleSelect("subscriptionOrganizerValue", newValue[0])
+            }
             value={subscriptionOrganizerValue ?? []}
             placeholder={t("subscription-search-placeholder")}
             labelledBy="select-subscription-organizers"
@@ -119,7 +119,9 @@ function PosterSubscriptionCriteria({
             name="subscriptionTagValue"
             options={tags}
             hasSelectAll={false}
-            onChange={(newValue) => handleSelect('subscriptionTagValue', newValue)}
+            onChange={(newValue) =>
+              handleSelect("subscriptionTagValue", newValue)
+            }
             value={subscriptionTagValue ?? []}
             placeholder={t("subscription-search-placeholder")}
             labelledBy="select-subscription-tags"
