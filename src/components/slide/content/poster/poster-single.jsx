@@ -134,7 +134,7 @@ function PosterSingle({ configurationChange, feedSource, configuration }) {
 
       <Row className="m-1 mt-2 mb-3">
         <Alert variant="warning" className="mb-0">
-          {t("preview-updates-after-save")}
+          {t("subscription-preview-of-events-helptext")}
         </Alert>
       </Row>
 
