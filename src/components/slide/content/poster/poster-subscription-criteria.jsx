@@ -21,7 +21,7 @@ function PosterSubscriptionCriteria({
     subscriptionPlaceValue,
     subscriptionOrganizerValue,
     subscriptionTagValue,
-    subscriptionNumberValue,
+    subscriptionNumberValue = 5,
   },
   handleSelect,
 }) {
