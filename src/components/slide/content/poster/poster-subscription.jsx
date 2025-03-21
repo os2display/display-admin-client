@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Alert, Row, Spinner } from "react-bootstrap";
+import { Row, Spinner } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import { formatDate, getHeaders } from "./poster-helper";
 import PosterSubscriptionCriteria from "./poster-subscription-criteria";
@@ -93,12 +93,6 @@ function PosterSubscription({
           <h5>{t("selected-type-subscription")}</h5>
           <small className="form-text">{t("subscription-helptext")}</small>
 
-          <Row className="m-1 mt-2">
-            <Alert variant="warning" className="mb-0">
-              {t("preview-updates-after-save")}
-            </Alert>
-          </Row>
-
           <Row>
             <PosterSubscriptionCriteria
               optionsEndpoint={optionsEndpoint}
@@ -159,6 +153,7 @@ function PosterSubscription({
                 </tbody>
               </table>
             </div>
+
             <small className="form-text">
               {t("subscription-preview-of-events-helptext")}
             </small>
