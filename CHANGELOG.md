@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.3.0] - 2025-03-24
+
 - [#279](https://github.com/os2display/display-admin-client/pull/279)
   - Eventdatabase v2 feed source - Change subscription endpoint.
   - Eventdatabase v2 feed source - Fixed options load.
