@@ -74,7 +74,7 @@ function PosterSubscriptionCriteria({
             }
             value={subscriptionPlaceValue ?? []}
             placeholder={t("subscription-search-placeholder")}
-            labelledBy="select-subscription-places"
+            labelledBy={t("filters-place")}
           />
         </div>
       </div>
@@ -99,7 +99,7 @@ function PosterSubscriptionCriteria({
             }
             value={subscriptionOrganizerValue ?? []}
             placeholder={t("subscription-search-placeholder")}
-            labelledBy="select-subscription-organizers"
+            labelledBy={t("filters-organizer")}
           />
         </div>
       </div>
@@ -124,7 +124,7 @@ function PosterSubscriptionCriteria({
             }
             value={subscriptionTagValue ?? []}
             placeholder={t("subscription-search-placeholder")}
-            labelledBy="select-subscription-tags"
+            labelledBy={t("filters-tag")}
           />
         </div>
       </div>

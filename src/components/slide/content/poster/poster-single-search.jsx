@@ -95,7 +95,7 @@ function PosterSingleSearch({
             hasSelectAll={false}
             value={locations}
             placeholder={t("single-search-placeholder")}
-            labelledBy="single-search-select-locations"
+            labelledBy={t("single-search-locations")}
           />
         </Col>
         <Col>
@@ -112,7 +112,7 @@ function PosterSingleSearch({
             onChange={(newValue) => setOrganizations(newValue)}
             value={organizations}
             placeholder={t("single-search-placeholder")}
-            labelledBy="single-search-select-organizations"
+            labelledBy={t("single-search-organizations")}
           />
         </Col>
       </Row>
@@ -130,7 +130,7 @@ function PosterSingleSearch({
             onChange={(newValue) => setTags(newValue)}
             value={tags}
             placeholder={t("single-search-placeholder")}
-            labelledBy="single-search-select-tags"
+            labelledBy={t("single-search-tags")}
           />
         </Col>
         <Col>
