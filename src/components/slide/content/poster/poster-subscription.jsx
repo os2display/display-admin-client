@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Alert, Row, Spinner } from "react-bootstrap";
+import { Row, Spinner } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import { formatDate, getHeaders } from "./poster-helper";
 import PosterSubscriptionCriteria from "./poster-subscription-criteria";
@@ -21,15 +21,15 @@ function PosterSubscription({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
 
-  const [subscriptionEvents, setSubscriptionEvents] = useState(null);
+  const [subscriptionOccurrences, setSubscriptionOccurrences] = useState(null);
   const [loadingResults, setLoadingResults] = useState(false);
 
   const [firstAdmin] = admin;
   const optionsEndpoint = firstAdmin.endpointOption ?? null;
-  const searchEndpoint = firstAdmin.endpointSearch ?? null;
+  const subscriptionEndpoint = firstAdmin.endpointSubscription ?? null;
 
   const {
-    subscriptionNumberValue = [],
+    subscriptionNumberValue = 5,
     subscriptionPlaceValue = [],
     subscriptionOrganizerValue = [],
     subscriptionTagValue = [],
@@ -45,36 +45,35 @@ function PosterSubscription({
 
   const subscriptionFetch = () => {
     const query = new URLSearchParams({
-      type: "events",
-      itemsPerPage: subscriptionNumberValue,
+      numberOfItems: subscriptionNumberValue,
     });
 
     const places = subscriptionPlaceValue.map(({ value }) => value);
 
     places.forEach((place) => {
-      query.append("location", place);
+      query.append("location[]", place);
     });
 
     const organizers = subscriptionOrganizerValue.map(({ value }) => value);
 
     organizers.forEach((organizer) => {
-      query.append("organization", organizer);
+      query.append("organization[]", organizer);
     });
 
     const tags = subscriptionTagValue.map(({ value }) => value);
 
     tags.forEach((tag) => {
-      query.append("tag", tag);
+      query.append("tag[]", tag);
     });
 
     setLoadingResults(true);
 
-    fetch(`${searchEndpoint}?${query}`, {
+    fetch(`${subscriptionEndpoint}?${query}`, {
       headers: getHeaders(),
     })
       .then((response) => response.json())
       .then((data) => {
-        setSubscriptionEvents(data);
+        setSubscriptionOccurrences(data);
       })
       .finally(() => {
         setLoadingResults(false);
@@ -93,12 +92,6 @@ function PosterSubscription({
         <Col>
           <h5>{t("selected-type-subscription")}</h5>
           <small className="form-text">{t("subscription-helptext")}</small>
-
-          <Row className="m-1 mt-2">
-            <Alert variant="warning" className="mb-0">
-              {t("preview-updates-after-save")}
-            </Alert>
-          </Row>
 
           <Row>
             <PosterSubscriptionCriteria
@@ -121,23 +114,23 @@ function PosterSubscription({
                   </tr>
                 </thead>
                 <tbody>
-                  {subscriptionEvents?.length > 0 &&
-                    subscriptionEvents?.map(
+                  {subscriptionOccurrences?.length > 0 &&
+                    subscriptionOccurrences?.map(
                       ({
-                        entityId,
-                        occurrences,
-                        imageUrls,
+                        eventId,
+                        imageThumbnail,
+                        image,
+                        startDate,
+                        endDate,
                         title,
                         organizer,
+                        place,
                       }) => {
-                        const firstOccurrence =
-                          occurrences.length > 0 ? occurrences[0] : null;
-
                         return (
-                          <tr key={`event-${entityId}`}>
+                          <tr key={`event-${eventId}`}>
                             <td>
                               <img
-                                src={imageUrls?.small}
+                                src={imageThumbnail ?? image}
                                 alt={title}
                                 style={{ maxWidth: "80px" }}
                               />
@@ -147,18 +140,11 @@ function PosterSubscription({
                               <br />
                               {organizer?.name}
                             </td>
+                            <td>{place?.name}</td>
                             <td>
-                              {firstOccurrence && firstOccurrence.place?.name}
-                            </td>
-                            <td>
-                              {firstOccurrence && (
-                                <>
-                                  {`${formatDate(
-                                    firstOccurrence.start,
-                                    "L"
-                                  )} - ${formatDate(firstOccurrence.end, "L")}`}
-                                </>
-                              )}
+                              {formatDate(startDate, "L HH:mm")}
+                              {" - "}
+                              {formatDate(endDate, "L HH:mm")}
                             </td>
                           </tr>
                         );
@@ -167,6 +153,10 @@ function PosterSubscription({
                 </tbody>
               </table>
             </div>
+
+            <small className="form-text">
+              {t("subscription-preview-of-events-helptext")}
+            </small>
           </Row>
         </Col>
       </Row>
@@ -194,6 +184,7 @@ PosterSubscription.propTypes = {
         endpointEntity: PropTypes.string,
         endpointOption: PropTypes.string,
         endpointSearch: PropTypes.string,
+        endpointSubscription: PropTypes.string,
       })
     ),
   }).isRequired,

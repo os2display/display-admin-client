@@ -1,11 +1,11 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import AsyncSelect from "react-select/async";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
+import { MultiSelect } from "react-multi-select-component";
+import Form from "react-bootstrap/Form";
 import FormInput from "../../../util/forms/form-input";
-import Select from "../../../util/forms/select";
 import { getHeaders, loadDropdownOptionsPromise } from "./poster-helper";
 
 /**
@@ -24,54 +24,44 @@ function PosterSingleSearch({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "poster-selector-v2" });
 
-  const [singleSearch, setSingleSearch] = useState("");
-  const [singleSearchType, setSingleSearchType] = useState("title");
-  const [singleSearchTypeValue, setSingleSearchTypeValue] = useState("");
+  const [title, setTitle] = useState("");
+  const [organizations, setOrganizations] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [tags, setTags] = useState([]);
 
-  const timeoutRef = useRef(null);
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [tagOptions, setTagOptions] = useState([]);
+  const [organizationOptions, setOrganizationOptions] = useState([]);
 
-  const debounceOptions = (inputValue) => {
-    // Debounce result to avoid searching while typing.
-    return new Promise((resolve, reject) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  useEffect(() => {
+    loadDropdownOptionsPromise(optionsEndpoint, getHeaders(), "", "tags").then(
+      (r) => setTagOptions(r)
+    );
 
-      timeoutRef.current = setTimeout(() => {
-        loadDropdownOptionsPromise(
-          optionsEndpoint,
-          getHeaders(),
-          inputValue,
-          singleSearchType
-        )
-          .then((data) => resolve(data))
-          .catch((reason) => reject(reason));
-      }, 500);
-    });
-  };
+    loadDropdownOptionsPromise(
+      optionsEndpoint,
+      getHeaders(),
+      "",
+      "locations"
+    ).then((r) => setLocationOptions(r));
+
+    loadDropdownOptionsPromise(
+      optionsEndpoint,
+      getHeaders(),
+      "",
+      "organizations"
+    ).then((r) => setOrganizationOptions(r));
+  }, []);
 
   const singleSearchFetch = () => {
     const params = {
       type: "events",
     };
 
-    const singleSearchTypeValueId = singleSearchTypeValue?.value;
-
-    switch (singleSearchType) {
-      case "title":
-        params.title = singleSearch;
-        break;
-      case "tags":
-        params.tag = singleSearchTypeValueId;
-        break;
-      case "organizations":
-        params.organization = singleSearchTypeValueId;
-        break;
-      case "locations":
-        params.location = singleSearchTypeValueId;
-        break;
-      default:
-    }
+    params.title = title;
+    params.tag = tags.map(({ value }) => value);
+    params.organization = organizations.map(({ value }) => value);
+    params.location = locations.map(({ value }) => value);
 
     setLoading(true);
 
@@ -89,124 +79,79 @@ function PosterSingleSearch({
       });
   };
 
-  const singleSearchTypeOptions = [
-    {
-      key: "singleSearchTypeOptions1",
-      value: "title",
-      title: t("single-search-type-title"),
-    },
-    {
-      key: "singleSearchTypeOptions2",
-      value: "organizations",
-      title: t("single-search-type-organization"),
-    },
-    {
-      key: "singleSearchTypeOptions3",
-      value: "locations",
-      title: t("single-search-type-location"),
-    },
-    {
-      key: "singleSearchTypeOptions4",
-      value: "tags",
-      title: t("single-search-type-tag"),
-    },
-  ];
-
-  useEffect(() => {
-    setSingleSearchTypeValue("");
-  }, [singleSearchType]);
-
   return (
-    <Row className="mb-2">
-      <Col>
-        <Select
-          value={singleSearchType}
-          onChange={({ target }) => setSingleSearchType(target.value)}
-          label={t("single-search-type")}
-          options={singleSearchTypeOptions}
-          name="poster-search-type"
-          allowNull={false}
-        />
-      </Col>
-      {singleSearchType === "title" && (
+    <>
+      <Row className="mb-2">
+        <Col>
+          <Form.Label htmlFor="single-search-select-locations">
+            {t("single-search-locations")}
+          </Form.Label>
+          <MultiSelect
+            id="single-search-select-locations"
+            label={t("single-search-select")}
+            name="locations"
+            onChange={(newValue) => setLocations(newValue)}
+            options={locationOptions}
+            hasSelectAll={false}
+            value={locations}
+            placeholder={t("single-search-placeholder")}
+            labelledBy={t("single-search-locations")}
+          />
+        </Col>
+        <Col>
+          <Form.Label htmlFor="single-search-select-organizations">
+            {t("single-search-organizations")}
+          </Form.Label>
+          <MultiSelect
+            id="single-search-select-organizations"
+            label={t("single-search-select")}
+            name="organizations"
+            singleSelect
+            options={organizationOptions}
+            hasSelectAll={false}
+            onChange={(newValue) => setOrganizations(newValue)}
+            value={organizations}
+            placeholder={t("single-search-placeholder")}
+            labelledBy={t("single-search-organizations")}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Label htmlFor="single-search-select-tags">
+            {t("single-search-tags")}
+          </Form.Label>
+          <MultiSelect
+            id="single-search-select-tags"
+            label={t("single-search-select")}
+            name="tags"
+            options={tagOptions}
+            hasSelectAll={false}
+            onChange={(newValue) => setTags(newValue)}
+            value={tags}
+            placeholder={t("single-search-placeholder")}
+            labelledBy={t("single-search-tags")}
+          />
+        </Col>
         <Col>
           <FormInput
             label={t("single-search-title")}
             name="poster-search"
-            value={singleSearch}
-            onChange={({ target }) => setSingleSearch(target.value)}
+            value={title}
+            onChange={({ target }) => setTitle(target.value)}
           />
         </Col>
-      )}
-      {singleSearchType === "locations" && (
-        <Col>
-          <label
-            className="form-label"
-            htmlFor="single-search-select-locations"
+        <Col className="d-flex align-items-end">
+          <Button
+            onClick={singleSearchFetch}
+            className="mt-3"
+            variant="success"
           >
-            {t("single-search-select")}
-          </label>
-          <AsyncSelect
-            id="single-search-select-locations"
-            isClearable
-            isSearchable
-            defaultOptions
-            placeholder={t("single-search-placeholder")}
-            loadOptions={debounceOptions}
-            value={singleSearchTypeValue}
-            onChange={(newValue) => {
-              setSingleSearchTypeValue(newValue);
-            }}
-          />
+            {t("single-search-button")}
+          </Button>
         </Col>
-      )}
-      {singleSearchType === "organizations" && (
-        <Col>
-          <label
-            className="form-label"
-            htmlFor="single-search-select-organizations"
-          >
-            {t("single-search-select")}
-          </label>
-          <AsyncSelect
-            id="single-search-select-organizations"
-            isClearable
-            isSearchable
-            defaultOptions
-            placeholder={t("single-search-placeholder")}
-            loadOptions={debounceOptions}
-            value={singleSearchTypeValue}
-            onChange={(newValue) => {
-              setSingleSearchTypeValue(newValue);
-            }}
-          />
-        </Col>
-      )}
-      {singleSearchType === "tags" && (
-        <Col>
-          <label className="form-label" htmlFor="single-search-select-tags">
-            {t("single-search-select")}
-          </label>
-          <AsyncSelect
-            id="single-search-select-tags"
-            isClearable
-            isSearchable
-            defaultOptions
-            placeholder={t("single-search-placeholder")}
-            loadOptions={debounceOptions}
-            value={singleSearchTypeValue}
-            onChange={(newValue) => {
-              setSingleSearchTypeValue(newValue);
-            }}
-          />
-        </Col>
-      )}
-      <Col className="d-flex align-items-end">
-        <Button onClick={singleSearchFetch} className="mt-3" variant="success">
-          {t("single-search-button")}
-        </Button>
-      </Col>
-    </Row>
+      </Row>
+    </>
   );
 }
 
