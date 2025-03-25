@@ -6,10 +6,10 @@ import AsyncSelect from "react-select/async";
 import Col from "react-bootstrap/Col";
 import dayjs from "dayjs";
 import localeDa from "dayjs/locale/da";
-import Select from "../../util/forms/select";
-import FormInput from "../../util/forms/form-input";
-import FormCheckbox from "../../util/forms/form-checkbox";
-import localStorageKeys from "../../util/local-storage-keys";
+import Select from "../../../util/forms/select";
+import FormInput from "../../../util/forms/form-input";
+import FormCheckbox from "../../../util/forms/form-checkbox";
+import localStorageKeys from "../../../util/local-storage-keys";
 
 /**
  * @param {object} props Props.
@@ -19,7 +19,7 @@ import localStorageKeys from "../../util/local-storage-keys";
  * @param {Function} props.configurationChange Configuration onChange.
  * @returns {object} PosterSelector component.
  */
-function PosterSelector({
+function PosterSelectorV1({
   feedSource,
   getValueFromConfiguration,
   configurationChange,
@@ -650,7 +650,7 @@ function PosterSelector({
                                     <th scope="col">
                                       {t("poster-selector.table-price")}
                                     </th>
-                                    <th scope="col"> </th>
+                                    <th scope="col" />
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -890,7 +890,7 @@ function PosterSelector({
   /* eslint-enable jsx-a11y/control-has-associated-label */
 }
 
-PosterSelector.propTypes = {
+PosterSelectorV1.propTypes = {
   getValueFromConfiguration: PropTypes.func.isRequired,
   configurationChange: PropTypes.func.isRequired,
   feedSource: PropTypes.shape({
@@ -903,4 +903,4 @@ PosterSelector.propTypes = {
   }).isRequired,
 };
 
-export default PosterSelector;
+export default PosterSelectorV1;
