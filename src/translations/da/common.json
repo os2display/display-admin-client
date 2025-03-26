@@ -80,7 +80,10 @@
     "latest-release-timestamp": "Seneste udgivelsestidspunkt",
     "latest-request-warning": "Skærmen har ikke kommunikeret i mere end en time.",
     "release-warning": "Skærmen kører ikke seneste udgivelse.",
-    "newest": "Nyeste"
+    "newest": "Nyeste",
+    "no-info": "Endnu ikke aktiv",
+    "no-communication-since": "Inaktiv siden: {{ts}}",
+    "ok": "Aktiv"
   },
   "screen-list": {
     "columns": {
@@ -118,7 +121,7 @@
     },
     "roles": {
       "ROLE_USER": "Bruger",
-      "ROLE_SCREEN":  "Skærm",
+      "ROLE_SCREEN": "Skærm",
       "ROLE_EDITOR": "Redaktør",
       "ROLE_EXTERNAL_USER": "Ekstern bruger",
       "ROLE_EXTERNAL_USER_ADMIN": "Ekstern brugeradministrator",
@@ -380,7 +383,7 @@
       "published": "Udgivet",
       "number-of-slides": "Slides tilknyttede"
     },
-    "more-playlists":"Hent flere spillelister",
+    "more-playlists": "Hent flere spillelister",
     "edit-playlists-help-text": "Hvis du vil redigere en spilleliste, åbnes dette i en ny fane.",
     "remove-from-list": "Fjern fra liste",
     "info-modal": {

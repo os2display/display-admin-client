@@ -124,28 +124,74 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
       );
     }
 
-    const latestRequest = dayjs(status.latestRequestDateTime);
-    const inOneHour = dayjs().add(1, "hours");
-
-    if (status?.clientMeta?.tokenExpired || latestRequest > inOneHour) {
+    if (
+      status.releaseTimestamp === null ||
+      status.releaseVersion === null ||
+      status.latestRequestDateTime === null
+    ) {
       return (
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-danger" />
+        <FontAwesomeIcon
+          icon={faInfoCircle}
+          className="text-warning"
+          title={t("no-info")}
+        />
+      );
+    }
+
+    const latestRequest = dayjs(status.latestRequestDateTime);
+    const oneHourAgo = dayjs().subtract(1, "hours");
+
+    if (status?.clientMeta?.tokenExpired) {
+      return (
+        <FontAwesomeIcon
+          icon={faExclamationCircle}
+          className="text-danger"
+          title={t("token-expired")}
+        />
+      );
+    }
+
+    if (latestRequest < oneHourAgo) {
+      return (
+        <FontAwesomeIcon
+          icon={faExclamationCircle}
+          className="text-danger"
+          title={t("no-communication-since", {
+            ts: latestRequest.format("D/M YYYY HH:mm"),
+          })}
+        />
       );
     }
 
     if (clientRelease) {
       if (status?.releaseVersion !== clientRelease?.releaseVersion) {
-        return <FontAwesomeIcon icon={faInfoCircle} className="text-warning" />;
+        return (
+          <FontAwesomeIcon
+            icon={faInfoCircle}
+            className="text-warning"
+            title={t("release-warning")}
+          />
+        );
       }
 
       if (status?.releaseTimestamp !== clientRelease?.releaseTimestamp) {
-        return <FontAwesomeIcon icon={faInfoCircle} className="text-warning" />;
+        return (
+          <FontAwesomeIcon
+            icon={faInfoCircle}
+            className="text-warning"
+            title={t("release-warning")}
+          />
+        );
       }
     }
 
     return (
       <div>
-        <FontAwesomeIcon icon={faCheckCircle} className="text-success" />
+        <FontAwesomeIcon
+          icon={faCheckCircle}
+          className="text-success"
+          title={t("ok")}
+        />
       </div>
     );
   }
@@ -209,14 +255,14 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
                 {status?.latestRequestDateTime && (
                   <li>
                     {t("latest-request")}:{" "}
-                    {dayjs(status?.latestRequestDateTime).format(
+                    {dayjs(status.latestRequestDateTime).format(
                       "D/M YYYY HH:mm"
                     )}
                   </li>
                 )}
                 {status?.releaseVersion && (
                   <li>
-                    {t("release-version")}: {status?.releaseVersion}
+                    {t("release-version")}: {status.releaseVersion}
                     {notRunningLatestRelease && (
                       <>
                         {" "}
@@ -228,7 +274,7 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
                 {status?.releaseTimestamp && (
                   <li>
                     {t("release-timestamp")}:{" "}
-                    {dayjs(status?.releaseTimestamp * 1000).format(
+                    {dayjs(status.releaseTimestamp * 1000).format(
                       "D/M YYYY HH:mm"
                     )}
                     {notRunningLatestRelease && (

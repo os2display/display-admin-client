@@ -227,11 +227,11 @@ function List({
       switch (screenStatusParam) {
         case "active":
           setExists({ screenUser: true });
-          setScreenUserLatestRequest({ after: anHourAgo.valueOf() });
+          setScreenUserLatestRequest({ after: anHourAgo.toISOString() });
           break;
         case "inactive":
           setExists({ screenUser: true });
-          setScreenUserLatestRequest({ before: anHourAgo.valueOf() });
+          setScreenUserLatestRequest({ before: anHourAgo.toISOString() });
           break;
         case "not-connected":
           setExists({ screenUser: false });
