@@ -187,7 +187,11 @@ function ScreenStatus({ screen, handleInput = () => {}, mode = "default" }) {
 
     return (
       <div>
-        <FontAwesomeIcon icon={faCheckCircle} className="text-success" title={t('ok')} />
+        <FontAwesomeIcon
+          icon={faCheckCircle}
+          className="text-success"
+          title={t("ok")}
+        />
       </div>
     );
   }
