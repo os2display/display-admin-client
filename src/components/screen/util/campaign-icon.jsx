@@ -19,7 +19,7 @@ import {
  * @param {number} props.delay Delay the fetch.
  * @returns {object} The campaign icon.
  */
-function CampaignIcon({ id, delay }) {
+function CampaignIcon({ id, delay = 1000 }) {
   const { t } = useTranslation("common", { keyPrefix: "campaign-icon" });
   const dispatch = useDispatch();
   const [isOverriddenByCampaign, setIsOverriddenByCampaign] = useState(null);
@@ -102,10 +102,6 @@ function CampaignIcon({ id, delay }) {
     ? t("overridden-by-campaign")
     : t("not-overridden-by-campaign");
 }
-
-CampaignIcon.defaultProps = {
-  delay: 1000,
-};
 
 CampaignIcon.propTypes = {
   id: PropTypes.string.isRequired,
