@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.4.0] - 2025-03-31
+
 - [#281](https://github.com/os2display/display-admin-client/pull/281)
   - Fixed screen status bugs.
 - [#274](https://github.com/os2display/display-admin-client/pull/274)
