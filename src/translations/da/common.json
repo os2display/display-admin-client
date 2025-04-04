@@ -65,11 +65,32 @@
   "react-table": {
     "remove-row": "Fjern række"
   },
+  "screen-status": {
+    "connect": "Tilkobl",
+    "bind": "Tilkobl skærm",
+    "unbind": "Afkobl skærm",
+    "bindkey-label": "Tilkoblingskode",
+    "not-bound": "Skærmen er ikke tilkoblet.",
+    "already-bound": "Skærmen er tilkoblet",
+    "token-expired": "Skærmens forbindelse er udløbet. Kobl på med en ny kode.",
+    "release-timestamp": "Kodeudgivelsestidspunkt",
+    "release-version": "Version",
+    "latest-request": "Seneste kommunikation",
+    "latest-release": "Seneste udgivelse",
+    "latest-release-timestamp": "Seneste udgivelsestidspunkt",
+    "latest-request-warning": "Skærmen har ikke kommunikeret i mere end en time.",
+    "release-warning": "Skærmen kører ikke seneste udgivelse.",
+    "newest": "Nyeste",
+    "no-info": "Endnu ikke aktiv",
+    "no-communication-since": "Inaktiv siden: {{ts}}",
+    "ok": "Aktiv"
+  },
   "screen-list": {
     "columns": {
       "campaign": "Kampagne",
       "on-groups": "Tilknyttede grupper",
-      "location": "Lokation"
+      "location": "Lokation",
+      "status": "Status"
     },
     "info-modal": {
       "screen-in-groups": "Skærmen er i følgende grupper"
@@ -100,7 +121,7 @@
     },
     "roles": {
       "ROLE_USER": "Bruger",
-      "ROLE_SCREEN":  "Skærm",
+      "ROLE_SCREEN": "Skærm",
       "ROLE_EDITOR": "Redaktør",
       "ROLE_EXTERNAL_USER": "Ekstern bruger",
       "ROLE_EXTERNAL_USER_ADMIN": "Ekstern brugeradministrator",
@@ -284,6 +305,9 @@
       "rss-feed-type": {
         "title": "RSS"
       }
+    },
+    "event-database-api-v2-feed-type": {
+      "title": "Event databasen v.2"
     }
   },
   "feed-source-form": {
@@ -363,7 +387,7 @@
       "published": "Udgivet",
       "number-of-slides": "Slides tilknyttede"
     },
-    "more-playlists":"Hent flere spillelister",
+    "more-playlists": "Hent flere spillelister",
     "edit-playlists-help-text": "Hvis du vil redigere en spilleliste, åbnes dette i en ny fane.",
     "remove-from-list": "Fjern fra liste",
     "info-modal": {
@@ -703,7 +727,11 @@
     "delete-button": "Slet",
     "deselect-all": "Fravælg alle",
     "published": "Udgivet",
-    "not-published": "Ikke udgivet"
+    "not-published": "Ikke udgivet",
+    "screen-status.all": "Alle skærme",
+    "screen-status.active": "Aktive skærme",
+    "screen-status.inactive": "Inaktive skærme",
+    "screen-status.not-connected": "Ikke forbundne skærme"
   },
   "image": {
     "image-currently-uploading": "Billedet du er ved at overføre",
@@ -746,11 +774,6 @@
     "touch-region": "(Touch)",
     "touch-region-helptext": "Touch region: En touch region fungerer anderledes end en normal region. I en touch region bliver slides der er tilføjet lavet til knapper der kan åbnes i fuld skærm.",
     "bind-header": "Tilkobling",
-    "bind": "Tilkobl skærm",
-    "unbind": "Afkobl skærm",
-    "not-bound": "Skærmen er ikke tilkoblet",
-    "already-bound": "Skærmen er tilkoblet",
-    "bindkey-label": "Tilkoblingskode",
     "error-messages": {
       "error-binding": "Der skete en fejl ({{status}}) da skærmen skulle kobles:",
       "error-unbinding": "Der skete en fejl ({{status}}) da skærmen skulle afkobles:"
@@ -1075,6 +1098,10 @@
       "saving-activation-code": "Opretter aktiveringskode"
     }
   },
+  "campaign-icon": {
+    "overridden-by-campaign": "Ja",
+    "not-overridden-by-campaign": ""
+  },
   "published-state": {
     "active": "Aktiv",
     "future": "Fremtidig",
@@ -1090,5 +1117,67 @@
     "redacted-value-input-placeholder": "Skjult værdi",
     "save-before-recipients-can-be-set": "Bemærk! Datakilden skal gemmes før der kan tilkobles tilladte modtagergrupper. Gem og åbn datakilden igen.",
     "allowed-recipients-help": "Det er kun disse modtagergrupper, der vil være tilgængelige, når man opretter et slide, der bruger datakilden."
+  },
+  "event-database-api-v2-feed-type": {
+    "title": "Event databasen v.2",
+    "host": "Host",
+    "apikey": "Api Key",
+    "redacted-value-input-placeholder": "Skjult værdi"
+  },
+  "poster-selector-v2": {
+    "preview-of-events": "Begivenheder der vil vises nu:",
+    "table-image": "Billede",
+    "table-event": "Begivenhed",
+    "table-date": "Dato",
+    "table-price": "Pris",
+    "table-place": "Sted",
+    "table-actions": "Handlinger",
+    "number-of-slides": "Antal slides",
+    "number-of-slides-helptext": "Vælg op til 10 begivenheder som vil blive vist på hvert sit slide",
+    "choose-an-occurrence": "Vælg en forekomst",
+    "choose-occurrence": "Vælg",
+    "choose-event": "Vælg",
+    "chosen-event": "Valgt begivenhed",
+    "chosen-occurrence": "Valgt forekomst",
+    "search-for-event": "Søg efter arrangement",
+    "search-result-image": "Billede på begivenheden",
+    "single-search-type": "Søgekriterium",
+    "single-search-title": "Søgetekst",
+    "single-search-organizations": "Arrangør",
+    "single-search-locations": "Sted",
+    "single-search-tags": "Tags",
+    "single-search-select": "Søgetekst",
+    "single-search-button": "Søg",
+    "single-search-type-title": "Titel",
+    "single-search-type-url": "Url",
+    "single-search-type-location": "Sted",
+    "single-search-type-organization": "Arrangør",
+    "single-search-type-tag": "Tag",
+    "single-search-placeholder": "Vælg...",
+    "single-search-loading": "Søger...",
+    "remove": "Afvælg",
+    "no-results": "0 begivenheder fundet",
+    "single-override-title": "Overskriv overskrift",
+    "single-override-subtitle": "Overskriv underoverskrift",
+    "single-override-ticket-price": "Overskriv pristekst",
+    "single-read-more-text": "\"Læs mere\" tekst",
+    "single-read-more-url": "Overskriv \"læs mere\"-url",
+    "single-hide-time": "Skjul tidspunkt",
+    "hide-overrides": "Skjul overskrivningsmuligheder",
+    "display-overrides": "Vis overskrivningsmuligheder",
+    "selected-type-single": "Valgt type: Enkelt begivenhed",
+    "selected-type-subscription": "Valgt type: Abonnement",
+    "poster-feed-type-single": "Enkelt",
+    "poster-feed-type-subscription": "Abonnement",
+    "select-mode": "Vælg visningstype",
+    "subscription-preview-of-events-helptext": "Bemærk! Forhåndsvisningen bliver først opdateret efter slidet er gemt.",
+    "subscription-helptext": "Kombiner \"sted\", \"arrangør\", \"tags\" og \"antal slides\" for at opsætte abonnementet på begivenheder.",
+    "filters": "Vælg filtre",
+    "filters-place": "Sted",
+    "filter-place-helptext": "Begynd at skrive navnet på det sted du ønsker begivenheder fra, og vælg det på listen som kommer frem.",
+    "filters-organizer": "Arrangør",
+    "filter-organizer-helptext": "Begynd at skrive arrangøren du ønsker begivenheder fra, og vælg det på listen som kommer frem.",
+    "filters-tag": "Tags",
+    "filter-tag-helptext": "Begynd at skrive det tag du ønsker begivenheder fra, og vælg det på listen som kommer frem."
   }
 }
