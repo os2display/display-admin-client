@@ -2,6 +2,7 @@
   "api": "/",
   "touchButtonRegions": false,
   "previewClient": null,
+  "showScreenStatus": false,
   "rejseplanenApiKey": null,
   "loginMethods": [
     {

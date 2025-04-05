@@ -13,6 +13,7 @@ import CalendarApiFeedType from "./templates/calendar-api-feed-type";
 import NotifiedFeedType from "./templates/notified-feed-type";
 import EventDatabaseApiFeedType from "./templates/event-database-feed-type";
 import StickyFooter from "../util/sticky-footer";
+import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type";
 
 /**
  * The feed-source form component.
@@ -97,6 +98,14 @@ function FeedSourceForm({
               {feedSource?.feedType ===
                 "App\\Feed\\EventDatabaseApiFeedType" && (
                 <EventDatabaseApiFeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                />
+              )}
+              {feedSource?.feedType ===
+                "App\\Feed\\EventDatabaseApiV2FeedType" && (
+                <EventDatabaseApiV2FeedType
                   handleInput={handleSecretInput}
                   formStateObject={feedSource.secrets}
                   mode={mode}

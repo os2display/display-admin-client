@@ -9,7 +9,7 @@ import { Tooltip } from "react-tooltip";
 /**
  * @param {object} props The props.
  * @param {string} props.name The name of the select component.
- * @param {string} props.label The label of the select component.
+ * @param {string | null} props.label The label of the select component.
  * @param {string} props.value The selected value.
  * @param {Array} props.options The options for the select component.
  * @param {Function} props.onChange The callback for when something is selected.
@@ -25,7 +25,7 @@ import { Tooltip } from "react-tooltip";
  */
 function Select({
   name,
-  label,
+  label = null,
   options,
   onChange,
   errors = null,

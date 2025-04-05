@@ -70,6 +70,15 @@ function FeedSourceManager({
       },
     },
     {
+      value: "App\\Feed\\EventDatabaseApiV2FeedType",
+      title: t("event-database-api-v2-feed-type.title"),
+      key: "7",
+      secretsDefault: {
+        host: "",
+        apikey: "",
+      },
+    },
+    {
       value: "App\\Feed\\NotifiedFeedType",
       title: t("dynamic-fields.notified-feed-type.title"),
       key: "2",
