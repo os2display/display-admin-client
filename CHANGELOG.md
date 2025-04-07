@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#276](https://github.com/os2display/display-admin-client/pull/276)
+  - Added Colibo feed type form.
+  - Fixed feed type selector when unsupported type.
+
 ## [2.4.0] - 2025-03-31
 
 - [#281](https://github.com/os2display/display-admin-client/pull/281)

@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { Alert, Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -12,6 +12,7 @@ import FormInput from "../util/forms/form-input";
 import CalendarApiFeedType from "./templates/calendar-api-feed-type";
 import NotifiedFeedType from "./templates/notified-feed-type";
 import EventDatabaseApiFeedType from "./templates/event-database-feed-type";
+import ColiboFeedType from "./templates/colibo-feed-type";
 import StickyFooter from "../util/sticky-footer";
 import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type";
 
@@ -22,7 +23,6 @@ import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type"
  * @param {object} props.feedSource The feed-source object to modify in the form.
  * @param {Function} props.handleInput Handles form input.
  * @param {Function} props.handleSubmit Handles form submit.
- * @param {Function} props.handleSaveNoClose Handles form submit with close.
  * @param {string} props.headerText Headline text.
  * @param {boolean} [props.isLoading] Indicator of whether the form is loading.
  *   Default is `false`
@@ -32,6 +32,7 @@ import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type"
  * @param {string} props.mode The mode
  * @param {Function} props.onFeedTypeChange Callback on feed type change.
  * @param {Function} props.handleSecretInput Callback on secret input change.
+ * @param {Function} props.handleSaveNoClose Handles save but stays on page.
  * @returns {object} The feed-source form.
  */
 function FeedSourceForm({
@@ -49,6 +50,10 @@ function FeedSourceForm({
 }) {
   const { t } = useTranslation("common", { keyPrefix: "feed-source-form" });
   const navigate = useNavigate();
+
+  const typeInOptions =
+    !feedSource?.feedType ||
+    feedSourceTypeOptions.find((el) => el.value === feedSource.feedType);
 
   return (
     <>
@@ -77,18 +82,44 @@ function FeedSourceForm({
                 value={feedSource.description}
                 onChange={handleInput}
               />
-              <FormSelect
-                name="feedType"
-                formGroupClasses="mb-2"
-                label={t("feed-source-feed-type-label")}
-                value={feedSource.feedType}
-                onChange={onFeedTypeChange}
-                disabled={mode === "PUT"}
-                options={feedSourceTypeOptions}
-              />
+              {typeInOptions && (
+                <FormSelect
+                  name="feedType"
+                  formGroupClasses="mb-2"
+                  label={t("feed-source-feed-type-label")}
+                  value={feedSource.feedType}
+                  onChange={onFeedTypeChange}
+                  disabled={mode === "PUT"}
+                  options={feedSourceTypeOptions}
+                />
+              )}
+              {!typeInOptions && (
+                <>
+                  <FormInput
+                    name="title"
+                    formGroupClasses="mb-2"
+                    type="text"
+                    disabled
+                    label={t("feed-source-feed-type-label")}
+                    value={feedSource.feedType}
+                    onChange={() => {}}
+                  />
+                  <Alert className="mt-4" variant="warning">
+                    {t("feed-type-not-supported")}
+                  </Alert>
+                </>
+              )}
 
               {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" && (
                 <CalendarApiFeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                  feedSourceId={feedSource["@id"]}
+                />
+              )}
+              {feedSource?.feedType === "App\\Feed\\ColiboFeedType" && (
+                <ColiboFeedType
                   handleInput={handleSecretInput}
                   formStateObject={feedSource.secrets}
                   mode={mode}
