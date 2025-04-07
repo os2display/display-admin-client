@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -8,12 +8,12 @@ import LoadingComponent from "../util/loading-component/loading-component";
 import FormInputArea from "../util/forms/form-input-area";
 import FormSelect from "../util/forms/select";
 import ContentBody from "../util/content-body/content-body";
-import ContentFooter from "../util/content-footer/content-footer";
 import FormInput from "../util/forms/form-input";
 import CalendarApiFeedType from "./templates/calendar-api-feed-type";
 import NotifiedFeedType from "./templates/notified-feed-type";
 import EventDatabaseApiFeedType from "./templates/event-database-feed-type";
 import ColiboFeedType from "./templates/colibo-feed-type";
+import StickyFooter from "../util/sticky-footer";
 import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type";
 
 /**
@@ -32,11 +32,13 @@ import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type"
  * @param {string} props.mode The mode
  * @param {Function} props.onFeedTypeChange Callback on feed type change.
  * @param {Function} props.handleSecretInput Callback on secret input change.
+ * @param props.handleSaveNoClose
  * @returns {object} The feed-source form.
  */
 function FeedSourceForm({
   handleInput,
   handleSubmit,
+  handleSaveNoClose,
   headerText,
   isLoading = false,
   loadingMessage = "",
@@ -60,111 +62,124 @@ function FeedSourceForm({
           isLoading={isLoading}
           loadingMessage={loadingMessage}
         />
-        <h1 id="feed-sourceTitle">{headerText}</h1>
-        <ContentBody>
-          <FormInput
-            name="title"
-            formGroupClasses="mb-2"
-            type="text"
-            label={t("feed-source-name-label")}
-            value={feedSource.title}
-            onChange={handleInput}
-          />
-          <FormInputArea
-            name="description"
-            formGroupClasses="mb-2"
-            type="text"
-            label={t("feed-source-description-label")}
-            value={feedSource.description}
-            onChange={handleInput}
-          />
-          {typeInOptions && (
-            <FormSelect
-              name="feedType"
-              formGroupClasses="mb-2"
-              label={t("feed-source-feed-type-label")}
-              value={feedSource.feedType}
-              onChange={onFeedTypeChange}
-              disabled={mode === "PUT"}
-              options={feedSourceTypeOptions}
-            />
-          )}
-          {!typeInOptions && (
-            <>
+        <Row className="m-2">
+          <h1 id="feed-sourceTitle">{headerText}</h1>
+          <Col>
+            <ContentBody>
               <FormInput
                 name="title"
                 formGroupClasses="mb-2"
                 type="text"
-                disabled
-                label={t("feed-source-feed-type-label")}
-                value={feedSource.feedType}
-                onChange={() => {}}
+                label={t("feed-source-name-label")}
+                value={feedSource.title}
+                onChange={handleInput}
               />
-              <Alert className="mt-4" variant="warning">
-                {t("feed-type-not-supported")}
-              </Alert>
-            </>
-          )}
+              <FormInputArea
+                name="description"
+                formGroupClasses="mb-2"
+                type="text"
+                label={t("feed-source-description-label")}
+                value={feedSource.description}
+                onChange={handleInput}
+              />
+              {typeInOptions && (
+                <FormSelect
+                  name="feedType"
+                  formGroupClasses="mb-2"
+                  label={t("feed-source-feed-type-label")}
+                  value={feedSource.feedType}
+                  onChange={onFeedTypeChange}
+                  disabled={mode === "PUT"}
+                  options={feedSourceTypeOptions}
+                />
+              )}
+              {!typeInOptions && (
+                <>
+                  <FormInput
+                    name="title"
+                    formGroupClasses="mb-2"
+                    type="text"
+                    disabled
+                    label={t("feed-source-feed-type-label")}
+                    value={feedSource.feedType}
+                    onChange={() => {}}
+                  />
+                  <Alert className="mt-4" variant="warning">
+                    {t("feed-type-not-supported")}
+                  </Alert>
+                </>
+              )}
 
-          {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" && (
-            <CalendarApiFeedType
-              handleInput={handleSecretInput}
-              formStateObject={feedSource.secrets}
-              mode={mode}
-              feedSourceId={feedSource["@id"]}
-            />
-          )}
-          {feedSource?.feedType === "App\\Feed\\ColiboFeedType" && (
-            <ColiboFeedType
-              handleInput={handleSecretInput}
-              formStateObject={feedSource.secrets}
-              mode={mode}
-              feedSourceId={feedSource["@id"]}
-            />
-          )}
-          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiFeedType" && (
-            <EventDatabaseApiFeedType
-              handleInput={handleSecretInput}
-              formStateObject={feedSource.secrets}
-              mode={mode}
-            />
-          )}
-          {feedSource?.feedType === "App\\Feed\\EventDatabaseApiV2FeedType" && (
-            <EventDatabaseApiV2FeedType
-              handleInput={handleSecretInput}
-              formStateObject={feedSource.secrets}
-              mode={mode}
-            />
-          )}
-          {feedSource?.feedType === "App\\Feed\\NotifiedFeedType" && (
-            <NotifiedFeedType
-              handleInput={handleSecretInput}
-              formStateObject={feedSource.secrets}
-              mode={mode}
-            />
-          )}
-        </ContentBody>
-        <ContentFooter>
+              {feedSource?.feedType === "App\\Feed\\CalendarApiFeedType" && (
+                <CalendarApiFeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                  feedSourceId={feedSource["@id"]}
+                />
+              )}
+              {feedSource?.feedType === "App\\Feed\\ColiboFeedType" && (
+                <ColiboFeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                  feedSourceId={feedSource["@id"]}
+                />
+              )}
+              {feedSource?.feedType ===
+                "App\\Feed\\EventDatabaseApiFeedType" && (
+                <EventDatabaseApiFeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                />
+              )}
+              {feedSource?.feedType ===
+                "App\\Feed\\EventDatabaseApiV2FeedType" && (
+                <EventDatabaseApiV2FeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                />
+              )}
+              {feedSource?.feedType === "App\\Feed\\NotifiedFeedType" && (
+                <NotifiedFeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                />
+              )}
+            </ContentBody>
+          </Col>
+        </Row>
+        <StickyFooter>
           <Button
             variant="secondary"
             type="button"
-            id="cancel_feed-source"
+            id="cancel"
             onClick={() => navigate("/feed-sources/list")}
-            size="lg"
             className="margin-right-button"
           >
             {t("cancel-button")}
           </Button>
           <Button
+            variant="outline-primary"
+            type="button"
+            id="save-without-close"
+            onClick={handleSaveNoClose}
+            className="margin-right-button"
+          >
+            {t("save-without-close-button")}
+          </Button>
+          <Button
             variant="primary"
             type="button"
             onClick={handleSubmit}
-            id="save_feed-source"
-            size="lg"
+            id="save"
           >
             {t("save-button")}
           </Button>
-        </ContentFooter>
+        </StickyFooter>
       </Form>
     </>
   );
@@ -179,6 +194,7 @@ FeedSourceForm.propTypes = {
   }),
   handleInput: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleSaveNoClose: PropTypes.func.isRequired,
   handleSecretInput: PropTypes.func.isRequired,
   onFeedTypeChange: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
