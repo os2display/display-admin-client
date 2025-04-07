@@ -32,7 +32,7 @@ import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type"
  * @param {string} props.mode The mode
  * @param {Function} props.onFeedTypeChange Callback on feed type change.
  * @param {Function} props.handleSecretInput Callback on secret input change.
- * @param props.handleSaveNoClose
+ * @param {Function} props.handleSaveNoClose Handles save but stays on page.
  * @returns {object} The feed-source form.
  */
 function FeedSourceForm({
