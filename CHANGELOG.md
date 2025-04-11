@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#283](https://github.com/os2display/display-admin-client/pull/283)
+  - Fixed preview issues. 
+- [#275](https://github.com/os2display/display-admin-client/pull/275)
+  - Added enhanced preview.
 - [#276](https://github.com/os2display/display-admin-client/pull/276)
   - Added Colibo feed type form.
   - Fixed feed type selector when unsupported type.

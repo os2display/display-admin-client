@@ -230,12 +230,21 @@ function PlaylistCampaignForm({
               </div>
               {previewOverlayVisible && (
                 <div
-                  onClick={() =>
-                    setPreviewOverlayVisible(!previewOverlayVisible)
-                  }
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
+                  <Button
+                    id="close_preview_button"
+                    variant="primary"
+                    type="button"
+                    className="preview-close-button"
+                    onClick={() =>
+                      setPreviewOverlayVisible(!previewOverlayVisible)
+                    }
+                  >
+                    {t("preview-close-button")}
+                  </Button>
+
                   <Preview
                     id={idFromUrl(playlist["@id"])}
                     mode="playlist"
@@ -248,6 +257,7 @@ function PlaylistCampaignForm({
                       previewOrientation === "horizontal" ? 1920 : 1080
                     }
                   />
+
                   <Alert
                     key="playlist-preview-about"
                     variant="info"
