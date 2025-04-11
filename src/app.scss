@@ -62,6 +62,22 @@ body,
   }
 }
 
+.preview-overlay {
+  background: white;
+  z-index: 1021;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+
+  button {
+    position: fixed;
+    z-index: 20;
+  }
+}
+
 .table {
   td {
     vertical-align: middle;
@@ -105,22 +121,6 @@ body,
     justify-content: center;
     align-content: center;
     align-items: center;
-  }
-}
-
-.preview-overlay {
-  background: white;
-  z-index: 1021;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-
-  button {
-    position: fixed;
-    z-index: 20;
   }
 }
 

@@ -443,7 +443,6 @@ function SlideForm({
                       className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                     >
                       <Button
-                        id="close_preview_button"
                         variant="primary"
                         type="button"
                         className="preview-close-button"
