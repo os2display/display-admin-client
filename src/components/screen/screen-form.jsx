@@ -331,13 +331,22 @@ function ScreenForm({
               </div>
               {previewOverlayVisible && (
                 <div
-                  onClick={() =>
-                    setPreviewOverlayVisible(!previewOverlayVisible)
-                  }
                   role="presentation"
                   className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                 >
+                  <Button
+                    variant="primary"
+                    type="button"
+                    className="preview-close-button"
+                    onClick={() =>
+                      setPreviewOverlayVisible(!previewOverlayVisible)
+                    }
+                  >
+                    {t("preview-close-button")}
+                  </Button>
+
                   <Preview id={idFromUrl(screen["@id"])} mode="screen" />
+
                   <Alert
                     key="slide-preview-about"
                     variant="info"

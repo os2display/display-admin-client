@@ -439,19 +439,19 @@ function SlideForm({
                 <>
                   {config?.previewClient && (
                     <div
-                      onClick={() =>
-                        setPreviewOverlayVisible(!previewOverlayVisible)
-                      }
                       role="presentation"
                       className="preview-overlay d-flex justify-content-center align-items-center flex-column"
                     >
-                      <Alert
-                        key="slide-preview-about"
-                        variant="info"
-                        className="mt-3"
+                      <Button
+                        variant="primary"
+                        type="button"
+                        className="preview-close-button"
+                        onClick={() =>
+                          setPreviewOverlayVisible(!previewOverlayVisible)
+                        }
                       >
-                        {t("slide-preview-about")}
-                      </Alert>
+                        {t("preview-close-button")}
+                      </Button>
 
                       <Preview
                         id={idFromUrl(slide["@id"])}
@@ -465,6 +465,14 @@ function SlideForm({
                           previewOrientation === "horizontal" ? 1920 : 1080
                         }
                       />
+
+                      <Alert
+                        key="slide-preview-about"
+                        variant="info"
+                        className="mt-3"
+                      >
+                        {t("slide-preview-about")}
+                      </Alert>
                     </div>
                   )}
                   {!config?.previewClient && (

@@ -398,6 +398,7 @@
   "slide-form": {
     "preview-orientation-portrait": "Portræt (9:16)",
     "preview-orientation-landscape": "Landskab (16:9)",
+    "preview-close-button": "Luk",
     "slide-template-selected": "Skabelon",
     "template-error": "Der skete en fejl da skabelonen skulle hentes:",
     "remember-template-error": "Husk at tilknytte en skabelon til dit slide",
@@ -580,6 +581,7 @@
   "playlist-campaign-form": {
     "preview-orientation-portrait": "Portræt (9:16)",
     "preview-orientation-landscape": "Landskab (16:9)",
+    "preview-close-button": "Luk",
     "title-about": "Om spillelisten",
     "title-slides": "Tilknyttede slides",
     "save-button": "Gem",
@@ -836,7 +838,8 @@
     "preview-orientation-landscape": "Landskab (16:9)",
     "preview-in-full-screen": "Fuld skærm",
     "preview-small-about": "Gem for at opdatere indhold.",
-    "preview": "Forhåndsvisning"
+    "preview": "Forhåndsvisning",
+    "preview-close-button": "Luk"
   },
   "nav-items": {
     "shared-playlists": "Delte spillelister",
