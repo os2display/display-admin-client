@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { Tabs, Tab, Alert } from "react-bootstrap";
 import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import idFromUrl from "../../util/helpers/id-from-url";
 import PlaylistDragAndDrop from "../../playlist-drag-and-drop/playlist-drag-and-drop";
-import { useDispatch } from "react-redux";
 import { api } from "../../../redux/api/api.generated.ts";
 import "./grid.scss";
 
@@ -40,16 +40,17 @@ function GridGenerationAndSelect({
   };
 
   /**
-   * @param root0
-   * @param root0.value
-   * @param root0.id
+   * @param {object} props The props
+   * @param {Array} props.value The value
+   * @param {string} props.id The id
+   * @returns {Array} Mapped data
    */
-  function mapData({ value, id }) {
+  function mapData({ value: inputPlaylists, id }) {
     // Map to add region id to incoming data.
-    const localTarget = value.map((value) => {
+    const localTarget = inputPlaylists.map((playlist) => {
       return {
         region: idFromUrl(id),
-        ...value,
+        ...playlist,
       };
     });
     // A copy, to be able to remove items.
@@ -63,7 +64,7 @@ function GridGenerationAndSelect({
     const selectedWithoutRegion = [];
 
     // Checks if an element has been removed from the list
-    if (value.length < regionPlaylists.length) {
+    if (inputPlaylists.length < regionPlaylists.length) {
       selectedPlaylists.forEach((playlist) => {
         if (!regionPlaylists.includes(playlist.region)) {
           selectedWithoutRegion.push(playlist);
@@ -78,10 +79,12 @@ function GridGenerationAndSelect({
       ...localTarget,
       ...selectedPlaylistsCopy,
     ].filter(
-      (value, index, self) =>
+      (playlist, index, self) =>
         index ===
         self.findIndex(
-          (t) => t["@id"] === value["@id"] && t.region === value.region
+          (secondPlaylist) =>
+            secondPlaylist["@id"] === playlist["@id"] &&
+            secondPlaylist.region === playlist.region
         )
     );
 
@@ -151,14 +154,17 @@ function GridGenerationAndSelect({
   /**
    * Removes playlist from list of playlists, and closes modal.
    *
-   * @param {object} inputPlaylist - inputPlaylist to remove
-   * @param {object} inputRegion  - inputRegion to remove from
+   * @param {object} inputPlaylist - InputPlaylist to remove
+   * @param {object} inputRegion - InputRegion to remove from
    */
   const removeFromList = (inputPlaylist, inputRegion) => {
-    const indexOfItemToRemove =selectedPlaylists.findIndex(({"@id": id, region}) => { return region === inputRegion && id === inputPlaylist });
+    const indexOfItemToRemove = selectedPlaylists.findIndex(
+      ({ "@id": id, region }) => {
+        return region === inputRegion && id === inputPlaylist;
+      }
+    );
     const selectedPlaylistsCopy = [...selectedPlaylists];
     selectedPlaylistsCopy.splice(indexOfItemToRemove, 1);
-    console.log(selectedPlaylistsCopy,"selectedPlaylistsCopy")
     setSelectedPlaylists(selectedPlaylistsCopy);
   };
 
@@ -201,7 +207,7 @@ function GridGenerationAndSelect({
                   >
                     <PlaylistDragAndDrop
                       id="playlist_drag_and_drop"
-                      handleAdd={handleChange}
+                      handleChange={handleChange}
                       removeFromList={removeFromList}
                       name={data["@id"]}
                       regionIdForInitializeCallback={data["@id"]}

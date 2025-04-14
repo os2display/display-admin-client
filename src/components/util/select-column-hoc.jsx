@@ -51,7 +51,7 @@ function SelectColumnHoc(columns, omitStandardColumns) {
           <Button
             variant="danger"
             className="remove-from-list"
-            onClick={() => handleDelete(id,region)}
+            onClick={() => handleDelete(id, region)}
           >
             {t("delete-button")}
           </Button>

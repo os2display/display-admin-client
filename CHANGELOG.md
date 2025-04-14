@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 - [#285](https://github.com/os2display/display-admin-client/pull/285)
   - Rewrite screen playlists get to use promises
   - Fix save screen and go to list
+  - Disable eslint for proptypes
+  - Disable eslint for react in scope
 - [#283](https://github.com/os2display/display-admin-client/pull/283)
   - Fixed preview issues. 
 - [#275](https://github.com/os2display/display-admin-client/pull/275)

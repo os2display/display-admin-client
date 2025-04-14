@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { SelectPlaylistColumns } from "../playlist/playlists-columns";
 import PlaylistsDropdown from "../util/forms/multiselect-dropdown/playlists/playlists-dropdown";
@@ -10,24 +9,23 @@ import {
   useGetV2PlaylistsQuery,
 } from "../../redux/api/api.generated.ts";
 import ScreenGanttChart from "../screen/util/screen-gantt-chart";
-
+// eslint-disable-next-line react/prop-types
 /**
  * A drag and drop component for playlists.
  *
  * @param {string} props The props.
- * @param {Function} props.handleChange - The callback when something changed
- * @param {string} props.name - The id of the form element
- * @param {string} props.screenId - The screen id for get request
+ * @param {Array} props.selectedPlaylists - The selected playlists
+ * @param {string} props.name - The name
+ * @param {Function} props.handleChange - The callback when something is added
  * @param {string} props.regionId - The region id for get request
  * @param {string} props.regionIdForInitializeCallback - The region id to add
  *   regions to formstateobject.
  * @returns {object} A drag and drop component
  */
 function PlaylistDragAndDrop({
-  handleChange,
   selectedPlaylists,
   name,
-  handleAdd,
+  handleChange,
   removeFromList,
   regionId,
 }) {
@@ -85,7 +83,7 @@ function PlaylistDragAndDrop({
         <PlaylistsDropdown
           filterCallback={onFilter}
           name={name}
-          handlePlaylistSelection={handleAdd}
+          handlePlaylistSelection={handleChange}
           selected={selectedPlaylists}
           data={playlists}
         />
@@ -107,13 +105,5 @@ function PlaylistDragAndDrop({
     </>
   );
 }
-
-PlaylistDragAndDrop.propTypes = {
-  name: PropTypes.string.isRequired,
-  screenId: PropTypes.string.isRequired,
-  regionIdForInitializeCallback: PropTypes.string.isRequired,
-  regionId: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-};
 
 export default PlaylistDragAndDrop;

@@ -1,8 +1,7 @@
-import { React, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Form, Spinner, Alert, Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import ContentBody from "../util/content-body/content-body";
@@ -31,15 +30,15 @@ import { displayError } from "../util/list/toast-component/display-toast";
  * @param {object} props The props.
  * @param {object} props.screen Screen The screen object to modify in the form.
  * @param {Function} props.handleInput HandleInput Handles form input.
- * @param {Function} props.handleSubmit HandleSubmit Handles form submit.
  * @param {string} props.headerText HeaderText Headline text.
  * @param {string} props.groupId The group id.
  * @param {boolean} props.isLoading Indicator of whether the form is loading
  * @param {string} props.loadingMessage The loading message for the spinner
  * @param {object} props.orientationOptions The options for the orientation dropdown
  * @param {object} props.resolutionOptions The options for the resolution dropdown
- * @param props.handleSubmitWithoutRedirect
- * @param props.handleSubmitWithRedirect
+ * @param {Function} props.handleSubmitWithoutRedirect Handles form submit
+ *   without redirect.
+ * @param {Function} props.handleSubmitWithRedirect Handles form submit with redirect.
  * @returns {object} The screen form.
  */
 function ScreenForm({
@@ -87,7 +86,7 @@ function ScreenForm({
   /**
    * Check if published is set
    *
-   * @param redirect
+   * @param {boolean} redirect Whether to redirect after submit
    */
   const checkInputsHandleSubmit = (redirect) => {
     setLayoutError(false);
@@ -415,41 +414,5 @@ function ScreenForm({
     </div>
   );
 }
-
-ScreenForm.propTypes = {
-  screen: PropTypes.shape({
-    resolution: PropTypes.string,
-    "@id": PropTypes.string,
-    description: PropTypes.string,
-    orientation: PropTypes.string,
-    enableColorSchemeChange: PropTypes.bool,
-    layout: PropTypes.string,
-    location: PropTypes.string,
-    regions: PropTypes.arrayOf(
-      PropTypes.shape({
-        "@id": PropTypes.string,
-      })
-    ),
-    screenUser: PropTypes.string,
-    size: PropTypes.string,
-    title: PropTypes.string,
-    status: PropTypes.shape({}),
-    playlists: PropTypes.arrayOf(
-      PropTypes.shape({ name: PropTypes.string, id: PropTypes.number })
-    ),
-  }),
-  handleInput: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  headerText: PropTypes.string.isRequired,
-  groupId: PropTypes.string,
-  isLoading: PropTypes.bool,
-  loadingMessage: PropTypes.string,
-  orientationOptions: PropTypes.arrayOf(
-    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
-  ).isRequired,
-  resolutionOptions: PropTypes.arrayOf(
-    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
-  ).isRequired,
-};
 
 export default ScreenForm;
