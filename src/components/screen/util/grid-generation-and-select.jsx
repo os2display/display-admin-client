@@ -5,9 +5,9 @@ import { createGridArea, createGrid } from "os2display-grid-generator";
 import { useTranslation } from "react-i18next";
 import idFromUrl from "../../util/helpers/id-from-url";
 import PlaylistDragAndDrop from "../../playlist-drag-and-drop/playlist-drag-and-drop";
-import "./grid.scss";
 import { useDispatch } from "react-redux";
 import { api } from "../../../redux/api/api.generated.ts";
+import "./grid.scss";
 
 /**
  * The grid generator component.
