@@ -108,7 +108,6 @@ function GridGenerationAndSelect({
       });
 
       Promise.allSettled(promises).then((results) => {
-        // simplify below
         let playlists = [];
         results.forEach(
           ({
