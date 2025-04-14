@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { SelectPlaylistColumns } from "../playlist/playlists-columns";
@@ -8,7 +8,6 @@ import FormCheckbox from "../util/forms/form-checkbox";
 import {
   useGetV2PlaylistsByIdSlidesQuery,
   useGetV2PlaylistsQuery,
-  useGetV2ScreensByIdRegionsAndRegionIdPlaylistsQuery,
 } from "../../redux/api/api.generated.ts";
 import ScreenGanttChart from "../screen/util/screen-gantt-chart";
 
