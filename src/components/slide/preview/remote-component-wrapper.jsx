@@ -36,7 +36,7 @@ function RemoteComponentWrapper({
   const [remoteComponentSlide, setRemoteComponentSlide] = useState(null);
   const [loading, err, Component] = useRemoteComponent(url);
   const [runId, setRunId] = useState("");
-  const [fontSizeEm, setFontSizeEm] = useState(1);
+  const [fontSizeRem, setFontSizeRem] = useState(1);
 
   /** Create remoteComponentSlide from slide and mediaData */
   useEffect(() => {
@@ -90,7 +90,7 @@ function RemoteComponentWrapper({
       if (adjustFontSize) {
         if (entries.length > 0) {
           const first = entries[0];
-          setFontSizeEm(
+          setFontSizeRem(
             first.contentRect.width / (orientation === "vertical" ? 1080 : 1920)
           );
         }
@@ -109,7 +109,11 @@ function RemoteComponentWrapper({
   const remoteComponentStyle = {};
 
   if (adjustFontSize) {
-    remoteComponentStyle["--font-size-base"] = `${fontSizeEm}rem`;
+    // These sizes relate to:
+    // https://github.com/os2display/display-templates/blob/develop/src/global-styles.css#L100
+    // https://github.com/os2display/display-templates/blob/develop/src/global-styles.css#L126
+    remoteComponentStyle["--font-size-base"] = `${fontSizeRem}rem`;
+    remoteComponentStyle["--spacer"] = `${fontSizeRem * 12}px`;
   }
 
   return (
