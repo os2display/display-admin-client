@@ -9,7 +9,7 @@ import {
   useGetV2PlaylistsQuery,
 } from "../../redux/api/api.generated.ts";
 import ScreenGanttChart from "../screen/util/screen-gantt-chart";
-// eslint-disable-next-line react/prop-types
+
 /**
  * A drag and drop component for playlists.
  *
