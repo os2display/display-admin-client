@@ -42,7 +42,7 @@ function SelectColumnHoc(columns, omitStandardColumns) {
 
     returnColumns.push({
       key: "edit-delete-buttons",
-      content: ({ "@id": id, tenants }) => (
+      content: ({ "@id": id, tenants, region }) => (
         <div className="d-flex justify-content-end">
           {!tenants?.find(
             (tenant) =>
@@ -51,7 +51,7 @@ function SelectColumnHoc(columns, omitStandardColumns) {
           <Button
             variant="danger"
             className="remove-from-list"
-            onClick={() => handleDelete(id)}
+            onClick={() => handleDelete(id,region)}
           >
             {t("delete-button")}
           </Button>

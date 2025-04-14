@@ -38,11 +38,14 @@ import { displayError } from "../util/list/toast-component/display-toast";
  * @param {string} props.loadingMessage The loading message for the spinner
  * @param {object} props.orientationOptions The options for the orientation dropdown
  * @param {object} props.resolutionOptions The options for the resolution dropdown
+ * @param props.handleSubmitWithoutRedirect
+ * @param props.handleSubmitWithRedirect
  * @returns {object} The screen form.
  */
 function ScreenForm({
+  handleSubmitWithoutRedirect,
   handleInput,
-  handleSubmit,
+  handleSubmitWithRedirect,
   headerText,
   orientationOptions,
   resolutionOptions,
@@ -81,8 +84,12 @@ function ScreenForm({
     previewOrientationOptions[0].value
   );
 
-  /** Check if published is set */
-  const checkInputsHandleSubmit = () => {
+  /**
+   * Check if published is set
+   *
+   * @param redirect
+   */
+  const checkInputsHandleSubmit = (redirect) => {
     setLayoutError(false);
     let submit = true;
 
@@ -93,7 +100,11 @@ function ScreenForm({
     }
 
     if (submit) {
-      handleSubmit();
+      if (redirect) {
+        handleSubmitWithRedirect();
+      } else {
+        handleSubmitWithoutRedirect();
+      }
     }
   };
 
@@ -252,14 +263,14 @@ function ScreenForm({
                 )}
                 {selectedLayout &&
                   selectedLayout.grid &&
-                  selectedLayout.regions && (
+                  selectedLayout.regions &&
+                  screen.layout && (
                     <GridGenerationAndSelect
                       screenId={idFromUrl(screen["@id"])}
                       grid={selectedLayout?.grid}
                       vertical={isVertical()}
                       regions={selectedLayout.regions}
                       handleInput={handleInput}
-                      selectedData={screen.layout}
                     />
                   )}
               </div>
@@ -375,7 +386,7 @@ function ScreenForm({
             type="button"
             className="margin-right-button"
             id="save_screen"
-            onClick={checkInputsHandleSubmit}
+            onClick={() => checkInputsHandleSubmit(false)}
           >
             {t("save-button")}
           </Button>

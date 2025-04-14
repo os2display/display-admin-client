@@ -26,30 +26,25 @@ import ScreenGanttChart from "../screen/util/screen-gantt-chart";
  */
 function PlaylistDragAndDrop({
   handleChange,
+  selectedPlaylists,
   name,
-  screenId,
+  handleAdd,
+  removeFromList,
   regionId,
-  regionIdForInitializeCallback,
 }) {
   const { t } = useTranslation("common", {
     keyPrefix: "playlist-drag-and-drop",
   });
-
   const [searchText, setSearchText] = useState();
-  const [selectedData, setSelectedData] = useState([]);
-  const [totalItems, setTotalItems] = useState(0);
   const [page, setPage] = useState(1);
   const [onlySharedPlaylists, setOnlySharedPlaylists] = useState(false);
-  const { data: selectedPlaylistsByRegion } =
-    useGetV2ScreensByIdRegionsAndRegionIdPlaylistsQuery({
-      id: screenId,
-      regionId,
-      page,
-      itemsPerPage: 10,
-    });
 
-  // Get method
-  const { data } = useGetV2PlaylistsQuery({
+  const {
+    data: {
+      "hydra:member": playlists = null,
+      "hydra:totalItems": totalItems = 0,
+    } = {},
+  } = useGetV2PlaylistsQuery({
     isCampaign: false,
     title: searchText,
     itemsPerPage: 30,
@@ -58,77 +53,12 @@ function PlaylistDragAndDrop({
   });
 
   /**
-   * @param {object} regionsAndPlaylists This method initializes playlists, so
-   *   the initial formstate object in screen manager is not empty
-   */
-  function callbackToinitializePlaylists(regionsAndPlaylists) {
-    handleChange({
-      target: {
-        id: regionIdForInitializeCallback,
-        value: regionsAndPlaylists["hydra:member"].map(
-          ({ playlist }) => playlist
-        ),
-      },
-    });
-  }
-
-  /** Set loaded data into form state. */
-  useEffect(() => {
-    if (selectedPlaylistsByRegion) {
-      setTotalItems(selectedPlaylistsByRegion["hydra:totalItems"]);
-      const newPlaylists = selectedPlaylistsByRegion["hydra:member"].map(
-        ({ playlist, weight }) => ({ ...playlist, weight })
-      );
-
-      const selected = [...selectedData, ...newPlaylists].sort(
-        (a, b) => a.weight - b.weight
-      );
-
-      setSelectedData(selected);
-      callbackToinitializePlaylists(selectedPlaylistsByRegion);
-    }
-  }, [selectedPlaylistsByRegion]);
-
-  /**
    * Fetches data for the multi component
    *
    * @param {string} filter - The filter.
    */
   const onFilter = (filter) => {
     setSearchText(filter);
-  };
-
-  /**
-   * Removes playlist from list of playlists, and closes modal.
-   *
-   * @param {object} removeItem - Item to remove
-   */
-  const removeFromList = (removeItem) => {
-    const indexOfItemToRemove = selectedData
-      .map((item) => {
-        return item["@id"];
-      })
-      .indexOf(removeItem);
-    const selectedDataCopy = [...selectedData];
-    selectedDataCopy.splice(indexOfItemToRemove, 1);
-    setSelectedData(selectedDataCopy);
-
-    const target = { value: selectedDataCopy, id: name };
-    handleChange({ target });
-  };
-
-  /**
-   * Adds group to list of groups.
-   *
-   * @param {object} props - The props.
-   * @param {object} props.target - The target.
-   */
-  const handleAdd = ({ target }) => {
-    const { value, id } = target;
-    setSelectedData(value);
-    handleChange({
-      target: { id, value },
-    });
   };
 
   const columns = SelectPlaylistColumns({
@@ -140,42 +70,40 @@ function PlaylistDragAndDrop({
     infoModalTitle: t("select-playlists-table.info-modal.slides"),
   });
 
+  if (!playlists) return null;
+
   return (
     <>
-      {data && data["hydra:member"] && (
-        <>
-          <FormCheckbox
-            label={t("show-only-shared")}
-            onChange={() => {
-              setOnlySharedPlaylists(!onlySharedPlaylists);
-            }}
-            value={onlySharedPlaylists}
-            name="show-only-shared"
-          />
-          <div className="mb-3">
-            <PlaylistsDropdown
-              filterCallback={onFilter}
-              name={name}
-              handlePlaylistSelection={handleAdd}
-              selected={selectedData}
-              data={data["hydra:member"]}
-            />
-          </div>
-          {selectedData.length > 0 && (
-            <DragAndDropTable
-              columns={columns}
-              onDropped={handleChange}
-              name={name}
-              data={selectedData}
-              callback={() => setPage(page + 1)}
-              label={t("more-playlists")}
-              totalItems={totalItems}
-            />
-          )}
-          {selectedData?.length > 0 && (
-            <ScreenGanttChart playlists={selectedData} id={regionId} />
-          )}
-        </>
+      <FormCheckbox
+        label={t("show-only-shared")}
+        onChange={() => {
+          setOnlySharedPlaylists(!onlySharedPlaylists);
+        }}
+        value={onlySharedPlaylists}
+        name="show-only-shared"
+      />
+      <div className="mb-3">
+        <PlaylistsDropdown
+          filterCallback={onFilter}
+          name={name}
+          handlePlaylistSelection={handleAdd}
+          selected={selectedPlaylists}
+          data={playlists}
+        />
+      </div>
+      {selectedPlaylists.length > 0 && (
+        <DragAndDropTable
+          columns={columns}
+          onDropped={handleChange}
+          name={name}
+          data={selectedPlaylists}
+          callback={() => setPage(page + 1)}
+          label={t("more-playlists")}
+          totalItems={totalItems}
+        />
+      )}
+      {selectedPlaylists?.length > 0 && (
+        <ScreenGanttChart playlists={selectedPlaylists} id={regionId} />
       )}
     </>
   );

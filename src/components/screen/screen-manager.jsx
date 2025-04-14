@@ -35,6 +35,7 @@ function ScreenManager({
   initialState = null,
 }) {
   const { t } = useTranslation("common", { keyPrefix: "screen-manager" });
+  const [saveWithoutClose, setSaveWithoutClose] = useState(false);
   const navigate = useNavigate();
   const orientationOptions = [
     { title: "Vertikal", "@id": "vertical" },
@@ -58,7 +59,7 @@ function ScreenManager({
   // Handler for creating screen.
   const [
     PostV2Screens,
-    { error: saveErrorPost, isSuccess: isSaveSuccessPost },
+    { data: postData, error: saveErrorPost, isSuccess: isSaveSuccessPost },
   ] = usePostV2ScreensMutation();
 
   /** If the screen is saved, display the success message */
@@ -170,7 +171,7 @@ function ScreenManager({
   function mapPlaylistsWithRegion() {
     const returnArray = [];
     const { playlists, regions } = formStateObject;
-    const regionIds = regions.map((r) => r["@id"]);
+    const regionIds = regions.map((r) => idFromUrl(r["@id"]));
 
     // The playlists all have a regionId, the following creates a unique list of relevant regions If there are not
     // playlists, then an empty playlist is to be saved per region
@@ -191,7 +192,6 @@ function ScreenManager({
         regionId: idFromUrl(regionId),
       });
     });
-
     // The remaining regions are added with empty playlist arrays.
     if (regionIds.length > 0) {
       regionIds.forEach((regionId) =>
@@ -201,7 +201,6 @@ function ScreenManager({
         })
       );
     }
-
     return returnArray;
   }
 
@@ -267,11 +266,25 @@ function ScreenManager({
     }
   };
 
+  const handleSubmitWithRedirect = () => {
+    setSaveWithoutClose(true);
+    handleSubmit();
+  };
+
   /** Handle submitting is done. */
   useEffect(() => {
     if (isSaveSuccessPut || isSaveSuccessPost) {
       setSavingScreen(false);
-      navigate("/screen/list");
+
+      if (saveWithoutClose) {
+        setSaveWithoutClose(false);
+
+        if (isSaveSuccessPost) {
+          navigate(`/screen/edit/${idFromUrl(postData["@id"])}`);
+        }
+      } else {
+        navigate("/screen/list");
+      }
     }
   }, [isSaveSuccessPut, isSaveSuccessPost]);
 
@@ -279,12 +292,13 @@ function ScreenManager({
     <>
       {formStateObject && (
         <ScreenForm
+          handleSubmitWithoutRedirect={handleSubmitWithRedirect}
           screen={formStateObject}
           orientationOptions={orientationOptions}
           resolutionOptions={resolutionOptions}
           headerText={headerText}
           handleInput={handleInput}
-          handleSubmit={handleSubmit}
+          handleSubmitWithRedirect={handleSubmit}
           isLoading={savingScreen || isLoading}
           loadingMessage={loadingMessage}
           groupId={groupId}
