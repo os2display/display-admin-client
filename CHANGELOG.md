@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#285](https://github.com/os2display/display-admin-client/pull/285)
+  - Rewrite screen playlists get to use promises
+  - Fix save screen and go to list
+  - Disable eslint for proptypes
+  - Disable eslint for react in scope
 - [#284](https://github.com/os2display/display-admin-client/pull/284)
   - Fixed spacer calculations for previews.
-  - Added border to preview container.
+  - Added border to preview container
 - [#283](https://github.com/os2display/display-admin-client/pull/283)
   - Fixed preview issues. 
 - [#275](https://github.com/os2display/display-admin-client/pull/275)

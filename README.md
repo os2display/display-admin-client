@@ -32,15 +32,10 @@ setting are required than what is default.
 cp public/example-access-config.json public/access-config.json
 ```
 
-### Up the containers
+### Up the containers and install npm packages
 
 ```shell
 docker compose up --detach
-```
-
-### Install npm packages
-
-```shell
 docker compose run --rm node yarn install
 ```
 
