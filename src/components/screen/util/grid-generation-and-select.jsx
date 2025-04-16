@@ -101,7 +101,7 @@ function GridGenerationAndSelect({
               id: screenId,
               regionId: idFromUrl(id),
               page: 1,
-              itemsPerPage: 10,
+              itemsPerPage: 50,
             })
           )
         );
