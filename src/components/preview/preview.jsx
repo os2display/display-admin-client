@@ -57,6 +57,7 @@ function Preview({
             width: `${width}px`,
             height: `${height}px`,
             overflow: "hidden",
+            border: "1px solid #aaa",
           }}
         >
           <iframe
