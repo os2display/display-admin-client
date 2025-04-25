@@ -1,5 +1,5 @@
 {
-  "plugins": ["react", "prettier", "only-warn"],
+  "plugins": ["react", "prettier"],
   "extends": [
     "airbnb",
     "prettier",
@@ -18,7 +18,9 @@
     "allowImportExportEverywhere": true
   },
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
+     "react/prop-types": "off",
     "react/jsx-filename-extension": [
       "warn",
       {
