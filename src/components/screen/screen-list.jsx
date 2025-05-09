@@ -136,7 +136,7 @@ function ScreenList() {
   });
 
   return (
-    <>
+    <div className="p-3">
       <ContentHeader
         title={t("header")}
         newBtnTitle={t("create-new-screen")}
@@ -159,7 +159,7 @@ function ScreenList() {
           )}
         </>
       </ContentBody>
-    </>
+    </div>
   );
 }
 
