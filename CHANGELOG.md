@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.5.0] - 2025-05-09
+
 - [#285](https://github.com/os2display/display-admin-client/pull/285)
   - Rewrite screen playlists get to use promises
   - Fix save screen and go to list
