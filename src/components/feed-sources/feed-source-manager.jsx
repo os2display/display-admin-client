@@ -11,6 +11,7 @@ import {
   displayError,
   displaySuccess,
 } from "../util/list/toast-component/display-toast";
+import idFromUrl from "../util/helpers/id-from-url";
 
 /**
  * The theme manager component.
@@ -47,10 +48,11 @@ function FeedSourceManager({
 
   const [submitting, setSubmitting] = useState(false);
   const [formStateObject, setFormStateObject] = useState({});
+  const [saveWithoutClose, setSaveWithoutClose] = useState(false);
 
   const [
     postV2FeedSources,
-    { error: saveErrorPost, isSuccess: isSaveSuccessPost },
+    { error: saveErrorPost, isSuccess: isSaveSuccessPost, data },
   ] = usePostV2FeedSourcesMutation();
 
   const [
@@ -60,9 +62,28 @@ function FeedSourceManager({
 
   const feedSourceTypeOptions = [
     {
+      value: "App\\Feed\\CalendarApiFeedType",
+      title: t("dynamic-fields.calendar-api-feed-type.title"),
+      key: "0",
+      secretsDefault: {
+        locations: [],
+      },
+    },
+    {
+      value: "App\\Feed\\ColiboFeedType",
+      title: t("colibo-feed-type.title"),
+      key: "1",
+      secretsDefault: {
+        api_base_uri: "",
+        client_id: "",
+        client_secret: "",
+        recipients: [],
+      },
+    },
+    {
       value: "App\\Feed\\EventDatabaseApiFeedType",
       title: t("dynamic-fields.event-database-api-feed-type.title"),
-      key: "1",
+      key: "2",
       secretsDefault: {
         host: "",
       },
@@ -79,17 +100,9 @@ function FeedSourceManager({
     {
       value: "App\\Feed\\NotifiedFeedType",
       title: t("dynamic-fields.notified-feed-type.title"),
-      key: "2",
+      key: "3",
       secretsDefault: {
         token: "",
-      },
-    },
-    {
-      value: "App\\Feed\\CalendarApiFeedType",
-      title: t("dynamic-fields.calendar-api-feed-type.title"),
-      key: "0",
-      secretsDefault: {
-        locations: [],
       },
     },
     {
@@ -169,7 +182,16 @@ function FeedSourceManager({
     if (isSaveSuccessPost || isSaveSuccessPut) {
       setSubmitting(false);
       displaySuccess(t("success-messages.saved-feed-source"));
-      navigate("/feed-sources/list");
+
+      if (saveWithoutClose) {
+        setSaveWithoutClose(false);
+
+        if (isSaveSuccessPost) {
+          navigate(`/feed-sources/edit/${idFromUrl(data["@id"])}`);
+        }
+      } else {
+        navigate(`/feed-sources/list`);
+      }
     }
   }, [isSaveSuccessPut, isSaveSuccessPost]);
 
@@ -177,6 +199,11 @@ function FeedSourceManager({
   const handleSubmit = () => {
     setSubmitting(true);
     saveFeedSource();
+  };
+
+  const handleSaveNoClose = () => {
+    setSaveWithoutClose(true);
+    handleSubmit();
   };
 
   /** If the theme is saved with error, display the error message */
@@ -196,6 +223,7 @@ function FeedSourceManager({
           headerText={`${headerText}: ${formStateObject?.title}`}
           handleInput={handleInput}
           handleSubmit={handleSubmit}
+          handleSaveNoClose={handleSaveNoClose}
           isLoading={isLoading || submitting}
           loadingMessage={loadingMessage}
           onFeedTypeChange={onFeedTypeChange}
