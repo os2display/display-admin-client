@@ -403,7 +403,6 @@ function SlideForm({
 
               {selectedTemplate?.resources?.options?.disableLivePreview && (
                 <Alert
-                  key="slide-preview-disabled-preview"
                   variant="secondary"
                   className="mt-3"
                 >
