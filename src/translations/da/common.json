@@ -396,6 +396,7 @@
     }
   },
   "slide-form": {
+    "slide-preview-disabled-preview": "Forhåndsvisning ikke tilgængelig for denne skabelon",
     "preview-orientation-portrait": "Portræt (9:16)",
     "preview-orientation-landscape": "Landskab (16:9)",
     "preview-close-button": "Luk",
