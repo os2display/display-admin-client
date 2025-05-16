@@ -401,40 +401,46 @@ function SlideForm({
                 </Button>
               </div>
 
-              {selectedTemplate?.resources?.component && (
-                <>
-                  {previewOrientation === "horizontal" && (
-                    <div style={{ width: "100%" }}>
-                      <RemoteComponentWrapper
-                        key="live-preview-horizontal"
-                        url={selectedTemplate?.resources?.component}
-                        slide={slide}
-                        mediaData={mediaData}
-                        showPreview={displayPreview}
-                        themeData={
-                          selectedTheme?.length > 0 ? selectedTheme[0] : {}
-                        }
-                        orientation={previewOrientation}
-                      />
-                    </div>
-                  )}
-                  {previewOrientation === "vertical" && (
-                    <div style={{ width: "56.25%" }}>
-                      <RemoteComponentWrapper
-                        key="live-preview-vertical"
-                        url={selectedTemplate?.resources?.component}
-                        slide={slide}
-                        mediaData={mediaData}
-                        showPreview={displayPreview}
-                        themeData={
-                          selectedTheme?.length > 0 ? selectedTheme[0] : {}
-                        }
-                        orientation={previewOrientation}
-                      />
-                    </div>
-                  )}
-                </>
+              {selectedTemplate?.resources?.options?.disableLivePreview && (
+                <Alert variant="secondary" className="mt-3">
+                  {t("slide-preview-disabled-preview")}
+                </Alert>
               )}
+              {!selectedTemplate?.resources?.options?.disableLivePreview &&
+                selectedTemplate?.resources?.component && (
+                  <>
+                    {previewOrientation === "horizontal" && (
+                      <div style={{ width: "100%" }}>
+                        <RemoteComponentWrapper
+                          key="live-preview-horizontal"
+                          url={selectedTemplate?.resources?.component}
+                          slide={slide}
+                          mediaData={mediaData}
+                          showPreview={displayPreview}
+                          themeData={
+                            selectedTheme?.length > 0 ? selectedTheme[0] : {}
+                          }
+                          orientation={previewOrientation}
+                        />
+                      </div>
+                    )}
+                    {previewOrientation === "vertical" && (
+                      <div style={{ width: "56.25%" }}>
+                        <RemoteComponentWrapper
+                          key="live-preview-vertical"
+                          url={selectedTemplate?.resources?.component}
+                          slide={slide}
+                          mediaData={mediaData}
+                          showPreview={displayPreview}
+                          themeData={
+                            selectedTheme?.length > 0 ? selectedTheme[0] : {}
+                          }
+                          orientation={previewOrientation}
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
               {previewOverlayVisible && (
                 <>
                   {config?.previewClient && (
