@@ -402,10 +402,7 @@ function SlideForm({
               </div>
 
               {selectedTemplate?.resources?.options?.disableLivePreview && (
-                <Alert
-                  variant="secondary"
-                  className="mt-3"
-                >
+                <Alert variant="secondary" className="mt-3">
                   {t("slide-preview-disabled-preview")}
                 </Alert>
               )}
