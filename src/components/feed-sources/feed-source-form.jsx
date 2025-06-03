@@ -15,6 +15,7 @@ import EventDatabaseApiFeedType from "./templates/event-database-feed-type";
 import ColiboFeedType from "./templates/colibo-feed-type";
 import StickyFooter from "../util/sticky-footer";
 import EventDatabaseApiV2FeedType from "./templates/event-database-v2-feed-type";
+import BrndFeedType from "./templates/brnd-feed-type";
 
 /**
  * The feed-source form component.
@@ -120,6 +121,14 @@ function FeedSourceForm({
               )}
               {feedSource?.feedType === "App\\Feed\\ColiboFeedType" && (
                 <ColiboFeedType
+                  handleInput={handleSecretInput}
+                  formStateObject={feedSource.secrets}
+                  mode={mode}
+                  feedSourceId={feedSource["@id"]}
+                />
+              )}
+              {feedSource?.feedType === "App\\Feed\\BrndFeedType" && (
+                <BrndFeedType
                   handleInput={handleSecretInput}
                   formStateObject={feedSource.secrets}
                   mode={mode}
