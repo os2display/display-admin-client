@@ -285,6 +285,9 @@
     "colibo-feed-type": {
       "title": "Colibo"
     },
+    "brnd-feed-type": {
+      "title": "BRND"
+    },
     "dynamic-fields": {
       "event-database-api-feed-type": {
         "title": "Eventdatabase API",
@@ -1161,7 +1164,7 @@
     "title": "BRND feed",
     "api-base-uri": "API Base URI",
     "company-id": "Company ID",
-    "api_auth_key": "API Auth Key",
+    "api-auth-key": "API Auth Key",
     "values-info": "Værdierne Company ID og API Auth Key udleveres af BRND. Ret henvendelse til BRND support."
   },
   "event-database-api-v2-feed-type": {
