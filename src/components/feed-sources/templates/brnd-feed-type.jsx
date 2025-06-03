@@ -32,7 +32,7 @@ const BrndFeedType = ({
         name="company_id"
         type="text"
         className="mb-2"
-        label={t("company_id")}
+        label={t("company-id")}
         onChange={handleInput}
         placeholder={
           mode === "PUT" ? t("redacted-value-input-placeholder") : ""
@@ -43,7 +43,7 @@ const BrndFeedType = ({
       <FormInput
         name="api_auth_key"
         type="text"
-        label={t("api_auth_key")}
+        label={t("api-auth-key")}
         onChange={handleInput}
         placeholder={
           mode === "PUT" ? t("redacted-value-input-placeholder") : ""
