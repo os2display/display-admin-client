@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.5.1] - 2025-06-23
+
+- [#287](https://github.com/os2display/display-admin-client/pull/287)
+  - Disable live slide preview for templates with option.disableLivePreview.
+
 ## [2.5.0] - 2025-05-09
 
 - [#285](https://github.com/os2display/display-admin-client/pull/285)
