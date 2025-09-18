@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#292](https://github.com/os2display/display-admin-client/pull/292)
+  - Add BRND Booking feed type
 
 - [#290](https://github.com/os2display/display-admin-client/pull/290)
   - Added temporary fix that reloads the page after a screen has been saved, to ensure fresh data is fetched.

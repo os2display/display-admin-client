@@ -81,6 +81,16 @@ function FeedSourceManager({
       },
     },
     {
+      value: "App\\Feed\\BrndFeedType",
+      title: t("brnd-feed-type.title"),
+      key: "8",
+      secretsDefault: {
+        api_base_uri: "",
+        company_id: "",
+        api_auth_key: "",
+      },
+    },
+    {
       value: "App\\Feed\\EventDatabaseApiFeedType",
       title: t("dynamic-fields.event-database-api-feed-type.title"),
       key: "2",
