@@ -1,21 +1,16 @@
-import { React, useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import FormInput from "../../util/forms/form-input";
 
-const BrndFeedType = ({
-  feedSourceId,
-  handleInput,
-  formStateObject,
-  mode,
-}) => {
+const BrndFeedType = ({ handleInput, formStateObject, mode }) => {
   const { t } = useTranslation("common", {
     keyPrefix: "brnd-feed-type",
   });
 
   return (
     <>
-     
+
       <FormInput
         name="api_base_uri"
         type="text"
@@ -61,7 +56,7 @@ BrndFeedType.propTypes = {
     company_id: PropTypes.string,
     api_auth_key: PropTypes.string,
   }),
-  feedSourceId: PropTypes.string,
+  // feedSourceId: PropTypes.string, // removed as unused
   mode: PropTypes.string,
 };
 
