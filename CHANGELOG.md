@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+- [#292](https://github.com/os2display/display-admin-client/pull/292)
+  - Add BRND Booking feed type
 
 ## [2.5.1] - 2025-06-23
 
