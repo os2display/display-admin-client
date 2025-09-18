@@ -10,7 +10,6 @@ const BrndFeedType = ({ handleInput, formStateObject, mode }) => {
 
   return (
     <>
-
       <FormInput
         name="api_base_uri"
         type="text"
