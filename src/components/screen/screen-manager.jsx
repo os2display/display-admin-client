@@ -285,6 +285,9 @@ function ScreenManager({
       } else {
         navigate("/screen/list");
       }
+
+      // TODO: Remove this. Temporary fix until redux caching issues are fixed.
+      window.location.reload();
     }
   }, [isSaveSuccessPut, isSaveSuccessPost]);
 
