@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [2.5.2] - 2025-09-04
+## [2.5.2] - 2025-09-25
 
 - [#290](https://github.com/os2display/display-admin-client/pull/290)
   - Added temporary fix that reloads the page after a screen has been saved, to ensure fresh data is fetched.
