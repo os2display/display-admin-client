@@ -55,7 +55,6 @@ BrndFeedType.propTypes = {
     company_id: PropTypes.string,
     api_auth_key: PropTypes.string,
   }),
-  // feedSourceId: PropTypes.string, // removed as unused
   mode: PropTypes.string,
 };
 
