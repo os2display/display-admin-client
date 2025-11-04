@@ -285,6 +285,9 @@
     "colibo-feed-type": {
       "title": "Colibo"
     },
+    "brnd-feed-type": {
+      "title": "BRND"
+    },
     "dynamic-fields": {
       "event-database-api-feed-type": {
         "title": "Eventdatabase API",
@@ -1156,6 +1159,14 @@
     "redacted-value-input-placeholder": "Skjult værdi",
     "save-before-recipients-can-be-set": "Bemærk! Datakilden skal gemmes før der kan tilkobles tilladte modtagergrupper. Gem og åbn datakilden igen.",
     "allowed-recipients-help": "Det er kun disse modtagergrupper, der vil være tilgængelige, når man opretter et slide, der bruger datakilden."
+  },
+  "brnd-feed-type": {
+    "title": "BRND feed",
+    "api-base-uri": "API Base URI",
+    "company-id": "Company ID",
+    "api-auth-key": "API Auth Key",
+    "values-info": "Værdierne Company ID og API Auth Key udleveres af BRND. Ret henvendelse til BRND support.",
+    "redacted-value-input-placeholder": "Skjult værdi"
   },
   "event-database-api-v2-feed-type": {
     "title": "Event databasen v.2",
