@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.6.0] - 2025-12-05
+
+- [#293](https://github.com/os2display/display-admin-client/pull/293)
+  - Npm upgrade.
+  - Upgraded to DOMPurify 3.3.
+- [#292](https://github.com/os2display/display-admin-client/pull/292)
+  - Add BRND Booking feed type
+
 ## [2.5.2] - 2025-09-25
 
 - [#290](https://github.com/os2display/display-admin-client/pull/290)
