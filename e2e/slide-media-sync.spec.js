@@ -88,4 +88,39 @@ test.describe("Slide media sync", () => {
 
     expect(result).toEqual(["/v2/media/1"]);
   });
+
+  test("It includes media from untracked content fields", () => {
+    // When only one media field has been touched via handleMedia,
+    // mediaFields only contains that field. Media from other content
+    // fields must still be included by scanning top-level content keys.
+    const content = {
+      images: ["/v2/media/1"],
+      backgroundImage: ["/v2/media/2"],
+    };
+    const mediaFields = ["images"]; // only images was touched
+
+    const result = rebuildMediaFromContent(content, mediaFields);
+
+    expect(result).toContain("/v2/media/1");
+    expect(result).toContain("/v2/media/2");
+  });
+
+  test("It ignores non-media content values when scanning top-level keys", () => {
+    // Content has both media arrays and plain string/object values.
+    // Only string array entries should be picked up as media.
+    const content = {
+      images: ["/v2/media/1"],
+      title: "Some text",
+      separator: true,
+      contacts: [{ name: "John", image: ["/v2/media/2"] }],
+    };
+    const mediaFields = [];
+
+    const result = rebuildMediaFromContent(content, mediaFields);
+
+    // images field is picked up via top-level scan
+    expect(result).toContain("/v2/media/1");
+    // contacts is an array of objects, not strings — objects are skipped
+    expect(result).not.toContain("/v2/media/2");
+  });
 });
