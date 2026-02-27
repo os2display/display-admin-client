@@ -2,6 +2,7 @@ import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import get from "lodash.get";
 import set from "lodash.set";
+import { rebuildMediaFromContent } from "./slide-media-utils";
 import { ulid } from "ulid";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
@@ -337,13 +338,11 @@ function SlideManager({
     const localFormStateObject = { ...formStateObject };
     const localMediaData = { ...mediaData };
     // Set field as a field to look into for new references.
-    setMediaFields([...new Set([...mediaFields, fieldId])]);
+    const updatedMediaFields = [...new Set([...mediaFields, fieldId])];
+    setMediaFields(updatedMediaFields);
 
     const newField = [];
 
-    if (Array.isArray(fieldValue) && fieldValue.length === 0) {
-      localFormStateObject.media = [];
-    }
     // Handle each entry in field.
     if (Array.isArray(fieldValue)) {
       fieldValue.forEach((entry) => {
@@ -383,17 +382,19 @@ function SlideManager({
             !Object.prototype.hasOwnProperty.call(localMediaData, entry["@id"])
           ) {
             set(localMediaData, entry["@id"], entry);
-
-            localFormStateObject.media.push(entry["@id"]);
           }
         }
       });
     }
 
     set(localFormStateObject.content, fieldId, newField);
-    set(localFormStateObject, "media", [
-      ...new Set([...localFormStateObject.media]),
-    ]);
+
+    // Rebuild media array from all content fields to keep it in sync.
+    set(
+      localFormStateObject,
+      "media",
+      rebuildMediaFromContent(localFormStateObject.content, updatedMediaFields)
+    );
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
