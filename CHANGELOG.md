@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- [#295](https://github.com/os2display/display-admin-client/pull/295)
+  - Fixed slide media array not syncing with content on media removal.
+
 ## [2.6.0] - 2025-12-05
 
 - [#293](https://github.com/os2display/display-admin-client/pull/293)

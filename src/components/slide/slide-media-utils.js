@@ -3,15 +3,15 @@ import get from "lodash.get";
 /**
  * Rebuild the media array from all content fields that reference media.
  *
- * This ensures that the top-level `media` array (sent to the API as
- * slide_media associations) always matches the media actually referenced
- * in the slide's `content` object.
+ * This ensures that the top-level `media` array (sent to the API as slide_media
+ * associations) always matches the media actually referenced in the slide's
+ * `content` object.
  *
  * @param {object} content - The slide content object.
  * @param {string[]} mediaFields - Field names in content that hold media refs.
  * @returns {string[]} Deduplicated array of media IRIs.
  */
-export function rebuildMediaFromContent(content, mediaFields) {
+export default function rebuildMediaFromContent(content, mediaFields) {
   const media = [];
 
   mediaFields.forEach((fieldName) => {

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { rebuildMediaFromContent } from "../src/components/slide/slide-media-utils";
+import rebuildMediaFromContent from "../src/components/slide/slide-media-utils";
 
 test.describe("Slide media sync", () => {
   test("It returns media IRIs referenced in content fields", () => {

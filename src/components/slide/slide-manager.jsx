@@ -2,12 +2,12 @@ import { React, useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import get from "lodash.get";
 import set from "lodash.set";
-import { rebuildMediaFromContent } from "./slide-media-utils";
 import { ulid } from "ulid";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import rebuildMediaFromContent from "./slide-media-utils";
 import UserContext from "../../context/user-context";
 import {
   api,
