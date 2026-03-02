@@ -112,7 +112,7 @@ test.describe("Slide media sync", () => {
       images: ["/v2/media/1"],
       title: "Some text",
       separator: true,
-      contacts: [{ name: "John", image: ["/v2/media/2"] }],
+      contacts: [{ name: "John", image: ["/v2/media/2"], tags: ["news"] }],
     };
     const mediaFields = [];
 
@@ -120,7 +120,33 @@ test.describe("Slide media sync", () => {
 
     // images field is picked up via top-level scan
     expect(result).toContain("/v2/media/1");
-    // contacts is an array of objects, not strings — objects are skipped
-    expect(result).not.toContain("/v2/media/2");
+    expect(result).toContain("/v2/media/2");
+    expect(result).not.toContain("news");
+  });
+
+  test("It does not include non-media string arrays from content", () => {
+    // Only actual media IRIs should be returned.
+    const content = {
+      images: ["/v2/media/1"],
+      tags: ["news", "sports"],
+    };
+    const mediaFields = []; // rely on top-level scan
+
+    const result = rebuildMediaFromContent(content, mediaFields);
+
+    expect(result).toEqual(["/v2/media/1"]);
+    expect(result).not.toContain("news");
+    expect(result).not.toContain("sports");
+  });
+
+  test("It avoids infinite recursion when content contains circular references", () => {
+    const circular = { images: ["/v2/media/1"] };
+    circular.self = circular; // create an explicit cycle
+
+    // If we didn't track `seen`, this would crash.
+    expect(() => rebuildMediaFromContent(circular, [])).not.toThrow();
+
+    const result = rebuildMediaFromContent(circular, []);
+    expect(result).toContain("/v2/media/1");
   });
 });
