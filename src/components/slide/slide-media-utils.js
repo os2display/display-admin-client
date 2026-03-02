@@ -23,24 +23,31 @@ export default function rebuildMediaFromContent(content, mediaFields) {
     mediaIriRegex.test(value);
 
   const collectMediaFromValue = (value, seen = new Set()) => {
+    // 1) Ignore empty values early (nothing to scan)
     if (value === null || value === undefined) return;
 
+    // 2) If it's a string, it might be a media IRI; validate and collect it
     if (typeof value === "string") {
       if (isMediaIri(value)) media.push(value);
       return;
     }
 
+    // 3) If it's not an object (e.g. number/boolean/function), it cannot contain nested media
     if (typeof value !== "object") return;
 
-    // Avoid potential circular references (defensive; content is usually JSON)
+    // 4) Defensive guard against circular references:
+    //    - JSON content won't have cycles, but runtime objects might.
+    //    - If we've seen this object/array already, stop to avoid infinite recursion.
     if (seen.has(value)) return;
     seen.add(value);
 
+    // 5) If it's an array, scan each element (elements can be strings, objects, or more arrays)
     if (Array.isArray(value)) {
       value.forEach((item) => collectMediaFromValue(item, seen));
       return;
     }
 
+    // 6) Otherwise it's a plain object: scan its property values recursively
     Object.values(value).forEach((item) => collectMediaFromValue(item, seen));
   };
 
