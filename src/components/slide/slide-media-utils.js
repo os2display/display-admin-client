@@ -1,5 +1,3 @@
-import get from "lodash.get";
-
 /**
  * Rebuild the media array from all content fields that reference media.
  *
