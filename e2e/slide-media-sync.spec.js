@@ -138,4 +138,15 @@ test.describe("Slide media sync", () => {
     expect(result).not.toContain("news");
     expect(result).not.toContain("sports");
   });
+
+  test("It avoids infinite recursion when content contains circular references", () => {
+    const circular = { images: ["/v2/media/1"] };
+    circular.self = circular; // create an explicit cycle
+
+    // If we didn't track `seen`, this would crash.
+    expect(() => rebuildMediaFromContent(circular, [])).not.toThrow();
+
+    const result = rebuildMediaFromContent(circular, []);
+    expect(result).toContain("/v2/media/1");
+  });
 });
