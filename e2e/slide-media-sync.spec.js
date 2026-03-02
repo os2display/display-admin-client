@@ -123,4 +123,20 @@ test.describe("Slide media sync", () => {
     // contacts is an array of objects, not strings — objects are skipped
     expect(result).not.toContain("/v2/media/2");
   });
+
+  test("It does not include non-media string arrays from content", () => {
+    // Regression: previously any array-of-strings could be treated as media,
+    // e.g. tags/categories/etc. Only actual media IRIs should be returned.
+    const content = {
+      images: ["/v2/media/1"],
+      tags: ["news", "sports"],
+    };
+    const mediaFields = []; // rely on top-level scan
+
+    const result = rebuildMediaFromContent(content, mediaFields);
+
+    expect(result).toEqual(["/v2/media/1"]);
+    expect(result).not.toContain("news");
+    expect(result).not.toContain("sports");
+  });
 });

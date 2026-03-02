@@ -15,6 +15,11 @@ export default function rebuildMediaFromContent(content, mediaFields) {
   const media = [];
   const fieldsToScan = new Set(mediaFields);
 
+  const isMediaIri = (value) =>
+    typeof value === "string" &&
+    !value.startsWith("TEMP--") &&
+    value.includes("/v2/media/");
+
   // Also scan top-level content keys to catch media fields not yet
   // tracked via handleMedia (e.g. on first edit of another field).
   if (content && typeof content === "object") {
@@ -23,13 +28,13 @@ export default function rebuildMediaFromContent(content, mediaFields) {
 
   fieldsToScan.forEach((fieldName) => {
     const fieldData = get(content, fieldName);
-    if (Array.isArray(fieldData)) {
-      fieldData.forEach((mediaId) => {
-        if (typeof mediaId === "string" && !mediaId.startsWith("TEMP--")) {
-          media.push(mediaId);
-        }
-      });
-    }
+    if (!Array.isArray(fieldData)) return;
+
+    fieldData.forEach((candidate) => {
+      if (isMediaIri(candidate)) {
+        media.push(candidate);
+      }
+    });
   });
 
   return [...new Set(media)];
