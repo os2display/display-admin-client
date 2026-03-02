@@ -112,7 +112,7 @@ test.describe("Slide media sync", () => {
       images: ["/v2/media/1"],
       title: "Some text",
       separator: true,
-      contacts: [{ name: "John", image: ["/v2/media/2"] }],
+      contacts: [{ name: "John", image: ["/v2/media/2"], tags: ["news"] }],
     };
     const mediaFields = [];
 
@@ -120,13 +120,12 @@ test.describe("Slide media sync", () => {
 
     // images field is picked up via top-level scan
     expect(result).toContain("/v2/media/1");
-    // contacts is an array of objects, not strings — objects are skipped
-    expect(result).not.toContain("/v2/media/2");
+    expect(result).toContain("/v2/media/2");
+    expect(result).not.toContain("news");
   });
 
   test("It does not include non-media string arrays from content", () => {
-    // Regression: previously any array-of-strings could be treated as media,
-    // e.g. tags/categories/etc. Only actual media IRIs should be returned.
+    // Only actual media IRIs should be returned.
     const content = {
       images: ["/v2/media/1"],
       tags: ["news", "sports"],

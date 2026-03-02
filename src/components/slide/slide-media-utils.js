@@ -22,6 +22,28 @@ export default function rebuildMediaFromContent(content, mediaFields) {
     !value.startsWith("TEMP--") &&
     mediaIriRegex.test(value);
 
+  const collectMediaFromValue = (value, seen = new Set()) => {
+    if (value === null || value === undefined) return;
+
+    if (typeof value === "string") {
+      if (isMediaIri(value)) media.push(value);
+      return;
+    }
+
+    if (typeof value !== "object") return;
+
+    // Avoid potential circular references (defensive; content is usually JSON)
+    if (seen.has(value)) return;
+    seen.add(value);
+
+    if (Array.isArray(value)) {
+      value.forEach((item) => collectMediaFromValue(item, seen));
+      return;
+    }
+
+    Object.values(value).forEach((item) => collectMediaFromValue(item, seen));
+  };
+
   // Also, scan top-level content keys to catch media fields not yet
   // tracked via handleMedia (e.g. on the first edit of another field).
   if (content && typeof content === "object") {
@@ -30,13 +52,7 @@ export default function rebuildMediaFromContent(content, mediaFields) {
 
   fieldsToScan.forEach((fieldName) => {
     const fieldData = get(content, fieldName);
-    if (!Array.isArray(fieldData)) return;
-
-    fieldData.forEach((candidate) => {
-      if (isMediaIri(candidate)) {
-        media.push(candidate);
-      }
-    });
+    collectMediaFromValue(fieldData);
   });
 
   return [...new Set(media)];
