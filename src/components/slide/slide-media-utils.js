@@ -8,12 +8,10 @@ import get from "lodash.get";
  * `content` object.
  *
  * @param {object} content - The slide content object.
- * @param {string[]} mediaFields - Field names in content that hold media refs.
  * @returns {string[]} Deduplicated array of media IRIs.
  */
-export default function rebuildMediaFromContent(content, mediaFields) {
+export default function rebuildMediaFromContent(content) {
   const media = [];
-  const fieldsToScan = new Set(mediaFields);
 
   const mediaIriRegex = /\/v2\/media\/.+/;
 
@@ -51,16 +49,15 @@ export default function rebuildMediaFromContent(content, mediaFields) {
     Object.values(value).forEach((item) => collectMediaFromValue(item, seen));
   };
 
-  // Also, scan top-level content keys to catch media fields not yet
-  // tracked via handleMedia (e.g. on the first edit of another field).
+  const fieldsToScan = new Set([]);
+
+  // Scan content for media references.
   if (content && typeof content === "object") {
     Object.keys(content).forEach((key) => fieldsToScan.add(key));
   }
 
-  fieldsToScan.forEach((fieldName) => {
-    const fieldData = get(content, fieldName);
-    collectMediaFromValue(fieldData);
-  });
+  // Scan the entire content object (one traversal)
+  collectMediaFromValue(content);
 
   return [...new Set(media)];
 }

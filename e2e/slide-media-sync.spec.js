@@ -7,9 +7,8 @@ test.describe("Slide media sync", () => {
       mainImage: ["/v2/media/1", "/v2/media/2"],
       backgroundVideo: ["/v2/media/3"],
     };
-    const mediaFields = ["mainImage", "backgroundVideo"];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual(["/v2/media/1", "/v2/media/2", "/v2/media/3"]);
   });
@@ -18,39 +17,30 @@ test.describe("Slide media sync", () => {
     const content = {
       mainImage: ["TEMP--abc123", "/v2/media/1"],
     };
-    const mediaFields = ["mainImage"];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual(["/v2/media/1"]);
   });
 
   test("It removes media no longer referenced in any content field", () => {
-    // This is the core bug fix scenario: media/1 was previously in mainImage
-    // but has been replaced by media/2. The rebuilt array must NOT contain
-    // media/1 since it is no longer in any content field.
     const content = {
       mainImage: ["/v2/media/2"],
     };
-    const mediaFields = ["mainImage"];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual(["/v2/media/2"]);
     expect(result).not.toContain("/v2/media/1");
   });
 
   test("It returns empty array when all media is removed from content", () => {
-    // Second bug fix scenario: clearing one media field used to wipe all
-    // media including those from other fields. Now it correctly rebuilds
-    // from all fields.
     const content = {
       mainImage: [],
       backgroundVideo: ["/v2/media/3"],
     };
-    const mediaFields = ["mainImage", "backgroundVideo"];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual(["/v2/media/3"]);
   });
@@ -60,18 +50,16 @@ test.describe("Slide media sync", () => {
       mainImage: ["/v2/media/1"],
       thumbnail: ["/v2/media/1"],
     };
-    const mediaFields = ["mainImage", "thumbnail"];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual(["/v2/media/1"]);
   });
 
   test("It handles non-existent content fields gracefully", () => {
     const content = {};
-    const mediaFields = ["mainImage"];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual([]);
   });
@@ -82,57 +70,34 @@ test.describe("Slide media sync", () => {
         hero: ["/v2/media/1"],
       },
     };
-    const mediaFields = ["sections.hero"];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual(["/v2/media/1"]);
   });
 
-  test("It includes media from untracked content fields", () => {
-    // When only one media field has been touched via handleMedia,
-    // mediaFields only contains that field. Media from other content
-    // fields must still be included by scanning top-level content keys.
-    const content = {
-      images: ["/v2/media/1"],
-      backgroundImage: ["/v2/media/2"],
-    };
-    const mediaFields = ["images"]; // only images was touched
-
-    const result = rebuildMediaFromContent(content, mediaFields);
-
-    expect(result).toContain("/v2/media/1");
-    expect(result).toContain("/v2/media/2");
-  });
-
   test("It ignores non-media content values when scanning top-level keys", () => {
-    // Content has both media arrays and plain string/object values.
-    // Only string array entries should be picked up as media.
     const content = {
       images: ["/v2/media/1"],
       title: "Some text",
       separator: true,
       contacts: [{ name: "John", image: ["/v2/media/2"], tags: ["news"] }],
     };
-    const mediaFields = [];
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
-    // images field is picked up via top-level scan
     expect(result).toContain("/v2/media/1");
     expect(result).toContain("/v2/media/2");
     expect(result).not.toContain("news");
   });
 
   test("It does not include non-media string arrays from content", () => {
-    // Only actual media IRIs should be returned.
     const content = {
       images: ["/v2/media/1"],
       tags: ["news", "sports"],
     };
-    const mediaFields = []; // rely on top-level scan
 
-    const result = rebuildMediaFromContent(content, mediaFields);
+    const result = rebuildMediaFromContent(content);
 
     expect(result).toEqual(["/v2/media/1"]);
     expect(result).not.toContain("news");
@@ -143,10 +108,9 @@ test.describe("Slide media sync", () => {
     const circular = { images: ["/v2/media/1"] };
     circular.self = circular; // create an explicit cycle
 
-    // If we didn't track `seen`, this would crash.
-    expect(() => rebuildMediaFromContent(circular, [])).not.toThrow();
+    expect(() => rebuildMediaFromContent(circular)).not.toThrow();
 
-    const result = rebuildMediaFromContent(circular, []);
+    const result = rebuildMediaFromContent(circular);
     expect(result).toContain("/v2/media/1");
   });
 });

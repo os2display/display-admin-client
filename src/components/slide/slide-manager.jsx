@@ -389,11 +389,11 @@ function SlideManager({
 
     set(localFormStateObject.content, fieldId, newField);
 
-    // Rebuild media array from all content fields to keep it in sync.
+    // Rebuild the media array from all content fields to keep it in sync.
     set(
       localFormStateObject,
       "media",
-      rebuildMediaFromContent(localFormStateObject.content, updatedMediaFields)
+      rebuildMediaFromContent(localFormStateObject.content)
     );
 
     setFormStateObject(localFormStateObject);
