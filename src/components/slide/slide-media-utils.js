@@ -15,13 +15,15 @@ export default function rebuildMediaFromContent(content, mediaFields) {
   const media = [];
   const fieldsToScan = new Set(mediaFields);
 
+  const mediaIriRegex = /\/v2\/media\/.+/;
+
   const isMediaIri = (value) =>
     typeof value === "string" &&
     !value.startsWith("TEMP--") &&
-    value.includes("/v2/media/");
+    mediaIriRegex.test(value);
 
-  // Also scan top-level content keys to catch media fields not yet
-  // tracked via handleMedia (e.g. on first edit of another field).
+  // Also, scan top-level content keys to catch media fields not yet
+  // tracked via handleMedia (e.g. on the first edit of another field).
   if (content && typeof content === "object") {
     Object.keys(content).forEach((key) => fieldsToScan.add(key));
   }
@@ -36,6 +38,8 @@ export default function rebuildMediaFromContent(content, mediaFields) {
       }
     });
   });
+
+  console.log("media", [...new Set(media)]);
 
   return [...new Set(media)];
 }
