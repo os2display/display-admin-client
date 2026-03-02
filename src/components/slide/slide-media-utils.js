@@ -39,7 +39,5 @@ export default function rebuildMediaFromContent(content, mediaFields) {
     });
   });
 
-  console.log("media", [...new Set(media)]);
-
   return [...new Set(media)];
 }
