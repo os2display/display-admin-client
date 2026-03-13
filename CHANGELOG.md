@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Added api_version configuration field to BRND feed source settings, allowing administrators to specify which BRND API version to use. Issue: https://github.com/os2display/display-api-service/issues/352
+
 - [#295](https://github.com/os2display/display-admin-client/pull/295)
   - Fixed slide media array not syncing with content on media removal.
 
