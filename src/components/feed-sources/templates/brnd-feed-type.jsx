@@ -44,6 +44,16 @@ const BrndFeedType = ({ handleInput, formStateObject, mode }) => {
         }
         value={formStateObject?.api_auth_key}
       />
+
+      <FormInput
+        name="api_version"
+        type="text"
+        className="mb-2"
+        label={t("api-version")}
+        onChange={handleInput}
+        placeholder="1.0"
+        value={formStateObject?.api_version}
+      />
     </>
   );
 };
@@ -54,6 +64,7 @@ BrndFeedType.propTypes = {
     api_base_uri: PropTypes.string,
     company_id: PropTypes.string,
     api_auth_key: PropTypes.string,
+    api_version: PropTypes.string,
   }),
   mode: PropTypes.string,
 };
