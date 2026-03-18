@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import rebuildMediaFromContent from "./slide-media-utils";
 import UserContext from "../../context/user-context";
 import {
   api,
@@ -337,13 +338,11 @@ function SlideManager({
     const localFormStateObject = { ...formStateObject };
     const localMediaData = { ...mediaData };
     // Set field as a field to look into for new references.
-    setMediaFields([...new Set([...mediaFields, fieldId])]);
+    const updatedMediaFields = [...new Set([...mediaFields, fieldId])];
+    setMediaFields(updatedMediaFields);
 
     const newField = [];
 
-    if (Array.isArray(fieldValue) && fieldValue.length === 0) {
-      localFormStateObject.media = [];
-    }
     // Handle each entry in field.
     if (Array.isArray(fieldValue)) {
       fieldValue.forEach((entry) => {
@@ -383,17 +382,19 @@ function SlideManager({
             !Object.prototype.hasOwnProperty.call(localMediaData, entry["@id"])
           ) {
             set(localMediaData, entry["@id"], entry);
-
-            localFormStateObject.media.push(entry["@id"]);
           }
         }
       });
     }
 
     set(localFormStateObject.content, fieldId, newField);
-    set(localFormStateObject, "media", [
-      ...new Set([...localFormStateObject.media]),
-    ]);
+
+    // Rebuild the media array from all content fields to keep it in sync.
+    set(
+      localFormStateObject,
+      "media",
+      rebuildMediaFromContent(localFormStateObject.content)
+    );
 
     setFormStateObject(localFormStateObject);
     setMediaData(localMediaData);
