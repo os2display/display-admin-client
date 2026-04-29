@@ -2,11 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import FormInput from "../../util/forms/form-input";
+import Select from "../../util/forms/select";
 
 const BrndFeedType = ({ handleInput, formStateObject, mode }) => {
   const { t } = useTranslation("common", {
     keyPrefix: "brnd-feed-type",
   });
+  const apiVersionOptions = [
+    { key: "api-version-1-0", title: "1.0", value: "1.0" },
+    { key: "api-version-2-0", title: "2.0", value: "2.0" },
+  ];
 
   return (
     <>
@@ -45,14 +50,14 @@ const BrndFeedType = ({ handleInput, formStateObject, mode }) => {
         value={formStateObject?.api_auth_key}
       />
 
-      <FormInput
+      <Select
         name="api_version"
-        type="text"
-        className="mb-2"
+        formGroupClasses="mb-2"
         label={t("api-version")}
+        options={apiVersionOptions}
+        allowNull={false}
         onChange={handleInput}
-        placeholder="1.0"
-        value={formStateObject?.api_version}
+        value={formStateObject?.api_version || "1.0"}
       />
     </>
   );
