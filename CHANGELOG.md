@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [2.7.0] - 2026-04-01
+## [2.7.0] - 2026-05-01
 
 - [#299](https://github.com/os2display/display-admin-client/pull/299)
   - Added api_version configuration field to BRND feed source settings, allowing administrators to specify which BRND API version to use.
