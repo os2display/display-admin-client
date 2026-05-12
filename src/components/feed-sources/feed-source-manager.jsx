@@ -88,6 +88,7 @@ function FeedSourceManager({
         api_base_uri: "",
         company_id: "",
         api_auth_key: "",
+        api_version: "1.0",
       },
     },
     {
