@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ## [2.7.1] - 2026-10-26
 
 - [#301](https://github.com/os2display/display-admin-client/pull/301)
-  - Switched docker compose setup to the maintained nginx/nginx-unprivileged image.
+  - Switched docker compose setup and Dockerfiles to the maintained nginx/nginx-unprivileged image.
 
 ## [2.7.0] - 2026-05-01
 
